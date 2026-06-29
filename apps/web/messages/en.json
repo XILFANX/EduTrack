@@ -1,0 +1,133 @@
+{
+  "auth": {
+    "login": "Log In",
+    "logout": "Log Out",
+    "signup": "Create Account",
+    "email": "Email address",
+    "password": "Password",
+    "forgotPassword": "Forgot password?",
+    "continueWithGoogle": "Continue with Google",
+    "noAccount": "Don't have an account?",
+    "alreadyHaveAccount": "Already have an account?",
+    "signIn": "Sign in",
+    "signUp": "Sign up"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "properties": "Properties",
+    "tenants": "Tenants",
+    "rent": "Rent",
+    "expenses": "Expenses",
+    "maintenance": "Maintenance",
+    "staff": "Staff",
+    "leases": "Leases",
+    "settings": "Settings",
+    "portal": "My Portal"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "collectedThisMonth": "Collected This Month",
+    "outstanding": "Outstanding",
+    "tenantsInArrears": "Tenants in Arrears",
+    "openMaintenance": "Open Maintenance",
+    "leasesExpiring": "Leases Expiring Soon",
+    "morningSnapshot": "Morning Snapshot",
+    "vacantUnits": "Vacant Units"
+  },
+  "properties": {
+    "title": "Properties",
+    "addProperty": "Add Property",
+    "noProperties": "No properties yet. Add your first property to get started.",
+    "units": "Units",
+    "occupied": "Occupied",
+    "vacant": "Vacant",
+    "underMaintenance": "Under Maintenance"
+  },
+  "tenants": {
+    "title": "Tenants",
+    "addTenant": "Add Tenant",
+    "importTenants": "Import Tenants",
+    "inviteToPortal": "Invite to Portal",
+    "moveIn": "Move In",
+    "moveOut": "Move Out",
+    "active": "Active",
+    "notice": "Notice",
+    "movedOut": "Moved Out",
+    "noTenants": "No tenants yet."
+  },
+  "rent": {
+    "title": "Rent",
+    "recordPayment": "Record Payment",
+    "invoices": "Invoices",
+    "payments": "Payments",
+    "arrears": "Arrears",
+    "reports": "Reports",
+    "payNow": "Pay Now",
+    "paid": "Paid",
+    "unpaid": "Unpaid",
+    "partial": "Partial",
+    "overdue": "Overdue",
+    "balance": "Balance",
+    "totalDue": "Total Due",
+    "dueDate": "Due Date"
+  },
+  "maintenance": {
+    "title": "Maintenance",
+    "submitRequest": "Submit Request",
+    "open": "Open",
+    "acknowledged": "Acknowledged",
+    "inProgress": "In Progress",
+    "completed": "Completed",
+    "closed": "Closed",
+    "urgency": {
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High",
+      "emergency": "Emergency"
+    },
+    "category": {
+      "plumbing": "Plumbing",
+      "electrical": "Electrical",
+      "structural": "Structural",
+      "appliance": "Appliance",
+      "pestControl": "Pest Control",
+      "security": "Security",
+      "other": "Other"
+    }
+  },
+  "notifications": {
+    "rentDueSoon": "Rent of {amount} is due on {date}.",
+    "rentDueToday": "Your rent of {amount} is due today.",
+    "rentOverdue": "Your rent of {amount} is overdue. A penalty of {penalty} has been applied.",
+    "paymentReceived": "Payment of {amount} received. Receipt: {receiptNo}. Balance: {balance}.",
+    "maintenanceAcknowledged": "Your maintenance request #{ref} has been acknowledged. Expected response: 24–48 hours.",
+    "leaseExpiring": "The lease for Unit {unit} expires on {date}. Please take action."
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "view": "View",
+    "download": "Download",
+    "export": "Export",
+    "loading": "Loading...",
+    "search": "Search",
+    "filter": "Filter",
+    "noResults": "No results found.",
+    "error": "Something went wrong. Please try again.",
+    "success": "Done!",
+    "confirm": "Are you sure?",
+    "yes": "Yes",
+    "no": "No",
+    "all": "All",
+    "status": "Status",
+    "date": "Date",
+    "amount": "Amount",
+    "notes": "Notes",
+    "phone": "Phone",
+    "email": "Email",
+    "name": "Name",
+    "required": "This field is required"
+  }
+}

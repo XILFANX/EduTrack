@@ -1,0 +1,16 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/generate-invoices",
+      "schedule": "0 6 28 * *"
+    },
+    {
+      "path": "/api/cron/rent",
+      "schedule": "0 7 * * *"
+    },
+    {
+      "path": "/api/cron/billing",
+      "schedule": "0 8 * * *"
+    }
+  ]
+}
