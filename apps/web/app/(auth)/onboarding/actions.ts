@@ -33,16 +33,19 @@ export async function completeOnboarding(
       '-' +
       Math.random().toString(36).slice(2, 7)
 
-    const { data: school, error: schoolError } = await admin
+    const { data: schoolResult, error: schoolError } = await admin
       .from('schools')
       .insert({
         name: data.schoolName,
         domain: slug,
-        address: data.schoolAddress,
-        subscription_tier: data.subscriptionPlan,
+        curriculum_type: data.curriculumType,
+        subscription_plan: data.subscriptionPlan,
+        fee_due_day: data.feeDueDay,
       })
-      .select()
+      .select('id')
       .single()
+
+    const school = schoolResult as any
 
     if (schoolError || !school) {
       return { error: `Failed to create school: ${schoolError?.message ?? 'Unknown error'}` }

@@ -1,0 +1,94 @@
+
+> @edutrack/web@0.1.0 build
+> next build
+
+▲ Next.js 16.1.6 (Turbopack)
+- Environments: .env.local
+- Experiments (use with caution):
+  · clientTraceMetadata
+  · serverActions
+
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+  Creating an optimized production build ...
+
+> Build error occurred
+Error: Turbopack build failed with 6 errors:
+./apps/web/app/admin/page.tsx:2:65
+Parsing ecmascript source code failed
+[0m [90m 1 |[39m [36mexport[39m [36mdefault[39m [36mfunction[39m [33mPage[39m() {
+[31m[1m>[22m[39m[90m 2 |[39m   [36mreturn[39m [33m<[39m[33mdiv[39m className[33m=[39m[32m"p-8 text-2xl font-bold capitalize"[39m[33m>[39m{$r [33mPortal[39m}[33m<[39m[33m/[39m[33mdiv[39m[33m>[39m
+ [90m   |[39m                                                                 [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 3 |[39m }
+ [90m 4 |[39m[0m
+
+Expected '</', got 'ident'
+
+
+./apps/web/app/bursar/page.tsx:2:65
+Parsing ecmascript source code failed
+[0m [90m 1 |[39m [36mexport[39m [36mdefault[39m [36mfunction[39m [33mPage[39m() {
+[31m[1m>[22m[39m[90m 2 |[39m   [36mreturn[39m [33m<[39m[33mdiv[39m className[33m=[39m[32m"p-8 text-2xl font-bold capitalize"[39m[33m>[39m{$r [33mPortal[39m}[33m<[39m[33m/[39m[33mdiv[39m[33m>[39m
+ [90m   |[39m                                                                 [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 3 |[39m }
+ [90m 4 |[39m[0m
+
+Expected '</', got 'ident'
+
+
+./apps/web/app/parent/page.tsx:2:65
+Parsing ecmascript source code failed
+[0m [90m 1 |[39m [36mexport[39m [36mdefault[39m [36mfunction[39m [33mPage[39m() {
+[31m[1m>[22m[39m[90m 2 |[39m   [36mreturn[39m [33m<[39m[33mdiv[39m className[33m=[39m[32m"p-8 text-2xl font-bold capitalize"[39m[33m>[39m{$r [33mPortal[39m}[33m<[39m[33m/[39m[33mdiv[39m[33m>[39m
+ [90m   |[39m                                                                 [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 3 |[39m }
+ [90m 4 |[39m[0m
+
+Expected '</', got 'ident'
+
+
+./apps/web/app/store/page.tsx:2:65
+Parsing ecmascript source code failed
+[0m [90m 1 |[39m [36mexport[39m [36mdefault[39m [36mfunction[39m [33mPage[39m() {
+[31m[1m>[22m[39m[90m 2 |[39m   [36mreturn[39m [33m<[39m[33mdiv[39m className[33m=[39m[32m"p-8 text-2xl font-bold capitalize"[39m[33m>[39m{$r [33mPortal[39m}[33m<[39m[33m/[39m[33mdiv[39m[33m>[39m
+ [90m   |[39m                                                                 [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 3 |[39m }
+ [90m 4 |[39m[0m
+
+Expected '</', got 'ident'
+
+
+./apps/web/app/teacher/page.tsx:2:65
+Parsing ecmascript source code failed
+[0m [90m 1 |[39m [36mexport[39m [36mdefault[39m [36mfunction[39m [33mPage[39m() {
+[31m[1m>[22m[39m[90m 2 |[39m   [36mreturn[39m [33m<[39m[33mdiv[39m className[33m=[39m[32m"p-8 text-2xl font-bold capitalize"[39m[33m>[39m{$r [33mPortal[39m}[33m<[39m[33m/[39m[33mdiv[39m[33m>[39m
+ [90m   |[39m                                                                 [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 3 |[39m }
+ [90m 4 |[39m[0m
+
+Expected '</', got 'ident'
+
+
+./apps/web/app/transport/page.tsx:2:65
+Parsing ecmascript source code failed
+[0m [90m 1 |[39m [36mexport[39m [36mdefault[39m [36mfunction[39m [33mPage[39m() {
+[31m[1m>[22m[39m[90m 2 |[39m   [36mreturn[39m [33m<[39m[33mdiv[39m className[33m=[39m[32m"p-8 text-2xl font-bold capitalize"[39m[33m>[39m{$r [33mPortal[39m}[33m<[39m[33m/[39m[33mdiv[39m[33m>[39m
+ [90m   |[39m                                                                 [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 3 |[39m }
+ [90m 4 |[39m[0m
+
+Expected '</', got 'ident'
+
+
+    at <unknown> (./apps/web/app/admin/page.tsx:2:65)
+    at <unknown> (./apps/web/app/bursar/page.tsx:2:65)
+    at <unknown> (./apps/web/app/parent/page.tsx:2:65)
+    at <unknown> (./apps/web/app/store/page.tsx:2:65)
+    at <unknown> (./apps/web/app/teacher/page.tsx:2:65)
+    at <unknown> (./apps/web/app/transport/page.tsx:2:65)
+npm error Lifecycle script `build` failed with error:
+npm error code 1
+npm error path C:\Users\jxilf\OneDrive\Desktop\EduTrack\apps\web
+npm error workspace @edutrack/web@0.1.0
+npm error location C:\Users\jxilf\OneDrive\Desktop\EduTrack\apps\web
+npm error command failed
+npm error command C:\WINDOWS\system32\cmd.exe /d /s /c next build

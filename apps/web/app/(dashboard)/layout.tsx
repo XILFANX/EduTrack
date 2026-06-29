@@ -10,19 +10,21 @@ export default async function DashboardLayout({ children }: { children: React.Re
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login')
 
-  const { data: profile } = await supabase
+  const { data: profileResult } = await supabase
     .from('users')
     .select('full_name, role, school_id')
     .eq('id', user.id)
     .single()
 
+  const profile = profileResult as any
+
   if (!profile) redirect('/onboarding')
 
   // Route non-principal roles to their correct portals
-  if (profile.role === 'admin') redirect('/admin/dashboard')
-  if (profile.role === 'parent') redirect('/parent/dashboard')
-  if (profile.role === 'class_teacher' || profile.role === 'subject_teacher') redirect('/teacher/dashboard')
-  if (profile.role === 'bursar') redirect('/bursar/dashboard')
+  if (profile?.role === 'admin') redirect('/admin/dashboard')
+  if (profile?.role === 'parent') redirect('/parent/dashboard')
+  if (profile?.role === 'class_teacher' || profile?.role === 'subject_teacher') redirect('/teacher/dashboard')
+  if (profile?.role === 'bursar') redirect('/bursar/dashboard')
   if (profile.role === 'librarian') redirect('/library/dashboard')
   if (profile.role === 'storekeeper') redirect('/store/dashboard')
   if (profile.role === 'transport_matron') redirect('/transport/dashboard')

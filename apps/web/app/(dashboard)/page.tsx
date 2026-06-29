@@ -54,11 +54,13 @@ export default async function DashboardPage() {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login')
 
-  const { data: profile } = await supabase
+  const { data: profileResult } = await supabase
     .from('users')
     .select('full_name, school_id')
     .eq('id', user.id)
     .single()
+
+  const profile = profileResult as any
 
   if (!profile?.school_id) redirect('/onboarding')
 

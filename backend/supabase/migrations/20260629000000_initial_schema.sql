@@ -67,23 +67,55 @@ create table public.subjects (
 );
 
 -- Financial & Operational Entities
+create table public.academic_terms (
+  id uuid default uuid_generate_v4() primary key,
+  school_id uuid references public.schools(id) not null,
+  name text not null, -- e.g., "Term 1 - 2026"
+  start_date date not null,
+  end_date date not null,
+  is_active boolean default false,
+  created_at timestamp with time zone default now()
+);
+
+create table public.fee_structures (
+  id uuid default uuid_generate_v4() primary key,
+  school_id uuid references public.schools(id) not null,
+  term_id uuid references public.academic_terms(id) not null,
+  class_id uuid references public.classes(id), -- If null, applies to the whole school
+  amount numeric not null,
+  description text, -- e.g., "Tuition Fee", "Transport Fee"
+  created_at timestamp with time zone default now()
+);
+
 create table public.invoices (
   id uuid default uuid_generate_v4() primary key,
+  school_id uuid references public.schools(id) not null,
   student_id uuid references public.students(id) not null,
-  term text not null,
+  term_id uuid references public.academic_terms(id) not null,
   amount numeric not null,
   balance numeric not null,
   due_date date,
+  status text default 'unpaid', -- 'unpaid', 'partial', 'paid'
   created_at timestamp with time zone default now(),
   deleted_at timestamp with time zone
 );
 
-create table public.payments (
+create table public.invoice_items (
   id uuid default uuid_generate_v4() primary key,
+  invoice_id uuid references public.invoices(id) on delete cascade not null,
+  description text not null,
+  amount numeric not null
+);
+
+create table public.fee_payments (
+  id uuid default uuid_generate_v4() primary key,
+  school_id uuid references public.schools(id) not null,
   invoice_id uuid references public.invoices(id) not null,
+  student_id uuid references public.students(id) not null,
   amount numeric not null,
-  payment_method text not null, -- 'M-Pesa', 'Bank'
-  reference text,
+  payment_method text not null, -- 'M-Pesa', 'Bank', 'Cash'
+  mpesa_receipt text unique,
+  payment_date timestamp with time zone default now(),
   created_at timestamp with time zone default now()
 );
 

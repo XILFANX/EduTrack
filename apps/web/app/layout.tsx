@@ -14,32 +14,32 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: 'EstateTrack — Property Management Made Simple',
-    template: '%s | EstateTrack',
+    default: 'EduTrack — School Management Made Simple',
+    template: '%s | EduTrack',
   },
   description:
-    'Automate rent collection, tenant tracking, and maintenance management. M-Pesa-first property management for Kenyan landlords.',
-  keywords: ['property management', 'rent collection', 'landlord', 'kenya', 'tenant portal'],
-  authors: [{ name: 'EstateTrack' }],
-  creator: 'EstateTrack',
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? 'https://estatetrack.co.ke'),
+    'Automate fee collection, grade tracking, and school operations. M-Pesa-first school management for Kenyan schools.',
+  keywords: ['school management', 'fee collection', 'kenya', 'CBC', 'parent portal', 'teacher portal'],
+  authors: [{ name: 'EduTrack' }],
+  creator: 'EduTrack',
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? 'https://edutrack.co.ke'),
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
-    title: 'EstateTrack',
+    title: 'EduTrack',
   },
   openGraph: {
     type: 'website',
     locale: 'en_KE',
     url: process.env.NEXT_PUBLIC_APP_URL,
-    siteName: 'EstateTrack',
-    title: 'EstateTrack — Property Management Made Simple',
-    description: 'Automate rent collection, tenant tracking, and maintenance. M-Pesa-first.',
+    siteName: 'EduTrack',
+    title: 'EduTrack — School Management Made Simple',
+    description: 'Automate fee collection, grade tracking, and school operations. M-Pesa-first.',
   },
 }
 
 export const viewport: Viewport = {
-  themeColor: '#9333ea',
+  themeColor: '#2563eb',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
@@ -53,7 +53,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="apple-touch-icon" href="/EstateTrack.png" />
+        <link rel="apple-touch-icon" href="/logo.jpeg" />
       </head>
       <body suppressHydrationWarning className={`${inter.variable} font-sans antialiased bg-background text-foreground`}>
         <ThemeProvider

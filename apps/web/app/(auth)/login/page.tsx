@@ -21,12 +21,11 @@ export default function LoginPage() {
     e.preventDefault()
     setInviteError(null)
     const raw = inviteLink.trim()
-    // Accept full URL or just a token UUID
     const tokenMatch = raw.match(/invite\/([\w-]{36})/)
-    const uuidMatch  = raw.match(/^([\w-]{36})$/)
-    const token      = tokenMatch?.[1] ?? uuidMatch?.[1]
+    const uuidMatch = raw.match(/^([\w-]{36})$/)
+    const token = tokenMatch?.[1] ?? uuidMatch?.[1]
     if (!token) {
-      setInviteError('Paste your full invite link or just the token (the long code at the end).')
+      setInviteError('Paste your full invite link or just the token at the end of the URL.')
       return
     }
     router.push(`/invite/${token}`)
@@ -36,21 +35,17 @@ export default function LoginPage() {
     e.preventDefault()
     setLoading(true)
     setError(null)
-
     const supabase = createClient()
     const { error: signInError } = await supabase.auth.signInWithPassword({ email, password })
-
     if (signInError) {
-      if (signInError.message === 'Invalid login credentials') {
-        setError('Invalid email or password. If you originally signed up with Google, please click "Continue with Google" below, or reset your password to create one.')
-      } else {
-        setError(signInError.message)
-      }
+      setError(
+        signInError.message === 'Invalid login credentials'
+          ? 'Invalid email or password. Please try again or reset your password.'
+          : signInError.message
+      )
       setLoading(false)
       return
     }
-
-    // Let the root page handle role-based routing
     router.push('/')
     router.refresh()
   }
@@ -64,21 +59,21 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-violet-50 to-slate-100 dark:from-slate-950 dark:to-slate-900 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-slate-100 dark:from-slate-950 dark:to-slate-900 flex items-center justify-center px-4">
       <div className="w-full max-w-sm space-y-6">
 
         {/* Logo */}
         <div className="text-center space-y-2">
           <div className="w-12 h-12 relative mx-auto rounded-full overflow-hidden shadow-sm border border-slate-200 dark:border-slate-800 bg-white">
-            <Image src="/logo.jpeg" alt="EstateTrack Logo" fill className="object-cover scale-[1.2]" />
+            <Image src="/logo.jpeg" alt="EduTrack Logo" fill className="object-cover scale-[1.2]" />
           </div>
-          <h1 className="text-2xl font-bold mt-4 text-slate-800 dark:text-slate-100">Welcome back</h1>
-          <p className="text-slate-500 dark:text-slate-400 text-sm">Sign in to your EstateTrack account</p>
+          <p className="text-blue-600 dark:text-blue-400 font-bold text-xl">EduTrack</p>
+          <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-100">Welcome back</h1>
+          <p className="text-slate-500 dark:text-slate-400 text-sm">Sign in to your EduTrack account</p>
         </div>
 
-        {/* Card */}
-        <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 p-6 space-y-4 relative z-10">
-
+        {/* Login Card */}
+        <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 p-6 space-y-4">
           <form onSubmit={handleLogin} className="space-y-4">
             <div className="space-y-1.5">
               <label htmlFor="email" className="text-sm font-medium text-slate-700 dark:text-slate-300">Email</label>
@@ -89,32 +84,32 @@ export default function LoginPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
-                className="w-full border border-slate-200 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent"
+                placeholder="you@school.ac.ke"
+                className="w-full border border-slate-200 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
 
             <div className="space-y-1.5">
               <div className="flex justify-between">
                 <label htmlFor="password" className="text-sm font-medium text-slate-700 dark:text-slate-300">Password</label>
-                <Link href="/forgot-password" className="text-xs text-violet-600 dark:text-violet-500 hover:underline">Forgot password?</Link>
+                <Link href="/forgot-password" className="text-xs text-blue-600 dark:text-blue-500 hover:underline">Forgot password?</Link>
               </div>
               <div className="relative">
                 <input
                   id="password"
-                  type={showPassword ? "text" : "password"}
+                  type={showPassword ? 'text' : 'password'}
                   autoComplete="current-password"
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full border border-slate-200 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent pr-10"
+                  className="w-full border border-slate-200 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent pr-10"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 focus:outline-none p-1"
-                  aria-label={showPassword ? "Hide password" : "Show password"}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 p-1"
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
@@ -130,7 +125,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-violet-600 hover:bg-violet-700 text-white font-medium py-2.5 px-4 rounded-lg transition-colors text-sm disabled:opacity-60"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-4 rounded-lg transition-colors text-sm disabled:opacity-60"
             >
               {loading ? 'Signing in…' : 'Sign in'}
             </button>
@@ -162,17 +157,17 @@ export default function LoginPage() {
 
         <p className="text-center text-sm text-slate-500 dark:text-slate-400">
           No account?{' '}
-          <Link href="/signup" className="text-violet-600 dark:text-violet-500 font-medium hover:underline">
-            Start your 30-day free trial
+          <Link href="/signup" className="text-blue-600 dark:text-blue-500 font-medium hover:underline">
+            Register your school
           </Link>
         </p>
 
-        {/* ── Invite link shortcut ── */}
+        {/* Invite Link Shortcut */}
         <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 p-5 space-y-3">
           <div className="flex items-center gap-2">
             <span className="text-lg">🔑</span>
             <div>
-              <p className="text-sm font-semibold text-slate-800 dark:text-slate-100">Caretaker or Tenant?</p>
+              <p className="text-sm font-semibold text-slate-800 dark:text-slate-100">Teacher, Bursar or Parent?</p>
               <p className="text-xs text-slate-500 dark:text-slate-400">Paste your invite link to access your portal</p>
             </div>
           </div>
@@ -180,17 +175,20 @@ export default function LoginPage() {
             <input
               type="text"
               value={inviteLink}
-              onChange={e => setInviteLink(e.target.value)}
+              onChange={(e) => setInviteLink(e.target.value)}
               placeholder="https://…/invite/your-token or just the token"
-              className="flex-1 min-w-0 border border-slate-200 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-violet-500 placeholder-slate-400"
+              className="flex-1 min-w-0 border border-slate-200 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-slate-400"
             />
-            <button type="submit"
-              className="shrink-0 bg-violet-600 hover:bg-violet-700 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors">
+            <button
+              type="submit"
+              className="shrink-0 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors"
+            >
               Go →
             </button>
           </form>
           {inviteError && <p className="text-xs text-red-500">{inviteError}</p>}
         </div>
+
       </div>
     </div>
   )

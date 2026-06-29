@@ -1,7 +1,16 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
-import { isPlatformOwner, getPortalUrl } from '@/lib/auth-utils'
+
+const PLATFORM_OWNER_EMAILS = [
+  'admin@edutrack.co.ke',
+  'hello@edutrack.co.ke',
+]
+
+export function isPlatformOwner(email?: string | null) {
+  if (!email) return false
+  return PLATFORM_OWNER_EMAILS.includes(email.toLowerCase())
+}
 
 /**
  * OAuth + Magic Link callback handler.
@@ -25,45 +34,29 @@ export async function GET(request: Request) {
 
       // ── Platform Owner: hardcoded email always routes to admin ──────────────
       if (isPlatformOwner(user.email)) {
-        await admin.from('profiles').upsert({
+        await admin.from('users').upsert({
           id: user.id,
-          role: 'platform_owner',
+          role: 'admin',
           full_name: user.user_metadata?.full_name ?? 'Platform Owner',
-          landlord_id: null,
+          phone_number: '0000000000',
         }, { onConflict: 'id' })
-        await admin.from('platform_admins').upsert(
-          { id: user.id, email: user.email!, is_root: true, granted_by: user.id },
-          { onConflict: 'id' }
-        )
         return NextResponse.redirect(`${origin}/admin/dashboard`)
       }
 
       // ── Check if user already has a profile ─────────────────────────────────
       const { data: profile } = await supabase
-        .from('profiles')
-        .select('role, landlord_id')
+        .from('users')
+        .select('role, school_id')
         .eq('id', user.id)
         .single()
 
       if (!profile) {
-        // Brand new landlord with no profile → onboarding
+        // Brand new user with no profile (assumed to be a principal signing up)
         return NextResponse.redirect(`${origin}/onboarding`)
       }
 
-      // Check if landlord has completed onboarding (has a landlords record)
-      let hasLandlordRecord = true
-      if (profile.role === 'landlord') {
-        const { data: landlordRow } = await supabase
-          .from('landlords')
-          .select('id')
-          .eq('id', user.id)
-          .single()
-        hasLandlordRecord = !!landlordRow
-      }
-
-      // Honor the ?next= param if safe, otherwise route by role
-      const portalUrl = getPortalUrl(profile.role, hasLandlordRecord)
-      const destination = next !== '/' ? next : portalUrl
+      // Route them
+      const destination = next !== '/' ? next : '/'
       return NextResponse.redirect(`${origin}${destination}`)
     }
   }

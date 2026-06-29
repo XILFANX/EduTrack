@@ -1,11 +1,10 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
-import type { Database } from '@/types/database'
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request })
 
-  const supabase = createServerClient<Database>(
+  const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
@@ -26,15 +25,14 @@ export async function updateSession(request: NextRequest) {
     }
   )
 
-  // Refresh session: IMPORTANT — do not remove this await
+  // Refresh the session — do NOT remove this await
   const { data: { user } } = await supabase.auth.getUser()
 
-  // Fetch lightweight profile for onboarding guard in proxy.ts
-  let profile: { landlord_id: string | null; role: string } | null = null
+  let profile: { role: string; school_id: string | null } | null = null
   if (user) {
     const { data } = await supabase
-      .from('profiles')
-      .select('landlord_id, role')
+      .from('users')
+      .select('role, school_id')
       .eq('id', user.id)
       .single()
     profile = data
