@@ -2,14 +2,9 @@ import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 
-const PLATFORM_OWNER_EMAILS = [
-  'admin@edutrack.co.ke',
-  'hello@edutrack.co.ke',
-]
-
 export function isPlatformOwner(email?: string | null) {
   if (!email) return false
-  return PLATFORM_OWNER_EMAILS.includes(email.toLowerCase())
+  return email.toLowerCase() === process.env.PRODUCT_ADMINISTRATOR_EMAIL?.toLowerCase()
 }
 
 /**

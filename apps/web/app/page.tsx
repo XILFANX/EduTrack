@@ -296,6 +296,10 @@ export default async function RootPage() {
   const { data: { user } } = await supabase.auth.getUser()
 
   if (user) {
+    if (user.email === process.env.PRODUCT_ADMINISTRATOR_EMAIL) {
+      redirect('/admin/dashboard')
+    }
+
     const { data: profile } = await supabase
       .from('users')
       .select('role, school_id')
