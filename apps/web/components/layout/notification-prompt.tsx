@@ -17,7 +17,7 @@ export function NotificationPrompt() {
     
     setPermission(Notification.permission)
     
-    if (localStorage.getItem('estate_push_dismissed') === 'true') {
+    if (localStorage.getItem('edutrack_push_dismissed') === 'true') {
       setDismissed(true)
     }
 
@@ -84,31 +84,31 @@ export function NotificationPrompt() {
 
   const dismiss = () => {
     setDismissed(true)
-    localStorage.setItem('estate_push_dismissed', 'true')
+    localStorage.setItem('edutrack_push_dismissed', 'true')
   }
 
   if (dismissed || subscribed || permission === 'denied') return null
 
   return (
-    <div className="fixed bottom-4 right-4 max-w-sm bg-slate-900 border border-violet-500/30 rounded-2xl shadow-2xl p-4 z-50 animate-in slide-in-from-bottom-5">
+    <div className="fixed bottom-4 right-4 max-w-sm bg-slate-900 border border-blue-500/30 rounded-2xl shadow-2xl p-4 z-50 animate-in slide-in-from-bottom-5">
       <button onClick={dismiss} className="absolute top-2 right-2 text-slate-400 hover:text-white transition-colors">
         <X className="w-4 h-4" />
       </button>
       
       <div className="flex gap-3 items-start">
-        <div className="bg-violet-500/20 p-2 rounded-full text-violet-400 shrink-0">
+        <div className="bg-blue-500/20 p-2 rounded-full text-blue-400 shrink-0">
           <Bell className="w-5 h-5" />
         </div>
         <div>
           <h3 className="text-sm font-bold text-white">Enable Notifications</h3>
           <p className="text-xs text-slate-400 mt-1 leading-relaxed">
-            Get instant alerts for maintenance requests, payments, and lease updates.
+            Get instant alerts for important messages, fee payments, and school announcements.
           </p>
           <div className="mt-3 flex gap-2">
             <button 
               onClick={subscribeToPush} 
               disabled={loading}
-              className="text-xs bg-violet-600 hover:bg-violet-700 disabled:opacity-50 text-white font-semibold py-1.5 px-3 rounded-lg transition-colors"
+              className="text-xs bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-semibold py-1.5 px-3 rounded-lg transition-colors"
             >
               {loading ? 'Enabling...' : 'Enable Now'}
             </button>
