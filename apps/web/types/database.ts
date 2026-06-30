@@ -15,7 +15,7 @@ export interface Database {
         Update: any; Relationships: any[]
       }
       users: {
-        Row: { id: string; school_id: string | null; role: string; full_name: string; phone_number: string; created_at: string; updated_at: string; deleted_at: string | null }
+        Row: { id: string; school_id: string | null; role: string; full_name: string; phone_number: string; email: string | null; created_at: string; updated_at: string; deleted_at: string | null }
         Insert: any
         Update: any; Relationships: any[]
       }
