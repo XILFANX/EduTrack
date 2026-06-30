@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
+import { redirect } from 'next/navigation'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Receipt, Send, CheckCircle2, Clock } from 'lucide-react'
@@ -6,18 +7,22 @@ import { Receipt, Send, CheckCircle2, Clock } from 'lucide-react'
 export default async function InvoicesPage() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
+  if (!user) redirect('/login')
 
   const { data: profile } = await supabase
     .from('users')
     .select('school_id')
-    .eq('id', user?.id)
+    .eq('id', user.id)
     .single()
 
-  const { data: invoices } = await supabase
+  if (!profile?.school_id) return null
+
+  const { data: invoicesResult } = await supabase
     .from('invoices')
     .select('*, students(first_name, last_name, admission_number), academic_terms(name)')
-    .eq('school_id', profile?.school_id)
+    .eq('school_id', profile.school_id)
     .order('created_at', { ascending: false })
+  const invoices = (invoicesResult as any[]) || []
 
   const formatKES = (amount: number) => {
     return new Intl.NumberFormat('en-KE', { style: 'currency', currency: 'KES', maximumFractionDigits: 0 }).format(amount)

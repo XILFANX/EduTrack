@@ -44,9 +44,9 @@ export async function sendNotification(profileId: string, payload: NotificationP
     .select('id, endpoint, p256dh, auth')
     .eq('profile_id', profileId)
 
-  if (error || !subs || subs.length === 0) return
+  if (error || !subs || (subs as any[]).length === 0) return
 
-  const notifications = subs.map(async (sub) => {
+  const notifications = (subs as any[]).map(async (sub) => {
     try {
       await webpush.sendNotification(
         {

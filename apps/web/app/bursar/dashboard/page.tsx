@@ -1,7 +1,7 @@
 import { getBursarOverview } from '../actions'
 import { createClient } from '@/lib/supabase/server'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Coins, Receipt, ArrowUpRight, ArrowDownRight, Wallet } from 'lucide-react'
+import { Coins, Receipt, ArrowUpRight, ArrowDownRight, Wallet, BookOpen } from 'lucide-react'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 

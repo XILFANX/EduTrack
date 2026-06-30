@@ -1,0 +1,21 @@
+[00:00:10.898] Server  LOG     ○ Compiling instrumentation Node.js ...
+[00:00:16.778] Server  WARN    ⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+[00:00:18.693] Server  LOG     ✓ Ready in 16.6s
+[00:00:53.984] Server  LOG     ○ Compiling /login ...
+[00:01:59.962] Server  LOG     ○ Compiling / ...
+[00:02:06.130] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:02:06.298] Browser WARN    Image with src "/logo.jpeg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[00:02:07.841] Browser LOG     Service Worker registered successfully with scope: http://localhost:3000/
+[00:04:13.690] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:04:14.318] Browser WARN    Image with src "/logo.jpeg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[00:04:14.318] Browser LOG     Service Worker registered successfully with scope: http://localhost:3000/
+[00:04:35.226] Server  LOG     ○ Compiling /onboarding ...
+[00:04:39.428] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:04:40.760] Browser WARN    Image with src "/logo.jpeg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[00:04:46.706] Server  LOG     ✓ Compiled in 1578ms
+[00:05:53.504] Server  ERROR   [bootstrap] error: "Could not find the function public.bootstrap_platform_owner(p_email) in the schema cache"
+[00:09:32.244] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:09:32.721] Browser WARN    Image with src "/logo.jpeg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[00:09:56.098] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:09:56.482] Browser WARN    Image with src "/logo.jpeg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[00:09:56.482] Browser LOG     Service Worker registered successfully with scope: http://localhost:3000/

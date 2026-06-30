@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "debugId": "04cbd551-a137-6164-2495-aabcf97131cb",
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["../../../../../../apps/web/app/admin/layout.tsx"],"sourcesContent":["export default function Layout({children}: {children: React.ReactNode}) {\n  return <div className=\"min-h-screen bg-slate-50 dark:bg-slate-950\">{children}</div>\n}\r\n"],"names":[],"mappings":"sDAAe,SAAS,EAAO,UAAC,CAAQ,CAA8B,EACpE,MAAO,CAAA,EAAA,EAAA,GAAA,EAAC,MAAA,CAAI,UAAU,sDAA8C,GACtE"}}]
+}

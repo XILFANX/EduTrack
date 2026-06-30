@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
+import { redirect } from 'next/navigation'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Plus, BookOpen } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -6,17 +7,21 @@ import { Button } from '@/components/ui/button'
 export default async function FeeStructuresPage() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
+  if (!user) redirect('/login')
 
   const { data: profile } = await supabase
     .from('users')
     .select('school_id')
-    .eq('id', user?.id)
+    .eq('id', user.id)
     .single()
 
-  const { data: structures } = await supabase
+  if (!profile?.school_id) return null
+
+  const { data: structuresResult } = await supabase
     .from('fee_structures')
     .select('*, academic_terms(name), classes(name)')
-    .eq('school_id', profile?.school_id)
+    .eq('school_id', profile.school_id)
+  const structures = (structuresResult as any[]) || []
 
   const formatKES = (amount: number) => {
     return new Intl.NumberFormat('en-KE', { style: 'currency', currency: 'KES', maximumFractionDigits: 0 }).format(amount)

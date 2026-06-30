@@ -1,0 +1,35 @@
+{
+  "node": {
+    "4025aeba4f2cc60f2c6f762d7c1346dfe47d057074": {
+      "workers": {
+        "app/(dashboard)/staff/page": {
+          "moduleId": 27169,
+          "async": false,
+          "exportedName": "inviteStaff",
+          "filename": "apps/web/app/(dashboard)/staff/actions.ts"
+        }
+      },
+      "layer": {
+        "app/(dashboard)/staff/page": "action-browser"
+      },
+      "exportedName": "inviteStaff",
+      "filename": "apps/web/app/(dashboard)/staff/actions.ts"
+    },
+    "40c4cf9d3f1300354423907aee65995936d1732c60": {
+      "workers": {
+        "app/(dashboard)/staff/page": {
+          "moduleId": 27169,
+          "async": false,
+          "exportedName": "getStaff",
+          "filename": "apps/web/app/(dashboard)/staff/actions.ts"
+        }
+      },
+      "layer": {
+        "app/(dashboard)/staff/page": "rsc"
+      },
+      "exportedName": "getStaff",
+      "filename": "apps/web/app/(dashboard)/staff/actions.ts"
+    }
+  },
+  "edge": {}
+}

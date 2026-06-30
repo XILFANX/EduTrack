@@ -68,7 +68,7 @@ export default function SignupPage() {
           <p className="text-slate-500 dark:text-slate-400 text-sm">
             We sent a confirmation link to <strong className="text-slate-700 dark:text-slate-200">{email}</strong>. Click it to activate your account.
           </p>
-          <Link href="/login" className="text-violet-600 dark:text-violet-500 text-sm hover:underline">Back to login</Link>
+          <Link href="/login" className="text-blue-600 dark:text-blue-500 text-sm hover:underline">Back to login</Link>
         </div>
       </div>
     )
@@ -81,16 +81,16 @@ export default function SignupPage() {
         {/* Logo */}
         <div className="text-center space-y-2">
           <div className="w-12 h-12 relative mx-auto rounded-full overflow-hidden shadow-sm border border-slate-200 dark:border-slate-800 bg-white">
-            <Image src="/logo.jpeg" alt="EstateTrack Logo" fill className="object-cover scale-[1.2]" />
+            <Image src="/logo.jpeg" alt="EduTrack Logo" fill className="object-cover scale-[1.2]" />
           </div>
-          <h1 className="text-2xl font-bold mt-4 text-slate-800 dark:text-slate-100">Start your free trial</h1>
-          <p className="text-slate-500 dark:text-slate-400 text-sm">30 days free · No credit card required</p>
+          <h1 className="text-2xl font-bold mt-4 text-slate-800 dark:text-slate-100">Set up your school</h1>
+          <p className="text-slate-500 dark:text-slate-400 text-sm">Free to get started · No credit card required</p>
         </div>
 
         {/* Trial callout */}
-        <div className="bg-violet-600 text-white rounded-xl px-4 py-3 text-sm text-center shadow-sm">
-          <p className="font-semibold">🎉 30-day free trial</p>
-          <p className="opacity-90 text-xs mt-0.5">Full access to all features. Cancel anytime.</p>
+        <div className="bg-blue-600 text-white rounded-xl px-4 py-3 text-sm text-center shadow-sm">
+          <p className="font-semibold">🎓 Welcome to EduTrack</p>
+          <p className="opacity-90 text-xs mt-0.5">Full access to all portals. Set up in minutes.</p>
         </div>
 
         {/* Card */}
@@ -107,7 +107,7 @@ export default function SignupPage() {
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 placeholder="Jane Kamau"
-                className="w-full border border-slate-200 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent"
+                className="w-full border border-slate-200 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
 
@@ -121,7 +121,7 @@ export default function SignupPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="jane@example.com"
-                className="w-full border border-slate-200 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent"
+                className="w-full border border-slate-200 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
 
@@ -137,7 +137,7 @@ export default function SignupPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="At least 8 characters"
-                  className="w-full border border-slate-200 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent pr-10"
+                  className="w-full border border-slate-200 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent pr-10"
                 />
                 <button
                   type="button"
@@ -159,7 +159,7 @@ export default function SignupPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-violet-600 hover:bg-violet-700 text-white font-medium py-2.5 px-4 rounded-lg transition-colors text-sm disabled:opacity-60"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-4 rounded-lg transition-colors text-sm disabled:opacity-60"
             >
               {loading ? 'Creating account…' : 'Create free account'}
             </button>
@@ -195,7 +195,7 @@ export default function SignupPage() {
 
         <p className="text-center text-sm text-slate-500 dark:text-slate-400">
           Already have an account?{' '}
-          <Link href="/login" className="text-violet-600 dark:text-violet-500 font-medium hover:underline">Sign in</Link>
+          <Link href="/login" className="text-blue-600 dark:text-blue-500 font-medium hover:underline">Sign in</Link>
         </p>
       </div>
     </div>

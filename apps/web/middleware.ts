@@ -13,6 +13,7 @@ const PUBLIC_ROUTES = [
   '/contact',
   '/terms',
   '/privacy',
+  '/api/admin/bootstrap',
 ]
 
 /** Returns the home route for each role */

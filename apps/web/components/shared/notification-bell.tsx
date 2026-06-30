@@ -31,8 +31,8 @@ export function NotificationBell() {
       const { data: { user } } = await supabase.auth.getUser()
       if (!user) return
 
-      const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single()
-      if (profile) setUserRole(profile.role)
+      const { data: profile } = await supabase.from('users').select('role').eq('id', user.id).single()
+      if (profile) setUserRole((profile as any).role)
 
       const { data } = await supabase
         .from('notifications')
@@ -40,7 +40,7 @@ export function NotificationBell() {
         .order('created_at', { ascending: false })
         .limit(10)
       
-      if (data) setNotifications(data as Notification[])
+      if (data) setNotifications(data as any[] as Notification[])
       setLoading(false)
     }
 

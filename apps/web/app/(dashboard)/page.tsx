@@ -1,13 +1,12 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
-import { PerformanceChart } from '@/components/analytics/performance-chart'
 import {
   Users, GraduationCap, Banknote, BookOpen,
   TrendingUp, AlertTriangle, Bus, Package,
   ArrowUpRight, CheckCircle2, Clock
 } from 'lucide-react'
+import Link from 'next/link'
 
-// Metric card component
 function MetricCard({
   label, value, sub, icon: Icon, color, trend
 }: {
@@ -39,12 +38,40 @@ function MetricCard({
   )
 }
 
-// Section header
 function SectionHeader({ title, sub }: { title: string; sub?: string }) {
   return (
     <div className="mb-3">
       <h2 className="text-base font-bold text-foreground">{title}</h2>
       {sub && <p className="text-xs text-muted-foreground">{sub}</p>}
+    </div>
+  )
+}
+
+// Simple inline bar chart — no external chart lib needed
+function FeeBarChart({ collected, expected }: { collected: number; expected: number }) {
+  const pct = expected > 0 ? Math.min(100, Math.round((collected / expected) * 100)) : 0
+  const formatKES = (n: number) =>
+    new Intl.NumberFormat('en-KE', { style: 'currency', currency: 'KES', maximumFractionDigits: 0 }).format(n)
+
+  return (
+    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5">
+      <div className="flex items-center justify-between mb-4">
+        <div>
+          <p className="text-sm font-semibold text-foreground">Fee Collection This Term</p>
+          <p className="text-xs text-muted-foreground">Total collected vs expected</p>
+        </div>
+        <span className="text-2xl font-bold text-blue-600">{pct}%</span>
+      </div>
+      <div className="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-3 mb-4">
+        <div
+          className="h-3 rounded-full bg-gradient-to-r from-blue-500 to-cyan-400 transition-all duration-500"
+          style={{ width: `${pct}%` }}
+        />
+      </div>
+      <div className="flex justify-between text-xs text-muted-foreground">
+        <span>Collected: <span className="text-emerald-600 font-semibold">{formatKES(collected)}</span></span>
+        <span>Expected: <span className="text-foreground font-semibold">{formatKES(expected)}</span></span>
+      </div>
     </div>
   )
 }
@@ -71,23 +98,19 @@ export default async function DashboardPage() {
     { count: totalStudents },
     { count: totalStaff },
     { count: totalClasses },
-    { data: recentPayments },
+    { data: invoicesRaw },
   ] = await Promise.all([
     supabase.from('students').select('*', { count: 'exact', head: true }).eq('school_id', schoolId).is('deleted_at', null),
     supabase.from('users').select('*', { count: 'exact', head: true }).eq('school_id', schoolId).neq('role', 'principal').is('deleted_at', null),
     supabase.from('classes').select('*', { count: 'exact', head: true }).eq('school_id', schoolId).is('deleted_at', null),
-    supabase.from('payments').select('amount, created_at').order('created_at', { ascending: false }).limit(5),
+    supabase.from('invoices').select('amount, balance').eq('school_id', schoolId).is('deleted_at', null),
   ])
 
-  // Mock chart data — real data connected once Supabase is live
-  const cashFlowData = [
-    { time: '2026-01-01', value: 180000 },
-    { time: '2026-02-01', value: 320000 },
-    { time: '2026-03-01', value: 290000 },
-    { time: '2026-04-01', value: 410000 },
-    { time: '2026-05-01', value: 375000 },
-    { time: '2026-06-01', value: 490000 },
-  ]
+  // Aggregate fee totals
+  const invoices = (invoicesRaw as any[]) || []
+  const totalExpected = invoices.reduce((s: number, i: any) => s + Number(i.amount), 0)
+  const totalArrears = invoices.reduce((s: number, i: any) => s + Number(i.balance), 0)
+  const totalCollected = totalExpected - totalArrears
 
   const firstName = profile.full_name.split(' ')[0]
 
@@ -111,7 +134,6 @@ export default async function DashboardPage() {
           sub="Enrolled & active"
           icon={Users}
           color="bg-blue-100 text-blue-600 dark:bg-blue-900/40 dark:text-blue-400"
-          trend="+3 this month"
         />
         <MetricCard
           label="Staff"
@@ -129,29 +151,20 @@ export default async function DashboardPage() {
         />
         <MetricCard
           label="Fee Collection"
-          value="78%"
+          value={totalExpected > 0 ? `${Math.round((totalCollected / totalExpected) * 100)}%` : '—'}
           sub="This term"
           icon={Banknote}
           color="bg-amber-100 text-amber-600 dark:bg-amber-900/40 dark:text-amber-400"
-          trend="Up from 65%"
         />
       </div>
 
-      {/* Fee Cash-Flow Chart */}
+      {/* Fee Collection Chart */}
       <div>
         <SectionHeader
           title="Fee Collection Velocity"
-          sub="Monthly cumulative fee revenue — KES"
+          sub="Collected vs expected this term — KES"
         />
-        <PerformanceChart
-          data={cashFlowData}
-          title=""
-          colors={{
-            lineColor: '#2563eb',
-            areaTopColor: 'rgba(37, 99, 235, 0.45)',
-            areaBottomColor: 'rgba(37, 99, 235, 0.03)',
-          }}
-        />
+        <FeeBarChart collected={totalCollected} expected={totalExpected} />
       </div>
 
       {/* Quick Actions */}
@@ -161,17 +174,17 @@ export default async function DashboardPage() {
           {[
             { href: '/staff', label: 'Invite Staff', icon: Users, color: 'bg-blue-600 hover:bg-blue-700' },
             { href: '/students', label: 'Add Student', icon: GraduationCap, color: 'bg-violet-600 hover:bg-violet-700' },
-            { href: '/finance', label: 'View Finances', icon: Banknote, color: 'bg-emerald-600 hover:bg-emerald-700' },
-            { href: '/reports', label: 'Reports', icon: TrendingUp, color: 'bg-slate-700 hover:bg-slate-800' },
+            { href: '/bursar/dashboard', label: 'View Finances', icon: Banknote, color: 'bg-emerald-600 hover:bg-emerald-700' },
+            { href: '/dashboard', label: 'Overview', icon: TrendingUp, color: 'bg-slate-700 hover:bg-slate-800' },
           ].map(({ href, label, icon: Icon, color }) => (
-            <a
+            <Link
               key={href}
               href={href}
               className={`flex flex-col items-center justify-center gap-2 p-4 rounded-2xl text-white font-semibold text-sm transition-all shadow-sm ${color}`}
             >
               <Icon className="w-5 h-5" />
               {label}
-            </a>
+            </Link>
           ))}
         </div>
       </div>
@@ -180,27 +193,27 @@ export default async function DashboardPage() {
       <div className="grid grid-cols-3 gap-3">
         <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col gap-2">
           <div className="flex items-center gap-2 text-emerald-600">
-            <CheckCircle2 className="w-4 h-4" />
+            <Bus className="w-4 h-4" />
             <span className="text-xs font-bold uppercase tracking-wider">Transport</span>
           </div>
-          <p className="text-lg font-bold text-foreground">4 Routes</p>
-          <p className="text-xs text-muted-foreground">All routes active</p>
+          <p className="text-lg font-bold text-foreground">Routes</p>
+          <p className="text-xs text-muted-foreground">View in Transport portal</p>
         </div>
         <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col gap-2">
           <div className="flex items-center gap-2 text-amber-600">
             <AlertTriangle className="w-4 h-4" />
             <span className="text-xs font-bold uppercase tracking-wider">Library</span>
           </div>
-          <p className="text-lg font-bold text-foreground">3 Fines</p>
-          <p className="text-xs text-muted-foreground">Pending clearance</p>
+          <p className="text-lg font-bold text-foreground">Books</p>
+          <p className="text-xs text-muted-foreground">View in Library portal</p>
         </div>
         <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col gap-2">
           <div className="flex items-center gap-2 text-blue-600">
-            <Clock className="w-4 h-4" />
+            <Package className="w-4 h-4" />
             <span className="text-xs font-bold uppercase tracking-wider">Store</span>
           </div>
-          <p className="text-lg font-bold text-foreground">12 Items</p>
-          <p className="text-xs text-muted-foreground">Low stock</p>
+          <p className="text-lg font-bold text-foreground">Inventory</p>
+          <p className="text-xs text-muted-foreground">View in Store portal</p>
         </div>
       </div>
     </div>

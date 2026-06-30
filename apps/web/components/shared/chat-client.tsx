@@ -60,9 +60,10 @@ export function ChatClient({
         .limit(100)
 
       if (data) {
-        setMessages(data)
+        const msgs = data as any[] as Message[]
+        setMessages(msgs)
         // Mark as read
-        const unreadIds = data.filter(m => m.receiver_id === currentUser.id && !m.is_read).map(m => m.id)
+        const unreadIds = msgs.filter(m => m.receiver_id === currentUser.id && !m.is_read).map(m => m.id)
         if (unreadIds.length > 0) {
           await supabase.from('communications').update({ is_read: true }).in('id', unreadIds)
         }

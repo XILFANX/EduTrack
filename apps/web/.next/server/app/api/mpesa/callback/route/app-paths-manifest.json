@@ -1,0 +1,3 @@
+{
+  "/api/mpesa/callback/route": "app/api/mpesa/callback/route.js"
+}

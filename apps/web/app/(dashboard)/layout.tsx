@@ -25,9 +25,9 @@ export default async function DashboardLayout({ children }: { children: React.Re
   if (profile?.role === 'parent') redirect('/parent/dashboard')
   if (profile?.role === 'class_teacher' || profile?.role === 'subject_teacher') redirect('/teacher/dashboard')
   if (profile?.role === 'bursar') redirect('/bursar/dashboard')
-  if (profile.role === 'librarian') redirect('/library/dashboard')
-  if (profile.role === 'storekeeper') redirect('/store/dashboard')
-  if (profile.role === 'transport_matron') redirect('/transport/dashboard')
+  if (profile?.role === 'librarian') redirect('/library/dashboard')
+  if (profile?.role === 'storekeeper') redirect('/store/dashboard')
+  if (profile?.role === 'transport_matron') redirect('/transport/dashboard')
 
   // Principal must complete onboarding before accessing dashboard
   if (profile.role === 'principal' && !profile.school_id) redirect('/onboarding')

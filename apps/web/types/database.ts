@@ -59,6 +59,41 @@ export interface Database {
         Insert: any
         Update: any; Relationships: any[]
       }
+      exams: {
+        Row: { id: string; school_id: string; term_id: string; name: string; max_score: number; created_at: string }
+        Insert: any
+        Update: any; Relationships: any[]
+      }
+      exam_results: {
+        Row: { id: string; school_id: string; exam_id: string; student_id: string; subject_id: string; score: number; grade: string | null; remarks: string | null; recorded_by: string | null; created_at: string }
+        Insert: any
+        Update: any; Relationships: any[]
+      }
+      attendance: {
+        Row: { id: string; school_id: string; class_id: string; student_id: string; date: string; status: string; notes: string | null; recorded_by: string | null; created_at: string }
+        Insert: any
+        Update: any; Relationships: any[]
+      }
+      announcements: {
+        Row: { id: string; school_id: string; title: string; body: string; target_audience: string; author_id: string; created_at: string }
+        Insert: any
+        Update: any; Relationships: any[]
+      }
+      conversations: {
+        Row: { id: string; school_id: string; title: string | null; created_at: string; updated_at: string }
+        Insert: any
+        Update: any; Relationships: any[]
+      }
+      conversation_participants: {
+        Row: { id: string; conversation_id: string; user_id: string; last_read_at: string; joined_at: string }
+        Insert: any
+        Update: any; Relationships: any[]
+      }
+      messages: {
+        Row: { id: string; conversation_id: string; sender_id: string; content: string; created_at: string }
+        Insert: any
+        Update: any; Relationships: any[]
+      }
       [key: string]: any // Fallback for scaffolding
     }
     Views: {

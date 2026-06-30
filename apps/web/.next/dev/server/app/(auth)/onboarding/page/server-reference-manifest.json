@@ -1,0 +1,20 @@
+{
+  "node": {
+    "40707e353bab50dac9b8ef1962b7b40d4ff3c8d4b5": {
+      "workers": {
+        "app/(auth)/onboarding/page": {
+          "moduleId": "[project]/apps/web/.next-internal/server/app/(auth)/onboarding/page/actions.js { ACTIONS_MODULE0 => \"[project]/apps/web/app/(auth)/onboarding/actions.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "completeOnboarding",
+          "filename": "apps/web/app/(auth)/onboarding/actions.ts"
+        }
+      },
+      "layer": {
+        "app/(auth)/onboarding/page": "action-browser"
+      },
+      "exportedName": "completeOnboarding",
+      "filename": "apps/web/app/(auth)/onboarding/actions.ts"
+    }
+  },
+  "edge": {}
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "debugId": "4208a29b-4370-1ce4-2aa8-69f82807517b",
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["../../../../../../apps/web/app/teacher/page.tsx"],"sourcesContent":["import { redirect } from 'next/navigation'\n\nexport default function TeacherRoot() {\n  redirect('/teacher/dashboard')\n}\n"],"names":[],"mappings":"+VAAA,EAAA,CAAA,CAAA,OAAA,IAAA,EAAA,EAAA,CAAA,CAAA,OAEe,SAAS,IACtB,CAAA,EAAA,EAAA,QAAA,AAAQ,EAAC,qBACX"}}]
+}

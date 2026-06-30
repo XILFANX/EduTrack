@@ -19,7 +19,7 @@ export async function getBursarOverview(schoolId: string) {
   let expected = 0
   let arrears = 0
 
-  invoices.forEach((inv) => {
+  ;(invoices as any[]).forEach((inv) => {
     expected += inv.amount
     arrears += inv.balance
   })

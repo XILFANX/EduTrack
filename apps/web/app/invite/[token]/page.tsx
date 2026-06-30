@@ -26,6 +26,8 @@ export default async function InvitePage({ params }: Props) {
 
   if (!profile) return notFound()
 
+  if (!profile.school_id) return notFound()
+
   // Get the school name
   const { data: school } = await admin
     .from('schools')

@@ -59,9 +59,10 @@ export async function generateInvoicesForClass(classId: string, termId: string, 
       .single()
 
     if (!invError && invoice) {
+      const invoiceData = invoice as any
       // Insert items
       const itemsToInsert = structures.map(s => ({
-        invoice_id: invoice.id,
+        invoice_id: invoiceData.id,
         description: s.description || 'General Fee',
         amount: s.amount,
       }))

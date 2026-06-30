@@ -2,13 +2,13 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Home, Receipt, BookOpen, Settings } from 'lucide-react'
+import { Home, Receipt, BookOpen, MessageSquare } from 'lucide-react'
 
 const NAV_ITEMS = [
   { label: 'Dashboard', href: '/parent/dashboard', icon: Home },
   { label: 'Payments', href: '/parent/payments', icon: Receipt },
   { label: 'Academics', href: '/parent/academics', icon: BookOpen },
-  { label: 'Settings', href: '/parent/settings', icon: Settings },
+  { label: 'Messages', href: '/parent/messages', icon: MessageSquare },
 ]
 
 export function ParentNav() {

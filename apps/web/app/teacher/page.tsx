@@ -1,3 +1,5 @@
-export default function Page() {
-  return <div className="p-8 text-2xl font-bold capitalize">Teacher Portal</div>
+import { redirect } from 'next/navigation'
+
+export default function TeacherRoot() {
+  redirect('/teacher/dashboard')
 }
