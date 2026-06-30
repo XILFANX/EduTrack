@@ -2,6 +2,7 @@
 
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
+import { revalidatePath } from 'next/cache'
 
 export interface OnboardingData {
   schoolName: string
@@ -64,6 +65,7 @@ export async function completeOnboarding(
       return { error: `Failed to link you to the school: ${profileError.message}` }
     }
 
+    revalidatePath('/', 'layout')
     return { success: true }
   } catch (err: any) {
     return { error: err.message || 'An unexpected server error occurred.' }
