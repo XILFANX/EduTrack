@@ -29,8 +29,12 @@ export default async function DashboardLayout({ children }: { children: React.Re
   if (profile?.role === 'storekeeper') redirect('/store/dashboard')
   if (profile?.role === 'transport_matron') redirect('/transport/dashboard')
 
-  // Principal must complete onboarding before accessing dashboard
-  if (profile.role === 'principal' && !profile.school_id) redirect('/onboarding')
+  // Principal/Headteacher must complete onboarding before accessing dashboard
+  if ((profile.role === 'principal' || profile.role === 'headteacher') && !profile.school_id) {
+    redirect('/onboarding')
+  }
+
+  const roleLabel = profile.role === 'headteacher' ? 'Headteacher' : 'Principal'
 
   const initials = profile.full_name
     .split(' ')
@@ -50,13 +54,13 @@ export default async function DashboardLayout({ children }: { children: React.Re
             </div>
             <div>
               <span className="font-semibold text-foreground text-sm dark:text-slate-100 block leading-tight">EduTrack</span>
-              <span className="text-[10px] font-semibold text-blue-600 uppercase tracking-wider">Principal</span>
+              <span className="text-[10px] font-semibold text-blue-600 uppercase tracking-wider">{roleLabel}</span>
             </div>
           </div>
 
           <div className="flex items-center gap-3">
             <NotificationBell />
-            <UserNav user={{ fullName: profile.full_name, role: 'Principal', initials }} />
+            <UserNav user={{ fullName: profile.full_name, role: roleLabel, initials }} />
           </div>
         </div>
       </header>
