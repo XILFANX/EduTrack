@@ -11,11 +11,13 @@ export default async function InvitePage({ params }: Props) {
   const admin = createAdminClient()
 
   // Look up invitation by token
-  const { data: invitation } = await admin
+  const { data: rawInvitation } = await admin
     .from('invitations')
     .select('id, name, role, school_id, used_at, schools(name)')
     .eq('token', token)
     .single()
+
+  const invitation = rawInvitation as any
 
   if (!invitation || invitation.used_at) {
     return (

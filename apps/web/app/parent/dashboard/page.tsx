@@ -1,7 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Wallet, CheckCircle2, AlertCircle } from 'lucide-react'
+import { CardContent } from '@/components/ui/card'
+import { Wallet, CheckCircle2, AlertCircle, Smartphone, Copy } from 'lucide-react'
 import { redirect } from 'next/navigation'
 
 export default async function ParentDashboard() {
@@ -9,90 +8,184 @@ export default async function ParentDashboard() {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login')
 
-  // Find students linked to this parent
-  // We use the admin client or a join via RLS if set up correctly
-  // For demo, we'll assume RLS lets the parent read their own students' invoices
-  
-  // Since we haven't seeded student_parents yet, let's just show an empty state or 
-  // fetch invoices where student is linked to parent.
-  // We'll mock the UI structure since data is empty.
+  const { data: profile } = await supabase
+    .from('users')
+    .select('id, full_name, school_id, schools(name)')
+    .eq('id', user.id)
+    .single()
 
-  const formatKES = (amount: number) => {
-    return new Intl.NumberFormat('en-KE', { style: 'currency', currency: 'KES', maximumFractionDigits: 0 }).format(amount)
+  if (!profile?.school_id) return null
+
+  const school = (profile as any).schools
+
+  // Get students linked to this parent
+  const { data: studentLinks } = await supabase
+    .from('student_parents')
+    .select('relationship, students(id, first_name, last_name, admission_number, classes(name))')
+    .eq('parent_id', user.id)
+
+  const students = (studentLinks as any[]) || []
+
+  // For each student, get their active term invoice
+  const { data: activeTerm } = await supabase
+    .from('academic_terms')
+    .select('id, name')
+    .eq('school_id', profile.school_id)
+    .eq('is_active', true)
+    .single()
+
+  // Fetch invoices for all linked students in the active term
+  const studentIds = students.map((l: any) => l.students?.id).filter(Boolean)
+  let invoices: any[] = []
+
+  if (studentIds.length > 0 && activeTerm) {
+    const { data: invData } = await supabase
+      .from('invoices')
+      .select('id, amount, balance, status, students(id, first_name, last_name), academic_terms(name)')
+      .eq('school_id', profile.school_id)
+      .eq('term_id', activeTerm.id)
+      .in('student_id', studentIds)
+      .is('deleted_at', null)
+
+    invoices = (invData as any[]) || []
   }
 
-  // MOCK DATA for now until we build the Parent->Student linking UI
-  const mockStudents = [
-    {
-      id: '1',
-      name: 'John Doe',
-      class: 'Grade 4',
-      invoice: {
-        id: 'inv-1',
-        term: 'Term 1 - 2026',
-        amount: 15000,
-        balance: 15000,
-      }
-    }
-  ]
+  const formatKES = (amount: number) =>
+    new Intl.NumberFormat('en-KE', { style: 'currency', currency: 'KES', maximumFractionDigits: 0 }).format(amount)
+
+  const firstName = profile.full_name?.split(' ')[0] ?? 'Parent'
 
   return (
     <div className="space-y-6">
+      {/* Greeting */}
       <div>
-        <h1 className="text-2xl font-bold text-foreground">Welcome back!</h1>
-        <p className="text-sm text-muted-foreground mt-1">Here is the fee status for your children.</p>
+        <h1 className="text-2xl font-bold text-foreground">Hello, {firstName}! 👋</h1>
+        <p className="text-sm text-muted-foreground mt-1">
+          {school?.name} · {activeTerm?.name ?? 'No active term'}
+        </p>
       </div>
 
-      <div className="space-y-4">
-        {mockStudents.map((student) => (
-          <Card key={student.id} className="border-slate-200 dark:border-slate-800 overflow-hidden">
-            <div className="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 p-4">
-              <h2 className="font-semibold text-lg text-foreground">{student.name}</h2>
-              <p className="text-sm text-muted-foreground">{student.class}</p>
-            </div>
-            
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between mb-4">
-                <div>
-                  <p className="text-xs text-muted-foreground uppercase tracking-wider font-medium mb-1">
-                    {student.invoice.term} Fees
-                  </p>
-                  <p className="text-2xl font-bold text-foreground">{formatKES(student.invoice.balance)}</p>
+      {/* No students linked yet */}
+      {students.length === 0 && (
+        <div className="text-center py-16 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl">
+          <div className="w-14 h-14 rounded-2xl bg-slate-100 dark:bg-slate-800 mx-auto flex items-center justify-center mb-4">
+            <Wallet className="w-7 h-7 text-slate-400" />
+          </div>
+          <p className="font-semibold text-foreground">No students linked yet</p>
+          <p className="text-sm text-muted-foreground mt-1 max-w-xs mx-auto">
+            Your school administrator will link your children to your account. Check back soon!
+          </p>
+        </div>
+      )}
+
+      {/* Student fee cards */}
+      {students.map((link: any) => {
+        const student = link.students
+        if (!student) return null
+        const invoice = invoices.find((inv: any) => inv.students?.id === student.id)
+        const balance = invoice?.balance ?? null
+        const totalAmount = invoice?.amount ?? null
+        const paidAmount = totalAmount !== null && balance !== null ? totalAmount - balance : null
+
+        return (
+          <div key={student.id} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm">
+            {/* Student Header */}
+            <div className="bg-gradient-to-r from-blue-600 to-blue-700 p-4 text-white">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-lg font-bold">
+                  {student.first_name[0]}
                 </div>
-                
-                <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
-                  student.invoice.balance > 0 ? 'bg-orange-100 text-orange-600' : 'bg-emerald-100 text-emerald-600'
-                }`}>
-                  {student.invoice.balance > 0 ? <Wallet className="w-6 h-6" /> : <CheckCircle2 className="w-6 h-6" />}
+                <div>
+                  <p className="font-bold">{student.first_name} {student.last_name}</p>
+                  <p className="text-xs text-blue-100">{student.classes?.name ?? '—'} · Adm: {student.admission_number}</p>
                 </div>
               </div>
+            </div>
 
-              {student.invoice.balance > 0 ? (
-                <div className="space-y-3">
-                  <div className="flex items-start gap-2 p-3 bg-orange-50 dark:bg-orange-950/30 text-orange-700 dark:text-orange-400 rounded-lg text-sm">
-                    <AlertCircle className="w-5 h-5 shrink-0" />
-                    <p>Fees are due. Please settle the balance to avoid disruptions.</p>
-                  </div>
-                  
-                  {/* Client component needed for STK Push logic, but we'll mock it here with a form/action for simplicity */}
-                  <form action="/api/mpesa/push" method="POST">
-                    <input type="hidden" name="invoiceId" value={student.invoice.id} />
-                    <input type="hidden" name="amount" value={student.invoice.balance} />
-                    <Button type="submit" className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold h-12 rounded-xl text-lg">
-                      Pay with M-Pesa
-                    </Button>
-                  </form>
-                </div>
-              ) : (
-                <div className="flex items-start gap-2 p-3 bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-400 rounded-lg text-sm">
-                  <CheckCircle2 className="w-5 h-5 shrink-0" />
-                  <p>All fees are cleared for this term. Thank you!</p>
+            <CardContent className="p-4 space-y-4">
+              {/* No invoice for this term */}
+              {!invoice && (
+                <div className="text-center py-4">
+                  <p className="text-sm text-muted-foreground">No invoice generated for this term yet.</p>
                 </div>
               )}
+
+              {/* Invoice summary */}
+              {invoice && (
+                <>
+                  {/* Balance summary */}
+                  <div className="grid grid-cols-3 gap-3 text-center">
+                    <div className="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-3">
+                      <p className="text-xs text-muted-foreground mb-1">Total</p>
+                      <p className="text-sm font-bold text-foreground">{formatKES(totalAmount!)}</p>
+                    </div>
+                    <div className="bg-emerald-50 dark:bg-emerald-900/20 rounded-xl p-3">
+                      <p className="text-xs text-muted-foreground mb-1">Paid</p>
+                      <p className="text-sm font-bold text-emerald-600">{formatKES(paidAmount!)}</p>
+                    </div>
+                    <div className={`rounded-xl p-3 ${balance! > 0 ? 'bg-red-50 dark:bg-red-900/20' : 'bg-emerald-50 dark:bg-emerald-900/20'}`}>
+                      <p className="text-xs text-muted-foreground mb-1">Balance</p>
+                      <p className={`text-sm font-bold ${balance! > 0 ? 'text-red-500' : 'text-emerald-600'}`}>
+                        {formatKES(balance!)}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Status */}
+                  {balance! > 0 ? (
+                    <div className="flex items-start gap-2 p-3 bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-900/50 rounded-xl text-sm text-orange-700 dark:text-orange-400">
+                      <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
+                      <p>You have an outstanding balance of <strong>{formatKES(balance!)}</strong>. Please pay before the end of the term to avoid disruptions.</p>
+                    </div>
+                  ) : (
+                    <div className="flex items-start gap-2 p-3 bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-900/50 rounded-xl text-sm text-emerald-700 dark:text-emerald-400">
+                      <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5" />
+                      <p>All fees cleared for this term. Thank you! 🎉</p>
+                    </div>
+                  )}
+                </>
+              )}
             </CardContent>
-          </Card>
-        ))}
-      </div>
+          </div>
+        )
+      })}
+
+      {/* M-Pesa Payment Instructions */}
+      {students.length > 0 && (
+        <div className="bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-2xl p-5 text-white">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
+              <Smartphone className="w-5 h-5" />
+            </div>
+            <div>
+              <p className="font-bold">How to Pay via M-Pesa</p>
+              <p className="text-xs text-emerald-100">Follow these steps on your phone</p>
+            </div>
+          </div>
+          <ol className="space-y-2 text-sm text-emerald-50">
+            <li className="flex gap-2">
+              <span className="w-5 h-5 rounded-full bg-white/20 text-xs flex items-center justify-center shrink-0 font-bold">1</span>
+              Go to <strong>M-Pesa</strong> → <strong>Lipa na M-Pesa</strong> → <strong>Pay Bill</strong>
+            </li>
+            <li className="flex gap-2">
+              <span className="w-5 h-5 rounded-full bg-white/20 text-xs flex items-center justify-center shrink-0 font-bold">2</span>
+              Business No: <strong className="font-mono ml-1">247 247</strong>
+            </li>
+            <li className="flex gap-2">
+              <span className="w-5 h-5 rounded-full bg-white/20 text-xs flex items-center justify-center shrink-0 font-bold">3</span>
+              Account No: <strong className="font-mono ml-1">{school?.name ?? 'Your School Code'}</strong>
+            </li>
+            <li className="flex gap-2">
+              <span className="w-5 h-5 rounded-full bg-white/20 text-xs flex items-center justify-center shrink-0 font-bold">4</span>
+              Enter the exact amount and your M-Pesa PIN
+            </li>
+            <li className="flex gap-2">
+              <span className="w-5 h-5 rounded-full bg-white/20 text-xs flex items-center justify-center shrink-0 font-bold">5</span>
+              Share the <strong>receipt code</strong> with the school bursar to confirm payment
+            </li>
+          </ol>
+        </div>
+      )}
     </div>
   )
 }

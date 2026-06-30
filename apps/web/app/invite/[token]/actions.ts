@@ -21,12 +21,14 @@ export async function activatePortal(formData: FormData) {
 
   const admin = createAdminClient()
 
-  // 1. Validate the invitation
-  const { data: invitation } = await admin
+  // 1. Fetch invitation
+  const { data: rawInvitation } = await admin
     .from('invitations')
     .select('*')
     .eq('token', token)
     .single()
+
+  const invitation = rawInvitation as any
 
   if (!invitation) return { error: 'This invite link is invalid.' }
   if (invitation.used_at) return { error: 'This invite has already been used. Please log in.' }
