@@ -10,6 +10,7 @@ export interface OnboardingData {
   curriculumType: 'cbc' | '844' | 'igcse' | 'other'
   subscriptionPlan: string
   feeDueDay: number
+  adminTitle: 'principal' | 'headteacher'
 }
 
 export async function completeOnboarding(
@@ -38,9 +39,7 @@ export async function completeOnboarding(
       .insert({
         name: data.schoolName,
         domain: slug,
-        curriculum_type: data.curriculumType,
-        subscription_plan: data.subscriptionPlan,
-        fee_due_day: data.feeDueDay,
+        subscription_tier: data.subscriptionPlan,
       })
       .select('id')
       .single()
@@ -56,7 +55,7 @@ export async function completeOnboarding(
       .from('users')
       .update({
         school_id: school.id,
-        role: 'principal',
+        role: data.adminTitle || 'principal',
         phone_number: data.schoolPhone,
       })
       .eq('id', user.id)

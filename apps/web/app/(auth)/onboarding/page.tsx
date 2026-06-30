@@ -64,6 +64,7 @@ export default function OnboardingPage() {
   const [curriculumType, setCurriculumType] = useState<'cbc' | '844' | 'igcse' | 'other'>('cbc')
   const [subscriptionPlan, setSubscriptionPlan] = useState('trial')
   const [feeDueDay, setFeeDueDay] = useState(5)
+  const [adminTitle, setAdminTitle] = useState<'principal' | 'headteacher'>('principal')
 
   const progress = (step / STEPS.length) * 100
 
@@ -77,6 +78,7 @@ export default function OnboardingPage() {
       curriculumType,
       subscriptionPlan,
       feeDueDay,
+      adminTitle,
     }
     try {
       const res = await completeOnboarding(data)
@@ -172,6 +174,36 @@ export default function OnboardingPage() {
                     value={schoolAddress}
                     onChange={(e) => setSchoolAddress(e.target.value)}
                   />
+                </div>
+                <div className="space-y-2">
+                  <Label>Your official title</Label>
+                  <div className="flex gap-4">
+                    <label className="flex items-center gap-2 text-sm cursor-pointer">
+                      <input 
+                        type="radio" 
+                        name="adminTitle" 
+                        value="principal" 
+                        checked={adminTitle === 'principal'} 
+                        onChange={() => setAdminTitle('principal')}
+                        className="text-blue-600 focus:ring-blue-500"
+                      />
+                      Principal
+                    </label>
+                    <label className="flex items-center gap-2 text-sm cursor-pointer">
+                      <input 
+                        type="radio" 
+                        name="adminTitle" 
+                        value="headteacher" 
+                        checked={adminTitle === 'headteacher'} 
+                        onChange={() => setAdminTitle('headteacher')}
+                        className="text-blue-600 focus:ring-blue-500"
+                      />
+                      Headteacher
+                    </label>
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    This is how the system will address you and label your dashboard.
+                  </p>
                 </div>
                 <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800/50 rounded-lg p-3 text-sm text-blue-800 dark:text-blue-400">
                   🏫 <strong>You&apos;ll add classes, subjects, and staff from your dashboard</strong> after setup.

@@ -19,3 +19,7 @@
 [00:09:56.098] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
 [00:09:56.482] Browser WARN    Image with src "/logo.jpeg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
 [00:09:56.482] Browser LOG     Service Worker registered successfully with scope: http://localhost:3000/
+[01:08:06.044] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:08:06.871] Browser WARN    Image with src "/logo.jpeg" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[01:20:49.512] Server  LOG     ✓ Compiled in 1130ms
+[01:21:08.803] Server  LOG     ✓ Compiled in 2s

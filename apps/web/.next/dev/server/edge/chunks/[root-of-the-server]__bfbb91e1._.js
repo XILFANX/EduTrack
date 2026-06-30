@@ -89,6 +89,7 @@ const PUBLIC_ROUTES = [
         case 'admin':
             return '/admin/dashboard';
         case 'principal':
+        case 'headteacher':
             return '/dashboard';
         case 'class_teacher':
         case 'subject_teacher':
@@ -127,7 +128,7 @@ const PUBLIC_ROUTES = [
         '/settings'
     ];
     const isPrincipalRoute = principalRoutes.some((r)=>pathname === r || pathname.startsWith(r + '/'));
-    if (isPrincipalRoute && role !== 'principal') return false;
+    if (isPrincipalRoute && role !== 'principal' && role !== 'headteacher') return false;
     return true;
 }
 async function middleware(request) {
@@ -149,16 +150,16 @@ async function middleware(request) {
     }
     // ── Authenticated ───────────────────────────────────────────────
     const role = profile?.role ?? 'principal';
-    // Principal without school_id → must complete onboarding
-    if (role === 'principal' && !profile?.school_id && !pathname.startsWith('/onboarding') && !pathname.startsWith('/auth') && !pathname.startsWith('/invite')) {
+    // Principal/Headteacher without school_id → must complete onboarding
+    if ((role === 'principal' || role === 'headteacher') && !profile?.school_id && !pathname.startsWith('/onboarding') && !pathname.startsWith('/auth') && !pathname.startsWith('/invite')) {
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$exports$2f$index$2e$js__$5b$middleware$2d$edge$5d$__$28$ecmascript$29$__["NextResponse"].redirect(new URL('/onboarding', request.url));
     }
     // Authenticated user hitting login/signup → their portal
     if (pathname === '/login' || pathname === '/signup') {
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$exports$2f$index$2e$js__$5b$middleware$2d$edge$5d$__$28$ecmascript$29$__["NextResponse"].redirect(new URL(roleHome(role), request.url));
     }
-    // Already set up principal hitting onboarding → their portal
-    if (profile?.school_id && role === 'principal' && pathname.startsWith('/onboarding')) {
+    // Already set up principal/headteacher hitting onboarding → their portal
+    if (profile?.school_id && (role === 'principal' || role === 'headteacher') && pathname.startsWith('/onboarding')) {
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$exports$2f$index$2e$js__$5b$middleware$2d$edge$5d$__$28$ecmascript$29$__["NextResponse"].redirect(new URL('/dashboard', request.url));
     }
     // Cross-portal access guard

@@ -116,8 +116,8 @@ export function NotificationBell() {
         <Bell className="w-5 h-5" />
         {unreadCount > 0 && (
           <span className="absolute top-1.5 right-1.5 flex h-2.5 w-2.5">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-violet-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-violet-600"></span>
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-blue-600"></span>
           </span>
         )}
       </button>
@@ -129,7 +129,7 @@ export function NotificationBell() {
             {unreadCount > 0 && (
               <button 
                 onClick={markAllAsRead}
-                className="text-xs text-violet-600 hover:text-violet-700 hover:underline font-medium"
+                className="text-xs text-blue-600 hover:text-blue-700 hover:underline font-medium"
               >
                 Mark all as read
               </button>
@@ -150,7 +150,7 @@ export function NotificationBell() {
                 {notifications.map((n) => (
                   <div 
                     key={n.id} 
-                    className={`p-4 transition-colors ${n.is_read ? 'opacity-70 hover:opacity-100 bg-transparent' : 'bg-violet-50/50 dark:bg-violet-950/20'}`}
+                    className={`p-4 transition-colors ${n.is_read ? 'opacity-70 hover:opacity-100 bg-transparent' : 'bg-blue-50/50 dark:bg-blue-950/20'}`}
                     onClick={() => {
                       if (!n.is_read) markAsRead(n.id)
                       setIsOpen(false)
@@ -159,9 +159,9 @@ export function NotificationBell() {
                     {n.link ? (
                       <Link href={getAdjustedLink(n.link)!} className="block group">
                         <div className="flex gap-3">
-                          <div className={`mt-0.5 w-2 h-2 rounded-full shrink-0 ${n.is_read ? 'bg-transparent' : 'bg-violet-600'}`} />
+                          <div className={`mt-0.5 w-2 h-2 rounded-full shrink-0 ${n.is_read ? 'bg-transparent' : 'bg-blue-600'}`} />
                           <div>
-                            <p className="text-sm font-semibold text-foreground group-hover:text-violet-600 transition-colors">{n.title}</p>
+                            <p className="text-sm font-semibold text-foreground group-hover:text-blue-600 transition-colors">{n.title}</p>
                             <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{n.message}</p>
                             <p className="text-[10px] text-muted-foreground/70 mt-2">
                               {new Date(n.created_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })}
@@ -171,7 +171,7 @@ export function NotificationBell() {
                       </Link>
                     ) : (
                       <div className="flex gap-3 cursor-default">
-                        <div className={`mt-0.5 w-2 h-2 rounded-full shrink-0 ${n.is_read ? 'bg-transparent' : 'bg-violet-600'}`} />
+                        <div className={`mt-0.5 w-2 h-2 rounded-full shrink-0 ${n.is_read ? 'bg-transparent' : 'bg-blue-600'}`} />
                         <div>
                           <p className="text-sm font-semibold text-foreground">{n.title}</p>
                           <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{n.message}</p>

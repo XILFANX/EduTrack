@@ -20,7 +20,8 @@ const PUBLIC_ROUTES = [
 function roleHome(role: string): string {
   switch (role) {
     case 'admin':           return '/admin/dashboard'
-    case 'principal':       return '/dashboard'
+    case 'principal':
+    case 'headteacher':     return '/dashboard'
     case 'class_teacher':
     case 'subject_teacher': return '/teacher/dashboard'
     case 'bursar':          return '/bursar/dashboard'
@@ -44,7 +45,7 @@ function isAllowedForRole(role: string, pathname: string): boolean {
   // Dashboard routes — principal only
   const principalRoutes = ['/dashboard', '/staff', '/classes', '/students', '/subjects', '/finance', '/reports', '/settings']
   const isPrincipalRoute = principalRoutes.some((r) => pathname === r || pathname.startsWith(r + '/'))
-  if (isPrincipalRoute && role !== 'principal') return false
+  if (isPrincipalRoute && role !== 'principal' && role !== 'headteacher') return false
   return true
 }
 
@@ -78,9 +79,9 @@ export async function middleware(request: NextRequest) {
   // ── Authenticated ───────────────────────────────────────────────
   const role = profile?.role ?? 'principal'
 
-  // Principal without school_id → must complete onboarding
+  // Principal/Headteacher without school_id → must complete onboarding
   if (
-    role === 'principal' &&
+    (role === 'principal' || role === 'headteacher') &&
     !profile?.school_id &&
     !pathname.startsWith('/onboarding') &&
     !pathname.startsWith('/auth') &&
@@ -94,8 +95,8 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL(roleHome(role), request.url))
   }
 
-  // Already set up principal hitting onboarding → their portal
-  if (profile?.school_id && role === 'principal' && pathname.startsWith('/onboarding')) {
+  // Already set up principal/headteacher hitting onboarding → their portal
+  if (profile?.school_id && (role === 'principal' || role === 'headteacher') && pathname.startsWith('/onboarding')) {
     return NextResponse.redirect(new URL('/dashboard', request.url))
   }
 
