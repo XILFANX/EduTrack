@@ -77,7 +77,11 @@ export async function middleware(request: NextRequest) {
   }
 
   // ── Authenticated ───────────────────────────────────────────────
-  const role = profile?.role ?? 'principal'
+  let role = profile?.role ?? 'principal'
+
+  if (user.email && user.email.toLowerCase() === process.env.PRODUCT_ADMINISTRATOR_EMAIL?.toLowerCase()) {
+    role = 'admin'
+  }
 
   // Principal/Headteacher without school_id → must complete onboarding
   if (
