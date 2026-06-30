@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "debugId": "1b58af9e-a733-33f1-d07e-0703617f01f7",
-  "sections": [
-    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["../../../../../../apps/web/app/bursar/page.tsx"],"sourcesContent":["import { redirect } from 'next/navigation'\n\nexport default function BursarRoot() {\n  redirect('/bursar/dashboard')\n}\n"],"names":[],"mappings":"+VAAA,EAAA,CAAA,CAAA,OAAA,IAAA,EAAA,EAAA,CAAA,CAAA,OAEe,SAAS,IACtB,CAAA,EAAA,EAAA,QAAA,AAAQ,EAAC,oBACX"}}]
-}

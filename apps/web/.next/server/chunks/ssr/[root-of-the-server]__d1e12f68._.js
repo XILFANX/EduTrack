@@ -1,5 +1,0 @@
-;!function(){try { var e="undefined"!=typeof globalThis?globalThis:"undefined"!=typeof global?global:"undefined"!=typeof window?window:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&((e._debugIds|| (e._debugIds={}))[n]="8fb83ba3-03ac-40d9-9ed4-1ebe5a201aec")}catch(e){}}();
-module.exports=[93695,(a,b,c)=>{b.exports=a.x("next/dist/shared/lib/no-fallback-error.external.js",()=>require("next/dist/shared/lib/no-fallback-error.external.js"))},9994,a=>{a.n(a.i(87644))},44665,a=>{a.n(a.i(28992))},43619,a=>{a.n(a.i(79962))},13718,a=>{a.n(a.i(85523))},18198,a=>{a.n(a.i(45518))},30328,a=>{"use strict";var b=a.i(7997);function c(){return(0,b.jsx)("div",{className:"p-8 text-2xl font-bold capitalize",children:"Admin Portal"})}a.s(["default",()=>c])}];
-
-//# debugId=8fb83ba3-03ac-40d9-9ed4-1ebe5a201aec
-//# sourceMappingURL=%5Broot-of-the-server%5D__d1e12f68._.js.map

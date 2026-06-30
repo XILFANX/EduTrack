@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "debugId": "ba121e33-5829-cd3a-6622-871fb6ce0555",
-  "sections": [
-    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["../../../../../../apps/web/app/store/page.tsx"],"sourcesContent":["import { redirect } from 'next/navigation'\nexport default function StoreRoot() { redirect('/store/dashboard') }\n"],"names":[],"mappings":"8VAAA,EAAA,CAAA,CAAA,OAAA,IAAA,EAAA,EAAA,CAAA,CAAA,OACe,SAAS,IAAc,CAAA,EAAA,EAAA,QAAA,AAAQ,EAAC,mBAAoB"}}]
-}

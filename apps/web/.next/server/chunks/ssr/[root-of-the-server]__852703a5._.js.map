@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "debugId": "79d8876c-f5fa-8674-c9d8-924572f1300b",
-  "sections": [
-    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["../../../../../../apps/web/app/transport/page.tsx"],"sourcesContent":["import { redirect } from 'next/navigation'\nexport default function TransportRoot() { redirect('/transport/dashboard') }\n"],"names":[],"mappings":"+VAAA,EAAA,CAAA,CAAA,OAAA,IAAA,EAAA,EAAA,CAAA,CAAA,OACe,SAAS,IAAkB,CAAA,EAAA,EAAA,QAAA,AAAQ,EAAC,uBAAwB"}}]
-}

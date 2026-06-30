@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "debugId": "55f82dab-32af-02b8-208c-7106bef373de",
-  "sections": [
-    {"offset": {"line": 8, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/jxilf/OneDrive/Desktop/EduTrack/apps/web/app/favicon.ico.mjs%20%28structured%20image%20object%29"],"sourcesContent":["import src from \"IMAGE\";\nexport default { src, width: 64, height: 64 }\n"],"names":[],"mappings":";;;;AAAA;;uCACe;IAAE,KAAA,kJAAG;IAAE,OAAO;IAAI,QAAQ;AAAG"}}]
-}

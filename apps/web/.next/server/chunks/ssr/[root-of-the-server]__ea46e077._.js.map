@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "debugId": "ee479db2-9b1e-cd69-f82c-ffd70984bd2c",
-  "sections": [
-    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["../../../../../../apps/web/app/parent/page.tsx"],"sourcesContent":["import { redirect } from 'next/navigation'\n\nexport default function ParentRoot() {\n  redirect('/parent/dashboard')\n}\n"],"names":[],"mappings":"+VAAA,EAAA,CAAA,CAAA,OAAA,IAAA,EAAA,EAAA,CAAA,CAAA,OAEe,SAAS,IACtB,CAAA,EAAA,EAAA,QAAA,AAAQ,EAAC,oBACX"}}]
-}

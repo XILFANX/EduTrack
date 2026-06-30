@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "debugId": "8fb83ba3-03ac-40d9-9ed4-1ebe5a201aec",
-  "sections": [
-    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["../../../../../../apps/web/app/admin/page.tsx"],"sourcesContent":["export default function Page() {\n  return <div className=\"p-8 text-2xl font-bold capitalize\">Admin Portal</div>\n}\n"],"names":[],"mappings":"oVAAe,SAAS,IACtB,MAAO,CAAA,EAAA,EAAA,GAAA,EAAC,MAAA,CAAI,UAAU,6CAAoC,gBAC5D"}}]
-}

@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "debugId": "ae1cec0d-d3ee-b7ec-54dc-c6c35aa15a4b",
-  "sections": [
-    {"offset": {"line": 5, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/jxilf/OneDrive/Desktop/EduTrack/apps/web/sentry.server.config.ts"],"sourcesContent":["// This file configures the initialization of Sentry on the server.\r\n// The config you add here will be used whenever the server handles a request.\r\n// https://docs.sentry.io/platforms/javascript/guides/nextjs/\r\n\r\nimport * as Sentry from \"@sentry/nextjs\";\r\n\r\nSentry.init({\r\n  dsn: \"https://59e961947db8150c46b5c073d8ce1b4c@o4510981017567232.ingest.de.sentry.io/4510981019140176\",\r\n\r\n  // Define how likely traces are sampled. Adjust this value in production, or use tracesSampler for greater control.\r\n  tracesSampleRate: 1,\r\n\r\n  // Enable logs to be sent to Sentry\r\n  enableLogs: true,\r\n\r\n  // Enable sending user PII (Personally Identifiable Information)\r\n  // https://docs.sentry.io/platforms/javascript/guides/nextjs/configuration/options/#sendDefaultPii\r\n  sendDefaultPii: true,\r\n});\r\n"],"names":[],"mappings":";AAAA,mEAAmE;AACnE,8EAA8E;AAC9E,6DAA6D;AAE7D;;AAEA,kLAAW,CAAC;IACV,KAAK;IAEL,mHAAmH;IACnH,kBAAkB;IAElB,mCAAmC;IACnC,YAAY;IAEZ,gEAAgE;IAChE,kGAAkG;IAClG,gBAAgB;AAClB"}}]
-}
