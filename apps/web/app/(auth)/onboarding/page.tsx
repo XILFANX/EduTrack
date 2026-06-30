@@ -86,7 +86,10 @@ export default function OnboardingPage() {
         setError(res.error)
         setLoading(false)
       } else {
-        router.push('/dashboard')
+        // Hard navigation — bypasses Next.js client-side router cache
+        // which would otherwise serve a stale profile (no school_id yet)
+        // and silently redirect back to /onboarding.
+        window.location.href = '/dashboard'
       }
     } catch (err: any) {
       setError(err.message || 'An unexpected error occurred.')
