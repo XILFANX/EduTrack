@@ -10,37 +10,32 @@ export default async function InvitePage({ params }: Props) {
   const { token } = await params
   const admin = createAdminClient()
 
-  // Look up user by the token-based fake email
-  const fakeEmail = `${token}@edutrack.internal`
-  const { data: { users } } = await admin.auth.admin.listUsers()
-  const authUser = users.find((u) => u.email === fakeEmail)
-
-  if (!authUser) return notFound()
-
-  // Get their EduTrack profile
-  const { data: profile } = await admin
-    .from('users')
-    .select('full_name, role, school_id')
-    .eq('id', authUser.id)
+  // Look up invitation by token
+  const { data: invitation } = await admin
+    .from('invitations')
+    .select('id, name, role, school_id, used_at, schools(name)')
+    .eq('token', token)
     .single()
 
-  if (!profile) return notFound()
+  if (!invitation || invitation.used_at) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4">
+        <div className="max-w-md w-full bg-white rounded-2xl shadow-sm border border-slate-200 p-8 text-center">
+          <h1 className="text-xl font-bold text-slate-900">Invalid or Expired Invite</h1>
+          <p className="text-slate-500 mt-2">This invitation link is either invalid or has already been used.</p>
+        </div>
+      </div>
+    )
+  }
 
-  if (!profile.school_id) return notFound()
-
-  // Get the school name
-  const { data: school } = await admin
-    .from('schools')
-    .select('name')
-    .eq('id', profile.school_id)
-    .single()
+  const schoolName = (invitation.schools as any)?.name ?? 'Your School'
 
   return (
     <InviteClient
       token={token}
-      fullName={profile.full_name}
-      role={profile.role}
-      schoolName={school?.name ?? 'Your School'}
+      fullName={invitation.name}
+      role={invitation.role}
+      schoolName={schoolName}
     />
   )
 }

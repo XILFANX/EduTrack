@@ -20,38 +20,65 @@ export async function activatePortal(formData: FormData) {
   const password = formData.get('password') as string
 
   const admin = createAdminClient()
-  const fakeEmail = `${token}@edutrack.internal`
 
-  // 1. Find auth user by token-based email
-  const { data: { users }, error: listError } = await admin.auth.admin.listUsers()
-  if (listError) return { error: 'Could not look up invite. Please try again.' }
-
-  const authUser = users.find((u) => u.email === fakeEmail)
-  if (!authUser) return { error: 'This invite link is invalid or has expired.' }
-
-  // 2. Verify phone matches what the principal registered
-  const { data: profile } = await admin
-    .from('users')
-    .select('id, role, phone_number, full_name')
-    .eq('id', authUser.id)
+  // 1. Validate the invitation
+  const { data: invitation } = await admin
+    .from('invitations')
+    .select('*')
+    .eq('token', token)
     .single()
 
-  if (!profile) return { error: 'Account profile not found.' }
+  if (!invitation) return { error: 'This invite link is invalid.' }
+  if (invitation.used_at) return { error: 'This invite has already been used. Please log in.' }
 
+  // 2. Verify phone matches what the principal registered
   const normalize = (p: string) => p.replace(/\s+/g, '').replace(/^0/, '+254')
-  if (normalize(profile.phone_number) !== normalize(phone) && profile.phone_number !== phone) {
+  if (normalize(invitation.phone) !== normalize(phone) && invitation.phone !== phone) {
     return { error: 'This phone number does not match our records. Please contact your school administrator.' }
   }
 
-  // 3. Set password on the auth user
-  const { error: updateError } = await admin.auth.admin.updateUserById(authUser.id, { password })
-  if (updateError) return { error: `Failed to set password: ${updateError.message}` }
+  // 3. Create the auth user (using a synthetic email)
+  const syntheticEmail = `${token}@edutrack.internal`
+  const { data: newUser, error: createErr } = await admin.auth.admin.createUser({
+    email: syntheticEmail,
+    password,
+    email_confirm: true,
+  })
 
-  // 4. Sign them in with their new password
+  if (createErr || !newUser.user) {
+    return { error: 'Failed to create your account. Please try again.' }
+  }
+
+  // 4. Insert their profile into the users table
+  const { error: profileError } = await admin.from('users').insert({
+    id: newUser.user.id,
+    school_id: invitation.school_id,
+    role: invitation.role,
+    full_name: invitation.name,
+    phone_number: invitation.phone,
+  })
+
+  if (profileError) {
+    return { error: 'Failed to create your profile.' }
+  }
+
+  // 5. Mark the invitation as used
+  await admin
+    .from('invitations')
+    .update({ used_at: new Date().toISOString() })
+    .eq('id', invitation.id)
+
+  // 6. Sign them in
   const supabase = await createClient()
-  const { error: signInError } = await supabase.auth.signInWithPassword({ email: fakeEmail, password })
-  if (signInError) return { error: `Sign-in failed: ${signInError.message}` }
+  const { error: signInErr } = await supabase.auth.signInWithPassword({
+    email: syntheticEmail,
+    password,
+  })
 
-  // 5. Route to correct portal
-  redirect(ROLE_PORTAL[profile.role] ?? '/login')
+  if (signInErr) {
+    return { error: 'Account created, but sign-in failed. Please visit /login.' }
+  }
+
+  // 7. Route to correct portal
+  redirect(ROLE_PORTAL[invitation.role] ?? '/login')
 }

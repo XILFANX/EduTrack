@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { inviteStaff, type StaffRole } from './actions'
-import { Copy, Check, UserPlus, ExternalLink, Mail } from 'lucide-react'
+import { Copy, Check, UserPlus, ExternalLink } from 'lucide-react'
 
 const ROLE_OPTIONS: { value: StaffRole; label: string; desc: string }[] = [
   { value: 'class_teacher', label: 'Class Teacher', desc: 'Manages a specific class, onboards parents' },
@@ -27,7 +27,6 @@ interface InviteStaffModalProps {
 export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteStaffModalProps) {
   const [fullName, setFullName] = useState('')
   const [phoneNumber, setPhoneNumber] = useState('')
-  const [email, setEmail] = useState('')
   const [role, setRole] = useState<StaffRole>('class_teacher')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -37,7 +36,6 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
   function handleClose() {
     setFullName('')
     setPhoneNumber('')
-    setEmail('')
     setRole('class_teacher')
     setError(null)
     setInviteUrl(null)
@@ -47,12 +45,11 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
 
   async function handleInvite() {
     if (!fullName.trim()) { setError('Please enter the staff member\'s full name.'); return }
-    if (!email.trim() || !email.includes('@')) { setError('Please enter a valid email address.'); return }
     if (!phoneNumber.trim()) { setError('Please enter their phone number.'); return }
     setLoading(true)
     setError(null)
 
-    const res = await inviteStaff({ fullName, phoneNumber, email, role, schoolId })
+    const res = await inviteStaff({ fullName, phoneNumber, role, schoolId })
     setLoading(false)
 
     if ('error' in res) {
@@ -117,28 +114,18 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-3">
-              <div className="space-y-2">
-                <Label htmlFor="staffEmail">Email address *</Label>
-                <Input
-                  id="staffEmail"
-                  type="email"
-                  placeholder="name@example.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="staffPhone">Phone number *</Label>
-                <Input
-                  id="staffPhone"
-                  type="tel"
-                  placeholder="0712 345 678"
-                  value={phoneNumber}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
-                />
-              </div>
+            <div className="space-y-2">
+              <Label htmlFor="staffPhone">Phone number *</Label>
+              <Input
+                id="staffPhone"
+                type="tel"
+                placeholder="0712 345 678"
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+              />
+              <p className="text-xs text-muted-foreground">
+                They will verify this number to activate their portal.
+              </p>
             </div>
 
             {error && (
@@ -156,7 +143,7 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
                 onClick={handleInvite}
                 disabled={loading}
               >
-                {loading ? 'Sending Invite…' : 'Send Invitation'}
+                {loading ? 'Generating link…' : 'Generate Invite Link'}
               </Button>
             </div>
           </div>
@@ -165,16 +152,16 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
           <div className="space-y-5 pt-2">
             <div className="text-center space-y-2">
               <div className="w-16 h-16 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 flex items-center justify-center mx-auto mb-4">
-                <Mail className="w-8 h-8" />
+                <Check className="w-8 h-8" />
               </div>
-              <p className="font-bold text-lg text-foreground">Invitation Sent!</p>
+              <p className="font-bold text-lg text-foreground">Invite link generated!</p>
               <p className="text-sm text-muted-foreground">
-                We've emailed an invitation to <strong>{email}</strong>. They will use the link inside to set up their account password.
+                Share this link with <strong>{fullName}</strong> via WhatsApp. They will click it and verify their phone number to activate their portal.
               </p>
             </div>
 
             <div className="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-3 border border-slate-100 dark:border-slate-800 space-y-2">
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Fallback Link</p>
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Access Link</p>
               <p className="text-xs font-mono break-all text-foreground select-all">{inviteUrl}</p>
               <div className="flex gap-2 pt-1">
                 <Button
