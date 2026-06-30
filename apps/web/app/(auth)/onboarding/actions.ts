@@ -51,18 +51,31 @@ export async function completeOnboarding(
       return { error: `Failed to create school: ${schoolError?.message ?? 'Unknown error'}` }
     }
 
-    // 2. Link the principal's user profile to the new school
+    // 2. Upsert the user profile — works whether the row already exists or not
     const { error: profileError } = await admin
       .from('users')
-      .update({
+      .upsert({
+        id: user.id,
         school_id: school.id,
         role: data.adminTitle || 'principal',
         phone_number: data.schoolPhone,
-      })
-      .eq('id', user.id)
+        full_name: user.user_metadata?.full_name ?? user.email ?? 'Administrator',
+        email: user.email,
+      }, { onConflict: 'id' })
 
     if (profileError) {
-      return { error: `Failed to link you to the school: ${profileError.message}` }
+      return { error: `Failed to save your profile: ${profileError.message}` }
+    }
+
+    // 3. Verify the write actually took effect before telling the client to proceed
+    const { data: verified, error: verifyError } = await admin
+      .from('users')
+      .select('school_id')
+      .eq('id', user.id)
+      .single()
+
+    if (verifyError || !verified?.school_id) {
+      return { error: 'Profile was not saved correctly. Please try again.' }
     }
 
     revalidatePath('/', 'layout')
