@@ -79,7 +79,8 @@ export async function middleware(request: NextRequest) {
   // ── Authenticated ───────────────────────────────────────────────
   let role = profile?.role ?? 'principal'
 
-  if (user.email && user.email.toLowerCase() === process.env.PRODUCT_ADMINISTRATOR_EMAIL?.toLowerCase()) {
+  const rootEmail = (process.env.PRODUCT_ADMINISTRATOR_EMAIL || 'plancknetworks@gmail.com').toLowerCase()
+  if (user.email && user.email.toLowerCase() === rootEmail) {
     role = 'admin'
   }
 

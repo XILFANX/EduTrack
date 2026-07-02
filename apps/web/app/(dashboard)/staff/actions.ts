@@ -17,17 +17,36 @@ export interface InviteStaffData {
   phoneNumber: string
   role: StaffRole
   schoolId: string
+  classId?: string // only for class_teacher
 }
 
 export async function inviteStaff(
   data: InviteStaffData
-): Promise<{ token: string } | { error: string }> {
+): Promise<{ token: string; schoolName: string; className?: string } | { error: string }> {
   try {
     const supabase = await createClient()
     const { data: { user }, error: authError } = await supabase.auth.getUser()
     if (authError || !user) return { error: 'Not authenticated.' }
 
     const admin = createAdminClient()
+
+    // Fetch school name for the WhatsApp message
+    const { data: school } = await admin
+      .from('schools')
+      .select('name')
+      .eq('id', data.schoolId)
+      .single()
+
+    // Fetch class name if class_teacher
+    let className: string | undefined
+    if (data.role === 'class_teacher' && data.classId) {
+      const { data: cls } = await admin
+        .from('classes')
+        .select('name')
+        .eq('id', data.classId)
+        .single()
+      className = (cls as any)?.name
+    }
 
     // Generate unique token
     const token = randomUUID()
@@ -37,8 +56,9 @@ export async function inviteStaff(
       school_id: data.schoolId,
       role: data.role,
       token,
-      name: data.fullName,
-      phone: data.phoneNumber,
+      target_name: data.fullName,
+      target_phone: data.phoneNumber,
+      target_class_id: data.classId || null,
       created_by: user.id,
     })
 
@@ -47,12 +67,23 @@ export async function inviteStaff(
       return { error: 'Failed to generate invite link.' }
     }
 
-    return { token }
+    return { token, schoolName: (school as any)?.name ?? 'the school', className }
   } catch (err: any) {
     return { error: err.message || 'An unexpected error occurred.' }
   }
 }
 
+export async function getClasses(schoolId: string) {
+  const supabase = await createClient()
+  const { data, error } = await supabase
+    .from('classes')
+    .select('id, name')
+    .eq('school_id', schoolId)
+    .order('name', { ascending: true })
+
+  if (error) return []
+  return (data ?? []) as { id: string; name: string }[]
+}
 
 export async function getStaff(schoolId: string) {
   const supabase = await createClient()

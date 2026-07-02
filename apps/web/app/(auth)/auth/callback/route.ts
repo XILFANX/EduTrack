@@ -4,7 +4,8 @@ import { createAdminClient } from '@/lib/supabase/admin'
 
 export function isPlatformOwner(email?: string | null) {
   if (!email) return false
-  return email.toLowerCase() === process.env.PRODUCT_ADMINISTRATOR_EMAIL?.toLowerCase()
+  const rootEmail = (process.env.PRODUCT_ADMINISTRATOR_EMAIL || 'plancknetworks@gmail.com').toLowerCase()
+  return email.toLowerCase() === rootEmail
 }
 
 /**
@@ -38,6 +39,11 @@ export async function GET(request: Request) {
         return NextResponse.redirect(`${origin}/admin/dashboard`)
       }
 
+      // ── Handle custom next redirects (e.g., invite linking) ─────────────────
+      if (next && next !== '/') {
+        return NextResponse.redirect(`${origin}${next}`)
+      }
+
       // ── Check if user already has a profile ─────────────────────────────────
       const { data: profile } = await supabase
         .from('users')
@@ -50,9 +56,7 @@ export async function GET(request: Request) {
         return NextResponse.redirect(`${origin}/onboarding`)
       }
 
-      // Route them
-      const destination = next !== '/' ? next : '/'
-      return NextResponse.redirect(`${origin}${destination}`)
+      return NextResponse.redirect(`${origin}/`)
     }
   }
 

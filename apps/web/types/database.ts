@@ -89,6 +89,66 @@ export interface Database {
         Insert: any
         Update: any; Relationships: any[]
       }
+      invitations: {
+        Row: {
+          id: string
+          school_id: string
+          token: string
+          role: string
+          target_class_id: string | null
+          target_name: string | null
+          target_phone: string | null
+          used_at: string | null
+          reset_otp: string | null
+          reset_otp_expires_at: string | null
+          created_by: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          school_id: string
+          token?: string
+          role: string
+          target_class_id?: string | null
+          target_name?: string | null
+          target_phone?: string | null
+          used_at?: string | null
+          reset_otp?: string | null
+          reset_otp_expires_at?: string | null
+          created_by: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          school_id?: string
+          token?: string
+          role?: string
+          target_class_id?: string | null
+          target_name?: string | null
+          target_phone?: string | null
+          used_at?: string | null
+          reset_otp?: string | null
+          reset_otp_expires_at?: string | null
+          created_by?: string
+          created_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "invitations_school_id_fkey"
+            columns: ["school_id"]
+            isOneToOne: false
+            referencedRelation: "schools"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "invitations_target_class_id_fkey"
+            columns: ["target_class_id"]
+            isOneToOne: false
+            referencedRelation: "classes"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       messages: {
         Row: { id: string; conversation_id: string; sender_id: string; content: string; created_at: string }
         Insert: any
