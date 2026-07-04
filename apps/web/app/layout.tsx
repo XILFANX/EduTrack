@@ -4,7 +4,6 @@ import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
 
 import { NotificationPrompt } from '@/components/layout/notification-prompt'
-import { PWARegistrar } from '@/components/pwa-registrar'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -53,7 +52,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="apple-touch-icon" href="/logo.jpeg" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
       </head>
       <body suppressHydrationWarning className={`${inter.variable} font-sans antialiased bg-background text-foreground`}>
         <ThemeProvider
@@ -64,7 +63,6 @@ export default function RootLayout({
         >
           {children}
           <NotificationPrompt />
-          <PWARegistrar />
         </ThemeProvider>
       </body>
     </html>

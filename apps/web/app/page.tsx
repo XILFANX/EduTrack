@@ -12,7 +12,7 @@ function NavBar() {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 relative rounded-full overflow-hidden shrink-0 border border-slate-200 dark:border-slate-700 bg-white shadow-sm">
-              <Image src="/logo.jpeg" alt="EduTrack" fill className="object-cover" />
+              <Image src="/logo.png" alt="EduTrack" fill className="object-cover" />
             </div>
             <span className="font-bold text-xl text-slate-900 dark:text-white tracking-tight">EduTrack</span>
           </div>
@@ -246,7 +246,7 @@ function Footer() {
           <div className="col-span-2 lg:col-span-2">
             <div className="flex items-center gap-3 mb-6">
               <div className="w-8 h-8 relative rounded-full overflow-hidden shrink-0 border border-slate-200 dark:border-slate-700 bg-white">
-                <Image src="/logo.jpeg" alt="EduTrack" fill className="object-cover" />
+                <Image src="/logo.png" alt="EduTrack" fill className="object-cover" />
               </div>
               <span className="font-bold text-xl text-slate-900 dark:text-white">EduTrack</span>
             </div>

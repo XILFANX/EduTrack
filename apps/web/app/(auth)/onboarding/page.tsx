@@ -117,7 +117,7 @@ export default function OnboardingPage() {
         {/* Header */}
         <div className="text-center space-y-2">
           <div className="w-12 h-12 relative mx-auto rounded-full overflow-hidden shadow-sm border border-slate-200 dark:border-slate-800 bg-white">
-            <Image src="/logo.jpeg" alt="EduTrack" fill className="object-cover scale-[1.2]" />
+            <Image src="/logo.png" alt="EduTrack" fill className="object-cover " />
           </div>
           <p className="text-blue-600 dark:text-blue-400 font-bold text-xl">EduTrack</p>
           <h1 className="text-2xl font-bold text-foreground">Set up your school</h1>

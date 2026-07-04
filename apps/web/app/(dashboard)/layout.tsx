@@ -50,7 +50,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
         <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 relative rounded-full overflow-hidden shrink-0 border border-slate-200 dark:border-slate-700 bg-white">
-              <Image src="/logo.jpeg" alt="EduTrack" fill className="object-cover scale-[1.2]" />
+              <Image src="/logo.png" alt="EduTrack" fill className="object-cover " />
             </div>
             <div>
               <span className="font-semibold text-foreground text-sm dark:text-slate-100 block leading-tight">EduTrack</span>

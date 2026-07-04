@@ -57,8 +57,14 @@ export async function middleware(request: NextRequest) {
     pathname.startsWith('/_next') ||
     pathname.startsWith('/api/webhooks') ||
     pathname.startsWith('/icons') ||
+    pathname.startsWith('/icon-') ||
     pathname === '/sw.js' ||
-    pathname === '/manifest.json'
+    pathname === '/sw.js.map' ||
+    pathname === '/manifest.json' ||
+    pathname === '/manifest.webmanifest' ||
+    pathname === '/logo.png' ||
+    pathname === '/apple-touch-icon.png' ||
+    pathname === '/apple-icon.png'
   ) {
     return NextResponse.next()
   }

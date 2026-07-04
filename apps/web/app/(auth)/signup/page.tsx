@@ -81,7 +81,7 @@ export default function SignupPage() {
         {/* Logo */}
         <div className="text-center space-y-2">
           <div className="w-12 h-12 relative mx-auto rounded-full overflow-hidden shadow-sm border border-slate-200 dark:border-slate-800 bg-white">
-            <Image src="/logo.jpeg" alt="EduTrack Logo" fill className="object-cover scale-[1.2]" />
+            <Image src="/logo.png" alt="EduTrack Logo" fill className="object-cover " />
           </div>
           <h1 className="text-2xl font-bold mt-4 text-slate-800 dark:text-slate-100">Set up your school</h1>
           <p className="text-slate-500 dark:text-slate-400 text-sm">Free to get started · No credit card required</p>

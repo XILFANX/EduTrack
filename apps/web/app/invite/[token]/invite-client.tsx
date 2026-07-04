@@ -124,7 +124,7 @@ export default function InviteClient({
         {/* Header */}
         <div className="text-center space-y-3">
           <div className="w-16 h-16 relative mx-auto rounded-2xl overflow-hidden shadow-lg border border-border bg-card">
-            <Image src="/logo.jpeg" alt="EduTrack" fill className="object-cover scale-[1.2]" />
+            <Image src="/logo.png" alt="EduTrack" fill className="object-cover " />
           </div>
           <div>
             <p className="text-muted-foreground text-sm font-medium">EduTrack</p>
