@@ -3,7 +3,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
 
-import { NotificationPrompt } from '@/components/layout/notification-prompt'
+import { AppPrompts } from '@/components/layout/app-prompts'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -62,7 +62,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
-          <NotificationPrompt />
+          <AppPrompts />
         </ThemeProvider>
       </body>
     </html>
