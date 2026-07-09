@@ -448,3 +448,28 @@ create policy "Parents can view their own stk requests"
   );
 -- Add teacher_id to subjects table
 alter table public.subjects add column teacher_id uuid references public.users(id);
+
+-- ENABLING ROW LEVEL SECURITY
+ALTER TABLE public.schools ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.users ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.classes ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.students ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.student_parents ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.subjects ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.academic_terms ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.fee_structures ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.invoices ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.invoice_items ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.fee_payments ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.inventory_ledger ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.bus_routes ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.salary_advances ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.exams ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.exam_results ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.attendance ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.announcements ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.conversations ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.conversation_participants ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.messages ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.invitations ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.mpesa_stk_requests ENABLE ROW LEVEL SECURITY;
