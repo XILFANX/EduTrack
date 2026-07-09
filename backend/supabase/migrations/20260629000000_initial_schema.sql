@@ -42,6 +42,7 @@ create table public.students (
   school_id uuid references public.schools(id) not null,
   class_id uuid references public.classes(id),
   first_name text not null,
+  middle_name text,
   last_name text not null,
   admission_number text not null,
   dob date,

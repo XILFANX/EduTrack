@@ -6,6 +6,7 @@ import { revalidatePath } from 'next/cache'
 
 export interface EnrollStudentData {
   firstName: string
+  middleName?: string
   lastName: string
   dob: string
   gender: string
@@ -53,6 +54,7 @@ export async function enrollStudent(
         school_id: profile.school_id,
         class_id: data.classId || null,
         first_name: data.firstName.trim(),
+        middle_name: data.middleName?.trim() || null,
         last_name: data.lastName.trim(),
         admission_number: admissionNumber,
         dob: data.dob || null,

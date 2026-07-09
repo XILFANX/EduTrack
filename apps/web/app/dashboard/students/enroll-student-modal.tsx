@@ -25,6 +25,7 @@ const STEPS = ['Student Details', 'Class Assignment', 'Confirm']
 export function EnrollStudentModal({ open, onClose, classes, onSuccess }: EnrollStudentModalProps) {
   const [step, setStep] = useState(1)
   const [firstName, setFirstName] = useState('')
+  const [middleName, setMiddleName] = useState('')
   const [lastName, setLastName] = useState('')
   const [dob, setDob] = useState('')
   const [gender, setGender] = useState('')
@@ -36,6 +37,7 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
   function reset() {
     setStep(1)
     setFirstName('')
+    setMiddleName('')
     setLastName('')
     setDob('')
     setGender('')
@@ -54,7 +56,7 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
     setError(null)
     if (step === 1) {
       if (!firstName.trim()) return setError('First name is required.')
-      if (!lastName.trim()) return setError('Last name is required.')
+      if (!lastName.trim()) return setError('Surname is required.')
     }
     setStep(s => s + 1)
   }
@@ -62,7 +64,7 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
   async function handleSubmit() {
     setLoading(true)
     setError(null)
-    const data: EnrollStudentData = { firstName, lastName, dob, gender, classId, parentName: '', parentPhone: '' }
+    const data: EnrollStudentData = { firstName, middleName, lastName, dob, gender, classId, parentName: '', parentPhone: '' }
     const res = await enrollStudent(data)
     setLoading(false)
     if ('error' in res) {
@@ -108,7 +110,7 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
                 <CheckCircle2 className="w-8 h-8 text-emerald-600 dark:text-emerald-400" />
               </div>
               <div>
-                <p className="font-bold text-foreground text-lg">{firstName} {lastName}</p>
+                <p className="font-bold text-foreground text-lg">{firstName} {middleName ? middleName + ' ' : ''}{lastName}</p>
                 <p className="text-sm text-muted-foreground mt-1">
                   Assigned to <span className="font-medium text-foreground">{selectedClass?.name ?? 'No class'}</span>
                 </p>
@@ -137,7 +139,16 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
                       />
                     </div>
                     <div className="space-y-1.5">
-                      <Label>Last Name *</Label>
+                      <Label>Middle Name</Label>
+                      <Input
+                        id="enroll-middle-name"
+                        value={middleName}
+                        onChange={e => setMiddleName(e.target.value)}
+                        placeholder="e.g. Nduta (Optional)"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <Label>Surname *</Label>
                       <Input
                         id="enroll-last-name"
                         value={lastName}

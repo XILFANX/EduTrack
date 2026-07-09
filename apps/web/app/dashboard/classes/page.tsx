@@ -10,7 +10,7 @@ export default async function ClassesPage() {
 
   const { data: profile } = await supabase
     .from('users')
-    .select('school_id, schools(curriculum_type)')
+    .select('school_id')
     .eq('id', user.id)
     .single()
 
@@ -35,7 +35,7 @@ export default async function ClassesPage() {
     return acc
   }, {})
 
-  const curriculumType = (profile.schools as any)?.curriculum_type || 'cbc'
+  const curriculumType = 'cbc'
 
   return (
     <ClassesPageClient 

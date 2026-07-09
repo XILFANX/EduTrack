@@ -23,6 +23,7 @@ export function StudentsPageClient({ initialStudents, classes }: { initialStuden
     const q = searchQuery.toLowerCase()
     return (
       student.first_name.toLowerCase().includes(q) ||
+      (student.middle_name && student.middle_name.toLowerCase().includes(q)) ||
       student.last_name.toLowerCase().includes(q) ||
       student.admission_number.toLowerCase().includes(q) ||
       ((student.classes as any)?.name || '').toLowerCase().includes(q)
@@ -94,7 +95,7 @@ export function StudentsPageClient({ initialStudents, classes }: { initialStuden
                 {filteredStudents.map((student) => (
                   <tr key={student.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors">
                     <td className="px-6 py-4 font-mono text-slate-500 dark:text-slate-400">{student.admission_number}</td>
-                    <td className="px-6 py-4 font-medium text-foreground">{student.first_name} {student.last_name}</td>
+                    <td className="px-6 py-4 font-medium text-foreground">{student.first_name} {student.middle_name ? student.middle_name + ' ' : ''}{student.last_name}</td>
                     <td className="px-6 py-4 text-muted-foreground">{(student.classes as any)?.name || 'Unassigned'}</td>
                     <td className="px-6 py-4">
                       <span className="px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 text-xs font-medium">Active</span>
