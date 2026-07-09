@@ -13,28 +13,28 @@ import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet'
 
 const TABS = [
   { href: '/dashboard', icon: Home, label: 'Home' },
-  { href: '/staff', icon: UserCog, label: 'Staff' },
-  { href: '/classes', icon: GraduationCap, label: 'Classes' },
-  { href: '/students', icon: Users, label: 'Students' },
-  { href: '/finance', icon: Banknote, label: 'Finance' },
+  { href: '/dashboard/staff', icon: UserCog, label: 'Staff' },
+  { href: '/dashboard/classes', icon: GraduationCap, label: 'Classes' },
+  { href: '/dashboard/students', icon: Users, label: 'Students' },
+  { href: '/dashboard/finance', icon: Banknote, label: 'Finance' },
 ]
 
 const MENU_SECTIONS = [
   {
     label: 'Academic',
     items: [
-      { href: '/subjects', label: 'Subjects', icon: BookOpen },
-      { href: '/library', label: 'Library', icon: Library },
-      { href: '/reports', label: 'Reports', icon: BarChart3 },
+      { href: '/dashboard/subjects', label: 'Subjects', icon: BookOpen },
+      { href: '/dashboard/library', label: 'Library', icon: Library },
+      { href: '/dashboard/reports', label: 'Reports', icon: BarChart3 },
     ],
   },
   {
     label: 'Operations',
     items: [
-      { href: '/store', label: 'Store', icon: Package },
-      { href: '/transport', label: 'Transport', icon: Bus },
-      { href: '/messages', label: 'Messages', icon: MessageSquare },
-      { href: '/settings', label: 'Settings', icon: Settings },
+      { href: '/dashboard/store', label: 'Store', icon: Package },
+      { href: '/dashboard/transport', label: 'Transport', icon: Bus },
+      { href: '/dashboard/messages', label: 'Messages', icon: MessageSquare },
+      { href: '/dashboard/settings', label: 'Settings', icon: Settings },
     ],
   },
 ]

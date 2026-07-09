@@ -74,7 +74,7 @@ export async function generateInvoicesForClass(classId: string, termId: string, 
   return { success: true, count: generatedCount }
 }
 
-export async function initiateSTKPush(invoiceId: string, phone: string, amount: number) {
+export async function initiateSTKPush(invoiceId: string, studentId: string, schoolId: string, phone: string, amount: number) {
   // Normalize phone to 254 format
   const normalizedPhone = phone.replace(/^0/, '254').replace(/\+/g, '').replace(/\s+/g, '')
 
@@ -84,14 +84,23 @@ export async function initiateSTKPush(invoiceId: string, phone: string, amount: 
 
   console.log(`[STK Push] Initiating push to ${normalizedPhone} for KES ${amount}...`)
 
-  // Log a "pending" payment intent
   const admin = createAdminClient()
-  const receiptPlaceholder = `STK-${randomUUID().substring(0, 8).toUpperCase()}`
+  const checkoutRequestId = 'ws_CO_' + Date.now()
+  
+  // Log a "pending" payment intent
+  await admin.from('mpesa_stk_requests').insert({
+    school_id: schoolId,
+    invoice_id: invoiceId,
+    student_id: studentId,
+    checkout_request_id: checkoutRequestId,
+    amount: amount,
+    phone_number: normalizedPhone,
+  })
 
   // Return success to the client
   return { 
     success: true, 
     message: 'STK Push sent to phone successfully.',
-    checkoutRequestId: 'ws_CO_' + Date.now()
+    checkoutRequestId
   }
 }

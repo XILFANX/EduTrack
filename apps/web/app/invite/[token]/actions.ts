@@ -28,12 +28,14 @@ export async function activateInvite(formData: FormData) {
   const admin = createAdminClient()
 
   // 1. Re-fetch invite to validate
-  const { data: invite } = await admin
+  const { data: inviteRaw } = await admin
     .from('invitations')
-    .select('id, token, role, target_phone, target_name, school_id, used_at, reset_otp, reset_otp_expires_at')
+    .select('id, token, role, target_phone, target_name, target_entity_id, school_id, used_at, reset_otp, reset_otp_expires_at')
     .eq('id', inviteId)
     .eq('token', token)
     .single()
+
+  const invite = inviteRaw as any
 
   if (!invite) {
     return { error: 'This invite link is invalid or has been removed.' }
@@ -180,6 +182,19 @@ export async function activateInvite(formData: FormData) {
       console.error('Profile insert error:', profileErr)
       return { error: 'Account created but profile setup failed. Please contact your school administrator.' }
     }
+
+    // Link target_entity_id if parent
+    if (invite.role === 'parent' && invite.target_entity_id) {
+      const { error: linkErr } = await admin.from('student_parents').insert({
+        student_id: invite.target_entity_id,
+        parent_id: userId,
+        relationship: 'Guardian' // Default, can be updated later
+      });
+      if (linkErr) {
+        console.error('Parent linking error:', linkErr);
+      }
+    }
+
 
     // Mark invite as used (keep target_name updated to whatever they entered)
     await admin
