@@ -114,12 +114,17 @@ export default async function DashboardPage() {
 
   const firstName = profile.full_name.split(' ')[0]
 
+  const hour = new Date().getHours()
+  let greeting = 'Good evening'
+  if (hour < 12) greeting = 'Good morning'
+  else if (hour < 17) greeting = 'Good afternoon'
+
   return (
     <div className="space-y-7">
       {/* Welcome */}
       <div>
         <h1 className="text-2xl font-bold text-foreground">
-          Good morning, {firstName} 👋
+          {greeting}, {firstName} 👋
         </h1>
         <p className="text-sm text-muted-foreground mt-1">
           Here&apos;s your school overview for today.

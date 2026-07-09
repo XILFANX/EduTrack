@@ -2,8 +2,10 @@ import { redirect } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
-import { GraduationCap, BookOpen, Users, Receipt, Megaphone, ArrowRight, Activity } from 'lucide-react'
+import { GraduationCap, BookOpen, Users, Receipt, Megaphone, ArrowRight, Activity, Settings } from 'lucide-react'
 import { ModeToggleLanding } from '@/components/shared/mode-toggle-landing'
+
+// --- Landing Page Components ---
 
 function NavBar() {
   return (
@@ -11,7 +13,7 @@ function NavBar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 relative rounded-full overflow-hidden shrink-0 border border-slate-200 dark:border-slate-700 bg-white shadow-sm">
+            <div className="w-8 h-8 relative rounded-full overflow-hidden shrink-0 border border-slate-200 dark:border-slate-700 bg-white shadow-sm">
               <Image src="/logo.png" alt="EduTrack" fill className="object-cover" />
             </div>
             <span className="font-bold text-xl text-slate-900 dark:text-white tracking-tight">EduTrack</span>
@@ -23,7 +25,7 @@ function NavBar() {
           </div>
           <div className="flex items-center gap-3">
             <ModeToggleLanding />
-            <Link href="/login" className="text-sm font-medium text-slate-600 hover:text-blue-600 dark:text-slate-300 dark:hover:text-blue-500 transition-colors ml-2">Log in</Link>
+            <Link href="/login" className="hidden sm:inline-block text-sm font-medium text-slate-600 hover:text-blue-600 dark:text-slate-300 dark:hover:text-blue-500 transition-colors ml-2">Log in</Link>
             <Link href="/signup" className="text-sm font-medium px-4 py-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-all shadow-md hover:shadow-lg active:scale-95 duration-200">
               Get Started
             </Link>
@@ -36,31 +38,36 @@ function NavBar() {
 
 function HeroSection() {
   return (
-    <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+    <section className="relative pt-24 pb-16 lg:pt-32 lg:pb-24 overflow-hidden">
       {/* Decorative background blur */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-500/10 dark:bg-blue-500/5 blur-3xl rounded-full -z-10" />
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 text-sm font-medium mb-8 border border-blue-200 dark:border-blue-500/20">
-          <GraduationCap className="w-4 h-4" />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 text-xs font-semibold mb-6 border border-blue-200 dark:border-blue-500/20">
+          <GraduationCap className="w-3.5 h-3.5" />
           <span>The Modern Education System</span>
         </div>
-        <h1 className="text-5xl md:text-7xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-8">
-          School management,<br className="hidden md:block" />
+        <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4 max-w-4xl leading-tight">
+          School Management<br />
+          &amp;<br />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-400">
-            simplified seamlessly.
+            Seamless Administration.
           </span>
         </h1>
-        <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed">
+        <p className="text-base md:text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto mb-8 leading-relaxed">
           The all-in-one platform for principals, teachers, and parents. Automate fee collection via M-Pesa, track attendance, manage grades, and connect the entire school.
         </p>
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Link href="/signup" className="w-full sm:w-auto px-8 py-4 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-medium text-lg transition-all shadow-xl hover:shadow-blue-600/25 active:scale-95 duration-200 flex items-center justify-center gap-2">
-            Start your school <ArrowRight className="w-5 h-5" />
+
+        <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <Link href="/signup" className="w-full sm:w-auto px-6 py-2.5 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-medium text-sm transition-all shadow-md hover:shadow-lg active:scale-95 duration-200 flex items-center justify-center gap-2">
+            Start your school <ArrowRight className="w-4 h-4" />
           </Link>
-          <a href="#features" className="w-full sm:w-auto px-8 py-4 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-900 dark:text-white font-medium text-lg transition-all active:scale-95 duration-200 text-center">
-            How it works
-          </a>
+          <Link href="/login" className="w-full sm:w-auto px-6 py-2.5 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-900 dark:text-white font-medium text-sm transition-all active:scale-95 duration-200 text-center">
+            I am a Teacher
+          </Link>
+          <Link href="/login" className="w-full sm:w-auto px-6 py-2.5 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-900 dark:text-white font-medium text-sm transition-all active:scale-95 duration-200 text-center">
+            I am a Parent
+          </Link>
         </div>
       </div>
     </section>
@@ -69,13 +76,13 @@ function HeroSection() {
 
 function FeatureCard({ icon: Icon, title, description }: { icon: React.ElementType, title: string, description: string }) {
   return (
-    <div className="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow group relative overflow-hidden">
+    <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow group relative overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-400 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity" />
-      <div className="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-500/10 flex items-center justify-center text-blue-600 dark:text-blue-400 mb-6">
-        <Icon className="w-6 h-6" />
+      <div className="w-10 h-10 rounded-lg bg-blue-50 dark:bg-blue-500/10 flex items-center justify-center text-blue-600 dark:text-blue-400 mb-4">
+        <Icon className="w-5 h-5" />
       </div>
-      <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">{title}</h3>
-      <p className="text-slate-600 dark:text-slate-400 leading-relaxed">{description}</p>
+      <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">{title}</h3>
+      <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">{description}</p>
     </div>
   )
 }
@@ -108,22 +115,22 @@ function FeaturesSection() {
       description: 'Dedicated portals for operational staff. Manage bus routes, fleet tracking, and live inventory ledgers.'
     },
     {
-      icon: GraduationCap,
+      icon: Settings,
       title: 'Role-Based Portals',
       description: 'Six customized, secure portals ensuring everyone from the Principal to the Parent sees exactly what they need.'
     }
   ]
 
   return (
-    <section id="features" className="py-24 bg-slate-50 dark:bg-slate-950/50">
+    <section id="features" className="py-16 bg-slate-50 dark:bg-slate-950/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6">Everything you need to run your school</h2>
-          <p className="text-lg text-slate-600 dark:text-slate-400">
+        <div className="text-center max-w-2xl mx-auto mb-12">
+          <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-4">Everything you need to run your school</h2>
+          <p className="text-sm md:text-base text-slate-600 dark:text-slate-400">
             EduTrack replaces a dozen disjointed tools with one elegant platform designed specifically for modern education.
           </p>
         </div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {features.map((f, i) => (
             <FeatureCard key={i} {...f} />
           ))}
@@ -139,7 +146,7 @@ function PortalSection() {
       emoji: '🏛️',
       role: 'Principal / Admin',
       tagline: 'I manage the entire school',
-      color: 'from-blue-600 to-indigo-600',
+      color: 'from-blue-600 to-cyan-500',
       bgLight: 'bg-blue-50 border-blue-200',
       bgDark: 'dark:bg-blue-950/30 dark:border-blue-800/50',
       textAccent: 'text-blue-700 dark:text-blue-400',
@@ -151,12 +158,13 @@ function PortalSection() {
       cta: 'Create free account',
       href: '/signup',
       ctaStyle: 'bg-blue-600 hover:bg-blue-700 text-white',
+      secondary: null,
     },
     {
       emoji: '👨‍🏫',
       role: 'Teachers & Staff',
       tagline: 'I educate and operate',
-      color: 'from-indigo-500 to-violet-500',
+      color: 'from-indigo-600 to-blue-500',
       bgLight: 'bg-indigo-50 border-indigo-200',
       bgDark: 'dark:bg-indigo-950/30 dark:border-indigo-800/50',
       textAccent: 'text-indigo-700 dark:text-indigo-400',
@@ -168,15 +176,16 @@ function PortalSection() {
       cta: 'Use invite link',
       href: '/login',
       ctaStyle: 'bg-indigo-600 hover:bg-indigo-700 text-white',
+      secondary: { label: 'Learn how invites work', href: '/help' },
     },
     {
       emoji: '👨‍👩‍👧',
       role: 'Parents',
       tagline: 'I have children enrolled',
-      color: 'from-orange-500 to-amber-500',
-      bgLight: 'bg-orange-50 border-orange-200',
-      bgDark: 'dark:bg-orange-950/30 dark:border-orange-800/50',
-      textAccent: 'text-orange-700 dark:text-orange-400',
+      color: 'from-sky-500 to-cyan-500',
+      bgLight: 'bg-sky-50 border-sky-200',
+      bgDark: 'dark:bg-sky-950/30 dark:border-sky-800/50',
+      textAccent: 'text-sky-700 dark:text-sky-400',
       benefits: [
         'Pay fees securely via M-Pesa',
         'Track academic performance',
@@ -184,7 +193,8 @@ function PortalSection() {
       ],
       cta: 'Sign in to your portal',
       href: '/login',
-      ctaStyle: 'bg-orange-600 hover:bg-orange-700 text-white',
+      ctaStyle: 'bg-sky-600 hover:bg-sky-700 text-white',
+      secondary: { label: 'Contact your school for access', href: '/help' },
     },
   ]
 
@@ -229,6 +239,14 @@ function PortalSection() {
                 >
                   {portal.cta} →
                 </a>
+                {portal.secondary && (
+                  <a
+                    href={portal.secondary.href}
+                    className="w-full flex items-center justify-center text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                  >
+                    {portal.secondary.label}
+                  </a>
+                )}
               </div>
             </div>
           ))}
@@ -291,6 +309,8 @@ function Footer() {
   )
 }
 
+// --- Main Page Component ---
+
 export default async function RootPage() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
@@ -331,8 +351,8 @@ export default async function RootPage() {
       <NavBar />
       <main>
         <HeroSection />
-        <PortalSection />
         <FeaturesSection />
+        <PortalSection />
       </main>
       <Footer />
     </div>
