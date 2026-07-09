@@ -15,6 +15,7 @@ export type StaffRole =
 export interface InviteStaffData {
   fullName: string
   phoneNumber: string
+  salutation: string
   role: StaffRole
   schoolId: string
   classId?: string // only for class_teacher
@@ -59,6 +60,7 @@ export async function inviteStaff(
       target_name: data.fullName,
       target_phone: data.phoneNumber,
       target_entity_id: data.classId || null,
+      target_salutation: data.salutation || null,
       created_by: user.id,
     } as any)
 

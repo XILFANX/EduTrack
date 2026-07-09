@@ -30,7 +30,7 @@ export async function activateInvite(formData: FormData) {
   // 1. Re-fetch invite to validate
   const { data: inviteRaw } = await admin
     .from('invitations')
-    .select('id, token, role, target_phone, target_name, target_entity_id, school_id, used_at, reset_otp, reset_otp_expires_at')
+    .select('id, token, role, target_phone, target_name, target_salutation, target_entity_id, school_id, used_at, reset_otp, reset_otp_expires_at')
     .eq('id', inviteId)
     .eq('token', token)
     .single()
@@ -176,6 +176,7 @@ export async function activateInvite(formData: FormData) {
       role: invite.role,
       full_name: name,
       phone_number: phone,
+      salutation: invite.target_salutation || null,
     })
 
     if (profileErr) {

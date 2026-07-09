@@ -89,7 +89,21 @@ export async function getTeachers(schoolId: string) {
   return data || []
 }
 
-// Keep the enrollStudent here as it was, but fix revalidatePath
+export async function assignTeacher(classId: string, teacherId: string | null) {
+  const admin = createAdminClient()
+
+  const { error } = await admin
+    .from('classes')
+    .update({ class_teacher_id: teacherId })
+    .eq('id', classId)
+
+  if (error) return { error: error.message }
+
+  revalidatePath('/dashboard/classes')
+  revalidatePath(`/dashboard/classes/${classId}`)
+  return { success: true }
+}
+
 export async function enrollStudent(schoolId: string, classId: string, firstName: string, lastName: string, admissionNumber: string, dob?: string) {
   const admin = createAdminClient()
 

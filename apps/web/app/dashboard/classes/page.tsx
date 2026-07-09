@@ -19,7 +19,7 @@ export default async function ClassesPage() {
   // Fetch classes and aggregate student counts manually
   const { data: classes } = await supabase
     .from('classes')
-    .select('*, users!classes_class_teacher_id_fkey(full_name)')
+    .select('*, users!classes_class_teacher_id_fkey(id, full_name, salutation)')
     .eq('school_id', profile.school_id)
     .order('name')
 
