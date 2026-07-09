@@ -65,7 +65,7 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
   async function handleInvite() {
     if (!fullName.trim()) { setError("Please enter the staff member's full name."); return }
     if (!phoneNumber.trim()) { setError('Please enter their phone number.'); return }
-    if (role === 'class_teacher' && !classId) { setError('Please select the class they will manage.'); return }
+    
     setLoading(true)
     setError(null)
 
@@ -146,10 +146,10 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
             {/* Class picker — only for class_teacher */}
             {role === 'class_teacher' && (
               <div className="space-y-2">
-                <Label htmlFor="staffClass">Assign to class *</Label>
+                <Label htmlFor="staffClass">Assign to class <span className="text-muted-foreground font-normal">(Optional)</span></Label>
                 {classes.length === 0 ? (
                   <p className="text-xs text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800/50 rounded-lg px-3 py-2">
-                    No classes found. Please create a class first from the Classes page.
+                    No classes found. You can invite the teacher now and assign a class later.
                   </p>
                 ) : (
                   <select

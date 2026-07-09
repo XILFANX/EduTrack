@@ -58,9 +58,9 @@ export async function inviteStaff(
       token,
       target_name: data.fullName,
       target_phone: data.phoneNumber,
-      target_class_id: data.classId || null,
+      target_entity_id: data.classId || null,
       created_by: user.id,
-    })
+    } as any)
 
     if (invErr) {
       console.error('Invitation insert error:', invErr)

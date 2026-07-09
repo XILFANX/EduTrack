@@ -6,6 +6,7 @@ import {
   ArrowUpRight, CheckCircle2, Clock
 } from 'lucide-react'
 import Link from 'next/link'
+import { OnboardingWizard } from './onboarding-wizard'
 
 function MetricCard({
   label, value, sub, icon: Icon, color, trend
@@ -98,11 +99,13 @@ export default async function DashboardPage() {
     { count: totalStudents },
     { count: totalStaff },
     { count: totalClasses },
+    { count: totalSubjects },
     { data: invoicesRaw },
   ] = await Promise.all([
     supabase.from('students').select('*', { count: 'exact', head: true }).eq('school_id', schoolId).is('deleted_at', null),
     supabase.from('users').select('*', { count: 'exact', head: true }).eq('school_id', schoolId).neq('role', 'principal').is('deleted_at', null),
     supabase.from('classes').select('*', { count: 'exact', head: true }).eq('school_id', schoolId).is('deleted_at', null),
+    supabase.from('subjects').select('*', { count: 'exact', head: true }).eq('school_id', schoolId).is('deleted_at', null),
     supabase.from('invoices').select('amount, balance').eq('school_id', schoolId).is('deleted_at', null),
   ])
 
@@ -131,6 +134,12 @@ export default async function DashboardPage() {
         </p>
       </div>
 
+      <OnboardingWizard 
+        totalStaff={totalStaff ?? 0}
+        totalClasses={totalClasses ?? 0}
+        totalSubjects={totalSubjects ?? 0}
+      />
+
       {/* Key Metrics */}
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         <MetricCard
@@ -145,21 +154,21 @@ export default async function DashboardPage() {
           value={totalStaff ?? 0}
           sub="Teachers & support"
           icon={GraduationCap}
-          color="bg-violet-100 text-violet-600 dark:bg-violet-900/40 dark:text-violet-400"
+          color="bg-slate-100 text-slate-600 dark:bg-slate-800/60 dark:text-slate-400"
         />
         <MetricCard
           label="Classes"
           value={totalClasses ?? 0}
           sub="Active streams"
           icon={BookOpen}
-          color="bg-emerald-100 text-emerald-600 dark:bg-emerald-900/40 dark:text-emerald-400"
+          color="bg-slate-100 text-slate-600 dark:bg-slate-800/60 dark:text-slate-400"
         />
         <MetricCard
           label="Fee Collection"
           value={totalExpected > 0 ? `${Math.round((totalCollected / totalExpected) * 100)}%` : '—'}
           sub="This term"
           icon={Banknote}
-          color="bg-amber-100 text-amber-600 dark:bg-amber-900/40 dark:text-amber-400"
+          color="bg-emerald-100 text-emerald-600 dark:bg-emerald-900/40 dark:text-emerald-400"
         />
       </div>
 
