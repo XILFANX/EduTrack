@@ -15,11 +15,13 @@ export default async function SettingsPage() {
 
   if (!profile?.school_id) redirect('/onboarding')
 
-  const { data: school } = await supabase
+  const { data: schoolRaw } = await supabase
     .from('schools')
-    .select('name, curriculum_type, subscription_plan, subscription_status')
+    .select('name, subscription_tier')
     .eq('id', profile.school_id)
     .single()
+
+  const school = schoolRaw as any
 
   const SETTINGS_SECTIONS = [
     { label: 'School Profile', href: '/dashboard/settings/school', icon: '🏫', desc: 'School name, logo, contact info' },
@@ -42,9 +44,7 @@ export default async function SettingsPage() {
         <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">School Info</p>
         <div className="grid grid-cols-2 gap-3">
           {[
-            { label: 'Curriculum', value: school?.curriculum_type ? String(school.curriculum_type).toUpperCase() : '—' },
-            { label: 'Plan', value: school?.subscription_plan || 'Pro' },
-            { label: 'Status', value: school?.subscription_status || 'Active' },
+            { label: 'Subscription', value: school?.subscription_tier || 'Trial' },
             { label: 'Your Role', value: profile.role?.replace('_', ' ').toUpperCase() },
           ].map((item) => (
             <div key={item.label} className="flex justify-between py-1 border-b border-slate-50 dark:border-slate-800/50">

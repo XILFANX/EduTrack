@@ -16,11 +16,13 @@ export default async function SchoolProfileSettings() {
 
   if (!profile?.school_id) redirect('/onboarding')
 
-  const { data: school } = await supabase
+  const { data: schoolRaw } = await supabase
     .from('schools')
-    .select('name, curriculum_type, address, phone, email')
+    .select('name, address')
     .eq('id', profile.school_id)
     .single()
+
+  const school = schoolRaw as any
 
   return (
     <div className="p-4 md:p-6 space-y-6 max-w-3xl mx-auto pb-32">
@@ -35,28 +37,10 @@ export default async function SchoolProfileSettings() {
         <p className="text-slate-500 text-sm">Basic information about your school as registered on EduTrack.</p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <div className="space-y-1.5">
+          <div className="space-y-1.5 md:col-span-2">
             <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide">School Name</label>
             <div className="bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-2.5 text-sm font-medium text-foreground">
               {school?.name || '—'}
-            </div>
-          </div>
-          <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Curriculum</label>
-            <div className="bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-2.5 text-sm font-medium text-foreground uppercase">
-              {school?.curriculum_type || '—'}
-            </div>
-          </div>
-          <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Phone</label>
-            <div className="bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-2.5 text-sm font-medium text-foreground">
-              {school?.phone || '—'}
-            </div>
-          </div>
-          <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Email</label>
-            <div className="bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-2.5 text-sm font-medium text-foreground">
-              {school?.email || '—'}
             </div>
           </div>
           {school?.address && (
