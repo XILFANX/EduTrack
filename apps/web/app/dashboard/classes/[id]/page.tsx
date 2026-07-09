@@ -16,10 +16,10 @@ export default async function ClassDetailPage({ params }: { params: { id: string
 
   if (!profile?.school_id) return null
 
-  // Fetch class details — include salutation from users
+  // Fetch class details
   const { data: cls } = await supabase
     .from('classes')
-    .select('*, users!classes_class_teacher_id_fkey(id, full_name, salutation)')
+    .select('*, users!classes_class_teacher_id_fkey(id, full_name)')
     .eq('id', params.id)
     .eq('school_id', profile.school_id)
     .single()

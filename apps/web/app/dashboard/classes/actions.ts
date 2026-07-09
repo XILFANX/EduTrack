@@ -3,6 +3,31 @@
 import { createAdminClient } from '@/lib/supabase/admin'
 import { revalidatePath } from 'next/cache'
 
+export async function deleteClass(classId: string) {
+  const admin = createAdminClient()
+
+  // Check if class has enrolled students before deleting
+  const { count } = await admin
+    .from('students')
+    .select('id', { count: 'exact', head: true })
+    .eq('class_id', classId)
+    .is('deleted_at', null)
+
+  if ((count ?? 0) > 0) {
+    return { error: `This class has ${count} enrolled student(s). Please remove or transfer them before deleting the class.` }
+  }
+
+  const { error } = await admin
+    .from('classes')
+    .update({ deleted_at: new Date().toISOString() })
+    .eq('id', classId)
+
+  if (error) return { error: error.message }
+
+  revalidatePath('/dashboard/classes')
+  return { success: true }
+}
+
 export async function createClass(schoolId: string, name: string, classTeacherId?: string) {
   const admin = createAdminClient()
 

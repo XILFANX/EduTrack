@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { UserPlus, ArrowLeft, MoreVertical, GraduationCap, Edit, Trash2, UserCheck, X, Check } from 'lucide-react'
 import Link from 'next/link'
@@ -12,7 +13,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { deleteStudent } from '@/app/dashboard/students/actions'
-import { assignTeacher } from '../actions'
+import { assignTeacher, deleteClass } from '../actions'
 import { useConfirmDialog, ConfirmDialog } from '@/components/ui/confirm-dialog'
 
 interface Teacher {
@@ -33,6 +34,7 @@ interface ClassDetailClientProps {
 }
 
 export function ClassDetailClient({ cls, initialStudents, teacherName, teacherSalutation, teacherId, teachers, schoolId }: ClassDetailClientProps) {
+  const router = useRouter()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [students, setStudents] = useState(initialStudents)
   const { dialogProps, confirm, setLoading: setConfirmLoading } = useConfirmDialog()
@@ -49,6 +51,25 @@ export function ClassDetailClient({ cls, initialStudents, teacherName, teacherSa
   const displayTeacherName = currentTeacherSalutation && currentTeacherName
     ? `${currentTeacherSalutation} ${currentTeacherName}`
     : currentTeacherName
+
+  async function handleDeleteClass() {
+    const isConfirmed = await confirm({
+      title: 'Delete Class',
+      description: `Are you sure you want to delete "${cls.name}"? This cannot be undone. Classes with enrolled students cannot be deleted.`,
+      confirmLabel: 'Delete Class',
+      variant: 'danger'
+    })
+    if (!isConfirmed) return
+    setConfirmLoading(true)
+    const res = await deleteClass(cls.id)
+    setConfirmLoading(false)
+    if ('error' in res && res.error) {
+      alert(res.error)
+    } else {
+      router.push('/dashboard/classes')
+      router.refresh()
+    }
+  }
 
   async function handleDelete(id: string) {
     const isConfirmed = await confirm({
@@ -91,12 +112,19 @@ export function ClassDetailClient({ cls, initialStudents, teacherName, teacherSa
         <Link href="/dashboard/classes" className="w-10 h-10 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors shrink-0">
           <ArrowLeft className="w-5 h-5 text-slate-500" />
         </Link>
-        <div>
-          <h1 className="text-2xl font-bold text-foreground">{cls.name}</h1>
+        <div className="flex-1 min-w-0">
+          <h1 className="text-2xl font-bold text-foreground truncate">{cls.name}</h1>
           <p className="text-sm text-muted-foreground mt-0.5">
             {students.length} student{students.length !== 1 ? 's' : ''} enrolled
           </p>
         </div>
+        <button
+          onClick={handleDeleteClass}
+          className="shrink-0 p-2 rounded-xl text-slate-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+          title="Delete class"
+        >
+          <Trash2 className="w-4 h-4" />
+        </button>
       </div>
 
       {/* Class Info Card */}
