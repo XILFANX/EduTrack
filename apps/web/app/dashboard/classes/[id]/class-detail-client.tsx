@@ -12,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { deleteStudent } from '@/app/dashboard/students/actions'
+import { useConfirmDialog, ConfirmDialog } from '@/components/ui/confirm-dialog'
 
 interface ClassDetailClientProps {
   cls: { id: string; name: string }
@@ -22,10 +23,20 @@ interface ClassDetailClientProps {
 export function ClassDetailClient({ cls, initialStudents, teacherName }: ClassDetailClientProps) {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [students, setStudents] = useState(initialStudents)
+  const { dialogProps, confirm, setLoading } = useConfirmDialog()
 
   async function handleDelete(id: string) {
-    if (!confirm('Are you sure you want to delete this student?')) return
+    const isConfirmed = await confirm({
+      title: "Remove Student",
+      description: "Are you sure you want to remove this student? This action cannot be undone.",
+      confirmLabel: "Remove",
+      variant: "danger"
+    })
+    if (!isConfirmed) return
+    
+    setLoading(true)
     const res = await deleteStudent(id)
+    setLoading(false)
     if ('success' in res) {
       setStudents(students.filter(s => s.id !== id))
     } else {
@@ -119,6 +130,7 @@ export function ClassDetailClient({ cls, initialStudents, teacherName }: ClassDe
           setTimeout(() => window.location.reload(), 1500)
         }}
       />
+      <ConfirmDialog {...dialogProps} />
     </div>
   )
 }

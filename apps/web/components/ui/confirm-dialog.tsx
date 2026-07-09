@@ -23,8 +23,8 @@ const VARIANT_STYLES = {
   },
   warning: {
     icon: "⚠️",
-    iconBg: "bg-amber-100 dark:bg-amber-900/30",
-    confirmBtn: "bg-amber-600 hover:bg-amber-700 focus:ring-amber-500",
+    iconBg: "bg-red-100 dark:bg-red-900/30",
+    confirmBtn: "bg-red-600 hover:bg-red-700 focus:ring-red-500",
   },
   default: {
     icon: "❓",

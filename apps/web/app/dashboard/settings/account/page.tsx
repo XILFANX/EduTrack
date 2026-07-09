@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { ArrowLeft } from 'lucide-react'
 import AccountClient from './account-client'
+import DeleteAccountButton from './delete-account-button'
 
 export default async function AccountSettingsPage() {
   const supabase = await createClient()
@@ -37,9 +38,7 @@ export default async function AccountSettingsPage() {
         <p className="text-sm text-red-800 dark:text-red-300 mb-4">
           Deleting your account is permanent. All school data associated with your profile will be removed.
         </p>
-        <button className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl text-sm font-semibold transition-colors">
-          Delete Account
-        </button>
+        <DeleteAccountButton />
       </div>
     </div>
   )

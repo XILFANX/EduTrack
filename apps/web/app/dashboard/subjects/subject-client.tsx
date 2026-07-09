@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { deleteSubject } from './actions'
+import { useConfirmDialog, ConfirmDialog } from '@/components/ui/confirm-dialog'
 
 interface SubjectClientProps {
   subjects: any[]
@@ -20,10 +21,20 @@ interface SubjectClientProps {
 export function SubjectClient({ subjects, schoolId }: SubjectClientProps) {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [subjectList, setSubjectList] = useState(subjects)
+  const { dialogProps, confirm, setLoading } = useConfirmDialog()
 
   async function handleDelete(id: string) {
-    if (!confirm('Are you sure you want to delete this subject?')) return
+    const isConfirmed = await confirm({
+      title: "Delete Subject",
+      description: "Are you sure you want to delete this subject? This action cannot be undone.",
+      confirmLabel: "Delete",
+      variant: "danger"
+    })
+    if (!isConfirmed) return
+    
+    setLoading(true)
     const res = await deleteSubject(id)
+    setLoading(false)
     if ('success' in res) {
       setSubjectList(subjectList.filter(s => s.id !== id))
     } else {
@@ -111,6 +122,7 @@ export function SubjectClient({ subjects, schoolId }: SubjectClientProps) {
         onClose={() => setIsModalOpen(false)} 
         schoolId={schoolId}
       />
+      <ConfirmDialog {...dialogProps} />
     </div>
   )
 }

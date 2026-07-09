@@ -12,11 +12,13 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { deleteStudent } from './actions'
+import { useConfirmDialog, ConfirmDialog } from '@/components/ui/confirm-dialog'
 
 export function StudentsPageClient({ initialStudents, classes }: { initialStudents: any[], classes: any[] }) {
   const [searchQuery, setSearchQuery] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [students, setStudents] = useState(initialStudents)
+  const { dialogProps, confirm, setLoading } = useConfirmDialog()
 
   // Filter students based on search query
   const filteredStudents = students.filter(student => {
@@ -31,8 +33,17 @@ export function StudentsPageClient({ initialStudents, classes }: { initialStuden
   })
 
   async function handleDelete(id: string) {
-    if (!confirm('Are you sure you want to delete this student?')) return
+    const isConfirmed = await confirm({
+      title: "Delete Student",
+      description: "Are you sure you want to delete this student record? This action cannot be undone.",
+      confirmLabel: "Delete",
+      variant: "danger"
+    })
+    if (!isConfirmed) return
+    
+    setLoading(true)
     const res = await deleteStudent(id)
+    setLoading(false)
     if ('success' in res) {
       setStudents(students.filter(s => s.id !== id))
     } else {
@@ -140,6 +151,7 @@ export function StudentsPageClient({ initialStudents, classes }: { initialStuden
           setTimeout(() => window.location.reload(), 1500)
         }}
       />
+      <ConfirmDialog {...dialogProps} />
     </div>
   )
 }
