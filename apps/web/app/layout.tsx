@@ -4,6 +4,7 @@ import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
 
 import { AppPrompts } from '@/components/layout/app-prompts'
+import { Toaster } from '@/components/ui/sonner'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -63,6 +64,7 @@ export default function RootLayout({
         >
           {children}
           <AppPrompts />
+          <Toaster richColors position="top-right" />
         </ThemeProvider>
       </body>
     </html>

@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { deleteStudent, permanentlyDeleteStudent } from './actions'
 import { useConfirmDialog, ConfirmDialog } from '@/components/ui/confirm-dialog'
+import { toast } from 'sonner'
 
 export function StudentsPageClient({ initialStudents, classes, autoEnroll }: { initialStudents: any[], classes: any[], autoEnroll?: boolean }) {
   const [searchQuery, setSearchQuery] = useState('')
@@ -61,6 +62,7 @@ export function StudentsPageClient({ initialStudents, classes, autoEnroll }: { i
     setLoading(false)
     if ('success' in res) {
       setStudents(students.filter(s => s.id !== id))
+      toast.success('Student removed')
     } else {
       alert(res.error)
     }
@@ -80,6 +82,7 @@ export function StudentsPageClient({ initialStudents, classes, autoEnroll }: { i
     setLoading(false)
     if ('success' in res) {
       setStudents(students.filter(s => s.id !== id))
+      toast.success(`${res.success ? name : name} permanently deleted`)
     } else {
       alert(res.error)
     }

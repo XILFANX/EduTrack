@@ -1,12 +1,13 @@
 'use client'
 
 import { useState } from 'react'
-import { UserPlus, UserCog, Search, Link as LinkIcon, Trash2, Check, Copy } from 'lucide-react'
+import { UserPlus, UserCog, Search, Link as LinkIcon, Trash2, Check, Copy, X, Phone, Calendar, ExternalLink } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { InviteStaffModal } from './invite-staff-modal'
 import { useRouter } from 'next/navigation'
 import { useConfirmDialog, ConfirmDialog } from '@/components/ui/confirm-dialog'
 import { deleteInviteAndAccount } from './actions'
+import { toast } from 'sonner'
 
 const ROLE_LABELS: Record<string, { label: string; color: string }> = {
   class_teacher:   { label: 'Class Teacher',    color: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' },
@@ -47,7 +48,7 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
   const [search, setSearch] = useState('')
   const [filterRole, setFilterRole] = useState<string>('all')
   const [copiedToken, setCopiedToken] = useState<string | null>(null)
-  const [expandedId, setExpandedId] = useState<string | null>(null)
+  const [detailMember, setDetailMember] = useState<StaffMember | null>(null)
   
   const { dialogProps, confirm, setLoading } = useConfirmDialog()
 
@@ -59,13 +60,13 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
     return matchSearch && matchRole
   })
 
-  const groupedStaff = filteredStaff.reduce((acc, member) => {
-    if (!acc[member.role]) acc[member.role] = []
-    acc[member.role].push(member)
+  // Group by role in the defined ROLE_LABELS order
+  const groupedStaff = Object.keys(ROLE_LABELS).reduce((acc, role) => {
+    const members = filteredStaff.filter(s => s.role === role)
+    if (members.length > 0) acc[role] = members
     return acc
   }, {} as Record<string, StaffMember[]>)
 
-  // We only show pending invitations in the UI
   const pendingInvitations = invitations.filter(inv => !inv.used_at)
 
   function getInitials(name: string) {
@@ -77,9 +78,10 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
     navigator.clipboard.writeText(link)
     setCopiedToken(token)
     setTimeout(() => setCopiedToken(null), 2000)
+    toast.success('Invite link copied to clipboard')
   }
 
-  async function handleDeleteInvite(id: string, isUsed: boolean) {
+  async function handleDeleteInvite(id: string, isUsed: boolean, name?: string) {
     const ok = await confirm({
       title: isUsed ? 'Permanently Remove Staff' : 'Delete Invitation',
       description: isUsed 
@@ -96,8 +98,16 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
     setLoading(false)
     
     if (res.error) alert(res.error)
-    else router.refresh()
+    else {
+      toast.success(isUsed ? `${name ?? 'Staff member'} removed` : 'Invitation deleted')
+      setDetailMember(null)
+      router.refresh()
+    }
   }
+
+  const detailInvite = detailMember
+    ? invitations.find(i => i.target_phone === detailMember.phone_number && i.used_at)
+    : null
 
   return (
     <div className="space-y-6">
@@ -118,26 +128,29 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
 
       {/* Pending Invitations */}
       {pendingInvitations.length > 0 && (
-        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden mb-8">
-          <div className="px-4 py-3 bg-amber-50/50 dark:bg-amber-900/10 border-b border-slate-100 dark:border-slate-800">
-            <h2 className="text-sm font-semibold text-amber-800 dark:text-amber-500">Pending Invitations</h2>
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden">
+          <div className="px-4 py-3 bg-amber-50/50 dark:bg-amber-900/10 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+            <h2 className="text-sm font-semibold text-amber-800 dark:text-amber-500">Pending Invitations ({pendingInvitations.length})</h2>
           </div>
           <div className="divide-y divide-slate-100 dark:divide-slate-800/50">
             {pendingInvitations.map(inv => {
               const roleInfo = ROLE_LABELS[inv.role] ?? { label: inv.role, color: 'bg-slate-100 text-slate-700' }
               return (
-                <div key={inv.id} className="flex items-center gap-4 p-4 hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors">
+                <div key={inv.id} className="flex items-center gap-3 p-4 hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors">
+                  <div className="w-9 h-9 rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 flex items-center justify-center text-sm font-bold shrink-0">
+                    {getInitials(inv.target_name || '??')}
+                  </div>
                   <div className="flex-1 min-w-0">
                     <p className="font-semibold text-foreground text-sm truncate">{inv.target_name}</p>
                     <div className="flex items-center gap-2 mt-0.5">
                       <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full shrink-0 ${roleInfo.color}`}>
                         {roleInfo.label}
                       </span>
-                      <span className="text-xs text-muted-foreground">{inv.target_phone}</span>
+                      <span className="text-xs text-muted-foreground truncate">{inv.target_phone}</span>
                     </div>
                   </div>
                   
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1.5 shrink-0">
                     <Button 
                       variant="outline" 
                       size="sm" 
@@ -145,13 +158,13 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
                       onClick={() => handleCopyLink(inv.token)}
                     >
                       {copiedToken === inv.token ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
-                      <span className="hidden sm:inline">{copiedToken === inv.token ? 'Copied' : 'Copy Link'}</span>
+                      <span className="hidden sm:inline">{copiedToken === inv.token ? 'Copied' : 'Copy'}</span>
                     </Button>
                     <a
                       href={`https://wa.me/?text=${encodeURIComponent(`Hello ${inv.target_name}! 👋\n\nYou have been invited to join EduTrack. Click the link below to set up your account:\n${typeof window !== 'undefined' ? window.location.origin : ''}/invite/${inv.token}\n\n_This link is permanent and does not expire._`)}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-1.5 h-8 px-3 text-xs font-medium bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-md transition-colors"
+                      className="h-8 px-3 flex items-center text-xs font-medium bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-md transition-colors"
                     >
                       WhatsApp
                     </a>
@@ -159,7 +172,7 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
                       variant="ghost" 
                       size="icon" 
                       className="h-8 w-8 text-slate-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20"
-                      onClick={() => handleDeleteInvite(inv.id, false)}
+                      onClick={() => handleDeleteInvite(inv.id, false, inv.target_name ?? undefined)}
                     >
                       <Trash2 className="w-4 h-4" />
                     </Button>
@@ -197,124 +210,146 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
 
       {/* Staff List */}
       {filteredStaff.length === 0 ? (
-        <div className="text-center py-20 space-y-3">
+        <div className="text-center py-20 space-y-4">
           <div className="w-16 h-16 rounded-2xl bg-muted flex items-center justify-center mx-auto">
             <UserCog className="w-8 h-8 text-muted-foreground" />
           </div>
-          <p className="font-semibold text-foreground">
-            {staff.length === 0 ? 'No active staff members' : 'No results found'}
-          </p>
-          <p className="text-sm text-muted-foreground max-w-xs mx-auto">
-            {staff.length === 0
-              ? 'Active staff will appear here once they complete their account setup using the invite link.'
-              : 'Try adjusting your search or filter.'}
-          </p>
+          <div>
+            <p className="font-semibold text-foreground">
+              {staff.length === 0 ? 'No active staff members yet' : 'No results found'}
+            </p>
+            <p className="text-sm text-muted-foreground max-w-xs mx-auto mt-1">
+              {staff.length === 0
+                ? 'Staff appear here once they complete setup using their invite link.'
+                : 'Try adjusting your search or filter.'}
+            </p>
+          </div>
+          {staff.length === 0 && (
+            <Button className="bg-blue-600 hover:bg-blue-700 gap-2" onClick={() => setModalOpen(true)}>
+              <UserPlus className="w-4 h-4" /> Invite First Staff Member
+            </Button>
+          )}
         </div>
       ) : (
-        <div className="space-y-2">
-          {Object.entries(ROLE_LABELS).map(([roleKey, roleInfo]) => {
-            const membersInRole = groupedStaff[roleKey]
-            if (!membersInRole || membersInRole.length === 0) return null
-            
+        <div className="space-y-8">
+          {Object.entries(groupedStaff).map(([roleKey, members]) => {
+            const roleInfo = ROLE_LABELS[roleKey]
             return (
-              <div key={roleKey} className="space-y-3 mb-8">
-                <h3 className="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider pl-1">
-                  {roleInfo.label}s ({membersInRole.length})
-                </h3>
-                <div className="space-y-3">
-                  {membersInRole.map((member) => {
+              <div key={roleKey}>
+                {/* Role section header */}
+                <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-3 pl-1">
+                  {roleInfo.label}s · {members.length}
+                </p>
+                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden divide-y divide-slate-100 dark:divide-slate-800/50">
+                  {members.map((member) => {
                     const invite = invitations.find(i => i.target_phone === member.phone_number && i.used_at)
-                    const isExpanded = expandedId === member.id
-                    
                     return (
-                      <div
+                      <button
                         key={member.id}
-                        className={`bg-white dark:bg-slate-900 border transition-all overflow-hidden ${isExpanded ? 'border-blue-500 ring-1 ring-blue-500 shadow-md rounded-2xl' : 'border-slate-200 dark:border-slate-800 rounded-2xl hover:border-blue-300 dark:hover:border-blue-700'}`}
+                        onClick={() => setDetailMember(member)}
+                        className="w-full flex items-center gap-4 px-4 py-3.5 hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors text-left group"
                       >
-                        {/* Header (Always visible) */}
-                        <div 
-                          className="flex items-center gap-4 p-4 cursor-pointer"
-                          onClick={() => setExpandedId(isExpanded ? null : member.id)}
-                        >
-                          <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 flex items-center justify-center text-sm font-bold shrink-0">
-                            {getInitials(member.full_name)}
-                          </div>
-                          
-                          <div className="flex-1 min-w-0">
-                            <p className="font-semibold text-foreground truncate">{member.full_name}</p>
-                            <p className="text-xs text-muted-foreground truncate">{member.phone_number}</p>
-                          </div>
-                          
-                          <div className="shrink-0 flex items-center gap-2">
-                            {invite && !isExpanded && (
-                              <Button 
-                                variant="ghost" 
-                                size="icon" 
-                                className="h-8 w-8 text-slate-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20"
-                                onClick={(e) => { e.stopPropagation(); handleDeleteInvite(invite.id, true); }}
-                                title="Revoke Access"
-                              >
-                                <Trash2 className="w-4 h-4" />
-                              </Button>
-                            )}
-                          </div>
+                        <div className="w-9 h-9 rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 flex items-center justify-center text-sm font-bold shrink-0">
+                          {getInitials(member.full_name)}
                         </div>
-
-                        {/* Expanded Details */}
-                        {isExpanded && (
-                          <div className="px-4 pb-4 pt-2 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/10">
-                            <div className="grid grid-cols-2 gap-4 mb-4">
-                              <div>
-                                <p className="text-xs text-muted-foreground font-medium mb-1">Date Joined</p>
-                                <p className="text-sm text-foreground font-medium">{new Date(member.created_at).toLocaleDateString()}</p>
-                              </div>
-                              <div>
-                                <p className="text-xs text-muted-foreground font-medium mb-1">Account Status</p>
-                                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400">
-                                  Active Portal
-                                </span>
-                              </div>
-                            </div>
-
-                            {invite && (
-                              <div className="flex flex-col sm:flex-row gap-2 pt-3 border-t border-slate-200 dark:border-slate-700/50">
-                                <Button 
-                                  variant="outline" 
-                                  size="sm" 
-                                  className="gap-1.5 flex-1"
-                                  onClick={() => handleCopyLink(invite.token)}
-                                >
-                                  {copiedToken === invite.token ? <Check className="w-4 h-4 text-emerald-500" /> : <LinkIcon className="w-4 h-4" />}
-                                  <span>{copiedToken === invite.token ? 'Copied' : 'Copy Permanent Link'}</span>
-                                </Button>
-                                <a
-                                  href={`https://wa.me/?text=${encodeURIComponent(`Hello ${member.full_name}! 👋\n\nYour permanent EduTrack access link is:\n${typeof window !== 'undefined' ? window.location.origin : ''}/invite/${invite.token}\n\n_This link is permanent and does not expire._`)}`}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="flex-1 flex items-center justify-center gap-1.5 h-9 px-3 text-sm font-medium bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-md transition-colors"
-                                >
-                                  Send WhatsApp
-                                </a>
-                                <Button 
-                                  variant="destructive" 
-                                  size="sm" 
-                                  className="gap-1.5 flex-1"
-                                  onClick={() => handleDeleteInvite(invite.id, true)}
-                                >
-                                  <Trash2 className="w-4 h-4" />
-                                  Permanently Delete
-                                </Button>
-                              </div>
-                            )}
-                          </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="font-semibold text-foreground text-sm truncate group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{member.full_name}</p>
+                          <p className="text-xs text-muted-foreground truncate">{member.phone_number}</p>
+                        </div>
+                        {invite && (
+                          <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 shrink-0 hidden sm:inline-flex">
+                            Active
+                          </span>
                         )}
-                      </div>
+                        <ExternalLink className="w-3.5 h-3.5 text-slate-300 dark:text-slate-600 group-hover:text-blue-400 transition-colors shrink-0" />
+                      </button>
                     )
                   })}
                 </div>
               </div>
             )
           })}
+        </div>
+      )}
+
+      {/* Staff Detail Sheet */}
+      {detailMember && (
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center">
+          {/* Backdrop */}
+          <div 
+            className="absolute inset-0 bg-black/40 backdrop-blur-sm" 
+            onClick={() => setDetailMember(null)}
+          />
+          {/* Panel */}
+          <div className="relative w-full sm:max-w-sm bg-white dark:bg-slate-900 rounded-t-3xl sm:rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 z-10 overflow-hidden">
+            {/* Drag handle */}
+            <div className="w-10 h-1 bg-slate-200 dark:bg-slate-700 rounded-full mx-auto mt-3 mb-4 sm:hidden" />
+
+            {/* Header */}
+            <div className="flex items-center gap-4 px-5 pb-4">
+              <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 flex items-center justify-center text-base font-bold shrink-0">
+                {getInitials(detailMember.full_name)}
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="font-bold text-foreground truncate">{detailMember.full_name}</p>
+                <span className={`text-[11px] font-semibold px-2 py-0.5 rounded-full mt-0.5 inline-block ${ROLE_LABELS[detailMember.role]?.color ?? 'bg-slate-100 text-slate-700'}`}>
+                  {ROLE_LABELS[detailMember.role]?.label ?? detailMember.role}
+                </span>
+              </div>
+              <button 
+                onClick={() => setDetailMember(null)}
+                className="p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 transition-colors"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Details */}
+            <div className="px-5 pb-2 space-y-3 border-t border-slate-100 dark:border-slate-800 pt-4">
+              <div className="flex items-center gap-3 text-sm">
+                <Phone className="w-4 h-4 text-muted-foreground shrink-0" />
+                <span className="text-foreground">{detailMember.phone_number}</span>
+              </div>
+              <div className="flex items-center gap-3 text-sm">
+                <Calendar className="w-4 h-4 text-muted-foreground shrink-0" />
+                <span className="text-foreground">Joined {new Date(detailMember.created_at).toLocaleDateString('en-KE', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+              </div>
+            </div>
+
+            {/* Actions */}
+            {detailInvite && (
+              <div className="px-5 pb-5 pt-4 space-y-2 border-t border-slate-100 dark:border-slate-800 mt-3">
+                <div className="flex gap-2">
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    className="flex-1 gap-1.5"
+                    onClick={() => handleCopyLink(detailInvite.token)}
+                  >
+                    {copiedToken === detailInvite.token ? <Check className="w-4 h-4 text-emerald-500" /> : <LinkIcon className="w-4 h-4" />}
+                    {copiedToken === detailInvite.token ? 'Copied!' : 'Copy Portal Link'}
+                  </Button>
+                  <a
+                    href={`https://wa.me/?text=${encodeURIComponent(`Hello ${detailMember.full_name}! 👋\n\nYour permanent EduTrack access link:\n${typeof window !== 'undefined' ? window.location.origin : ''}/invite/${detailInvite.token}\n\n_This link is permanent and does not expire._`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 flex items-center justify-center gap-1.5 h-9 px-3 text-sm font-medium bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-md transition-colors"
+                  >
+                    WhatsApp
+                  </a>
+                </div>
+                <Button 
+                  variant="outline"
+                  size="sm"
+                  className="w-full gap-2 text-red-600 border-red-200 hover:bg-red-50 dark:border-red-900/50 dark:hover:bg-red-900/20"
+                  onClick={() => handleDeleteInvite(detailInvite.id, true, detailMember.full_name)}
+                >
+                  <Trash2 className="w-4 h-4" />
+                  Permanently Remove {detailMember.full_name.split(' ')[0]}
+                </Button>
+              </div>
+            )}
+          </div>
         </div>
       )}
 

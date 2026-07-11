@@ -5,19 +5,19 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { BookMarked, Info } from 'lucide-react'
+import { BookMarked, Info, CheckCircle2 } from 'lucide-react'
 import { createSubject } from './actions'
 import { getTeachers, getClasses } from '../classes/actions'
-import { useRouter } from 'next/navigation'
+import { toast } from 'sonner'
 
 interface AddSubjectModalProps {
   open: boolean
   onClose: () => void
   schoolId: string
+  onSuccess: (subject: any) => void
 }
 
-export function AddSubjectModal({ open, onClose, schoolId }: AddSubjectModalProps) {
-  const router = useRouter()
+export function AddSubjectModal({ open, onClose, schoolId, onSuccess }: AddSubjectModalProps) {
   const [name, setName] = useState('')
   const [teacherId, setTeacherId] = useState('')
   const [classId, setClassId] = useState('')
@@ -44,7 +44,11 @@ export function AddSubjectModal({ open, onClose, schoolId }: AddSubjectModalProp
     const res = await createSubject(schoolId, name, teacherId || undefined, classId || undefined)
     setLoading(false)
     if (res.error) { setError(res.error) }
-    else { router.refresh(); handleClose() }
+    else {
+      toast.success(`"${name.trim()}" added successfully!`)
+      onSuccess(res.data)
+      handleClose()
+    }
   }
 
   return (

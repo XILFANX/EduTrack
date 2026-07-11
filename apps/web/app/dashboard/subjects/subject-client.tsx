@@ -11,6 +11,7 @@ import { AddSubjectModal } from './add-subject-modal'
 import { deleteSubject, assignSubjectTeacher } from './actions'
 import { useConfirmDialog, ConfirmDialog } from '@/components/ui/confirm-dialog'
 import { getTeachers } from '../classes/actions'
+import { toast } from 'sonner'
 
 interface SubjectClientProps {
   subjects: any[]
@@ -35,6 +36,10 @@ export function SubjectClient({ subjects, classes, schoolId }: SubjectClientProp
   const [assigning, setAssigning] = useState(false)
   const [assignError, setAssignError] = useState<string | null>(null)
   const [currentTeacher, setCurrentTeacher] = useState<any>(null)
+
+  function handleSubjectAdded(newSubject: any) {
+    setSubjectList(prev => [newSubject, ...prev])
+  }
 
   // Subjects belonging to the selected class
   const classSubjects = selectedClass
@@ -76,6 +81,7 @@ export function SubjectClient({ subjects, classes, schoolId }: SubjectClientProp
       setCurrentTeacher(t ?? null)
       setSubjectList(prev => prev.map(s => s.id === selectedSubject.id ? { ...s, teacher_id: selectedTeacherId || null, users: t ?? null } : s))
       setAssignMode(false)
+      toast.success(t ? `Assigned ${t.full_name} to ${selectedSubject.name}` : 'Teacher removed')
     }
   }
 
@@ -90,8 +96,10 @@ export function SubjectClient({ subjects, classes, schoolId }: SubjectClientProp
     const res = await deleteSubject(id)
     setLoading(false)
     if ('success' in res) {
+      const deleted = subjectList.find(s => s.id === id)
       setSubjectList(prev => prev.filter(s => s.id !== id))
       if (view === 'detail') { setView('subjects'); setSelectedSubject(null) }
+      toast.success(deleted ? `"${deleted.name}" deleted` : 'Subject deleted')
     } else { alert(res.error) }
   }
 
@@ -179,7 +187,7 @@ export function SubjectClient({ subjects, classes, schoolId }: SubjectClientProp
           </div>
         )}
 
-        <AddSubjectModal open={isModalOpen} onClose={() => setIsModalOpen(false)} schoolId={schoolId} />
+        <AddSubjectModal open={isModalOpen} onClose={() => setIsModalOpen(false)} schoolId={schoolId} onSuccess={handleSubjectAdded} />
         <ConfirmDialog {...dialogProps} />
       </div>
     )
@@ -216,9 +224,12 @@ export function SubjectClient({ subjects, classes, schoolId }: SubjectClientProp
               <BookMarked className="w-8 h-8 text-blue-600 dark:text-blue-400" />
             </div>
             <h2 className="text-lg font-semibold text-foreground">No subjects for this class</h2>
-            <p className="text-sm text-muted-foreground max-w-sm mx-auto mt-2">
+            <p className="text-sm text-muted-foreground max-w-sm mx-auto mt-2 mb-6">
               Add a subject and assign it to <strong>{selectedClass?.name}</strong>.
             </p>
+            <Button className="bg-blue-600 hover:bg-blue-700 gap-2" onClick={() => setIsModalOpen(true)}>
+              <Plus className="w-4 h-4" /> Add First Subject
+            </Button>
           </div>
         ) : (
           <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden">
@@ -258,7 +269,7 @@ export function SubjectClient({ subjects, classes, schoolId }: SubjectClientProp
           </div>
         )}
 
-        <AddSubjectModal open={isModalOpen} onClose={() => setIsModalOpen(false)} schoolId={schoolId} />
+        <AddSubjectModal open={isModalOpen} onClose={() => setIsModalOpen(false)} schoolId={schoolId} onSuccess={handleSubjectAdded} />
         <ConfirmDialog {...dialogProps} />
       </div>
     )
