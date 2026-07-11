@@ -19,8 +19,8 @@ interface Props {
 }
 
 const ROLE_COLORS: Record<string, { badge: string; btn: string; glow: string }> = {
-  class_teacher:    { badge: 'bg-violet-100 text-violet-700 dark:bg-violet-900/40 dark:text-violet-300',   btn: 'bg-violet-600 hover:bg-violet-700',   glow: 'from-violet-500/20 to-slate-900' },
-  subject_teacher:  { badge: 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300',           btn: 'bg-blue-600 hover:bg-blue-700',       glow: 'from-blue-500/20 to-slate-900' },
+  class_teacher:    { badge: 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300',   btn: 'bg-blue-600 hover:bg-blue-700',   glow: 'from-blue-500/20 to-slate-900' },
+  subject_teacher:  { badge: 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/40 dark:text-cyan-300',           btn: 'bg-cyan-600 hover:bg-cyan-700',       glow: 'from-cyan-500/20 to-slate-900' },
   bursar:           { badge: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300', btn: 'bg-emerald-600 hover:bg-emerald-700', glow: 'from-emerald-500/20 to-slate-900' },
   librarian:        { badge: 'bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300',       btn: 'bg-amber-500 hover:bg-amber-600',     glow: 'from-amber-500/20 to-slate-900' },
   storekeeper:      { badge: 'bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-300',   btn: 'bg-orange-600 hover:bg-orange-700',   glow: 'from-orange-500/20 to-slate-900' },
@@ -37,6 +37,7 @@ export default function InviteClient({
 
   const [name, setName]               = useState(prefilledName)
   const [phone, setPhone]             = useState(registeredPhone ?? '')
+  const [admissionNumber, setAdmissionNumber] = useState('')
   const [password, setPassword]       = useState('')
   const [confirmPass, setConfirmPass] = useState('')
   const [otp, setOtp]                 = useState('')
@@ -103,6 +104,9 @@ export default function InviteClient({
     formData.append('name', name)
     formData.append('phone', phone)
     formData.append('password', password)
+    if (role === 'parent') {
+      formData.append('admissionNumber', admissionNumber)
+    }
     if (viewState === 'otp') {
       formData.append('otp', otp)
     }
@@ -216,6 +220,26 @@ export default function InviteClient({
                     className={`w-full bg-muted border border-border text-foreground placeholder-muted-foreground rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition ${viewState === 'login' ? 'opacity-70 cursor-not-allowed' : ''}`}
                   />
                 </div>
+
+                {/* Admission Number — Parent only, Registration only */}
+                {role === 'parent' && viewState === 'register' && (
+                  <div className="space-y-1.5">
+                    <label htmlFor="inv-adm" className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                      Student Admission Number <span className="text-red-400 normal-case font-normal">(required)</span>
+                    </label>
+                    <input
+                      id="inv-adm"
+                      required
+                      value={admissionNumber}
+                      onChange={(e) => setAdmissionNumber(e.target.value)}
+                      placeholder="e.g. 2024/001"
+                      className="w-full bg-muted border border-border text-foreground placeholder-muted-foreground rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                    />
+                    <p className="text-[11px] text-muted-foreground leading-relaxed">
+                      Enter your child&apos;s admission number exactly as provided by the school. This links your account to their academic records.
+                    </p>
+                  </div>
+                )}
               </>
             )}
 

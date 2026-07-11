@@ -107,7 +107,7 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
     }
     msg += `.\n\n`
     msg += `Click the link below to set up your account:\n${result.url}\n\n`
-    msg += `_This link expires in 7 days._`
+    msg += `_This link is permanent and does not expire._`
     return msg
   }
 

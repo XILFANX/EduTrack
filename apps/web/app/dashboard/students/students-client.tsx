@@ -11,7 +11,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { deleteStudent } from './actions'
+import { deleteStudent, permanentlyDeleteStudent } from './actions'
 import { useConfirmDialog, ConfirmDialog } from '@/components/ui/confirm-dialog'
 
 export function StudentsPageClient({ initialStudents, classes }: { initialStudents: any[], classes: any[] }) {
@@ -49,15 +49,34 @@ export function StudentsPageClient({ initialStudents, classes }: { initialStuden
 
   async function handleDelete(id: string) {
     const isConfirmed = await confirm({
-      title: "Delete Student",
-      description: "Are you sure you want to delete this student record? This action cannot be undone.",
-      confirmLabel: "Delete",
+      title: "Remove Student",
+      description: "This will hide the student from views but keep records safe. To permanently erase all data, use 'Permanently Delete'.",
+      confirmLabel: "Remove",
       variant: "danger"
     })
     if (!isConfirmed) return
     
     setLoading(true)
     const res = await deleteStudent(id)
+    setLoading(false)
+    if ('success' in res) {
+      setStudents(students.filter(s => s.id !== id))
+    } else {
+      alert(res.error)
+    }
+  }
+
+  async function handlePermanentDelete(id: string, name: string) {
+    const isConfirmed = await confirm({
+      title: "Permanently Delete Student",
+      description: `This will permanently erase all records for ${name}, including any linked parent accounts with no other students. This CANNOT be undone.`,
+      confirmLabel: "Permanently Delete",
+      variant: "danger"
+    })
+    if (!isConfirmed) return
+    
+    setLoading(true)
+    const res = await permanentlyDeleteStudent(id)
     setLoading(false)
     if ('success' in res) {
       setStudents(students.filter(s => s.id !== id))
@@ -261,10 +280,16 @@ export function StudentsPageClient({ initialStudents, classes }: { initialStuden
                             </Link>
                           </DropdownMenuItem>
                           <DropdownMenuItem 
-                            className="text-red-600 focus:bg-red-50 dark:focus:bg-red-900/20 gap-2 cursor-pointer"
+                            className="text-amber-600 focus:bg-amber-50 dark:focus:bg-amber-900/20 gap-2 cursor-pointer"
                             onClick={() => handleDelete(student.id)}
                           >
-                            <Trash2 className="w-4 h-4" /> Delete
+                            <Trash2 className="w-4 h-4" /> Remove
+                          </DropdownMenuItem>
+                          <DropdownMenuItem 
+                            className="text-red-600 focus:bg-red-50 dark:focus:bg-red-900/20 gap-2 cursor-pointer"
+                            onClick={() => handlePermanentDelete(student.id, `${student.first_name} ${student.last_name}`)}
+                          >
+                            <Trash2 className="w-4 h-4" /> Permanently Delete
                           </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>

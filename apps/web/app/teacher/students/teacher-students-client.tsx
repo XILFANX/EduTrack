@@ -70,11 +70,11 @@ export function TeacherStudentsClient({ students, invitations, parentLinks, scho
 
   async function handleDeleteInvite(inviteId: string, isUsed: boolean) {
     const ok = await confirm({
-      title: isUsed ? 'Revoke Parent Access' : 'Delete Invitation',
+      title: isUsed ? 'Permanently Revoke Parent Access' : 'Delete Invitation',
       description: isUsed 
-        ? 'This will completely delete the parent account and revoke their access. Are you sure?'
+        ? 'This will permanently delete the parent account and revoke all their access. This cannot be undone.'
         : 'This will invalidate the parent invite link. Are you sure?',
-      confirmLabel: isUsed ? 'Revoke Access' : 'Delete',
+      confirmLabel: isUsed ? 'Permanently Revoke' : 'Delete',
       variant: 'danger'
     })
     
@@ -187,6 +187,14 @@ export function TeacherStudentsClient({ students, invitations, parentLinks, scho
                               {copiedToken === pendingInvite.token ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <LinkIcon className="w-3.5 h-3.5" />}
                               <span className="hidden sm:inline">{copiedToken === pendingInvite.token ? 'Copied' : 'Link'}</span>
                             </Button>
+                            <a
+                              href={`https://wa.me/?text=${encodeURIComponent(`Hello ${pendingInvite.target_name}! 👋\n\nYou have been invited to join EduTrack to track your child's progress. Click the link below to set up your account:\n${typeof window !== 'undefined' ? window.location.origin : ''}/invite/${pendingInvite.token}\n\n_This link is permanent and does not expire._`)}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center justify-center gap-1.5 h-8 px-3 text-xs font-medium bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-md transition-colors"
+                            >
+                              WhatsApp
+                            </a>
                             <Button 
                               variant="ghost" 
                               size="icon" 

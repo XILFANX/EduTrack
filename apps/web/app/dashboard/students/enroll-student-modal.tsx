@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { enrollStudent, type EnrollStudentData } from './actions'
-import { GraduationCap, ChevronLeft, ChevronRight, CheckCircle2 } from 'lucide-react'
+import { GraduationCap, ChevronLeft, ChevronRight, CheckCircle2, Hash } from 'lucide-react'
 
 interface Class {
   id: string
@@ -20,10 +20,11 @@ interface EnrollStudentModalProps {
   onSuccess: () => void
 }
 
-const STEPS = ['Student Details', 'Class Assignment', 'Confirm']
+const STEPS = ['Student Details', 'Confirm & Enroll']
 
 export function EnrollStudentModal({ open, onClose, classes, onSuccess }: EnrollStudentModalProps) {
   const [step, setStep] = useState(1)
+  const [admissionNumber, setAdmissionNumber] = useState('')
   const [firstName, setFirstName] = useState('')
   const [middleName, setMiddleName] = useState('')
   const [lastName, setLastName] = useState('')
@@ -36,6 +37,7 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
 
   function reset() {
     setStep(1)
+    setAdmissionNumber('')
     setFirstName('')
     setMiddleName('')
     setLastName('')
@@ -54,21 +56,31 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
 
   function handleNext() {
     setError(null)
-    if (step === 1) {
-      if (!firstName.trim()) return setError('First name is required.')
-      if (!lastName.trim()) return setError('Surname is required.')
-    }
-    setStep(s => s + 1)
+    const adm = admissionNumber.trim()
+    if (!adm) return setError('Admission number is required.')
+    if (!/^[a-zA-Z0-9]+$/.test(adm)) return setError('Admission number can only contain letters and numbers (no spaces or special characters).')
+    if (!firstName.trim()) return setError('First name is required.')
+    if (!lastName.trim()) return setError('Surname is required.')
+    setStep(2)
   }
 
   async function handleSubmit() {
     setLoading(true)
     setError(null)
-    const data: EnrollStudentData = { firstName, middleName, lastName, dob, gender, classId, parentName: '', parentPhone: '' }
+    const data: EnrollStudentData = {
+      admissionNumber,
+      firstName,
+      middleName,
+      lastName,
+      dob,
+      gender,
+      classId,
+    }
     const res = await enrollStudent(data)
     setLoading(false)
     if ('error' in res) {
       setError(res.error)
+      setStep(1) // go back to step 1 to show e.g. duplicate admission number
     } else {
       setDone(true)
       onSuccess()
@@ -111,6 +123,7 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
               </div>
               <div>
                 <p className="font-bold text-foreground text-lg">{firstName} {middleName ? middleName + ' ' : ''}{lastName}</p>
+                <p className="text-sm text-muted-foreground font-mono mt-0.5">{admissionNumber}</p>
                 <p className="text-sm text-muted-foreground mt-1">
                   Assigned to <span className="font-medium text-foreground">{selectedClass?.name ?? 'No class'}</span>
                 </p>
@@ -124,64 +137,113 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
             </div>
           ) : (
             <div className="space-y-5">
-              {/* ── Step 1: Student Details ── */}
+              {/* ── Step 1: Student Details + Class + Admission Number ── */}
               {step === 1 && (
                 <div className="space-y-4">
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="space-y-1.5">
-                      <Label>First Name *</Label>
-                      <Input
-                        id="enroll-first-name"
-                        value={firstName}
-                        onChange={e => setFirstName(e.target.value)}
-                        placeholder="e.g. Amina"
-                        autoFocus
-                      />
+                  {/* Admission Number — top, prominent */}
+                  <div className="space-y-1.5">
+                    <Label htmlFor="enroll-adm" className="flex items-center gap-1.5">
+                      <Hash className="w-3.5 h-3.5 text-blue-500" />
+                      Admission Number *
+                    </Label>
+                    <Input
+                      id="enroll-adm"
+                      value={admissionNumber}
+                      onChange={e => setAdmissionNumber(e.target.value.replace(/[^a-zA-Z0-9]/g, ''))}
+                      placeholder="e.g. ADM001"
+                      autoFocus
+                    />
+                    <p className="text-[11px] text-muted-foreground">This is the key identifier used throughout the system. Must be unique per student.</p>
+                  </div>
+
+                  <div className="border-t border-slate-100 dark:border-slate-800 pt-4 space-y-4">
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="space-y-1.5">
+                        <Label>First Name *</Label>
+                        <Input
+                          id="enroll-first-name"
+                          value={firstName}
+                          onChange={e => setFirstName(e.target.value)}
+                          placeholder="e.g. Amina"
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <Label>Surname *</Label>
+                        <Input
+                          id="enroll-last-name"
+                          value={lastName}
+                          onChange={e => setLastName(e.target.value)}
+                          placeholder="e.g. Wanjiru"
+                        />
+                      </div>
                     </div>
                     <div className="space-y-1.5">
-                      <Label>Middle Name</Label>
+                      <Label>Middle Name <span className="text-muted-foreground font-normal">(Optional)</span></Label>
                       <Input
                         id="enroll-middle-name"
                         value={middleName}
                         onChange={e => setMiddleName(e.target.value)}
-                        placeholder="e.g. Nduta (Optional)"
+                        placeholder="e.g. Nduta"
                       />
                     </div>
                     <div className="space-y-1.5">
-                      <Label>Surname *</Label>
+                      <Label>Date of Birth</Label>
                       <Input
-                        id="enroll-last-name"
-                        value={lastName}
-                        onChange={e => setLastName(e.target.value)}
-                        placeholder="e.g. Wanjiru"
+                        id="enroll-dob"
+                        type="date"
+                        value={dob}
+                        onChange={e => setDob(e.target.value)}
+                        max={new Date().toISOString().split('T')[0]}
                       />
                     </div>
+                    <div className="space-y-2">
+                      <Label>Gender</Label>
+                      <div className="flex gap-2">
+                        {['Male', 'Female'].map(g => (
+                          <button
+                            key={g}
+                            type="button"
+                            onClick={() => setGender(g)}
+                            className={`flex-1 py-2 rounded-xl border text-sm font-semibold transition-all ${
+                              gender === g
+                                ? 'border-blue-600 bg-blue-600 text-white'
+                                : 'border-slate-200 dark:border-slate-700 text-muted-foreground hover:border-blue-300'
+                            }`}
+                          >
+                            {g}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
                   </div>
-                  <div className="space-y-1.5">
-                    <Label>Date of Birth</Label>
-                    <Input
-                      id="enroll-dob"
-                      type="date"
-                      value={dob}
-                      onChange={e => setDob(e.target.value)}
-                      max={new Date().toISOString().split('T')[0]}
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label>Gender</Label>
-                    <div className="flex gap-2">
-                      {['Male', 'Female'].map(g => (
+
+                  {/* Class Assignment — inline in step 1 */}
+                  <div className="border-t border-slate-100 dark:border-slate-800 pt-4 space-y-2">
+                    <Label>Assign to Class <span className="text-muted-foreground font-normal">(Optional)</span></Label>
+                    <div className="grid grid-cols-2 gap-2 max-h-40 overflow-y-auto pr-1">
+                      <button
+                        type="button"
+                        onClick={() => setClassId(null)}
+                        className={`text-left px-4 py-2.5 rounded-xl border text-sm transition-all ${
+                          classId === null
+                            ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/20 ring-1 ring-blue-600 text-blue-700 dark:text-blue-300 font-semibold'
+                            : 'border-slate-200 dark:border-slate-700 text-muted-foreground hover:border-blue-300'
+                        }`}
+                      >
+                        Unassigned
+                      </button>
+                      {classes.map(cls => (
                         <button
-                          key={g}
+                          key={cls.id}
                           type="button"
-                          onClick={() => setGender(g)}
-                          className={`flex-1 py-2 rounded-xl border text-sm font-semibold transition-all ${
-                            gender === g
-                              ? 'border-blue-600 bg-blue-600 text-white'
-                              : 'border-slate-200 dark:border-slate-700 text-muted-foreground hover:border-blue-300'
+                          onClick={() => setClassId(cls.id)}
+                          className={`text-left px-4 py-2.5 rounded-xl border text-sm font-medium transition-all ${
+                            classId === cls.id
+                              ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/20 ring-1 ring-blue-600 text-blue-700 dark:text-blue-300'
+                              : 'border-slate-200 dark:border-slate-700 text-foreground hover:border-blue-300'
                           }`}
                         >
-                          {g}
+                          {cls.name}
                         </button>
                       ))}
                     </div>
@@ -189,57 +251,26 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
                 </div>
               )}
 
-              {/* ── Step 2: Class Assignment ── */}
+              {/* ── Step 2: Confirm ── */}
               {step === 2 && (
-                <div className="space-y-3">
-                  <p className="text-sm text-muted-foreground">Select a class to assign <span className="font-semibold text-foreground">{firstName}</span> to, or skip to assign later.</p>
-                  <div className="grid grid-cols-2 gap-2 max-h-56 overflow-y-auto pr-1">
-                    <button
-                      type="button"
-                      onClick={() => setClassId(null)}
-                      className={`text-left px-4 py-3 rounded-xl border text-sm transition-all ${
-                        classId === null
-                          ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/20 ring-1 ring-blue-600 text-blue-700 dark:text-blue-300 font-semibold'
-                          : 'border-slate-200 dark:border-slate-700 text-muted-foreground hover:border-blue-300'
-                      }`}
-                    >
-                      Unassigned
-                    </button>
-                    {classes.map(cls => (
-                      <button
-                        key={cls.id}
-                        type="button"
-                        onClick={() => setClassId(cls.id)}
-                        className={`text-left px-4 py-3 rounded-xl border text-sm font-medium transition-all ${
-                          classId === cls.id
-                            ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/20 ring-1 ring-blue-600 text-blue-700 dark:text-blue-300'
-                            : 'border-slate-200 dark:border-slate-700 text-foreground hover:border-blue-300'
-                        }`}
-                      >
-                        {cls.name}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* ── Step 3: Confirm ── */}
-              {step === 3 && (
                 <div className="space-y-3">
                   <div className="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-4 space-y-2 text-sm">
                     {[
-                      { label: 'Full Name', value: `${firstName} ${lastName}` },
+                      { label: 'Admission No.', value: admissionNumber },
+                      { label: 'Full Name', value: `${firstName}${middleName ? ' ' + middleName : ''} ${lastName}` },
                       { label: 'Date of Birth', value: dob || 'Not provided' },
                       { label: 'Gender', value: gender || 'Not provided' },
                       { label: 'Class', value: selectedClass?.name ?? 'Unassigned' },
                     ].map(({ label, value }) => (
                       <div key={label} className="flex justify-between">
                         <span className="text-muted-foreground">{label}</span>
-                        <span className="font-semibold text-foreground">{value}</span>
+                        <span className="font-semibold text-foreground text-right ml-4">{value}</span>
                       </div>
                     ))}
                   </div>
-                  <p className="text-xs text-muted-foreground">An admission number will be auto-generated upon enrollment.</p>
+                  <p className="text-xs text-muted-foreground">
+                    Please confirm these details are correct before enrolling.
+                  </p>
                 </div>
               )}
 
@@ -258,7 +289,7 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
                 )}
                 {step < STEPS.length ? (
                   <Button className="flex-1 gap-1 bg-blue-600 hover:bg-blue-700" onClick={handleNext}>
-                    Next <ChevronRight className="w-4 h-4" />
+                    Review <ChevronRight className="w-4 h-4" />
                   </Button>
                 ) : (
                   <Button

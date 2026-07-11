@@ -143,9 +143,9 @@ export async function deleteInviteAndAccount(inviteId: string) {
     const existingUser = usersData?.users?.find(u => u.email === syntheticEmail)
     
     if (existingUser) {
-      // The users profile table should cascade automatically if FK is set,
-      // but let's soft-delete explicitly just in case.
-      await admin.from('users').update({ deleted_at: new Date().toISOString() }).eq('id', existingUser.id)
+      // Hard-delete the user profile
+      await admin.from('users').delete().eq('id', existingUser.id)
+      // Hard-delete the auth account
       await admin.auth.admin.deleteUser(existingUser.id)
     }
   }

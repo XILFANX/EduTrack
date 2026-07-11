@@ -32,7 +32,7 @@ export default async function BursarLayout({ children }: { children: React.React
             </div>
           </div>
           
-          <form action="/auth/signout" method="post">
+          <form action="/api/auth/signout" method="post">
             <button className="w-10 h-10 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
               <LogOut className="w-4 h-4" />
             </button>

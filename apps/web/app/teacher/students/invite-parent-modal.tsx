@@ -159,11 +159,23 @@ export function InviteParentModal({ open, onClose, studentId, studentName, schoo
 
             <div className="flex items-center gap-2 max-w-sm mx-auto">
               <div className="flex-1 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-sm text-slate-500 font-mono truncate">
-                {window.location.origin}/invite/{inviteToken}
+                {typeof window !== 'undefined' ? window.location.origin : ''}/invite/{inviteToken}
               </div>
-              <Button size="icon" variant="outline" onClick={handleCopy} className="shrink-0 h-10 w-10">
+            </div>
+
+            <div className="flex gap-2 max-w-sm mx-auto">
+              <Button variant="outline" onClick={handleCopy} className="flex-1 gap-1.5 h-10">
                 {copied ? <CheckCircle2 className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4" />}
+                {copied ? 'Copied' : 'Copy Link'}
               </Button>
+              <a
+                href={`https://wa.me/?text=${encodeURIComponent(`Hello ${salutation} ${fullName}! 👋\n\nYou have been invited to join EduTrack to track ${studentName}'s progress. Click the link below to set up your account:\n${typeof window !== 'undefined' ? window.location.origin : ''}/invite/${inviteToken}\n\n_This link is permanent and does not expire._`)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 flex items-center justify-center gap-1.5 h-10 text-sm font-medium bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-md transition-colors"
+              >
+                WhatsApp
+              </a>
             </div>
 
             <Button className="w-full bg-slate-900 hover:bg-slate-800 text-white dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-white" onClick={handleClose}>

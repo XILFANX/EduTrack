@@ -75,10 +75,10 @@ export async function deleteParentInviteAndAccount(inviteId: string) {
       // 1. Unlink parent from student_parents table (should cascade but we can be explicit)
       await admin.from('student_parents').delete().eq('parent_id', existingUser.id)
       
-      // 2. Delete user profile
-      await admin.from('users').update({ deleted_at: new Date().toISOString() }).eq('id', existingUser.id)
+      // 2. Hard-delete user profile
+      await admin.from('users').delete().eq('id', existingUser.id)
       
-      // 3. Delete auth account
+      // 3. Hard-delete auth account
       await admin.auth.admin.deleteUser(existingUser.id)
     }
   }

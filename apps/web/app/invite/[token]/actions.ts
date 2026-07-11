@@ -154,6 +154,29 @@ export async function activateInvite(formData: FormData) {
       return { error: 'This invite has already been used. Please log in.' }
     }
 
+    // Admission number gate — parent only
+    if (invite.role === 'parent' && invite.target_entity_id) {
+      const admissionNumber = (formData.get('admissionNumber') as string || '').trim()
+      if (!admissionNumber) {
+        return { error: 'Please enter your child\'s admission number to continue.' }
+      }
+      // Validate it matches the linked student
+      const { data: student } = await admin
+        .from('students')
+        .select('id, admission_number')
+        .eq('id', invite.target_entity_id)
+        .single()
+
+      if (!student) {
+        return { error: 'The student linked to this invite could not be found. Please contact your school.' }
+      }
+
+      const normalize = (s: string) => s.trim().toLowerCase().replace(/[\s\-\/]/g, '')
+      if (normalize(admissionNumber) !== normalize(student.admission_number)) {
+        return { error: 'Incorrect admission number. Please check with your child\'s class teacher and try again.' }
+      }
+    }
+
     // Create auth user with synthetic email
     const { data: newUser, error: createErr } = await admin.auth.admin.createUser({
       email: syntheticEmail,

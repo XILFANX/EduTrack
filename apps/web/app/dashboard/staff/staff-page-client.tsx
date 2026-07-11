@@ -9,8 +9,8 @@ import { useConfirmDialog, ConfirmDialog } from '@/components/ui/confirm-dialog'
 import { deleteInviteAndAccount } from './actions'
 
 const ROLE_LABELS: Record<string, { label: string; color: string }> = {
-  class_teacher:   { label: 'Class Teacher',    color: 'bg-violet-100 text-violet-700 dark:bg-violet-900/30 dark:text-violet-300' },
-  subject_teacher: { label: 'Subject Teacher',   color: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' },
+  class_teacher:   { label: 'Class Teacher',    color: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' },
+  subject_teacher: { label: 'Subject Teacher',   color: 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-300' },
   bursar:          { label: 'Bursar',            color: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300' },
   librarian:       { label: 'Librarian',         color: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300' },
   storekeeper:     { label: 'Storekeeper',       color: 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300' },
@@ -74,11 +74,11 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
 
   async function handleDeleteInvite(id: string, isUsed: boolean) {
     const ok = await confirm({
-      title: isUsed ? 'Revoke Access' : 'Delete Invitation',
+      title: isUsed ? 'Permanently Remove Staff' : 'Delete Invitation',
       description: isUsed 
-        ? 'This will completely delete this staff member\'s account and revoke their access to the system. Are you sure?'
+        ? 'This will permanently remove this staff member and revoke all their access. This cannot be undone.'
         : 'This will invalidate the invite link. Are you sure?',
-      confirmLabel: isUsed ? 'Revoke Access' : 'Delete',
+      confirmLabel: isUsed ? 'Permanently Remove' : 'Delete',
       variant: 'danger'
     })
     
@@ -140,6 +140,14 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
                       {copiedToken === inv.token ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
                       <span className="hidden sm:inline">{copiedToken === inv.token ? 'Copied' : 'Copy Link'}</span>
                     </Button>
+                    <a
+                      href={`https://wa.me/?text=${encodeURIComponent(`Hello ${inv.target_name}! 👋\n\nYou have been invited to join EduTrack. Click the link below to set up your account:\n${typeof window !== 'undefined' ? window.location.origin : ''}/invite/${inv.token}\n\n_This link is permanent and does not expire._`)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center gap-1.5 h-8 px-3 text-xs font-medium bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-md transition-colors"
+                    >
+                      WhatsApp
+                    </a>
                     <Button 
                       variant="ghost" 
                       size="icon" 
