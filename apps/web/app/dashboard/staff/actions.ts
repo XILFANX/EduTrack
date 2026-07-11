@@ -3,6 +3,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { randomUUID } from 'crypto'
+import { revalidatePath } from 'next/cache'
 
 export type StaffRole =
   | 'class_teacher'
@@ -69,6 +70,7 @@ export async function inviteStaff(
       return { error: 'Failed to generate invite link.' }
     }
 
+    revalidatePath('/dashboard/staff')
     return { token, schoolName: (school as any)?.name ?? 'the school', className }
   } catch (err: any) {
     return { error: err.message || 'An unexpected error occurred.' }
@@ -81,6 +83,7 @@ export async function getClasses(schoolId: string) {
     .from('classes')
     .select('id, name')
     .eq('school_id', schoolId)
+    .is('deleted_at', null)
     .order('name', { ascending: true })
 
   if (error) return []
@@ -99,4 +102,54 @@ export async function getStaff(schoolId: string) {
 
   if (error) return []
   return data ?? []
+}
+
+export async function getInvitations(schoolId: string) {
+  const supabase = await createClient()
+  const { data, error } = await supabase
+    .from('invitations')
+    .select('*')
+    .eq('school_id', schoolId)
+    .order('created_at', { ascending: false })
+
+  if (error) return []
+  return data ?? []
+}
+
+export async function deleteInviteAndAccount(inviteId: string) {
+  const admin = createAdminClient()
+  
+  // 1. Fetch the invite to get the token (used as synthetic email prefix)
+  const { data: invite, error: invErr } = await admin
+    .from('invitations')
+    .select('token, used_at')
+    .eq('id', inviteId)
+    .single()
+    
+  if (invErr || !invite) return { error: 'Invite not found.' }
+  
+  // 2. Delete the invitation row
+  const { error: delInvErr } = await admin
+    .from('invitations')
+    .delete()
+    .eq('id', inviteId)
+    
+  if (delInvErr) return { error: 'Could not delete invitation.' }
+  
+  // 3. Cascading delete of user account (if they already signed up)
+  if (invite.used_at) {
+    const syntheticEmail = `${invite.token}@invite.edutrack.app`
+    const { data: usersData } = await admin.auth.admin.listUsers()
+    const existingUser = usersData?.users?.find(u => u.email === syntheticEmail)
+    
+    if (existingUser) {
+      // The users profile table should cascade automatically if FK is set,
+      // but let's soft-delete explicitly just in case.
+      await admin.from('users').update({ deleted_at: new Date().toISOString() }).eq('id', existingUser.id)
+      await admin.auth.admin.deleteUser(existingUser.id)
+    }
+  }
+  
+  revalidatePath('/dashboard/staff')
+  return { success: true }
 }

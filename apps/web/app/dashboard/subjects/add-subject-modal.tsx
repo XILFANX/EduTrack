@@ -5,9 +5,9 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { BookMarked } from 'lucide-react'
+import { BookMarked, Info } from 'lucide-react'
 import { createSubject } from './actions'
-import { getTeachers } from '../classes/actions' // Reuse the getTeachers action
+import { getTeachers, getClasses } from '../classes/actions'
 import { useRouter } from 'next/navigation'
 
 interface AddSubjectModalProps {
@@ -20,42 +20,31 @@ export function AddSubjectModal({ open, onClose, schoolId }: AddSubjectModalProp
   const router = useRouter()
   const [name, setName] = useState('')
   const [teacherId, setTeacherId] = useState('')
+  const [classId, setClassId] = useState('')
   const [teachers, setTeachers] = useState<any[]>([])
+  const [classes, setClasses] = useState<any[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     if (open) {
       getTeachers(schoolId).then(setTeachers)
+      getClasses(schoolId).then(setClasses)
     }
   }, [open, schoolId])
 
   function handleClose() {
-    setName('')
-    setTeacherId('')
-    setError(null)
+    setName(''); setTeacherId(''); setClassId(''); setError(null)
     onClose()
   }
 
   async function handleSave() {
-    setLoading(true)
-    setError(null)
-
-    if (!name.trim()) {
-      setError('Subject name is required.')
-      setLoading(false)
-      return
-    }
-
-    const res = await createSubject(schoolId, name, teacherId || undefined)
+    setLoading(true); setError(null)
+    if (!name.trim()) { setError('Subject name is required.'); setLoading(false); return }
+    const res = await createSubject(schoolId, name, teacherId || undefined, classId || undefined)
     setLoading(false)
-
-    if (res.error) {
-      setError(res.error)
-    } else {
-      router.refresh()
-      handleClose()
-    }
+    if (res.error) { setError(res.error) }
+    else { router.refresh(); handleClose() }
   }
 
   return (
@@ -73,45 +62,60 @@ export function AddSubjectModal({ open, onClose, schoolId }: AddSubjectModalProp
         <div className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="subjectName">Subject Name *</Label>
-            <Input
-              id="subjectName"
-              placeholder="e.g. Mathematics"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
+            <Input id="subjectName" placeholder="e.g. Mathematics" value={name} onChange={e => setName(e.target.value)} />
           </div>
-          
+
           <div className="space-y-2">
-            <Label htmlFor="subjectTeacher">Assign Default Teacher (Optional)</Label>
-            <select
-              id="subjectTeacher"
-              value={teacherId}
-              onChange={(e) => setTeacherId(e.target.value)}
-              className="w-full bg-background border border-input text-foreground rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-            >
-              <option value="">None</option>
-              {teachers.map(t => (
-                <option key={t.id} value={t.id}>{t.full_name}</option>
-              ))}
-            </select>
-            <p className="text-xs text-muted-foreground">The primary teacher for this subject.</p>
+            <Label htmlFor="subjectClass">
+              Assign to Class <span className="text-muted-foreground font-normal">(Optional)</span>
+            </Label>
+            {classes.length === 0 ? (
+              <p className="text-xs text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800/50 rounded-lg px-3 py-2 flex items-center gap-1.5">
+                <Info className="w-3.5 h-3.5 shrink-0" />
+                No classes yet. You can assign a class later.
+              </p>
+            ) : (
+              <select
+                id="subjectClass"
+                value={classId}
+                onChange={e => setClassId(e.target.value)}
+                className="w-full bg-background border border-input text-foreground rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+              >
+                <option value="">None — assign later</option>
+                {classes.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+              </select>
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="subjectTeacher">
+              Assign Teacher <span className="text-muted-foreground font-normal">(Optional)</span>
+            </Label>
+            {teachers.length === 0 ? (
+              <p className="text-xs text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800/50 rounded-lg px-3 py-2 flex items-center gap-1.5">
+                <Info className="w-3.5 h-3.5 shrink-0" />
+                No teachers yet. You can assign one later.
+              </p>
+            ) : (
+              <select
+                id="subjectTeacher"
+                value={teacherId}
+                onChange={e => setTeacherId(e.target.value)}
+                className="w-full bg-background border border-input text-foreground rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+              >
+                <option value="">None — assign later</option>
+                {teachers.map(t => <option key={t.id} value={t.id}>{t.full_name}</option>)}
+              </select>
+            )}
           </div>
 
           {error && (
-            <p className="text-sm text-red-600 bg-red-50 dark:bg-red-950/30 px-3 py-2 rounded-lg border border-red-200 dark:border-red-900/50">
-              {error}
-            </p>
+            <p className="text-sm text-red-600 bg-red-50 dark:bg-red-950/30 px-3 py-2 rounded-lg border border-red-200 dark:border-red-900/50">{error}</p>
           )}
 
           <div className="flex gap-3 pt-4 border-t border-slate-100 dark:border-slate-800">
-            <Button variant="outline" className="flex-1" onClick={handleClose} disabled={loading}>
-              Cancel
-            </Button>
-            <Button
-              className="flex-1 bg-blue-600 hover:bg-blue-700"
-              onClick={handleSave}
-              disabled={loading}
-            >
+            <Button variant="outline" className="flex-1" onClick={handleClose} disabled={loading}>Cancel</Button>
+            <Button className="flex-1 bg-blue-600 hover:bg-blue-700" onClick={handleSave} disabled={loading}>
               {loading ? 'Saving…' : 'Create Subject'}
             </Button>
           </div>

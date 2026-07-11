@@ -23,9 +23,8 @@ export default async function InvitePage({ params }: Props) {
       target_phone,
       used_at,
       school_id,
-      target_class_id,
-      schools ( name ),
-      classes ( name )
+      target_entity_id,
+      schools ( name )
     `)
     .eq('token', token)
     .single()
@@ -36,7 +35,7 @@ export default async function InvitePage({ params }: Props) {
 
   const isReturningUser = invite.used_at !== null
   const schoolName = (invite.schools as any)?.name ?? 'Your School'
-  const className = (invite.classes as any)?.name ?? null
+  const className = null // resolved separately if needed
 
   // Access Revocation Check — if returning user, verify they still have an active account
   if (isReturningUser) {
@@ -98,7 +97,7 @@ function RevokedAccessScreen({ message }: { message: string }) {
         <h1 className="text-xl font-bold text-foreground mb-2">Access Revoked</h1>
         <p className="text-muted-foreground text-sm mb-6">{message}</p>
         <Link href="/" className="inline-block bg-primary text-primary-foreground font-semibold px-6 py-2.5 rounded-xl hover:bg-primary/90 transition-colors">
-          Return Home
+          Go to EduTrack
         </Link>
       </div>
     </div>

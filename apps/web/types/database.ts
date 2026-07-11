@@ -95,7 +95,7 @@ export interface Database {
           school_id: string
           token: string
           role: string
-          target_class_id: string | null
+          target_entity_id: string | null
           target_name: string | null
           target_phone: string | null
           used_at: string | null
@@ -109,7 +109,7 @@ export interface Database {
           school_id: string
           token?: string
           role: string
-          target_class_id?: string | null
+          target_entity_id?: string | null
           target_name?: string | null
           target_phone?: string | null
           used_at?: string | null
@@ -123,7 +123,7 @@ export interface Database {
           school_id?: string
           token?: string
           role?: string
-          target_class_id?: string | null
+          target_entity_id?: string | null
           target_name?: string | null
           target_phone?: string | null
           used_at?: string | null
@@ -141,8 +141,8 @@ export interface Database {
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "invitations_target_class_id_fkey"
-            columns: ["target_class_id"]
+            foreignKeyName: "invitations_target_entity_id_fkey"
+            columns: ["target_entity_id"]
             isOneToOne: false
             referencedRelation: "classes"
             referencedColumns: ["id"]

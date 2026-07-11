@@ -114,6 +114,24 @@ export async function getTeachers(schoolId: string) {
   return data || []
 }
 
+export async function getClasses(schoolId: string) {
+  const admin = createAdminClient()
+  
+  const { data, error } = await admin
+    .from('classes')
+    .select('id, name')
+    .eq('school_id', schoolId)
+    .is('deleted_at', null)
+    .order('name')
+
+  if (error) {
+    console.error('Error fetching classes:', error)
+    return []
+  }
+
+  return data || []
+}
+
 export async function assignTeacher(classId: string, teacherId: string | null) {
   const admin = createAdminClient()
 

@@ -1,9 +1,13 @@
 import { createClient } from '@/lib/supabase/server'
-import { redirect } from 'next/navigation'
+import { redirect, notFound } from 'next/navigation'
 import { ClassDetailClient } from './class-detail-client'
 import { getTeachers } from '../actions'
 
-export default async function ClassDetailPage({ params }: { params: { id: string } }) {
+export const dynamic = 'force-dynamic'
+
+export default async function ClassDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params   // ← Next.js 15: params is a Promise
+
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login')
@@ -16,22 +20,24 @@ export default async function ClassDetailPage({ params }: { params: { id: string
 
   if (!profile?.school_id) return null
 
-  // Fetch class details
+  // Fetch class details (exclude soft-deleted)
   const { data: cls } = await supabase
     .from('classes')
     .select('*, users!classes_class_teacher_id_fkey(id, full_name)')
-    .eq('id', params.id)
+    .eq('id', id)
     .eq('school_id', profile.school_id)
+    .is('deleted_at', null)
     .single()
 
-  if (!cls) redirect('/dashboard/classes')
+  if (!cls) notFound()
 
-  // Fetch enrolled students
+  // Fetch enrolled students (exclude soft-deleted)
   const { data: students } = await supabase
     .from('students')
     .select('*')
-    .eq('class_id', params.id)
+    .eq('class_id', id)
     .eq('school_id', profile.school_id)
+    .is('deleted_at', null)
     .order('first_name')
 
   // Fetch teachers for the assign dropdown
@@ -39,7 +45,6 @@ export default async function ClassDetailPage({ params }: { params: { id: string
 
   const teacherObj = Array.isArray(cls.users) ? cls.users[0] : cls.users as any
   const teacherName = teacherObj?.full_name ?? null
-  const teacherSalutation = teacherObj?.salutation ?? null
   const teacherId = teacherObj?.id ?? null
 
   return (
@@ -47,7 +52,7 @@ export default async function ClassDetailPage({ params }: { params: { id: string
       cls={{ id: cls.id, name: cls.name }}
       initialStudents={students || []}
       teacherName={teacherName}
-      teacherSalutation={teacherSalutation}
+      teacherSalutation={null}
       teacherId={teacherId}
       teachers={teachers}
       schoolId={profile.school_id}

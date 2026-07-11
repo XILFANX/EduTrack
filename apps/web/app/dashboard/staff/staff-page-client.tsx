@@ -1,10 +1,12 @@
 'use client'
 
 import { useState } from 'react'
-import { UserPlus, UserCog, Search } from 'lucide-react'
+import { UserPlus, UserCog, Search, Link as LinkIcon, Trash2, Check, Copy } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { InviteStaffModal } from './invite-staff-modal'
 import { useRouter } from 'next/navigation'
+import { useConfirmDialog, ConfirmDialog } from '@/components/ui/confirm-dialog'
+import { deleteInviteAndAccount } from './actions'
 
 const ROLE_LABELS: Record<string, { label: string; color: string }> = {
   class_teacher:   { label: 'Class Teacher',    color: 'bg-violet-100 text-violet-700 dark:bg-violet-900/30 dark:text-violet-300' },
@@ -23,18 +25,32 @@ interface StaffMember {
   created_at: string
 }
 
+interface Invitation {
+  id: string
+  token: string
+  role: string
+  target_name: string | null
+  target_phone: string | null
+  used_at: string | null
+  created_at: string
+}
+
 interface StaffPageClientProps {
   staff: StaffMember[]
+  invitations: Invitation[]
   schoolId: string
 }
 
-export function StaffPageClient({ staff, schoolId }: StaffPageClientProps) {
+export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClientProps) {
   const router = useRouter()
   const [modalOpen, setModalOpen] = useState(false)
   const [search, setSearch] = useState('')
   const [filterRole, setFilterRole] = useState<string>('all')
+  const [copiedToken, setCopiedToken] = useState<string | null>(null)
+  
+  const { dialogProps, confirm, setLoading } = useConfirmDialog()
 
-  const filtered = staff.filter((s) => {
+  const filteredStaff = staff.filter((s) => {
     const matchSearch =
       s.full_name.toLowerCase().includes(search.toLowerCase()) ||
       s.phone_number.includes(search)
@@ -42,8 +58,38 @@ export function StaffPageClient({ staff, schoolId }: StaffPageClientProps) {
     return matchSearch && matchRole
   })
 
+  // We only show pending invitations in the UI
+  const pendingInvitations = invitations.filter(inv => !inv.used_at)
+
   function getInitials(name: string) {
     return name.split(' ').map((n) => n[0]).join('').slice(0, 2).toUpperCase()
+  }
+
+  function handleCopyLink(token: string) {
+    const link = `${window.location.origin}/invite/${token}`
+    navigator.clipboard.writeText(link)
+    setCopiedToken(token)
+    setTimeout(() => setCopiedToken(null), 2000)
+  }
+
+  async function handleDeleteInvite(id: string, isUsed: boolean) {
+    const ok = await confirm({
+      title: isUsed ? 'Revoke Access' : 'Delete Invitation',
+      description: isUsed 
+        ? 'This will completely delete this staff member\'s account and revoke their access to the system. Are you sure?'
+        : 'This will invalidate the invite link. Are you sure?',
+      confirmLabel: isUsed ? 'Revoke Access' : 'Delete',
+      variant: 'danger'
+    })
+    
+    if (!ok) return
+    
+    setLoading(true)
+    const res = await deleteInviteAndAccount(id)
+    setLoading(false)
+    
+    if (res.error) alert(res.error)
+    else router.refresh()
   }
 
   return (
@@ -59,9 +105,56 @@ export function StaffPageClient({ staff, schoolId }: StaffPageClientProps) {
           onClick={() => setModalOpen(true)}
         >
           <UserPlus className="w-4 h-4" />
-          Invite Staff
+          <span className="hidden sm:inline">Invite Staff</span>
         </Button>
       </div>
+
+      {/* Pending Invitations */}
+      {pendingInvitations.length > 0 && (
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden mb-8">
+          <div className="px-4 py-3 bg-amber-50/50 dark:bg-amber-900/10 border-b border-slate-100 dark:border-slate-800">
+            <h2 className="text-sm font-semibold text-amber-800 dark:text-amber-500">Pending Invitations</h2>
+          </div>
+          <div className="divide-y divide-slate-100 dark:divide-slate-800/50">
+            {pendingInvitations.map(inv => {
+              const roleInfo = ROLE_LABELS[inv.role] ?? { label: inv.role, color: 'bg-slate-100 text-slate-700' }
+              return (
+                <div key={inv.id} className="flex items-center gap-4 p-4 hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors">
+                  <div className="flex-1 min-w-0">
+                    <p className="font-semibold text-foreground text-sm truncate">{inv.target_name}</p>
+                    <div className="flex items-center gap-2 mt-0.5">
+                      <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full shrink-0 ${roleInfo.color}`}>
+                        {roleInfo.label}
+                      </span>
+                      <span className="text-xs text-muted-foreground">{inv.target_phone}</span>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center gap-2">
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="gap-1.5 h-8 text-xs"
+                      onClick={() => handleCopyLink(inv.token)}
+                    >
+                      {copiedToken === inv.token ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
+                      <span className="hidden sm:inline">{copiedToken === inv.token ? 'Copied' : 'Copy Link'}</span>
+                    </Button>
+                    <Button 
+                      variant="ghost" 
+                      size="icon" 
+                      className="h-8 w-8 text-slate-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20"
+                      onClick={() => handleDeleteInvite(inv.id, false)}
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      )}
 
       {/* Filters */}
       <div className="flex flex-col sm:flex-row gap-3">
@@ -88,33 +181,27 @@ export function StaffPageClient({ staff, schoolId }: StaffPageClientProps) {
       </div>
 
       {/* Staff List */}
-      {filtered.length === 0 ? (
+      {filteredStaff.length === 0 ? (
         <div className="text-center py-20 space-y-3">
           <div className="w-16 h-16 rounded-2xl bg-muted flex items-center justify-center mx-auto">
             <UserCog className="w-8 h-8 text-muted-foreground" />
           </div>
           <p className="font-semibold text-foreground">
-            {staff.length === 0 ? 'No staff invited yet' : 'No results found'}
+            {staff.length === 0 ? 'No active staff members' : 'No results found'}
           </p>
           <p className="text-sm text-muted-foreground max-w-xs mx-auto">
             {staff.length === 0
-              ? 'Click "Invite Staff" to generate a secure link for your teachers, bursar, librarian, and more.'
+              ? 'Active staff will appear here once they complete their account setup using the invite link.'
               : 'Try adjusting your search or filter.'}
           </p>
-          {staff.length === 0 && (
-            <Button
-              className="bg-blue-600 hover:bg-blue-700 gap-2 mt-2"
-              onClick={() => setModalOpen(true)}
-            >
-              <UserPlus className="w-4 h-4" />
-              Invite your first staff member
-            </Button>
-          )}
         </div>
       ) : (
         <div className="space-y-2">
-          {filtered.map((member) => {
+          {filteredStaff.map((member) => {
             const roleInfo = ROLE_LABELS[member.role] ?? { label: member.role, color: 'bg-slate-100 text-slate-700' }
+            // Find the associated invite (used_at will be populated)
+            const invite = invitations.find(i => i.target_phone === member.phone_number && i.used_at)
+            
             return (
               <div
                 key={member.id}
@@ -132,9 +219,33 @@ export function StaffPageClient({ staff, schoolId }: StaffPageClientProps) {
                 </div>
 
                 {/* Role Badge */}
-                <span className={`text-xs font-semibold px-2.5 py-1 rounded-full shrink-0 ${roleInfo.color}`}>
+                <span className={`text-xs font-semibold px-2.5 py-1 rounded-full shrink-0 ${roleInfo.color} hidden sm:inline-flex`}>
                   {roleInfo.label}
                 </span>
+
+                {/* Actions */}
+                {invite && (
+                  <div className="flex items-center gap-2">
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="gap-1.5 h-8 text-xs hidden md:flex"
+                      onClick={() => handleCopyLink(invite.token)}
+                    >
+                      {copiedToken === invite.token ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <LinkIcon className="w-3.5 h-3.5" />}
+                      <span>{copiedToken === invite.token ? 'Copied' : 'Invite Link'}</span>
+                    </Button>
+                    <Button 
+                      variant="ghost" 
+                      size="icon" 
+                      className="h-8 w-8 text-slate-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20"
+                      onClick={() => handleDeleteInvite(invite.id, true)}
+                      title="Revoke Access"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  </div>
+                )}
               </div>
             )
           })}
@@ -148,6 +259,7 @@ export function StaffPageClient({ staff, schoolId }: StaffPageClientProps) {
         schoolId={schoolId}
         onSuccess={() => router.refresh()}
       />
+      <ConfirmDialog {...dialogProps} />
     </div>
   )
 }

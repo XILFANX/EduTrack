@@ -2,6 +2,8 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import { ClassesPageClient } from './classes-client'
 
+export const dynamic = 'force-dynamic'
+
 export default async function ClassesPage() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
@@ -16,11 +18,12 @@ export default async function ClassesPage() {
 
   if (!profile?.school_id) return null
 
-  // Fetch classes and aggregate student counts manually
+  // Fetch classes (exclude soft-deleted)
   const { data: classes } = await supabase
     .from('classes')
     .select('*, users!classes_class_teacher_id_fkey(id, full_name)')
     .eq('school_id', profile.school_id)
+    .is('deleted_at', null)
     .order('name')
 
   const { data: students } = await supabase
