@@ -8,15 +8,16 @@ interface OnboardingWizardProps {
   totalStaff: number
   totalClasses: number
   totalSubjects: number
+  totalStudents: number
 }
 
-export function OnboardingWizard({ totalStaff, totalClasses, totalSubjects }: OnboardingWizardProps) {
+export function OnboardingWizard({ totalStaff, totalClasses, totalSubjects, totalStudents }: OnboardingWizardProps) {
   const [dismissed, setDismissed] = useState(false)
   const [expanded, setExpanded] = useState(true)
 
-  if (dismissed || (totalStaff > 0 && totalClasses > 0 && totalSubjects > 0)) return null
+  if (dismissed || (totalStaff > 0 && totalClasses > 0 && totalSubjects > 0 && totalStudents > 0)) return null
 
-  // Order: Staff → Classes → Subjects
+  // Order: Staff → Classes → Subjects → Students
   const steps = [
     {
       id: 'staff',
@@ -44,6 +45,15 @@ export function OnboardingWizard({ totalStaff, totalClasses, totalSubjects }: On
       completed: totalSubjects > 0,
       href: '/dashboard/subjects',
       cta: 'Add Subjects'
+    },
+    {
+      id: 'students',
+      label: 'Enroll Students',
+      desc: 'Add students to your classes',
+      icon: GraduationCap,
+      completed: totalStudents > 0,
+      href: '/dashboard/students?enroll=true',
+      cta: 'Enroll Students'
     }
   ]
 
@@ -103,8 +113,8 @@ export function OnboardingWizard({ totalStaff, totalClasses, totalSubjects }: On
             </div>
           </div>
 
-          {/* Steps — vertical list on mobile, 3-col grid on md+ */}
-          <div className="flex flex-col gap-2 md:grid md:grid-cols-3 md:gap-3">
+          {/* Steps — vertical list on mobile, 4-col grid on md+ */}
+          <div className="flex flex-col gap-2 md:grid md:grid-cols-4 md:gap-3">
             {steps.map((step, idx) => (
               <div
                 key={step.id}

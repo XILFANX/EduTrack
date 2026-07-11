@@ -2,7 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import { StudentsPageClient } from './students-client'
 
-export default async function StudentsDirectoryPage() {
+export default async function StudentsPage({ searchParams }: { searchParams: { enroll?: string } }) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
@@ -36,7 +36,7 @@ export default async function StudentsDirectoryPage() {
     <StudentsPageClient 
       initialStudents={students || []} 
       classes={classes || []} 
+      autoEnroll={searchParams?.enroll === 'true'}
     />
   )
 }
-

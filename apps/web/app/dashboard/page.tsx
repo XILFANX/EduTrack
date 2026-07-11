@@ -138,6 +138,7 @@ export default async function DashboardPage() {
         totalStaff={totalStaff ?? 0}
         totalClasses={totalClasses ?? 0}
         totalSubjects={totalSubjects ?? 0}
+        totalStudents={totalStudents ?? 0}
       />
 
       {/* Key Metrics */}

@@ -19,7 +19,7 @@ export async function deleteClass(classId: string) {
 
   const { error } = await admin
     .from('classes')
-    .update({ deleted_at: new Date().toISOString() })
+    .delete()
     .eq('id', classId)
 
   if (error) return { error: error.message }
@@ -32,14 +32,30 @@ export async function createClass(schoolId: string, name: string, classTeacherId
   const admin = createAdminClient()
 
   // Validate class doesn't already exist for this school
-  const { data: existing } = await admin
+  const { data: existingData } = await admin
     .from('classes')
-    .select('id')
+    .select('id, deleted_at' as any)
     .eq('school_id', schoolId)
     .ilike('name', name.trim())
     .single()
 
+  const existing = existingData as any
+
   if (existing) {
+    if (existing.deleted_at) {
+      // Restore soft-deleted class
+      const { data: restored, error: restoreError } = await admin
+        .from('classes')
+        .update({ deleted_at: null, class_teacher_id: classTeacherId || null })
+        .eq('id', existing.id)
+        .select()
+        .single()
+      
+      if (restoreError) return { error: restoreError.message }
+      
+      revalidatePath('/dashboard/classes')
+      return { success: true, data: restored }
+    }
     return { error: 'A class with this name already exists.' }
   }
 
@@ -64,31 +80,57 @@ export async function createClass(schoolId: string, name: string, classTeacherId
 export async function createBulkClasses(schoolId: string, names: string[]) {
   const admin = createAdminClient()
 
-  // Fetch existing classes to prevent duplicates
-  const { data: existing } = await admin
+  const { data: existingData } = await admin
     .from('classes')
-    .select('name')
+    .select('id, name, deleted_at' as any)
     .eq('school_id', schoolId)
 
-  const existingNames = new Set(existing?.map(c => c.name.toLowerCase()) || [])
+  const existing = existingData as any[] | null
 
-  const newClasses = names
-    .filter(name => !existingNames.has(name.toLowerCase()))
-    .map(name => ({
-      school_id: schoolId,
-      name: name.trim(),
-    }))
+  const existingByName = new Map<string, any>()
+  if (existing) {
+    for (const c of existing) {
+      existingByName.set(c.name.toLowerCase(), c)
+    }
+  }
 
-  if (newClasses.length === 0) {
+  const newClasses: any[] = []
+  const classesToRestore: string[] = []
+
+  for (const name of names) {
+    const n = name.trim()
+    const match = existingByName.get(n.toLowerCase())
+    if (match) {
+      if (match.deleted_at) {
+        classesToRestore.push(match.id)
+      }
+    } else {
+      newClasses.push({ school_id: schoolId, name: n })
+    }
+  }
+
+  if (newClasses.length === 0 && classesToRestore.length === 0) {
     return { error: 'All selected classes already exist.' }
   }
 
-  const { error } = await admin
-    .from('classes')
-    .insert(newClasses)
+  // Restore deleted classes
+  if (classesToRestore.length > 0) {
+    const { error } = await admin
+      .from('classes')
+      .update({ deleted_at: null })
+      .in('id', classesToRestore)
+    if (error) return { error: error.message }
+  }
 
-  if (error) {
-    return { error: error.message }
+  // Insert truly new classes
+  if (newClasses.length > 0) {
+    const { error } = await admin
+      .from('classes')
+      .insert(newClasses)
+
+    if (error) {
+      return { error: error.message }
+    }
   }
 
   revalidatePath('/dashboard/classes')

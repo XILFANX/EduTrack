@@ -14,11 +14,11 @@ import {
 import { deleteStudent, permanentlyDeleteStudent } from './actions'
 import { useConfirmDialog, ConfirmDialog } from '@/components/ui/confirm-dialog'
 
-export function StudentsPageClient({ initialStudents, classes }: { initialStudents: any[], classes: any[] }) {
+export function StudentsPageClient({ initialStudents, classes, autoEnroll }: { initialStudents: any[], classes: any[], autoEnroll?: boolean }) {
   const [searchQuery, setSearchQuery] = useState('')
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(autoEnroll || false)
   const [students, setStudents] = useState(initialStudents)
-  const [selectedClass, setSelectedClass] = useState<any | null | 'all'>(null) // null = showing classes, 'all' = showing all students (via search or explicit), or a class object
+  const [selectedClass, setSelectedClass] = useState<any | null | 'all'>(autoEnroll ? 'all' : null) // null = showing classes, 'all' = showing all students (via search or explicit), or a class object
   const { dialogProps, confirm, setLoading } = useConfirmDialog()
 
   const isGlobalSearchActive = searchQuery.length > 0
@@ -236,9 +236,15 @@ export function StudentsPageClient({ initialStudents, classes }: { initialStuden
              <GraduationCap className="w-8 h-8 text-blue-600 dark:text-blue-400" />
            </div>
            <h2 className="text-lg font-semibold text-foreground">No students enrolled yet</h2>
-           <p className="text-sm text-muted-foreground max-w-sm mx-auto mt-2">
-             Click 'Enroll Student' to add your first student.
+           <p className="text-sm text-muted-foreground max-w-sm mx-auto mt-2 mb-6">
+             {selectedClass !== 'all' 
+               ? `There are no students enrolled in ${selectedClass?.name || 'this class'}.` 
+               : 'Click Enroll Student to add your first student.'}
            </p>
+           <Button className="bg-blue-600 hover:bg-blue-700 gap-2" onClick={() => setIsModalOpen(true)}>
+             <UserPlus className="w-4 h-4" />
+             Enroll Student
+           </Button>
          </div>
       ) : filteredStudents.length === 0 ? (
         <div className="text-center py-20 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl">

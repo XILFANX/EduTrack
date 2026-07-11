@@ -47,6 +47,7 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
   const [search, setSearch] = useState('')
   const [filterRole, setFilterRole] = useState<string>('all')
   const [copiedToken, setCopiedToken] = useState<string | null>(null)
+  const [expandedId, setExpandedId] = useState<string | null>(null)
   
   const { dialogProps, confirm, setLoading } = useConfirmDialog()
 
@@ -57,6 +58,12 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
     const matchRole = filterRole === 'all' || s.role === filterRole
     return matchSearch && matchRole
   })
+
+  const groupedStaff = filteredStaff.reduce((acc, member) => {
+    if (!acc[member.role]) acc[member.role] = []
+    acc[member.role].push(member)
+    return acc
+  }, {} as Record<string, StaffMember[]>)
 
   // We only show pending invitations in the UI
   const pendingInvitations = invitations.filter(inv => !inv.used_at)
@@ -205,55 +212,106 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
         </div>
       ) : (
         <div className="space-y-2">
-          {filteredStaff.map((member) => {
-            const roleInfo = ROLE_LABELS[member.role] ?? { label: member.role, color: 'bg-slate-100 text-slate-700' }
-            // Find the associated invite (used_at will be populated)
-            const invite = invitations.find(i => i.target_phone === member.phone_number && i.used_at)
+          {Object.entries(ROLE_LABELS).map(([roleKey, roleInfo]) => {
+            const membersInRole = groupedStaff[roleKey]
+            if (!membersInRole || membersInRole.length === 0) return null
             
             return (
-              <div
-                key={member.id}
-                className="flex items-center gap-4 p-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl hover:border-blue-300 dark:hover:border-blue-700 transition-colors"
-              >
-                {/* Avatar */}
-                <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 flex items-center justify-center text-sm font-bold shrink-0">
-                  {getInitials(member.full_name)}
+              <div key={roleKey} className="space-y-3 mb-8">
+                <h3 className="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider pl-1">
+                  {roleInfo.label}s ({membersInRole.length})
+                </h3>
+                <div className="space-y-3">
+                  {membersInRole.map((member) => {
+                    const invite = invitations.find(i => i.target_phone === member.phone_number && i.used_at)
+                    const isExpanded = expandedId === member.id
+                    
+                    return (
+                      <div
+                        key={member.id}
+                        className={`bg-white dark:bg-slate-900 border transition-all overflow-hidden ${isExpanded ? 'border-blue-500 ring-1 ring-blue-500 shadow-md rounded-2xl' : 'border-slate-200 dark:border-slate-800 rounded-2xl hover:border-blue-300 dark:hover:border-blue-700'}`}
+                      >
+                        {/* Header (Always visible) */}
+                        <div 
+                          className="flex items-center gap-4 p-4 cursor-pointer"
+                          onClick={() => setExpandedId(isExpanded ? null : member.id)}
+                        >
+                          <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 flex items-center justify-center text-sm font-bold shrink-0">
+                            {getInitials(member.full_name)}
+                          </div>
+                          
+                          <div className="flex-1 min-w-0">
+                            <p className="font-semibold text-foreground truncate">{member.full_name}</p>
+                            <p className="text-xs text-muted-foreground truncate">{member.phone_number}</p>
+                          </div>
+                          
+                          <div className="shrink-0 flex items-center gap-2">
+                            {invite && !isExpanded && (
+                              <Button 
+                                variant="ghost" 
+                                size="icon" 
+                                className="h-8 w-8 text-slate-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20"
+                                onClick={(e) => { e.stopPropagation(); handleDeleteInvite(invite.id, true); }}
+                                title="Revoke Access"
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </Button>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Expanded Details */}
+                        {isExpanded && (
+                          <div className="px-4 pb-4 pt-2 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/10">
+                            <div className="grid grid-cols-2 gap-4 mb-4">
+                              <div>
+                                <p className="text-xs text-muted-foreground font-medium mb-1">Date Joined</p>
+                                <p className="text-sm text-foreground font-medium">{new Date(member.created_at).toLocaleDateString()}</p>
+                              </div>
+                              <div>
+                                <p className="text-xs text-muted-foreground font-medium mb-1">Account Status</p>
+                                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400">
+                                  Active Portal
+                                </span>
+                              </div>
+                            </div>
+
+                            {invite && (
+                              <div className="flex flex-col sm:flex-row gap-2 pt-3 border-t border-slate-200 dark:border-slate-700/50">
+                                <Button 
+                                  variant="outline" 
+                                  size="sm" 
+                                  className="gap-1.5 flex-1"
+                                  onClick={() => handleCopyLink(invite.token)}
+                                >
+                                  {copiedToken === invite.token ? <Check className="w-4 h-4 text-emerald-500" /> : <LinkIcon className="w-4 h-4" />}
+                                  <span>{copiedToken === invite.token ? 'Copied' : 'Copy Permanent Link'}</span>
+                                </Button>
+                                <a
+                                  href={`https://wa.me/?text=${encodeURIComponent(`Hello ${member.full_name}! 👋\n\nYour permanent EduTrack access link is:\n${typeof window !== 'undefined' ? window.location.origin : ''}/invite/${invite.token}\n\n_This link is permanent and does not expire._`)}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="flex-1 flex items-center justify-center gap-1.5 h-9 px-3 text-sm font-medium bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-md transition-colors"
+                                >
+                                  Send WhatsApp
+                                </a>
+                                <Button 
+                                  variant="destructive" 
+                                  size="sm" 
+                                  className="gap-1.5 flex-1"
+                                  onClick={() => handleDeleteInvite(invite.id, true)}
+                                >
+                                  <Trash2 className="w-4 h-4" />
+                                  Permanently Delete
+                                </Button>
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    )
+                  })}
                 </div>
-
-                {/* Info */}
-                <div className="flex-1 min-w-0">
-                  <p className="font-semibold text-foreground truncate">{member.full_name}</p>
-                  <p className="text-xs text-muted-foreground">{member.phone_number}</p>
-                </div>
-
-                {/* Role Badge */}
-                <span className={`text-xs font-semibold px-2.5 py-1 rounded-full shrink-0 ${roleInfo.color} hidden sm:inline-flex`}>
-                  {roleInfo.label}
-                </span>
-
-                {/* Actions */}
-                {invite && (
-                  <div className="flex items-center gap-2">
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
-                      className="gap-1.5 h-8 text-xs hidden md:flex"
-                      onClick={() => handleCopyLink(invite.token)}
-                    >
-                      {copiedToken === invite.token ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <LinkIcon className="w-3.5 h-3.5" />}
-                      <span>{copiedToken === invite.token ? 'Copied' : 'Invite Link'}</span>
-                    </Button>
-                    <Button 
-                      variant="ghost" 
-                      size="icon" 
-                      className="h-8 w-8 text-slate-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20"
-                      onClick={() => handleDeleteInvite(invite.id, true)}
-                      title="Revoke Access"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </Button>
-                  </div>
-                )}
               </div>
             )
           })}
