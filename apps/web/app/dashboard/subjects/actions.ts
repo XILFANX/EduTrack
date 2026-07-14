@@ -6,7 +6,7 @@ import { revalidatePath } from 'next/cache'
 export async function createSubject(schoolId: string, name: string, teacherId?: string, classId?: string) {
   const admin = createAdminClient()
 
-  // Check if a matching subject already exists (including soft-deleted ones)
+  // Check if a matching subject already exists
   const allMatchQuery = admin
     .from('subjects')
     .select('*')
@@ -21,26 +21,10 @@ export async function createSubject(schoolId: string, name: string, teacherId?: 
 
   const { data: matches } = await allMatchQuery
 
-  // If there's an active (non-deleted) subject, block it
-  const activeMatch = matches?.find((s: any) => !s.deleted_at)
-  if (activeMatch) {
+  // If there's an active match, block it
+  if (matches && matches.length > 0) {
     const scope = classId ? 'this class' : 'the unassigned list'
     return { error: `A subject named "${name.trim()}" already exists in ${scope}.` }
-  }
-
-  // If there's a soft-deleted orphan, restore it instead of creating a new one
-  const orphan = matches?.find((s: any) => s.deleted_at)
-  if (orphan) {
-    const { data, error } = await admin
-      .from('subjects')
-      .update({ deleted_at: null, teacher_id: teacherId || null, class_id: classId || null } as any)
-      .eq('id', orphan.id)
-      .select()
-      .single()
-    if (error) return { error: error.message }
-    revalidatePath('/dashboard/subjects')
-    revalidatePath('/dashboard')
-    return { success: true, data }
   }
 
   const { data, error } = await admin
@@ -82,7 +66,7 @@ export async function deleteSubject(id: string) {
 
   const { error } = await admin
     .from('subjects')
-    .update({ deleted_at: new Date().toISOString() })
+    .delete()
     .eq('id', id)
 
   if (error) {

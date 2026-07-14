@@ -104,8 +104,8 @@ export default async function DashboardPage() {
   ] = await Promise.all([
     supabase.from('students').select('*', { count: 'exact', head: true }).eq('school_id', schoolId).is('deleted_at', null),
     supabase.from('users').select('*', { count: 'exact', head: true }).eq('school_id', schoolId).neq('role', 'principal').is('deleted_at', null),
-    supabase.from('classes').select('*', { count: 'exact', head: true }).eq('school_id', schoolId).is('deleted_at', null),
-    supabase.from('subjects').select('*', { count: 'exact', head: true }).eq('school_id', schoolId).is('deleted_at', null),
+    supabase.from('classes').select('*', { count: 'exact', head: true }).eq('school_id', schoolId),
+    supabase.from('subjects').select('*', { count: 'exact', head: true }).eq('school_id', schoolId),
     supabase.from('invoices').select('amount, balance').eq('school_id', schoolId).is('deleted_at', null),
   ])
 

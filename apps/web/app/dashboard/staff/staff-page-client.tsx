@@ -230,58 +230,90 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
         </div>
       )}
 
-      {/* Staff Detail Modal — centered on all screens */}
+      {/* Staff Detail Modal — full-page style */}
       {detailMember && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setDetailMember(null)} />
-          <div className="relative w-full max-w-sm bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 z-10 overflow-hidden">
-            {/* Header */}
-            <div className="flex items-center gap-4 px-5 py-4 border-b border-slate-100 dark:border-slate-800">
-              <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 flex items-center justify-center text-base font-bold shrink-0">
-                {getInitials(detailMember.full_name)}
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="font-bold text-foreground">{detailMember.full_name}</p>
-                <span className={`text-[11px] font-semibold px-2 py-0.5 rounded-full inline-block mt-0.5 ${ROLE_LABELS[detailMember.role]?.color ?? 'bg-slate-100 text-slate-700'}`}>
-                  {ROLE_LABELS[detailMember.role]?.label ?? detailMember.role}
-                </span>
-              </div>
-              <button onClick={() => setDetailMember(null)} className="p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 transition-colors">
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-            {/* Details */}
-            <div className="px-5 py-4 space-y-3">
-              <div className="flex items-center gap-3 text-sm">
-                <Phone className="w-4 h-4 text-muted-foreground shrink-0" />
-                <span className="text-foreground">{detailMember.phone_number}</span>
-              </div>
-              <div className="flex items-center gap-3 text-sm">
-                <Calendar className="w-4 h-4 text-muted-foreground shrink-0" />
-                <span className="text-foreground">Joined {new Date(detailMember.created_at).toLocaleDateString('en-KE', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setDetailMember(null)} />
+          <div className="relative w-full max-w-md bg-slate-50 dark:bg-slate-950 rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+            {/* Close button */}
+            <button onClick={() => setDetailMember(null)} className="absolute top-4 right-4 z-20 w-8 h-8 flex items-center justify-center rounded-full bg-black/20 text-white hover:bg-black/40 backdrop-blur-md transition-colors">
+              <X className="w-4 h-4" />
+            </button>
+
+            {/* Hero Header */}
+            <div className="h-32 bg-gradient-to-r from-blue-600 to-indigo-600 shrink-0 relative">
+              {/* Overlapping Avatar */}
+              <div className="absolute -bottom-10 left-6">
+                {(detailMember as any).photo_url ? (
+                  <img src={(detailMember as any).photo_url} alt="" className="w-20 h-20 rounded-2xl object-cover border-4 border-slate-50 dark:border-slate-950 shadow-sm" />
+                ) : (
+                  <div className="w-20 h-20 rounded-2xl bg-slate-900 border-4 border-slate-50 dark:border-slate-950 shadow-sm text-white flex items-center justify-center text-2xl font-bold">
+                    {getInitials(detailMember.full_name)}
+                  </div>
+                )}
               </div>
             </div>
-            {/* Actions */}
-            {detailInvite && (
-              <div className="px-5 pb-5 space-y-2 border-t border-slate-100 dark:border-slate-800 pt-4">
-                <div className="flex gap-2">
-                  <button onClick={() => handleCopyLink(detailInvite.token)}
-                    className="flex-1 flex items-center justify-center gap-2 h-10 rounded-xl border border-slate-200 dark:border-slate-700 text-sm font-medium text-foreground hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
-                    {copiedToken === detailInvite.token ? <Check className="w-4 h-4 text-emerald-500" /> : <LinkIcon className="w-4 h-4" />}
-                    {copiedToken === detailInvite.token ? 'Copied!' : 'Copy Link'}
-                  </button>
-                  <a href={buildWA(detailMember.full_name, detailInvite.token)} target="_blank" rel="noopener noreferrer"
-                    className="flex-1 flex items-center justify-center gap-2 h-10 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white text-sm font-medium transition-colors">
-                    {WA_ICON} WhatsApp
-                  </a>
+
+            {/* Content Area */}
+            <div className="flex-1 overflow-y-auto px-6 pt-14 pb-6 space-y-6">
+              {/* Header Info */}
+              <div>
+                <h2 className="text-2xl font-bold text-foreground">{detailMember.full_name}</h2>
+                <div className="flex items-center gap-2 mt-2">
+                  <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${ROLE_LABELS[detailMember.role]?.color ?? 'bg-slate-200 text-slate-700'}`}>
+                    {ROLE_LABELS[detailMember.role]?.label ?? detailMember.role}
+                  </span>
+                  <span className="text-sm font-medium px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400">
+                    Active
+                  </span>
                 </div>
-                <button onClick={() => handleDelete(detailInvite.id, true, detailMember.full_name)}
-                  className="w-full flex items-center justify-center gap-2 h-10 rounded-xl border border-red-200 dark:border-red-900/50 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 text-sm font-medium transition-colors">
-                  <Trash2 className="w-4 h-4" />
-                  Permanently Remove {detailMember.full_name.split(' ')[0]}
-                </button>
               </div>
-            )}
+
+              {/* Details Cards */}
+              <div className="space-y-3">
+                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4">
+                  <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3">Contact Details</p>
+                  <div className="flex items-center gap-3 text-sm">
+                    <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 shrink-0">
+                      <Phone className="w-4 h-4" />
+                    </div>
+                    <span className="font-medium text-foreground">{detailMember.phone_number}</span>
+                  </div>
+                </div>
+
+                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4">
+                  <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3">Account Status</p>
+                  <div className="flex items-center gap-3 text-sm">
+                    <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 shrink-0">
+                      <Calendar className="w-4 h-4" />
+                    </div>
+                    <span className="font-medium text-foreground">Joined {new Date(detailMember.created_at).toLocaleDateString('en-KE', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Actions */}
+              {detailInvite && (
+                <div className="space-y-3 pt-2">
+                  <div className="flex gap-2">
+                    <button onClick={() => handleCopyLink(detailInvite.token)}
+                      className="flex-1 flex items-center justify-center gap-2 h-11 rounded-xl border border-slate-200 dark:border-slate-700 text-sm font-semibold text-foreground hover:bg-white dark:hover:bg-slate-800 transition-colors shadow-sm bg-slate-50 dark:bg-slate-900">
+                      {copiedToken === detailInvite.token ? <Check className="w-4 h-4 text-emerald-500" /> : <LinkIcon className="w-4 h-4" />}
+                      {copiedToken === detailInvite.token ? 'Copied!' : 'Copy Link'}
+                    </button>
+                    <a href={buildWA(detailMember.full_name, detailInvite.token)} target="_blank" rel="noopener noreferrer"
+                      className="flex-1 flex items-center justify-center gap-2 h-11 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white text-sm font-semibold transition-colors shadow-sm">
+                      {WA_ICON} WhatsApp
+                    </a>
+                  </div>
+                  <button onClick={() => handleDelete(detailInvite.id, true, detailMember.full_name)}
+                    className="w-full flex items-center justify-center gap-2 h-11 rounded-xl border border-red-200 dark:border-red-900/50 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 text-sm font-semibold transition-colors bg-white dark:bg-slate-900 shadow-sm">
+                    <Trash2 className="w-4 h-4" />
+                    Permanently Remove Staff
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}

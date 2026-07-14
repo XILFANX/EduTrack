@@ -34,7 +34,7 @@ export async function createClass(schoolId: string, name: string, classTeacherId
   // Validate class doesn't already exist for this school
   const { data: existingData } = await admin
     .from('classes')
-    .select('id, deleted_at' as any)
+    .select('id')
     .eq('school_id', schoolId)
     .ilike('name', name.trim())
     .single()
@@ -42,20 +42,6 @@ export async function createClass(schoolId: string, name: string, classTeacherId
   const existing = existingData as any
 
   if (existing) {
-    if (existing.deleted_at) {
-      // Restore soft-deleted class
-      const { data: restored, error: restoreError } = await admin
-        .from('classes')
-        .update({ deleted_at: null, class_teacher_id: classTeacherId || null })
-        .eq('id', existing.id)
-        .select()
-        .single()
-      
-      if (restoreError) return { error: restoreError.message }
-      
-      revalidatePath('/dashboard/classes')
-      return { success: true, data: restored }
-    }
     return { error: 'A class with this name already exists.' }
   }
 
@@ -82,44 +68,29 @@ export async function createBulkClasses(schoolId: string, names: string[]) {
 
   const { data: existingData } = await admin
     .from('classes')
-    .select('id, name, deleted_at' as any)
+    .select('id, name')
     .eq('school_id', schoolId)
 
   const existing = existingData as any[] | null
 
-  const existingByName = new Map<string, any>()
+  const existingByName = new Set<string>()
   if (existing) {
     for (const c of existing) {
-      existingByName.set(c.name.toLowerCase(), c)
+      existingByName.add(c.name.toLowerCase())
     }
   }
 
   const newClasses: any[] = []
-  const classesToRestore: string[] = []
 
   for (const name of names) {
     const n = name.trim()
-    const match = existingByName.get(n.toLowerCase())
-    if (match) {
-      if (match.deleted_at) {
-        classesToRestore.push(match.id)
-      }
-    } else {
+    if (!existingByName.has(n.toLowerCase())) {
       newClasses.push({ school_id: schoolId, name: n })
     }
   }
 
-  if (newClasses.length === 0 && classesToRestore.length === 0) {
+  if (newClasses.length === 0) {
     return { error: 'All selected classes already exist.' }
-  }
-
-  // Restore deleted classes
-  if (classesToRestore.length > 0) {
-    const { error } = await admin
-      .from('classes')
-      .update({ deleted_at: null })
-      .in('id', classesToRestore)
-    if (error) return { error: error.message }
   }
 
   // Insert truly new classes
@@ -163,7 +134,6 @@ export async function getClasses(schoolId: string) {
     .from('classes')
     .select('id, name')
     .eq('school_id', schoolId)
-    .is('deleted_at', null)
     .order('name')
 
   if (error) {

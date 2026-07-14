@@ -17,20 +17,16 @@ export default async function SubjectsPage() {
 
   if (!profile?.school_id) return null
 
-  // Fetch classes
   const { data: classes } = await supabase
     .from('classes')
     .select('id, name')
     .eq('school_id', profile.school_id)
-    .is('deleted_at', null)
     .order('name')
 
-  // Fetch subjects with teacher name
   const { data: subjects } = await supabase
     .from('subjects')
     .select('*, users!subjects_teacher_id_fkey(id, full_name)')
     .eq('school_id', profile.school_id)
-    .is('deleted_at', null)
     .order('name')
 
   return (

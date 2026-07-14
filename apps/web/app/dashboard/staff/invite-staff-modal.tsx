@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { inviteStaff, getClasses, type StaffRole } from './actions'
 import { Copy, Check, UserPlus } from 'lucide-react'
+import { FileUpload } from '@/components/ui/file-upload'
 
 const ROLE_OPTIONS: { value: StaffRole; label: string; desc: string }[] = [
   { value: 'class_teacher',    label: 'Class Teacher',    desc: 'Manages a specific class, onboards parents' },
@@ -46,6 +47,7 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
   const [error, setError]             = useState<string | null>(null)
   const [result, setResult]           = useState<{ url: string; schoolName: string; className?: string } | null>(null)
   const [copied, setCopied]           = useState(false)
+  const [photoUrl, setPhotoUrl]       = useState<string | null>(null)
 
   // Load classes whenever modal opens or role changes to class_teacher
   useEffect(() => {
@@ -63,6 +65,7 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
     setError(null)
     setResult(null)
     setCopied(false)
+    setPhotoUrl(null)
     onClose()
   }
 
@@ -73,7 +76,7 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
     setLoading(true)
     setError(null)
 
-    const res = await inviteStaff({ salutation, fullName, phoneNumber, role, schoolId, classId: classId || undefined })
+    const res = await inviteStaff({ salutation, fullName, phoneNumber, role, schoolId, classId: classId || undefined, photoUrl: photoUrl || undefined })
     setLoading(false)
 
     if ('error' in res) {
@@ -212,6 +215,30 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
               <p className="text-xs text-muted-foreground">
                 They will verify this number to activate their portal.
               </p>
+            </div>
+
+            {/* Photo Upload (Optional) */}
+            <div className="space-y-2">
+              <Label>Profile Photo <span className="text-muted-foreground font-normal">(Optional)</span></Label>
+              {photoUrl ? (
+                <div className="flex items-center gap-4 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700">
+                  <img src={photoUrl} alt="Preview" className="w-16 h-16 rounded-full object-cover border-2 border-slate-200 dark:border-slate-600" />
+                  <div className="flex-1">
+                    <p className="text-sm font-semibold text-foreground">Photo uploaded</p>
+                    <p className="text-xs text-muted-foreground">Will be shown on their profile.</p>
+                  </div>
+                  <Button variant="ghost" size="sm" onClick={() => setPhotoUrl(null)} className="text-red-500 hover:text-red-600">Remove</Button>
+                </div>
+              ) : (
+                <FileUpload
+                  bucket="student-photos"
+                  folder={`staff/${schoolId}`}
+                  maxFiles={1}
+                  accept="image/*"
+                  onUploadSuccess={(urls) => setPhotoUrl(urls[0])}
+                  onUploadError={(err) => setError(`Photo upload failed: ${err.message}`)}
+                />
+              )}
             </div>
 
             {error && (

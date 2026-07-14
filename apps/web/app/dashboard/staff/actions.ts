@@ -20,6 +20,7 @@ export interface InviteStaffData {
   role: StaffRole
   schoolId: string
   classId?: string // only for class_teacher
+  photoUrl?: string
 }
 
 export async function inviteStaff(
@@ -62,6 +63,7 @@ export async function inviteStaff(
       target_phone: data.phoneNumber,
       target_entity_id: data.classId || null,
       target_salutation: data.salutation || null,
+      target_photo_url: data.photoUrl || null,
       created_by: user.id,
     } as any)
 
