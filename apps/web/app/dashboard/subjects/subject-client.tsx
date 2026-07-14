@@ -34,6 +34,11 @@ export function SubjectClient({ globalSubjects, classSubjects, classes, schoolId
   const [selectedTeacherId, setSelectedTeacherId] = useState('')
   const [assigning, setAssigning] = useState(false)
   const [assignError, setAssignError] = useState<string | null>(null)
+  const [expandedClasses, setExpandedClasses] = useState<Record<string, boolean>>({})
+
+  const toggleExpand = (classId: string) => {
+    setExpandedClasses(prev => ({ ...prev, [classId]: !prev[classId] }))
+  }
 
   useEffect(() => {
     setGlobalList(globalSubjects)
@@ -168,6 +173,10 @@ export function SubjectClient({ globalSubjects, classSubjects, classes, schoolId
             <div className="divide-y divide-slate-100 dark:divide-slate-800">
               {classes.map(cls => {
                 const classMappings = mappings.filter(m => m.class_id === cls.id)
+                const isExpanded = expandedClasses[cls.id]
+                const visibleMappings = isExpanded ? classMappings : classMappings.slice(0, 4)
+                const hiddenCount = classMappings.length - visibleMappings.length
+
                 return (
                   <div key={cls.id} className="p-4 hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors">
                     <div className="flex items-center justify-between mb-4">
@@ -185,14 +194,14 @@ export function SubjectClient({ globalSubjects, classSubjects, classes, schoolId
                         </div>
                       </div>
                       <Button variant="outline" size="sm" onClick={() => { setSelectedClass(cls); setIsModalOpen(true); }} className="gap-2">
-                        <Plus className="w-3.5 h-3.5" /> Add Subject
+                        <Plus className="w-3.5 h-3.5" /> <span className="hidden sm:inline">Add Subject</span>
                       </Button>
                     </div>
 
                     <div className="pl-14">
                       {classMappings.length > 0 ? (
                         <div className="flex flex-wrap gap-2">
-                          {classMappings.map(m => {
+                          {visibleMappings.map(m => {
                             const globalSub = globalList.find(g => g.id === m.subject_id)
                             return (
                               <button
@@ -205,6 +214,24 @@ export function SubjectClient({ globalSubjects, classSubjects, classes, schoolId
                               </button>
                             )
                           })}
+                          
+                          {hiddenCount > 0 && (
+                            <button
+                              onClick={() => toggleExpand(cls.id)}
+                              className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/50 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors shadow-sm"
+                            >
+                              +{hiddenCount} more
+                            </button>
+                          )}
+                          
+                          {isExpanded && hiddenCount === 0 && classMappings.length > 4 && (
+                            <button
+                              onClick={() => toggleExpand(cls.id)}
+                              className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/50 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors shadow-sm"
+                            >
+                              Show less
+                            </button>
+                          )}
                         </div>
                       ) : (
                         <p className="text-xs text-muted-foreground italic">No subjects assigned to this class yet.</p>

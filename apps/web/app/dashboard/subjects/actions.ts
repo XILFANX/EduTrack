@@ -13,7 +13,8 @@ export async function createSubject(schoolId: string, name: string, classIds: st
     .select('id')
     .eq('school_id', schoolId)
     .ilike('name', name.trim())
-    .single()
+    .limit(1)
+    .maybeSingle()
 
   if (existing) {
     subjectId = existing.id;
