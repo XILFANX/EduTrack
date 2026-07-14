@@ -233,6 +233,12 @@ export function SubjectClient({ globalSubjects, classSubjects, classes, schoolId
         {listToRender.length === 0 ? (
           <div className="text-center py-20 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl">
             <h2 className="text-lg font-semibold text-foreground">No subjects found</h2>
+            <p className="text-sm text-muted-foreground mt-2 mb-6">
+              Get started by adding a subject for this class.
+            </p>
+            <Button className="bg-blue-600 hover:bg-blue-700 gap-2" onClick={() => setIsModalOpen(true)}>
+              <Plus className="w-4 h-4" /> Add Subject
+            </Button>
           </div>
         ) : (
           <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden">
