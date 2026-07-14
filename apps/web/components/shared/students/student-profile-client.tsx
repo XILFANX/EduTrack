@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { GraduationCap, Calendar, User, FileText, Check, ChevronDown } from 'lucide-react'
-import { updateStudentClass } from '../actions'
+import { updateStudentClass } from './actions'
 import {
   DropdownMenu,
   DropdownMenuContent,
