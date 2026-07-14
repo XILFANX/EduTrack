@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { UserPlus, Search, GraduationCap, MoreVertical, Edit, Trash2, ArrowLeft, ChevronRight, Users } from 'lucide-react'
+import { UserPlus, Search, GraduationCap, MoreVertical, Pencil, Trash2, ArrowLeft, ChevronRight, Users, X, User, Hash, ExternalLink, Calendar } from 'lucide-react'
 import { EnrollStudentModal } from './enroll-student-modal'
 import {
   DropdownMenu,
@@ -19,7 +19,8 @@ export function StudentsPageClient({ initialStudents, classes, autoEnroll }: { i
   const [searchQuery, setSearchQuery] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(autoEnroll || false)
   const [students, setStudents] = useState(initialStudents)
-  const [selectedClass, setSelectedClass] = useState<any | null | 'all'>(autoEnroll ? 'all' : null) // null = showing classes, 'all' = showing all students (via search or explicit), or a class object
+  const [selectedClass, setSelectedClass] = useState<any | null | 'all'>(autoEnroll ? 'all' : null)
+  const [quickViewStudent, setQuickViewStudent] = useState<any | null>(null)
   const { dialogProps, confirm, setLoading } = useConfirmDialog()
 
   const isGlobalSearchActive = searchQuery.length > 0
@@ -268,33 +269,43 @@ export function StudentsPageClient({ initialStudents, classes, autoEnroll }: { i
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-slate-800/50">
                 {filteredStudents.map((student) => (
-                  <tr key={student.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors">
+                  <tr
+                    key={student.id}
+                    className="hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors cursor-pointer"
+                    onClick={() => setQuickViewStudent(student)}
+                  >
                     <td className="px-6 py-4 font-mono text-slate-500 dark:text-slate-400">{student.admission_number}</td>
                     <td className="px-6 py-4 font-medium text-foreground">{student.first_name} {student.middle_name ? student.middle_name + ' ' : ''}{student.last_name}</td>
                     <td className="px-6 py-4 text-muted-foreground">{(student.classes as any)?.name || 'Unassigned'}</td>
                     <td className="px-6 py-4">
                       <span className="px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 text-xs font-medium">Active</span>
                     </td>
-                    <td className="px-6 py-4 text-right">
+                    <td className="px-6 py-4 text-right" onClick={e => e.stopPropagation()}>
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                           <Button variant="ghost" size="icon" className="text-slate-400 hover:text-foreground">
                             <MoreVertical className="w-4 h-4" />
                           </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end" className="w-40 rounded-xl">
+                        <DropdownMenuContent align="end" className="w-44 rounded-xl">
+                          <DropdownMenuItem
+                            className="gap-2 cursor-pointer"
+                            onClick={() => setQuickViewStudent(student)}
+                          >
+                            <User className="w-4 h-4" /> View Profile
+                          </DropdownMenuItem>
                           <DropdownMenuItem asChild className="text-slate-600 dark:text-slate-300 gap-2 cursor-pointer">
                             <Link href={`/dashboard/students/${student.id}`}>
-                              <Edit className="w-4 h-4" /> View Profile
+                              <Pencil className="w-4 h-4" /> Edit Profile
                             </Link>
                           </DropdownMenuItem>
-                          <DropdownMenuItem 
+                          <DropdownMenuItem
                             className="text-amber-600 focus:bg-amber-50 dark:focus:bg-amber-900/20 gap-2 cursor-pointer"
                             onClick={() => handleDelete(student.id)}
                           >
                             <Trash2 className="w-4 h-4" /> Remove
                           </DropdownMenuItem>
-                          <DropdownMenuItem 
+                          <DropdownMenuItem
                             className="text-red-600 focus:bg-red-50 dark:focus:bg-red-900/20 gap-2 cursor-pointer"
                             onClick={() => handlePermanentDelete(student.id, `${student.first_name} ${student.last_name}`)}
                           >
@@ -311,15 +322,74 @@ export function StudentsPageClient({ initialStudents, classes, autoEnroll }: { i
         </div>
       )}
 
-      <EnrollStudentModal 
-        open={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
+      <EnrollStudentModal
+        open={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
         classes={classes}
         onSuccess={() => {
           setTimeout(() => window.location.reload(), 1500)
         }}
       />
       <ConfirmDialog {...dialogProps} />
+
+      {/* Quick View Sheet */}
+      {quickViewStudent && (
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center">
+          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setQuickViewStudent(null)} />
+          <div className="relative w-full sm:max-w-sm bg-white dark:bg-slate-900 rounded-t-3xl sm:rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 z-10 overflow-hidden pb-safe">
+            <div className="w-10 h-1 bg-slate-200 dark:bg-slate-700 rounded-full mx-auto mt-3 mb-4 sm:hidden" />
+            {/* Header */}
+            <div className="flex items-center gap-4 px-5 pt-2 pb-4">
+              {quickViewStudent.photo_url ? (
+                <img src={quickViewStudent.photo_url} alt="" className="w-12 h-12 rounded-full object-cover shrink-0 border-2 border-slate-200 dark:border-slate-700" />
+              ) : (
+                <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 flex items-center justify-center text-base font-bold shrink-0">
+                  {quickViewStudent.first_name?.[0]}{quickViewStudent.last_name?.[0]}
+                </div>
+              )}
+              <div className="flex-1 min-w-0">
+                <p className="font-bold text-foreground truncate">{quickViewStudent.first_name} {quickViewStudent.middle_name ? quickViewStudent.middle_name + ' ' : ''}{quickViewStudent.last_name}</p>
+                <p className="text-xs font-mono text-muted-foreground">{quickViewStudent.admission_number}</p>
+              </div>
+              <button onClick={() => setQuickViewStudent(null)} className="p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 transition-colors">
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+            {/* Details */}
+            <div className="px-5 pb-2 space-y-3 border-t border-slate-100 dark:border-slate-800 pt-4">
+              <div className="flex items-center gap-3 text-sm">
+                <GraduationCap className="w-4 h-4 text-muted-foreground shrink-0" />
+                <span className="text-foreground">{(quickViewStudent.classes as any)?.name || 'Unassigned'}</span>
+              </div>
+              <div className="flex items-center gap-3 text-sm">
+                <Hash className="w-4 h-4 text-muted-foreground shrink-0" />
+                <span className="text-foreground font-mono">{quickViewStudent.admission_number}</span>
+              </div>
+              {quickViewStudent.dob && (
+                <div className="flex items-center gap-3 text-sm">
+                  <Calendar className="w-4 h-4 text-muted-foreground shrink-0" />
+                  <span className="text-foreground">{new Date(quickViewStudent.dob).toLocaleDateString('en-KE', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                </div>
+              )}
+            </div>
+            {/* Actions */}
+            <div className="px-5 pb-6 pt-4 flex gap-2 border-t border-slate-100 dark:border-slate-800 mt-3">
+              <Link
+                href={`/dashboard/students/${quickViewStudent.id}`}
+                className="flex-1 flex items-center justify-center gap-2 h-10 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold transition-colors"
+              >
+                <Pencil className="w-4 h-4" /> Edit Profile
+              </Link>
+              <button
+                onClick={() => { setQuickViewStudent(null); handleDelete(quickViewStudent.id) }}
+                className="flex items-center justify-center gap-2 h-10 px-4 rounded-xl border border-red-200 dark:border-red-900/50 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 text-sm font-semibold transition-colors"
+              >
+                <Trash2 className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

@@ -6,17 +6,27 @@ import { revalidatePath } from 'next/cache'
 export async function createSubject(schoolId: string, name: string, teacherId?: string, classId?: string) {
   const admin = createAdminClient()
 
-  const { data: existing } = await admin
+  // Uniqueness is per class (or per school if no class) — same name CAN exist in different classes
+  const duplicateQuery = admin
     .from('subjects')
     .select('id')
     .eq('school_id', schoolId)
     .ilike('name', name.trim())
     .is('deleted_at', null)
-    .single()
+
+  if (classId) {
+    duplicateQuery.eq('class_id' as any, classId)
+  } else {
+    duplicateQuery.is('class_id' as any, null)
+  }
+
+  const { data: existing } = await duplicateQuery.maybeSingle()
 
   if (existing) {
-    return { error: 'A subject with this name already exists.' }
+    const scope = classId ? 'this class' : 'the unassigned list'
+    return { error: `A subject named "${name.trim()}" already exists in ${scope}.` }
   }
+
 
   const { data, error } = await admin
     .from('subjects')

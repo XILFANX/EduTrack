@@ -12,6 +12,7 @@ export interface EnrollStudentData {
   dob: string
   gender: string
   classId: string | null
+  photoUrl?: string
 }
 
 export async function enrollStudent(
@@ -60,6 +61,7 @@ export async function enrollStudent(
         last_name: data.lastName.trim(),
         admission_number: data.admissionNumber.trim(),
         dob: data.dob || null,
+        photo_url: data.photoUrl || null,
       })
       .select('id')
       .single()

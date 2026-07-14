@@ -18,6 +18,7 @@ import { MoreVertical, Edit } from 'lucide-react'
 import { deleteStudent } from '@/app/dashboard/students/actions'
 import { assignTeacher, deleteClass } from '../actions'
 import { useConfirmDialog, ConfirmDialog } from '@/components/ui/confirm-dialog'
+import { toast } from 'sonner'
 
 interface Teacher { id: string; full_name: string; role: string; salutation?: string | null }
 
@@ -63,9 +64,13 @@ export function ClassDetailClient({
   })
 
   async function handleDeleteClass() {
+    if (students.length > 0) {
+      alert('This class has enrolled students. Please remove or transfer them before deleting.')
+      return
+    }
     const ok = await confirm({
       title: 'Delete Class',
-      description: `Delete "${cls.name}"? This cannot be undone. Classes with enrolled students cannot be deleted.`,
+      description: `Permanently delete "${cls.name}"? This cannot be undone.`,
       confirmLabel: 'Delete Class', variant: 'danger'
     })
     if (!ok) return
@@ -73,7 +78,7 @@ export function ClassDetailClient({
     const res = await deleteClass(cls.id)
     setConfirmLoading(false)
     if ('error' in res && res.error) { alert(res.error) }
-    else { router.push('/dashboard/classes'); router.refresh() }
+    else { toast.success(`"${cls.name}" deleted`); router.push('/dashboard/classes'); router.refresh() }
   }
 
   async function handleDeleteStudent(id: string) {
@@ -120,22 +125,32 @@ export function ClassDetailClient({
           <h1 className="text-2xl font-bold text-foreground truncate">{cls.name}</h1>
           <p className="text-sm text-muted-foreground mt-0.5">{students.length} student{students.length !== 1 ? 's' : ''} enrolled</p>
         </div>
-        <button onClick={handleDeleteClass} className="shrink-0 p-2 rounded-xl text-slate-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors" title="Delete class">
-          <Trash2 className="w-4 h-4" />
-        </button>
+        {students.length === 0 && (
+          <button
+            onClick={handleDeleteClass}
+            className="shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-xl text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 border border-red-200 dark:border-red-900/50 text-sm font-medium transition-colors"
+            title="Delete class"
+          >
+            <Trash2 className="w-4 h-4" />
+            <span className="hidden sm:inline">Delete Class</span>
+          </button>
+        )}
       </div>
 
-      {/* Tab Bar */}
-      <div className="flex gap-1 p-1 bg-slate-100 dark:bg-slate-800/60 rounded-xl">
+      {/* Tab Bar — full text, blue underline active indicator */}
+      <div className="flex border-b border-slate-200 dark:border-slate-800">
         {tabs.map(t => (
           <button
             key={t.id}
             onClick={() => setActiveTab(t.id)}
-            className={`flex-1 flex items-center justify-center gap-1.5 py-2 text-sm font-medium rounded-lg transition-all ${activeTab === t.id ? 'bg-white dark:bg-slate-900 shadow text-foreground' : 'text-muted-foreground hover:text-foreground'}`}
+            className={`flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium border-b-2 transition-all -mb-px ${
+              activeTab === t.id
+                ? 'border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400'
+                : 'border-transparent text-muted-foreground hover:text-foreground hover:border-slate-300 dark:hover:border-slate-600'
+            }`}
           >
             <t.icon className="w-3.5 h-3.5 shrink-0" />
-            <span className="hidden sm:inline">{t.label}</span>
-            <span className="sm:hidden">{t.id === 'overview' ? 'Info' : t.id === 'students' ? `${students.length}` : 'Perf'}</span>
+            {t.label}
           </button>
         ))}
       </div>
@@ -275,9 +290,14 @@ export function ClassDetailClient({
                 {search ? 'No students match your search' : 'No students enrolled'}
               </h2>
               {!search && (
-                <p className="text-sm text-muted-foreground max-w-sm mx-auto mt-2">
-                  Enroll your first student to build the class roster.
-                </p>
+                <>
+                  <p className="text-sm text-muted-foreground max-w-sm mx-auto mt-2 mb-6">
+                    Enroll your first student to build the class roster.
+                  </p>
+                  <Button className="bg-blue-600 hover:bg-blue-700 gap-2" onClick={() => setIsModalOpen(true)}>
+                    <UserPlus className="w-4 h-4" /> Enroll First Student
+                  </Button>
+                </>
               )}
             </div>
           ) : (

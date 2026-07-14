@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import {
   BookMarked, Plus, ChevronRight, ArrowLeft,
@@ -22,6 +23,7 @@ interface SubjectClientProps {
 type View = 'classes' | 'subjects' | 'detail'
 
 export function SubjectClient({ subjects, classes, schoolId }: SubjectClientProps) {
+  const router = useRouter()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [subjectList, setSubjectList] = useState(subjects)
   const [selectedClass, setSelectedClass] = useState<any | null>(null)
@@ -39,6 +41,7 @@ export function SubjectClient({ subjects, classes, schoolId }: SubjectClientProp
 
   function handleSubjectAdded(newSubject: any) {
     setSubjectList(prev => [newSubject, ...prev])
+    router.refresh() // also sync any pre-existing subjects that were missed
   }
 
   // Subjects belonging to the selected class

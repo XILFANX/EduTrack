@@ -234,51 +234,55 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
             </div>
           </div>
         ) : (
-          /* ── Success: Show invite link ── */
-          <div className="space-y-5 pt-2">
+          /* ── Success: Invite link created ── */
+          <div className="space-y-5 pt-1">
             <div className="text-center space-y-2">
-              <div className="w-16 h-16 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 flex items-center justify-center mx-auto mb-4">
-                <Check className="w-8 h-8" />
+              <div className="w-16 h-16 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center mx-auto mb-3">
+                <Check className="w-8 h-8 text-emerald-600 dark:text-emerald-400" />
               </div>
-              <p className="font-bold text-lg text-foreground">Invite link generated!</p>
+              <p className="font-bold text-xl text-foreground">Invite link created!</p>
               <p className="text-sm text-muted-foreground">
-                Share this with <strong>{salutation} {fullName}</strong>
-                {role === 'class_teacher' && result.className ? (
-                  <> — <strong>{ROLE_LABEL[role]}</strong> of <strong>{result.className}</strong> at <strong>{result.schoolName}</strong></>
-                ) : (
-                  <> — <strong>{ROLE_LABEL[role]}</strong> at <strong>{result.schoolName}</strong></>
-                )}
+                Share this link with <strong>{salutation} {fullName}</strong>. They'll use it to set up their account.
               </p>
             </div>
 
-            {/* Link box */}
-            <div className="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-3 border border-slate-100 dark:border-slate-800 space-y-2">
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Invite Link</p>
-              <p className="text-xs font-mono break-all text-foreground select-all">{result.url}</p>
-              <div className="flex gap-2 pt-1">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="flex-1 gap-1.5 h-8 text-xs"
-                  onClick={handleCopy}
-                >
-                  {copied ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
-                  {copied ? 'Copied!' : 'Copy Link'}
-                </Button>
-                <a
-                  href={`https://wa.me/?text=${encodeURIComponent(buildWhatsAppMessage())}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 flex items-center justify-center gap-1.5 h-8 text-xs font-medium bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-md transition-colors"
-                >
-                  Share via WhatsApp
-                </a>
-              </div>
+            {/* Link display box */}
+            <div className="bg-slate-50 dark:bg-slate-800/60 rounded-xl p-3.5 border border-slate-200 dark:border-slate-700">
+              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-2">Permanent Invite Link</p>
+              <p className="text-xs font-mono break-all text-foreground select-all leading-relaxed">{result.url}</p>
             </div>
 
-            <Button variant="outline" className="w-full" onClick={handleClose}>
-              Done
-            </Button>
+            {/* Actions */}
+            <div className="space-y-2.5">
+              <button
+                onClick={handleCopy}
+                className="w-full h-11 flex items-center justify-center gap-2 rounded-xl bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-semibold text-sm transition-colors"
+              >
+                {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                {copied ? 'Copied!' : 'Copy Link'}
+              </button>
+
+              <Button variant="outline" className="w-full h-11" onClick={handleClose}>
+                Back to Dashboard
+              </Button>
+
+              <a
+                href={`https://wa.me/?text=${encodeURIComponent(buildWhatsAppMessage())}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full h-11 flex items-center justify-center gap-2.5 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] active:bg-[#1aad50] text-white font-semibold text-sm transition-colors"
+              >
+                {/* WhatsApp circle logo */}
+                <svg viewBox="0 0 24 24" className="w-5 h-5 fill-white shrink-0" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.38 1.25 4.79L2.05 22l5.5-1.44c1.37.73 2.92 1.15 4.49 1.15h.01C17.5 21.71 22 17.26 22 11.8c0-2.66-1.04-5.17-2.92-7.05A9.93 9.93 0 0012.04 2zm0 1.67c2.24 0 4.35.87 5.94 2.46a8.33 8.33 0 012.45 5.68c0 4.59-3.74 8.32-8.34 8.32a8.33 8.33 0 01-4.23-1.15l-.3-.18-3.14.82.84-3.07-.2-.32a8.28 8.28 0 01-1.27-4.42c0-4.6 3.74-8.34 8.25-8.34zm-2.78 4.4c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.09s.9 2.43 1.02 2.6c.13.17 1.77 2.7 4.28 3.68.6.26 1.07.41 1.43.52.6.19 1.15.16 1.58.1.48-.07 1.48-.61 1.69-1.19.21-.58.21-1.08.15-1.19-.06-.1-.23-.16-.48-.28-.25-.13-1.48-.73-1.71-.81-.23-.09-.4-.13-.56.13-.17.25-.64.81-.79.98-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.25a7.58 7.58 0 01-1.4-1.74c-.15-.25-.02-.39.11-.51.12-.11.25-.29.38-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.36-.77-1.86-.2-.49-.4-.42-.56-.43h-.48z"/>
+                </svg>
+                Share via WhatsApp
+              </a>
+            </div>
+
+            <p className="text-center text-xs text-muted-foreground">
+              This link is permanent — it won't expire. The same link can be used to log in again in the future.
+            </p>
           </div>
         )}
       </DialogContent>

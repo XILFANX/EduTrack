@@ -37,10 +37,14 @@ export function StudentProfileClient({ student, classes }: { student: any, class
         <Card className="border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden relative">
           <div className="h-24 bg-gradient-to-r from-blue-600 to-cyan-500" />
           <CardContent className="px-6 pb-6 pt-0 relative">
-            <div className="w-20 h-20 rounded-2xl bg-white dark:bg-slate-900 border-4 border-white dark:border-slate-950 shadow-sm mx-auto -mt-10 flex items-center justify-center relative z-10">
-              <span className="text-2xl font-bold text-slate-700 dark:text-slate-200">
-                {student.first_name[0]}{(student.middle_name || student.last_name)[0]}
-              </span>
+            <div className="w-20 h-20 rounded-2xl bg-white dark:bg-slate-900 border-4 border-white dark:border-slate-950 shadow-sm mx-auto -mt-10 flex items-center justify-center relative z-10 overflow-hidden">
+              {student.photo_url ? (
+                <img src={student.photo_url} alt={`${student.first_name}'s photo`} className="w-full h-full object-cover" />
+              ) : (
+                <span className="text-2xl font-bold text-slate-700 dark:text-slate-200">
+                  {student.first_name[0]}{(student.middle_name || student.last_name)[0]}
+                </span>
+              )}
             </div>
             
             <div className="text-center mt-3 mb-6">

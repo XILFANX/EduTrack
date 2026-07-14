@@ -1,12 +1,13 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { enrollStudent, type EnrollStudentData } from './actions'
-import { GraduationCap, ChevronLeft, ChevronRight, CheckCircle2, Hash } from 'lucide-react'
+import { GraduationCap, ChevronLeft, ChevronRight, CheckCircle2, Hash, Camera, X } from 'lucide-react'
+import { createClient } from '@/lib/supabase/client'
 
 interface Class {
   id: string
@@ -31,9 +32,12 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
   const [dob, setDob] = useState('')
   const [gender, setGender] = useState('')
   const [classId, setClassId] = useState<string | null>(null)
+  const [photoFile, setPhotoFile] = useState<File | null>(null)
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [done, setDone] = useState(false)
+  const photoInputRef = useRef<HTMLInputElement>(null)
 
   function reset() {
     setStep(1)
@@ -44,9 +48,19 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
     setDob('')
     setGender('')
     setClassId(null)
+    setPhotoFile(null)
+    setPhotoPreview(null)
     setError(null)
     setDone(false)
     setLoading(false)
+  }
+
+  function handlePhotoChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file) return
+    if (file.size > 5 * 1024 * 1024) { setError('Photo must be under 5 MB.'); return }
+    setPhotoFile(file)
+    setPhotoPreview(URL.createObjectURL(file))
   }
 
   function handleClose() {
@@ -67,6 +81,27 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
   async function handleSubmit() {
     setLoading(true)
     setError(null)
+
+    // Upload photo first if provided
+    let photoUrl: string | undefined
+    if (photoFile) {
+      try {
+        const supabase = createClient()
+        const ext = photoFile.name.split('.').pop() ?? 'jpg'
+        const path = `${admissionNumber.trim()}-${Date.now()}.${ext}`
+        const { error: upErr } = await supabase.storage
+          .from('student-photos')
+          .upload(path, photoFile, { upsert: true })
+        if (upErr) throw new Error(upErr.message)
+        const { data: urlData } = supabase.storage.from('student-photos').getPublicUrl(path)
+        photoUrl = urlData.publicUrl
+      } catch (err: any) {
+        setLoading(false)
+        setError(`Photo upload failed: ${err.message}`)
+        return
+      }
+    }
+
     const data: EnrollStudentData = {
       admissionNumber,
       firstName,
@@ -75,12 +110,13 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
       dob,
       gender,
       classId,
+      photoUrl,
     }
     const res = await enrollStudent(data)
     setLoading(false)
     if ('error' in res) {
       setError(res.error)
-      setStep(1) // go back to step 1 to show e.g. duplicate admission number
+      setStep(1)
     } else {
       setDone(true)
       onSuccess()
@@ -140,7 +176,49 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
               {/* ── Step 1: Student Details + Class + Admission Number ── */}
               {step === 1 && (
                 <div className="space-y-4">
-                  {/* Admission Number — top, prominent */}
+                  {/* Photo Upload */}
+                  <div className="flex items-center gap-4">
+                    <button
+                      type="button"
+                      onClick={() => photoInputRef.current?.click()}
+                      className="w-16 h-16 rounded-full border-2 border-dashed border-slate-300 dark:border-slate-600 hover:border-blue-400 flex items-center justify-center bg-slate-50 dark:bg-slate-800/50 transition-colors shrink-0 overflow-hidden group relative"
+                    >
+                      {photoPreview ? (
+                        <img src={photoPreview} alt="preview" className="w-full h-full object-cover" />
+                      ) : (
+                        <Camera className="w-6 h-6 text-slate-400 group-hover:text-blue-500 transition-colors" />
+                      )}
+                    </button>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-foreground">Student Photo <span className="text-muted-foreground font-normal">(Optional)</span></p>
+                      <p className="text-xs text-muted-foreground mt-0.5">JPG, PNG or WebP · Max 5 MB</p>
+                      <button
+                        type="button"
+                        onClick={() => photoInputRef.current?.click()}
+                        className="mt-1.5 text-xs text-blue-600 dark:text-blue-400 hover:underline font-medium"
+                      >
+                        {photoPreview ? 'Change photo' : 'Upload photo'}
+                      </button>
+                      {photoPreview && (
+                        <button
+                          type="button"
+                          onClick={() => { setPhotoFile(null); setPhotoPreview(null) }}
+                          className="ml-3 text-xs text-red-500 hover:underline"
+                        >
+                          Remove
+                        </button>
+                      )}
+                    </div>
+                    <input
+                      ref={photoInputRef}
+                      type="file"
+                      accept="image/jpeg,image/jpg,image/png,image/webp"
+                      className="hidden"
+                      onChange={handlePhotoChange}
+                    />
+                  </div>
+
+                  {/* Admission Number — prominent */}
                   <div className="space-y-1.5">
                     <Label htmlFor="enroll-adm" className="flex items-center gap-1.5">
                       <Hash className="w-3.5 h-3.5 text-blue-500" />
@@ -254,17 +332,29 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
               {/* ── Step 2: Confirm ── */}
               {step === 2 && (
                 <div className="space-y-3">
+                  <div className="flex items-center gap-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl p-3">
+                    {photoPreview ? (
+                      <img src={photoPreview} alt="" className="w-12 h-12 rounded-full object-cover shrink-0 border border-slate-200 dark:border-slate-700" />
+                    ) : (
+                      <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center shrink-0">
+                        <span className="text-base font-bold text-blue-700 dark:text-blue-300">{firstName[0]}{lastName[0]}</span>
+                      </div>
+                    )}
+                    <div>
+                      <p className="font-bold text-foreground">{firstName} {middleName ? middleName + ' ' : ''}{lastName}</p>
+                      <p className="text-xs font-mono text-muted-foreground">{admissionNumber}</p>
+                    </div>
+                  </div>
                   <div className="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-4 space-y-2 text-sm">
                     {[
-                      { label: 'Admission No.', value: admissionNumber },
-                      { label: 'Full Name', value: `${firstName}${middleName ? ' ' + middleName : ''} ${lastName}` },
                       { label: 'Date of Birth', value: dob || 'Not provided' },
                       { label: 'Gender', value: gender || 'Not provided' },
                       { label: 'Class', value: selectedClass?.name ?? 'Unassigned' },
+                      { label: 'Photo', value: photoFile ? photoFile.name : 'No photo' },
                     ].map(({ label, value }) => (
                       <div key={label} className="flex justify-between">
                         <span className="text-muted-foreground">{label}</span>
-                        <span className="font-semibold text-foreground text-right ml-4">{value}</span>
+                        <span className="font-semibold text-foreground text-right ml-4 truncate max-w-[160px]">{value}</span>
                       </div>
                     ))}
                   </div>
