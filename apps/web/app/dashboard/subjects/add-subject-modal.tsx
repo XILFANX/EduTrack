@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState, useEffect } from 'react'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
@@ -15,9 +15,10 @@ interface AddSubjectModalProps {
   onClose: () => void
   schoolId: string
   onSuccess: () => void
+  preSelectedClassId?: string | null
 }
 
-export function AddSubjectModal({ open, onClose, schoolId, onSuccess }: AddSubjectModalProps) {
+export function AddSubjectModal({ open, onClose, schoolId, onSuccess, preSelectedClassId }: AddSubjectModalProps) {
   const [name, setName] = useState('')
   const [selectedClassIds, setSelectedClassIds] = useState<string[]>([])
   const [classes, setClasses] = useState<any[]>([])
@@ -27,8 +28,13 @@ export function AddSubjectModal({ open, onClose, schoolId, onSuccess }: AddSubje
   useEffect(() => {
     if (open) {
       getClasses(schoolId).then(setClasses)
+      if (preSelectedClassId) {
+        setSelectedClassIds([preSelectedClassId])
+      } else {
+        setSelectedClassIds([])
+      }
     }
-  }, [open, schoolId])
+  }, [open, schoolId, preSelectedClassId])
 
   function handleClose() {
     setName(''); setSelectedClassIds([]); setError(null)
@@ -69,7 +75,14 @@ export function AddSubjectModal({ open, onClose, schoolId, onSuccess }: AddSubje
         <div className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="subjectName">Subject Name *</Label>
-            <Input id="subjectName" placeholder="e.g. Mathematics" value={name} onChange={e => setName(e.target.value)} />
+            <Input
+              id="subjectName"
+              placeholder="e.g. Mathematics"
+              value={name}
+              onChange={e => setName(e.target.value)}
+              onKeyDown={e => e.key === 'Enter' && handleSave()}
+              autoFocus
+            />
           </div>
 
           <div className="space-y-2">
@@ -79,7 +92,7 @@ export function AddSubjectModal({ open, onClose, schoolId, onSuccess }: AddSubje
             {classes.length === 0 ? (
               <p className="text-xs text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800/50 rounded-lg px-3 py-2 flex items-center gap-1.5">
                 <Info className="w-3.5 h-3.5 shrink-0" />
-                No classes yet. You can create the subject now and assign it later.
+                No classes yet. Create classes first before assigning subjects.
               </p>
             ) : (
               <div className="grid grid-cols-2 gap-2 max-h-48 overflow-y-auto p-2 bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl">
@@ -98,7 +111,7 @@ export function AddSubjectModal({ open, onClose, schoolId, onSuccess }: AddSubje
             )}
           </div>
 
-          {error && <p className="text-xs text-red-500 bg-red-50 dark:bg-red-900/10 p-2 rounded-lg">{error}</p>}
+          {error && <p className="text-xs text-red-500 bg-red-50 dark:bg-red-900/10 border border-red-200 dark:border-red-800/30 p-3 rounded-lg">{error}</p>}
         </div>
 
         <div className="flex items-center justify-end gap-3 mt-6">
