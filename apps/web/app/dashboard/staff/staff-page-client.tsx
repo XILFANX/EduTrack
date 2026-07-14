@@ -282,7 +282,7 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
                 </div>
 
                 <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4">
-                  <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3">Account Status</p>
+                  <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3">Date of Admission</p>
                   <div className="flex items-center gap-3 text-sm">
                     <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 shrink-0">
                       <Calendar className="w-4 h-4" />

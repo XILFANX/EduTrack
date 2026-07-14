@@ -44,7 +44,7 @@ export function AddSubjectModal({ open, onClose, schoolId, onSuccess }: AddSubje
   async function handleSave() {
     setLoading(true); setError(null)
     if (!name.trim()) { setError('Subject name is required.'); setLoading(false); return }
-    const res = await createSubject(schoolId, name, 'core', selectedClassIds)
+    const res = await createSubject(schoolId, name, selectedClassIds)
     setLoading(false)
     if (res.error) { setError(res.error) }
     else {

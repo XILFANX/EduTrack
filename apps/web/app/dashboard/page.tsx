@@ -185,10 +185,11 @@ export default async function DashboardPage() {
       {/* Quick Actions */}
       <div>
         <SectionHeader title="Quick Actions" />
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
           {[
             { href: '/dashboard/staff', label: 'Invite Staff', icon: Users, color: 'bg-blue-600 hover:bg-blue-700' },
             { href: '/dashboard/students', label: 'Add Student', icon: GraduationCap, color: 'bg-violet-600 hover:bg-violet-700' },
+            { href: '/dashboard/subjects', label: 'Manage Subjects', icon: BookOpen, color: 'bg-amber-500 hover:bg-amber-600' },
             { href: '/bursar/dashboard', label: 'View Finances', icon: Banknote, color: 'bg-emerald-600 hover:bg-emerald-700' },
             { href: '/dashboard', label: 'Overview', icon: TrendingUp, color: 'bg-slate-700 hover:bg-slate-800' },
           ].map(({ href, label, icon: Icon, color }) => (

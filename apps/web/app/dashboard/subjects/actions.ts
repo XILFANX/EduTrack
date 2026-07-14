@@ -3,7 +3,7 @@
 import { createAdminClient } from '@/lib/supabase/admin'
 import { revalidatePath } from 'next/cache'
 
-export async function createSubject(schoolId: string, name: string, type: string, classIds: string[]) {
+export async function createSubject(schoolId: string, name: string, classIds: string[]) {
   const admin = createAdminClient()
 
   // 1. Check if a global subject with this name already exists
@@ -23,8 +23,7 @@ export async function createSubject(schoolId: string, name: string, type: string
       .from('subjects')
       .insert({
         school_id: schoolId,
-        name: name.trim(),
-        type: type || 'core',
+        name: name.trim()
       } as any)
       .select('id')
       .single()

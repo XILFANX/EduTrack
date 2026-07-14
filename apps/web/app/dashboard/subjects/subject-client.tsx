@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
@@ -144,7 +144,7 @@ export function SubjectClient({ globalSubjects, classSubjects, classes, schoolId
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-foreground">Subjects Engine</h1>
+            <h1 className="text-2xl font-bold text-foreground">Subject Management</h1>
             <p className="text-sm text-muted-foreground mt-1">Manage global curriculum and class assignments.</p>
           </div>
           <Button className="bg-blue-600 hover:bg-blue-700 gap-2" onClick={() => setIsModalOpen(true)}>
