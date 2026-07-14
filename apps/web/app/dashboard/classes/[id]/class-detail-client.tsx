@@ -6,16 +6,17 @@ import { Button } from '@/components/ui/button'
 import {
   UserPlus, ArrowLeft, GraduationCap,
   UserCheck, X, Check, Trash2, Search,
-  TrendingUp, Users, BookOpen, BarChart3
+  TrendingUp, Users, BookOpen, BarChart3,
+  Hash, Calendar, Pencil
 } from 'lucide-react'
 import Link from 'next/link'
-import { EnrollStudentModal } from '@/app/dashboard/students/enroll-student-modal'
+import { EnrollStudentModal } from '@/components/shared/students/enroll-student-modal'
 import {
   DropdownMenu, DropdownMenuContent,
   DropdownMenuItem, DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { MoreVertical, Edit } from 'lucide-react'
-import { deleteStudent } from '@/app/dashboard/students/actions'
+import { deleteStudent } from '@/components/shared/students/actions'
 import { assignTeacher, deleteClass } from '../actions'
 import { useConfirmDialog, ConfirmDialog } from '@/components/ui/confirm-dialog'
 import { toast } from 'sonner'
@@ -43,6 +44,7 @@ export function ClassDetailClient({
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [students, setStudents] = useState(initialStudents)
   const [search, setSearch] = useState('')
+  const [quickViewStudent, setQuickViewStudent] = useState<any | null>(null)
   const { dialogProps, confirm, setLoading: setConfirmLoading } = useConfirmDialog()
 
   const [currentTeacherId, setCurrentTeacherId] = useState(teacherId)
@@ -304,11 +306,16 @@ export function ClassDetailClient({
             <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden">
               <div className="divide-y divide-slate-100 dark:divide-slate-800/50">
                 {filteredStudents.map(student => (
-                  <div key={student.id} className="flex items-center gap-3 px-4 py-3 hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors">
-                    <div className="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center shrink-0">
-                      <span className="text-xs font-bold text-blue-600 dark:text-blue-400">
-                        {student.first_name?.[0]}{student.last_name?.[0]}
-                      </span>
+                  <div
+                    key={student.id}
+                    className="flex items-center gap-3 px-4 py-3 hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors cursor-pointer"
+                    onClick={() => setQuickViewStudent(student)}
+                  >
+                    <div className="w-8 h-8 rounded-full overflow-hidden bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center shrink-0">
+                      {student.photo_url
+                        ? <img src={student.photo_url} alt="" className="w-full h-full object-cover" />
+                        : <span className="text-xs font-bold text-blue-600 dark:text-blue-400">{student.first_name?.[0]}{student.last_name?.[0]}</span>
+                      }
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="font-medium text-foreground text-sm truncate">
@@ -316,7 +323,7 @@ export function ClassDetailClient({
                       </p>
                       <p className="text-xs text-muted-foreground font-mono">{student.admission_number}</p>
                     </div>
-                    <div className="flex items-center gap-2 shrink-0">
+                    <div className="flex items-center gap-2 shrink-0" onClick={e => e.stopPropagation()}>
                       <span className="hidden sm:inline-flex px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 text-xs font-medium">
                         Active
                       </span>
@@ -326,10 +333,13 @@ export function ClassDetailClient({
                             <MoreVertical className="w-3.5 h-3.5" />
                           </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end" className="w-40 rounded-xl">
+                        <DropdownMenuContent align="end" className="w-44 rounded-xl">
+                          <DropdownMenuItem className="gap-2 cursor-pointer" onClick={() => setQuickViewStudent(student)}>
+                            <GraduationCap className="w-4 h-4" /> View Profile
+                          </DropdownMenuItem>
                           <DropdownMenuItem asChild className="gap-2 cursor-pointer">
                             <Link href={`/dashboard/students/${student.id}`}>
-                              <Edit className="w-4 h-4" /> View Profile
+                              <Pencil className="w-4 h-4" /> Edit Profile
                             </Link>
                           </DropdownMenuItem>
                           <DropdownMenuItem
@@ -388,9 +398,67 @@ export function ClassDetailClient({
         open={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         classes={[cls]}
-        onSuccess={() => { router.refresh() }}
+        onSuccess={(newStudent?: any) => {
+          if (newStudent) setStudents(prev => [...prev, newStudent])
+          router.refresh()
+        }}
       />
       <ConfirmDialog {...dialogProps} />
+
+      {/* Student Quick-View — centered modal */}
+      {quickViewStudent && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setQuickViewStudent(null)} />
+          <div className="relative w-full max-w-sm bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 z-10 overflow-hidden">
+            <div className="flex items-center gap-4 px-5 py-4 border-b border-slate-100 dark:border-slate-800">
+              {quickViewStudent.photo_url ? (
+                <img src={quickViewStudent.photo_url} alt="" className="w-12 h-12 rounded-full object-cover shrink-0 border-2 border-slate-200" />
+              ) : (
+                <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 flex items-center justify-center text-base font-bold shrink-0">
+                  {quickViewStudent.first_name?.[0]}{quickViewStudent.last_name?.[0]}
+                </div>
+              )}
+              <div className="flex-1 min-w-0">
+                <p className="font-bold text-foreground truncate">{quickViewStudent.first_name} {quickViewStudent.middle_name ? quickViewStudent.middle_name + ' ' : ''}{quickViewStudent.last_name}</p>
+                <p className="text-xs font-mono text-muted-foreground">{quickViewStudent.admission_number}</p>
+              </div>
+              <button onClick={() => setQuickViewStudent(null)} className="p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 transition-colors">
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+            <div className="px-5 py-4 space-y-3">
+              <div className="flex items-center gap-3 text-sm">
+                <GraduationCap className="w-4 h-4 text-muted-foreground shrink-0" />
+                <span className="text-foreground">{cls.name}</span>
+              </div>
+              <div className="flex items-center gap-3 text-sm">
+                <Hash className="w-4 h-4 text-muted-foreground shrink-0" />
+                <span className="text-foreground font-mono">{quickViewStudent.admission_number}</span>
+              </div>
+              {quickViewStudent.dob && (
+                <div className="flex items-center gap-3 text-sm">
+                  <Calendar className="w-4 h-4 text-muted-foreground shrink-0" />
+                  <span className="text-foreground">{new Date(quickViewStudent.dob).toLocaleDateString('en-KE', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                </div>
+              )}
+            </div>
+            <div className="px-5 pb-5 flex gap-2 border-t border-slate-100 dark:border-slate-800 pt-4">
+              <Link
+                href={`/dashboard/students/${quickViewStudent.id}`}
+                className="flex-1 flex items-center justify-center gap-2 h-10 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold transition-colors"
+              >
+                <Pencil className="w-4 h-4" /> Edit Profile
+              </Link>
+              <button
+                onClick={() => { setQuickViewStudent(null); handleDeleteStudent(quickViewStudent.id) }}
+                className="flex items-center justify-center h-10 px-4 rounded-xl border border-red-200 dark:border-red-900/50 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 text-sm font-semibold transition-colors"
+              >
+                <Trash2 className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

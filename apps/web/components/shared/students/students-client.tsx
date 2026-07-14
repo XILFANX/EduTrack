@@ -275,7 +275,18 @@ export function StudentsPageClient({ initialStudents, classes, autoEnroll }: { i
                     onClick={() => setQuickViewStudent(student)}
                   >
                     <td className="px-6 py-4 font-mono text-slate-500 dark:text-slate-400">{student.admission_number}</td>
-                    <td className="px-6 py-4 font-medium text-foreground">{student.first_name} {student.middle_name ? student.middle_name + ' ' : ''}{student.last_name}</td>
+                    <td className="px-6 py-4">
+                      <div className="flex items-center gap-3">
+                        {student.photo_url ? (
+                          <img src={student.photo_url} alt="" className="w-7 h-7 rounded-full object-cover border border-slate-200 dark:border-slate-700 shrink-0" />
+                        ) : (
+                          <div className="w-7 h-7 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-bold flex items-center justify-center shrink-0">
+                            {student.first_name?.[0]}{student.last_name?.[0]}
+                          </div>
+                        )}
+                        <span className="font-medium text-foreground">{student.first_name} {student.middle_name ? student.middle_name + ' ' : ''}{student.last_name}</span>
+                      </div>
+                    </td>
                     <td className="px-6 py-4 text-muted-foreground">{(student.classes as any)?.name || 'Unassigned'}</td>
                     <td className="px-6 py-4">
                       <span className="px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 text-xs font-medium">Active</span>
@@ -334,12 +345,11 @@ export function StudentsPageClient({ initialStudents, classes, autoEnroll }: { i
 
       {/* Quick View Sheet */}
       {quickViewStudent && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center">
-          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setQuickViewStudent(null)} />
-          <div className="relative w-full sm:max-w-sm bg-white dark:bg-slate-900 rounded-t-3xl sm:rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 z-10 overflow-hidden pb-safe">
-            <div className="w-10 h-1 bg-slate-200 dark:bg-slate-700 rounded-full mx-auto mt-3 mb-4 sm:hidden" />
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setQuickViewStudent(null)} />
+          <div className="relative w-full max-w-sm bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 z-10 overflow-hidden">
             {/* Header */}
-            <div className="flex items-center gap-4 px-5 pt-2 pb-4">
+            <div className="flex items-center gap-4 px-5 py-4 border-b border-slate-100 dark:border-slate-800">
               {quickViewStudent.photo_url ? (
                 <img src={quickViewStudent.photo_url} alt="" className="w-12 h-12 rounded-full object-cover shrink-0 border-2 border-slate-200 dark:border-slate-700" />
               ) : (
@@ -356,7 +366,7 @@ export function StudentsPageClient({ initialStudents, classes, autoEnroll }: { i
               </button>
             </div>
             {/* Details */}
-            <div className="px-5 pb-2 space-y-3 border-t border-slate-100 dark:border-slate-800 pt-4">
+            <div className="px-5 py-4 space-y-3">
               <div className="flex items-center gap-3 text-sm">
                 <GraduationCap className="w-4 h-4 text-muted-foreground shrink-0" />
                 <span className="text-foreground">{(quickViewStudent.classes as any)?.name || 'Unassigned'}</span>
@@ -373,7 +383,7 @@ export function StudentsPageClient({ initialStudents, classes, autoEnroll }: { i
               )}
             </div>
             {/* Actions */}
-            <div className="px-5 pb-6 pt-4 flex gap-2 border-t border-slate-100 dark:border-slate-800 mt-3">
+            <div className="px-5 pb-5 flex gap-2 border-t border-slate-100 dark:border-slate-800 pt-4">
               <Link
                 href={`/dashboard/students/${quickViewStudent.id}`}
                 className="flex-1 flex items-center justify-center gap-2 h-10 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold transition-colors"
@@ -382,7 +392,7 @@ export function StudentsPageClient({ initialStudents, classes, autoEnroll }: { i
               </Link>
               <button
                 onClick={() => { setQuickViewStudent(null); handleDelete(quickViewStudent.id) }}
-                className="flex items-center justify-center gap-2 h-10 px-4 rounded-xl border border-red-200 dark:border-red-900/50 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 text-sm font-semibold transition-colors"
+                className="flex items-center justify-center h-10 px-4 rounded-xl border border-red-200 dark:border-red-900/50 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 text-sm font-semibold transition-colors"
               >
                 <Trash2 className="w-4 h-4" />
               </button>

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import {
@@ -39,9 +39,14 @@ export function SubjectClient({ subjects, classes, schoolId }: SubjectClientProp
   const [assignError, setAssignError] = useState<string | null>(null)
   const [currentTeacher, setCurrentTeacher] = useState<any>(null)
 
+  // Keep local list in sync with server-fetched props (picks up orphans after router.refresh)
+  useEffect(() => {
+    setSubjectList(subjects)
+  }, [subjects])
+
   function handleSubjectAdded(newSubject: any) {
     setSubjectList(prev => [newSubject, ...prev])
-    router.refresh() // also sync any pre-existing subjects that were missed
+    router.refresh() // triggers server re-fetch which syncs via the effect above
   }
 
   // Subjects belonging to the selected class

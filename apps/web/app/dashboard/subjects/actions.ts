@@ -6,27 +6,42 @@ import { revalidatePath } from 'next/cache'
 export async function createSubject(schoolId: string, name: string, teacherId?: string, classId?: string) {
   const admin = createAdminClient()
 
-  // Uniqueness is per class (or per school if no class) — same name CAN exist in different classes
-  const duplicateQuery = admin
+  // Check if a matching subject already exists (including soft-deleted ones)
+  const allMatchQuery = admin
     .from('subjects')
-    .select('id')
+    .select('id, deleted_at')
     .eq('school_id', schoolId)
     .ilike('name', name.trim())
-    .is('deleted_at', null)
 
   if (classId) {
-    duplicateQuery.eq('class_id' as any, classId)
+    allMatchQuery.eq('class_id' as any, classId)
   } else {
-    duplicateQuery.is('class_id' as any, null)
+    allMatchQuery.is('class_id' as any, null)
   }
 
-  const { data: existing } = await duplicateQuery.maybeSingle()
+  const { data: matches } = await allMatchQuery
 
-  if (existing) {
+  // If there's an active (non-deleted) subject, block it
+  const activeMatch = matches?.find((s: any) => !s.deleted_at)
+  if (activeMatch) {
     const scope = classId ? 'this class' : 'the unassigned list'
     return { error: `A subject named "${name.trim()}" already exists in ${scope}.` }
   }
 
+  // If there's a soft-deleted orphan, restore it instead of creating a new one
+  const orphan = matches?.find((s: any) => s.deleted_at)
+  if (orphan) {
+    const { data, error } = await admin
+      .from('subjects')
+      .update({ deleted_at: null, teacher_id: teacherId || null, class_id: classId || null } as any)
+      .eq('id', orphan.id)
+      .select()
+      .single()
+    if (error) return { error: error.message }
+    revalidatePath('/dashboard/subjects')
+    revalidatePath('/dashboard')
+    return { success: true, data }
+  }
 
   const { data, error } = await admin
     .from('subjects')
@@ -44,6 +59,7 @@ export async function createSubject(schoolId: string, name: string, teacherId?: 
   }
 
   revalidatePath('/dashboard/subjects')
+  revalidatePath('/dashboard')
   return { success: true, data }
 }
 

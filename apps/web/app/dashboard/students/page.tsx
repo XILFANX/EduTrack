@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
-import { StudentsPageClient } from './students-client'
+import { StudentsPageClient } from '@/components/shared/students/students-client'
 
 export default async function StudentsPage({ searchParams }: { searchParams: { enroll?: string } }) {
   const supabase = await createClient()

@@ -1,7 +1,7 @@
 'use client'
 
-import { useState, useRef } from 'react'
-import { UserPlus, UserCog, Search, Share2, Copy, Check, Trash2, Phone, Calendar, ChevronRight, X, Link as LinkIcon } from 'lucide-react'
+import { useState } from 'react'
+import { UserPlus, UserCog, Search, Share2, Copy, Check, Trash2, Phone, Calendar, X, Link as LinkIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { InviteStaffModal } from './invite-staff-modal'
 import { useRouter } from 'next/navigation'
@@ -11,54 +11,27 @@ import { toast } from 'sonner'
 
 const ROLE_LABELS: Record<string, { label: string; color: string }> = {
   class_teacher:    { label: 'Class Teacher',    color: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' },
-  subject_teacher:  { label: 'Subject Teacher',   color: 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-300' },
-  bursar:           { label: 'Bursar',            color: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300' },
-  librarian:        { label: 'Librarian',         color: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300' },
-  storekeeper:      { label: 'Storekeeper',       color: 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300' },
-  transport_matron: { label: 'Transport Matron',  color: 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300' },
+  subject_teacher:  { label: 'Subject Teacher',  color: 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-300' },
+  bursar:           { label: 'Bursar',           color: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300' },
+  librarian:        { label: 'Librarian',        color: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300' },
+  storekeeper:      { label: 'Storekeeper',      color: 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300' },
+  transport_matron: { label: 'Transport Matron', color: 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300' },
 }
 
-const WHATSAPP_ICON = (
+const WA_ICON = (
   <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current shrink-0" xmlns="http://www.w3.org/2000/svg">
     <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.38 1.25 4.79L2.05 22l5.5-1.44c1.37.73 2.92 1.15 4.49 1.15h.01C17.5 21.71 22 17.26 22 11.8c0-2.66-1.04-5.17-2.92-7.05A9.93 9.93 0 0012.04 2zm0 1.67c2.24 0 4.35.87 5.94 2.46a8.33 8.33 0 012.45 5.68c0 4.59-3.74 8.32-8.34 8.32a8.33 8.33 0 01-4.23-1.15l-.3-.18-3.14.82.84-3.07-.2-.32a8.28 8.28 0 01-1.27-4.42c0-4.6 3.74-8.34 8.25-8.34zm-2.78 4.4c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.09s.9 2.43 1.02 2.6c.13.17 1.77 2.7 4.28 3.68.6.26 1.07.41 1.43.52.6.19 1.15.16 1.58.1.48-.07 1.48-.61 1.69-1.19.21-.58.21-1.08.15-1.19-.06-.1-.23-.16-.48-.28-.25-.13-1.48-.73-1.71-.81-.23-.09-.4-.13-.56.13-.17.25-.64.81-.79.98-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.25a7.58 7.58 0 01-1.4-1.74c-.15-.25-.02-.39.11-.51.12-.11.25-.29.38-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.36-.77-1.86-.2-.49-.4-.42-.56-.43h-.48z"/>
   </svg>
 )
 
-interface StaffMember {
-  id: string
-  full_name: string
-  role: string
-  phone_number: string
-  created_at: string
-}
+interface StaffMember { id: string; full_name: string; role: string; phone_number: string; created_at: string }
+interface Invitation { id: string; token: string; role: string; target_name: string | null; target_phone: string | null; used_at: string | null; created_at: string }
+interface StaffPageClientProps { staff: StaffMember[]; invitations: Invitation[]; schoolId: string }
 
-interface Invitation {
-  id: string
-  token: string
-  role: string
-  target_name: string | null
-  target_phone: string | null
-  used_at: string | null
-  created_at: string
-}
-
-interface StaffPageClientProps {
-  staff: StaffMember[]
-  invitations: Invitation[]
-  schoolId: string
-}
-
-function getInitials(name: string) {
-  return name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()
-}
-
-function getPortalLink(token: string) {
-  return `${typeof window !== 'undefined' ? window.location.origin : ''}/invite/${token}`
-}
-
-function buildWhatsApp(name: string, token: string) {
-  const link = getPortalLink(token)
-  return `https://wa.me/?text=${encodeURIComponent(`Hello ${name}! 👋\n\nHere is your permanent EduTrack access link:\n${link}\n\n_This link is permanent and does not expire._`)}`
+function getInitials(name: string) { return name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase() }
+function getPortalLink(token: string) { return `${typeof window !== 'undefined' ? window.location.origin : ''}/invite/${token}` }
+function buildWA(name: string, token: string) {
+  return `https://wa.me/?text=${encodeURIComponent(`Hello ${name}! 👋\n\nHere is your permanent EduTrack access link:\n${getPortalLink(token)}\n\n_This link is permanent and does not expire._`)}`
 }
 
 export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClientProps) {
@@ -66,21 +39,17 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
   const [modalOpen, setModalOpen] = useState(false)
   const [search, setSearch] = useState('')
   const [copiedToken, setCopiedToken] = useState<string | null>(null)
-  const [shareOpen, setShareOpen] = useState<string | null>(null) // token of open share dropdown
+  const [shareOpen, setShareOpen] = useState<string | null>(null)
   const [detailMember, setDetailMember] = useState<StaffMember | null>(null)
   const { dialogProps, confirm, setLoading } = useConfirmDialog()
 
   const filteredStaff = staff.filter(s =>
-    s.full_name.toLowerCase().includes(search.toLowerCase()) ||
-    s.phone_number.includes(search)
+    s.full_name.toLowerCase().includes(search.toLowerCase()) || s.phone_number.includes(search)
   )
-
-  const activeMembers = filteredStaff
   const pendingInvitations = invitations.filter(inv => !inv.used_at)
 
   function handleCopyLink(token: string) {
-    const link = getPortalLink(token)
-    navigator.clipboard.writeText(link)
+    navigator.clipboard.writeText(getPortalLink(token))
     setCopiedToken(token)
     setTimeout(() => setCopiedToken(null), 2000)
     setShareOpen(null)
@@ -123,100 +92,80 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
           </p>
         </div>
         <Button className="bg-blue-600 hover:bg-blue-700 gap-2" onClick={() => setModalOpen(true)}>
-          <UserPlus className="w-4 h-4" />
-          <span className="hidden sm:inline">Invite Staff</span>
+          <UserPlus className="w-4 h-4" /><span className="hidden sm:inline">Invite Staff</span>
         </Button>
       </div>
 
       {/* Search */}
       <div className="relative max-w-md">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-        <input
-          type="text"
-          placeholder="Search by name or phone…"
-          value={search}
+        <input type="text" placeholder="Search by name or phone…" value={search}
           onChange={e => setSearch(e.target.value)}
-          className="w-full pl-9 pr-4 py-2.5 text-sm border border-border rounded-xl bg-background focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
+          className="w-full pl-9 pr-4 py-2.5 text-sm border border-border rounded-xl bg-background focus:outline-none focus:ring-2 focus:ring-blue-500" />
       </div>
 
       {/* Active Members */}
-      {activeMembers.length > 0 && (
-        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden">
-          <div className="px-4 py-3 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
-            <h2 className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
-              Active Members
-            </h2>
-            <span className="text-xs text-muted-foreground">{activeMembers.length} total</span>
+      {filteredStaff.length > 0 && (
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-visible">
+          <div className="px-4 py-3 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between rounded-t-2xl">
+            <h2 className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Active Members</h2>
+            <span className="text-xs text-muted-foreground">{filteredStaff.length} total</span>
           </div>
           <div className="divide-y divide-slate-100 dark:divide-slate-800/50">
-            {activeMembers.map(member => {
+            {filteredStaff.map(member => {
               const inv = invitations.find(i => i.target_phone === member.phone_number && i.used_at)
               const roleInfo = ROLE_LABELS[member.role] ?? { label: member.role, color: 'bg-slate-100 text-slate-600' }
               const joinedDate = new Date(member.created_at).toLocaleDateString('en-KE', { month: 'short', year: 'numeric' })
               return (
-                <div key={member.id} className="flex items-start gap-3.5 px-4 py-3.5 hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+                <div
+                  key={member.id}
+                  className="flex items-start gap-3.5 px-4 py-3.5 hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors cursor-pointer relative"
+                  onClick={() => setDetailMember(member)}
+                >
                   {/* Avatar */}
                   <div className="w-9 h-9 rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 flex items-center justify-center text-sm font-bold shrink-0 mt-0.5">
                     {getInitials(member.full_name)}
                   </div>
-
                   {/* Info */}
                   <div className="flex-1 min-w-0">
                     <p className="font-semibold text-foreground text-sm">{member.full_name}</p>
-                    <p className="text-xs text-muted-foreground mt-0.5">
-                      {member.phone_number} · Joined {joinedDate}
-                    </p>
-                    {/* Share Portal inline link */}
+                    <p className="text-xs text-muted-foreground mt-0.5">{member.phone_number} · Joined {joinedDate}</p>
+                    {/* Share Portal — stops row click */}
                     {inv && (
-                      <div className="relative mt-1.5" onClick={e => e.stopPropagation()}>
+                      <div className="relative mt-1.5 inline-block" onClick={e => e.stopPropagation()}>
                         <button
                           onClick={() => setShareOpen(shareOpen === inv.token ? null : inv.token)}
                           className="inline-flex items-center gap-1 text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 font-medium transition-colors"
                         >
-                          <Share2 className="w-3 h-3" />
-                          Share Portal
+                          <Share2 className="w-3 h-3" /> Share Portal
                         </button>
-                        {/* Share dropdown */}
+                        {/* Dropdown — z-50, fixed width, no overflow clip */}
                         {shareOpen === inv.token && (
-                          <div className="absolute left-0 top-6 z-30 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl shadow-xl w-48 py-1 overflow-hidden">
+                          <div className="absolute left-0 top-7 z-50 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl shadow-2xl w-52 py-1 overflow-hidden">
                             <button
                               onClick={() => handleCopyLink(inv.token)}
-                              className="w-full flex items-center gap-2.5 px-3.5 py-2.5 text-sm text-foreground hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                              className="w-full flex items-center gap-2.5 px-4 py-3 text-sm text-foreground hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
                             >
                               {copiedToken === inv.token ? <Check className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4 text-muted-foreground" />}
                               Copy Link
                             </button>
                             <a
-                              href={buildWhatsApp(member.full_name, inv.token)}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="w-full flex items-center gap-2.5 px-3.5 py-2.5 text-sm text-[#25D366] hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                              href={buildWA(member.full_name, inv.token)}
+                              target="_blank" rel="noopener noreferrer"
+                              className="w-full flex items-center gap-2.5 px-4 py-3 text-sm text-[#25D366] hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
                               onClick={() => setShareOpen(null)}
                             >
-                              {WHATSAPP_ICON}
-                              Share via WhatsApp
+                              {WA_ICON} Share via WhatsApp
                             </a>
                           </div>
                         )}
                       </div>
                     )}
                   </div>
-
-                  {/* Right side */}
-                  <div className="flex items-center gap-2 shrink-0 pt-0.5">
-                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${roleInfo.color}`}>
-                      {roleInfo.label}
-                    </span>
-                    {inv && (
-                      <button
-                        onClick={() => setDetailMember(member)}
-                        className="text-xs text-red-500 hover:text-red-600 font-medium transition-colors"
-                      >
-                        Remove
-                      </button>
-                    )}
-                  </div>
+                  {/* Role pill */}
+                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0 mt-1 ${roleInfo.color}`}>
+                    {roleInfo.label}
+                  </span>
                 </div>
               )
             })}
@@ -225,16 +174,14 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
       )}
 
       {/* Empty state */}
-      {activeMembers.length === 0 && pendingInvitations.length === 0 && (
+      {filteredStaff.length === 0 && pendingInvitations.length === 0 && (
         <div className="text-center py-20 space-y-4">
           <div className="w-16 h-16 rounded-2xl bg-muted flex items-center justify-center mx-auto">
             <UserCog className="w-8 h-8 text-muted-foreground" />
           </div>
           <div>
             <p className="font-semibold text-foreground">No staff yet</p>
-            <p className="text-sm text-muted-foreground max-w-xs mx-auto mt-1">
-              Invite your first staff member using the button above.
-            </p>
+            <p className="text-sm text-muted-foreground max-w-xs mx-auto mt-1">Invite your first staff member using the button above.</p>
           </div>
           <Button className="bg-blue-600 hover:bg-blue-700 gap-2" onClick={() => setModalOpen(true)}>
             <UserPlus className="w-4 h-4" /> Invite First Staff Member
@@ -246,9 +193,7 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
       {pendingInvitations.length > 0 && (
         <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden">
           <div className="px-4 py-3 border-b border-slate-100 dark:border-slate-800">
-            <h2 className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
-              Pending Invite Links
-            </h2>
+            <h2 className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Pending Invite Links</h2>
           </div>
           <div className="divide-y divide-slate-100 dark:divide-slate-800/50">
             {pendingInvitations.map(inv => {
@@ -256,7 +201,6 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
               const portalLink = getPortalLink(inv.token)
               return (
                 <div key={inv.id} className="px-4 py-3.5 space-y-2.5">
-                  {/* Top row */}
                   <div className="flex items-center gap-3">
                     <div className="w-9 h-9 rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 flex items-center justify-center text-sm font-bold shrink-0">
                       {getInitials(inv.target_name || '??')}
@@ -266,38 +210,18 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
                       <p className="text-xs text-muted-foreground">{inv.target_phone}</p>
                     </div>
                     <div className="flex items-center gap-2 shrink-0">
-                      <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${roleInfo.color}`}>
-                        {roleInfo.label}
-                      </span>
-                      <button
-                        onClick={() => handleDelete(inv.id, false, inv.target_name ?? undefined)}
-                        className="text-xs text-red-500 hover:text-red-600 font-medium transition-colors"
-                      >
-                        Revoke
-                      </button>
+                      <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${roleInfo.color}`}>{roleInfo.label}</span>
+                      <button onClick={() => handleDelete(inv.id, false, inv.target_name ?? undefined)}
+                        className="text-xs text-red-500 hover:text-red-600 font-medium transition-colors">Revoke</button>
                     </div>
                   </div>
-                  {/* Link row */}
                   <div className="flex items-center gap-2 pl-12">
                     <p className="flex-1 text-xs font-mono text-muted-foreground truncate">{portalLink}</p>
-                    {/* WhatsApp circle icon button */}
-                    <a
-                      href={buildWhatsApp(inv.target_name ?? 'there', inv.token)}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <a href={buildWA(inv.target_name ?? 'there', inv.token)} target="_blank" rel="noopener noreferrer"
                       className="w-7 h-7 rounded-full bg-[#25D366] flex items-center justify-center text-white hover:bg-[#20bd5a] transition-colors shrink-0"
-                      title="Share via WhatsApp"
-                    >
-                      {WHATSAPP_ICON}
-                    </a>
-                    <a
-                      href={portalLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs text-blue-600 dark:text-blue-400 hover:underline font-medium shrink-0"
-                    >
-                      Open ↗
-                    </a>
+                      title="Share via WhatsApp">{WA_ICON}</a>
+                    <a href={portalLink} target="_blank" rel="noopener noreferrer"
+                      className="text-xs text-blue-600 dark:text-blue-400 hover:underline font-medium shrink-0">Open ↗</a>
                   </div>
                 </div>
               )
@@ -306,14 +230,13 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
         </div>
       )}
 
-      {/* Staff Detail / Remove Confirmation Sheet */}
+      {/* Staff Detail Modal — centered on all screens */}
       {detailMember && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center">
-          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setDetailMember(null)} />
-          <div className="relative w-full sm:max-w-sm bg-white dark:bg-slate-900 rounded-t-3xl sm:rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 z-10 overflow-hidden"
-            style={{ paddingBottom: 'env(safe-area-inset-bottom, 16px)' }}>
-            <div className="w-10 h-1 bg-slate-200 dark:bg-slate-700 rounded-full mx-auto mt-3 mb-1 sm:hidden" />
-            <div className="flex items-center gap-4 px-5 py-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setDetailMember(null)} />
+          <div className="relative w-full max-w-sm bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 z-10 overflow-hidden">
+            {/* Header */}
+            <div className="flex items-center gap-4 px-5 py-4 border-b border-slate-100 dark:border-slate-800">
               <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 flex items-center justify-center text-base font-bold shrink-0">
                 {getInitials(detailMember.full_name)}
               </div>
@@ -327,41 +250,33 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
                 <X className="w-4 h-4" />
               </button>
             </div>
-
-            <div className="px-5 pb-2 space-y-2.5 border-t border-slate-100 dark:border-slate-800 pt-4">
+            {/* Details */}
+            <div className="px-5 py-4 space-y-3">
               <div className="flex items-center gap-3 text-sm">
                 <Phone className="w-4 h-4 text-muted-foreground shrink-0" />
-                <span>{detailMember.phone_number}</span>
+                <span className="text-foreground">{detailMember.phone_number}</span>
               </div>
               <div className="flex items-center gap-3 text-sm">
                 <Calendar className="w-4 h-4 text-muted-foreground shrink-0" />
-                <span>Joined {new Date(detailMember.created_at).toLocaleDateString('en-KE', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                <span className="text-foreground">Joined {new Date(detailMember.created_at).toLocaleDateString('en-KE', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
               </div>
             </div>
-
+            {/* Actions */}
             {detailInvite && (
-              <div className="px-5 pb-4 pt-4 space-y-2 border-t border-slate-100 dark:border-slate-800 mt-3">
+              <div className="px-5 pb-5 space-y-2 border-t border-slate-100 dark:border-slate-800 pt-4">
                 <div className="flex gap-2">
-                  <button
-                    onClick={() => handleCopyLink(detailInvite.token)}
-                    className="flex-1 flex items-center justify-center gap-2 h-9 rounded-xl border border-slate-200 dark:border-slate-700 text-sm font-medium text-foreground hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
-                  >
+                  <button onClick={() => handleCopyLink(detailInvite.token)}
+                    className="flex-1 flex items-center justify-center gap-2 h-10 rounded-xl border border-slate-200 dark:border-slate-700 text-sm font-medium text-foreground hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
                     {copiedToken === detailInvite.token ? <Check className="w-4 h-4 text-emerald-500" /> : <LinkIcon className="w-4 h-4" />}
                     {copiedToken === detailInvite.token ? 'Copied!' : 'Copy Link'}
                   </button>
-                  <a
-                    href={buildWhatsApp(detailMember.full_name, detailInvite.token)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1 flex items-center justify-center gap-2 h-9 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white text-sm font-medium transition-colors"
-                  >
-                    {WHATSAPP_ICON} WhatsApp
+                  <a href={buildWA(detailMember.full_name, detailInvite.token)} target="_blank" rel="noopener noreferrer"
+                    className="flex-1 flex items-center justify-center gap-2 h-10 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white text-sm font-medium transition-colors">
+                    {WA_ICON} WhatsApp
                   </a>
                 </div>
-                <button
-                  onClick={() => handleDelete(detailInvite.id, true, detailMember.full_name)}
-                  className="w-full flex items-center justify-center gap-2 h-9 rounded-xl border border-red-200 dark:border-red-900/50 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 text-sm font-medium transition-colors"
-                >
+                <button onClick={() => handleDelete(detailInvite.id, true, detailMember.full_name)}
+                  className="w-full flex items-center justify-center gap-2 h-10 rounded-xl border border-red-200 dark:border-red-900/50 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 text-sm font-medium transition-colors">
                   <Trash2 className="w-4 h-4" />
                   Permanently Remove {detailMember.full_name.split(' ')[0]}
                 </button>
@@ -371,12 +286,7 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
         </div>
       )}
 
-      <InviteStaffModal
-        open={modalOpen}
-        onClose={() => setModalOpen(false)}
-        schoolId={schoolId}
-        onSuccess={() => router.refresh()}
-      />
+      <InviteStaffModal open={modalOpen} onClose={() => setModalOpen(false)} schoolId={schoolId} onSuccess={() => router.refresh()} />
       <ConfirmDialog {...dialogProps} />
     </div>
   )
