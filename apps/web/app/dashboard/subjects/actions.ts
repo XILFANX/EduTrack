@@ -9,7 +9,7 @@ export async function createSubject(schoolId: string, name: string, teacherId?: 
   // Check if a matching subject already exists (including soft-deleted ones)
   const allMatchQuery = admin
     .from('subjects')
-    .select('id, deleted_at')
+    .select('*')
     .eq('school_id', schoolId)
     .ilike('name', name.trim())
 
