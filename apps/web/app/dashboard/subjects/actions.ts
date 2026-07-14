@@ -3,57 +3,63 @@
 import { createAdminClient } from '@/lib/supabase/admin'
 import { revalidatePath } from 'next/cache'
 
-export async function createSubject(schoolId: string, name: string, teacherId?: string, classId?: string) {
+export async function createSubject(schoolId: string, name: string, type: string, classIds: string[]) {
   const admin = createAdminClient()
 
-  // Check if a matching subject already exists
-  const allMatchQuery = admin
+  // 1. Check if a global subject with this name already exists
+  let subjectId: string;
+  const { data: existing } = await admin
     .from('subjects')
-    .select('*')
+    .select('id')
     .eq('school_id', schoolId)
     .ilike('name', name.trim())
-
-  if (classId) {
-    allMatchQuery.eq('class_id' as any, classId)
-  } else {
-    allMatchQuery.is('class_id' as any, null)
-  }
-
-  const { data: matches } = await allMatchQuery
-
-  // If there's an active match, block it
-  if (matches && matches.length > 0) {
-    const scope = classId ? 'this class' : 'the unassigned list'
-    return { error: `A subject named "${name.trim()}" already exists in ${scope}.` }
-  }
-
-  const { data, error } = await admin
-    .from('subjects')
-    .insert({
-      school_id: schoolId,
-      name: name.trim(),
-      teacher_id: teacherId || null,
-      class_id: classId || null,
-    } as any)
-    .select()
     .single()
 
-  if (error) {
-    return { error: error.message }
+  if (existing) {
+    subjectId = existing.id;
+  } else {
+    // 2. Create the global subject
+    const { data: newSub, error: subErr } = await admin
+      .from('subjects')
+      .insert({
+        school_id: schoolId,
+        name: name.trim(),
+        type: type || 'core',
+      } as any)
+      .select('id')
+      .single()
+    
+    if (subErr || !newSub) return { error: subErr?.message || 'Failed to create subject' }
+    subjectId = newSub.id;
+  }
+
+  // 3. Map to selected classes
+  if (classIds && classIds.length > 0) {
+    const mappings = classIds.map(cid => ({
+      school_id: schoolId,
+      class_id: cid,
+      subject_id: subjectId,
+    }));
+    // Use upsert to avoid duplicate key errors if the mapping already exists
+    const { error: mapErr } = await admin
+      .from('class_subjects')
+      .upsert(mappings, { onConflict: 'class_id, subject_id' } as any)
+    
+    if (mapErr) return { error: mapErr.message }
   }
 
   revalidatePath('/dashboard/subjects')
   revalidatePath('/dashboard')
-  return { success: true, data }
+  return { success: true }
 }
 
-export async function assignSubjectTeacher(subjectId: string, teacherId: string | null) {
+export async function assignSubjectTeacher(classSubjectId: string, teacherId: string | null) {
   const admin = createAdminClient()
 
   const { error } = await admin
-    .from('subjects')
+    .from('class_subjects')
     .update({ teacher_id: teacherId })
-    .eq('id', subjectId)
+    .eq('id', classSubjectId)
 
   if (error) return { error: error.message }
 
@@ -61,18 +67,27 @@ export async function assignSubjectTeacher(subjectId: string, teacherId: string 
   return { success: true }
 }
 
-export async function deleteSubject(id: string) {
+export async function removeSubjectFromClass(classSubjectId: string) {
   const admin = createAdminClient()
+  const { error } = await admin
+    .from('class_subjects')
+    .delete()
+    .eq('id', classSubjectId)
 
+  if (error) return { error: error.message }
+  revalidatePath('/dashboard/subjects')
+  return { success: true }
+}
+
+export async function deleteGlobalSubject(subjectId: string) {
+  const admin = createAdminClient()
   const { error } = await admin
     .from('subjects')
     .delete()
-    .eq('id', id)
+    .eq('id', subjectId)
 
-  if (error) {
-    return { error: error.message }
-  }
-
+  if (error) return { error: error.message }
   revalidatePath('/dashboard/subjects')
+  revalidatePath('/dashboard')
   return { success: true }
 }

@@ -134,13 +134,13 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
                     {inv && (
                       <div className="relative mt-1.5 inline-block" onClick={e => e.stopPropagation()}>
                         <button
-                          onClick={() => setShareOpen(shareOpen === inv.token ? null : inv.token)}
+                          onClick={() => setShareOpen(shareOpen === member.id ? null : member.id)}
                           className="inline-flex items-center gap-1 text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 font-medium transition-colors"
                         >
                           <Share2 className="w-3 h-3" /> Share Portal
                         </button>
                         {/* Dropdown — z-50, fixed width, no overflow clip */}
-                        {shareOpen === inv.token && (
+                        {shareOpen === member.id && (
                           <div className="absolute left-0 top-7 z-50 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl shadow-2xl w-52 py-1 overflow-hidden">
                             <button
                               onClick={() => handleCopyLink(inv.token)}

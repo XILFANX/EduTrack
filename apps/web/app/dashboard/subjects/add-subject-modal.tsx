@@ -5,48 +5,51 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { BookMarked, Info, CheckCircle2 } from 'lucide-react'
+import { BookMarked, Info } from 'lucide-react'
 import { createSubject } from './actions'
-import { getTeachers, getClasses } from '../classes/actions'
+import { getClasses } from '../classes/actions'
 import { toast } from 'sonner'
 
 interface AddSubjectModalProps {
   open: boolean
   onClose: () => void
   schoolId: string
-  onSuccess: (subject: any) => void
+  onSuccess: () => void
 }
 
 export function AddSubjectModal({ open, onClose, schoolId, onSuccess }: AddSubjectModalProps) {
   const [name, setName] = useState('')
-  const [teacherId, setTeacherId] = useState('')
-  const [classId, setClassId] = useState('')
-  const [teachers, setTeachers] = useState<any[]>([])
+  const [selectedClassIds, setSelectedClassIds] = useState<string[]>([])
   const [classes, setClasses] = useState<any[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     if (open) {
-      getTeachers(schoolId).then(setTeachers)
       getClasses(schoolId).then(setClasses)
     }
   }, [open, schoolId])
 
   function handleClose() {
-    setName(''); setTeacherId(''); setClassId(''); setError(null)
+    setName(''); setSelectedClassIds([]); setError(null)
     onClose()
+  }
+
+  function toggleClass(id: string) {
+    setSelectedClassIds(prev =>
+      prev.includes(id) ? prev.filter(c => c !== id) : [...prev, id]
+    )
   }
 
   async function handleSave() {
     setLoading(true); setError(null)
     if (!name.trim()) { setError('Subject name is required.'); setLoading(false); return }
-    const res = await createSubject(schoolId, name, teacherId || undefined, classId || undefined)
+    const res = await createSubject(schoolId, name, 'core', selectedClassIds)
     setLoading(false)
     if (res.error) { setError(res.error) }
     else {
-      toast.success(`"${name.trim()}" added successfully!`)
-      onSuccess(res.data)
+      toast.success(`"${name.trim()}" saved successfully!`)
+      onSuccess()
       handleClose()
     }
   }
@@ -70,59 +73,39 @@ export function AddSubjectModal({ open, onClose, schoolId, onSuccess }: AddSubje
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="subjectClass">
-              Assign to Class <span className="text-muted-foreground font-normal">(Optional)</span>
+            <Label>
+              Assign to Classes <span className="text-muted-foreground font-normal">(Select multiple)</span>
             </Label>
             {classes.length === 0 ? (
               <p className="text-xs text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800/50 rounded-lg px-3 py-2 flex items-center gap-1.5">
                 <Info className="w-3.5 h-3.5 shrink-0" />
-                No classes yet. You can assign a class later.
+                No classes yet. You can create the subject now and assign it later.
               </p>
             ) : (
-              <select
-                id="subjectClass"
-                value={classId}
-                onChange={e => setClassId(e.target.value)}
-                className="w-full bg-background border border-input text-foreground rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-              >
-                <option value="">None — assign later</option>
-                {classes.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
-              </select>
+              <div className="grid grid-cols-2 gap-2 max-h-48 overflow-y-auto p-2 bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl">
+                {classes.map(c => (
+                  <label key={c.id} className="flex items-center gap-2 text-sm cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 p-2 rounded-lg transition">
+                    <input
+                      type="checkbox"
+                      checked={selectedClassIds.includes(c.id)}
+                      onChange={() => toggleClass(c.id)}
+                      className="rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+                    />
+                    <span className="truncate">{c.name}</span>
+                  </label>
+                ))}
+              </div>
             )}
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="subjectTeacher">
-              Assign Teacher <span className="text-muted-foreground font-normal">(Optional)</span>
-            </Label>
-            {teachers.length === 0 ? (
-              <p className="text-xs text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800/50 rounded-lg px-3 py-2 flex items-center gap-1.5">
-                <Info className="w-3.5 h-3.5 shrink-0" />
-                No teachers yet. You can assign one later.
-              </p>
-            ) : (
-              <select
-                id="subjectTeacher"
-                value={teacherId}
-                onChange={e => setTeacherId(e.target.value)}
-                className="w-full bg-background border border-input text-foreground rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-              >
-                <option value="">None — assign later</option>
-                {teachers.map(t => <option key={t.id} value={t.id}>{t.full_name}</option>)}
-              </select>
-            )}
-          </div>
+          {error && <p className="text-xs text-red-500 bg-red-50 dark:bg-red-900/10 p-2 rounded-lg">{error}</p>}
+        </div>
 
-          {error && (
-            <p className="text-sm text-red-600 bg-red-50 dark:bg-red-950/30 px-3 py-2 rounded-lg border border-red-200 dark:border-red-900/50">{error}</p>
-          )}
-
-          <div className="flex gap-3 pt-4 border-t border-slate-100 dark:border-slate-800">
-            <Button variant="outline" className="flex-1" onClick={handleClose} disabled={loading}>Cancel</Button>
-            <Button className="flex-1 bg-blue-600 hover:bg-blue-700" onClick={handleSave} disabled={loading}>
-              {loading ? 'Saving…' : 'Create Subject'}
-            </Button>
-          </div>
+        <div className="flex items-center justify-end gap-3 mt-6">
+          <Button variant="ghost" onClick={handleClose} disabled={loading} className="rounded-xl">Cancel</Button>
+          <Button onClick={handleSave} disabled={loading} className="bg-blue-600 hover:bg-blue-700 rounded-xl min-w-[100px]">
+            {loading ? 'Saving...' : 'Save Subject'}
+          </Button>
         </div>
       </DialogContent>
     </Dialog>

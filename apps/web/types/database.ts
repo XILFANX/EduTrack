@@ -34,6 +34,11 @@ export interface Database {
         Insert: any
         Update: any; Relationships: any[]
       }
+      class_subjects: {
+        Row: { id: string; school_id: string; class_id: string; subject_id: string; teacher_id: string | null; created_at: string }
+        Insert: any
+        Update: any; Relationships: any[]
+      }
       fee_structures: {
         Row: { id: string; school_id: string; term_id: string; class_id: string | null; amount: number; description: string | null; created_at: string }
         Insert: any

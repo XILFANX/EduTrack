@@ -23,15 +23,23 @@ export default async function SubjectsPage() {
     .eq('school_id', profile.school_id)
     .order('name')
 
-  const { data: subjects } = await supabase
+  // Fetch all global subjects
+  const { data: globalSubjects } = await supabase
     .from('subjects')
-    .select('*, users!subjects_teacher_id_fkey(id, full_name)')
+    .select('*')
     .eq('school_id', profile.school_id)
     .order('name')
 
+  // Fetch all mappings
+  const { data: classSubjects } = await supabase
+    .from('class_subjects')
+    .select('id, class_id, subject_id, teacher_id, users(id, full_name)')
+    .eq('school_id', profile.school_id)
+
   return (
     <SubjectClient
-      subjects={subjects || []}
+      globalSubjects={globalSubjects || []}
+      classSubjects={classSubjects || []}
       classes={classes || []}
       schoolId={profile.school_id}
     />
