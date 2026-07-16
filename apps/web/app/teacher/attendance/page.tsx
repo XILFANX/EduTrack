@@ -16,7 +16,7 @@ export default async function TeacherAttendance() {
   const profile = profileResult as any
   if (!profile?.school_id) return null
 
-  // Fetch the first class where the user is the class teacher
+  // Fetch the class where the user is the class teacher
   const { data: cls } = await supabase
     .from('classes')
     .select('id, name')
@@ -26,21 +26,22 @@ export default async function TeacherAttendance() {
 
   let students: any[] = []
   let existingRecords: Record<string, 'Present' | 'Absent' | 'Late'> = {}
-  
-  // Use current date
+  let historyByDate: Record<string, Record<string, 'Present' | 'Absent' | 'Late'>> = {}
+
   const today = new Date().toISOString().split('T')[0]
 
   if (cls) {
     const { data: stdData } = await supabase
       .from('students')
-      .select('id, first_name, last_name, admission_number')
+      .select('id, first_name, last_name, admission_number, photo_url')
       .eq('class_id', cls.id)
       .eq('school_id', profile.school_id)
+      .is('deleted_at', null)
       .order('first_name')
       
     if (stdData) students = stdData as any[]
 
-    // Fetch existing attendance for today
+    // Fetch today's attendance
     const { data: attData } = await supabase
       .from('attendance')
       .select('student_id, status')
@@ -53,6 +54,26 @@ export default async function TeacherAttendance() {
         return acc
       }, {} as Record<string, 'Present' | 'Absent' | 'Late'>)
     }
+
+    // Fetch last 30 days history for calendar
+    const thirtyDaysAgo = new Date()
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 29)
+    const startDate = thirtyDaysAgo.toISOString().split('T')[0]
+
+    const { data: historyData } = await supabase
+      .from('attendance')
+      .select('date, student_id, status')
+      .eq('class_id', cls.id)
+      .gte('date', startDate)
+      .lte('date', today)
+
+    if (historyData) {
+      historyByDate = (historyData as any[]).reduce((acc, curr) => {
+        if (!acc[curr.date]) acc[curr.date] = {}
+        acc[curr.date][curr.student_id] = curr.status
+        return acc
+      }, {} as Record<string, Record<string, 'Present' | 'Absent' | 'Late'>>)
+    }
   }
 
   return (
@@ -63,6 +84,8 @@ export default async function TeacherAttendance() {
       students={students}
       existingRecords={existingRecords}
       date={today}
+      historyByDate={historyByDate}
+      totalStudents={students.length}
     />
   )
 }

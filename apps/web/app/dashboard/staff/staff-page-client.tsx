@@ -10,17 +10,17 @@ import { deleteInviteAndAccount } from './actions'
 import { toast } from 'sonner'
 
 const ROLE_LABELS: Record<string, { label: string; color: string }> = {
-  class_teacher:    { label: 'Class Teacher',    color: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' },
-  subject_teacher:  { label: 'Subject Teacher',  color: 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-300' },
-  bursar:           { label: 'Bursar',           color: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300' },
-  librarian:        { label: 'Librarian',        color: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300' },
-  storekeeper:      { label: 'Storekeeper',      color: 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300' },
+  class_teacher: { label: 'Class Teacher', color: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' },
+  subject_teacher: { label: 'Subject Teacher', color: 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-300' },
+  bursar: { label: 'Bursar', color: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300' },
+  librarian: { label: 'Librarian', color: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300' },
+  storekeeper: { label: 'Storekeeper', color: 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300' },
   transport_matron: { label: 'Transport Matron', color: 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300' },
 }
 
 const WA_ICON = (
   <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current shrink-0" xmlns="http://www.w3.org/2000/svg">
-    <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.38 1.25 4.79L2.05 22l5.5-1.44c1.37.73 2.92 1.15 4.49 1.15h.01C17.5 21.71 22 17.26 22 11.8c0-2.66-1.04-5.17-2.92-7.05A9.93 9.93 0 0012.04 2zm0 1.67c2.24 0 4.35.87 5.94 2.46a8.33 8.33 0 012.45 5.68c0 4.59-3.74 8.32-8.34 8.32a8.33 8.33 0 01-4.23-1.15l-.3-.18-3.14.82.84-3.07-.2-.32a8.28 8.28 0 01-1.27-4.42c0-4.6 3.74-8.34 8.25-8.34zm-2.78 4.4c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.09s.9 2.43 1.02 2.6c.13.17 1.77 2.7 4.28 3.68.6.26 1.07.41 1.43.52.6.19 1.15.16 1.58.1.48-.07 1.48-.61 1.69-1.19.21-.58.21-1.08.15-1.19-.06-.1-.23-.16-.48-.28-.25-.13-1.48-.73-1.71-.81-.23-.09-.4-.13-.56.13-.17.25-.64.81-.79.98-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.25a7.58 7.58 0 01-1.4-1.74c-.15-.25-.02-.39.11-.51.12-.11.25-.29.38-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.36-.77-1.86-.2-.49-.4-.42-.56-.43h-.48z"/>
+    <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.38 1.25 4.79L2.05 22l5.5-1.44c1.37.73 2.92 1.15 4.49 1.15h.01C17.5 21.71 22 17.26 22 11.8c0-2.66-1.04-5.17-2.92-7.05A9.93 9.93 0 0012.04 2zm0 1.67c2.24 0 4.35.87 5.94 2.46a8.33 8.33 0 012.45 5.68c0 4.59-3.74 8.32-8.34 8.32a8.33 8.33 0 01-4.23-1.15l-.3-.18-3.14.82.84-3.07-.2-.32a8.28 8.28 0 01-1.27-4.42c0-4.6 3.74-8.34 8.25-8.34zm-2.78 4.4c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.09s.9 2.43 1.02 2.6c.13.17 1.77 2.7 4.28 3.68.6.26 1.07.41 1.43.52.6.19 1.15.16 1.58.1.48-.07 1.48-.61 1.69-1.19.21-.58.21-1.08.15-1.19-.06-.1-.23-.16-.48-.28-.25-.13-1.48-.73-1.71-.81-.23-.09-.4-.13-.56.13-.17.25-.64.81-.79.98-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.25a7.58 7.58 0 01-1.4-1.74c-.15-.25-.02-.39.11-.51.12-.11.25-.29.38-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.36-.77-1.86-.2-.49-.4-.42-.56-.43h-.48z" />
   </svg>
 )
 
@@ -134,7 +134,7 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
                   <div className="flex-1 min-w-0">
                     <p className="font-semibold text-foreground text-sm">{member.full_name}</p>
                     <p className="text-xs text-muted-foreground mt-0.5">{member.phone_number} · Joined {joinedDate}</p>
-                    {/* Share Portal — stops row click */}
+                    {/* Share Portal Link — stops row click */}
                     {inv && (
                       <div className="relative mt-1.5 inline-block" onClick={e => e.stopPropagation()}>
                         <button

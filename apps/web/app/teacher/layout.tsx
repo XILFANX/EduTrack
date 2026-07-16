@@ -19,18 +19,40 @@ export default async function TeacherLayout({ children }: { children: React.Reac
 
   if (profile?.role !== 'class_teacher' && profile?.role !== 'subject_teacher') redirect('/login')
 
+  // Fetch a descriptive role context label
+  let roleLabel = 'Teacher Portal'
+  if (profile.role === 'class_teacher') {
+    const { data: cls } = await supabase
+      .from('classes')
+      .select('name')
+      .eq('class_teacher_id', user.id)
+      .eq('school_id', profile.school_id)
+      .single()
+    if (cls) roleLabel = `Class Teacher · ${(cls as any).name}`
+  } else {
+    const { data: assignments } = await supabase
+      .from('class_subjects')
+      .select('subjects(name)')
+      .eq('teacher_id', user.id)
+      .eq('school_id', profile.school_id)
+      .limit(1)
+    const firstSubject = (assignments as any)?.[0]?.subjects?.name
+    if (firstSubject) roleLabel = `Subject Teacher · ${firstSubject}`
+    else roleLabel = 'Subject Teacher'
+  }
+
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 pb-20">
       {/* Header */}
       <header className="sticky top-0 z-40 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800">
         <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-indigo-100 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300 flex items-center justify-center font-bold text-lg">
-              {profile.full_name[0]}
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-600 to-cyan-500 text-white flex items-center justify-center font-bold text-base">
+              {profile.full_name?.[0] || 'T'}
             </div>
             <div>
               <p className="font-semibold text-sm text-foreground">{profile.full_name}</p>
-              <p className="text-xs text-indigo-600 dark:text-indigo-400 font-medium">Teacher Portal</p>
+              <p className="text-xs text-blue-600 dark:text-blue-400 font-medium">{roleLabel}</p>
             </div>
           </div>
           
@@ -47,8 +69,8 @@ export default async function TeacherLayout({ children }: { children: React.Reac
         {children}
       </main>
 
-      {/* Bottom Nav */}
-      <TeacherNav />
+      {/* Bottom Nav — role-aware */}
+      <TeacherNav role={profile.role} />
     </div>
   )
 }
