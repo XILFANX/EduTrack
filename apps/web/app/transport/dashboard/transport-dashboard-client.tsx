@@ -5,9 +5,18 @@ import { Bus, Users, Map, CheckCircle2 } from 'lucide-react'
 export function TransportDashboardClient({ stats, recentLogs }: { stats: any, recentLogs: any[] }) {
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-foreground">Transport Dashboard</h1>
-        <p className="text-sm text-muted-foreground mt-1">Real-time overview of school fleet and boarding logs.</p>
+      {/* Hero */}
+      <div className="bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-500 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 blur-[40px] rounded-full pointer-events-none" />
+        <div className="relative z-10 flex items-center gap-3">
+          <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center">
+            <Bus className="w-6 h-6 text-white" />
+          </div>
+          <div>
+            <h1 className="text-xl font-black">Transport Dashboard</h1>
+            <p className="text-sm text-blue-100">Real-time overview of school fleet and boarding logs</p>
+          </div>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">

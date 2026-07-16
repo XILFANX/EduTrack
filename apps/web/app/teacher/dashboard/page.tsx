@@ -96,7 +96,7 @@ export default async function TeacherDashboard() {
           <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 blur-[40px] rounded-full pointer-events-none" />
           <div className="relative z-10">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center text-white font-black text-lg">
+              <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center text-white font-black text-lg">
                 {classData?.name?.substring(0, 2) || 'CL'}
               </div>
               <div>
@@ -208,7 +208,7 @@ export default async function TeacherDashboard() {
         <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 blur-[40px] rounded-full pointer-events-none" />
         <div className="relative z-10">
           <div className="flex items-center gap-3 mb-5">
-            <div className="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center">
+            <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center">
               <BookOpen className="w-6 h-6 text-white" />
             </div>
             <div>

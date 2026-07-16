@@ -25,43 +25,52 @@ export function ParentDashboardClient({ childrenList, recentPayments }: { childr
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-foreground">Parent Dashboard</h1>
-          <p className="text-sm text-muted-foreground mt-1">Monitor academic progress and fee balances.</p>
+      {/* Hero */}
+      <div className="bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-500 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 blur-[40px] rounded-full pointer-events-none" />
+        <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center">
+              <User className="w-6 h-6 text-white" />
+            </div>
+            <div>
+              <h1 className="text-xl font-black">Parent Dashboard</h1>
+              <p className="text-sm text-blue-100">Monitor academic progress and fee balances</p>
+            </div>
+          </div>
+          
+          {childrenList.length > 1 && (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="bg-white/10 hover:bg-white/20 border-white/20 text-white gap-2 h-11 px-4 rounded-xl">
+                  <div className="w-6 h-6 rounded-full bg-white/20 text-white flex items-center justify-center text-xs font-bold">
+                    {selectedChild.first_name[0]}
+                  </div>
+                  <span>{selectedChild.first_name} {selectedChild.last_name}</span>
+                  <ChevronDown className="w-4 h-4 text-white/70" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56 rounded-xl">
+                {childrenList.map((child) => (
+                  <DropdownMenuItem 
+                    key={child.id}
+                    onClick={() => setSelectedChild(child)}
+                    className="gap-3 cursor-pointer py-2.5"
+                  >
+                    <div className="w-6 h-6 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 flex items-center justify-center text-xs font-bold">
+                      {child.first_name[0]}
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="font-medium text-sm">{child.first_name} {child.last_name}</span>
+                      <span className="text-[10px] text-muted-foreground uppercase">{child.class_name}</span>
+                    </div>
+                    {selectedChild.id === child.id && <CheckCircle2 className="w-4 h-4 text-blue-600 ml-auto" />}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )}
         </div>
-        
-        {childrenList.length > 1 && (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 gap-2 h-11 px-4 rounded-xl">
-                <div className="w-6 h-6 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-xs font-bold">
-                  {selectedChild.first_name[0]}
-                </div>
-                <span>{selectedChild.first_name} {selectedChild.last_name}</span>
-                <ChevronDown className="w-4 h-4 text-slate-400" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56 rounded-xl">
-              {childrenList.map((child) => (
-                <DropdownMenuItem 
-                  key={child.id}
-                  onClick={() => setSelectedChild(child)}
-                  className="gap-3 cursor-pointer py-2.5"
-                >
-                  <div className="w-6 h-6 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 flex items-center justify-center text-xs font-bold">
-                    {child.first_name[0]}
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="font-medium text-sm">{child.first_name} {child.last_name}</span>
-                    <span className="text-[10px] text-muted-foreground uppercase">{child.class_name}</span>
-                  </div>
-                  {selectedChild.id === child.id && <CheckCircle2 className="w-4 h-4 text-blue-600 ml-auto" />}
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
-        )}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

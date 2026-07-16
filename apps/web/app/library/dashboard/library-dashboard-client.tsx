@@ -5,9 +5,18 @@ import { Book, CheckCircle, Clock, AlertTriangle } from 'lucide-react'
 export function LibraryDashboardClient({ stats }: { stats: any }) {
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-foreground">Library Overview</h1>
-        <p className="text-sm text-muted-foreground mt-1">Monitor book inventory and circulation.</p>
+      {/* Hero */}
+      <div className="bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-500 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 blur-[40px] rounded-full pointer-events-none" />
+        <div className="relative z-10 flex items-center gap-3">
+          <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center">
+            <Book className="w-6 h-6 text-white" />
+          </div>
+          <div>
+            <h1 className="text-xl font-black">Library Overview</h1>
+            <p className="text-sm text-blue-100">Monitor book inventory and circulation</p>
+          </div>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
