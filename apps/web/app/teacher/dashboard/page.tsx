@@ -25,7 +25,7 @@ export default async function TeacherDashboard() {
   if (profile.role === 'class_teacher') {
     const { data: cls } = await supabase
       .from('classes')
-      .select('id, name, level, stream')
+      .select('id, name')
       .eq('class_teacher_id', user.id)
       .eq('school_id', profile.school_id)
       .single()
