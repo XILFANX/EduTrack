@@ -1,20 +1,26 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { GraduationCap, Calendar, User, FileText, Check, ChevronDown } from 'lucide-react'
-import { updateStudentClass } from './actions'
+import { updateStudentClass, updateStudentProfile } from './actions'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { createClient } from '@/lib/supabase/client'
+import { Camera, Loader2 } from 'lucide-react'
 
 export function StudentProfileClient({ student, classes }: { student: any, classes: any[] }) {
   const [loading, setLoading] = useState(false)
+  const [photoUploading, setPhotoUploading] = useState(false)
   const [currentClassId, setCurrentClassId] = useState<string | null>(student.class_id)
+  const [status, setStatus] = useState<string>(student.status || 'Active')
+  const [photoUrl, setPhotoUrl] = useState<string | null>(student.photo_url)
+  const fileInputRef = useRef<HTMLInputElement>(null)
   
   const currentClass = classes.find(c => c.id === currentClassId)
 
@@ -30,6 +36,51 @@ export function StudentProfileClient({ student, classes }: { student: any, class
     }
   }
 
+  async function handleStatusChange(newStatus: string) {
+    if (newStatus === status) return
+    setLoading(true)
+    const res = await updateStudentProfile(student.id, { status: newStatus })
+    setLoading(false)
+    if ('success' in res) {
+      setStatus(newStatus)
+    } else {
+      alert(res.error)
+    }
+  }
+
+  async function handlePhotoUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file) return
+    if (file.size > 5 * 1024 * 1024) { alert('Photo must be under 5 MB.'); return }
+    
+    setPhotoUploading(true)
+    try {
+      const supabase = createClient()
+      const ext = file.name.split('.').pop() ?? 'jpg'
+      const path = `${student.admission_number.trim()}-${Date.now()}.${ext}`
+      
+      const { error: upErr } = await supabase.storage
+        .from('student-photos')
+        .upload(path, file, { upsert: true })
+        
+      if (upErr) throw new Error(upErr.message)
+      
+      const { data: urlData } = supabase.storage.from('student-photos').getPublicUrl(path)
+      const newPhotoUrl = urlData.publicUrl
+
+      const res = await updateStudentProfile(student.id, { photoUrl: newPhotoUrl })
+      if ('success' in res) {
+        setPhotoUrl(newPhotoUrl)
+      } else {
+        alert(res.error)
+      }
+    } catch (err: any) {
+      alert(`Photo upload failed: ${err.message}`)
+    } finally {
+      setPhotoUploading(false)
+    }
+  }
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
       {/* ── Left Column: Main Profile Card ── */}
@@ -37,14 +88,28 @@ export function StudentProfileClient({ student, classes }: { student: any, class
         <Card className="border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden relative">
           <div className="h-24 bg-gradient-to-r from-blue-600 to-cyan-500" />
           <CardContent className="px-6 pb-6 pt-0 relative">
-            <div className="w-20 h-20 rounded-2xl bg-white dark:bg-slate-900 border-4 border-white dark:border-slate-950 shadow-sm mx-auto -mt-10 flex items-center justify-center relative z-10 overflow-hidden">
-              {student.photo_url ? (
-                <img src={student.photo_url} alt={`${student.first_name}'s photo`} className="w-full h-full object-cover" />
+            <div className="w-20 h-20 rounded-2xl bg-white dark:bg-slate-900 border-4 border-white dark:border-slate-950 shadow-sm mx-auto -mt-10 flex items-center justify-center relative z-10 overflow-hidden group">
+              {photoUrl ? (
+                <img src={photoUrl} alt={`${student.first_name}'s photo`} className="w-full h-full object-cover" />
               ) : (
                 <span className="text-2xl font-bold text-slate-700 dark:text-slate-200">
                   {student.first_name[0]}{(student.middle_name || student.last_name)[0]}
                 </span>
               )}
+              <div 
+                className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                onClick={() => fileInputRef.current?.click()}
+              >
+                {photoUploading ? <Loader2 className="w-6 h-6 text-white animate-spin" /> : <Camera className="w-6 h-6 text-white" />}
+              </div>
+              <input 
+                type="file" 
+                ref={fileInputRef} 
+                className="hidden" 
+                accept="image/jpeg,image/png,image/webp" 
+                onChange={handlePhotoUpload} 
+                disabled={photoUploading}
+              />
             </div>
             
             <div className="text-center mt-3 mb-6">
@@ -62,9 +127,28 @@ export function StudentProfileClient({ student, classes }: { student: any, class
                   </div>
                   <div>
                     <p className="text-xs text-muted-foreground font-medium">Status</p>
-                    <p className="text-sm font-semibold text-foreground">Active</p>
+                    <p className={`text-sm font-semibold ${status.toLowerCase() === 'active' ? 'text-emerald-600 dark:text-emerald-400' : 'text-amber-600 dark:text-amber-400'}`}>{status}</p>
                   </div>
                 </div>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="sm" className="h-8 px-2" disabled={loading}>
+                      Change <ChevronDown className="w-3 h-3 ml-1" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-32 rounded-xl">
+                    {['Active', 'Suspended', 'Transferred', 'Alumni'].map(s => (
+                      <DropdownMenuItem 
+                        key={s} 
+                        className={`gap-2 ${status === s ? 'bg-slate-100 dark:bg-slate-800' : ''}`}
+                        onClick={() => handleStatusChange(s)}
+                      >
+                        {status === s && <Check className="w-4 h-4 text-blue-600" />} 
+                        <span className={status === s ? 'ml-0' : 'ml-6'}>{s}</span>
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
 
               <div className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50">

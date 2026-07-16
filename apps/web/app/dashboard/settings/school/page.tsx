@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { ArrowLeft } from 'lucide-react'
+import { SchoolSettingsClient } from './school-settings-client'
 
 export default async function SchoolProfileSettings() {
   const supabase = await createClient()
@@ -18,7 +19,7 @@ export default async function SchoolProfileSettings() {
 
   const { data: schoolRaw } = await supabase
     .from('schools')
-    .select('name, address')
+    .select('name, address, logo_url')
     .eq('id', profile.school_id)
     .single()
 
@@ -33,30 +34,7 @@ export default async function SchoolProfileSettings() {
         <h1 className="text-xl font-bold text-foreground">School Profile</h1>
       </div>
 
-      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 shadow-sm space-y-5">
-        <p className="text-slate-500 text-sm">Basic information about your school as registered on EduTrack.</p>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <div className="space-y-1.5 md:col-span-2">
-            <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide">School Name</label>
-            <div className="bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-2.5 text-sm font-medium text-foreground">
-              {school?.name || '—'}
-            </div>
-          </div>
-          {school?.address && (
-            <div className="space-y-1.5 md:col-span-2">
-              <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Address</label>
-              <div className="bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-2.5 text-sm font-medium text-foreground">
-                {school.address}
-              </div>
-            </div>
-          )}
-        </div>
-
-        <p className="text-xs text-slate-400 pt-2">
-          To update school details, please contact EduTrack support or your system administrator.
-        </p>
-      </div>
+      <SchoolSettingsClient school={school} />
     </div>
   )
 }

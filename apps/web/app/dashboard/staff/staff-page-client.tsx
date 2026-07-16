@@ -24,7 +24,7 @@ const WA_ICON = (
   </svg>
 )
 
-interface StaffMember { id: string; full_name: string; role: string; phone_number: string; created_at: string }
+interface StaffMember { id: string; full_name: string; role: string; phone_number: string; created_at: string; photo_url?: string }
 interface Invitation { id: string; token: string; role: string; target_name: string | null; target_phone: string | null; used_at: string | null; created_at: string }
 interface StaffPageClientProps { staff: StaffMember[]; invitations: Invitation[]; schoolId: string }
 
@@ -123,8 +123,12 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
                   onClick={() => setDetailMember(member)}
                 >
                   {/* Avatar */}
-                  <div className="w-9 h-9 rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 flex items-center justify-center text-sm font-bold shrink-0 mt-0.5">
-                    {getInitials(member.full_name)}
+                  <div className="w-9 h-9 rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 flex items-center justify-center text-sm font-bold shrink-0 mt-0.5 overflow-hidden">
+                    {member.photo_url ? (
+                      <img src={member.photo_url} alt="" className="w-full h-full object-cover" />
+                    ) : (
+                      getInitials(member.full_name)
+                    )}
                   </div>
                   {/* Info */}
                   <div className="flex-1 min-w-0">
@@ -282,7 +286,7 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
                 </div>
 
                 <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4">
-                  <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3">Date of Admission</p>
+                  <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3">Date Joined</p>
                   <div className="flex items-center gap-3 text-sm">
                     <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 shrink-0">
                       <Calendar className="w-4 h-4" />

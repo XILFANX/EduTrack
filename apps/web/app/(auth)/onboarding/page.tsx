@@ -8,7 +8,9 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { completeOnboarding, type OnboardingData } from './actions'
-import { GraduationCap, School, CheckCircle2 } from 'lucide-react'
+import { GraduationCap, School, CheckCircle2, Camera, Loader2 } from 'lucide-react'
+import { createClient } from '@/lib/supabase/client'
+import { useRef } from 'react'
 
 const STEPS = [
   { id: 1, title: 'School Details', desc: 'Tell us about your school' },
@@ -65,12 +67,53 @@ export default function OnboardingPage() {
   const [subscriptionPlan, setSubscriptionPlan] = useState('trial')
   const [feeDueDay, setFeeDueDay] = useState(5)
   const [adminTitle, setAdminTitle] = useState<'principal' | 'headteacher'>('principal')
+  const [logoFile, setLogoFile] = useState<File | null>(null)
+  const [logoPreview, setLogoPreview] = useState<string | null>(null)
+  const [uploadingLogo, setUploadingLogo] = useState(false)
+  
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   const progress = (step / STEPS.length) * 100
+
+  function handleLogoChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file) return
+    if (file.size > 5 * 1024 * 1024) { setError('Logo must be under 5 MB.'); return }
+    setLogoFile(file)
+    setLogoPreview(URL.createObjectURL(file))
+  }
 
   async function handleComplete() {
     setLoading(true)
     setError(null)
+    
+    let logoUrl: string | null = null
+    
+    if (logoFile) {
+      setUploadingLogo(true)
+      try {
+        const supabase = createClient()
+        const ext = logoFile.name.split('.').pop() ?? 'jpg'
+        const slug = schoolName.toLowerCase().replace(/[^a-z0-9]/g, '-').slice(0, 30)
+        const path = `${slug}-${Date.now()}.${ext}`
+        
+        const { error: upErr } = await supabase.storage
+          .from('school-logos')
+          .upload(path, logoFile, { upsert: true })
+          
+        if (upErr) throw new Error(upErr.message)
+        
+        const { data: urlData } = supabase.storage.from('school-logos').getPublicUrl(path)
+        logoUrl = urlData.publicUrl
+      } catch (err: any) {
+        setError(`Logo upload failed: ${err.message}`)
+        setLoading(false)
+        setUploadingLogo(false)
+        return
+      }
+      setUploadingLogo(false)
+    }
+
     const data: OnboardingData = {
       schoolName,
       schoolPhone,
@@ -79,6 +122,7 @@ export default function OnboardingPage() {
       subscriptionPlan,
       feeDueDay,
       adminTitle,
+      logoUrl,
     }
     try {
       const res = await completeOnboarding(data)
@@ -147,17 +191,60 @@ export default function OnboardingPage() {
             {/* ── Step 1: School Details ── */}
             {step === 1 && (
               <>
-                <div className="space-y-2">
-                  <Label htmlFor="schoolName">School name *</Label>
-                  <Input
-                    id="schoolName"
-                    placeholder="e.g. Nairobi Academy"
-                    value={schoolName}
-                    onChange={(e) => setSchoolName(e.target.value)}
-                  />
-                  <p className="text-xs text-muted-foreground">
-                    This appears on report cards, receipts, and leaving certificates.
-                  </p>
+                <div className="space-y-4">
+                  <div className="flex items-center gap-4">
+                    <button
+                      type="button"
+                      onClick={() => fileInputRef.current?.click()}
+                      className="w-16 h-16 rounded-2xl border-2 border-dashed border-slate-300 dark:border-slate-600 hover:border-blue-400 flex items-center justify-center bg-slate-50 dark:bg-slate-800/50 transition-colors shrink-0 overflow-hidden group relative"
+                    >
+                      {logoPreview ? (
+                        <img src={logoPreview} alt="preview" className="w-full h-full object-cover" />
+                      ) : (
+                        <Camera className="w-6 h-6 text-slate-400 group-hover:text-blue-500 transition-colors" />
+                      )}
+                    </button>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-foreground">School Logo <span className="text-muted-foreground font-normal">(Optional)</span></p>
+                      <p className="text-xs text-muted-foreground mt-0.5">JPG, PNG or WebP · Max 5 MB</p>
+                      <button
+                        type="button"
+                        onClick={() => fileInputRef.current?.click()}
+                        className="mt-1.5 text-xs text-blue-600 dark:text-blue-400 hover:underline font-medium"
+                      >
+                        {logoPreview ? 'Change logo' : 'Upload logo'}
+                      </button>
+                      {logoPreview && (
+                        <button
+                          type="button"
+                          onClick={() => { setLogoFile(null); setLogoPreview(null) }}
+                          className="ml-3 text-xs text-red-500 hover:underline"
+                        >
+                          Remove
+                        </button>
+                      )}
+                    </div>
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept="image/jpeg,image/jpg,image/png,image/webp"
+                      className="hidden"
+                      onChange={handleLogoChange}
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="schoolName">School name *</Label>
+                    <Input
+                      id="schoolName"
+                      placeholder="e.g. Nairobi Academy"
+                      value={schoolName}
+                      onChange={(e) => setSchoolName(e.target.value)}
+                    />
+                    <p className="text-xs text-muted-foreground">
+                      This appears on report cards, receipts, and leaving certificates.
+                    </p>
+                  </div>
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="schoolPhone">School phone number *</Label>
@@ -356,9 +443,9 @@ export default function OnboardingPage() {
             <Button
               className="flex-1 bg-blue-600 hover:bg-blue-700"
               onClick={handleComplete}
-              disabled={loading}
+              disabled={loading || uploadingLogo}
             >
-              {loading ? 'Setting up your school…' : '🎓 Go to my dashboard'}
+              {loading || uploadingLogo ? 'Setting up your school…' : '🎓 Go to my dashboard'}
             </Button>
           )}
         </div>

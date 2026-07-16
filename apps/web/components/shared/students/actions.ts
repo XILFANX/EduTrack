@@ -188,3 +188,32 @@ export async function updateStudentClass(
     return { error: err.message }
   }
 }
+
+export async function updateStudentProfile(
+  studentId: string,
+  data: { photoUrl?: string | null; status?: string }
+): Promise<{ success: true } | { error: string }> {
+  try {
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) return { error: 'Not authenticated.' }
+
+    const admin = createAdminClient()
+    const updates: any = {}
+    if (data.photoUrl !== undefined) updates.photo_url = data.photoUrl
+    if (data.status !== undefined) updates.status = data.status
+
+    const { error } = await admin
+      .from('students')
+      .update(updates)
+      .eq('id', studentId)
+
+    if (error) return { error: error.message }
+
+    revalidatePath(`/dashboard/students/${studentId}`)
+    revalidatePath('/dashboard/students')
+    return { success: true }
+  } catch (err: any) {
+    return { error: err.message }
+  }
+}

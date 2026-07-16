@@ -12,6 +12,7 @@ export interface OnboardingData {
   subscriptionPlan: string
   feeDueDay: number
   adminTitle: 'principal' | 'headteacher'
+  logoUrl?: string | null
 }
 
 export async function completeOnboarding(
@@ -41,6 +42,7 @@ export async function completeOnboarding(
         name: data.schoolName,
         domain: slug,
         subscription_tier: data.subscriptionPlan,
+        logo_url: data.logoUrl || null,
       })
       .select('id')
       .single()

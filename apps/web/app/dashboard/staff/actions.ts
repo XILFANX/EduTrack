@@ -96,14 +96,14 @@ export async function getStaff(schoolId: string) {
   const supabase = await createClient()
   const { data, error } = await supabase
     .from('users')
-    .select('id, full_name, role, phone_number, created_at')
+    .select('id, full_name, role, phone_number, created_at, photo_url')
     .eq('school_id', schoolId)
     .neq('role', 'principal')
     .is('deleted_at', null)
     .order('created_at', { ascending: false })
 
   if (error) return []
-  return data ?? []
+  return (data as any) ?? []
 }
 
 export async function getInvitations(schoolId: string) {
