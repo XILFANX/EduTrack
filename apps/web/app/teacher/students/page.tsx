@@ -34,11 +34,11 @@ export default async function TeacherStudentsPage() {
   }
 
   // 1. Fetch the class assigned to this teacher
-  const { data: cls } = await supabase
+  const { data: cls, error: clsError } = await supabase
     .from('classes')
     .select('id, name')
     .eq('class_teacher_id', user.id)
-    .is('deleted_at', null)
+    .eq('school_id', profile.school_id)
     .single()
 
   if (!cls) {

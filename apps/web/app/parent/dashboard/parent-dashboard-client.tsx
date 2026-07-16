@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
-export function ParentDashboardClient({ childrenList }: { childrenList: any[] }) {
+export function ParentDashboardClient({ childrenList, recentPayments }: { childrenList: any[], recentPayments: any[] }) {
   const [selectedChild, setSelectedChild] = useState(childrenList[0])
 
   if (!selectedChild) {
@@ -103,18 +103,23 @@ export function ParentDashboardClient({ childrenList }: { childrenList: any[] })
       <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm">
         <h2 className="text-lg font-bold text-foreground flex items-center gap-2 mb-4">
           <Bell className="w-5 h-5 text-amber-500" />
-          Recent Notifications
+          Recent Payments
         </h2>
-        <div className="space-y-4">
-          <div className="border-l-2 border-emerald-500 pl-4 py-1">
-            <p className="text-sm font-medium text-foreground">Payment Received</p>
-            <p className="text-xs text-muted-foreground mt-0.5">We received KES 5,000 for {selectedChild.first_name}'s fees. Thank you.</p>
+        {recentPayments.length === 0 ? (
+          <p className="text-sm text-muted-foreground py-4 text-center">No payment history found.</p>
+        ) : (
+          <div className="space-y-4">
+            {recentPayments.map((p, i) => (
+              <div key={i} className="border-l-2 border-emerald-500 pl-4 py-1">
+                <p className="text-sm font-medium text-foreground">KES {Number(p.amount).toLocaleString()} Received</p>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  {new Date(p.payment_date).toLocaleDateString('en-KE', { year: 'numeric', month: 'long', day: 'numeric' })}
+                  {p.mpesa_receipt && <span className="font-mono ml-2 text-blue-600">#{p.mpesa_receipt}</span>}
+                </p>
+              </div>
+            ))}
           </div>
-          <div className="border-l-2 border-blue-500 pl-4 py-1">
-            <p className="text-sm font-medium text-foreground">End of Term Notice</p>
-            <p className="text-xs text-muted-foreground mt-0.5">School will close on Friday 28th for the August holidays.</p>
-          </div>
-        </div>
+        )}
       </div>
     </div>
   )

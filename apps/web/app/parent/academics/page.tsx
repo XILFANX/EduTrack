@@ -2,6 +2,8 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import { BookOpen, CheckCircle2, XCircle, Clock, GraduationCap } from 'lucide-react'
 
+export const dynamic = 'force-dynamic'
+
 export default async function ParentAcademics() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()

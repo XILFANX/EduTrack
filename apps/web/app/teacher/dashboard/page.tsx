@@ -3,6 +3,8 @@ import { redirect } from 'next/navigation'
 import { GraduationCap, BookOpen, ClipboardList, Users, TrendingUp, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
 
+export const dynamic = 'force-dynamic'
+
 export default async function TeacherDashboard() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()

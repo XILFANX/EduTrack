@@ -2,6 +2,8 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import { Receipt, CheckCircle2, AlertCircle, Smartphone } from 'lucide-react'
 
+export const dynamic = 'force-dynamic'
+
 export default async function ParentPayments() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
