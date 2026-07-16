@@ -84,7 +84,7 @@ export default async function DashboardPage() {
     <div className="space-y-6 max-w-4xl mx-auto pb-24">
       {/* School Header */}
       <div className="flex flex-col items-center justify-center pt-8 pb-4 text-center">
-        <div className="w-20 h-20 rounded-3xl bg-white dark:bg-slate-900 border-4 border-slate-50 dark:border-slate-800 shadow-md flex items-center justify-center overflow-hidden mb-4">
+        <div className="w-20 h-20 rounded-full bg-white dark:bg-slate-900 border-4 border-slate-50 dark:border-slate-800 shadow-md flex items-center justify-center overflow-hidden mb-4">
           {school?.logo_url ? (
             <img src={school.logo_url} alt={`${school.name} Logo`} className="w-full h-full object-cover" />
           ) : (
@@ -107,24 +107,27 @@ export default async function DashboardPage() {
       />
       
       {/* Academic Overview */}
-      <div className="bg-slate-900 dark:bg-slate-950 border border-slate-800 rounded-[2rem] p-6 text-white shadow-md">
-        <div className="flex items-center gap-2 mb-5">
-          <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
-            <GraduationCap className="w-4 h-4 text-blue-400" />
+      <div className="bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-500 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
+        {/* Decorative blur inside card */}
+        <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-[50px] rounded-full pointer-events-none" />
+
+        <div className="flex items-center gap-2 mb-5 relative z-10">
+          <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+            <GraduationCap className="w-4 h-4 text-white" />
           </div>
-          <h2 className="text-lg font-bold text-slate-100">Academic Overview</h2>
+          <h2 className="text-lg font-bold text-white">Academic Overview</h2>
         </div>
         
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 relative z-10">
           {[
             { label: 'Students Enrolled', value: totalStudents ?? 0 },
             { label: 'Active Staff', value: totalStaff ?? 0 },
             { label: 'Total Classes', value: totalClasses ?? 0 },
             { label: 'Subjects Offered', value: totalSubjects ?? 0 },
           ].map((stat, i) => (
-            <div key={i} className="bg-slate-800/50 border border-slate-700/50 rounded-2xl p-4 flex flex-col justify-center">
-              <p className="text-2xl font-bold text-white">{stat.value}</p>
-              <p className="text-xs font-medium text-slate-400 mt-1">{stat.label}</p>
+            <div key={i} className="bg-white/10 border border-white/20 rounded-2xl p-4 flex flex-col justify-center shadow-inner hover:bg-white/20 transition-colors">
+              <p className="text-2xl font-bold text-white drop-shadow-sm">{stat.value}</p>
+              <p className="text-xs font-semibold text-blue-50 mt-1">{stat.label}</p>
             </div>
           ))}
         </div>
