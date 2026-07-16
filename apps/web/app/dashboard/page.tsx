@@ -82,55 +82,21 @@ export default async function DashboardPage() {
 
   return (
     <div className="space-y-6 max-w-4xl mx-auto pb-24">
-      {/* Context & Hero Card */}
-      <div>
-        <div className="flex items-center justify-between mb-2">
-          <SectionHeader title="SCHOOL CONTEXT" />
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-1.5 flex items-center gap-2 text-xs font-semibold text-foreground shadow-sm">
-            {school?.logo_url ? (
-              <img src={school.logo_url} alt="Logo" className="w-4 h-4 rounded-full object-cover" />
-            ) : (
-              <div className="w-4 h-4 rounded-full bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center text-[8px] text-blue-600 dark:text-blue-400">
-                SC
-              </div>
-            )}
-            {school?.name?.toUpperCase() || 'YOUR SCHOOL'}
-          </div>
+      {/* School Header */}
+      <div className="flex flex-col items-center justify-center pt-8 pb-4 text-center">
+        <div className="w-20 h-20 rounded-3xl bg-white dark:bg-slate-900 border-4 border-slate-50 dark:border-slate-800 shadow-md flex items-center justify-center overflow-hidden mb-4">
+          {school?.logo_url ? (
+            <img src={school.logo_url} alt={`${school.name} Logo`} className="w-full h-full object-cover" />
+          ) : (
+            <span className="text-2xl font-black text-blue-600 dark:text-blue-400">
+              {school?.name?.substring(0, 2).toUpperCase() || 'SC'}
+            </span>
+          )}
         </div>
-        
-        <div className="bg-gradient-to-br from-blue-600 to-cyan-500 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
-          {/* Decorative blur inside card */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-[50px] rounded-full pointer-events-none" />
-          
-          <div className="flex justify-between items-start mb-6 relative z-10">
-            <div>
-              <h1 className="text-2xl md:text-3xl font-bold tracking-tight mb-1">
-                {profile.full_name || 'Administrator'}
-              </h1>
-              <p className="text-sm font-medium text-blue-100">
-                {school?.name?.toUpperCase() || 'YOUR SCHOOL'} · Dashboard overview
-              </p>
-            </div>
-            <div className="text-right">
-              <p className="text-xs font-semibold text-blue-100 uppercase tracking-wider mb-1">Collected MTD</p>
-              <p className="text-2xl md:text-3xl font-bold tracking-tight">{formatKES(totalCollected)}</p>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 relative z-10">
-            {[
-              { label: 'Students', value: totalStudents ?? 0 },
-              { label: 'Staff', value: totalStaff ?? 0 },
-              { label: 'Classes', value: totalClasses ?? 0 },
-              { label: 'Subjects', value: totalSubjects ?? 0 },
-            ].map((stat, i) => (
-              <div key={i} className="bg-white/10 border border-white/20 rounded-2xl p-4 flex flex-col justify-center shadow-inner">
-                <p className="text-2xl font-bold">{stat.value}</p>
-                <p className="text-xs font-medium text-blue-100">{stat.label}</p>
-              </div>
-            ))}
-          </div>
-        </div>
+        <h1 className="text-2xl md:text-3xl font-black text-foreground tracking-tight uppercase">
+          {school?.name || 'Your School'}
+        </h1>
+        <p className="text-sm font-medium text-slate-500 mt-1">School Management System</p>
       </div>
 
       <OnboardingWizard 
@@ -139,34 +105,58 @@ export default async function DashboardPage() {
         totalSubjects={totalSubjects ?? 0}
         totalStudents={totalStudents ?? 0}
       />
+      
+      {/* Academic Overview */}
+      <div className="bg-slate-900 dark:bg-slate-950 border border-slate-800 rounded-[2rem] p-6 text-white shadow-md">
+        <div className="flex items-center gap-2 mb-5">
+          <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
+            <GraduationCap className="w-4 h-4 text-blue-400" />
+          </div>
+          <h2 className="text-lg font-bold text-slate-100">Academic Overview</h2>
+        </div>
+        
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          {[
+            { label: 'Students Enrolled', value: totalStudents ?? 0 },
+            { label: 'Active Staff', value: totalStaff ?? 0 },
+            { label: 'Total Classes', value: totalClasses ?? 0 },
+            { label: 'Subjects Offered', value: totalSubjects ?? 0 },
+          ].map((stat, i) => (
+            <div key={i} className="bg-slate-800/50 border border-slate-700/50 rounded-2xl p-4 flex flex-col justify-center">
+              <p className="text-2xl font-bold text-white">{stat.value}</p>
+              <p className="text-xs font-medium text-slate-400 mt-1">{stat.label}</p>
+            </div>
+          ))}
+        </div>
+      </div>
 
-      {/* Finance Section */}
+      {/* Operations */}
       <div>
-        <SectionHeader title="FINANCE & OPERATIONS" />
+        <SectionHeader title="OPERATIONS" />
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-          <MetricCard
-            label="Collected"
-            value={formatKES(totalCollected)}
-            icon={Banknote}
-            color="text-emerald-500"
-          />
-          <MetricCard
-            label="Outstanding"
-            value={formatKES(totalArrears)}
-            icon={Clock}
-            color="text-amber-500"
-          />
           <MetricCard
             label="Active Routes"
             value="0"
             icon={Bus}
-            color="text-blue-500"
+            color="text-emerald-500"
           />
           <MetricCard
             label="Books Issued"
             value="0"
             icon={BookOpen}
-            color="text-violet-500"
+            color="text-indigo-500"
+          />
+          <MetricCard
+            label="Inventory Items"
+            value="0"
+            icon={Package}
+            color="text-amber-500"
+          />
+          <MetricCard
+            label="Unread Messages"
+            value="0"
+            icon={Users}
+            color="text-blue-500"
           />
         </div>
       </div>
@@ -190,6 +180,25 @@ export default async function DashboardPage() {
               <span className="font-bold text-sm">{label}</span>
             </Link>
           ))}
+        </div>
+      </div>
+
+      {/* Finance Summary */}
+      <div>
+        <SectionHeader title="FINANCE SUMMARY" />
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-2">
+          <MetricCard
+            label="Term Fees Collected"
+            value={formatKES(totalCollected)}
+            icon={Banknote}
+            color="text-emerald-500"
+          />
+          <MetricCard
+            label="Outstanding Arrears"
+            value={formatKES(totalArrears)}
+            icon={Clock}
+            color="text-rose-500"
+          />
         </div>
       </div>
     </div>

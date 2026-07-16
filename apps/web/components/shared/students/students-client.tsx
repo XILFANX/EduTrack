@@ -289,7 +289,13 @@ export function StudentsPageClient({ initialStudents, classes, autoEnroll }: { i
                     </td>
                     <td className="px-6 py-4 text-muted-foreground">{(student.classes as any)?.name || 'Unassigned'}</td>
                     <td className="px-6 py-4">
-                      <span className="px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 text-xs font-medium">Active</span>
+                      <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${
+                        (student.status || 'Active').toLowerCase() === 'active' 
+                          ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400' 
+                          : 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400'
+                      }`}>
+                        {student.status || 'Active'}
+                      </span>
                     </td>
                     <td className="px-6 py-4 text-right" onClick={e => e.stopPropagation()}>
                       <DropdownMenu>
@@ -378,8 +384,12 @@ export function StudentsPageClient({ initialStudents, classes, autoEnroll }: { i
                   <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">
                     Student
                   </span>
-                  <span className="text-sm font-medium px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400">
-                    Active
+                  <span className={`text-sm font-medium px-2.5 py-1 rounded-full ${
+                    (quickViewStudent.status || 'Active').toLowerCase() === 'active'
+                      ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400'
+                      : 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400'
+                  }`}>
+                    {quickViewStudent.status || 'Active'}
                   </span>
                 </div>
               </div>
