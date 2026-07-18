@@ -26,14 +26,18 @@ WHERE is_active = true;
 -- Enable RLS on academic_years
 ALTER TABLE public.academic_years ENABLE ROW LEVEL SECURITY;
 
--- Policies for academic_years
-CREATE POLICY "Users can view their school's academic years"
+-- Policies for academic_years (safe re-run)
+DO $$ BEGIN
+  CREATE POLICY "Users can view their school's academic years"
     ON public.academic_years FOR SELECT
     USING (school_id IN (
         SELECT school_id FROM public.users WHERE users.id = auth.uid()
     ));
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
 
-CREATE POLICY "Admin can insert academic years"
+DO $$ BEGIN
+  CREATE POLICY "Admin can insert academic years"
     ON public.academic_years FOR INSERT
     WITH CHECK (
         EXISTS (
@@ -43,8 +47,11 @@ CREATE POLICY "Admin can insert academic years"
             AND users.role = 'admin'
         )
     );
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
 
-CREATE POLICY "Admin can update academic years"
+DO $$ BEGIN
+  CREATE POLICY "Admin can update academic years"
     ON public.academic_years FOR UPDATE
     USING (
         EXISTS (
@@ -54,8 +61,11 @@ CREATE POLICY "Admin can update academic years"
             AND users.role = 'admin'
         )
     );
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
 
-CREATE POLICY "Admin can delete academic years"
+DO $$ BEGIN
+  CREATE POLICY "Admin can delete academic years"
     ON public.academic_years FOR DELETE
     USING (
         EXISTS (
@@ -65,3 +75,5 @@ CREATE POLICY "Admin can delete academic years"
             AND users.role = 'admin'
         )
     );
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;

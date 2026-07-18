@@ -25,7 +25,6 @@ SELECT
   e.year_id,
   e.class_id,
   s.name as subject_name,
-  s.code as subject_code,
   st.first_name,
   st.last_name,
   st.admission_number,
