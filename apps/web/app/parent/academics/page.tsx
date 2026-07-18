@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
-import { BookOpen, CheckCircle2, XCircle, Clock, GraduationCap } from 'lucide-react'
+import Link from 'next/link'
+import { BookOpen, CheckCircle2, XCircle, Clock, GraduationCap, FileText } from 'lucide-react'
 
 export const dynamic = 'force-dynamic'
 
@@ -109,10 +110,16 @@ export default async function ParentAcademics() {
             <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center font-bold text-lg">
               {student.first_name[0]}
             </div>
-            <div>
+            <div className="flex-1">
               <p className="font-bold">{student.first_name} {student.last_name}</p>
               <p className="text-xs text-blue-100">{student.classes?.name ?? '—'} · {student.admission_number}</p>
             </div>
+            <Link
+              href={`/parent/results/${student.id}`}
+              className="flex items-center gap-1.5 bg-white/20 hover:bg-white/30 transition-colors px-3 py-1.5 rounded-lg text-xs font-semibold text-white"
+            >
+              <FileText className="w-3.5 h-3.5" /> Report Card
+            </Link>
           </div>
 
           {/* Attendance summary */}
