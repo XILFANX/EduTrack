@@ -35,7 +35,6 @@ export async function issueBook(data: {
   schoolId: string
   bookId: string
   studentId: string
-  issuedBy: string
   dueDays: number
 }) {
   const admin = await createAdminClient()
@@ -58,9 +57,8 @@ export async function issueBook(data: {
       school_id: data.schoolId,
       book_id: data.bookId,
       student_id: data.studentId,
-      issued_by: data.issuedBy,
       due_date: dueDate.toISOString().split('T')[0],
-      status: 'issued',
+      status: 'borrowed',
     })
 
   if (issueErr) return { error: issueErr.message }
@@ -84,25 +82,15 @@ export async function returnBook(data: {
   const newBookStatus = data.isLost ? 'lost' : 'available'
 
   // Update book status
-  await admin.from('library_books').update({ status: newBookStatus }).eq('id', data.bookId)
+  const { error: bookErr } = await admin.from('library_books').update({ status: newBookStatus }).eq('id', data.bookId)
+  if (bookErr) return { error: bookErr.message }
 
   // Close the issue record
-  await admin.from('library_issues').update({
-    returned_at: new Date().toISOString(),
+  const { error: issueErr } = await admin.from('library_issues').update({
+    return_date: new Date().toISOString(),
     status: data.isLost ? 'lost' : 'returned',
   }).eq('id', data.issueId)
-
-  // If lost and flagged for fine — add to student's next invoice as a note
-  // This is a simple implementation: we log it to a library_fines table
-  if (data.isLost && data.fineToBursar) {
-    await admin.from('library_fines').insert({
-      school_id: data.schoolId,
-      student_id: data.studentId,
-      issue_id: data.issueId,
-      amount: 0, // Bursar sets the actual amount
-      status: 'pending',
-    })
-  }
+  if (issueErr) return { error: issueErr.message }
 
   revalidatePath('/library/issues')
   revalidatePath('/library/dashboard')

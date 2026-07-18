@@ -1,21 +1,44 @@
 'use client'
 
-import { Package, TrendingDown, ArrowDownRight, ArrowUpRight, FileText } from 'lucide-react'
+import { useState } from 'react'
+import { Package, TrendingDown, ArrowDownRight, ArrowUpRight, FileText, Plus } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { LogStockModal } from '../log-stock-modal'
 
-export function StoreDashboardClient({ recentTransactions, currentStock }: { recentTransactions: any[], currentStock: any[] }) {
+export function StoreDashboardClient({ 
+  recentTransactions, 
+  currentStock,
+  schoolId,
+  userId
+}: { 
+  recentTransactions: any[]
+  currentStock: any[]
+  schoolId: string
+  userId: string
+}) {
+  const [showLogModal, setShowLogModal] = useState(false)
   return (
     <div className="space-y-6">
       {/* Hero */}
       <div className="bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-500 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
         <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 blur-[40px] rounded-full pointer-events-none" />
-        <div className="relative z-10 flex items-center gap-3">
-          <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center">
-            <Package className="w-6 h-6 text-white" />
+        <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center">
+              <Package className="w-6 h-6 text-white" />
+            </div>
+            <div>
+              <h1 className="text-xl font-black">Inventory Dashboard</h1>
+              <p className="text-sm text-blue-100">Monitor kitchen and stationery supplies</p>
+            </div>
           </div>
-          <div>
-            <h1 className="text-xl font-black">Inventory Dashboard</h1>
-            <p className="text-sm text-blue-100">Monitor kitchen and stationery supplies</p>
-          </div>
+          <Button 
+            onClick={() => setShowLogModal(true)}
+            className="bg-white/20 hover:bg-white/30 text-white border-none gap-2 shrink-0 backdrop-blur-md"
+          >
+            <Plus className="w-4 h-4" />
+            Log Stock
+          </Button>
         </div>
       </div>
 
@@ -91,6 +114,14 @@ export function StoreDashboardClient({ recentTransactions, currentStock }: { rec
           </div>
         </div>
       </div>
+
+      {showLogModal && (
+        <LogStockModal 
+          schoolId={schoolId} 
+          userId={userId} 
+          onClose={() => setShowLogModal(false)} 
+        />
+      )}
     </div>
   )
 }

@@ -32,7 +32,25 @@ export default async function LibraryIssuesPage() {
     .eq('school_id', profile.school_id)
     .order('borrow_date', { ascending: false })
 
-  const issuesList = (issues as any[]) || []
+  // Fetch all students for the dropdown
+  const { data: students } = await supabase
+    .from('students')
+    .select('id, first_name, last_name, admission_number')
+    .eq('school_id', profile.school_id)
+    .is('deleted_at', null)
+    .order('first_name')
 
-  return <IssuesClient issues={issuesList} />
+  // Fetch available books for the dropdown
+  const { data: books } = await supabase
+    .from('library_books')
+    .select('id, title, isbn')
+    .eq('school_id', profile.school_id)
+    .eq('status', 'available')
+    .order('title')
+
+  const issuesList = (issues as any[]) || []
+  const studentsList = (students as any[]) || []
+  const booksList = (books as any[]) || []
+
+  return <IssuesClient issues={issuesList} schoolId={profile.school_id} availableStudents={studentsList} availableBooks={booksList} />
 }

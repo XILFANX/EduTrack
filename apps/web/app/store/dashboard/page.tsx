@@ -41,5 +41,12 @@ export default async function StoreDashboardPage() {
 
   const stock = Array.from(stockMap.entries()).map(([name, qty]) => ({ name, qty }))
 
-  return <StoreDashboardClient recentTransactions={ledger || []} currentStock={stock} />
+  return (
+    <StoreDashboardClient 
+      recentTransactions={ledger || []} 
+      currentStock={stock} 
+      schoolId={profile.school_id}
+      userId={user.id}
+    />
+  )
 }

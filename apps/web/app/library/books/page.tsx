@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
-import { BookOpen, Plus } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { BookOpen } from 'lucide-react'
+import { AddBookModal } from './add-book-modal'
 
 export default async function LibraryBooks() {
   const supabase = await createClient()
@@ -28,11 +28,8 @@ export default async function LibraryBooks() {
           <h1 className="text-2xl font-bold text-foreground">Books</h1>
           <p className="text-sm text-muted-foreground mt-1">{allBooks.length} books in library</p>
         </div>
-        {/* Add Book — wire up modal in next iteration */}
-        <Button className="bg-violet-600 hover:bg-violet-700 gap-2">
-          <Plus className="w-4 h-4" />
-          Add Book
-        </Button>
+        {/* Add Book Modal */}
+        <AddBookModal schoolId={profile.school_id} />
       </div>
 
       {allBooks.length === 0 ? (

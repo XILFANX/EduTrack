@@ -3,8 +3,20 @@
 import { useState } from 'react'
 import { Search, BookOpen, Plus, CheckCircle, AlertTriangle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { IssueBookModal } from './issue-book-modal'
+import { ReturnBookButton } from './return-book-button'
 
-export function IssuesClient({ issues }: { issues: any[] }) {
+export function IssuesClient({ 
+  issues, 
+  schoolId, 
+  availableStudents, 
+  availableBooks 
+}: { 
+  issues: any[]
+  schoolId: string
+  availableStudents: any[]
+  availableBooks: any[]
+}) {
   const [searchQuery, setSearchQuery] = useState('')
 
   const filteredIssues = issues.filter(issue => {
@@ -27,10 +39,11 @@ export function IssuesClient({ issues }: { issues: any[] }) {
           <h1 className="text-2xl font-bold text-foreground">Circulation Desk</h1>
           <p className="text-sm text-muted-foreground mt-1">Track borrowed books and returns.</p>
         </div>
-        <Button className="bg-blue-600 hover:bg-blue-700 gap-2 shrink-0">
-          <Plus className="w-4 h-4" />
-          <span className="hidden sm:inline">Issue Book</span>
-        </Button>
+        <IssueBookModal 
+          schoolId={schoolId} 
+          availableStudents={availableStudents} 
+          availableBooks={availableBooks} 
+        />
       </div>
 
       <div className="relative max-w-md">
@@ -100,15 +113,15 @@ export function IssuesClient({ issues }: { issues: any[] }) {
                         </span>
                       </td>
                       <td className="px-6 py-4 text-right">
-                        {issue.status === 'borrowed' && (
-                          <div className="flex items-center justify-end gap-2">
-                            <Button variant="outline" size="sm" className="h-8 gap-1 text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 border-emerald-200">
-                              <CheckCircle className="w-3.5 h-3.5" /> Return
-                            </Button>
-                            <Button variant="ghost" size="sm" className="h-8 gap-1 text-red-600 hover:text-red-700 hover:bg-red-50">
-                              <AlertTriangle className="w-3.5 h-3.5" /> Mark Lost
-                            </Button>
-                          </div>
+                        {issue.status === 'borrowed' ? (
+                          <ReturnBookButton 
+                            issueId={issue.id} 
+                            bookId={issue.library_books?.id}
+                            schoolId={schoolId}
+                            studentId={issue.students?.id}
+                          />
+                        ) : (
+                          <span className="text-xs text-muted-foreground">—</span>
                         )}
                       </td>
                     </tr>
