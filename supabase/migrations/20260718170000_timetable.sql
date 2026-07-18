@@ -41,7 +41,7 @@ DO $$ BEGIN
       school_id IN (
         SELECT school_id FROM public.users
         WHERE id = auth.uid()
-          AND role IN ('admin', 'principal', 'headteacher')
+          AND role::text IN ('admin', 'principal', 'headteacher')
       )
     );
 EXCEPTION WHEN duplicate_object THEN NULL;
@@ -67,7 +67,7 @@ DO $$ BEGIN
       school_id IN (
         SELECT school_id FROM public.users
         WHERE id = auth.uid()
-          AND role IN ('admin', 'principal', 'headteacher')
+          AND role::text IN ('admin', 'principal', 'headteacher')
       )
     );
 EXCEPTION WHEN duplicate_object THEN NULL;
