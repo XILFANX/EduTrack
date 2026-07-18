@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import { useState, useMemo } from 'react'
 import { Button } from '@/components/ui/button'
@@ -22,6 +22,7 @@ interface Props {
   isClassTeacher: boolean
   availableClasses: { id: string; name: string }[]
   preselectedSubjectId?: string
+  gradeScales?: { grade: string; min_score: number; remarks: string | null }[]
 }
 
 const GRADE_CUTOFFS = [
@@ -29,11 +30,20 @@ const GRADE_CUTOFFS = [
   [55, 'C+'], [50, 'C'], [45, 'C-'], [40, 'D+'], [35, 'D'], [30, 'D-'],
 ] as const
 
-function calculateGrade(scoreStr: string): string {
+function calculateGrade(scoreStr: string, gradeScales?: { grade: string; min_score: number }[]): string {
   const s = parseFloat(scoreStr)
   if (isNaN(s)) return '--'
+  
+  if (gradeScales && gradeScales.length > 0) {
+    for (const scale of gradeScales) {
+      if (s >= scale.min_score) return scale.grade
+    }
+    return 'E'
+  }
+
+  // Fallback if no custom scales
   for (const [cutoff, grade] of GRADE_CUTOFFS) {
-    if (s >= cutoff) return grade
+    if (s >= cutoff) return grade as string
   }
   return 'E'
 }
@@ -46,7 +56,7 @@ function gradeColor(grade: string): string {
   return 'text-red-600 dark:text-red-400'
 }
 
-export function GradesClient({ schoolId, teacherId, cls, students, exams, subjects, existingResults, isClassTeacher, availableClasses, preselectedSubjectId }: Props) {
+export function GradesClient({ schoolId, teacherId, cls, students, exams, subjects, existingResults, isClassTeacher, availableClasses, preselectedSubjectId, gradeScales }: Props) {
   const router = useRouter()
   const [selectedExamId, setSelectedExamId] = useState(exams[0]?.id || '')
   const [selectedSubjectId, setSelectedSubjectId] = useState(preselectedSubjectId || subjects[0]?.id || '')
@@ -88,7 +98,11 @@ export function GradesClient({ schoolId, teacherId, cls, students, exams, subjec
       .map(([studentId, scoreStr]) => {
         const score = parseFloat(scoreStr)
         if (isNaN(score)) return null
-        return { studentId, score, grade: calculateGrade(scoreStr) }
+        
+        const grade = calculateGrade(scoreStr, gradeScales)
+        const remark = gradeScales?.find(g => g.grade === grade)?.remarks || null
+
+        return { studentId, score, grade, remarks: remark }
       })
       .filter(Boolean) as any[]
 

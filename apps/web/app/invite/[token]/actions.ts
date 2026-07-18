@@ -220,6 +220,16 @@ export async function activateInvite(formData: FormData) {
       }
     }
 
+    // Assign class teacher if classId was provided
+    if (invite.role === 'class_teacher' && invite.target_entity_id) {
+      await admin.from('classes').update({ class_teacher_id: userId }).eq('id', invite.target_entity_id);
+    }
+
+    // Assign subject teacher if classSubjectId was provided
+    if (invite.role === 'subject_teacher' && invite.target_entity_id) {
+      await admin.from('class_subjects').update({ teacher_id: userId }).eq('id', invite.target_entity_id);
+    }
+
 
     // Mark invite as used (keep target_name updated to whatever they entered)
     await admin

@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
-import { ExamsManager } from './exams-manager'
+import { AdminExamsTabs } from './admin-exams-tabs'
 import { ClipboardList } from 'lucide-react'
 
 export const dynamic = 'force-dynamic'
@@ -16,7 +16,7 @@ export default async function AdminExamsPage() {
     .eq('id', user.id)
     .single()
 
-  if (!profile?.school_id || (profile as any).role !== 'admin') redirect('/dashboard')
+  if (!profile?.school_id || !['admin', 'principal', 'headteacher'].includes((profile as any).role)) redirect('/dashboard')
 
   const schoolId = (profile as any).school_id
 
@@ -25,11 +25,13 @@ export default async function AdminExamsPage() {
     { data: terms },
     { data: classes },
     { data: exams },
+    { data: gradeScales },
   ] = await Promise.all([
     supabase.from('academic_years').select('id, name, is_active').eq('school_id', schoolId).order('start_date', { ascending: false }),
     supabase.from('academic_terms').select('id, name, year_id, is_active').eq('school_id', schoolId).order('start_date'),
     supabase.from('classes').select('id, name').eq('school_id', schoolId).order('name'),
     supabase.from('exams').select('id, name, max_score, term_id, year_id, class_id, created_at').eq('school_id', schoolId).order('created_at', { ascending: false }),
+    supabase.from('grade_scales').select('*').eq('school_id', schoolId).order('min_score', { ascending: false }),
   ])
 
   return (
@@ -44,11 +46,13 @@ export default async function AdminExamsPage() {
         </div>
       </div>
 
-      <ExamsManager
+      <AdminExamsTabs
         years={(years as any[]) || []}
         terms={(terms as any[]) || []}
         classes={(classes as any[]) || []}
         initialExams={(exams as any[]) || []}
+        initialGradeScales={(gradeScales as any[]) || []}
+        schoolId={schoolId}
       />
     </div>
   )

@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { inviteStaff, getClasses, type StaffRole } from './actions'
+import { inviteStaff, getClasses, getUnoccupiedSubjects, type StaffRole } from './actions'
 import { Copy, Check, UserPlus } from 'lucide-react'
 import { FileUpload } from '@/components/ui/file-upload'
 
@@ -42,7 +42,9 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
   const [phoneNumber, setPhoneNumber] = useState('')
   const [role, setRole]               = useState<StaffRole>('class_teacher')
   const [classId, setClassId]         = useState<string>('')
+  const [classSubjectId, setClassSubjectId] = useState<string>('')
   const [classes, setClasses]         = useState<{ id: string; name: string }[]>([])
+  const [unoccupiedSubjects, setUnoccupiedSubjects] = useState<{ id: string; label: string }[]>([])
   const [loading, setLoading]         = useState(false)
   const [error, setError]             = useState<string | null>(null)
   const [result, setResult]           = useState<{ url: string; schoolName: string; className?: string } | null>(null)
@@ -51,8 +53,9 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
 
   // Load classes whenever modal opens or role changes to class_teacher
   useEffect(() => {
-    if (open && role === 'class_teacher') {
-      getClasses(schoolId).then(setClasses)
+    if (open) {
+      if (role === 'class_teacher') getClasses(schoolId).then(setClasses)
+      if (role === 'subject_teacher') getUnoccupiedSubjects(schoolId).then(setUnoccupiedSubjects)
     }
   }, [open, role, schoolId])
 
@@ -62,6 +65,7 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
     setPhoneNumber('')
     setRole('class_teacher')
     setClassId('')
+    setClassSubjectId('')
     setError(null)
     setResult(null)
     setCopied(false)
@@ -76,7 +80,11 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
     setLoading(true)
     setError(null)
 
-    const res = await inviteStaff({ salutation, fullName, phoneNumber, role, schoolId, classId: classId || undefined, photoUrl: photoUrl || undefined })
+    const res = await inviteStaff({ salutation, fullName, phoneNumber, role, schoolId,
+      classId: role === 'class_teacher' ? classId : undefined,
+      classSubjectId: role === 'subject_teacher' ? classSubjectId : undefined,
+      photoUrl: photoUrl || undefined
+    })
     setLoading(false)
 
     if ('error' in res) {
@@ -116,8 +124,8 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent className="max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6">
-        <DialogHeader className="mb-4">
+      <DialogContent className="max-w-md max-h-[92vh] flex flex-col bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-0 overflow-hidden">
+        <DialogHeader className="px-6 pt-6 pb-0 shrink-0">
           <DialogTitle className="flex items-center gap-2 text-lg font-bold">
             <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center">
               <UserPlus className="w-4 h-4 text-blue-600 dark:text-blue-400" />
@@ -125,6 +133,8 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
             Invite Staff Member
           </DialogTitle>
         </DialogHeader>
+
+        <div className="overflow-y-auto flex-1 px-6 pb-6 pt-4">
 
         {!result ? (
           <div className="space-y-4">
@@ -168,6 +178,30 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
                     <option value="">Select a class…</option>
                     {classes.map((cls) => (
                       <option key={cls.id} value={cls.id}>{cls.name}</option>
+                    ))}
+                  </select>
+                )}
+              </div>
+            )}
+
+            {/* Subject picker — only for subject_teacher */}
+            {role === 'subject_teacher' && (
+              <div className="space-y-2">
+                <Label htmlFor="staffSubject">Assign Subject <span className="text-muted-foreground font-normal">(Optional)</span></Label>
+                {unoccupiedSubjects.length === 0 ? (
+                  <p className="text-xs text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800/50 rounded-lg px-3 py-2">
+                    No unoccupied subjects found. You can invite the teacher now and assign them subjects later.
+                  </p>
+                ) : (
+                  <select
+                    id="staffSubject"
+                    value={classSubjectId}
+                    onChange={(e) => setClassSubjectId(e.target.value)}
+                    className="w-full bg-background border border-input text-foreground rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                  >
+                    <option value="">Select an unoccupied subject…</option>
+                    {unoccupiedSubjects.map((sub) => (
+                      <option key={sub.id} value={sub.id}>{sub.label}</option>
                     ))}
                   </select>
                 )}
@@ -307,11 +341,12 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
               </a>
             </div>
 
-            <p className="text-center text-xs text-muted-foreground">
+            <p className="text-center text-xs text-muted-foreground italic">
               This link is permanent — it won't expire. The same link can be used to log in again in the future.
             </p>
           </div>
         )}
+        </div>{/* end scroll wrapper */}
       </DialogContent>
     </Dialog>
   )

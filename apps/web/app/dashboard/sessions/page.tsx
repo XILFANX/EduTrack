@@ -16,7 +16,7 @@ export default async function SessionsPage() {
     .eq('id', user.id)
     .single()
 
-  if (!profile?.school_id || profile.role !== 'admin') redirect('/dashboard')
+  if (!profile?.school_id || !['admin', 'principal', 'headteacher'].includes(profile.role as string)) redirect('/dashboard')
 
   // Fetch all years
   const { data: years } = await supabase

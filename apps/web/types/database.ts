@@ -106,6 +106,11 @@ export interface Database {
           }
         ]
       }
+      grade_scales: {
+        Row: { id: string; school_id: string; grade: string; min_score: number; max_score: number; points: number; remarks: string | null; created_at: string }
+        Insert: any
+        Update: any; Relationships: any[]
+      }
       conversations: {
         Row: { id: string; school_id: string; title: string | null; created_at: string; updated_at: string }
         Insert: any

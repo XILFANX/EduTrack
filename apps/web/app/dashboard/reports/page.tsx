@@ -17,7 +17,7 @@ export default async function AdminReportsPage({ searchParams }: { searchParams:
     .eq('id', user.id)
     .single()
 
-  if (!profile?.school_id || (profile as any).role !== 'admin') redirect('/dashboard')
+  if (!profile?.school_id || !['admin', 'principal', 'headteacher'].includes((profile as any).role)) redirect('/dashboard')
 
   const schoolId = (profile as any).school_id
 

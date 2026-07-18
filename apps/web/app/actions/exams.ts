@@ -1,6 +1,9 @@
 'use server'
 
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
+
+const ADMIN_ROLES = ['admin', 'principal', 'headteacher']
 
 export async function createExam(data: {
   name: string
@@ -19,7 +22,7 @@ export async function createExam(data: {
     .eq('id', user.id)
     .single()
 
-  if (!profile?.school_id || profile.role !== 'admin') throw new Error('Unauthorized')
+  if (!profile?.school_id || !ADMIN_ROLES.includes(profile.role)) throw new Error('Unauthorized')
 
   const { data: exam, error } = await supabase
     .from('exams')
@@ -49,7 +52,7 @@ export async function deleteExam(examId: string) {
     .eq('id', user.id)
     .single()
 
-  if (!profile?.school_id || profile.role !== 'admin') throw new Error('Unauthorized')
+  if (!profile?.school_id || !ADMIN_ROLES.includes(profile.role)) throw new Error('Unauthorized')
 
   const { error } = await supabase
     .from('exams')

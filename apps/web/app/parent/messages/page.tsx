@@ -14,7 +14,7 @@ export default async function ParentMessagesPage() {
 
   const { data: profile } = await supabase
     .from('users')
-    .select('school_id, role, full_name')
+    .select('school_id, role, full_name, salutation')
     .eq('id', user.id)
     .single()
 
@@ -27,9 +27,9 @@ export default async function ParentMessagesPage() {
   
   const { data: adminData } = await adminClient
     .from('users')
-    .select('id, full_name, role, last_seen_at')
+    .select('id, full_name, salutation, role, last_seen_at')
     .eq('school_id', profile.school_id)
-    .eq('role', 'admin')
+    .in('role', ['admin', 'principal', 'headteacher'])
 
   const { data: studentLinks } = await adminClient
     .from('student_parents' as any)
@@ -62,7 +62,7 @@ export default async function ParentMessagesPage() {
   if (teacherIds.length > 0) {
     const { data } = await adminClient
       .from('users')
-      .select('id, full_name, role, last_seen_at')
+      .select('id, full_name, salutation, role, last_seen_at')
       .in('id', teacherIds)
     if (data) teachersData = data
   }
@@ -70,25 +70,27 @@ export default async function ParentMessagesPage() {
   const contacts = [
     ...(adminData || []).map(a => ({
       id: a.id,
-      name: a.full_name || 'School Admin',
+      name: a.salutation ? `${a.salutation} ${a.full_name}` : (a.full_name || 'School Admin'),
       role: 'Admin',
-      last_seen_at: a.last_seen_at
+      last_seen_at: a.last_seen_at,
+      roleOrder: 0
     })),
-    ...(teachersData).map(t => ({
+    ...teachersData.map(t => ({
       id: t.id,
-      name: t.full_name || 'Teacher',
+      name: t.salutation ? `${t.salutation} ${t.full_name}` : (t.full_name || 'Class Teacher'),
       role: 'Class Teacher',
-      last_seen_at: t.last_seen_at
+      last_seen_at: t.last_seen_at,
+      roleOrder: 1
     }))
-  ]
+  ].sort((a, b) => a.roleOrder - b.roleOrder)
 
   // 2. Fetch Announcements
-  // Parents should see: global announcements + their children's class announcements
-  const targetAudiences = ['all_users', 'all_parents', ...(classIds.map(id => `class_${id}`))]
-
+  // Parents see announcements targeted to: all_users, all_parents, and their specific classes
+  const targetAudiences = ['all_users', 'all_parents', ...classIds.map(id => `class_${id}`)]
+  
   const { data: announcementsData } = await supabase
     .from('announcements')
-    .select('*, users(full_name)')
+    .select('*, users(full_name, salutation)')
     .eq('school_id', profile.school_id)
     .in('target_audience', targetAudiences)
     .order('created_at', { ascending: false })

@@ -8,6 +8,20 @@ import { redirect } from 'next/navigation'
 
 export const dynamic = 'force-dynamic'
 
+const ROLE_ORDER: Record<string, number> = {
+  admin: 0, principal: 0, headteacher: 0,
+  class_teacher: 1, subject_teacher: 2,
+  bursar: 3, librarian: 3, storekeeper: 3, transport_matron: 3,
+  parent: 4,
+}
+
+const ROLE_LABEL: Record<string, string> = {
+  admin: 'Admin', principal: 'Principal', headteacher: 'Headteacher',
+  class_teacher: 'Class Teacher', subject_teacher: 'Subject Teacher',
+  bursar: 'Bursar', librarian: 'Librarian', storekeeper: 'Storekeeper',
+  transport_matron: 'Transport Matron', parent: 'Parent',
+}
+
 export default async function PrincipalMessagesPage() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
@@ -15,69 +29,95 @@ export default async function PrincipalMessagesPage() {
 
   const { data: profile } = await supabase
     .from('users')
-    .select('school_id, role, full_name')
+    .select('school_id, role, full_name, salutation')
     .eq('id', user.id)
     .single()
 
-  if (!profile?.school_id || profile.role !== 'admin') redirect('/dashboard')
+  if (!profile?.school_id || !['admin', 'principal', 'headteacher'].includes(profile.role as string)) redirect('/dashboard')
 
   const adminClient = createAdminClient()
 
   // 1. Fetch Contacts
-  // Admin can see: all staff in their school, all parents linked to their school, and platform owner.
-  
   // Staff
   const { data: staffData } = await adminClient
     .from('users')
-    .select('id, full_name, role, last_seen_at')
+    .select('id, full_name, salutation, role, last_seen_at')
     .eq('school_id', profile.school_id)
     .neq('id', user.id) // Exclude self
-    .in('role', ['admin', 'class_teacher', 'subject_teacher', 'bursar', 'library', 'store', 'transport'])
+    .neq('role', 'parent')
 
-  // Parents (Parents don't have a direct school_id on 'users' sometimes, or do they? 
-  // Let's assume parents are in the 'users' table with role 'parent' and school_id set.)
+  // Parents
   const { data: parentsData } = await adminClient
     .from('users')
-    .select('id, full_name, role, last_seen_at')
+    .select('id, full_name, salutation, role, last_seen_at')
     .eq('school_id', profile.school_id)
     .eq('role', 'parent')
+
+  // Find parents' students
+  let parentsWithStudents: any[] = []
+  if (parentsData && parentsData.length > 0) {
+    const parentIds = parentsData.map(p => p.id)
+    const { data: links } = await adminClient
+      .from('student_parents' as any)
+      .select('parent_id, student_id, students(first_name, last_name)')
+      .in('parent_id', parentIds)
+
+    const parentStudentMap: Record<string, string[]> = {}
+    ;((links as any[]) || []).forEach((l: any) => {
+      if (!parentStudentMap[l.parent_id]) parentStudentMap[l.parent_id] = []
+      if (l.students) {
+        parentStudentMap[l.parent_id].push(`${l.students.first_name} ${l.students.last_name}`)
+      }
+    })
+
+    parentsWithStudents = parentsData.map((p: any) => ({
+      ...p,
+      studentNames: parentStudentMap[p.id] || [],
+    }))
+  }
 
   // EduTrack Admin
   const { data: platformAdmin } = await adminClient
     .from('users')
-    .select('id, full_name, role, last_seen_at')
+    .select('id, full_name, salutation, role, last_seen_at')
     .eq('role', 'platform_owner')
     .limit(1)
     .single()
 
-  const contacts = [
-    ...(staffData || []).map(s => ({
-      id: s.id,
-      name: s.full_name || 'Staff Member',
-      role: s.role.replace('_', ' '),
-      last_seen_at: s.last_seen_at
-    })),
-    ...(parentsData || []).map(p => ({
-      id: p.id,
-      name: p.full_name || 'Parent',
-      role: 'Parent',
-      last_seen_at: p.last_seen_at
-    }))
-  ]
+  const staffContacts = (staffData || []).map((s: any) => ({
+    id: s.id,
+    name: s.salutation ? `${s.salutation} ${s.full_name}` : (s.full_name || 'Staff Member'),
+    role: ROLE_LABEL[s.role] || s.role.replace('_', ' '),
+    roleOrder: ROLE_ORDER[s.role] ?? 5,
+    last_seen_at: s.last_seen_at
+  }))
+
+  const parentContacts = parentsWithStudents.map((p: any) => ({
+    id: p.id,
+    name: p.salutation ? `${p.salutation} ${p.full_name}` : (p.full_name || 'Parent'),
+    role: 'Parent',
+    roleOrder: 4,
+    last_seen_at: p.last_seen_at,
+    subtitle: p.studentNames.length > 0 ? `Parent of: ${p.studentNames.join(', ')}` : undefined,
+  }))
+
+  const contacts = [...staffContacts, ...parentContacts].sort((a, b) => a.roleOrder - b.roleOrder)
 
   if (platformAdmin) {
     contacts.unshift({
       id: platformAdmin.id,
-      name: 'EduTrack Support',
+      name: platformAdmin.salutation ? `${platformAdmin.salutation} ${platformAdmin.full_name}` : 'EduTrack Support',
       role: 'Platform Admin',
-      last_seen_at: platformAdmin.last_seen_at
+      roleOrder: -1,
+      last_seen_at: platformAdmin.last_seen_at,
+      subtitle: undefined
     })
   }
 
   // 2. Fetch Announcements
   const { data: announcementsData } = await supabase
     .from('announcements')
-    .select('*, users(full_name)')
+    .select('*, users(full_name, salutation)')
     .eq('school_id', profile.school_id)
     .order('created_at', { ascending: false })
     .limit(10)

@@ -3,13 +3,15 @@
 import { useState, useEffect, useRef } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { Send, UserCircle2, Check, CheckCheck, Loader2 } from 'lucide-react'
-import { getOrCreateConversation, markConversationAsRead } from '@/app/actions/chat'
+import { getOrCreateConversation, markConversationAsRead, sendMessage } from '@/app/actions/chat'
 
 interface Contact {
   id: string
   name: string
   role: string
+  subtitle?: string  // e.g. 'Parent of: John Doe'
   last_seen_at?: string | null
+  roleOrder?: number
 }
 
 interface Message {
@@ -147,27 +149,17 @@ export function ChatClient({
       content: msgContent,
       created_at: new Date().toISOString(),
     }
-
     setMessages(prev => [...prev, newMsg])
 
-    const { data, error } = await supabase
-      .from('messages')
-      .insert({
-        conversation_id: conversationId,
-        sender_id: currentUser.id,
-        content: msgContent
-      })
-      .select()
-      .single()
-
-    if (error) {
-      console.error('Send error:', error)
-      setMessages(prev => prev.filter(m => m.id !== tempId)) // Revert on error
-    } else {
-      setMessages(prev => prev.map(m => m.id === tempId ? data : m))
+    try {
+      const data = await sendMessage(conversationId, msgContent)
+      setMessages(prev => prev.map(m => m.id === tempId ? data as Message : m))
+    } catch (err) {
+      console.error('Send error:', err)
+      setMessages(prev => prev.filter(m => m.id !== tempId))
+    } finally {
+      setSending(false)
     }
-
-    setSending(false)
   }
 
   // Format time helper
@@ -197,10 +189,10 @@ export function ChatClient({
                     : 'hover:bg-slate-200/50 dark:hover:bg-slate-800/50 text-foreground'
                 }`}
               >
-                <div className="relative">
-                  <UserCircle2 className={`w-10 h-10 ${selectedContact?.id === contact.id ? 'text-white/80' : 'text-slate-400'}`} />
+                <div className="relative shrink-0">
+                  <UserCircle2 className={`w-9 h-9 ${selectedContact?.id === contact.id ? 'text-white/80' : 'text-slate-400'}`} />
                   {onlineUsers.has(contact.id) && (
-                    <div className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-background rounded-full"></div>
+                    <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 border-2 border-background rounded-full"></div>
                   )}
                 </div>
                 <div className="flex-1 min-w-0">
@@ -208,6 +200,11 @@ export function ChatClient({
                   <p className={`text-xs truncate ${selectedContact?.id === contact.id ? 'text-blue-200' : 'text-muted-foreground'}`}>
                     {contact.role}
                   </p>
+                  {contact.subtitle && (
+                    <p className={`text-[10px] truncate mt-0.5 ${selectedContact?.id === contact.id ? 'text-blue-100' : 'text-slate-400 dark:text-slate-500'}`}>
+                      {contact.subtitle}
+                    </p>
+                  )}
                 </div>
               </button>
             ))

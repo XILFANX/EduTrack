@@ -9,6 +9,7 @@ export interface Announcement {
   created_at: string
   users: {
     full_name: string
+    salutation?: string | null
   } | null
 }
 
@@ -40,7 +41,7 @@ export function AnnouncementsFeed({ announcements }: { announcements: Announceme
                 </h3>
                 <div className="flex items-center gap-3 text-xs font-medium text-orange-700/70 dark:text-orange-400">
                   <span className="bg-orange-100 dark:bg-orange-900/40 px-2 py-0.5 rounded-md">
-                    From: {ann.users?.full_name || 'Admin'}
+                    From: {ann.users ? (ann.users.salutation ? `${ann.users.salutation} ${ann.users.full_name}` : ann.users.full_name) : 'Admin'}
                   </span>
                   <span>{date}</span>
                 </div>

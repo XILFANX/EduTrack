@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation'
 import {
   Home, Users, BookOpen, Banknote, Menu,
   GraduationCap, Bus, Package, Settings, BarChart3,
-  UserCog, Library, MessageSquare, CalendarRange, ClipboardList
+  UserCog, Library, MessageSquare, CalendarRange, ClipboardList, HeartHandshake, FileText
 } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet'
@@ -14,6 +14,7 @@ import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet'
 const TABS = [
   { href: '/dashboard', icon: Home, label: 'Home' },
   { href: '/dashboard/staff', icon: UserCog, label: 'Staff' },
+  { href: '/dashboard/parents', icon: HeartHandshake, label: 'Parents' },
   { href: '/dashboard/classes', icon: GraduationCap, label: 'Classes' },
   { href: '/dashboard/students', icon: Users, label: 'Students' },
   { href: '/dashboard/finance', icon: Banknote, label: 'Finance' },
@@ -25,7 +26,16 @@ const MENU_SECTIONS = [
     items: [
       { href: '/dashboard/subjects', label: 'Subjects', icon: BookOpen },
       { href: '/dashboard/library', label: 'Library', icon: Library },
-      { href: '/dashboard/reports', label: 'Reports', icon: BarChart3 },
+      { href: '/dashboard/exams', label: 'Examinations', icon: ClipboardList },
+      { href: '/dashboard/reports', label: 'Report Cards', icon: FileText },
+      { href: '/dashboard/sessions', label: 'Sessions Engine', icon: CalendarRange },
+    ],
+  },
+  {
+    label: 'People',
+    items: [
+      { href: '/dashboard/parents', label: 'Parents Directory', icon: HeartHandshake },
+      { href: '/dashboard/messages', label: 'Messages', icon: MessageSquare },
     ],
   },
   {
@@ -33,9 +43,6 @@ const MENU_SECTIONS = [
     items: [
       { href: '/dashboard/store', label: 'Store', icon: Package },
       { href: '/dashboard/transport', label: 'Transport', icon: Bus },
-      { href: '/dashboard/messages', label: 'Messages', icon: MessageSquare },
-      { href: '/dashboard/exams', label: 'Examinations', icon: ClipboardList },
-      { href: '/dashboard/sessions', label: 'Sessions Engine', icon: CalendarRange },
       { href: '/dashboard/settings', label: 'Settings', icon: Settings },
     ],
   },

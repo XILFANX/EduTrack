@@ -3,6 +3,8 @@
 import { createClient } from '@/lib/supabase/server'
 import { broadcastAnnouncement } from './chat'
 
+const ADMIN_ROLES = ['admin', 'principal', 'headteacher']
+
 export async function createAcademicYear(name: string, startDate: string, endDate: string) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
@@ -14,7 +16,7 @@ export async function createAcademicYear(name: string, startDate: string, endDat
     .eq('id', user.id)
     .single()
 
-  if (!profile?.school_id || profile.role !== 'admin') throw new Error('Unauthorized')
+  if (!profile?.school_id || !ADMIN_ROLES.includes(profile.role)) throw new Error('Unauthorized')
 
   const { data, error } = await supabase
     .from('academic_years')
@@ -23,7 +25,7 @@ export async function createAcademicYear(name: string, startDate: string, endDat
       name,
       start_date: startDate,
       end_date: endDate,
-      is_active: false // New years are inactive by default
+      is_active: false
     })
     .select()
     .single()
@@ -43,7 +45,7 @@ export async function createAcademicTerm(yearId: string, name: string, startDate
     .eq('id', user.id)
     .single()
 
-  if (!profile?.school_id || profile.role !== 'admin') throw new Error('Unauthorized')
+  if (!profile?.school_id || !ADMIN_ROLES.includes(profile.role)) throw new Error('Unauthorized')
 
   const { data, error } = await supabase
     .from('academic_terms')
@@ -73,9 +75,8 @@ export async function toggleActiveSession(yearId: string, termId?: string) {
     .eq('id', user.id)
     .single()
 
-  if (!profile?.school_id || profile.role !== 'admin') throw new Error('Unauthorized')
+  if (!profile?.school_id || !ADMIN_ROLES.includes(profile.role)) throw new Error('Unauthorized')
 
-  // We need to perform a transaction-like operation.
   // 1. Deactivate all years and terms for this school
   await supabase
     .from('academic_years')
@@ -123,7 +124,6 @@ export async function toggleActiveSession(yearId: string, termId?: string) {
     )
   } catch (err) {
     console.error('Failed to broadcast session alert:', err)
-    // We don't throw here because the session transition itself succeeded
   }
 
   return { success: true }

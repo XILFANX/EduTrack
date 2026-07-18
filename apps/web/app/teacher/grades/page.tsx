@@ -111,6 +111,14 @@ export default async function TeacherGrades({ searchParams }: { searchParams: Pr
     if (resultsData) existingResults = resultsData as any[]
   }
 
+  // Grade Scales
+  const { data: scalesData } = await supabase
+    .from('grade_scales')
+    .select('grade, min_score, remarks')
+    .eq('school_id', profile.school_id)
+    .order('min_score', { ascending: false })
+  const gradeScales = (scalesData || []) as any[]
+
   // Available classes list (for subject teacher class switcher)
   let availableClasses: { id: string; name: string }[] = []
   if (!isClassTeacher) {
@@ -137,6 +145,7 @@ export default async function TeacherGrades({ searchParams }: { searchParams: Pr
       isClassTeacher={isClassTeacher}
       availableClasses={availableClasses}
       preselectedSubjectId={params.subject}
+      gradeScales={gradeScales}
     />
   )
 }

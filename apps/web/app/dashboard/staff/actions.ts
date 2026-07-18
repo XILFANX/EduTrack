@@ -20,6 +20,7 @@ export interface InviteStaffData {
   role: StaffRole
   schoolId: string
   classId?: string // only for class_teacher
+  classSubjectId?: string // only for subject_teacher
   photoUrl?: string
 }
 
@@ -51,6 +52,18 @@ export async function inviteStaff(
       className = (cls as any)?.name
     }
 
+    // Fetch subject details if subject_teacher
+    if (data.role === 'subject_teacher' && data.classSubjectId) {
+      const { data: classSubj } = await admin
+        .from('class_subjects')
+        .select('classes(name), subjects(name)')
+        .eq('id', data.classSubjectId)
+        .single()
+      if (classSubj) {
+        className = `${(classSubj as any).subjects?.name} (${(classSubj as any).classes?.name})`
+      }
+    }
+
     // Generate unique token
     const token = randomUUID()
 
@@ -61,7 +74,7 @@ export async function inviteStaff(
       token,
       target_name: data.fullName,
       target_phone: data.phoneNumber,
-      target_entity_id: data.classId || null,
+      target_entity_id: data.role === 'subject_teacher' ? data.classSubjectId : (data.classId || null),
       target_salutation: data.salutation || null,
       target_photo_url: data.photoUrl || null,
       created_by: user.id,
@@ -92,18 +105,37 @@ export async function getClasses(schoolId: string) {
   return (data ?? []) as { id: string; name: string }[]
 }
 
+export async function getUnoccupiedSubjects(schoolId: string) {
+  const supabase = await createClient()
+  const { data, error } = await supabase
+    .from('class_subjects')
+    .select('id, classes(name), subjects(name)')
+    .eq('school_id', schoolId)
+    .is('teacher_id', null)
+
+  if (error) return []
+  return (data || []).map((cs: any) => ({
+    id: cs.id,
+    label: `${cs.subjects?.name} - ${cs.classes?.name}`
+  })).sort((a, b) => a.label.localeCompare(b.label))
+}
+
 export async function getStaff(schoolId: string) {
   const supabase = await createClient()
   const { data, error } = await supabase
     .from('users')
-    .select('id, full_name, role, phone_number, created_at, photo_url')
+    .select('id, full_name, role, phone_number, created_at, photo_url, salutation')
     .eq('school_id', schoolId)
     .neq('role', 'principal')
+    .neq('role', 'parent')  // Parents have their own directory
     .is('deleted_at', null)
     .order('created_at', { ascending: false })
 
   if (error) return []
-  return (data as any) ?? []
+  return (data || []).map((u: any) => ({
+    ...u,
+    full_name: u.salutation ? `${u.salutation} ${u.full_name}` : u.full_name
+  }))
 }
 
 export async function getInvitations(schoolId: string) {

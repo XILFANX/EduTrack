@@ -118,3 +118,34 @@ export async function markConversationAsRead(conversationId: string) {
     .eq('conversation_id', conversationId)
     .eq('user_id', user.id)
 }
+
+export async function sendMessage(conversationId: string, content: string) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error('Not authenticated')
+  if (!content.trim()) throw new Error('Message cannot be empty')
+
+  // Verify sender is a participant before inserting
+  const admin = createAdminClient()
+  const { data: participant } = await admin
+    .from('conversation_participants')
+    .select('conversation_id')
+    .eq('conversation_id', conversationId)
+    .eq('user_id', user.id)
+    .single()
+
+  if (!participant) throw new Error('Not a participant of this conversation')
+
+  const { data, error } = await admin
+    .from('messages')
+    .insert({
+      conversation_id: conversationId,
+      sender_id: user.id,
+      content: content.trim()
+    })
+    .select()
+    .single()
+
+  if (error) throw new Error('Failed to send message: ' + error.message)
+  return data
+}
