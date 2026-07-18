@@ -1,90 +1,133 @@
 import { createClient } from '@/lib/supabase/server'
-import { Card, CardContent } from '@/components/ui/card'
+import { createAdminClient } from '@/lib/supabase/admin'
 import { MessageSquare, Megaphone } from 'lucide-react'
-import { ChatWidget } from '@/components/shared/chat-widget'
+import { ChatClient } from '@/components/shared/chat-client'
+import { AnnouncementsFeed, Announcement } from '@/components/shared/announcements-feed'
 import { redirect } from 'next/navigation'
+
+export const dynamic = 'force-dynamic'
 
 export default async function ParentMessagesPage() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login')
 
-  const { data: profileResult } = await supabase
+  const { data: profile } = await supabase
     .from('users')
-    .select('school_id, full_name')
+    .select('school_id, role, full_name')
     .eq('id', user.id)
     .single()
 
-  const profile = profileResult as any
-  if (!profile?.school_id) return null
+  if (!profile?.school_id || profile.role !== 'parent') redirect('/dashboard')
 
-  // Mock data for UI demonstration purposes
-  const mockAnnouncements = [
-    { id: '1', title: 'School Closed Tomorrow', body: 'Please be advised that the school will remain closed tomorrow due to heavy rains in the area.', date: 'Oct 24, 2026' },
+  const adminClient = createAdminClient()
+
+  // 1. Fetch Contacts
+  // Parents can see: Their children's teachers (class teachers for sure, maybe subject), and Admin.
+  
+  const { data: adminData } = await adminClient
+    .from('users')
+    .select('id, full_name, role, last_seen_at')
+    .eq('school_id', profile.school_id)
+    .eq('role', 'admin')
+
+  const { data: studentLinks } = await adminClient
+    .from('student_parents' as any)
+    .select('student_id')
+    .eq('parent_id', user.id)
+
+  const studentIds = ((studentLinks as any[]) || []).map((sl: any) => sl.student_id)
+  
+  let teacherIds: string[] = []
+  let classIds: string[] = []
+  if (studentIds.length > 0) {
+    const { data: students } = await adminClient
+      .from('students')
+      .select('class_id')
+      .in('id', studentIds)
+    
+    classIds = Array.from(new Set((students || []).map(s => s.class_id).filter(Boolean))) as string[]
+
+    if (classIds.length > 0) {
+      const { data: classes } = await adminClient
+        .from('classes')
+        .select('class_teacher_id')
+        .in('id', classIds)
+      
+      teacherIds = (classes || []).map(c => c.class_teacher_id).filter(Boolean) as string[]
+    }
+  }
+
+  let teachersData: any[] = []
+  if (teacherIds.length > 0) {
+    const { data } = await adminClient
+      .from('users')
+      .select('id, full_name, role, last_seen_at')
+      .in('id', teacherIds)
+    if (data) teachersData = data
+  }
+
+  const contacts = [
+    ...(adminData || []).map(a => ({
+      id: a.id,
+      name: a.full_name || 'School Admin',
+      role: 'Admin',
+      last_seen_at: a.last_seen_at
+    })),
+    ...(teachersData).map(t => ({
+      id: t.id,
+      name: t.full_name || 'Teacher',
+      role: 'Class Teacher',
+      last_seen_at: t.last_seen_at
+    }))
   ]
 
-  const mockMessages = [
-    { id: '1', content: 'Hello, I wanted to ask about the upcoming field trip?', senderId: user.id, timestamp: new Date().toISOString() },
-    { id: '2', content: 'Hi there! Yes, the field trip is scheduled for next Friday. Please remember to sign the permission slip.', senderId: 'teacher-1', timestamp: new Date().toISOString() },
-  ]
+  // 2. Fetch Announcements
+  // Parents should see: global announcements + their children's class announcements
+  const targetAudiences = ['all_users', 'all_parents', ...(classIds.map(id => `class_${id}`))]
+
+  const { data: announcementsData } = await supabase
+    .from('announcements')
+    .select('*, users(full_name)')
+    .eq('school_id', profile.school_id)
+    .in('target_audience', targetAudiences)
+    .order('created_at', { ascending: false })
+    .limit(15)
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 pb-20">
       <div>
-        <h1 className="text-2xl font-bold text-foreground">Messages</h1>
-        <p className="text-sm text-muted-foreground mt-1">Communicate with teachers and read school announcements.</p>
+        <h1 className="text-2xl font-bold text-foreground">Communications</h1>
+        <p className="text-sm text-muted-foreground mt-1">Read school announcements and message teachers.</p>
       </div>
 
-      {/* Global Announcements Section */}
-      <section>
-        <div className="flex items-center gap-2 mb-4">
-          <Megaphone className="w-5 h-5 text-orange-500" />
-          <h2 className="text-lg font-semibold text-foreground">Announcements</h2>
-        </div>
-        <div className="space-y-3">
-          {mockAnnouncements.map(ann => (
-            <Card key={ann.id} className="border-orange-200 dark:border-orange-900/50 bg-orange-50/50 dark:bg-orange-950/20">
-              <CardContent className="p-4">
-                <div className="flex items-center justify-between mb-2">
-                  <h3 className="font-bold text-foreground text-orange-900 dark:text-orange-200">{ann.title}</h3>
-                  <span className="text-xs text-orange-600/70 font-medium">{ann.date}</span>
-                </div>
-                <p className="text-sm text-orange-800/80 dark:text-orange-200/80">{ann.body}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </section>
-
-      {/* Direct Messages Section */}
-      <section>
-        <div className="flex items-center gap-2 mb-4">
-          <MessageSquare className="w-5 h-5 text-emerald-500" />
-          <h2 className="text-lg font-semibold text-foreground">Direct Messages</h2>
-        </div>
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="md:col-span-1 space-y-2">
-            {/* Contact List Mock */}
-            <div className="p-3 rounded-2xl bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-100 dark:border-emerald-800/50 cursor-pointer">
-              <h4 className="font-semibold text-foreground text-sm">Class Teacher (Grade 4)</h4>
-              <p className="text-xs text-muted-foreground truncate">Hi there! Yes, the field trip is...</p>
+        {/* Left Column: Announcements */}
+        <div className="xl:col-span-1 space-y-6">
+          <section>
+            <div className="flex items-center gap-2 mb-4">
+              <Megaphone className="w-5 h-5 text-orange-500" />
+              <h2 className="text-lg font-semibold text-foreground">Announcements</h2>
             </div>
-            <div className="p-3 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer transition-colors">
-              <h4 className="font-semibold text-foreground text-sm">Principal's Office</h4>
-              <p className="text-xs text-muted-foreground truncate">Thank you for your feedback.</p>
-            </div>
+            <AnnouncementsFeed announcements={(announcementsData as Announcement[]) || []} />
+          </section>
+        </div>
+
+        {/* Right Column: Direct Messages */}
+        <div className="xl:col-span-2 space-y-4">
+          <div className="flex items-center gap-2 mb-4">
+            <MessageSquare className="w-5 h-5 text-blue-500" />
+            <h2 className="text-lg font-semibold text-foreground">Direct Messages</h2>
           </div>
           
-          <div className="md:col-span-2">
-            <ChatWidget 
-              currentUserId={user.id} 
-              recipientName="Class Teacher (Grade 4)" 
-              initialMessages={mockMessages} 
-            />
-          </div>
+          <ChatClient 
+            currentUser={{ id: user.id, role: profile.role }} 
+            contacts={contacts} 
+          />
         </div>
-      </section>
+        
+      </div>
     </div>
   )
 }

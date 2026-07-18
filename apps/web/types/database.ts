@@ -15,7 +15,7 @@ export interface Database {
         Update: any; Relationships: any[]
       }
       users: {
-        Row: { id: string; school_id: string | null; role: string; full_name: string; phone_number: string; email: string | null; created_at: string; updated_at: string; deleted_at: string | null }
+        Row: { id: string; school_id: string | null; role: string; full_name: string; phone_number: string; email: string | null; created_at: string; updated_at: string; deleted_at: string | null; last_seen_at: string | null }
         Insert: any
         Update: any; Relationships: any[]
       }
@@ -82,7 +82,16 @@ export interface Database {
       announcements: {
         Row: { id: string; school_id: string; title: string; body: string; target_audience: string; author_id: string; created_at: string }
         Insert: any
-        Update: any; Relationships: any[]
+        Update: any; 
+        Relationships: [
+          {
+            foreignKeyName: "announcements_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       conversations: {
         Row: { id: string; school_id: string; title: string | null; created_at: string; updated_at: string }

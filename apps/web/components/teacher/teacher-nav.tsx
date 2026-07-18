@@ -2,19 +2,21 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Home, ClipboardList, PenTool, Users, BookOpen } from 'lucide-react'
+import { Home, ClipboardList, PenTool, Users, BookOpen, MessageSquare } from 'lucide-react'
 
 const CLASS_TEACHER_NAV = [
   { label: 'Home', href: '/teacher/dashboard', icon: Home },
   { label: 'Attendance', href: '/teacher/attendance', icon: ClipboardList },
   { label: 'Grades', href: '/teacher/grades', icon: PenTool },
   { label: 'Students', href: '/teacher/students', icon: Users },
+  { label: 'Messages', href: '/teacher/messages', icon: MessageSquare },
 ]
 
 const SUBJECT_TEACHER_NAV = [
   { label: 'Home', href: '/teacher/dashboard', icon: Home },
   { label: 'My Subjects', href: '/teacher/subjects', icon: BookOpen },
   { label: 'Grades', href: '/teacher/grades', icon: PenTool },
+  { label: 'Messages', href: '/teacher/messages', icon: MessageSquare },
 ]
 
 export function TeacherNav({ role }: { role: string }) {
