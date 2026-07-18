@@ -49,10 +49,23 @@ export interface Database {
         Insert: any
         Update: any; Relationships: any[]
       }
-      academic_terms: {
+      academic_years: {
         Row: { id: string; school_id: string; name: string; start_date: string; end_date: string; is_active: boolean; created_at: string }
         Insert: any
-        Update: any; Relationships: any[]
+        Update: any; Relationships: []
+      }
+      academic_terms: {
+        Row: { id: string; school_id: string; year_id: string | null; name: string; start_date: string; end_date: string; is_active: boolean; created_at: string }
+        Insert: any
+        Update: any; Relationships: [
+          {
+            foreignKeyName: "academic_terms_year_id_fkey"
+            columns: ["year_id"]
+            isOneToOne: false
+            referencedRelation: "academic_years"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       inventory_ledger: {
         Row: { id: string; school_id: string; item_name: string; quantity: number; transaction_type: string; logged_by: string; created_at: string }

@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation'
 import {
   Home, Users, BookOpen, Banknote, Menu,
   GraduationCap, Bus, Package, Settings, BarChart3,
-  UserCog, Library, MessageSquare
+  UserCog, Library, MessageSquare, CalendarRange
 } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet'
@@ -34,6 +34,7 @@ const MENU_SECTIONS = [
       { href: '/dashboard/store', label: 'Store', icon: Package },
       { href: '/dashboard/transport', label: 'Transport', icon: Bus },
       { href: '/dashboard/messages', label: 'Messages', icon: MessageSquare },
+      { href: '/dashboard/sessions', label: 'Sessions', icon: CalendarRange },
       { href: '/dashboard/settings', label: 'Settings', icon: Settings },
     ],
   },
