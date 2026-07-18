@@ -1,4 +1,5 @@
 import { redirect } from 'next/navigation'
+import Image from 'next/image'
 import { createClient } from '@/lib/supabase/server'
 import {
   Users, GraduationCap, Banknote, BookOpen,
@@ -88,9 +89,7 @@ export default async function DashboardPage() {
           {school?.logo_url ? (
             <img src={school.logo_url} alt={`${school.name} Logo`} className="w-full h-full object-cover" />
           ) : (
-            <span className="text-2xl font-black text-blue-600 dark:text-blue-400">
-              {school?.name?.substring(0, 2).toUpperCase() || 'SC'}
-            </span>
+            <Image src="/logo.png" alt="EduTrack" width={56} height={56} className="object-cover" />
           )}
         </div>
         <h1 className="text-2xl md:text-3xl font-black text-foreground tracking-tight uppercase">

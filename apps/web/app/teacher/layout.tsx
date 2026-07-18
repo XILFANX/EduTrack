@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { TeacherNav } from '@/components/teacher/teacher-nav'
@@ -20,6 +21,14 @@ export default async function TeacherLayout({ children }: { children: React.Reac
   const profile = profileResult as any
 
   if (profile?.role !== 'class_teacher' && profile?.role !== 'subject_teacher') redirect('/login')
+
+  // Fetch school branding
+  const { data: schoolResult } = await supabase
+    .from('schools')
+    .select('name, logo_url')
+    .eq('id', profile.school_id)
+    .single()
+  const school = schoolResult as any
 
   // Fetch a descriptive role context label
   let roleLabel = 'Teacher Portal'
@@ -48,12 +57,17 @@ export default async function TeacherLayout({ children }: { children: React.Reac
       {/* Header */}
       <header className="sticky top-0 z-40 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800">
         <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
+          {/* School branding */}
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-600 to-cyan-500 text-white flex items-center justify-center font-bold text-base">
-              {profile.full_name?.[0] || 'T'}
+            <div className="w-10 h-10 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-center overflow-hidden shrink-0">
+              {school?.logo_url ? (
+                <img src={school.logo_url} alt={school.name} className="w-full h-full object-cover" />
+              ) : (
+                <Image src="/logo.png" alt="EduTrack" width={32} height={32} className="object-cover" />
+              )}
             </div>
             <div>
-              <p className="font-semibold text-sm text-foreground">{profile.full_name}</p>
+              <p className="font-bold text-sm text-foreground leading-tight">{school?.name || 'School Portal'}</p>
               <p className="text-xs text-blue-600 dark:text-blue-400 font-medium">{roleLabel}</p>
             </div>
           </div>
@@ -71,7 +85,6 @@ export default async function TeacherLayout({ children }: { children: React.Reac
         {children}
       </main>
 
-      {/* Bottom Nav — role-aware */}
       <TeacherNav role={profile.role} />
     </div>
   )

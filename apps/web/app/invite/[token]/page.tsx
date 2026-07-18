@@ -20,6 +20,7 @@ export default async function InvitePage({ params }: Props) {
       token,
       role,
       target_name,
+      target_salutation,
       target_phone,
       used_at,
       school_id,
@@ -81,6 +82,7 @@ export default async function InvitePage({ params }: Props) {
       schoolName={schoolName}
       className={className}
       prefilledName={invite.target_name ?? ''}
+      salutation={invite.target_salutation ?? null}
       registeredPhone={invite.target_phone ?? null}
       isReturningUser={isReturningUser}
     />

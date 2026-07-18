@@ -102,6 +102,7 @@ export interface Database {
           role: string
           target_entity_id: string | null
           target_name: string | null
+          target_salutation: string | null
           target_phone: string | null
           used_at: string | null
           reset_otp: string | null
@@ -116,6 +117,7 @@ export interface Database {
           role: string
           target_entity_id?: string | null
           target_name?: string | null
+          target_salutation?: string | null
           target_phone?: string | null
           used_at?: string | null
           reset_otp?: string | null

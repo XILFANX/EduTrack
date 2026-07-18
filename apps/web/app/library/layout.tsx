@@ -1,7 +1,8 @@
+import Image from 'next/image'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
-import { Library, LogOut } from 'lucide-react'
 import { LibraryNav } from '@/components/library/library-nav'
+import { LogOut } from 'lucide-react'
 
 export default async function LibraryLayout({ children }: { children: React.ReactNode }) {
   const supabase = await createClient()
@@ -17,16 +18,29 @@ export default async function LibraryLayout({ children }: { children: React.Reac
   const profile = profileResult as any
   if (profile?.role !== 'librarian') redirect('/login')
 
+  // Fetch school branding
+  const { data: schoolResult } = await supabase
+    .from('schools')
+    .select('name, logo_url')
+    .eq('id', profile.school_id)
+    .single()
+  const school = schoolResult as any
+
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 pb-20">
       <header className="sticky top-0 z-40 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800">
         <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
+          {/* School branding */}
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-violet-100 dark:bg-violet-900/40 text-violet-700 dark:text-violet-300 flex items-center justify-center">
-              <Library className="w-5 h-5" />
+            <div className="w-10 h-10 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-center overflow-hidden shrink-0">
+              {school?.logo_url ? (
+                <img src={school.logo_url} alt={school.name} className="w-full h-full object-cover" />
+              ) : (
+                <Image src="/logo.png" alt="EduTrack" width={32} height={32} className="object-cover" />
+              )}
             </div>
             <div>
-              <p className="font-semibold text-sm text-foreground">{profile.full_name}</p>
+              <p className="font-bold text-sm text-foreground leading-tight">{school?.name || 'School Portal'}</p>
               <p className="text-xs text-violet-600 dark:text-violet-400 font-medium">Library Portal</p>
             </div>
           </div>

@@ -14,6 +14,7 @@ interface Props {
   schoolName: string
   className: string | null
   prefilledName: string
+  salutation: string | null
   registeredPhone: string | null
   isReturningUser: boolean
 }
@@ -31,7 +32,7 @@ const ROLE_COLORS: Record<string, { badge: string; btn: string; glow: string }> 
 export default function InviteClient({
   token, inviteId, role, roleLabel,
   schoolId, schoolName, className,
-  prefilledName, registeredPhone, isReturningUser
+  prefilledName, salutation, registeredPhone, isReturningUser
 }: Props) {
   const [viewState, setViewState] = useState<'register' | 'login' | 'otp'>(isReturningUser ? 'login' : 'register')
 
@@ -133,7 +134,12 @@ export default function InviteClient({
           <div>
             <p className="text-muted-foreground text-sm font-medium">EduTrack</p>
             <h1 className="text-2xl font-bold text-foreground mt-1">
-              {viewState === 'login' ? `Welcome back, ${name.split(' ')[0]}!` : `Hello ${name || 'there'}!`}
+              {viewState === 'login'
+                ? `Welcome back, ${salutation ? salutation + ' ' : ''}${name.split(' ')[0]}!`
+                : salutation
+                  ? `Hello, ${salutation} ${name.split(' ')[0] || ''}!`
+                  : `Hello ${name || 'there'}!`
+              }
             </h1>
             {viewState === 'register' && (
               <p className="text-muted-foreground text-sm mt-2 leading-relaxed">
