@@ -1,6 +1,7 @@
 'use server'
 
 import { createAdminClient } from '@/lib/supabase/server'
+import { createClient } from '@/lib/supabase/server'
 import { revalidatePath } from 'next/cache'
 
 export async function saveExamResults(data: {
@@ -26,7 +27,6 @@ export async function saveExamResults(data: {
     return { error: 'No results to save.' }
   }
 
-  // Upsert using the unique constraint (exam_id, student_id, subject_id)
   const { error } = await admin
     .from('exam_results')
     .upsert(payload, { onConflict: 'exam_id, student_id, subject_id' })
@@ -37,5 +37,45 @@ export async function saveExamResults(data: {
   }
 
   revalidatePath('/teacher/grades')
+  return { success: true }
+}
+
+// Single-row save used by the new ResultsEntryTable for per-row auto-save
+export async function saveExamResult(data: {
+  studentId: string
+  examId: string
+  subjectId: string
+  score: number
+  grade: string | null
+  remarks: string | null
+  schoolId: string
+}) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error('Not authenticated')
+
+  const { data: profile } = await supabase
+    .from('users')
+    .select('school_id')
+    .eq('id', user.id)
+    .single()
+
+  if (!profile?.school_id) throw new Error('No school')
+
+  const admin = await createAdminClient()
+  const { error } = await admin
+    .from('exam_results')
+    .upsert({
+      school_id: profile.school_id,
+      exam_id: data.examId,
+      subject_id: data.subjectId,
+      student_id: data.studentId,
+      score: data.score,
+      grade: data.grade,
+      remarks: data.remarks,
+      recorded_by: user.id,
+    }, { onConflict: 'exam_id, student_id, subject_id' })
+
+  if (error) throw new Error(error.message)
   return { success: true }
 }

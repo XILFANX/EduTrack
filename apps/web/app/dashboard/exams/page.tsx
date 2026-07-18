@@ -1,11 +1,17 @@
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 import { redirect } from 'next/navigation'
 import { AdminExamsTabs } from './admin-exams-tabs'
 import { ClipboardList } from 'lucide-react'
 
 export const dynamic = 'force-dynamic'
 
-export default async function AdminExamsPage() {
+interface Props {
+  searchParams: Promise<{ exam?: string }>
+}
+
+export default async function AdminExamsPage({ searchParams }: Props) {
+  const params = await searchParams
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login')
@@ -19,6 +25,7 @@ export default async function AdminExamsPage() {
   if (!profile?.school_id || !['admin', 'principal', 'headteacher'].includes((profile as any).role)) redirect('/dashboard')
 
   const schoolId = (profile as any).school_id
+  const adminClient = createAdminClient()
 
   const [
     { data: years },
@@ -26,13 +33,27 @@ export default async function AdminExamsPage() {
     { data: classes },
     { data: exams },
     { data: gradeScales },
+    { data: subjects },
   ] = await Promise.all([
     supabase.from('academic_years').select('id, name, is_active').eq('school_id', schoolId).order('start_date', { ascending: false }),
     supabase.from('academic_terms').select('id, name, year_id, is_active').eq('school_id', schoolId).order('start_date'),
     supabase.from('classes').select('id, name').eq('school_id', schoolId).order('name'),
     supabase.from('exams').select('id, name, max_score, term_id, year_id, class_id, created_at').eq('school_id', schoolId).order('created_at', { ascending: false }),
     supabase.from('grade_scales').select('*').eq('school_id', schoolId).order('min_score', { ascending: false }),
+    supabase.from('subjects').select('id, name').eq('school_id', schoolId).order('name'),
   ])
+
+  // If an exam is selected, fetch its timetable slots
+  const selectedExamId = params.exam || (exams as any[])?.[0]?.id || ''
+  const selectedExam = (exams as any[] || []).find((e: any) => e.id === selectedExamId) || null
+
+  const { data: examSlots } = selectedExamId
+    ? await adminClient
+        .from('exam_timetables')
+        .select('*')
+        .eq('exam_id', selectedExamId)
+        .eq('school_id', schoolId)
+    : { data: [] }
 
   return (
     <div className="space-y-8 max-w-5xl">
@@ -42,7 +63,7 @@ export default async function AdminExamsPage() {
         </div>
         <div>
           <h1 className="text-2xl font-bold text-foreground">Examination Management</h1>
-          <p className="text-sm text-muted-foreground">Create and manage exams per academic session.</p>
+          <p className="text-sm text-muted-foreground">Create, schedule, and publish exams per academic session.</p>
         </div>
       </div>
 
@@ -53,6 +74,10 @@ export default async function AdminExamsPage() {
         initialExams={(exams as any[]) || []}
         initialGradeScales={(gradeScales as any[]) || []}
         schoolId={schoolId}
+        subjects={(subjects as any[]) || []}
+        selectedExamId={selectedExamId}
+        selectedExam={selectedExam}
+        initialExamSlots={(examSlots as any[]) || []}
       />
     </div>
   )

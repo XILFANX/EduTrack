@@ -1,250 +1,175 @@
 'use client'
 
-import { useState } from 'react'
-import { Bus, Users, Map, CheckCircle2, AlertTriangle, Loader2 } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { logTransport } from '../actions'
+import Link from 'next/link'
+import {
+  Bus, Users, MapPin, Activity, Navigation,
+  ChevronRight, CheckCircle2, Clock, AlertCircle
+} from 'lucide-react'
 
-interface Route {
-  id: string
-  name: string
-  driver_name: string | null
-  vehicle_plate: string | null
-  capacity: number
+const fmtTime = (ts: string) => new Date(ts).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
+const fmtDate = (ts: string) => new Date(ts).toLocaleDateString('en-GB', { day: '2-digit', month: 'short' })
+
+const LOG_STATUS: Record<string, { icon: any; color: string; bg: string }> = {
+  boarded: { icon: CheckCircle2, color: 'text-emerald-600 dark:text-emerald-400', bg: 'bg-emerald-50 dark:bg-emerald-900/20' },
+  departed: { icon: Navigation, color: 'text-blue-600 dark:text-blue-400', bg: 'bg-blue-50 dark:bg-blue-900/20' },
+  arrived: { icon: Activity, color: 'text-purple-600 dark:text-purple-400', bg: 'bg-purple-50 dark:bg-purple-900/20' },
+  absent: { icon: AlertCircle, color: 'text-red-600 dark:text-red-400', bg: 'bg-red-50 dark:bg-red-900/20' },
 }
 
-interface StudentRoute {
-  route_id: string
-  students: {
-    id: string
-    first_name: string
-    last_name: string
-    admission_number: string
-  } | null
-}
-
-export function TransportDashboardClient({ 
-  stats, 
-  recentLogs, 
-  routes, 
-  studentRoutes, 
-  schoolId 
-}: { 
-  stats: any
+export function TransportDashboardClient({
+  stats, recentLogs, routes, studentRoutes, schoolId
+}: {
+  stats: { activeRoutes: number; totalCapacity: number; boardedToday: number }
   recentLogs: any[]
-  routes: Route[]
-  studentRoutes: StudentRoute[]
+  routes: any[]
+  studentRoutes: any[]
   schoolId: string
 }) {
-  const [selectedRouteId, setSelectedRouteId] = useState<string>(routes[0]?.id || '')
-  const [loggingStudentId, setLoggingStudentId] = useState<string | null>(null)
-  const [statusFilter, setStatusFilter] = useState<'all' | 'boarded' | 'dropped' | 'absent'>('all')
-
-  const currentRoute = routes.find(r => r.id === selectedRouteId)
-  
-  // Find students assigned to the selected route
-  const assignedStudents = studentRoutes
-    .filter(sr => sr.route_id === selectedRouteId && sr.students)
-    .map(sr => sr.students!)
-
-  async function handleLogStatus(studentId: string, status: 'boarded' | 'dropped' | 'absent') {
-    setLoggingStudentId(studentId)
-    const res = await logTransport({
-      schoolId,
-      studentId,
-      routeId: selectedRouteId,
-      status
-    })
-    setLoggingStudentId(null)
-    
-    if (res.error) {
-      alert(res.error)
-    }
-  }
+  const today = new Date().toDateString()
+  const todayLogs = recentLogs.filter(l => new Date(l.timestamp).toDateString() === today)
 
   return (
-    <div className="space-y-6 pb-20">
+    <div className="space-y-6 pb-24">
       {/* Hero */}
-      <div className="bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-500 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 blur-[40px] rounded-full pointer-events-none" />
-        <div className="relative z-10 flex items-center gap-3">
-          <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center">
-            <Bus className="w-6 h-6 text-white" />
+      <div className="relative bg-gradient-to-br from-cyan-700 via-blue-700 to-cyan-900 rounded-3xl p-6 overflow-hidden text-white shadow-xl">
+        <div className="absolute -top-12 -right-12 w-48 h-48 rounded-full bg-cyan-400/20 blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-32 h-32 rounded-full bg-blue-300/10 blur-2xl pointer-events-none" />
+
+        <div className="relative z-10">
+          <div className="flex items-center gap-3 mb-5">
+            <div className="w-12 h-12 rounded-2xl bg-white/15 flex items-center justify-center">
+              <Bus className="w-6 h-6" />
+            </div>
+            <div>
+              <h1 className="text-2xl font-black tracking-tight">Transport Control</h1>
+              <p className="text-cyan-200 text-sm">Fleet routes and student boarding</p>
+            </div>
           </div>
-          <div>
-            <h1 className="text-xl font-black">Transport Dashboard</h1>
-            <p className="text-sm text-blue-100">Real-time overview of school fleet and boarding logs</p>
+
+          <div className="grid grid-cols-3 gap-3">
+            {[
+              { label: 'Active Routes', value: stats.activeRoutes },
+              { label: 'Total Capacity', value: stats.totalCapacity },
+              { label: 'Boarded Today', value: stats.boardedToday },
+            ].map((s, i) => (
+              <div key={i} className="bg-white/10 backdrop-blur-sm rounded-2xl px-3 py-3 text-center">
+                <p className="text-2xl font-extrabold text-white">{s.value}</p>
+                <p className="text-[10px] text-cyan-200 font-semibold uppercase tracking-wide mt-0.5">{s.label}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 shadow-sm">
-          <div className="flex items-center justify-between mb-4">
-            <div className="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center">
-              <Map className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-            </div>
-          </div>
-          <p className="text-sm text-muted-foreground font-medium mb-1">Active Routes</p>
-          <h3 className="text-2xl font-bold text-foreground">{stats.activeRoutes}</h3>
-        </div>
-
-        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 shadow-sm">
-          <div className="flex items-center justify-between mb-4">
-            <div className="w-10 h-10 rounded-xl bg-purple-100 dark:bg-purple-900/40 flex items-center justify-center">
-              <Bus className="w-5 h-5 text-purple-600 dark:text-purple-400" />
-            </div>
-          </div>
-          <p className="text-sm text-muted-foreground font-medium mb-1">Total Fleet Capacity</p>
-          <h3 className="text-2xl font-bold text-foreground">{stats.totalCapacity}</h3>
-        </div>
-
-        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 shadow-sm">
-          <div className="flex items-center justify-between mb-4">
-            <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center">
-              <Users className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
-            </div>
-          </div>
-          <p className="text-sm text-muted-foreground font-medium mb-1">Boarded Today</p>
-          <h3 className="text-2xl font-bold text-foreground">{stats.boardedToday}</h3>
-        </div>
+      {/* Quick Actions */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        {[
+          { label: 'Manage Routes', href: '/transport/routes', icon: MapPin, color: 'text-cyan-600', bg: 'bg-cyan-50 dark:bg-cyan-900/20', border: 'border-cyan-100 dark:border-cyan-800/30' },
+          { label: 'Log Boarding', href: '/transport/logs', icon: CheckCircle2, color: 'text-emerald-600', bg: 'bg-emerald-50 dark:bg-emerald-900/20', border: 'border-emerald-100 dark:border-emerald-800/30' },
+          { label: 'Fleet', href: '/transport/fleet', icon: Bus, color: 'text-blue-600', bg: 'bg-blue-50 dark:bg-blue-900/20', border: 'border-blue-100 dark:border-blue-800/30' },
+          { label: 'Assigned Students', href: '/transport/routes', icon: Users, color: 'text-purple-600', bg: 'bg-purple-50 dark:bg-purple-900/20', border: 'border-purple-100 dark:border-purple-800/30' },
+        ].map((a, i) => {
+          const Icon = a.icon
+          return (
+            <Link key={i} href={a.href}
+              className={`flex flex-col items-center gap-2 p-4 ${a.bg} border ${a.border} rounded-2xl hover:scale-[1.02] transition-all text-center`}>
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-white dark:bg-slate-900 shadow-sm">
+                <Icon className={`w-5 h-5 ${a.color}`} />
+              </div>
+              <span className="text-xs font-semibold text-foreground">{a.label}</span>
+            </Link>
+          )
+        })}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Daily Manifest Logging */}
-        <div className="lg:col-span-2 space-y-6">
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-              <div>
-                <h2 className="text-lg font-bold text-foreground">Daily Manifest Logging</h2>
-                <p className="text-sm text-muted-foreground">Select a route to log student boarding status.</p>
-              </div>
-
-              {/* Route Selector */}
-              <select
-                value={selectedRouteId}
-                onChange={(e) => setSelectedRouteId(e.target.value)}
-                className="h-10 px-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 w-full sm:w-56 shrink-0"
-              >
-                <option value="" disabled>Select Route...</option>
-                {routes.map(r => (
-                  <option key={r.id} value={r.id}>{r.name}</option>
-                ))}
-              </select>
+      {/* Routes overview */}
+      {routes.length > 0 && (
+        <div className="bg-card border border-border rounded-3xl overflow-hidden shadow-sm">
+          <div className="px-5 py-4 border-b border-border flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Bus className="w-4 h-4 text-cyan-500" />
+              <h2 className="font-bold text-foreground">Active Routes</h2>
             </div>
-
-            {currentRoute && (
-              <div className="mb-6 bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800/60 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400">
-                    <Bus className="w-5 h-5" />
+            <Link href="/transport/routes" className="text-xs font-semibold text-cyan-600 hover:text-cyan-700 flex items-center gap-1">
+              Manage <ChevronRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+          <div className="divide-y divide-border">
+            {routes.slice(0, 5).map((route: any, i: number) => {
+              const assigned = studentRoutes.filter(sr => sr.route_id === route.id).length
+              const pct = route.capacity > 0 ? Math.min(100, (assigned / route.capacity) * 100) : 0
+              return (
+                <div key={i} className="flex items-center gap-4 px-5 py-4 hover:bg-slate-50/60 dark:hover:bg-slate-900/20 transition-colors">
+                  <div className="w-10 h-10 rounded-xl bg-cyan-50 dark:bg-cyan-900/20 flex items-center justify-center shrink-0">
+                    <Bus className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
                   </div>
-                  <div>
-                    <h3 className="font-bold text-sm text-foreground">{currentRoute.name}</h3>
-                    <p className="text-xs text-muted-foreground">Vehicle Plate: <span className="font-mono text-foreground font-semibold">{currentRoute.vehicle_plate || 'N/A'}</span></p>
-                  </div>
-                </div>
-                <div className="text-xs sm:text-right">
-                  <p className="text-muted-foreground">Driver</p>
-                  <p className="font-bold text-foreground">{currentRoute.driver_name || 'N/A'}</p>
-                </div>
-              </div>
-            )}
-
-            {/* Students Manifest List */}
-            {assignedStudents.length === 0 ? (
-              <div className="text-center py-12 border border-dashed border-slate-200 dark:border-slate-800 rounded-2xl">
-                <Users className="w-10 h-10 text-slate-300 dark:text-slate-700 mx-auto mb-2" />
-                <p className="text-sm font-medium text-foreground">No students assigned to this route</p>
-                <p className="text-xs text-muted-foreground mt-1">Assign students in the Fleet & Routes module.</p>
-              </div>
-            ) : (
-              <div className="space-y-3">
-                {assignedStudents.map((student) => {
-                  const isLogging = loggingStudentId === student.id
-                  return (
-                    <div 
-                      key={student.id} 
-                      className="flex flex-col sm:flex-row sm:items-center justify-between p-4 border border-slate-100 dark:border-slate-800 rounded-2xl hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-all gap-4"
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 flex items-center justify-center font-bold text-sm">
-                          {student.first_name[0]}{student.last_name[0]}
-                        </div>
-                        <div>
-                          <p className="font-bold text-sm text-foreground">{student.first_name} {student.last_name}</p>
-                          <p className="text-xs text-muted-foreground">Adm: <span className="font-mono">{student.admission_number}</span></p>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center gap-2">
-                        <Button 
-                          onClick={() => handleLogStatus(student.id, 'boarded')}
-                          disabled={isLogging}
-                          variant="outline"
-                          size="sm"
-                          className="h-8 rounded-lg text-xs font-semibold hover:bg-emerald-50 hover:text-emerald-700 border-slate-200 dark:border-slate-800"
-                        >
-                          {isLogging ? <Loader2 className="w-3 h-3 animate-spin mr-1" /> : null}
-                          Boarded
-                        </Button>
-                        <Button 
-                          onClick={() => handleLogStatus(student.id, 'dropped')}
-                          disabled={isLogging}
-                          variant="outline"
-                          size="sm"
-                          className="h-8 rounded-lg text-xs font-semibold hover:bg-blue-50 hover:text-blue-700 border-slate-200 dark:border-slate-800"
-                        >
-                          Dropped
-                        </Button>
-                        <Button 
-                          onClick={() => handleLogStatus(student.id, 'absent')}
-                          disabled={isLogging}
-                          variant="outline"
-                          size="sm"
-                          className="h-8 rounded-lg text-xs font-semibold hover:bg-red-50 hover:text-red-700 border-slate-200 dark:border-slate-800"
-                        >
-                          Absent
-                        </Button>
-                      </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between mb-1">
+                      <p className="font-semibold text-sm text-foreground">{route.name}</p>
+                      <span className="text-xs text-muted-foreground">{assigned}/{route.capacity || '—'} students</span>
                     </div>
-                  )
-                })}
-              </div>
-            )}
+                    {route.capacity > 0 && (
+                      <div className="h-1.5 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
+                        <div
+                          className={`h-full rounded-full transition-all duration-500 ${pct >= 90 ? 'bg-red-400' : pct >= 70 ? 'bg-amber-400' : 'bg-cyan-400'}`}
+                          style={{ width: `${pct}%` }}
+                        />
+                      </div>
+                    )}
+                    {route.vehicle_plate && (
+                      <p className="text-[10px] text-muted-foreground mt-1 flex items-center gap-1">
+                        <span className="bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded font-mono">{route.vehicle_plate}</span>
+                        {route.driver_name && <span>· {route.driver_name}</span>}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              )
+            })}
           </div>
         </div>
+      )}
 
-        {/* Recent Boarding Activity */}
-        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm h-[500px] flex flex-col">
-          <h2 className="text-lg font-bold text-foreground mb-4">Recent Boarding Activity</h2>
-          
-          <div className="flex-1 overflow-y-auto pr-2 space-y-4">
-            {recentLogs.length === 0 ? (
-              <p className="text-sm text-muted-foreground py-4">No boarding logs recorded yet.</p>
-            ) : (
-              recentLogs.map((log) => (
-                <div key={log.id} className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3 last:border-0 last:pb-0 gap-2">
-                  <div className="flex items-center gap-3 min-w-0">
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${
-                      log.status === 'boarded' ? 'bg-emerald-100 text-emerald-600 dark:bg-emerald-900/30' :
-                      log.status === 'dropped' ? 'bg-blue-100 text-blue-600 dark:bg-blue-900/30' :
-                      'bg-red-100 text-red-600 dark:bg-red-900/30'
-                    }`}>
-                      <Bus className="w-4 h-4" />
-                    </div>
-                    <div className="min-w-0">
-                      <p className="text-xs text-muted-foreground uppercase font-bold tracking-wider">{log.status}</p>
-                      <p className="text-xs text-slate-400 mt-0.5 truncate">Route ID: {log.route_id.substring(0,8)}...</p>
-                    </div>
-                  </div>
-                  <p className="text-[10px] text-muted-foreground shrink-0">{new Date(log.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</p>
-                </div>
-              ))
-            )}
-          </div>
+      {/* Live Boarding Feed */}
+      <div className="bg-card border border-border rounded-3xl overflow-hidden shadow-sm">
+        <div className="px-5 py-4 border-b border-border flex items-center gap-2">
+          <Activity className="w-4 h-4 text-blue-500" />
+          <h2 className="font-bold text-foreground">Today's Boarding Log</h2>
+          <span className="ml-auto text-xs text-muted-foreground">{todayLogs.length} events</span>
         </div>
+
+        {todayLogs.length === 0 ? (
+          <div className="text-center py-10">
+            <Clock className="w-7 h-7 text-slate-300 mx-auto mb-3" />
+            <p className="text-sm text-muted-foreground">No boarding activity logged today.</p>
+          </div>
+        ) : (
+          <div className="divide-y divide-border">
+            {todayLogs.slice(0, 8).map((log: any, i: number) => {
+              const cfg = LOG_STATUS[log.status] || LOG_STATUS.boarded
+              const Icon = cfg.icon
+              return (
+                <div key={i} className="flex items-center gap-3 px-5 py-3.5 hover:bg-slate-50/60 dark:hover:bg-slate-900/20 transition-colors">
+                  <div className={`w-8 h-8 rounded-xl ${cfg.bg} flex items-center justify-center shrink-0`}>
+                    <Icon className={`w-4 h-4 ${cfg.color}`} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-semibold text-sm text-foreground">
+                      {log.students?.first_name} {log.students?.last_name}
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      Route: {routes.find(r => r.id === log.route_id)?.name || '—'} · {log.notes || ''}
+                    </p>
+                  </div>
+                  <div className="text-right shrink-0">
+                    <p className="text-xs text-muted-foreground">{fmtTime(log.timestamp)}</p>
+                    <span className={`text-[10px] font-bold capitalize ${cfg.color}`}>{log.status}</span>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        )}
       </div>
     </div>
   )

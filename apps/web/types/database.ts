@@ -188,6 +188,16 @@ export interface Database {
         Insert: any
         Update: any; Relationships: any[]
       }
+      exam_timetables: {
+        Row: { id: string; school_id: string; exam_id: string; subject_id: string; class_id: string; exam_date: string; start_time: string; end_time: string; created_at: string }
+        Insert: any
+        Update: any; Relationships: any[]
+      }
+      exam_grading_status: {
+        Row: { id: string; school_id: string; exam_id: string; subject_id: string; class_id: string; status: string; submitted_at: string | null; submitted_by: string | null; finalized_at: string | null; finalized_by: string | null; created_at: string }
+        Insert: any
+        Update: any; Relationships: any[]
+      }
       [key: string]: any // Fallback for scaffolding
     }
     Views: {
