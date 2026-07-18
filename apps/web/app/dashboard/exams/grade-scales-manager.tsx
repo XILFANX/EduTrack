@@ -42,7 +42,7 @@ export function GradeScalesManager({ schoolId, initialGradeScales }: Props) {
   const [remarks, setRemarks] = useState('')
   const [error, setError] = useState<string | null>(null)
 
-  const { isConfirmOpen, confirmProps, confirm } = useConfirmDialog()
+  const { dialogProps, confirm } = useConfirmDialog()
 
   const openAddModal = () => {
     setEditingScale(null)
@@ -239,7 +239,7 @@ export function GradeScalesManager({ schoolId, initialGradeScales }: Props) {
           </form>
         </DialogContent>
       </Dialog>
-      <ConfirmDialog {...confirmProps} open={isConfirmOpen} />
+      <ConfirmDialog {...dialogProps} />
     </div>
   )
 }

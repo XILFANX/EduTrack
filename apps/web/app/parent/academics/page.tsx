@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
-import { BookOpen, CheckCircle2, XCircle, Clock, GraduationCap, FileText } from 'lucide-react'
+import { BookOpen, CheckCircle2, XCircle, Clock, GraduationCap, FileText, CalendarDays } from 'lucide-react'
 
 export const dynamic = 'force-dynamic'
 
@@ -119,6 +119,12 @@ export default async function ParentAcademics() {
               className="flex items-center gap-1.5 bg-white/20 hover:bg-white/30 transition-colors px-3 py-1.5 rounded-lg text-xs font-semibold text-white"
             >
               <FileText className="w-3.5 h-3.5" /> Report Card
+            </Link>
+            <Link
+              href="/parent/academics/timetable"
+              className="flex items-center gap-1.5 bg-white/20 hover:bg-white/30 transition-colors px-3 py-1.5 rounded-lg text-xs font-semibold text-white"
+            >
+              <CalendarDays className="w-3.5 h-3.5" /> Timetable
             </Link>
           </div>
 

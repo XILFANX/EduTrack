@@ -89,7 +89,8 @@ export default async function PrincipalMessagesPage() {
     name: s.salutation ? `${s.salutation} ${s.full_name}` : (s.full_name || 'Staff Member'),
     role: ROLE_LABEL[s.role] || s.role.replace('_', ' '),
     roleOrder: ROLE_ORDER[s.role] ?? 5,
-    last_seen_at: s.last_seen_at
+    last_seen_at: s.last_seen_at,
+    subtitle: undefined as string | undefined
   }))
 
   const parentContacts = parentsWithStudents.map((p: any) => ({

@@ -4,7 +4,7 @@ import { createClient } from '@/lib/supabase/server'
 import {
   Users, GraduationCap, Banknote, BookOpen,
   Bus, Package, Clock, CalendarRange,
-  ClipboardList, MessageSquare, FileText, ChevronRight
+  ClipboardList, MessageSquare, FileText, ChevronRight, CalendarDays
 } from 'lucide-react'
 import Link from 'next/link'
 import { OnboardingWizard } from './onboarding-wizard'
@@ -64,17 +64,18 @@ export default async function DashboardPage() {
     { href: '/dashboard/staff', label: 'Manage Staff', icon: Users, color: 'text-blue-500', bg: 'bg-blue-50 dark:bg-blue-900/20' },
     { href: '/dashboard/students', label: 'Manage Students', icon: GraduationCap, color: 'text-indigo-500', bg: 'bg-indigo-50 dark:bg-indigo-900/20' },
     { href: '/dashboard/exams', label: 'Examinations', icon: ClipboardList, color: 'text-purple-500', bg: 'bg-purple-50 dark:bg-purple-900/20' },
+    { href: '/dashboard/timetable', label: 'Timetable', icon: CalendarDays, color: 'text-indigo-500', bg: 'bg-indigo-50 dark:bg-indigo-900/20' },
     { href: '/dashboard/reports', label: 'Report Cards', icon: FileText, color: 'text-emerald-500', bg: 'bg-emerald-50 dark:bg-emerald-900/20' },
     { href: '/dashboard/sessions', label: 'Sessions Engine', icon: CalendarRange, color: 'text-amber-500', bg: 'bg-amber-50 dark:bg-amber-900/20' },
     { href: '/dashboard/messages', label: 'Messages', icon: MessageSquare, color: 'text-rose-500', bg: 'bg-rose-50 dark:bg-rose-900/20' },
     { href: '/dashboard/subjects', label: 'Manage Subjects', icon: BookOpen, color: 'text-teal-500', bg: 'bg-teal-50 dark:bg-teal-900/20' },
-    { href: '/bursar/dashboard', label: 'Record Payment', icon: Banknote, color: 'text-orange-500', bg: 'bg-orange-50 dark:bg-orange-900/20' },
   ]
 
   const operationModules = [
     { href: '/dashboard/transport', label: 'Transport', icon: Bus, color: 'text-emerald-500' },
     { href: '/dashboard/library', label: 'Library', icon: BookOpen, color: 'text-indigo-500' },
     { href: '/dashboard/store', label: 'Store', icon: Package, color: 'text-amber-500' },
+    { href: '/dashboard/timetable', label: 'Timetable', icon: CalendarDays, color: 'text-indigo-500' },
     { href: '/dashboard/messages', label: 'Messages', icon: MessageSquare, color: 'text-rose-500' },
     { href: '/dashboard/exams', label: 'Exams', icon: ClipboardList, color: 'text-purple-500' },
     { href: '/dashboard/sessions', label: 'Sessions', icon: CalendarRange, color: 'text-blue-500' },
