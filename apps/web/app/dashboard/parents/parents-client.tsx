@@ -38,8 +38,8 @@ export function ParentsDirectoryClient({ classes, selectedClassId, studentsWithP
   async function handleMessage(parentId: string) {
     setMessagingId(parentId)
     try {
-      const { conversationId } = await getOrCreateConversation(parentId)
-      router.push(`/dashboard/messages`)
+      await getOrCreateConversation(parentId)
+      router.push(`/dashboard/messages?contactId=${parentId}`)
     } catch {
       setMessagingId(null)
     }

@@ -51,7 +51,7 @@ export function AnnouncementsClient({ audienceOptions, defaultAudience }: Props)
         <select 
           value={target}
           onChange={(e) => setTarget(e.target.value)}
-          className="w-full bg-[#0b0f19] border border-slate-700 text-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all"
+          className="w-full bg-[#0b0f19] border border-slate-700 text-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
         >
           {audienceOptions.map(opt => (
             <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -67,7 +67,7 @@ export function AnnouncementsClient({ audienceOptions, defaultAudience }: Props)
           onChange={(e) => setTitle(e.target.value)}
           placeholder="e.g. School Closure Tomorrow"
           required
-          className="w-full bg-[#0b0f19] border border-slate-700 text-slate-200 placeholder:text-slate-600 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all"
+          className="w-full bg-[#0b0f19] border border-slate-700 text-slate-200 placeholder:text-slate-600 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
         />
       </div>
 
@@ -79,14 +79,14 @@ export function AnnouncementsClient({ audienceOptions, defaultAudience }: Props)
           placeholder="Type the details here..."
           required
           rows={4}
-          className="w-full bg-[#0b0f19] border border-slate-700 text-slate-200 placeholder:text-slate-600 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all resize-none"
+          className="w-full bg-[#0b0f19] border border-slate-700 text-slate-200 placeholder:text-slate-600 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all resize-none"
         />
       </div>
 
       <button 
         type="submit" 
         disabled={submitting || !title || !body}
-        className="w-full bg-orange-600 hover:bg-orange-700 text-white font-semibold py-2.5 rounded-xl transition-all shadow-md disabled:opacity-50 flex justify-center items-center h-11"
+        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-xl transition-all shadow-md disabled:opacity-50 flex justify-center items-center h-11"
       >
         {submitting ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Send Broadcast'}
       </button>

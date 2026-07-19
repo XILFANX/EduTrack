@@ -9,9 +9,15 @@ interface Contact {
   id: string
   name: string
   role: string
-  subtitle?: string  // e.g. 'Parent of: John Doe'
+  subtitle?: string
   last_seen_at?: string | null
   roleOrder?: number
+  classIds?: string[]
+}
+
+interface ClassItem {
+  id: string
+  name: string
 }
 
 interface Message {
@@ -32,11 +38,16 @@ const CATEGORIES = [
 export function ChatClient({ 
   currentUser, 
   contacts, 
+  classes,
+  initialContactId
 }: { 
   currentUser: { id: string, role: string }, 
   contacts: Contact[], 
+  classes?: ClassItem[],
+  initialContactId?: string
 }) {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+  const [selectedClassId, setSelectedClassId] = useState<string | null>(null)
   const [selectedContact, setSelectedContact] = useState<Contact | null>(null)
   const [conversationId, setConversationId] = useState<string | null>(null)
   const [messages, setMessages] = useState<Message[]>([])
@@ -54,6 +65,20 @@ export function ChatClient({
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
+
+  // Initialize selected contact from URL prop
+  useEffect(() => {
+    if (initialContactId) {
+      const contact = contacts.find(c => c.id === initialContactId)
+      if (contact) {
+        handleSelectContact(contact)
+      }
+    }
+  }, [initialContactId, contacts])
+
+  const handleSelectContact = (contact: Contact) => {
+    setSelectedContact(contact)
+  }
 
   // Presence channel setup
   useEffect(() => {
@@ -177,8 +202,11 @@ export function ChatClient({
   }
 
   const handleBackToCategories = () => {
-    setSelectedCategory(null)
-    setSearchQuery('')
+    if (selectedClassId) {
+      setSelectedClassId(null)
+    } else {
+      setSelectedCategory(null)
+    }
   }
 
   const handleBackToContacts = () => {
@@ -186,9 +214,18 @@ export function ChatClient({
   }
 
   const activeCategory = CATEGORIES.find(c => c.id === selectedCategory)
+  const isParentCategory = activeCategory?.id === 'parents'
   
   const filteredContacts = activeCategory 
-    ? contacts.filter(c => activeCategory.roles.includes(c.role)).filter(c => c.name.toLowerCase().includes(searchQuery.toLowerCase()))
+    ? contacts.filter(c => activeCategory.roles.includes(c.role))
+    : []
+
+  const globalSearchResults = searchQuery.trim() 
+    ? contacts.filter(c => 
+        c.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+        c.role.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        c.subtitle?.toLowerCase().includes(searchQuery.toLowerCase())
+      )
     : []
 
   return (
@@ -205,8 +242,16 @@ export function ChatClient({
                 <ArrowLeft className="w-5 h-5" />
               </button>
               <div className="min-w-0">
-                <h2 className="font-bold text-slate-100 truncate">{activeCategory?.label}</h2>
-                <p className="text-xs text-blue-400 font-medium">{contacts.filter(c => activeCategory?.roles.includes(c.role)).length} contacts</p>
+                <h2 className="font-bold text-slate-100 truncate">
+                  {selectedClassId 
+                    ? classes?.find(c => c.id === selectedClassId)?.name 
+                    : activeCategory?.label}
+                </h2>
+                <p className="text-xs text-blue-400 font-medium">
+                  {selectedClassId
+                    ? `${filteredContacts.filter(c => c.classIds?.includes(selectedClassId)).length} parents`
+                    : `${filteredContacts.length} contacts`}
+                </p>
               </div>
             </div>
           ) : (
@@ -215,8 +260,52 @@ export function ChatClient({
         </div>
 
         {/* Sidebar Content */}
-        <div className="flex-1 overflow-y-auto">
-          {!selectedCategory ? (
+        <div className="flex-1 overflow-hidden">
+          {/* Global Search */}
+          {!selectedCategory && (
+            <div className="px-4 pt-4 shrink-0">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                <input 
+                  type="text" 
+                  value={searchQuery}
+                  onChange={e => setSearchQuery(e.target.value)}
+                  placeholder="Search all contacts..."
+                  className="w-full bg-[#121827] border border-slate-700 rounded-xl py-2.5 pl-9 pr-4 text-sm text-slate-200 placeholder:text-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
+                />
+              </div>
+            </div>
+          )}
+
+          <div className="flex-1 overflow-y-auto">
+            {searchQuery.trim() && !selectedCategory ? (
+              // GLOBAL SEARCH RESULTS
+              <div className="p-4 space-y-1">
+                <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest px-2 mb-3">Search Results</p>
+                {globalSearchResults.length === 0 ? (
+                  <p className="text-sm text-slate-500 px-2 py-4 text-center">No contacts found matching "{searchQuery}"</p>
+                ) : (
+                  globalSearchResults.map(contact => (
+                    <button
+                      key={contact.id}
+                      onClick={() => handleSelectContact(contact)}
+                      className="w-full flex items-center gap-3 p-3 rounded-2xl border border-transparent hover:bg-[#121827] hover:border-slate-800 transition-all"
+                    >
+                      <div className="relative shrink-0">
+                        <UserCircle2 className="w-10 h-10 text-slate-500" />
+                        {onlineUsers.has(contact.id) && (
+                          <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 border-2 border-[#0b0f19] rounded-full"></div>
+                        )}
+                      </div>
+                      <div className="flex-1 min-w-0 text-left">
+                        <p className="font-semibold text-sm text-slate-200 truncate">{contact.name}</p>
+                        <p className="text-xs text-slate-500 truncate">{contact.role}</p>
+                      </div>
+                    </button>
+                  ))
+                )}
+              </div>
+            ) : !selectedCategory ? (
             // CATEGORIES VIEW
             <div className="p-4 space-y-2">
               <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest px-2 mb-4">Select Directory</p>
@@ -243,8 +332,34 @@ export function ChatClient({
                 )
               })}
             </div>
+          ) : isParentCategory && !selectedClassId ? (
+            // PARENTS DIRECTORY - CLASS FIRST
+            <div className="p-4 space-y-2">
+              <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest px-2 mb-4">Select Class</p>
+              {classes?.map(cls => {
+                const count = filteredContacts.filter(c => c.classIds?.includes(cls.id)).length
+                return (
+                  <button
+                    key={cls.id}
+                    onClick={() => setSelectedClassId(cls.id)}
+                    className="w-full flex items-center justify-between p-4 rounded-2xl hover:bg-[#121827] transition-all group border border-transparent hover:border-slate-800"
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-2xl bg-indigo-500/10 flex items-center justify-center shrink-0 group-hover:bg-indigo-500/20 transition-colors border border-indigo-500/10">
+                        <GraduationCap className="w-6 h-6 text-indigo-400" />
+                      </div>
+                      <div className="text-left">
+                        <p className="font-semibold text-slate-200">{cls.name}</p>
+                        <p className="text-xs text-slate-500">{count} parent{count !== 1 ? 's' : ''}</p>
+                      </div>
+                    </div>
+                    <ChevronRight className="w-5 h-5 text-slate-600 group-hover:text-indigo-400 transition-colors" />
+                  </button>
+                )
+              })}
+            </div>
           ) : (
-            // CONTACTS VIEW
+            // CONTACTS VIEW (For specific category or specific class)
             <div className="p-4 flex flex-col h-full">
               <div className="relative mb-4 shrink-0">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
@@ -252,22 +367,37 @@ export function ChatClient({
                   type="text" 
                   value={searchQuery}
                   onChange={e => setSearchQuery(e.target.value)}
-                  placeholder="Search contacts..." 
-                  className="w-full h-11 pl-10 pr-4 rounded-xl border border-slate-800 bg-[#121827] text-slate-200 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all text-sm"
+                  placeholder="Filter contacts..."
+                  className="w-full bg-[#121827] border border-slate-700 rounded-xl py-2.5 pl-9 pr-4 text-sm text-slate-200 placeholder:text-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
                 />
               </div>
 
-              <div className="flex-1 overflow-y-auto space-y-1 -mx-2 px-2">
-                {filteredContacts.length === 0 ? (
-                  <div className="text-center p-8 text-sm text-slate-500">No contacts found.</div>
-                ) : (
-                  filteredContacts.map((contact) => (
+              <div className="flex-1 overflow-y-auto space-y-1 pr-1">
+                {(() => {
+                  let viewContacts = filteredContacts
+                  if (selectedClassId) {
+                    viewContacts = viewContacts.filter(c => c.classIds?.includes(selectedClassId))
+                  }
+                  if (searchQuery.trim()) {
+                    viewContacts = viewContacts.filter(c => c.name.toLowerCase().includes(searchQuery.toLowerCase()))
+                  }
+                  
+                  if (viewContacts.length === 0) {
+                    return (
+                      <div className="flex flex-col items-center justify-center h-40 text-slate-500">
+                        <Users className="w-8 h-8 mb-2 opacity-50" />
+                        <p className="text-sm">No contacts found</p>
+                      </div>
+                    )
+                  }
+
+                  return viewContacts.map((contact) => (
                     <button
                       key={contact.id}
-                      onClick={() => setSelectedContact(contact)}
-                      className={`w-full text-left flex items-center gap-3 p-3 rounded-2xl transition-all border ${
+                      onClick={() => handleSelectContact(contact)}
+                      className={`w-full flex items-center gap-3 p-3 rounded-2xl transition-all border text-left ${
                         selectedContact?.id === contact.id
-                          ? 'bg-[#1a2133] border-slate-700'
+                          ? 'bg-[#1a2133] border-slate-700 shadow-sm'
                           : 'border-transparent hover:bg-[#121827] hover:border-slate-800'
                       }`}
                     >
@@ -294,12 +424,13 @@ export function ChatClient({
                       </div>
                     </button>
                   ))
-                )}
+                })()}
               </div>
             </div>
           )}
         </div>
       </div>
+    </div>
 
       {/* RIGHT PANE: Chat Area */}
       <div className={`flex-1 flex flex-col bg-[#121827] relative ${!selectedContact ? 'hidden md:flex' : 'flex'}`}>

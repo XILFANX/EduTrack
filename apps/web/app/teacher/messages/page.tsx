@@ -174,7 +174,7 @@ export default async function TeacherMessagesPage() {
     .from('announcements')
     .select('*, users(full_name, salutation)')
     .eq('school_id', profile.school_id)
-    .in('target_audience', ['all_users', 'all_staff', 'all_teachers', ...audienceOptions.map(o => o.value)])
+    .in('target_audience', ['all_users', 'all_staff', 'teaching_staff', ...audienceOptions.map(o => o.value)])
     .order('created_at', { ascending: false })
     .limit(15)
 
@@ -191,7 +191,7 @@ export default async function TeacherMessagesPage() {
           {profile.role === 'class_teacher' && audienceOptions.length > 0 && (
             <section className="bg-card border border-border rounded-3xl overflow-hidden shadow-sm">
               <div className="p-4 border-b border-border bg-slate-50 dark:bg-slate-950 flex items-center gap-2">
-                <Megaphone className="w-5 h-5 text-orange-500" />
+                <Megaphone className="w-5 h-5 text-blue-500" />
                 <h2 className="font-semibold text-foreground">Class Broadcast</h2>
               </div>
               <div className="p-5">
