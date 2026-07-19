@@ -35,15 +35,17 @@ export default async function SessionsPage() {
     .order('start_date', { ascending: true })
 
   return (
-    <div className="space-y-8 max-w-5xl">
-      <div>
-        <div className="flex items-center gap-2 text-blue-600 mb-2">
-          <CalendarRange className="w-6 h-6" />
-          <h1 className="text-2xl font-bold text-foreground">Academic Sessions Engine</h1>
+    <div className="space-y-8 max-w-5xl mx-auto pb-24">
+      <div className="flex items-center gap-3">
+        <div className="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center shrink-0">
+          <CalendarRange className="w-6 h-6 text-blue-400" />
         </div>
-        <p className="text-sm text-muted-foreground">
-          Manage academic years and terms. Activating a session automatically deactivates previous ones and notifies all staff.
-        </p>
+        <div>
+          <h1 className="text-2xl font-bold text-slate-100">Academic Sessions Engine</h1>
+          <p className="text-sm text-slate-400 mt-0.5">
+            Manage academic years and terms. Activating a session notifies all staff automatically.
+          </p>
+        </div>
       </div>
 
       <SessionsManager 

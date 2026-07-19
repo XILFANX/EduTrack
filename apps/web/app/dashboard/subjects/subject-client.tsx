@@ -187,7 +187,7 @@ export function SubjectClient({ globalSubjects, classSubjects, classes, schoolId
               Add a subject {selectedClass && `to ${selectedClass.name}`} to get started.
             </p>
             <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl text-sm font-semibold transition-colors" onClick={() => setIsModalOpen(true)}>
-              Add First Subject
+              Assign Subjects
             </button>
           </div>
         ) : (

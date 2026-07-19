@@ -81,14 +81,14 @@ export function AdminExamsTabs({
         <div className="space-y-5">
           {/* Exam Selector */}
           {initialExams.length === 0 ? (
-            <div className="text-center py-12 border border-dashed border-border rounded-2xl">
-              <ClipboardList className="w-8 h-8 text-slate-300 mx-auto mb-2" />
-              <p className="text-sm text-muted-foreground">Create an exam first before scheduling subjects.</p>
+            <div className="text-center py-12 border border-dashed border-slate-700 rounded-2xl bg-[#121827]">
+              <ClipboardList className="w-8 h-8 text-slate-600 mx-auto mb-2" />
+              <p className="text-sm text-slate-400">Create an exam first before scheduling subjects.</p>
             </div>
           ) : (
             <>
               <div>
-                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 px-1">Select Exam to Schedule</p>
+                <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2 px-1">Select Exam to Schedule</p>
                 <div className="flex gap-2 flex-wrap">
                   {initialExams.map((exam: any) => {
                     const isSelected = selectedExamId === exam.id
@@ -113,10 +113,10 @@ export function AdminExamsTabs({
               </div>
 
               {selectedExam && (
-                <div className="bg-card border border-border rounded-3xl p-5">
+                <div className="bg-[#121827] border border-slate-800 rounded-3xl p-5">
                   <div className="mb-4">
-                    <h3 className="font-bold text-foreground">{selectedExam.name}</h3>
-                    <p className="text-sm text-muted-foreground">Max Score: {selectedExam.max_score} marks · Schedule which subjects sit this exam and when.</p>
+                    <h3 className="font-bold text-slate-100">{selectedExam.name}</h3>
+                    <p className="text-sm text-slate-400">Max Score: {selectedExam.max_score} marks · Schedule which subjects sit this exam and when.</p>
                   </div>
                   <ExamScheduler
                     exam={selectedExam}

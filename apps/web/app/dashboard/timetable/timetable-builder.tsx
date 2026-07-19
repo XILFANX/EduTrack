@@ -415,15 +415,15 @@ export function TimetableBuilder({
           </div>
 
           {!selectedClassId ? (
-            <div className="text-center py-10 bg-card border border-border rounded-3xl">
-              <p className="text-muted-foreground text-sm">Select a class above to build its timetable.</p>
+            <div className="text-center py-10 bg-[#121827] border border-slate-800 rounded-3xl">
+              <p className="text-slate-400 text-sm">Select a class above to build its timetable.</p>
             </div>
           ) : (
-            <div className="overflow-x-auto rounded-3xl border border-border shadow-sm bg-card">
+            <div className="overflow-x-auto rounded-3xl border border-slate-800 shadow-sm bg-[#121827]">
               <table className="w-full min-w-[640px] text-sm border-collapse">
                 <thead>
                   <tr>
-                    <th className="sticky left-0 z-10 bg-slate-50 dark:bg-slate-900 border-b border-r border-border px-4 py-3 text-left font-semibold text-muted-foreground text-xs uppercase tracking-wider min-w-[140px]">
+                    <th className="sticky left-0 z-10 bg-[#0b0f19] border-b border-r border-slate-800 px-4 py-3 text-left font-semibold text-slate-400 text-xs uppercase tracking-wider min-w-[140px]">
                       Period / Time
                     </th>
                     {DAYS.map(day => (
@@ -441,10 +441,10 @@ export function TimetableBuilder({
                 </thead>
                 <tbody>
                   {periods.map((period, idx) => (
-                    <tr key={period.id} className={idx % 2 === 0 ? '' : 'bg-slate-50/40 dark:bg-slate-900/20'}>
+                    <tr key={period.id} className={idx % 2 === 0 ? '' : 'bg-[#1a2133]'}>
                       {/* Period label */}
-                      <td className="sticky left-0 z-10 bg-white dark:bg-slate-950 border-b border-r border-border px-4 py-3">
-                        {idx % 2 === 0 ? null : <div className="absolute inset-0 bg-slate-50/40 dark:bg-slate-900/20" />}
+                      <td className="sticky left-0 z-10 bg-[#121827] border-b border-r border-slate-800 px-4 py-3">
+                        {idx % 2 === 0 ? null : <div className="absolute inset-0 bg-[#1a2133]" />}
                         <div className="relative flex items-center gap-2">
                           {period.is_break ? (
                             <Coffee className="w-3.5 h-3.5 text-amber-500 shrink-0" />
@@ -452,8 +452,8 @@ export function TimetableBuilder({
                             <Clock className="w-3.5 h-3.5 text-indigo-400 shrink-0" />
                           )}
                           <div>
-                            <p className="font-semibold text-foreground text-xs">{period.name}</p>
-                            <p className="text-[10px] text-muted-foreground">{fmt12(period.start_time)}–{fmt12(period.end_time)}</p>
+                            <p className="font-semibold text-slate-200 text-xs">{period.name}</p>
+                            <p className="text-[10px] text-slate-500">{fmt12(period.start_time)}–{fmt12(period.end_time)}</p>
                           </div>
                         </div>
                       </td>
@@ -467,11 +467,11 @@ export function TimetableBuilder({
                         return (
                           <td
                             key={day.num}
-                            className="border-b border-r border-border last:border-r-0 p-1.5"
+                            className="border-b border-r border-slate-800 last:border-r-0 p-1.5"
                             onClick={() => openSlotModal(period, day)}
                           >
                             {period.is_break ? (
-                              <div className="rounded-xl bg-amber-50 dark:bg-amber-950/20 border border-amber-200/60 dark:border-amber-800/30 px-2 py-3 text-center cursor-default">
+                              <div className="rounded-xl bg-amber-500/10 border border-amber-500/20 px-2 py-3 text-center cursor-default">
                                 <Coffee className="w-3.5 h-3.5 text-amber-400 mx-auto" />
                               </div>
                             ) : subjectName ? (
@@ -479,8 +479,8 @@ export function TimetableBuilder({
                                 {subjectName}
                               </div>
                             ) : (
-                              <div className="rounded-xl border-2 border-dashed border-slate-200 dark:border-slate-800 px-2 py-3 text-center cursor-pointer hover:border-indigo-400 hover:bg-indigo-50/30 dark:hover:border-indigo-700 dark:hover:bg-indigo-950/20 transition-all group/cell">
-                                <Plus className="w-3.5 h-3.5 text-slate-300 dark:text-slate-700 group-hover/cell:text-indigo-400 mx-auto transition-colors" />
+                              <div className="rounded-xl border-2 border-dashed border-slate-700 px-2 py-3 text-center cursor-pointer hover:border-indigo-500/50 hover:bg-indigo-500/10 transition-all group/cell">
+                                <Plus className="w-3.5 h-3.5 text-slate-600 group-hover/cell:text-indigo-400 mx-auto transition-colors" />
                               </div>
                             )}
                           </td>

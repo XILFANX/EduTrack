@@ -64,10 +64,10 @@ export default async function DashboardPage() {
     { href: '/dashboard/staff', label: 'Manage Staff', icon: Users, color: 'text-blue-500', bg: 'bg-blue-50 dark:bg-blue-900/20' },
     { href: '/dashboard/students', label: 'Manage Students', icon: GraduationCap, color: 'text-indigo-500', bg: 'bg-indigo-50 dark:bg-indigo-900/20' },
     { href: '/dashboard/exams', label: 'Manage Examinations', icon: ClipboardList, color: 'text-purple-500', bg: 'bg-purple-50 dark:bg-purple-900/20' },
-    { href: '/dashboard/timetable', label: ' Manage Timetable', icon: CalendarDays, color: 'text-indigo-500', bg: 'bg-indigo-50 dark:bg-indigo-900/20' },
-    { href: '/dashboard/reports', label: 'Manage Student Reports', icon: FileText, color: 'text-emerald-500', bg: 'bg-emerald-50 dark:bg-emerald-900/20' },
-    { href: '/dashboard/sessions', label: 'Manage Academic Sessions', icon: CalendarRange, color: 'text-amber-500', bg: 'bg-amber-50 dark:bg-amber-900/20' },
-    { href: '/dashboard/messages', label: 'Communication Hub', icon: MessageSquare, color: 'text-rose-500', bg: 'bg-rose-50 dark:bg-rose-900/20' },
+    { href: '/dashboard/timetable', label: 'Manage Timetable', icon: CalendarDays, color: 'text-indigo-500', bg: 'bg-indigo-50 dark:bg-indigo-900/20' },
+    { href: '/dashboard/reports', label: 'Manage Reports', icon: FileText, color: 'text-emerald-500', bg: 'bg-emerald-50 dark:bg-emerald-900/20' },
+    { href: '/dashboard/sessions', label: 'Academic Sessions', icon: CalendarRange, color: 'text-amber-500', bg: 'bg-amber-50 dark:bg-amber-900/20' },
+    { href: '/dashboard/messages', label: 'Communications', icon: MessageSquare, color: 'text-rose-500', bg: 'bg-rose-50 dark:bg-rose-900/20' },
     { href: '/dashboard/subjects', label: 'Manage Subjects', icon: BookOpen, color: 'text-teal-500', bg: 'bg-teal-50 dark:bg-teal-900/20' },
   ]
 

@@ -72,9 +72,15 @@ export default async function AdminReportsPage({ searchParams }: { searchParams:
 
       {/* Students Grid */}
       {students.length === 0 ? (
-        <div className="text-center py-16 bg-card border border-border rounded-3xl">
-          <GraduationCap className="w-10 h-10 text-slate-300 mx-auto mb-3" />
-          <p className="text-muted-foreground text-sm">Select a class to view students.</p>
+        <div className="text-center py-20 bg-[#121827] border border-slate-800 rounded-3xl">
+          <div className="w-16 h-16 rounded-2xl bg-slate-800/50 mx-auto flex items-center justify-center mb-4">
+            <GraduationCap className="w-8 h-8 text-slate-500" />
+          </div>
+          <h2 className="text-lg font-semibold text-slate-200">No students enrolled</h2>
+          <p className="text-sm text-slate-400 mt-2 mb-6 max-w-xs mx-auto">Enroll students in this class to generate report cards.</p>
+          <a href="/dashboard/students" className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition-colors">
+            Enroll Students
+          </a>
         </div>
       ) : (
           <div className="bg-[#121827] border border-slate-800 rounded-2xl overflow-hidden shadow-sm divide-y divide-slate-800/50">
