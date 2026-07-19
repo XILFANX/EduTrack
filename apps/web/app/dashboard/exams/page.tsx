@@ -1,13 +1,15 @@
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { redirect } from 'next/navigation'
+import { ClipboardList, ChevronLeft } from 'lucide-react'
+import { ClassDirectory } from '@/components/shared/class-directory'
 import { AdminExamsTabs } from './admin-exams-tabs'
-import { ClipboardList } from 'lucide-react'
+import Link from 'next/link'
 
 export const dynamic = 'force-dynamic'
 
 interface Props {
-  searchParams: Promise<{ exam?: string }>
+  searchParams: Promise<{ exam?: string; class?: string; mode?: string }>
 }
 
 export default async function AdminExamsPage({ searchParams }: Props) {
@@ -22,7 +24,9 @@ export default async function AdminExamsPage({ searchParams }: Props) {
     .eq('id', user.id)
     .single()
 
-  if (!profile?.school_id || !['admin', 'principal', 'headteacher'].includes((profile as any).role)) redirect('/dashboard')
+  const role = ((profile as any).role || '').toLowerCase()
+  const isAdmin = role.includes('admin') || role.includes('principal') || role.includes('headteacher')
+  if (!profile?.school_id || !isAdmin) redirect('/dashboard')
 
   const schoolId = (profile as any).school_id
   const adminClient = createAdminClient()
@@ -43,9 +47,41 @@ export default async function AdminExamsPage({ searchParams }: Props) {
     supabase.from('subjects').select('id, name').eq('school_id', schoolId).order('name'),
   ])
 
+  const selectedClassId = params.class || ''
+  const isBulkMode = params.mode === 'bulk'
+  const isGradingMode = params.mode === 'grading'
+
+  if (!selectedClassId && !isBulkMode && !isGradingMode) {
+    return (
+      <ClassDirectory
+        title="Examination Management"
+        description="Select a class to manage its exams, or use bulk tools."
+        classes={(classes as any[]).map(c => ({ id: c.id, name: c.name, countLabel: 'Manage exams' }))}
+        basePath="/dashboard/exams?class"
+        actionButton={
+          <div className="flex gap-2">
+            <Link href="/dashboard/exams?mode=bulk" className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-sm font-semibold rounded-xl transition-colors">
+              Bulk Create Exams
+            </Link>
+            <Link href="/dashboard/exams?mode=grading" className="px-4 py-2 bg-[#1a2133] border border-slate-700 hover:border-slate-600 text-slate-300 text-sm font-semibold rounded-xl transition-colors">
+              Global Grading System
+            </Link>
+          </div>
+        }
+      />
+    )
+  }
+
+  const selectedClass = (classes as any[]).find(c => c.id === selectedClassId)
+  
+  // Filter exams based on mode
+  const filteredExams = isBulkMode 
+    ? (exams as any[]) 
+    : (exams as any[]).filter(e => e.class_id === selectedClassId)
+
   // If an exam is selected, fetch its timetable slots
-  const selectedExamId = params.exam || (exams as any[])?.[0]?.id || ''
-  const selectedExam = (exams as any[] || []).find((e: any) => e.id === selectedExamId) || null
+  const selectedExamId = params.exam || (filteredExams as any[])?.[0]?.id || ''
+  const selectedExam = (filteredExams as any[] || []).find((e: any) => e.id === selectedExamId) || null
 
   const { data: examSlots } = selectedExamId
     ? await adminClient
@@ -55,15 +91,21 @@ export default async function AdminExamsPage({ searchParams }: Props) {
         .eq('school_id', schoolId)
     : { data: [] }
 
+  const viewTitle = isBulkMode ? 'Bulk Exam Creation' : isGradingMode ? 'Grading System' : `${selectedClass?.name} Exams`
+
   return (
-    <div className="space-y-8 max-w-5xl">
-      <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-2xl bg-purple-500/10 flex items-center justify-center">
-          <ClipboardList className="w-5 h-5 text-purple-600" />
-        </div>
+    <div className="space-y-6 max-w-6xl mx-auto pb-24">
+      <div className="flex items-center gap-4">
+        <Link href="/dashboard/exams" className="p-2 rounded-xl bg-[#121827] border border-slate-800 text-slate-400 hover:text-slate-200 transition-colors">
+          <ChevronLeft className="w-5 h-5" />
+        </Link>
         <div>
-          <h1 className="text-2xl font-bold text-foreground">Examination Management</h1>
-          <p className="text-sm text-muted-foreground">Create, schedule, and publish exams per academic session.</p>
+          <h1 className="text-2xl font-bold text-slate-100 flex items-center gap-2">
+            Exams <span className="text-slate-600">/</span> <span className="text-purple-400">{viewTitle}</span>
+          </h1>
+          <p className="text-sm text-slate-400 mt-1">
+            {isBulkMode ? 'Create exams that apply across multiple classes.' : isGradingMode ? 'Configure school-wide grading scales.' : 'Create, schedule, and manage exams for this class.'}
+          </p>
         </div>
       </div>
 
@@ -71,13 +113,15 @@ export default async function AdminExamsPage({ searchParams }: Props) {
         years={(years as any[]) || []}
         terms={(terms as any[]) || []}
         classes={(classes as any[]) || []}
-        initialExams={(exams as any[]) || []}
+        initialExams={filteredExams}
         initialGradeScales={(gradeScales as any[]) || []}
         schoolId={schoolId}
         subjects={(subjects as any[]) || []}
         selectedExamId={selectedExamId}
         selectedExam={selectedExam}
         initialExamSlots={(examSlots as any[]) || []}
+        forceActiveTab={isGradingMode ? 'grading' : isBulkMode ? 'exams' : undefined}
+        selectedClassId={selectedClassId}
       />
     </div>
   )

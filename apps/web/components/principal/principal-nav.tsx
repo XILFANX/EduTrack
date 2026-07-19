@@ -29,7 +29,7 @@ const MENU_SECTIONS = [
       { href: '/dashboard/exams', label: 'Examinations', icon: ClipboardList },
       { href: '/dashboard/timetable', label: 'Timetable', icon: CalendarDays },
       { href: '/dashboard/reports', label: 'Report Cards', icon: FileText },
-      { href: '/dashboard/sessions', label: 'Sessions Engine', icon: CalendarRange },
+      { href: '/dashboard/sessions', label: 'Academic Sessions', icon: CalendarRange },
     ],
   },
   {
@@ -79,12 +79,10 @@ export function PrincipalNav() {
                   />
                 )}
                 <div className="relative z-10 flex flex-col items-center gap-1">
-                  <Icon className={`w-[1.125rem] h-[1.125rem] transition-colors duration-300 ${
-                    active && !menuOpen ? 'text-white' : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300'
-                  }`} />
-                  <span className={`text-[9px] font-bold tracking-wide transition-colors duration-300 ${
-                    active && !menuOpen ? 'text-white/90' : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300'
-                  }`}>
+                  <Icon className={`w-[1.125rem] h-[1.125rem] transition-colors duration-300 ${active && !menuOpen ? 'text-white' : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300'
+                    }`} />
+                  <span className={`text-[9px] font-bold tracking-wide transition-colors duration-300 ${active && !menuOpen ? 'text-white/90' : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300'
+                    }`}>
                     {t.label}
                   </span>
                 </div>
@@ -104,12 +102,10 @@ export function PrincipalNav() {
               />
             )}
             <div className="relative z-10 flex flex-col items-center gap-1">
-              <Menu className={`w-[1.125rem] h-[1.125rem] transition-colors duration-300 ${
-                isMenuActive || menuOpen ? 'text-white' : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300'
-              }`} />
-              <span className={`text-[9px] font-bold tracking-wide transition-colors duration-300 ${
-                isMenuActive || menuOpen ? 'text-white/90' : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300'
-              }`}>
+              <Menu className={`w-[1.125rem] h-[1.125rem] transition-colors duration-300 ${isMenuActive || menuOpen ? 'text-white' : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300'
+                }`} />
+              <span className={`text-[9px] font-bold tracking-wide transition-colors duration-300 ${isMenuActive || menuOpen ? 'text-white/90' : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300'
+                }`}>
                 More
               </span>
             </div>
@@ -139,11 +135,10 @@ export function PrincipalNav() {
                           onClick={() => setMenuOpen(false)}
                           className="flex flex-col items-center gap-2 group"
                         >
-                          <div className={`relative w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 ${
-                            active
+                          <div className={`relative w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 ${active
                               ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30'
                               : 'bg-muted text-foreground group-hover:bg-blue-100 group-hover:text-blue-600 dark:group-hover:bg-blue-900/30 dark:group-hover:text-blue-400'
-                          }`}>
+                            }`}>
                             <Icon className="w-5 h-5" />
                           </div>
                           <span className={`text-[10px] font-semibold text-center ${active ? 'text-blue-600 dark:text-blue-400' : 'text-muted-foreground'}`}>

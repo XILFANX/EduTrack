@@ -16,10 +16,12 @@ export interface Announcement {
 export function AnnouncementsFeed({ announcements }: { announcements: Announcement[] }) {
   if (announcements.length === 0) {
     return (
-      <div className="text-center py-12 bg-card border border-border rounded-2xl">
-        <Megaphone className="w-8 h-8 text-slate-300 mx-auto mb-3" />
-        <h3 className="font-semibold text-foreground">No Announcements</h3>
-        <p className="text-sm text-muted-foreground mt-1">You're all caught up!</p>
+      <div className="text-center py-12 bg-[#121827] border border-slate-800 rounded-2xl">
+        <div className="w-16 h-16 rounded-2xl bg-slate-800/50 mx-auto flex items-center justify-center mb-4">
+          <Megaphone className="w-8 h-8 text-slate-500" />
+        </div>
+        <h3 className="font-semibold text-slate-200">No Announcements</h3>
+        <p className="text-sm text-slate-400 mt-1">You're all caught up!</p>
       </div>
     )
   }
@@ -33,24 +35,24 @@ export function AnnouncementsFeed({ announcements }: { announcements: Announceme
           year: 'numeric'
         })
         return (
-          <Card key={ann.id} className="border-orange-200 dark:border-orange-900/50 bg-orange-50/50 dark:bg-orange-950/20 shadow-sm">
-            <CardContent className="p-4 md:p-5">
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-2">
-                <h3 className="font-bold text-foreground text-orange-900 dark:text-orange-200 text-lg">
-                  {ann.title}
-                </h3>
-                <div className="flex items-center gap-3 text-xs font-medium text-orange-700/70 dark:text-orange-400">
-                  <span className="bg-orange-100 dark:bg-orange-900/40 px-2 py-0.5 rounded-md">
-                    From: {ann.users ? (ann.users.salutation ? `${ann.users.salutation} ${ann.users.full_name}` : ann.users.full_name) : 'Admin'}
-                  </span>
-                  <span>{date}</span>
-                </div>
+          <div key={ann.id} className="relative bg-[#0b0f19] border border-orange-500/20 rounded-2xl p-5 overflow-hidden group hover:border-orange-500/40 transition-colors shadow-lg">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-orange-500/5 blur-3xl rounded-full pointer-events-none group-hover:bg-orange-500/10 transition-colors" />
+            
+            <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-3 mb-3">
+              <h3 className="font-bold text-orange-400 text-lg group-hover:text-orange-300 transition-colors">
+                {ann.title}
+              </h3>
+              <div className="flex items-center gap-3 text-xs font-semibold text-orange-200/60">
+                <span className="bg-orange-500/10 text-orange-400 border border-orange-500/20 px-2.5 py-1 rounded-lg">
+                  From: {ann.users ? (ann.users.salutation ? `${ann.users.salutation} ${ann.users.full_name}` : ann.users.full_name) : 'Admin'}
+                </span>
+                <span className="text-slate-500">{date}</span>
               </div>
-              <p className="text-sm text-orange-900/80 dark:text-orange-200/80 whitespace-pre-wrap leading-relaxed">
-                {ann.body}
-              </p>
-            </CardContent>
-          </Card>
+            </div>
+            <p className="relative z-10 text-sm text-slate-300 whitespace-pre-wrap leading-relaxed">
+              {ann.body}
+            </p>
+          </div>
         )
       })}
     </div>

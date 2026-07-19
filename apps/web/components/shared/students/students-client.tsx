@@ -39,7 +39,7 @@ export function StudentsPageClient({ initialStudents, classes, autoEnroll }: { i
         ((student.classes as any)?.name || '').toLowerCase().includes(q)
       )
     }
-    
+
     // Otherwise, filter by selected class
     if (selectedClass === 'all') return true
     if (selectedClass) {
@@ -57,7 +57,7 @@ export function StudentsPageClient({ initialStudents, classes, autoEnroll }: { i
       variant: "danger"
     })
     if (!isConfirmed) return
-    
+
     setLoading(true)
     const res = await deleteStudent(id)
     setLoading(false)
@@ -77,7 +77,7 @@ export function StudentsPageClient({ initialStudents, classes, autoEnroll }: { i
       variant: "danger"
     })
     if (!isConfirmed) return
-    
+
     setLoading(true)
     const res = await permanentlyDeleteStudent(id)
     setLoading(false)
@@ -97,8 +97,8 @@ export function StudentsPageClient({ initialStudents, classes, autoEnroll }: { i
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-foreground">Student Directory</h1>
-            <p className="text-sm text-muted-foreground mt-1">Select a class to view its enrolled students, or search globally.</p>
+            <h1 className="text-2xl font-bold text-foreground">Student Management</h1>
+            <p className="text-sm text-muted-foreground mt-1">Select a class to manage its enrolled students, or search globally.</p>
           </div>
           <Button className="bg-blue-600 hover:bg-blue-700 gap-2 shrink-0" onClick={() => setIsModalOpen(true)}>
             <UserPlus className="w-4 h-4" />
@@ -108,11 +108,11 @@ export function StudentsPageClient({ initialStudents, classes, autoEnroll }: { i
 
         <div className="relative max-w-md">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-          <input 
-            type="text" 
+          <input
+            type="text"
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
-            placeholder="Search by name, admission number..." 
+            placeholder="Search by name, admission number..."
             className="w-full h-11 pl-10 pr-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-sm"
           />
         </div>
@@ -180,9 +180,9 @@ export function StudentsPageClient({ initialStudents, classes, autoEnroll }: { i
           </div>
         )}
 
-        <EnrollStudentModal 
-          open={isModalOpen} 
-          onClose={() => setIsModalOpen(false)} 
+        <EnrollStudentModal
+          open={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
           classes={classes}
           onSuccess={() => {
             setTimeout(() => window.location.reload(), 1500)
@@ -225,31 +225,31 @@ export function StudentsPageClient({ initialStudents, classes, autoEnroll }: { i
 
       <div className="relative max-w-md">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-        <input 
-          type="text" 
+        <input
+          type="text"
           value={searchQuery}
           onChange={e => setSearchQuery(e.target.value)}
-          placeholder="Search by name, admission number, or class..." 
+          placeholder="Search by name, admission number, or class..."
           className="w-full h-11 pl-10 pr-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-sm"
         />
       </div>
 
       {!students || students.length === 0 ? (
         <div className="text-center py-20 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl">
-           <div className="w-16 h-16 rounded-2xl bg-blue-100 dark:bg-blue-900/40 mx-auto flex items-center justify-center mb-4">
-             <GraduationCap className="w-8 h-8 text-blue-600 dark:text-blue-400" />
-           </div>
-           <h2 className="text-lg font-semibold text-foreground">No students enrolled yet</h2>
-           <p className="text-sm text-muted-foreground max-w-sm mx-auto mt-2 mb-6">
-             {selectedClass !== 'all' 
-               ? `There are no students enrolled in ${selectedClass?.name || 'this class'}.` 
-               : 'Click Enroll Student to add your first student.'}
-           </p>
-           <Button className="bg-blue-600 hover:bg-blue-700 gap-2" onClick={() => setIsModalOpen(true)}>
-             <UserPlus className="w-4 h-4" />
-             Enroll Student
-           </Button>
-         </div>
+          <div className="w-16 h-16 rounded-2xl bg-blue-100 dark:bg-blue-900/40 mx-auto flex items-center justify-center mb-4">
+            <GraduationCap className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+          </div>
+          <h2 className="text-lg font-semibold text-foreground">No students enrolled yet</h2>
+          <p className="text-sm text-muted-foreground max-w-sm mx-auto mt-2 mb-6">
+            {selectedClass !== 'all'
+              ? `There are no students enrolled in ${selectedClass?.name || 'this class'}.`
+              : 'Click Enroll Student to add your first student.'}
+          </p>
+          <Button className="bg-blue-600 hover:bg-blue-700 gap-2" onClick={() => setIsModalOpen(true)}>
+            <UserPlus className="w-4 h-4" />
+            Enroll Student
+          </Button>
+        </div>
       ) : filteredStudents.length === 0 ? (
         <div className="text-center py-20 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl">
           <p className="text-muted-foreground">No students match your criteria.</p>
@@ -289,11 +289,10 @@ export function StudentsPageClient({ initialStudents, classes, autoEnroll }: { i
                     </td>
                     <td className="px-6 py-4 text-muted-foreground">{(student.classes as any)?.name || 'Unassigned'}</td>
                     <td className="px-6 py-4">
-                      <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${
-                        (student.status || 'Active').toLowerCase() === 'active' 
-                          ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400' 
+                      <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${(student.status || 'Active').toLowerCase() === 'active'
+                          ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400'
                           : 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400'
-                      }`}>
+                        }`}>
                         {student.status || 'Active'}
                       </span>
                     </td>
@@ -384,11 +383,10 @@ export function StudentsPageClient({ initialStudents, classes, autoEnroll }: { i
                   <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">
                     Student
                   </span>
-                  <span className={`text-sm font-medium px-2.5 py-1 rounded-full ${
-                    (quickViewStudent.status || 'Active').toLowerCase() === 'active'
+                  <span className={`text-sm font-medium px-2.5 py-1 rounded-full ${(quickViewStudent.status || 'Active').toLowerCase() === 'active'
                       ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400'
                       : 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400'
-                  }`}>
+                    }`}>
                     {quickViewStudent.status || 'Active'}
                   </span>
                 </div>

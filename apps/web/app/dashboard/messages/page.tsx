@@ -130,20 +130,20 @@ export default async function PrincipalMessagesPage() {
   ]
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 max-w-7xl mx-auto pb-24">
       <div>
-        <h1 className="text-2xl font-bold text-foreground">Communications</h1>
-        <p className="text-sm text-muted-foreground mt-1">Manage announcements and direct messages.</p>
+        <h1 className="text-2xl font-bold text-slate-100">Communications</h1>
+        <p className="text-sm text-slate-400 mt-1">Manage announcements and direct messages.</p>
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
         
         {/* Left Column: Announcements */}
         <div className="xl:col-span-1 space-y-6">
-          <section className="bg-card border border-border rounded-3xl overflow-hidden shadow-sm">
-            <div className="p-4 border-b border-border bg-slate-50 dark:bg-slate-950 flex items-center gap-2">
+          <section className="bg-[#121827] border border-slate-800 rounded-3xl overflow-hidden shadow-sm">
+            <div className="p-4 border-b border-slate-800 bg-[#0b0f19] flex items-center gap-2">
               <Megaphone className="w-5 h-5 text-orange-500" />
-              <h2 className="font-semibold text-foreground">New Broadcast</h2>
+              <h2 className="font-semibold text-slate-100">New Broadcast</h2>
             </div>
             <div className="p-5">
               <AnnouncementsClient audienceOptions={audienceOptions} />
@@ -151,7 +151,7 @@ export default async function PrincipalMessagesPage() {
           </section>
 
           <section>
-            <h3 className="font-semibold text-foreground mb-3 text-sm px-1">Recent Announcements</h3>
+            <h3 className="font-semibold text-slate-400 uppercase tracking-widest text-xs px-1 mb-4">Recent Announcements</h3>
             <AnnouncementsFeed announcements={(announcementsData as Announcement[]) || []} />
           </section>
         </div>
@@ -160,7 +160,7 @@ export default async function PrincipalMessagesPage() {
         <div className="xl:col-span-2 space-y-4">
           <div className="flex items-center gap-2 px-1">
             <MessageSquare className="w-5 h-5 text-blue-500" />
-            <h2 className="font-semibold text-foreground">Direct Messages</h2>
+            <h2 className="font-semibold text-slate-100">Direct Messages</h2>
           </div>
           
           <ChatClient 

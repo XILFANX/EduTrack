@@ -2,8 +2,9 @@ import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
-import { CalendarDays, GraduationCap } from 'lucide-react'
+import { CalendarDays, GraduationCap, ChevronLeft } from 'lucide-react'
 import { TimetableBuilder } from './timetable-builder'
+import { ClassDirectory } from '@/components/shared/class-directory'
 
 export const dynamic = 'force-dynamic'
 
@@ -24,7 +25,9 @@ export default async function AdminTimetablePage({ searchParams }: Props) {
     .eq('id', user.id)
     .single()
 
-  if (!profile?.school_id || !['admin', 'principal', 'headteacher'].includes((profile as any).role)) {
+  const role = ((profile as any).role || '').toLowerCase()
+  const isAdmin = role.includes('admin') || role.includes('principal') || role.includes('headteacher')
+  if (!profile?.school_id || !isAdmin) {
     redirect('/dashboard')
   }
 
@@ -39,7 +42,7 @@ export default async function AdminTimetablePage({ searchParams }: Props) {
     .order('name')
 
   const classList = (classes || []) as any[]
-  const selectedClassId = params.class || classList[0]?.id || ''
+  const selectedClassId = params.class || ''
 
   // Fetch subjects for this class
   const adminClient = createAdminClient()
@@ -71,58 +74,43 @@ export default async function AdminTimetablePage({ searchParams }: Props) {
         .eq('class_id', selectedClassId)
     : { data: [] }
 
+  if (!selectedClassId) {
+    return (
+      <ClassDirectory
+        title="Class Timetables"
+        description="Select a class to build or view its weekly timetable."
+        classes={classList.map(c => ({ id: c.id, name: c.name, countLabel: 'Manage timetable' }))}
+        basePath="/dashboard/timetable?class"
+      />
+    )
+  }
+
+  const selectedClass = classList.find(c => c.id === selectedClassId)
+
   return (
-    <div className="space-y-8 max-w-5xl">
-      {/* Header */}
-      <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-2xl bg-indigo-500/10 flex items-center justify-center">
-          <CalendarDays className="w-5 h-5 text-indigo-600" />
-        </div>
+    <div className="space-y-6 max-w-7xl mx-auto pb-24">
+      <div className="flex items-center gap-4">
+        <Link href="/dashboard/timetable" className="p-2 rounded-xl bg-[#121827] border border-slate-800 text-slate-400 hover:text-slate-200 transition-colors">
+          <ChevronLeft className="w-5 h-5" />
+        </Link>
         <div>
-          <h1 className="text-2xl font-bold text-foreground">Timetable Manager</h1>
-          <p className="text-sm text-muted-foreground">Build and manage weekly class schedules for your school.</p>
+          <h1 className="text-2xl font-bold text-slate-100 flex items-center gap-2">
+            Timetable <span className="text-slate-600">/</span> <span className="text-blue-400">{selectedClass?.name}</span>
+          </h1>
+          <p className="text-sm text-slate-400 mt-1">
+            Drag and drop subjects to create the weekly schedule.
+          </p>
         </div>
       </div>
 
-      {/* Class Selector */}
-      {classList.length === 0 ? (
-        <div className="text-center py-16 bg-card border border-border rounded-3xl">
-          <GraduationCap className="w-10 h-10 text-slate-300 mx-auto mb-3" />
-          <h3 className="font-semibold text-foreground">No Classes Found</h3>
-          <p className="text-sm text-muted-foreground mt-1">Create classes first before building a timetable.</p>
-        </div>
-      ) : (
-        <>
-          {/* Class pills */}
-          <div>
-            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 px-1">Select Class</p>
-            <div className="flex gap-2 flex-wrap">
-              {classList.map((cls: any) => (
-                <Link
-                  key={cls.id}
-                  href={`/dashboard/timetable?class=${cls.id}`}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors border ${
-                    selectedClassId === cls.id
-                      ? 'bg-indigo-600 text-white border-indigo-600 shadow-sm'
-                      : 'bg-card text-foreground border-border hover:bg-slate-50 dark:hover:bg-slate-800'
-                  }`}
-                >
-                  {cls.name}
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          <TimetableBuilder
-            schoolId={schoolId}
-            classes={classList}
-            initialPeriods={(periods as any[]) || []}
-            subjects={subjects as any[]}
-            initialSlots={(slots as any[]) || []}
-            selectedClassId={selectedClassId}
-          />
-        </>
-      )}
+      <TimetableBuilder
+        schoolId={schoolId}
+        classes={classList}
+        initialPeriods={(periods as any[]) || []}
+        subjects={subjects as any[]}
+        initialSlots={(slots as any[]) || []}
+        selectedClassId={selectedClassId}
+      />
     </div>
   )
 }

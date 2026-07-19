@@ -16,7 +16,9 @@ export default async function SessionsPage() {
     .eq('id', user.id)
     .single()
 
-  if (!profile?.school_id || !['admin', 'principal', 'headteacher'].includes(profile.role as string)) redirect('/dashboard')
+  const role = ((profile as any).role || '').toLowerCase()
+  const isAdmin = role.includes('admin') || role.includes('principal') || role.includes('headteacher')
+  if (!profile?.school_id || !isAdmin) redirect('/dashboard')
 
   // Fetch all years
   const { data: years } = await supabase
@@ -44,7 +46,10 @@ export default async function SessionsPage() {
         </p>
       </div>
 
-      <SessionsManager initialYears={years || []} initialTerms={(terms as any) || []} />
+      <SessionsManager 
+        initialYears={JSON.parse(JSON.stringify(years || []))} 
+        initialTerms={JSON.parse(JSON.stringify(terms || []))} 
+      />
     </div>
   )
 }

@@ -63,25 +63,14 @@ export default async function DashboardPage() {
   const quickActions = [
     { href: '/dashboard/staff', label: 'Manage Staff', icon: Users, color: 'text-blue-500', bg: 'bg-blue-50 dark:bg-blue-900/20' },
     { href: '/dashboard/students', label: 'Manage Students', icon: GraduationCap, color: 'text-indigo-500', bg: 'bg-indigo-50 dark:bg-indigo-900/20' },
-    { href: '/dashboard/exams', label: 'Examinations', icon: ClipboardList, color: 'text-purple-500', bg: 'bg-purple-50 dark:bg-purple-900/20' },
-    { href: '/dashboard/timetable', label: 'Timetable', icon: CalendarDays, color: 'text-indigo-500', bg: 'bg-indigo-50 dark:bg-indigo-900/20' },
-    { href: '/dashboard/reports', label: 'Report Cards', icon: FileText, color: 'text-emerald-500', bg: 'bg-emerald-50 dark:bg-emerald-900/20' },
-    { href: '/dashboard/sessions', label: 'Sessions Engine', icon: CalendarRange, color: 'text-amber-500', bg: 'bg-amber-50 dark:bg-amber-900/20' },
-    { href: '/dashboard/messages', label: 'Messages', icon: MessageSquare, color: 'text-rose-500', bg: 'bg-rose-50 dark:bg-rose-900/20' },
+    { href: '/dashboard/exams', label: 'Manage Examinations', icon: ClipboardList, color: 'text-purple-500', bg: 'bg-purple-50 dark:bg-purple-900/20' },
+    { href: '/dashboard/timetable', label: ' Manage Timetable', icon: CalendarDays, color: 'text-indigo-500', bg: 'bg-indigo-50 dark:bg-indigo-900/20' },
+    { href: '/dashboard/reports', label: 'Manage Student Reports', icon: FileText, color: 'text-emerald-500', bg: 'bg-emerald-50 dark:bg-emerald-900/20' },
+    { href: '/dashboard/sessions', label: 'Manage Academic Sessions', icon: CalendarRange, color: 'text-amber-500', bg: 'bg-amber-50 dark:bg-amber-900/20' },
+    { href: '/dashboard/messages', label: 'Communication Hub', icon: MessageSquare, color: 'text-rose-500', bg: 'bg-rose-50 dark:bg-rose-900/20' },
     { href: '/dashboard/subjects', label: 'Manage Subjects', icon: BookOpen, color: 'text-teal-500', bg: 'bg-teal-50 dark:bg-teal-900/20' },
   ]
 
-  const operationModules = [
-    { href: '/dashboard/transport', label: 'Transport', icon: Bus, color: 'text-emerald-500' },
-    { href: '/dashboard/library', label: 'Library', icon: BookOpen, color: 'text-indigo-500' },
-    { href: '/dashboard/store', label: 'Store', icon: Package, color: 'text-amber-500' },
-    { href: '/dashboard/timetable', label: 'Timetable', icon: CalendarDays, color: 'text-indigo-500' },
-    { href: '/dashboard/messages', label: 'Messages', icon: MessageSquare, color: 'text-rose-500' },
-    { href: '/dashboard/exams', label: 'Exams', icon: ClipboardList, color: 'text-purple-500' },
-    { href: '/dashboard/sessions', label: 'Sessions', icon: CalendarRange, color: 'text-blue-500' },
-    { href: '/dashboard/reports', label: 'Reports', icon: FileText, color: 'text-teal-500' },
-    { href: '/dashboard/settings', label: 'Settings', icon: Package, color: 'text-slate-500' },
-  ]
 
   return (
     <div className="space-y-6 max-w-4xl mx-auto pb-24">
@@ -138,17 +127,17 @@ export default async function DashboardPage() {
       {/* Quick Actions */}
       <div>
         <SectionHeader title="QUICK ACTIONS" />
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-8 gap-3">
           {quickActions.map(({ href, label, icon: Icon, color, bg }) => (
             <Link
               key={href}
               href={href}
-              className="flex flex-col items-center gap-2 p-4 rounded-2xl bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 text-foreground hover:scale-[1.02] hover:shadow-md dark:hover:bg-slate-800/50 transition-all shadow-sm group"
+              className="flex flex-col items-center gap-2 p-3 rounded-2xl bg-white dark:bg-[#121827] border border-slate-200 dark:border-slate-800 text-foreground hover:scale-[1.05] hover:shadow-md dark:hover:bg-[#1a2133] transition-all shadow-sm group"
             >
-              <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${bg} transition-colors`}>
+              <div className={`w-12 h-12 rounded-[1rem] flex items-center justify-center ${bg} transition-colors`}>
                 <Icon className={`w-5 h-5 ${color}`} />
               </div>
-              <span className="font-semibold text-xs text-center text-foreground leading-tight">{label}</span>
+              <span className="font-semibold text-[10px] sm:text-xs text-center text-foreground leading-tight px-1">{label}</span>
             </Link>
           ))}
         </div>

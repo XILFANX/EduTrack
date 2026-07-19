@@ -2,9 +2,8 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Loader2, Plus, Power, ShieldAlert, CalendarRange } from 'lucide-react'
+import { Loader2, Plus, Power, ShieldAlert, CalendarRange, X } from 'lucide-react'
 import { createAcademicYear, createAcademicTerm, toggleActiveSession } from '@/app/actions/sessions'
-import { Card, CardContent } from '@/components/ui/card'
 
 interface AcademicYear {
   id: string
@@ -102,53 +101,54 @@ export function SessionsManager({ initialYears, initialTerms }: { initialYears: 
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pb-24">
       
       {/* Current Session Banner */}
-      <Card className="bg-emerald-500/10 border-emerald-500/20 shadow-none">
-        <CardContent className="p-6 flex items-center justify-between">
-          <div>
-            <p className="text-sm font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-wide mb-1">Current Active Session</p>
-            {activeYear ? (
-              <h2 className="text-2xl font-bold text-foreground">
-                {activeYear.name} {activeTerm ? `• ${activeTerm.name}` : ''}
-              </h2>
-            ) : (
-              <h2 className="text-2xl font-bold text-foreground text-slate-400">No Active Session</h2>
-            )}
-          </div>
-          <ShieldAlert className="w-12 h-12 text-emerald-500/20" />
-        </CardContent>
-      </Card>
+      <div className="bg-[#121827] border border-slate-800 rounded-2xl p-6 flex items-center justify-between relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 blur-3xl pointer-events-none" />
+        <div className="relative z-10">
+          <p className="text-xs font-semibold text-blue-400 uppercase tracking-wide mb-1">Current Active Session</p>
+          {activeYear ? (
+            <h2 className="text-2xl font-bold text-slate-100">
+              {activeYear.name} {activeTerm ? <span className="text-slate-400 font-medium">/ {activeTerm.name}</span> : ''}
+            </h2>
+          ) : (
+            <h2 className="text-2xl font-bold text-slate-500">No Active Session</h2>
+          )}
+        </div>
+        <div className="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center border border-blue-500/20 relative z-10">
+          <CalendarRange className="w-6 h-6 text-blue-400" />
+        </div>
+      </div>
 
       {error && (
-        <div className="bg-red-500/10 text-red-500 p-4 rounded-xl text-sm font-medium">
+        <div className="bg-red-900/20 border border-red-800 text-red-400 p-4 rounded-xl text-sm font-medium">
           {error}
         </div>
       )}
 
       {/* Header */}
       <div className="flex justify-between items-center">
-        <h2 className="text-lg font-semibold text-foreground">Academic Timeline</h2>
+        <h2 className="text-lg font-semibold text-slate-200">Academic Timeline</h2>
         <button 
           onClick={() => setShowYearModal(true)}
-          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full text-sm font-medium transition-colors"
+          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-all shadow-sm"
         >
-          <Plus className="w-4 h-4" /> New Academic Year
+          <Plus className="w-4 h-4" /> Add Academic Year
         </button>
       </div>
 
       {/* Timeline */}
       <div className="space-y-6">
         {years.map(year => (
-          <div key={year.id} className={`p-6 rounded-3xl border transition-colors ${year.is_active ? 'border-emerald-500/50 bg-emerald-500/5 dark:bg-emerald-950/20' : 'border-border bg-card'}`}>
-            <div className="flex justify-between items-start mb-6">
+          <div key={year.id} className={`p-6 rounded-2xl border transition-colors ${year.is_active ? 'border-blue-500/30 bg-[#121827]' : 'border-slate-800 bg-[#0b0f19]'}`}>
+            <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-6">
               <div>
-                <h3 className="text-xl font-bold text-foreground flex items-center gap-3">
+                <h3 className="text-xl font-bold text-slate-200 flex items-center gap-3">
                   {year.name}
-                  {year.is_active && <span className="bg-emerald-500 text-white text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full font-bold">Active</span>}
+                  {year.is_active && <span className="bg-blue-500/20 text-blue-400 border border-blue-500/30 text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full font-bold">Active</span>}
                 </h3>
-                <p className="text-sm text-muted-foreground mt-1">
+                <p className="text-sm text-slate-400 mt-1">
                   {new Date(year.start_date).toLocaleDateString()} — {new Date(year.end_date).toLocaleDateString()}
                 </p>
               </div>
@@ -156,7 +156,7 @@ export function SessionsManager({ initialYears, initialTerms }: { initialYears: 
               <div className="flex gap-2">
                 <button
                   onClick={() => setShowTermModalFor(year.id)}
-                  className="px-4 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-foreground text-sm font-medium rounded-full transition-colors"
+                  className="px-4 py-2 bg-[#1a2133] hover:bg-[#232b40] border border-slate-700 text-slate-300 text-sm font-semibold rounded-xl transition-colors"
                 >
                   Add Term
                 </button>
@@ -164,107 +164,111 @@ export function SessionsManager({ initialYears, initialTerms }: { initialYears: 
                   <button
                     onClick={() => handleActivate(year.id)}
                     disabled={loadingId === year.id}
-                    className="flex items-center gap-2 px-4 py-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-600 dark:text-amber-400 text-sm font-medium rounded-full transition-colors"
+                    className="flex items-center gap-2 px-4 py-2 bg-[#1a2133] hover:bg-blue-600 border border-slate-700 hover:border-blue-500 text-slate-300 hover:text-white text-sm font-semibold rounded-xl transition-all disabled:opacity-50 group"
                   >
-                    {loadingId === year.id ? <Loader2 className="w-4 h-4 animate-spin" /> : <Power className="w-4 h-4" />}
-                    Activate Year
+                    {loadingId === year.id ? <Loader2 className="w-4 h-4 animate-spin" /> : <Power className="w-4 h-4 text-slate-400 group-hover:text-blue-200" />}
+                    Activate
                   </button>
                 )}
               </div>
             </div>
 
-            {/* Terms inside this year */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {terms.filter(t => t.year_id === year.id).map(term => (
-                <div key={term.id} className={`p-4 rounded-2xl border transition-colors ${term.is_active ? 'border-emerald-500 bg-white dark:bg-slate-900 shadow-md ring-1 ring-emerald-500' : 'border-border bg-slate-50/50 dark:bg-slate-950/50'}`}>
-                  <div className="flex justify-between items-start">
-                    <h4 className="font-semibold text-foreground">{term.name}</h4>
-                    {term.is_active ? (
-                      <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                    ) : (
+            {/* Terms List */}
+            {terms.filter(t => t.year_id === year.id).length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                {terms.filter(t => t.year_id === year.id).map(term => (
+                  <div key={term.id} className={`p-4 rounded-xl border flex flex-col justify-between transition-colors ${
+                    term.is_active ? 'border-blue-500/30 bg-blue-500/5' : 'border-slate-800 bg-[#121827]'
+                  }`}>
+                    <div className="mb-4">
+                      <div className="flex items-center justify-between mb-1">
+                        <h4 className="font-semibold text-slate-200">{term.name}</h4>
+                        {term.is_active && <span className="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.5)]"></span>}
+                      </div>
+                      <p className="text-xs text-slate-400">
+                        {new Date(term.start_date).toLocaleDateString()} — {new Date(term.end_date).toLocaleDateString()}
+                      </p>
+                    </div>
+                    
+                    {!term.is_active && year.is_active && (
                       <button
                         onClick={() => handleActivate(year.id, term.id)}
                         disabled={loadingId === term.id}
-                        title="Set as active term"
-                        className="text-slate-400 hover:text-amber-500 transition-colors"
+                        className="flex items-center justify-center gap-1.5 w-full py-2 bg-[#1a2133] hover:bg-blue-600 text-slate-300 hover:text-white text-xs font-semibold rounded-lg transition-colors disabled:opacity-50 border border-slate-700 hover:border-blue-500 group"
                       >
-                        {loadingId === term.id ? <Loader2 className="w-4 h-4 animate-spin" /> : <Power className="w-4 h-4" />}
+                        {loadingId === term.id ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Power className="w-3.5 h-3.5 text-slate-400 group-hover:text-blue-200" />}
+                        Activate Term
                       </button>
                     )}
+                    {term.is_active && (
+                      <div className="py-2 text-center text-xs font-semibold text-blue-400 border border-blue-500/20 bg-blue-500/10 rounded-lg">
+                        Currently Active
+                      </div>
+                    )}
                   </div>
-                  <p className="text-xs text-muted-foreground mt-2">
-                    {new Date(term.start_date).toLocaleDateString()} — {new Date(term.end_date).toLocaleDateString()}
-                  </p>
-                </div>
-              ))}
-              {terms.filter(t => t.year_id === year.id).length === 0 && (
-                <div className="col-span-full text-sm text-slate-400 p-4 border border-dashed border-border rounded-2xl text-center">
-                  No terms created for this year yet.
-                </div>
-              )}
-            </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-sm text-slate-500 italic py-4">No terms added to this year yet.</div>
+            )}
           </div>
         ))}
-
-        {years.length === 0 && (
-          <div className="text-center py-20 bg-card border border-border rounded-3xl">
-            <CalendarRange className="w-12 h-12 text-slate-300 mx-auto mb-4" />
-            <h3 className="text-lg font-bold text-foreground">No Academic Sessions</h3>
-            <p className="text-muted-foreground mt-2">Create your first academic year to get started.</p>
-          </div>
-        )}
       </div>
 
-      {/* Modal overlays for simple forms */}
+      {/* MODALS */}
       {(showYearModal || showTermModalFor) && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-card w-full max-w-md rounded-3xl p-6 shadow-2xl border border-border animate-in zoom-in-95">
-            <h3 className="text-xl font-bold mb-4">
-              {showYearModal ? 'New Academic Year' : 'New Academic Term'}
-            </h3>
-            <form onSubmit={showYearModal ? handleCreateYear : handleCreateTerm} className="space-y-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+          <div className="bg-[#121827] border border-slate-800 rounded-2xl shadow-xl w-full max-w-md overflow-hidden">
+            <div className="flex items-center justify-between p-4 border-b border-slate-800">
+              <h3 className="font-bold text-slate-200">
+                {showYearModal ? 'Add Academic Year' : 'Add Academic Term'}
+              </h3>
+              <button onClick={resetForm} className="text-slate-400 hover:text-slate-200 transition-colors">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            
+            <form onSubmit={showYearModal ? handleCreateYear : handleCreateTerm} className="p-5 space-y-4">
               <div>
-                <label className="text-xs font-semibold uppercase text-muted-foreground">Name</label>
+                <label className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1.5 block">Name</label>
                 <input 
-                  type="text" 
-                  value={name} onChange={e => setName(e.target.value)}
-                  placeholder={showYearModal ? "e.g. 2024/2025" : "e.g. Term 1"} 
+                  type="text"
                   required
-                  className="w-full bg-background border border-border rounded-xl px-4 py-2 mt-1 focus:ring-2 focus:ring-blue-500/50 outline-none"
+                  placeholder={showYearModal ? "e.g., 2026/2027" : "e.g., Term 1"}
+                  value={name}
+                  onChange={e => setName(e.target.value)}
+                  className="w-full bg-[#0b0f19] border border-slate-700 text-slate-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                 />
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs font-semibold uppercase text-muted-foreground">Start Date</label>
+                  <label className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1.5 block">Start Date</label>
                   <input 
-                    type="date" 
-                    value={startDate} onChange={e => setStartDate(e.target.value)} required
-                    className="w-full bg-background border border-border rounded-xl px-4 py-2 mt-1 focus:ring-2 focus:ring-blue-500/50 outline-none"
+                    type="date"
+                    required
+                    value={startDate}
+                    onChange={e => setStartDate(e.target.value)}
+                    className="w-full bg-[#0b0f19] border border-slate-700 text-slate-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 [color-scheme:dark]"
                   />
                 </div>
                 <div>
-                  <label className="text-xs font-semibold uppercase text-muted-foreground">End Date</label>
+                  <label className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1.5 block">End Date</label>
                   <input 
-                    type="date" 
-                    value={endDate} onChange={e => setEndDate(e.target.value)} required
-                    className="w-full bg-background border border-border rounded-xl px-4 py-2 mt-1 focus:ring-2 focus:ring-blue-500/50 outline-none"
+                    type="date"
+                    required
+                    value={endDate}
+                    onChange={e => setEndDate(e.target.value)}
+                    className="w-full bg-[#0b0f19] border border-slate-700 text-slate-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 [color-scheme:dark]"
                   />
                 </div>
               </div>
-              <div className="flex gap-3 pt-4 mt-4 border-t border-border">
+              <div className="pt-2">
                 <button 
-                  type="button" 
-                  onClick={resetForm}
-                  className="flex-1 py-2.5 rounded-xl font-medium text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-                >
-                  Cancel
-                </button>
-                <button 
-                  type="submit" 
+                  type="submit"
                   disabled={submitting}
-                  className="flex-1 py-2.5 rounded-xl font-medium bg-blue-600 hover:bg-blue-700 text-white flex justify-center items-center transition-colors disabled:opacity-50"
+                  className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-xl font-semibold transition-colors disabled:opacity-50"
                 >
-                  {submitting ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Create'}
+                  {submitting ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Save'}
                 </button>
               </div>
             </form>

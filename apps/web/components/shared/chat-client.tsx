@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { createClient } from '@/lib/supabase/client'
-import { Send, UserCircle2, Check, CheckCheck, Loader2 } from 'lucide-react'
+import { Send, UserCircle2, Loader2, ArrowLeft, Users, Briefcase, GraduationCap, Shield, ChevronRight, Search } from 'lucide-react'
 import { getOrCreateConversation, markConversationAsRead, sendMessage } from '@/app/actions/chat'
 
 interface Contact {
@@ -22,6 +22,13 @@ interface Message {
   created_at: string
 }
 
+const CATEGORIES = [
+  { id: 'teaching', label: 'Teaching Staff', icon: GraduationCap, roles: ['Class Teacher', 'Subject Teacher'] },
+  { id: 'non_teaching', label: 'Non-Teaching Staff', icon: Briefcase, roles: ['Bursar', 'Librarian', 'Storekeeper', 'Transport Matron'] },
+  { id: 'parents', label: 'Parents', icon: Users, roles: ['Parent'] },
+  { id: 'admin', label: 'Admin & Principals', icon: Shield, roles: ['Admin', 'Principal', 'Headteacher', 'Platform Admin'] }
+]
+
 export function ChatClient({ 
   currentUser, 
   contacts, 
@@ -29,12 +36,14 @@ export function ChatClient({
   currentUser: { id: string, role: string }, 
   contacts: Contact[], 
 }) {
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
   const [selectedContact, setSelectedContact] = useState<Contact | null>(null)
   const [conversationId, setConversationId] = useState<string | null>(null)
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
   const [sending, setSending] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
   
   const [onlineUsers, setOnlineUsers] = useState<Set<string>>(new Set())
 
@@ -167,124 +176,235 @@ export function ChatClient({
     return new Date(isoString).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
   }
 
+  const handleBackToCategories = () => {
+    setSelectedCategory(null)
+    setSearchQuery('')
+  }
+
+  const handleBackToContacts = () => {
+    setSelectedContact(null)
+  }
+
+  const activeCategory = CATEGORIES.find(c => c.id === selectedCategory)
+  
+  const filteredContacts = activeCategory 
+    ? contacts.filter(c => activeCategory.roles.includes(c.role)).filter(c => c.name.toLowerCase().includes(searchQuery.toLowerCase()))
+    : []
+
   return (
-    <div className="flex flex-col md:flex-row h-[650px] bg-card border border-border rounded-3xl overflow-hidden shadow-sm">
+    <div className="flex h-[700px] bg-[#121827] border border-slate-800 rounded-3xl overflow-hidden shadow-2xl">
       
-      {/* Contacts List */}
-      <div className="w-full md:w-1/3 border-b md:border-b-0 md:border-r border-border bg-slate-50/50 dark:bg-slate-950/20 flex flex-col">
-        <div className="p-4 border-b border-border bg-card">
-          <h2 className="font-semibold text-foreground">Contacts</h2>
-        </div>
-        <div className="flex-1 overflow-y-auto p-2 space-y-1">
-          {contacts.length === 0 ? (
-            <div className="text-center p-4 text-sm text-muted-foreground">No contacts available.</div>
-          ) : (
-            contacts.map((contact) => (
-              <button
-                key={contact.id}
-                onClick={() => setSelectedContact(contact)}
-                className={`w-full text-left flex items-center gap-3 p-3 rounded-2xl transition-all ${
-                  selectedContact?.id === contact.id
-                    ? 'bg-blue-600 text-white'
-                    : 'hover:bg-slate-200/50 dark:hover:bg-slate-800/50 text-foreground'
-                }`}
-              >
-                <div className="relative shrink-0">
-                  <UserCircle2 className={`w-9 h-9 ${selectedContact?.id === contact.id ? 'text-white/80' : 'text-slate-400'}`} />
-                  {onlineUsers.has(contact.id) && (
-                    <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 border-2 border-background rounded-full"></div>
-                  )}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="font-semibold text-sm truncate">{contact.name}</p>
-                  <p className={`text-xs truncate ${selectedContact?.id === contact.id ? 'text-blue-200' : 'text-muted-foreground'}`}>
-                    {contact.role}
-                  </p>
-                  {contact.subtitle && (
-                    <p className={`text-[10px] truncate mt-0.5 ${selectedContact?.id === contact.id ? 'text-blue-100' : 'text-slate-400 dark:text-slate-500'}`}>
-                      {contact.subtitle}
-                    </p>
-                  )}
-                </div>
+      {/* LEFT SIDEBAR (Hidden on mobile when contact is selected) */}
+      <div className={`w-full md:w-80 lg:w-96 flex flex-col border-r border-slate-800 bg-[#0b0f19] shrink-0 transition-transform ${selectedContact ? 'hidden md:flex' : 'flex'}`}>
+        
+        {/* Sidebar Header */}
+        <div className="h-20 px-6 flex items-center justify-between border-b border-slate-800 bg-[#121827]">
+          {selectedCategory ? (
+            <div className="flex items-center gap-3 w-full">
+              <button onClick={handleBackToCategories} className="p-2 -ml-2 rounded-full hover:bg-[#1a2133] text-slate-400 hover:text-slate-200 transition-colors shrink-0">
+                <ArrowLeft className="w-5 h-5" />
               </button>
-            ))
+              <div className="min-w-0">
+                <h2 className="font-bold text-slate-100 truncate">{activeCategory?.label}</h2>
+                <p className="text-xs text-blue-400 font-medium">{contacts.filter(c => activeCategory?.roles.includes(c.role)).length} contacts</p>
+              </div>
+            </div>
+          ) : (
+            <h2 className="text-xl font-bold text-slate-100">Chats</h2>
+          )}
+        </div>
+
+        {/* Sidebar Content */}
+        <div className="flex-1 overflow-y-auto">
+          {!selectedCategory ? (
+            // CATEGORIES VIEW
+            <div className="p-4 space-y-2">
+              <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest px-2 mb-4">Select Directory</p>
+              {CATEGORIES.map(category => {
+                const count = contacts.filter(c => category.roles.includes(c.role)).length
+                const Icon = category.icon
+                return (
+                  <button
+                    key={category.id}
+                    onClick={() => setSelectedCategory(category.id)}
+                    className="w-full flex items-center justify-between p-4 rounded-2xl hover:bg-[#121827] transition-all group border border-transparent hover:border-slate-800"
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center shrink-0 group-hover:bg-blue-500/20 transition-colors">
+                        <Icon className="w-6 h-6 text-blue-400" />
+                      </div>
+                      <div className="text-left">
+                        <p className="font-semibold text-slate-200">{category.label}</p>
+                        <p className="text-xs text-slate-500">{count} member{count !== 1 ? 's' : ''}</p>
+                      </div>
+                    </div>
+                    <ChevronRight className="w-5 h-5 text-slate-600 group-hover:text-blue-400 transition-colors" />
+                  </button>
+                )
+              })}
+            </div>
+          ) : (
+            // CONTACTS VIEW
+            <div className="p-4 flex flex-col h-full">
+              <div className="relative mb-4 shrink-0">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                <input 
+                  type="text" 
+                  value={searchQuery}
+                  onChange={e => setSearchQuery(e.target.value)}
+                  placeholder="Search contacts..." 
+                  className="w-full h-11 pl-10 pr-4 rounded-xl border border-slate-800 bg-[#121827] text-slate-200 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all text-sm"
+                />
+              </div>
+
+              <div className="flex-1 overflow-y-auto space-y-1 -mx-2 px-2">
+                {filteredContacts.length === 0 ? (
+                  <div className="text-center p-8 text-sm text-slate-500">No contacts found.</div>
+                ) : (
+                  filteredContacts.map((contact) => (
+                    <button
+                      key={contact.id}
+                      onClick={() => setSelectedContact(contact)}
+                      className={`w-full text-left flex items-center gap-3 p-3 rounded-2xl transition-all border ${
+                        selectedContact?.id === contact.id
+                          ? 'bg-[#1a2133] border-slate-700'
+                          : 'border-transparent hover:bg-[#121827] hover:border-slate-800'
+                      }`}
+                    >
+                      <div className="relative shrink-0">
+                        <UserCircle2 className={`w-11 h-11 ${selectedContact?.id === contact.id ? 'text-blue-400' : 'text-slate-500'}`} />
+                        {onlineUsers.has(contact.id) && (
+                          <div className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-[#0b0f19] rounded-full"></div>
+                        )}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex justify-between items-baseline">
+                          <p className={`font-semibold text-sm truncate ${selectedContact?.id === contact.id ? 'text-blue-100' : 'text-slate-200'}`}>
+                            {contact.name}
+                          </p>
+                        </div>
+                        <p className="text-xs text-slate-500 truncate mt-0.5">
+                          {contact.role}
+                        </p>
+                        {contact.subtitle && (
+                          <p className="text-[10px] text-slate-600 truncate mt-0.5">
+                            {contact.subtitle}
+                          </p>
+                        )}
+                      </div>
+                    </button>
+                  ))
+                )}
+              </div>
+            </div>
           )}
         </div>
       </div>
 
-      {/* Chat Area */}
-      <div className="flex-1 flex flex-col bg-card">
+      {/* RIGHT PANE: Chat Area */}
+      <div className={`flex-1 flex flex-col bg-[#121827] relative ${!selectedContact ? 'hidden md:flex' : 'flex'}`}>
         {selectedContact ? (
           <>
             {/* Chat Header */}
-            <div className="p-4 border-b border-border flex items-center gap-3 bg-slate-50 dark:bg-slate-950">
-              <UserCircle2 className="w-10 h-10 text-slate-400" />
-              <div>
-                <h3 className="font-semibold text-foreground">{selectedContact.name}</h3>
-                <p className="text-xs text-muted-foreground">
+            <div className="h-20 px-6 border-b border-slate-800 flex items-center gap-4 bg-[#121827]/80 backdrop-blur-md sticky top-0 z-10 shrink-0">
+              <button onClick={handleBackToContacts} className="md:hidden p-2 -ml-2 rounded-full hover:bg-[#1a2133] text-slate-400 hover:text-slate-200 transition-colors shrink-0">
+                <ArrowLeft className="w-5 h-5" />
+              </button>
+              <UserCircle2 className="w-12 h-12 text-slate-400 shrink-0" />
+              <div className="min-w-0 flex-1">
+                <h3 className="font-bold text-slate-100 text-lg truncate">{selectedContact.name}</h3>
+                <p className="text-xs font-medium">
                   {onlineUsers.has(selectedContact.id) ? (
-                    <span className="text-emerald-500 font-medium">Online</span>
-                  ) : 'Offline'}
+                    <span className="text-emerald-400">Online</span>
+                  ) : (
+                    <span className="text-slate-500">Offline</span>
+                  )}
+                  <span className="text-slate-600 mx-1.5">•</span>
+                  <span className="text-slate-500 truncate">{selectedContact.role}</span>
                 </p>
               </div>
             </div>
 
+            {/* Messages Background with subtle pattern */}
+            <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '24px 24px' }}></div>
+
             {/* Messages List */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50/50 dark:bg-slate-950/50">
+            <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-6 relative z-0">
               {loading ? (
-                <div className="h-full flex items-center justify-center">
-                  <Loader2 className="w-6 h-6 animate-spin text-blue-600" />
+                <div className="h-full flex flex-col items-center justify-center gap-4">
+                  <Loader2 className="w-8 h-8 animate-spin text-blue-500" />
+                  <p className="text-slate-500 font-medium animate-pulse">Loading secure chat...</p>
                 </div>
               ) : messages.length === 0 ? (
-                <div className="h-full flex flex-col items-center justify-center text-slate-400">
-                  <p>No messages yet. Say hello!</p>
+                <div className="h-full flex flex-col items-center justify-center text-slate-500 max-w-sm mx-auto text-center space-y-4">
+                  <div className="w-20 h-20 rounded-full bg-blue-500/10 flex items-center justify-center">
+                    <UserCircle2 className="w-10 h-10 text-blue-400" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-slate-300 mb-2">Start a conversation</h3>
+                    <p className="text-sm">End-to-end encrypted messaging with {selectedContact.name}. Say hello!</p>
+                  </div>
                 </div>
               ) : (
-                messages.map((msg) => {
-                  const isMe = msg.sender_id === currentUser.id
-                  return (
-                    <div key={msg.id} className={`flex ${isMe ? 'justify-end' : 'justify-start'}`}>
-                      <div className={`max-w-[80%] rounded-2xl px-4 py-2 flex flex-col gap-1 ${
-                        isMe 
-                          ? 'bg-blue-600 text-white rounded-br-sm' 
-                          : 'bg-white dark:bg-slate-900 border border-border text-foreground rounded-bl-sm shadow-sm'
-                      }`}>
-                        <p className="text-sm break-words">{msg.content}</p>
-                        <span className={`text-[10px] self-end ${isMe ? 'text-blue-200' : 'text-muted-foreground'}`}>
-                          {formatTime(msg.created_at)}
-                        </span>
+                <div className="space-y-4 flex flex-col justify-end min-h-full">
+                  {messages.map((msg, idx) => {
+                    const isMe = msg.sender_id === currentUser.id
+                    const prevMsg = messages[idx - 1]
+                    const showTime = !prevMsg || (new Date(msg.created_at).getTime() - new Date(prevMsg.created_at).getTime() > 5 * 60 * 1000)
+
+                    return (
+                      <div key={msg.id} className={`flex flex-col ${isMe ? 'items-end' : 'items-start'}`}>
+                        {showTime && (
+                          <span className="text-[10px] font-bold text-slate-600 uppercase tracking-widest mb-3 mt-4 self-center bg-[#0b0f19] px-3 py-1 rounded-full border border-slate-800">
+                            {new Date(msg.created_at).toLocaleDateString(undefined, { weekday: 'short', hour: '2-digit', minute: '2-digit' })}
+                          </span>
+                        )}
+                        <div className={`max-w-[85%] md:max-w-[70%] rounded-2xl px-5 py-3 flex flex-col gap-1 shadow-sm ${
+                          isMe 
+                            ? 'bg-blue-600 text-white rounded-br-sm' 
+                            : 'bg-[#1a2133] border border-slate-700 text-slate-200 rounded-bl-sm'
+                        }`}>
+                          <p className="text-[15px] leading-relaxed break-words">{msg.content}</p>
+                          <span className={`text-[10px] self-end font-medium mt-1 ${isMe ? 'text-blue-200/80' : 'text-slate-500'}`}>
+                            {formatTime(msg.created_at)}
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                  )
-                })
+                    )
+                  })}
+                  <div ref={messagesEndRef} />
+                </div>
               )}
-              <div ref={messagesEndRef} />
             </div>
 
             {/* Input Area */}
-            <div className="p-4 border-t border-border bg-card">
-              <form onSubmit={handleSend} className="relative flex items-center">
+            <div className="p-4 bg-[#121827] border-t border-slate-800 relative z-10 shrink-0">
+              <form onSubmit={handleSend} className="relative flex items-center max-w-4xl mx-auto">
                 <input
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   placeholder="Type a message..."
                   disabled={sending || !conversationId}
-                  className="w-full h-12 pl-4 pr-12 rounded-full border border-border bg-slate-50 dark:bg-slate-950 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all text-sm text-foreground disabled:opacity-50"
+                  className="w-full h-14 pl-6 pr-16 rounded-full border border-slate-700 bg-[#0b0f19] focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all text-[15px] text-slate-200 placeholder:text-slate-500 disabled:opacity-50"
                 />
                 <button
                   type="submit"
                   disabled={!input.trim() || sending || !conversationId}
-                  className="absolute right-2 w-8 h-8 flex items-center justify-center rounded-full bg-blue-600 text-white disabled:opacity-50 hover:bg-blue-700 transition-colors"
+                  className="absolute right-2 w-10 h-10 flex items-center justify-center rounded-full bg-blue-600 text-white disabled:opacity-50 hover:bg-blue-700 hover:scale-105 active:scale-95 transition-all shadow-md"
                 >
-                  {sending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
+                  {sending ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-5 h-5 -ml-0.5" />}
                 </button>
               </form>
             </div>
           </>
         ) : (
-          <div className="flex-1 flex items-center justify-center text-slate-400 bg-slate-50/50 dark:bg-slate-950/50">
-            <p>Select a contact to start chatting</p>
+          <div className="flex-1 flex flex-col items-center justify-center text-slate-500">
+            <div className="w-24 h-24 rounded-full bg-slate-800/30 flex items-center justify-center mb-6">
+              <Shield className="w-12 h-12 text-slate-700" />
+            </div>
+            <h2 className="text-xl font-bold text-slate-300 mb-2">EduTrack Secure Messaging</h2>
+            <p className="text-slate-500 max-w-sm text-center">Select a contact directory from the left menu to start a conversation.</p>
           </div>
         )}
       </div>

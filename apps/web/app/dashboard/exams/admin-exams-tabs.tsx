@@ -19,42 +19,54 @@ interface Props {
   selectedExamId: string
   selectedExam: any
   initialExamSlots: any[]
+  forceActiveTab?: 'exams' | 'schedule' | 'grading'
+  selectedClassId?: string
 }
 
 export function AdminExamsTabs({
   years, terms, classes, initialExams, initialGradeScales,
-  schoolId, subjects, selectedExamId, selectedExam, initialExamSlots
+  schoolId, subjects, selectedExamId, selectedExam, initialExamSlots,
+  forceActiveTab, selectedClassId
 }: Props) {
-  const [activeTab, setActiveTab] = useState<'exams' | 'schedule' | 'grading'>('exams')
+  const [activeTab, setActiveTab] = useState<'exams' | 'schedule' | 'grading'>(forceActiveTab || 'exams')
 
-  const tabs = [
-    { id: 'exams', label: 'Exams', icon: ClipboardList },
-    { id: 'schedule', label: 'Schedule', icon: CalendarDays },
-    { id: 'grading', label: 'Grading System', icon: Sliders },
-  ] as const
+  // If we're forcing a tab (e.g. bulk mode or global grading mode), we don't show the tab bar.
+  // Except if it's class-specific, then we only show Exams and Schedule tabs.
+  const tabs = selectedClassId 
+    ? [
+        { id: 'exams', label: 'Exams', icon: ClipboardList },
+        { id: 'schedule', label: 'Schedule', icon: CalendarDays },
+      ] as const
+    : [
+        { id: 'exams', label: 'Exams', icon: ClipboardList },
+        { id: 'schedule', label: 'Schedule', icon: CalendarDays },
+        { id: 'grading', label: 'Grading System', icon: Sliders },
+      ] as const
 
   return (
     <div className="space-y-6">
-      {/* Tab bar */}
-      <div className="flex bg-slate-100 dark:bg-slate-900/50 p-1 rounded-xl w-fit gap-0.5">
-        {tabs.map(tab => {
-          const Icon = tab.icon
-          return (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-1.5 px-4 py-2 text-sm font-semibold rounded-lg transition-colors ${
-                activeTab === tab.id
-                  ? 'bg-white dark:bg-slate-800 text-purple-600 dark:text-purple-400 shadow-sm'
-                  : 'text-muted-foreground hover:text-foreground hover:bg-slate-200/50 dark:hover:bg-slate-800/50'
-              }`}
-            >
-              <Icon className="w-3.5 h-3.5" />
-              {tab.label}
-            </button>
-          )
-        })}
-      </div>
+      {/* Tab bar (hide if forced, unless it's just a class where we still want exams/schedule toggle) */}
+      {(!forceActiveTab || selectedClassId) && (
+        <div className="flex bg-[#121827] border border-slate-800 p-1 rounded-xl w-fit gap-0.5 shadow-sm">
+          {tabs.map(tab => {
+            const Icon = tab.icon
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id as any)}
+                className={`flex items-center gap-1.5 px-4 py-2 text-sm font-semibold rounded-lg transition-colors ${
+                  activeTab === tab.id
+                    ? 'bg-[#1a2133] text-purple-400 shadow-sm border border-slate-700'
+                    : 'text-slate-400 hover:text-slate-200 hover:bg-[#1a2133]/50'
+                }`}
+              >
+                <Icon className="w-4 h-4" />
+                {tab.label}
+              </button>
+            )
+          })}
+        </div>
+      )}
 
       {activeTab === 'exams' && (
         <ExamsManager
@@ -84,16 +96,16 @@ export function AdminExamsTabs({
                     return (
                       <Link
                         key={exam.id}
-                        href={`/dashboard/exams?exam=${exam.id}`}
+                        href={selectedClassId ? `/dashboard/exams?class=${selectedClassId}&exam=${exam.id}` : `/dashboard/exams?mode=bulk&exam=${exam.id}`}
                         onClick={() => setActiveTab('schedule')}
                         className={`px-4 py-2 rounded-full text-sm font-medium transition-colors border ${
                           isSelected
                             ? 'bg-purple-600 text-white border-purple-600 shadow-sm'
-                            : 'bg-card text-foreground border-border hover:bg-slate-50 dark:hover:bg-slate-800'
+                            : 'bg-[#121827] text-slate-300 border-slate-800 hover:bg-[#1a2133]'
                         }`}
                       >
                         {exam.name}
-                        {className && <span className="ml-1.5 opacity-70 text-xs">({className})</span>}
+                        {className && !selectedClassId && <span className="ml-1.5 opacity-70 text-xs">({className})</span>}
                       </Link>
                     )
                   })}
