@@ -163,7 +163,7 @@ export function ParentsDirectoryClient({ classes, selectedClassId, studentsWithP
                             {student.first_name} {student.last_name}
                           </span>
                           {student.admission_number && (
-                            <span className="text-[9px] font-mono text-blue-500/60 dark:text-blue-400/50 bg-blue-100 dark:bg-blue-500/20 px-1 rounded shrink-0">
+                            <span className="text-[9px] font-mono font-bold text-blue-700 dark:text-blue-300 bg-blue-100 dark:bg-blue-500/30 px-1 py-px rounded shrink-0">
                               {student.admission_number}
                             </span>
                           )}

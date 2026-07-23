@@ -134,6 +134,7 @@ export async function getStaff(schoolId: string) {
   if (error) return []
   return (data || []).map((u: any) => ({
     ...u,
+    raw_name: u.full_name,
     full_name: u.salutation ? `${u.salutation} ${u.full_name}` : u.full_name
   }))
 }

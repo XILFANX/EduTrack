@@ -24,7 +24,7 @@ const WA_ICON = (
   </svg>
 )
 
-interface StaffMember { id: string; full_name: string; role: string; phone_number: string; created_at: string; photo_url?: string }
+interface StaffMember { id: string; full_name: string; raw_name?: string; role: string; phone_number: string; created_at: string; photo_url?: string }
 interface Invitation { id: string; token: string; role: string; target_name: string | null; target_phone: string | null; used_at: string | null; created_at: string }
 interface StaffPageClientProps { staff: StaffMember[]; invitations: Invitation[]; schoolId: string }
 
@@ -78,7 +78,7 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
   }
 
   const detailInvite = detailMember
-    ? invitations.find(i => i.target_phone === detailMember.phone_number && i.used_at)
+    ? invitations.find(i => i.target_phone === detailMember.phone_number && i.used_at && i.target_name === (detailMember.raw_name || detailMember.full_name))
     : null
 
   return (
@@ -113,7 +113,7 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
           </div>
           <div className="divide-y divide-slate-100 dark:divide-slate-800/50">
             {filteredStaff.map(member => {
-              const inv = invitations.find(i => i.target_phone === member.phone_number && i.used_at)
+              const inv = invitations.find(i => i.target_phone === member.phone_number && i.used_at && i.target_name === (member.raw_name || member.full_name))
               const roleInfo = ROLE_LABELS[member.role] ?? { label: member.role, color: 'bg-slate-100 text-slate-600' }
               const joinedDate = new Date(member.created_at).toLocaleDateString('en-KE', { month: 'short', year: 'numeric' })
               return (

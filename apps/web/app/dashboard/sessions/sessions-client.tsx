@@ -37,6 +37,16 @@ export function SessionsClient({ initialYears, initialTerms }: { initialYears: A
   const [endDate, setEndDate] = useState('')
   const [submitting, setSubmitting] = useState(false)
 
+  // Custom confirm dialog state
+  const [confirmDialog, setConfirmDialog] = useState<{
+    open: boolean
+    title: string
+    message: string
+    confirmLabel: string
+    danger?: boolean
+    onConfirm: () => void
+  } | null>(null)
+
   const activeYear = years.find(y => y.is_active)
   const activeTerm = terms.find(t => t.is_active)
 
@@ -110,42 +120,64 @@ export function SessionsClient({ initialYears, initialTerms }: { initialYears: A
     }
   }
 
-  const handleToggle = async (id: string, type: 'year' | 'term', activate: boolean) => {
+  const handleToggle = (id: string, type: 'year' | 'term', activate: boolean) => {
     if (!activate) {
-      alert('To deactivate this session, simply activate another session instead.')
+      setConfirmDialog({
+        open: true,
+        title: 'Cannot Deactivate Directly',
+        message: 'To deactivate this session, simply activate another session instead. This will automatically deactivate the current one.',
+        confirmLabel: 'Got it',
+        onConfirm: () => setConfirmDialog(null),
+      })
       return
     }
 
-    if (!confirm(`Are you sure you want to activate this ${type}? This will deactivate any currently active session and broadcast a notification.`)) return
-    
-    setLoadingId(id)
-    setError(null)
-    try {
-      let yrId = id
-      let tmId: string | undefined = undefined
+    const sessionLabel = type === 'year'
+      ? years.find(y => y.id === id)?.name
+      : (() => {
+          const t = terms.find(x => x.id === id)
+          const y = years.find(y => y.id === t?.year_id)
+          return `${y?.name ?? ''} — ${t?.name ?? ''}`
+        })()
 
-      if (type === 'term') {
-        const t = terms.find(x => x.id === id)
-        if (!t || !t.year_id) throw new Error("Term or year missing")
-        yrId = t.year_id
-        tmId = id
-      }
+    setConfirmDialog({
+      open: true,
+      title: `Activate ${type === 'year' ? 'Academic Year' : 'Term'}`,
+      message: `You are about to set "${sessionLabel}" as the active session. This will deactivate any currently active session and send an automatic broadcast to all staff.`,
+      confirmLabel: 'Yes, Activate',
+      danger: false,
+      onConfirm: async () => {
+        setConfirmDialog(null)
+        setLoadingId(id)
+        setError(null)
+        try {
+          let yrId = id
+          let tmId: string | undefined = undefined
 
-      const res = await toggleActiveSession(yrId, tmId)
-      if (res.error) throw new Error(res.error)
-      
-      setYears(years.map(y => ({ ...y, is_active: y.id === yrId })))
-      if (type === 'term') {
-        setTerms(terms.map(t => ({ ...t, is_active: t.id === tmId })))
-      } else {
-        setTerms(terms.map(t => ({ ...t, is_active: false })))
-      }
-      router.refresh()
-    } catch (err: any) {
-      setError(err.message || 'Failed to toggle status')
-    } finally {
-      setLoadingId(null)
-    }
+          if (type === 'term') {
+            const t = terms.find(x => x.id === id)
+            if (!t || !t.year_id) throw new Error('Term or year missing')
+            yrId = t.year_id
+            tmId = id
+          }
+
+          const res = await toggleActiveSession(yrId, tmId)
+          if (res.error) throw new Error(res.error)
+
+          setYears(years.map(y => ({ ...y, is_active: y.id === yrId })))
+          if (type === 'term') {
+            setTerms(terms.map(t => ({ ...t, is_active: t.id === tmId })))
+          } else {
+            setTerms(terms.map(t => ({ ...t, is_active: false })))
+          }
+          router.refresh()
+        } catch (err: any) {
+          setError(err.message || 'Failed to toggle status')
+        } finally {
+          setLoadingId(null)
+        }
+      },
+    })
   }
 
   return (
@@ -378,6 +410,35 @@ export function SessionsClient({ initialYears, initialTerms }: { initialYears: A
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Custom Confirm Dialog */}
+      {confirmDialog?.open && (
+        <div className="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl w-full max-w-sm overflow-hidden shadow-2xl">
+            <div className="px-6 pt-6 pb-4">
+              <div className="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center mb-4">
+                <Power className="w-6 h-6 text-blue-500" />
+              </div>
+              <h2 className="text-lg font-bold text-foreground mb-2">{confirmDialog.title}</h2>
+              <p className="text-sm text-muted-foreground leading-relaxed">{confirmDialog.message}</p>
+            </div>
+            <div className="px-6 pb-6 flex gap-3">
+              <button
+                onClick={() => setConfirmDialog(null)}
+                className="flex-1 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-sm font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmDialog.onConfirm}
+                className="flex-1 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold transition-colors shadow-sm"
+              >
+                {confirmDialog.confirmLabel}
+              </button>
+            </div>
           </div>
         </div>
       )}
