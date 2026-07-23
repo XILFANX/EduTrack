@@ -31,7 +31,7 @@ export default async function HelpDocPage({ params }: Props) {
                   <li key={heading.id}>
                     <a 
                       href={`#${heading.id}`}
-                      className="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-violet-600 dark:hover:text-violet-400 transition-colors"
+                      className="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                     >
                       {heading.title}
                     </a>
@@ -44,7 +44,7 @@ export default async function HelpDocPage({ params }: Props) {
           {elements}
           
           <div className="mt-20 pt-8 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-sm text-slate-500 dark:text-slate-400">
-            <p>Still need help? <Link href="/contact" className="text-violet-600 dark:text-violet-400 hover:underline font-medium">Contact Support</Link></p>
+            <p>Still need help? <Link href="/contact" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">Contact Support</Link></p>
             <p>Last updated: Today</p>
           </div>
         </article>
@@ -59,7 +59,7 @@ export default async function HelpDocPage({ params }: Props) {
                   <li key={heading.id}>
                     <a 
                       href={`#${heading.id}`}
-                      className="text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-violet-600 dark:hover:text-violet-400 transition-colors line-clamp-2 leading-relaxed"
+                      className="text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors line-clamp-2 leading-relaxed"
                     >
                       {heading.title}
                     </a>

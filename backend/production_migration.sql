@@ -48,6 +48,7 @@ create table public.users (
   full_name text not null,
   phone_number text not null,
   email text,
+  dev_docs_pin_hash text,
   created_at timestamp with time zone default now(),
   deleted_at timestamp with time zone
 );

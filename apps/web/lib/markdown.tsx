@@ -45,8 +45,8 @@ export function parseMarkdown(content: string): { elements: React.ReactNode[], h
       pushList()
       elements.push(
         <div key={i} className="p-5 rounded-2xl bg-slate-50 border border-slate-200 text-slate-800 dark:bg-slate-900/50 dark:border-slate-800 dark:text-slate-300 text-sm mb-8 flex items-start gap-3 shadow-sm">
-          <Info className="w-5 h-5 shrink-0 text-violet-600 dark:text-violet-400 mt-0.5" />
-          <div className="leading-relaxed"><strong className="text-violet-700 dark:text-violet-300">Note:</strong> {line.substring(line.indexOf(':') + 1).trim()}</div>
+          <Info className="w-5 h-5 shrink-0 text-blue-600 dark:text-blue-400 mt-0.5" />
+          <div className="leading-relaxed"><strong className="text-blue-700 dark:text-blue-300">Note:</strong> {line.substring(line.indexOf(':') + 1).trim()}</div>
         </div>
       )
     } else if (line.startsWith('> Warning:')) {
@@ -60,7 +60,7 @@ export function parseMarkdown(content: string): { elements: React.ReactNode[], h
     } else if (line.match(/^\d+\.\s/)) {
       listItems.push(
         <li key={i} className="flex gap-4 text-slate-700 dark:text-slate-300">
-          <span className="flex-shrink-0 w-6 h-6 rounded-full bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-400 text-xs font-bold flex items-center justify-center mt-0.5">
+          <span className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 text-xs font-bold flex items-center justify-center mt-0.5">
             {line.match(/^\d+/)?.[0]}
           </span>
           <span className="leading-relaxed flex-1">{line.replace(/^\d+\.\s/, '').replace(/\*\*/g, '')}</span>
@@ -86,7 +86,7 @@ export function parseMarkdown(content: string): { elements: React.ReactNode[], h
             </div>
           </div>
           <div className="h-48 flex flex-col items-center justify-center text-slate-400 dark:text-slate-600 bg-slate-50/50 dark:bg-slate-900/50 p-6 text-center">
-            <Monitor className="w-10 h-10 mb-3 opacity-50 text-violet-500" />
+            <Monitor className="w-10 h-10 mb-3 opacity-50 text-blue-500" />
             <span className="text-sm font-medium">{desc}</span>
           </div>
         </div>
@@ -112,7 +112,7 @@ export function parseMarkdown(content: string): { elements: React.ReactNode[], h
                 const href = isProtectedRoute ? `/signup?next=${encodeURIComponent(part)}` : part
                 
                 return (
-                  <Link key={idx} href={href} className="inline-flex items-center gap-1 text-violet-600 dark:text-violet-400 font-medium hover:text-violet-700 dark:hover:text-violet-300 transition-colors bg-violet-50 dark:bg-violet-500/10 px-2 py-0.5 rounded-md mx-1">
+                  <Link key={idx} href={href} className="inline-flex items-center gap-1 text-blue-600 dark:text-blue-400 font-medium hover:text-blue-700 dark:hover:text-blue-300 transition-colors bg-blue-50 dark:bg-blue-500/10 px-2 py-0.5 rounded-md mx-1">
                     {part}
                     <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
