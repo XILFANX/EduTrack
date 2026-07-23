@@ -112,7 +112,7 @@ export default async function ParentsDirectoryPage({ searchParams }: { searchPar
   return (
     <div className="space-y-6 max-w-5xl mx-auto pb-24">
       <div className="flex items-center gap-4">
-        <Link href="/dashboard/parents" className="p-2.5 rounded-xl bg-[#121827] border border-slate-800 text-slate-400 hover:text-slate-200 transition-colors shrink-0">
+        <Link href="/dashboard/parents" className="p-2.5 rounded-xl bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200 transition-colors shrink-0 shadow-sm">
           <ChevronLeft className="w-5 h-5" />
         </Link>
         <div className="flex items-center gap-3 min-w-0">
@@ -120,10 +120,10 @@ export default async function ParentsDirectoryPage({ searchParams }: { searchPar
             <Users className="w-5 h-5 text-blue-400" />
           </div>
           <div className="min-w-0">
-            <h1 className="text-xl font-bold text-slate-100">
-              Parents <span className="text-slate-600">/</span> <span className="text-blue-400">{selectedClass?.name}</span>
+            <h1 className="text-xl font-bold text-foreground">
+              Parents <span className="text-slate-400 dark:text-slate-600">/</span> <span className="text-blue-600 dark:text-blue-400">{selectedClass?.name}</span>
             </h1>
-            <p className="text-sm text-slate-400 mt-0.5">{studentsWithParents.length} students • {studentsWithParents.flatMap(s => s.parents).length} linked parents</p>
+            <p className="text-sm text-muted-foreground mt-0.5">{studentsWithParents.length} students • {new Set(studentsWithParents.flatMap(s => s.parents).map(p => p.id)).size} unique parents</p>
           </div>
         </div>
       </div>
