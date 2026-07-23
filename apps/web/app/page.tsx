@@ -116,7 +116,7 @@ function NavBar() {
         </div>
 
         {/* Mobile nav — always visible below the header row on small screens */}
-        <div className="md:hidden flex overflow-x-auto no-scrollbar gap-4 pb-2 pt-0.5">
+        <div className="md:hidden flex overflow-x-auto justify-center no-scrollbar gap-4 pb-2 pt-0.5">
           {navLinks.map((l) => (
             <a key={l.label} href={l.href} className={`text-xs font-medium whitespace-nowrap text-slate-500 dark:text-slate-400 ${T.accentHover} transition-colors shrink-0`}>{l.label}</a>
           ))}
@@ -141,7 +141,8 @@ function HeroSection() {
         </div>
 
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4 max-w-3xl leading-tight">
-          School Management &amp;{' '}
+          School Management<br />
+          &amp;<br />
           <span className={`text-transparent bg-clip-text bg-gradient-to-r ${T.grad}`}>
             Seamless Administration.
           </span>
