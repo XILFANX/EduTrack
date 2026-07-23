@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
-import { SessionsManager } from './sessions-manager'
+import { SessionsClient } from './sessions-client'
 import { CalendarRange } from 'lucide-react'
 
 export const dynamic = 'force-dynamic'
@@ -40,17 +40,17 @@ export default async function SessionsPage() {
     <div className="space-y-8 max-w-5xl mx-auto pb-24">
       <div className="flex items-center gap-3">
         <div className="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center shrink-0">
-          <CalendarRange className="w-6 h-6 text-blue-400" />
+          <CalendarRange className="w-6 h-6 text-blue-600 dark:text-blue-400" />
         </div>
         <div>
-          <h1 className="text-2xl font-bold text-slate-100">Academic Sessions Engine</h1>
-          <p className="text-sm text-slate-400 mt-0.5">
+          <h1 className="text-2xl font-bold text-foreground">Academic Sessions Engine</h1>
+          <p className="text-sm text-muted-foreground mt-0.5">
             Manage academic years and terms. Activating a session notifies all staff automatically.
           </p>
         </div>
       </div>
 
-      <SessionsManager 
+      <SessionsClient 
         initialYears={JSON.parse(JSON.stringify(years || []))} 
         initialTerms={JSON.parse(JSON.stringify(terms || []))} 
       />

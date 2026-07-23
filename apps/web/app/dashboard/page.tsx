@@ -61,16 +61,15 @@ export default async function DashboardPage() {
     new Intl.NumberFormat('en-KE', { style: 'currency', currency: 'KES', maximumFractionDigits: 0 }).format(n)
 
   const quickActions = [
-    { href: '/dashboard/staff', label: 'Staff', sublabel: 'Manage Staff', icon: Users, color: 'text-blue-400', bg: 'bg-blue-500/10 border border-blue-500/20', hoverBg: 'hover:bg-blue-500/20' },
-    { href: '/dashboard/students', label: 'Students', sublabel: 'Student Records', icon: GraduationCap, color: 'text-sky-400', bg: 'bg-sky-500/10 border border-sky-500/20', hoverBg: 'hover:bg-sky-500/20' },
-    { href: '/dashboard/classes', label: 'Classes', sublabel: 'Class Rosters', icon: BookOpen, color: 'text-indigo-400', bg: 'bg-indigo-500/10 border border-indigo-500/20', hoverBg: 'hover:bg-indigo-500/20' },
-    { href: '/dashboard/subjects', label: 'Subjects', sublabel: 'Subject Engine', icon: ClipboardList, color: 'text-cyan-400', bg: 'bg-cyan-500/10 border border-cyan-500/20', hoverBg: 'hover:bg-cyan-500/20' },
-    { href: '/dashboard/exams', label: 'Exams', sublabel: 'Examinations', icon: FileText, color: 'text-blue-400', bg: 'bg-blue-500/10 border border-blue-500/20', hoverBg: 'hover:bg-blue-500/20' },
-    { href: '/dashboard/timetable', label: 'Timetable', sublabel: 'School Schedule', icon: CalendarDays, color: 'text-sky-400', bg: 'bg-sky-500/10 border border-sky-500/20', hoverBg: 'hover:bg-sky-500/20' },
-    { href: '/dashboard/sessions', label: 'Sessions', sublabel: 'Academic Years', icon: CalendarRange, color: 'text-indigo-400', bg: 'bg-indigo-500/10 border border-indigo-500/20', hoverBg: 'hover:bg-indigo-500/20' },
-    { href: '/dashboard/messages', label: 'Comms', sublabel: 'Communications', icon: MessageSquare, color: 'text-cyan-400', bg: 'bg-cyan-500/10 border border-cyan-500/20', hoverBg: 'hover:bg-cyan-500/20' },
+    { href: '/dashboard/staff', label: 'Staff', sublabel: 'Manage Staff', icon: Users, color: 'text-blue-600 dark:text-blue-400', bg: 'bg-blue-500/10 border border-blue-500/20', hoverBg: 'group-hover:bg-blue-500/20' },
+    { href: '/dashboard/students', label: 'Students', sublabel: 'Student Records', icon: GraduationCap, color: 'text-emerald-600 dark:text-emerald-400', bg: 'bg-emerald-500/10 border border-emerald-500/20', hoverBg: 'group-hover:bg-emerald-500/20' },
+    { href: '/dashboard/classes', label: 'Classes', sublabel: 'Class Rosters', icon: BookOpen, color: 'text-amber-600 dark:text-amber-400', bg: 'bg-amber-500/10 border border-amber-500/20', hoverBg: 'group-hover:bg-amber-500/20' },
+    { href: '/dashboard/subjects', label: 'Subjects', sublabel: 'Subject Engine', icon: ClipboardList, color: 'text-violet-600 dark:text-violet-400', bg: 'bg-violet-500/10 border border-violet-500/20', hoverBg: 'group-hover:bg-violet-500/20' },
+    { href: '/dashboard/exams', label: 'Exams', sublabel: 'Examinations', icon: FileText, color: 'text-rose-600 dark:text-rose-400', bg: 'bg-rose-500/10 border border-rose-500/20', hoverBg: 'group-hover:bg-rose-500/20' },
+    { href: '/dashboard/timetable', label: 'Timetable', sublabel: 'School Schedule', icon: CalendarDays, color: 'text-teal-600 dark:text-teal-400', bg: 'bg-teal-500/10 border border-teal-500/20', hoverBg: 'group-hover:bg-teal-500/20' },
+    { href: '/dashboard/sessions', label: 'Sessions', sublabel: 'Academic Years', icon: CalendarRange, color: 'text-fuchsia-600 dark:text-fuchsia-400', bg: 'bg-fuchsia-500/10 border border-fuchsia-500/20', hoverBg: 'group-hover:bg-fuchsia-500/20' },
+    { href: '/dashboard/messages', label: 'Comms', sublabel: 'Communications', icon: MessageSquare, color: 'text-sky-600 dark:text-sky-400', bg: 'bg-sky-500/10 border border-sky-500/20', hoverBg: 'group-hover:bg-sky-500/20' },
   ]
-
 
   return (
     <div className="space-y-6 max-w-4xl mx-auto pb-24">
@@ -132,14 +131,14 @@ export default async function DashboardPage() {
             <Link
               key={href}
               href={href}
-              className="flex flex-col items-center gap-2.5 p-3 sm:p-4 rounded-2xl bg-[#121827] border border-slate-800 hover:border-slate-700 hover:bg-[#1a2133] transition-all shadow-sm group active:scale-95"
+              className="flex flex-col items-center gap-2.5 p-3 sm:p-4 rounded-2xl bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 hover:border-blue-500/50 dark:hover:border-blue-500/50 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all shadow-sm group active:scale-95"
             >
               <div className={`w-11 h-11 rounded-2xl flex items-center justify-center ${bg} ${hoverBg} transition-colors`}>
                 <Icon className={`w-5 h-5 ${color}`} />
               </div>
               <div className="text-center min-w-0 w-full">
-                <p className="font-bold text-xs text-slate-200 truncate">{label}</p>
-                <p className="text-[10px] text-slate-500 truncate hidden sm:block">{sublabel}</p>
+                <p className="font-bold text-xs text-foreground truncate group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{label}</p>
+                <p className="text-[10px] text-muted-foreground truncate hidden sm:block">{sublabel}</p>
               </div>
             </Link>
           ))}

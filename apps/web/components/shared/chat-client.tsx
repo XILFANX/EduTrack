@@ -229,20 +229,20 @@ export function ChatClient({
     : []
 
   return (
-    <div className="flex h-[calc(100vh-280px)] min-h-[500px] max-h-[800px] bg-[#121827] border border-slate-800 rounded-3xl overflow-hidden shadow-2xl">
+    <div className="flex h-[calc(100vh-280px)] min-h-[500px] max-h-[800px] bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-2xl">
       
       {/* LEFT SIDEBAR (Hidden on mobile when contact is selected) */}
-      <div className={`w-full md:w-80 lg:w-96 flex flex-col border-r border-slate-800 bg-[#0b0f19] shrink-0 transition-transform ${selectedContact ? 'hidden md:flex' : 'flex'}`}>
+      <div className={`w-full md:w-80 lg:w-96 flex flex-col border-r border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/20 shrink-0 transition-transform ${selectedContact ? 'hidden md:flex' : 'flex'}`}>
         
         {/* Sidebar Header */}
-        <div className="h-20 px-6 flex items-center justify-between border-b border-slate-800 bg-[#121827]">
+        <div className="h-20 px-6 flex items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50">
           {selectedCategory ? (
             <div className="flex items-center gap-3 w-full">
-              <button onClick={handleBackToCategories} className="p-2 -ml-2 rounded-full hover:bg-[#1a2133] text-slate-400 hover:text-slate-200 transition-colors shrink-0">
+              <button onClick={handleBackToCategories} className="p-2 -ml-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800/50 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 transition-colors shrink-0">
                 <ArrowLeft className="w-5 h-5" />
               </button>
               <div className="min-w-0">
-                <h2 className="font-bold text-slate-100 truncate">
+                <h2 className="font-bold text-foreground truncate">
                   {selectedClassId 
                     ? classes?.find(c => c.id === selectedClassId)?.name 
                     : activeCategory?.label}
@@ -255,7 +255,7 @@ export function ChatClient({
               </div>
             </div>
           ) : (
-            <h2 className="text-xl font-bold text-slate-100">Chats</h2>
+            <h2 className="text-lg font-bold text-foreground">Directory</h2>
           )}
         </div>
 
@@ -271,7 +271,7 @@ export function ChatClient({
                   value={searchQuery}
                   onChange={e => setSearchQuery(e.target.value)}
                   placeholder="Search all contacts..."
-                  className="w-full bg-[#121827] border border-slate-700 rounded-xl py-2.5 pl-9 pr-4 text-sm text-slate-200 placeholder:text-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
+                  className="w-full bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl py-2.5 pl-9 pr-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all shadow-sm"
                 />
               </div>
             </div>
@@ -289,16 +289,16 @@ export function ChatClient({
                     <button
                       key={contact.id}
                       onClick={() => handleSelectContact(contact)}
-                      className="w-full flex items-center gap-3 p-3 rounded-2xl border border-transparent hover:bg-[#121827] hover:border-slate-800 transition-all"
+                      className="w-full flex items-center gap-3 p-3 rounded-2xl border border-transparent hover:bg-white dark:hover:bg-slate-900/50 hover:border-slate-200 dark:hover:border-slate-800 transition-all shadow-sm"
                     >
                       <div className="relative shrink-0">
                         <UserCircle2 className="w-10 h-10 text-slate-500" />
                         {onlineUsers.has(contact.id) && (
-                          <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 border-2 border-[#0b0f19] rounded-full"></div>
+                          <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 border-2 border-white dark:border-[#0b0f19] rounded-full"></div>
                         )}
                       </div>
                       <div className="flex-1 min-w-0 text-left">
-                        <p className="font-semibold text-sm text-slate-200 truncate">{contact.name}</p>
+                            <p className="font-semibold text-sm truncate text-foreground">{contact.name}</p>
                         <p className="text-xs text-slate-500 truncate">{contact.role}</p>
                       </div>
                     </button>
@@ -316,14 +316,14 @@ export function ChatClient({
                   <button
                     key={category.id}
                     onClick={() => setSelectedCategory(category.id)}
-                    className="w-full flex items-center justify-between p-4 rounded-2xl hover:bg-[#121827] transition-all group border border-transparent hover:border-slate-800"
+                    className="w-full flex items-center justify-between p-4 rounded-2xl hover:bg-white dark:hover:bg-slate-900/50 transition-all group border border-transparent hover:border-slate-200 dark:hover:border-slate-800 shadow-sm"
                   >
                     <div className="flex items-center gap-4">
                       <div className="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center shrink-0 group-hover:bg-blue-500/20 transition-colors">
                         <Icon className="w-6 h-6 text-blue-400" />
                       </div>
                       <div className="text-left">
-                        <p className="font-semibold text-slate-200">{category.label}</p>
+                        <p className="font-semibold text-foreground">{category.label}</p>
                         <p className="text-xs text-slate-500">{count} member{count !== 1 ? 's' : ''}</p>
                       </div>
                     </div>
@@ -342,14 +342,14 @@ export function ChatClient({
                   <button
                     key={cls.id}
                     onClick={() => setSelectedClassId(cls.id)}
-                    className="w-full flex items-center justify-between p-4 rounded-2xl hover:bg-[#121827] transition-all group border border-transparent hover:border-slate-800"
+                    className="w-full flex items-center justify-between p-4 rounded-2xl hover:bg-white dark:hover:bg-slate-900/50 transition-all group border border-transparent hover:border-slate-200 dark:hover:border-slate-800 shadow-sm"
                   >
                     <div className="flex items-center gap-4">
                       <div className="w-12 h-12 rounded-2xl bg-indigo-500/10 flex items-center justify-center shrink-0 group-hover:bg-indigo-500/20 transition-colors border border-indigo-500/10">
                         <GraduationCap className="w-6 h-6 text-indigo-400" />
                       </div>
                       <div className="text-left">
-                        <p className="font-semibold text-slate-200">{cls.name}</p>
+                        <p className="font-semibold text-foreground">{cls.name}</p>
                         <p className="text-xs text-slate-500">{count} parent{count !== 1 ? 's' : ''}</p>
                       </div>
                     </div>
@@ -368,7 +368,7 @@ export function ChatClient({
                   value={searchQuery}
                   onChange={e => setSearchQuery(e.target.value)}
                   placeholder="Filter contacts..."
-                  className="w-full bg-[#121827] border border-slate-700 rounded-xl py-2.5 pl-9 pr-4 text-sm text-slate-200 placeholder:text-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
+                  className="w-full bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl py-2.5 pl-9 pr-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all shadow-sm"
                 />
               </div>
 
@@ -397,19 +397,19 @@ export function ChatClient({
                       onClick={() => handleSelectContact(contact)}
                       className={`w-full flex items-center gap-3 p-3 rounded-2xl transition-all border text-left ${
                         selectedContact?.id === contact.id
-                          ? 'bg-[#1a2133] border-slate-700 shadow-sm'
-                          : 'border-transparent hover:bg-[#121827] hover:border-slate-800'
+                          ? 'bg-slate-100 dark:bg-slate-800/80 border-slate-200 dark:border-slate-700 shadow-sm'
+                          : 'border-transparent hover:bg-white dark:hover:bg-slate-900/50 hover:border-slate-200 dark:hover:border-slate-800 hover:shadow-sm'
                       }`}
                     >
                       <div className="relative shrink-0">
                         <UserCircle2 className={`w-11 h-11 ${selectedContact?.id === contact.id ? 'text-blue-400' : 'text-slate-500'}`} />
                         {onlineUsers.has(contact.id) && (
-                          <div className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-[#0b0f19] rounded-full"></div>
+                          <div className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-white dark:border-[#0b0f19] rounded-full"></div>
                         )}
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex justify-between items-baseline">
-                          <p className={`font-semibold text-sm truncate ${selectedContact?.id === contact.id ? 'text-blue-100' : 'text-slate-200'}`}>
+                          <p className={`font-semibold text-sm truncate ${selectedContact?.id === contact.id ? 'text-blue-600 dark:text-blue-400' : 'text-foreground'}`}>
                             {contact.name}
                           </p>
                         </div>
@@ -432,17 +432,17 @@ export function ChatClient({
       </div>
 
       {/* RIGHT PANE: Chat Area */}
-      <div className={`flex-1 flex flex-col bg-[#121827] relative ${!selectedContact ? 'hidden md:flex' : 'flex'}`}>
+      <div className={`flex-1 flex flex-col bg-white dark:bg-slate-900/50 relative ${!selectedContact ? 'hidden md:flex' : 'flex'}`}>
         {selectedContact ? (
           <>
             {/* Chat Header */}
-            <div className="h-20 px-6 border-b border-slate-800 flex items-center gap-4 bg-[#121827]/80 backdrop-blur-md sticky top-0 z-10 shrink-0">
-              <button onClick={handleBackToContacts} className="md:hidden p-2 -ml-2 rounded-full hover:bg-[#1a2133] text-slate-400 hover:text-slate-200 transition-colors shrink-0">
+            <div className="h-20 px-6 border-b border-slate-200 dark:border-slate-800 flex items-center gap-4 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-10 shrink-0">
+              <button onClick={handleBackToContacts} className="md:hidden p-2 -ml-2 rounded-full hover:bg-slate-100 dark:hover:bg-[#1a2133] text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 transition-colors shrink-0">
                 <ArrowLeft className="w-5 h-5" />
               </button>
               <UserCircle2 className="w-12 h-12 text-slate-400 shrink-0" />
               <div className="min-w-0 flex-1">
-                <h3 className="font-bold text-slate-100 text-lg truncate">{selectedContact.name}</h3>
+                  <h3 className="font-bold text-foreground text-lg">{selectedContact.name}</h3>
                 <p className="text-xs font-medium">
                   {onlineUsers.has(selectedContact.id) ? (
                     <span className="text-emerald-400">Online</span>
@@ -456,7 +456,7 @@ export function ChatClient({
             </div>
 
             {/* Messages Background with subtle pattern */}
-            <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '24px 24px' }}></div>
+            <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #000 1px, transparent 0)', backgroundSize: '24px 24px' }}></div>
 
             {/* Messages List */}
             <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-6 relative z-0">
@@ -471,7 +471,7 @@ export function ChatClient({
                     <UserCircle2 className="w-10 h-10 text-blue-400" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-bold text-slate-300 mb-2">Start a conversation</h3>
+                    <h3 className="text-lg font-bold text-foreground mb-2">Start a conversation</h3>
                     <p className="text-sm">End-to-end encrypted messaging with {selectedContact.name}. Say hello!</p>
                   </div>
                 </div>
@@ -485,15 +485,15 @@ export function ChatClient({
                     return (
                       <div key={msg.id} className={`flex flex-col ${isMe ? 'items-end' : 'items-start'}`}>
                         {showTime && (
-                          <span className="text-[10px] font-bold text-slate-600 uppercase tracking-widest mb-3 mt-4 self-center bg-[#0b0f19] px-3 py-1 rounded-full border border-slate-800">
+                          <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3 mt-4 self-center bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full border border-slate-200 dark:border-slate-700">
                             {new Date(msg.created_at).toLocaleDateString(undefined, { weekday: 'short', hour: '2-digit', minute: '2-digit' })}
                           </span>
                         )}
-                        <div className={`max-w-[85%] md:max-w-[70%] rounded-2xl px-5 py-3 flex flex-col gap-1 shadow-sm ${
-                          isMe 
-                            ? 'bg-blue-600 text-white rounded-br-sm' 
-                            : 'bg-[#1a2133] border border-slate-700 text-slate-200 rounded-bl-sm'
-                        }`}>
+                        <div className={`px-4 py-2.5 rounded-2xl max-w-[85%] shadow-sm ${
+                        isMe 
+                          ? 'bg-blue-600 text-white rounded-br-sm' 
+                          : 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-200 rounded-bl-sm border border-slate-200 dark:border-slate-700'
+                      }`}>
                           <p className="text-[15px] leading-relaxed break-words">{msg.content}</p>
                           <span className={`text-[10px] self-end font-medium mt-1 ${isMe ? 'text-blue-200/80' : 'text-slate-500'}`}>
                             {formatTime(msg.created_at)}
@@ -508,7 +508,7 @@ export function ChatClient({
             </div>
 
             {/* Input Area */}
-            <div className="p-4 bg-[#121827] border-t border-slate-800 relative z-10 shrink-0">
+            <div className="p-4 bg-white dark:bg-slate-900/80 border-t border-slate-200 dark:border-slate-800 relative z-10 shrink-0 backdrop-blur-md">
               <form onSubmit={handleSend} className="relative flex items-center max-w-4xl mx-auto">
                 <input
                   type="text"
@@ -516,7 +516,7 @@ export function ChatClient({
                   onChange={(e) => setInput(e.target.value)}
                   placeholder="Type a message..."
                   disabled={sending || !conversationId}
-                  className="w-full h-14 pl-6 pr-16 rounded-full border border-slate-700 bg-[#0b0f19] focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all text-[15px] text-slate-200 placeholder:text-slate-500 disabled:opacity-50"
+                  className="w-full h-14 pl-6 pr-16 rounded-full border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all text-[15px] text-foreground placeholder:text-muted-foreground disabled:opacity-50 shadow-sm"
                 />
                 <button
                   type="submit"
@@ -530,10 +530,10 @@ export function ChatClient({
           </>
         ) : (
           <div className="flex-1 flex flex-col items-center justify-center text-slate-500">
-            <div className="w-24 h-24 rounded-full bg-slate-800/30 flex items-center justify-center mb-6">
+            <div className="w-24 h-24 rounded-full bg-slate-100 dark:bg-slate-800/50 flex items-center justify-center mb-6 shadow-sm border border-slate-200 dark:border-slate-800">
               <Shield className="w-12 h-12 text-slate-700" />
             </div>
-            <h2 className="text-xl font-bold text-slate-300 mb-2">EduTrack Secure Messaging</h2>
+            <h2 className="text-xl font-bold text-foreground mb-2">EduTrack Secure Messaging</h2>
             <p className="text-slate-500 max-w-sm text-center">Select a contact directory from the left menu to start a conversation.</p>
           </div>
         )}
