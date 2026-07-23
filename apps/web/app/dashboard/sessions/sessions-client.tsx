@@ -48,6 +48,31 @@ export function SessionsClient({ initialYears, initialTerms }: { initialYears: A
     setShowTermModalFor(null)
   }
 
+  // When a year pill is clicked — auto-fill name + sensible date range (Jan 1 → Dec 31)
+  const selectYearPreset = (label: string) => {
+    const y = parseInt(label.split('/')[0], 10)
+    setName(label)
+    setStartDate(`${y}-01-01`)
+    setEndDate(`${y + 1}-12-31`)
+  }
+
+  // When a term pill is clicked — auto-fill name + evenly-split dates based on parent year
+  const selectTermPreset = (label: string) => {
+    setName(label)
+    const parentYear = years.find(y => y.id === showTermModalFor)
+    if (parentYear) {
+      const start = new Date(parentYear.start_date)
+      const end = new Date(parentYear.end_date)
+      const totalMs = end.getTime() - start.getTime()
+      const termMs = totalMs / 3
+      const termIndex = label === 'Term 1' ? 0 : label === 'Term 2' ? 1 : 2
+      const termStart = new Date(start.getTime() + termMs * termIndex)
+      const termEnd = new Date(start.getTime() + termMs * (termIndex + 1) - 86400000)
+      setStartDate(termStart.toISOString().split('T')[0])
+      setEndDate(termEnd.toISOString().split('T')[0])
+    }
+  }
+
   const handleCreateYear = async (e: React.FormEvent) => {
     e.preventDefault()
     setSubmitting(true)
@@ -147,7 +172,10 @@ export function SessionsClient({ initialYears, initialTerms }: { initialYears: A
             </div>
           </div>
           <button 
-            onClick={() => setShowYearModal(true)}
+            onClick={() => {
+              selectYearPreset(`${new Date().getFullYear()}/${new Date().getFullYear() + 1}`)
+              setShowYearModal(true)
+            }}
             className="shrink-0 bg-white/20 hover:bg-white/30 text-white border border-white/30 transition-colors px-5 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 backdrop-blur-md"
           >
             <Plus className="w-4 h-4" /> New Academic Year
@@ -178,7 +206,10 @@ export function SessionsClient({ initialYears, initialTerms }: { initialYears: A
                 
                 <div className="flex items-center gap-3 shrink-0">
                   <button 
-                    onClick={() => setShowTermModalFor(year.id)}
+                    onClick={() => {
+                      selectTermPreset('Term 1')
+                      setShowTermModalFor(year.id)
+                    }}
                     className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
                   >
                     <Plus className="w-4 h-4" /> Add Term
@@ -279,6 +310,37 @@ export function SessionsClient({ initialYears, initialTerms }: { initialYears: A
                   placeholder={showYearModal ? "e.g., 2024/2025" : "e.g., Term 1"}
                   className="w-full bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-2.5 text-sm text-foreground focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all shadow-sm"
                 />
+                {showYearModal ? (
+                  <div className="flex gap-2 mt-2 overflow-x-auto pb-1">
+                    {[0, 1, 2, 3].map(offset => {
+                      const y = new Date().getFullYear() + offset
+                      const label = `${y}/${y + 1}`
+                      return (
+                        <button
+                          key={label}
+                          type="button"
+                          onClick={() => selectYearPreset(label)}
+                          className={`px-3 py-1.5 text-xs font-medium rounded-lg whitespace-nowrap transition-colors border ${name === label ? 'bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-200 dark:border-blue-500/30 shadow-sm' : 'bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700'}`}
+                        >
+                          {label}
+                        </button>
+                      )
+                    })}
+                  </div>
+                ) : (
+                  <div className="flex gap-2 mt-2 overflow-x-auto pb-1">
+                    {['Term 1', 'Term 2', 'Term 3'].map(label => (
+                      <button
+                        key={label}
+                        type="button"
+                        onClick={() => selectTermPreset(label)}
+                        className={`px-3 py-1.5 text-xs font-medium rounded-lg whitespace-nowrap transition-colors border ${name === label ? 'bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-200 dark:border-blue-500/30 shadow-sm' : 'bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700'}`}
+                      >
+                        {label}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>

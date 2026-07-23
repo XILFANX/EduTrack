@@ -126,53 +126,75 @@ export function ParentsDirectoryClient({ classes, selectedClassId, studentsWithP
         ) : (
           <div className="divide-y divide-slate-100 dark:divide-slate-800/50">
             {uniqueParents.map(parent => (
-              <div key={parent.id} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-4 sm:px-5 py-3 sm:py-4 hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
-                <div className="flex items-center gap-3 sm:gap-4 min-w-0">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-xs sm:text-sm font-bold text-slate-500 dark:text-slate-300 shrink-0 shadow-sm">
+              <div key={parent.id} className="flex items-center justify-between gap-3 px-4 sm:px-5 py-3 hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+
+                {/* Left: Avatar + Name + Phone (inline) */}
+                <div className="flex items-center gap-3 min-w-0 flex-1">
+                  <div className="w-9 h-9 rounded-full overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-xs font-bold text-slate-500 dark:text-slate-300 shrink-0 shadow-sm">
                     {parent.photo_url
                       ? <img src={parent.photo_url} alt="" className="w-full h-full object-cover" />
                       : getInitials(parent.full_name || '')}
                   </div>
-                  <div className="min-w-0">
-                    <p className="font-bold text-foreground text-sm sm:text-base truncate">
-                      {parent.salutation ? `${parent.salutation} ${parent.full_name}` : (parent.full_name || 'Parent')}
-                    </p>
-                    {parent.phone_number && (
-                      <p className="text-xs text-muted-foreground flex items-center gap-1.5 mt-0.5 truncate">
-                        <Phone className="w-3 h-3" /> {parent.phone_number}
+                  <div className="min-w-0 flex-1">
+                    {/* Name row + phone + message icon all in one line */}
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <p className="font-bold text-foreground text-sm truncate">
+                        {parent.salutation ? `${parent.salutation} ${parent.full_name}` : (parent.full_name || 'Parent')}
                       </p>
-                    )}
+                      {parent.phone_number && (
+                        <a
+                          href={`tel:${parent.phone_number}`}
+                          onClick={e => e.stopPropagation()}
+                          className="flex items-center gap-1 text-[11px] text-muted-foreground hover:text-blue-500 dark:hover:text-blue-400 transition-colors shrink-0"
+                          title={`Call ${parent.phone_number}`}
+                        >
+                          <Phone className="w-3 h-3" />
+                          <span className="hidden sm:inline">{parent.phone_number}</span>
+                        </a>
+                      )}
+                    </div>
+
+                    {/* Student badges row */}
+                    <div className="flex flex-wrap gap-1 mt-1">
+                      {parent.students.map(student => (
+                        <div key={student.id} className="flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-blue-50 dark:bg-blue-500/10 border border-blue-100 dark:border-blue-500/20">
+                          <Baby className="w-3 h-3 text-blue-500 shrink-0" />
+                          <span className="text-[10px] font-semibold text-blue-700 dark:text-blue-400 truncate max-w-[100px]">
+                            {student.first_name} {student.last_name}
+                          </span>
+                          {student.admission_number && (
+                            <span className="text-[9px] font-mono text-blue-500/60 dark:text-blue-400/50 bg-blue-100 dark:bg-blue-500/20 px-1 rounded shrink-0">
+                              {student.admission_number}
+                            </span>
+                          )}
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
 
-                <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 shrink-0 pl-12 sm:pl-0">
-                  {/* Attached Students Badges */}
-                  <div className="flex flex-wrap gap-1.5 justify-start sm:justify-end">
-                    {parent.students.map(student => (
-                      <div key={student.id} className="flex items-center gap-1.5 px-2 py-1 rounded-lg bg-blue-50 dark:bg-blue-500/10 border border-blue-100 dark:border-blue-500/20 max-w-[200px]">
-                        <div className="w-4 h-4 rounded-full overflow-hidden bg-blue-100 dark:bg-blue-500/20 shrink-0">
-                          {student.photo_url ? (
-                            <img src={student.photo_url} className="w-full h-full object-cover" alt="" />
-                          ) : (
-                            <Baby className="w-full h-full p-0.5 text-blue-500" />
-                          )}
-                        </div>
-                        <span className="text-[10px] font-bold text-blue-700 dark:text-blue-400 truncate">
-                          {student.first_name} {student.last_name}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-
+                {/* Right: compact action icons */}
+                <div className="flex items-center gap-2 shrink-0">
+                  {parent.phone_number && (
+                    <a
+                      href={`tel:${parent.phone_number}`}
+                      className="sm:hidden w-8 h-8 flex items-center justify-center rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:text-blue-500 hover:border-blue-300 dark:hover:border-blue-600 transition-all shadow-sm"
+                      title={`Call ${parent.phone_number}`}
+                    >
+                      <Phone className="w-3.5 h-3.5" />
+                    </a>
+                  )}
                   <button
                     onClick={() => handleMessage(parent.id)}
                     disabled={messagingId === parent.id}
-                    className="flex items-center justify-center gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-white dark:bg-slate-900 hover:bg-blue-600 dark:hover:bg-blue-600 border border-slate-200 dark:border-slate-700 hover:border-blue-600 dark:hover:border-blue-500 text-slate-600 dark:text-slate-300 hover:text-white text-xs font-bold transition-all disabled:opacity-60 shadow-sm"
+                    title="Send message"
+                    className="w-8 h-8 sm:w-auto sm:h-auto sm:px-3 sm:py-2 flex items-center justify-center gap-1.5 rounded-xl bg-white dark:bg-slate-900 hover:bg-blue-600 dark:hover:bg-blue-600 border border-slate-200 dark:border-slate-700 hover:border-blue-600 dark:hover:border-blue-500 text-slate-500 dark:text-slate-400 hover:text-white text-xs font-semibold transition-all disabled:opacity-60 shadow-sm"
                   >
-                    <MessageSquare className="w-4 h-4" />
-                    {messagingId === parent.id ? 'Opening…' : 'Message'}
+                    <MessageSquare className="w-3.5 h-3.5" />
+                    <span className="hidden sm:inline">{messagingId === parent.id ? 'Opening…' : 'Message'}</span>
                   </button>
                 </div>
+
               </div>
             ))}
           </div>
