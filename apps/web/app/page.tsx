@@ -2,7 +2,7 @@ import { redirect } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
-import { GraduationCap, BookOpen, Users, Receipt, Megaphone, ArrowRight, Activity, Settings } from 'lucide-react'
+import { GraduationCap, BookOpen, Users, Receipt, Megaphone, ArrowRight, Activity, Settings, HelpCircle, ArrowUpRight } from 'lucide-react'
 import { ModeToggleLanding } from '@/components/shared/mode-toggle-landing'
 
 // --- Landing Page Components ---
@@ -256,6 +256,46 @@ function PortalSection() {
   )
 }
 
+function DocsSection() {
+  return (
+    <section className="py-20 bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 relative overflow-hidden">
+      {/* Decorative gradient orb */}
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-500/5 dark:bg-blue-500/10 blur-3xl rounded-full -translate-y-1/2 translate-x-1/3 pointer-events-none" />
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 md:p-12 shadow-sm flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="max-w-xl text-center md:text-left">
+            <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-violet-100 dark:bg-violet-900/30 text-violet-600 dark:text-violet-400 mb-6">
+              <HelpCircle className="w-6 h-6" />
+            </div>
+            <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">
+              Need help getting started?
+            </h2>
+            <p className="text-lg text-slate-600 dark:text-slate-400">
+              Read our comprehensive guides on setting up your school, managing fee structures, and inviting parents.
+            </p>
+          </div>
+          
+          <div className="flex flex-col sm:flex-row gap-4 shrink-0">
+            <Link 
+              href="/help/00-getting-started" 
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-semibold shadow-md hover:shadow-lg transition-all active:scale-95"
+            >
+              Getting Started Guide <ArrowRight className="w-4 h-4" />
+            </Link>
+            <Link 
+              href="/help" 
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 font-medium border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all active:scale-95"
+            >
+              Browse all docs
+            </Link>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 function Footer() {
   return (
     <footer className="bg-slate-50 dark:bg-slate-950 py-16 border-t border-slate-200 dark:border-slate-800">
@@ -353,6 +393,7 @@ export default async function RootPage() {
         <HeroSection />
         <FeaturesSection />
         <PortalSection />
+        <DocsSection />
       </main>
       <Footer />
     </div>

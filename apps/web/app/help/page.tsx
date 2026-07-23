@@ -1,51 +1,57 @@
 import Link from 'next/link'
-import { ArrowLeft } from 'lucide-react'
+import { BookOpen, Settings, Users, CreditCard, Wrench, HelpCircle, FileText, ArrowRight } from 'lucide-react'
 
 export const metadata = {
-  title: 'Help Center | EstateTrack',
-  description: 'Browse guides, tutorials, and support articles to get the most out of EstateTrack. Learn how to set up properties, manage tenants, and collect rent.',
-  keywords: ['EstateTrack help', 'property manager guide', 'landlord tutorials', 'how to collect rent M-Pesa', 'tenant onboarding'],
-  openGraph: {
-    title: 'Help Center | EstateTrack',
-    description: 'Find step-by-step guides for onboarding tenants, setting up invoices, and managing your portfolio in EstateTrack.',
-    url: 'https://estatetrack.co.ke/help',
-    siteName: 'EstateTrack',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary',
-    title: 'EstateTrack Help Center',
-    description: 'Guides and tutorials for landlords and property managers using EstateTrack.',
-  },
+  title: 'Help Center | EduTrack',
+  description: 'Browse guides, tutorials, and support articles to get the most out of EduTrack.',
 }
 
-export default function Page() {
-  return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col items-center justify-center p-4 selection:bg-violet-200 dark:selection:bg-violet-900">
-      <div className="w-full max-w-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl overflow-hidden">
-        <div className="p-8 md:p-12 text-center space-y-6">
-          <div className="w-16 h-16 bg-violet-100 dark:bg-violet-900/30 text-violet-600 dark:text-violet-500 rounded-full flex items-center justify-center mx-auto mb-6">
-            <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </div>
-          <h1 className="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">Help Center</h1>
-          <p className="text-lg text-slate-500 dark:text-slate-400">
-            Explore our knowledge base, guides, and tutorials.
-          </p>
-          
-          
+const guides = [
+  { slug: '00-getting-started', title: 'Getting Started', icon: BookOpen, desc: 'Your first steps on the platform.' },
+  { slug: '01-property-setup', title: 'Property Setup', icon: Settings, desc: 'How to add properties and units.' },
+  { slug: '02-tenant-management', title: 'Tenant Management', icon: Users, desc: 'Invite and manage your tenants.' },
+  { slug: '03-rent-and-payments', title: 'Rent & Payments', icon: CreditCard, desc: 'Invoices, tracking, and reconciliation.' },
+  { slug: '04-maintenance', title: 'Maintenance', icon: Wrench, desc: 'Handle repair requests seamlessly.' },
+  { slug: '05-faq-and-troubleshooting', title: 'FAQs', icon: HelpCircle, desc: 'Common questions and issues.' },
+  { slug: '06-account-and-billing', title: 'Account & Billing', icon: FileText, desc: 'Manage your subscription tier.' },
+]
 
-          <div className="pt-8 mt-8 border-t border-slate-100 dark:border-slate-800">
+export default function HelpCenterPage() {
+  return (
+    <div className="max-w-4xl">
+      <div className="mb-16">
+        <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-6">
+          How can we help?
+        </h1>
+        <p className="text-xl text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed">
+          Explore our comprehensive guides and tutorials to get the most out of EduTrack. Built for principals, teachers, and parents.
+        </p>
+      </div>
+      
+      <div className="grid sm:grid-cols-2 gap-6">
+        {guides.map((guide) => {
+          const Icon = guide.icon
+          return (
             <Link 
-              href="/" 
-              className="inline-flex items-center justify-center text-sm font-medium text-slate-500 hover:text-violet-600 dark:text-slate-400 dark:hover:text-violet-400 transition-colors"
+              key={guide.slug} 
+              href={`/help/${guide.slug}`}
+              className="group p-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-sm hover:shadow-md transition-all hover:border-violet-300 dark:hover:border-violet-700 block"
             >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Return to Home
+              <div className="flex flex-col h-full justify-between">
+                <div>
+                  <div className="w-12 h-12 rounded-xl bg-violet-50 dark:bg-slate-800 text-violet-600 dark:text-violet-400 flex items-center justify-center mb-6 group-hover:bg-violet-100 dark:group-hover:bg-violet-900/50 transition-colors">
+                    <Icon className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors">{guide.title}</h3>
+                  <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-6">{guide.desc}</p>
+                </div>
+                <div className="flex items-center text-sm font-medium text-violet-600 dark:text-violet-400">
+                  Read Guide <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </div>
             </Link>
-          </div>
-        </div>
+          )
+        })}
       </div>
     </div>
   )
