@@ -133,7 +133,7 @@ export function GradeScalesManager({ schoolId, initialGradeScales }: Props) {
           <h2 className="font-semibold text-foreground">Custom Grading System</h2>
           <p className="text-sm text-muted-foreground mt-0.5">Define score ranges and remarks for result cards.</p>
         </div>
-        <Button onClick={openAddModal} className="bg-purple-600 hover:bg-purple-700 text-white gap-2 rounded-xl">
+        <Button onClick={openAddModal} className="bg-blue-600 hover:bg-blue-700 text-white gap-2 rounded-xl">
           <Plus className="w-4 h-4" />
           Add Grade
         </Button>
@@ -163,7 +163,7 @@ export function GradeScalesManager({ schoolId, initialGradeScales }: Props) {
                 {scales.map((s) => (
                   <tr key={s.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-900/20 transition-colors">
                     <td className="px-6 py-4 font-bold text-foreground">
-                      <span className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300">
+                      <span className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-400">
                         {s.grade}
                       </span>
                     </td>
@@ -232,7 +232,7 @@ export function GradeScalesManager({ schoolId, initialGradeScales }: Props) {
 
             <div className="flex justify-end gap-3 pt-4 border-t border-border mt-4">
               <Button type="button" variant="outline" onClick={() => setShowModal(false)} className="rounded-xl">Cancel</Button>
-              <Button type="submit" disabled={submitting} className="rounded-xl bg-purple-600 hover:bg-purple-700 text-white">
+              <Button type="submit" disabled={submitting} className="rounded-xl bg-blue-600 hover:bg-blue-700 text-white">
                 {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Save Grade'}
               </Button>
             </div>

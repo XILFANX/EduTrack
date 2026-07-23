@@ -107,7 +107,7 @@ export function ExamsManager({ years, terms, classes, initialExams }: Props) {
       <div className="flex justify-end">
         <button
           onClick={() => setShowModal(true)}
-          className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-5 py-2.5 rounded-full text-sm font-semibold transition-colors"
+          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-full text-sm font-semibold transition-colors"
         >
           <Plus className="w-4 h-4" /> Create Exam
         </button>
@@ -124,7 +124,7 @@ export function ExamsManager({ years, terms, classes, initialExams }: Props) {
         Object.entries(grouped).map(([yearId, termGroups]) => (
           <div key={yearId} className="space-y-4">
             <h2 className="text-base font-bold text-foreground flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-purple-500 inline-block"></span>
+              <span className="w-2 h-2 rounded-full bg-blue-500 inline-block"></span>
               {getYearName(yearId)}
             </h2>
             {Object.entries(termGroups as any).map(([termId, termExams]) => (
@@ -146,7 +146,7 @@ export function ExamsManager({ years, terms, classes, initialExams }: Props) {
                       <div className="flex items-center gap-3">
                         <a
                           href={`/dashboard/reports?examId=${exam.id}`}
-                          className="text-xs font-medium text-purple-600 hover:underline"
+                          className="text-xs font-medium text-blue-400 hover:underline"
                         >
                           View Results
                         </a>
@@ -181,7 +181,7 @@ export function ExamsManager({ years, terms, classes, initialExams }: Props) {
                   type="text" value={name} onChange={e => setName(e.target.value)}
                   placeholder="e.g. End of Term 1 Exam"
                   required
-                  className="w-full bg-background border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-purple-500/50"
+                  className="w-full bg-background border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-blue-500/50"
                 />
               </div>
 
@@ -191,7 +191,7 @@ export function ExamsManager({ years, terms, classes, initialExams }: Props) {
                   <select
                     value={selectedYearId}
                     onChange={e => { setSelectedYearId(e.target.value); setSelectedTermId('') }}
-                    className="w-full bg-background border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-purple-500/50"
+                    className="w-full bg-background border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-blue-500/50"
                   >
                     {years.map(y => <option key={y.id} value={y.id}>{y.name}</option>)}
                   </select>
@@ -202,7 +202,7 @@ export function ExamsManager({ years, terms, classes, initialExams }: Props) {
                     value={selectedTermId}
                     onChange={e => setSelectedTermId(e.target.value)}
                     required
-                    className="w-full bg-background border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-purple-500/50"
+                    className="w-full bg-background border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-blue-500/50"
                   >
                     <option value="">Select term...</option>
                     {filteredTerms.map(t => <option key={t.id} value={t.id}>{t.name}</option>)}
@@ -216,7 +216,7 @@ export function ExamsManager({ years, terms, classes, initialExams }: Props) {
                   <select
                     value={selectedClassId}
                     onChange={e => setSelectedClassId(e.target.value)}
-                    className="w-full bg-background border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-purple-500/50"
+                    className="w-full bg-background border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-blue-500/50"
                   >
                     <option value="">All Classes</option>
                     {classes.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
@@ -227,7 +227,7 @@ export function ExamsManager({ years, terms, classes, initialExams }: Props) {
                   <input
                     type="number" value={maxScore} min={1} max={1000}
                     onChange={e => setMaxScore(Number(e.target.value))}
-                    className="w-full bg-background border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-purple-500/50"
+                    className="w-full bg-background border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-blue-500/50"
                   />
                 </div>
               </div>
@@ -238,7 +238,7 @@ export function ExamsManager({ years, terms, classes, initialExams }: Props) {
                   Cancel
                 </button>
                 <button type="submit" disabled={submitting}
-                  className="flex-1 py-2.5 rounded-xl font-semibold bg-purple-600 hover:bg-purple-700 text-white flex justify-center items-center transition-colors disabled:opacity-50">
+                  className="flex-1 py-2.5 rounded-xl font-semibold bg-blue-600 hover:bg-blue-700 text-white flex justify-center items-center transition-colors disabled:opacity-50">
                   {submitting ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Create Exam'}
                 </button>
               </div>

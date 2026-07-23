@@ -60,7 +60,7 @@ export default async function AdminExamsPage({ searchParams }: Props) {
         basePath="/dashboard/exams?class"
         actionButton={
           <div className="flex gap-2">
-            <Link href="/dashboard/exams?mode=bulk" className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-sm font-semibold rounded-xl transition-colors">
+            <Link href="/dashboard/exams?mode=bulk" className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-xl transition-colors">
               Bulk Create Exams
             </Link>
             <Link href="/dashboard/exams?mode=grading" className="px-4 py-2 bg-[#1a2133] border border-slate-700 hover:border-slate-600 text-slate-300 text-sm font-semibold rounded-xl transition-colors">
@@ -101,7 +101,7 @@ export default async function AdminExamsPage({ searchParams }: Props) {
         </Link>
         <div>
           <h1 className="text-2xl font-bold text-slate-100 flex items-center gap-2">
-            Exams <span className="text-slate-600">/</span> <span className="text-purple-400">{viewTitle}</span>
+            Exams <span className="text-slate-600">/</span> <span className="text-blue-400">{viewTitle}</span>
           </h1>
           <p className="text-sm text-slate-400 mt-1">
             {isBulkMode ? 'Create exams that apply across multiple classes.' : isGradingMode ? 'Configure school-wide grading scales.' : 'Create, schedule, and manage exams for this class.'}
@@ -110,6 +110,7 @@ export default async function AdminExamsPage({ searchParams }: Props) {
       </div>
 
       <AdminExamsTabs
+        key={selectedClassId || selectedExamId || params.mode || 'default'}
         years={(years as any[]) || []}
         terms={(terms as any[]) || []}
         classes={(classes as any[]) || []}

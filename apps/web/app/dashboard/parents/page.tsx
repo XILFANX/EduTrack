@@ -129,6 +129,7 @@ export default async function ParentsDirectoryPage({ searchParams }: { searchPar
       </div>
 
       <ParentsDirectoryClient
+        key={selectedClassId || 'default'}
         classes={(classes as any[]) || []}
         selectedClassId={selectedClassId}
         studentsWithParents={studentsWithParents}

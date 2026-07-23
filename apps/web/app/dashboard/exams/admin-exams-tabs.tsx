@@ -56,7 +56,7 @@ export function AdminExamsTabs({
                 onClick={() => setActiveTab(tab.id as any)}
                 className={`flex items-center gap-1.5 px-4 py-2 text-sm font-semibold rounded-lg transition-colors ${
                   activeTab === tab.id
-                    ? 'bg-[#1a2133] text-purple-400 shadow-sm border border-slate-700'
+                    ? 'bg-[#1a2133] text-blue-400 shadow-sm border border-slate-700'
                     : 'text-slate-400 hover:text-slate-200 hover:bg-[#1a2133]/50'
                 }`}
               >
@@ -100,7 +100,7 @@ export function AdminExamsTabs({
                         onClick={() => setActiveTab('schedule')}
                         className={`px-4 py-2 rounded-full text-sm font-medium transition-colors border ${
                           isSelected
-                            ? 'bg-purple-600 text-white border-purple-600 shadow-sm'
+                            ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
                             : 'bg-[#121827] text-slate-300 border-slate-800 hover:bg-[#1a2133]'
                         }`}
                       >

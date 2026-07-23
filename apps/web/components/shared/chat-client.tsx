@@ -229,7 +229,7 @@ export function ChatClient({
     : []
 
   return (
-    <div className="flex h-[700px] bg-[#121827] border border-slate-800 rounded-3xl overflow-hidden shadow-2xl">
+    <div className="flex h-[calc(100vh-280px)] min-h-[500px] max-h-[800px] bg-[#121827] border border-slate-800 rounded-3xl overflow-hidden shadow-2xl">
       
       {/* LEFT SIDEBAR (Hidden on mobile when contact is selected) */}
       <div className={`w-full md:w-80 lg:w-96 flex flex-col border-r border-slate-800 bg-[#0b0f19] shrink-0 transition-transform ${selectedContact ? 'hidden md:flex' : 'flex'}`}>
@@ -430,7 +430,6 @@ export function ChatClient({
           )}
         </div>
       </div>
-    </div>
 
       {/* RIGHT PANE: Chat Area */}
       <div className={`flex-1 flex flex-col bg-[#121827] relative ${!selectedContact ? 'hidden md:flex' : 'flex'}`}>
@@ -538,6 +537,7 @@ export function ChatClient({
             <p className="text-slate-500 max-w-sm text-center">Select a contact directory from the left menu to start a conversation.</p>
           </div>
         )}
+      </div>
       </div>
     </div>
   )

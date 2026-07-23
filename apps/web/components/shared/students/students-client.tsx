@@ -15,11 +15,28 @@ import { deleteStudent, permanentlyDeleteStudent } from './actions'
 import { useConfirmDialog, ConfirmDialog } from '@/components/ui/confirm-dialog'
 import { toast } from 'sonner'
 
-export function StudentsPageClient({ initialStudents, classes, autoEnroll }: { initialStudents: any[], classes: any[], autoEnroll?: boolean }) {
+export function StudentsPageClient({ 
+  initialStudents, 
+  classes, 
+  autoEnroll,
+  initialClassId
+}: { 
+  initialStudents: any[], 
+  classes: any[], 
+  autoEnroll?: boolean,
+  initialClassId?: string
+}) {
   const [searchQuery, setSearchQuery] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(autoEnroll || false)
   const [students, setStudents] = useState(initialStudents)
-  const [selectedClass, setSelectedClass] = useState<any | null | 'all'>(autoEnroll ? 'all' : null)
+  
+  // Initialize with initialClassId if provided, else check autoEnroll, else default to null
+  const [selectedClass, setSelectedClass] = useState<any | null | 'all'>(
+    initialClassId === 'all' ? 'all' :
+    initialClassId === 'unassigned' ? { id: 'unassigned', name: 'Unassigned Students' } :
+    initialClassId ? classes.find(c => c.id === initialClassId) :
+    autoEnroll ? 'all' : null
+  )
   const [quickViewStudent, setQuickViewStudent] = useState<any | null>(null)
   const { dialogProps, confirm, setLoading } = useConfirmDialog()
 

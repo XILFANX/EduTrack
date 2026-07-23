@@ -61,14 +61,14 @@ export default async function DashboardPage() {
     new Intl.NumberFormat('en-KE', { style: 'currency', currency: 'KES', maximumFractionDigits: 0 }).format(n)
 
   const quickActions = [
-    { href: '/dashboard/staff', label: 'Manage Staff', icon: Users, color: 'text-blue-500', bg: 'bg-blue-50 dark:bg-blue-900/20' },
-    { href: '/dashboard/students', label: 'Manage Students', icon: GraduationCap, color: 'text-indigo-500', bg: 'bg-indigo-50 dark:bg-indigo-900/20' },
-    { href: '/dashboard/exams', label: 'Manage Examinations', icon: ClipboardList, color: 'text-purple-500', bg: 'bg-purple-50 dark:bg-purple-900/20' },
-    { href: '/dashboard/timetable', label: 'Manage Timetable', icon: CalendarDays, color: 'text-indigo-500', bg: 'bg-indigo-50 dark:bg-indigo-900/20' },
-    { href: '/dashboard/reports', label: 'Manage Reports', icon: FileText, color: 'text-emerald-500', bg: 'bg-emerald-50 dark:bg-emerald-900/20' },
-    { href: '/dashboard/sessions', label: 'Academic Sessions', icon: CalendarRange, color: 'text-amber-500', bg: 'bg-amber-50 dark:bg-amber-900/20' },
-    { href: '/dashboard/messages', label: 'Communications', icon: MessageSquare, color: 'text-rose-500', bg: 'bg-rose-50 dark:bg-rose-900/20' },
-    { href: '/dashboard/subjects', label: 'Manage Subjects', icon: BookOpen, color: 'text-teal-500', bg: 'bg-teal-50 dark:bg-teal-900/20' },
+    { href: '/dashboard/staff', label: 'Staff', sublabel: 'Manage Staff', icon: Users, color: 'text-blue-400', bg: 'bg-blue-500/10 border border-blue-500/20', hoverBg: 'hover:bg-blue-500/20' },
+    { href: '/dashboard/students', label: 'Students', sublabel: 'Student Records', icon: GraduationCap, color: 'text-sky-400', bg: 'bg-sky-500/10 border border-sky-500/20', hoverBg: 'hover:bg-sky-500/20' },
+    { href: '/dashboard/classes', label: 'Classes', sublabel: 'Class Rosters', icon: BookOpen, color: 'text-indigo-400', bg: 'bg-indigo-500/10 border border-indigo-500/20', hoverBg: 'hover:bg-indigo-500/20' },
+    { href: '/dashboard/subjects', label: 'Subjects', sublabel: 'Subject Engine', icon: ClipboardList, color: 'text-cyan-400', bg: 'bg-cyan-500/10 border border-cyan-500/20', hoverBg: 'hover:bg-cyan-500/20' },
+    { href: '/dashboard/exams', label: 'Exams', sublabel: 'Examinations', icon: FileText, color: 'text-blue-400', bg: 'bg-blue-500/10 border border-blue-500/20', hoverBg: 'hover:bg-blue-500/20' },
+    { href: '/dashboard/timetable', label: 'Timetable', sublabel: 'School Schedule', icon: CalendarDays, color: 'text-sky-400', bg: 'bg-sky-500/10 border border-sky-500/20', hoverBg: 'hover:bg-sky-500/20' },
+    { href: '/dashboard/sessions', label: 'Sessions', sublabel: 'Academic Years', icon: CalendarRange, color: 'text-indigo-400', bg: 'bg-indigo-500/10 border border-indigo-500/20', hoverBg: 'hover:bg-indigo-500/20' },
+    { href: '/dashboard/messages', label: 'Comms', sublabel: 'Communications', icon: MessageSquare, color: 'text-cyan-400', bg: 'bg-cyan-500/10 border border-cyan-500/20', hoverBg: 'hover:bg-cyan-500/20' },
   ]
 
 
@@ -127,17 +127,20 @@ export default async function DashboardPage() {
       {/* Quick Actions */}
       <div>
         <SectionHeader title="QUICK ACTIONS" />
-        <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-8 gap-3">
-          {quickActions.map(({ href, label, icon: Icon, color, bg }) => (
+        <div className="grid grid-cols-4 gap-3">
+          {quickActions.map(({ href, label, sublabel, icon: Icon, color, bg, hoverBg }) => (
             <Link
               key={href}
               href={href}
-              className="flex flex-col items-center gap-2 p-3 rounded-2xl bg-white dark:bg-[#121827] border border-slate-200 dark:border-slate-800 text-foreground hover:scale-[1.05] hover:shadow-md dark:hover:bg-[#1a2133] transition-all shadow-sm group"
+              className="flex flex-col items-center gap-2.5 p-3 sm:p-4 rounded-2xl bg-[#121827] border border-slate-800 hover:border-slate-700 hover:bg-[#1a2133] transition-all shadow-sm group active:scale-95"
             >
-              <div className={`w-12 h-12 rounded-[1rem] flex items-center justify-center ${bg} transition-colors`}>
+              <div className={`w-11 h-11 rounded-2xl flex items-center justify-center ${bg} ${hoverBg} transition-colors`}>
                 <Icon className={`w-5 h-5 ${color}`} />
               </div>
-              <span className="font-semibold text-[10px] sm:text-xs text-center text-foreground leading-tight px-1">{label}</span>
+              <div className="text-center min-w-0 w-full">
+                <p className="font-bold text-xs text-slate-200 truncate">{label}</p>
+                <p className="text-[10px] text-slate-500 truncate hidden sm:block">{sublabel}</p>
+              </div>
             </Link>
           ))}
         </div>

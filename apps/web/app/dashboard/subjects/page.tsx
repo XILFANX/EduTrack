@@ -64,6 +64,7 @@ export default async function SubjectsPage({ searchParams }: { searchParams: Pro
 
   return (
     <SubjectClient
+      key={selectedClassId || (isBulkMode ? 'bulk' : 'default')}
       globalSubjects={globalSubjects || []}
       classSubjects={classSubjects || []}
       classes={classes || []}
