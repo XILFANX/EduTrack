@@ -1,6 +1,7 @@
 'use server'
 
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 import { broadcastAnnouncement } from './chat'
 
 const ADMIN_ROLES = ['admin', 'principal', 'headteacher']
@@ -18,7 +19,8 @@ export async function createAcademicYear(name: string, startDate: string, endDat
 
   if (!profile?.school_id || !ADMIN_ROLES.includes(profile.role)) return { error: 'Unauthorized' }
 
-  const { data, error } = await supabase
+  const admin = createAdminClient()
+  const { data, error } = await admin
     .from('academic_years')
     .insert({
       school_id: profile.school_id,
@@ -47,7 +49,8 @@ export async function createAcademicTerm(yearId: string, name: string, startDate
 
   if (!profile?.school_id || !ADMIN_ROLES.includes(profile.role)) return { error: 'Unauthorized' }
 
-  const { data, error } = await supabase
+  const admin = createAdminClient()
+  const { data, error } = await admin
     .from('academic_terms')
     .insert({
       school_id: profile.school_id,
@@ -77,19 +80,21 @@ export async function toggleActiveSession(yearId: string, termId?: string) {
 
   if (!profile?.school_id || !ADMIN_ROLES.includes(profile.role)) return { error: 'Unauthorized' }
 
+  const admin = createAdminClient()
+
   // 1. Deactivate all years and terms for this school
-  await supabase
+  await admin
     .from('academic_years')
     .update({ is_active: false })
     .eq('school_id', profile.school_id)
 
-  await supabase
+  await admin
     .from('academic_terms')
     .update({ is_active: false })
     .eq('school_id', profile.school_id)
 
   // 2. Activate the target Year
-  const { data: activeYear, error: yearErr } = await supabase
+  const { data: activeYear, error: yearErr } = await admin
     .from('academic_years')
     .update({ is_active: true })
     .eq('id', yearId)
@@ -102,7 +107,7 @@ export async function toggleActiveSession(yearId: string, termId?: string) {
 
   // 3. Activate the target Term if provided
   if (termId) {
-    const { data: activeTerm, error: termErr } = await supabase
+    const { data: activeTerm, error: termErr } = await admin
       .from('academic_terms')
       .update({ is_active: true })
       .eq('id', termId)

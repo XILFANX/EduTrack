@@ -2,7 +2,10 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { createClient } from '@/lib/supabase/client'
-import { Send, UserCircle2, Loader2, ArrowLeft, Users, Briefcase, GraduationCap, Shield, ChevronRight, Search } from 'lucide-react'
+import {
+  Send, UserCircle2, Loader2, ArrowLeft, Users, Briefcase,
+  GraduationCap, Shield, ChevronRight, Search, MessageSquare
+} from 'lucide-react'
 import { getOrCreateConversation, markConversationAsRead, sendMessage } from '@/app/actions/chat'
 
 interface Contact {
@@ -28,21 +31,31 @@ interface Message {
   created_at: string
 }
 
+// Admin-level roles that get masked to "School Admin"
+const ADMIN_ROLE_VALUES = ['Admin', 'Principal', 'Headteacher', 'Platform Admin']
+
 const CATEGORIES = [
   { id: 'teaching', label: 'Teaching Staff', icon: GraduationCap, roles: ['Class Teacher', 'Subject Teacher'] },
   { id: 'non_teaching', label: 'Non-Teaching Staff', icon: Briefcase, roles: ['Bursar', 'Librarian', 'Storekeeper', 'Transport Matron'] },
   { id: 'parents', label: 'Parents', icon: Users, roles: ['Parent'] },
-  { id: 'admin', label: 'Admin & Principals', icon: Shield, roles: ['Admin', 'Principal', 'Headteacher', 'Platform Admin'] }
+  { id: 'admin', label: 'School Admin', icon: Shield, roles: ['Admin', 'Principal', 'Headteacher', 'Platform Admin'] },
 ]
 
-export function ChatClient({ 
-  currentUser, 
-  contacts, 
+function maskAdminContact(c: Contact): Contact {
+  if (ADMIN_ROLE_VALUES.includes(c.role)) {
+    return { ...c, name: 'School Admin', role: 'Administrator' }
+  }
+  return c
+}
+
+export function ChatClient({
+  currentUser,
+  contacts,
   classes,
   initialContactId
-}: { 
-  currentUser: { id: string, role: string }, 
-  contacts: Contact[], 
+}: {
+  currentUser: { id: string, role: string },
+  contacts: Contact[],
   classes?: ClassItem[],
   initialContactId?: string
 }) {
@@ -55,12 +68,28 @@ export function ChatClient({
   const [loading, setLoading] = useState(false)
   const [sending, setSending] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
-  
   const [onlineUsers, setOnlineUsers] = useState<Set<string>>(new Set())
 
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const presenceChannelRef = useRef<any>(null)
   const supabase = createClient()
+
+  // Determine which categories the current user should NOT see
+  const currentUserRole = currentUser.role // e.g. 'admin', 'principal', 'headteacher'
+  const isAdminUser = ['admin', 'principal', 'headteacher'].includes(currentUserRole)
+
+  // Filter out contacts that are same person, and for admins — hide other admins
+  const visibleContacts = contacts.filter(c => {
+    if (c.id === currentUser.id) return false
+    if (isAdminUser && ADMIN_ROLE_VALUES.includes(c.role)) return false
+    return true
+  })
+
+  // Visible categories: admins don't see the admin category
+  const visibleCategories = CATEGORIES.filter(cat => {
+    if (cat.id === 'admin' && isAdminUser) return false
+    return true
+  })
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -70,11 +99,10 @@ export function ChatClient({
   useEffect(() => {
     if (initialContactId) {
       const contact = contacts.find(c => c.id === initialContactId)
-      if (contact) {
-        handleSelectContact(contact)
-      }
+      if (contact) handleSelectContact(maskAdminContact(contact))
     }
-  }, [initialContactId, contacts])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialContactId])
 
   const handleSelectContact = (contact: Contact) => {
     setSelectedContact(contact)
@@ -83,11 +111,7 @@ export function ChatClient({
   // Presence channel setup
   useEffect(() => {
     const channel = supabase.channel('chat_presence', {
-      config: {
-        presence: {
-          key: currentUser.id,
-        },
-      },
+      config: { presence: { key: currentUser.id } },
     })
     presenceChannelRef.current = channel
 
@@ -95,7 +119,7 @@ export function ChatClient({
       .on('presence', { event: 'sync' }, () => {
         const state = channel.presenceState()
         const online = new Set<string>()
-        Object.keys(state).forEach((key) => online.add(key))
+        Object.keys(state).forEach(key => online.add(key))
         setOnlineUsers(online)
       })
       .subscribe(async (status) => {
@@ -104,9 +128,7 @@ export function ChatClient({
         }
       })
 
-    return () => {
-      supabase.removeChannel(channel)
-    }
+    return () => { supabase.removeChannel(channel) }
   }, [currentUser.id, supabase])
 
   // Load conversation & messages when contact is selected
@@ -115,20 +137,22 @@ export function ChatClient({
 
     async function loadChat() {
       setLoading(true)
+      setMessages([])
+      setConversationId(null)
       try {
-        const { conversationId } = await getOrCreateConversation(selectedContact!.id)
-        setConversationId(conversationId)
+        const { conversationId: cid } = await getOrCreateConversation(selectedContact!.id)
+        setConversationId(cid)
 
         const { data } = await supabase
           .from('messages')
           .select('*')
-          .eq('conversation_id', conversationId)
+          .eq('conversation_id', cid)
           .order('created_at', { ascending: true })
           .limit(100)
 
         if (data) {
           setMessages(data)
-          await markConversationAsRead(conversationId)
+          await markConversationAsRead(cid)
         }
       } catch (err) {
         console.error('Failed to load chat', err)
@@ -138,9 +162,10 @@ export function ChatClient({
     }
 
     loadChat()
-  }, [selectedContact?.id, currentUser.id, supabase])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedContact?.id])
 
-  // Realtime messages subscription for the active conversation
+  // Realtime subscription
   useEffect(() => {
     if (!conversationId) return
 
@@ -162,9 +187,7 @@ export function ChatClient({
       )
       .subscribe()
 
-    return () => {
-      supabase.removeChannel(channel)
-    }
+    return () => { supabase.removeChannel(channel) }
   }, [conversationId, currentUser.id, supabase])
 
   const handleSend = async (e: React.FormEvent) => {
@@ -196,250 +219,217 @@ export function ChatClient({
     }
   }
 
-  // Format time helper
-  const formatTime = (isoString: string) => {
-    return new Date(isoString).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-  }
+  const formatTime = (iso: string) =>
+    new Date(iso).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
 
-  const handleBackToCategories = () => {
+  const handleBackToDirectory = () => {
     if (selectedClassId) {
       setSelectedClassId(null)
     } else {
       setSelectedCategory(null)
     }
+    setSearchQuery('')
   }
 
   const handleBackToContacts = () => {
     setSelectedContact(null)
   }
 
-  const activeCategory = CATEGORIES.find(c => c.id === selectedCategory)
+  const activeCategory = visibleCategories.find(c => c.id === selectedCategory)
   const isParentCategory = activeCategory?.id === 'parents'
-  
-  const filteredContacts = activeCategory 
-    ? contacts.filter(c => activeCategory.roles.includes(c.role))
+
+  const categoryContacts = activeCategory
+    ? visibleContacts.filter(c => activeCategory.roles.includes(c.role)).map(maskAdminContact)
     : []
 
-  const globalSearchResults = searchQuery.trim() 
-    ? contacts.filter(c => 
-        c.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-        c.role.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        c.subtitle?.toLowerCase().includes(searchQuery.toLowerCase())
-      )
+  const globalSearchResults = searchQuery.trim()
+    ? visibleContacts
+        .map(maskAdminContact)
+        .filter(c =>
+          c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          c.role.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          c.subtitle?.toLowerCase().includes(searchQuery.toLowerCase())
+        )
     : []
+
+  // =========================================================================
+  // LAYOUT: on mobile, show either Directory OR Chat. On desktop, show both.
+  // =========================================================================
+
+  const showSidebar = !selectedContact || typeof window !== 'undefined' && window.innerWidth >= 768
+  const chatOpen = !!selectedContact
 
   return (
-    <div className="flex h-[calc(100vh-280px)] min-h-[500px] max-h-[800px] bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-2xl">
-      
-      {/* LEFT SIDEBAR (Hidden on mobile when contact is selected) */}
-      <div className={`w-full md:w-80 lg:w-96 flex flex-col border-r border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/20 shrink-0 transition-transform ${selectedContact ? 'hidden md:flex' : 'flex'}`}>
-        
+    <div className="flex h-full bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-xl"
+         style={{ minHeight: '520px', maxHeight: 'calc(100vh - 200px)' }}>
+
+      {/* ======================= LEFT SIDEBAR ======================= */}
+      <div className={`${chatOpen ? 'hidden md:flex' : 'flex'} w-full md:w-80 lg:w-96 flex-col border-r border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/20 shrink-0`}>
+
         {/* Sidebar Header */}
-        <div className="h-20 px-6 flex items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50">
+        <div className="h-16 px-5 flex items-center gap-3 border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shrink-0">
           {selectedCategory ? (
-            <div className="flex items-center gap-3 w-full">
-              <button onClick={handleBackToCategories} className="p-2 -ml-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800/50 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 transition-colors shrink-0">
+            <>
+              <button
+                onClick={handleBackToDirectory}
+                className="p-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 hover:text-slate-900 dark:hover:text-slate-200 transition-colors shrink-0"
+              >
                 <ArrowLeft className="w-5 h-5" />
               </button>
               <div className="min-w-0">
-                <h2 className="font-bold text-foreground truncate">
-                  {selectedClassId 
-                    ? classes?.find(c => c.id === selectedClassId)?.name 
-                    : activeCategory?.label}
-                </h2>
-                <p className="text-xs text-blue-400 font-medium">
+                <p className="font-bold text-foreground text-sm truncate">
                   {selectedClassId
-                    ? `${filteredContacts.filter(c => c.classIds?.includes(selectedClassId)).length} parents`
-                    : `${filteredContacts.length} contacts`}
+                    ? classes?.find(c => c.id === selectedClassId)?.name
+                    : activeCategory?.label}
+                </p>
+                <p className="text-[11px] text-blue-500 font-medium">
+                  {selectedClassId
+                    ? `${categoryContacts.filter(c => c.classIds?.includes(selectedClassId!)).length} parents`
+                    : `${categoryContacts.length} contacts`}
                 </p>
               </div>
-            </div>
+            </>
           ) : (
-            <h2 className="text-lg font-bold text-foreground">Directory</h2>
+            <h2 className="text-base font-bold text-foreground">Directory</h2>
           )}
         </div>
 
-        {/* Sidebar Content */}
-        <div className="flex-1 overflow-hidden flex flex-col">
-          {/* Global Search */}
-          {!selectedCategory && (
-            <div className="px-4 pt-4 shrink-0">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
-                <input 
-                  type="text" 
-                  value={searchQuery}
-                  onChange={e => setSearchQuery(e.target.value)}
-                  placeholder="Search all contacts..."
-                  className="w-full bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl py-2.5 pl-9 pr-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all shadow-sm"
-                />
-              </div>
+        {/* Global search bar (shown only when not in a category) */}
+        {!selectedCategory && (
+          <div className="px-4 pt-3 pb-2 shrink-0">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
+                placeholder="Search all contacts..."
+                className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl py-2 pl-9 pr-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
+              />
             </div>
-          )}
+          </div>
+        )}
 
-          <div className="flex-1 overflow-y-auto">
-            {searchQuery.trim() && !selectedCategory ? (
-              // GLOBAL SEARCH RESULTS
-              <div className="p-4 space-y-1">
-                <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest px-2 mb-3">Search Results</p>
-                {globalSearchResults.length === 0 ? (
-                  <p className="text-sm text-slate-500 px-2 py-4 text-center">No contacts found matching "{searchQuery}"</p>
-                ) : (
-                  globalSearchResults.map(contact => {
-                    const ADMIN_ROLES = ['Admin', 'Principal', 'Headteacher']
-                    const displayContact = ADMIN_ROLES.includes(contact.role) 
-                      ? { ...contact, name: 'School Admin', role: 'Administrator' } 
-                      : contact
-                    
-                    return (
-                    <button
-                      key={displayContact.id}
-                      onClick={() => handleSelectContact(displayContact)}
-                      className="w-full flex items-center gap-3 p-3 rounded-2xl border border-transparent hover:bg-white dark:hover:bg-slate-900/50 hover:border-slate-200 dark:hover:border-slate-800 transition-all shadow-sm"
-                    >
-                      <div className="relative shrink-0">
-                        <UserCircle2 className="w-10 h-10 text-slate-500" />
-                        {onlineUsers.has(contact.id) && (
-                          <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 border-2 border-white dark:border-[#0b0f19] rounded-full"></div>
-                        )}
-                      </div>
-                        <div className="flex-1 min-w-0 text-left">
-                          <p className="font-semibold text-sm truncate text-foreground">{displayContact.name}</p>
-                          <p className="text-xs text-slate-500 truncate">{displayContact.role}</p>
-                        </div>
-                      </button>
-                    )
-                  })
-                )}
-              </div>
-            ) : !selectedCategory ? (
+        {/* Sidebar scrollable content */}
+        <div className="flex-1 overflow-y-auto">
+          {searchQuery.trim() && !selectedCategory ? (
+            // GLOBAL SEARCH RESULTS
+            <div className="p-3 space-y-1">
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-2 pb-2">
+                {globalSearchResults.length} result{globalSearchResults.length !== 1 ? 's' : ''}
+              </p>
+              {globalSearchResults.length === 0 ? (
+                <p className="text-sm text-muted-foreground px-2 py-6 text-center">No contacts found for "{searchQuery}"</p>
+              ) : (
+                globalSearchResults.map(contact => (
+                  <ContactRow
+                    key={contact.id}
+                    contact={contact}
+                    selected={selectedContact?.id === contact.id}
+                    online={onlineUsers.has(contact.id)}
+                    onClick={() => handleSelectContact(contact)}
+                  />
+                ))
+              )}
+            </div>
+          ) : !selectedCategory ? (
             // CATEGORIES VIEW
-            <div className="p-4 space-y-2">
-              <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest px-2 mb-4">Select Directory</p>
-              {CATEGORIES.map(category => {
-                const count = contacts.filter(c => category.roles.includes(c.role)).length
+            <div className="p-3 space-y-1">
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-2 pb-2">Select Directory</p>
+              {visibleCategories.map(category => {
+                const count = visibleContacts.filter(c => category.roles.includes(c.role)).length
                 const Icon = category.icon
                 return (
                   <button
                     key={category.id}
                     onClick={() => setSelectedCategory(category.id)}
-                    className="w-full flex items-center justify-between p-4 rounded-2xl hover:bg-white dark:hover:bg-slate-900/50 transition-all group border border-transparent hover:border-slate-200 dark:hover:border-slate-800 shadow-sm"
+                    className="w-full flex items-center justify-between p-3.5 rounded-2xl hover:bg-white dark:hover:bg-slate-900/60 transition-all group border border-transparent hover:border-slate-200 dark:hover:border-slate-700"
                   >
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center shrink-0 group-hover:bg-blue-500/20 transition-colors">
-                        <Icon className="w-6 h-6 text-blue-400" />
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center shrink-0 group-hover:bg-blue-500/20 transition-colors">
+                        <Icon className="w-5 h-5 text-blue-400" />
                       </div>
                       <div className="text-left">
-                        <p className="font-semibold text-foreground">{category.label}</p>
-                        <p className="text-xs text-slate-500">{count} member{count !== 1 ? 's' : ''}</p>
+                        <p className="font-semibold text-foreground text-sm">{category.label}</p>
+                        <p className="text-xs text-muted-foreground">{count} member{count !== 1 ? 's' : ''}</p>
                       </div>
                     </div>
-                    <ChevronRight className="w-5 h-5 text-slate-600 group-hover:text-blue-400 transition-colors" />
+                    <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-blue-400 transition-colors" />
                   </button>
                 )
               })}
             </div>
           ) : isParentCategory && !selectedClassId ? (
-            // PARENTS DIRECTORY - CLASS FIRST
-            <div className="p-4 space-y-2">
-              <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest px-2 mb-4">Select Class</p>
-              {classes?.map(cls => {
-                const count = filteredContacts.filter(c => c.classIds?.includes(cls.id)).length
+            // PARENT CLASS-FIRST VIEW
+            <div className="p-3 space-y-1">
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-2 pb-2">Select Class</p>
+              {(classes || []).map(cls => {
+                const count = categoryContacts.filter(c => c.classIds?.includes(cls.id)).length
                 return (
                   <button
                     key={cls.id}
                     onClick={() => setSelectedClassId(cls.id)}
-                    className="w-full flex items-center justify-between p-4 rounded-2xl hover:bg-white dark:hover:bg-slate-900/50 transition-all group border border-transparent hover:border-slate-200 dark:hover:border-slate-800 shadow-sm"
+                    className="w-full flex items-center justify-between p-3.5 rounded-2xl hover:bg-white dark:hover:bg-slate-900/60 transition-all group border border-transparent hover:border-slate-200 dark:hover:border-slate-700"
                   >
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-2xl bg-indigo-500/10 flex items-center justify-center shrink-0 group-hover:bg-indigo-500/20 transition-colors border border-indigo-500/10">
-                        <GraduationCap className="w-6 h-6 text-indigo-400" />
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center shrink-0 group-hover:bg-indigo-500/20 transition-colors">
+                        <GraduationCap className="w-5 h-5 text-indigo-400" />
                       </div>
                       <div className="text-left">
-                        <p className="font-semibold text-foreground">{cls.name}</p>
-                        <p className="text-xs text-slate-500">{count} parent{count !== 1 ? 's' : ''}</p>
+                        <p className="font-semibold text-foreground text-sm">{cls.name}</p>
+                        <p className="text-xs text-muted-foreground">{count} parent{count !== 1 ? 's' : ''}</p>
                       </div>
                     </div>
-                    <ChevronRight className="w-5 h-5 text-slate-600 group-hover:text-indigo-400 transition-colors" />
+                    <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-indigo-400 transition-colors" />
                   </button>
                 )
               })}
             </div>
           ) : (
-            // CONTACTS VIEW (For specific category or specific class)
-            <div className="p-4 flex flex-col h-full">
-              <div className="relative mb-4 shrink-0">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
-                <input 
-                  type="text" 
-                  value={searchQuery}
-                  onChange={e => setSearchQuery(e.target.value)}
-                  placeholder="Filter contacts..."
-                  className="w-full bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl py-2.5 pl-9 pr-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all shadow-sm"
-                />
+            // CONTACTS LIST
+            <div className="flex flex-col h-full">
+              <div className="px-4 pt-3 pb-2 shrink-0">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={e => setSearchQuery(e.target.value)}
+                    placeholder="Filter contacts..."
+                    className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl py-2 pl-9 pr-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
+                  />
+                </div>
               </div>
-
-              <div className="flex-1 overflow-y-auto space-y-1 pr-1">
+              <div className="flex-1 overflow-y-auto p-3 space-y-1">
                 {(() => {
-                  let viewContacts = contacts.filter(c => activeCategory?.roles.includes(c.role))
-                  
-                  // Apply Smart Admin Masking
-                  const ADMIN_ROLES = ['Admin', 'Principal', 'Headteacher']
-                  viewContacts = viewContacts.map(c => {
-                    if (ADMIN_ROLES.includes(c.role)) {
-                      return { ...c, name: 'School Admin', role: 'Administrator' }
-                    }
-                    return c
-                  })
-
+                  let viewContacts = categoryContacts
                   if (selectedClassId) {
                     viewContacts = viewContacts.filter(c => c.classIds?.includes(selectedClassId))
                   }
                   if (searchQuery.trim()) {
-                    viewContacts = viewContacts.filter(c => c.name.toLowerCase().includes(searchQuery.toLowerCase()))
+                    viewContacts = viewContacts.filter(c =>
+                      c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                      c.subtitle?.toLowerCase().includes(searchQuery.toLowerCase())
+                    )
                   }
-                  
+
                   if (viewContacts.length === 0) {
                     return (
-                      <div className="flex flex-col items-center justify-center h-40 text-slate-500">
-                        <Users className="w-8 h-8 mb-2 opacity-50" />
+                      <div className="flex flex-col items-center justify-center h-32 text-muted-foreground">
+                        <Users className="w-8 h-8 mb-2 opacity-40" />
                         <p className="text-sm">No contacts found</p>
                       </div>
                     )
                   }
 
-                  return viewContacts.map((contact) => (
-                    <button
+                  return viewContacts.map(contact => (
+                    <ContactRow
                       key={contact.id}
+                      contact={contact}
+                      selected={selectedContact?.id === contact.id}
+                      online={onlineUsers.has(contact.id)}
                       onClick={() => handleSelectContact(contact)}
-                      className={`w-full flex items-center gap-3 p-3 rounded-2xl transition-all border text-left ${
-                        selectedContact?.id === contact.id
-                          ? 'bg-slate-100 dark:bg-slate-800/80 border-slate-200 dark:border-slate-700 shadow-sm'
-                          : 'border-transparent hover:bg-white dark:hover:bg-slate-900/50 hover:border-slate-200 dark:hover:border-slate-800 hover:shadow-sm'
-                      }`}
-                    >
-                      <div className="relative shrink-0">
-                        <UserCircle2 className={`w-11 h-11 ${selectedContact?.id === contact.id ? 'text-blue-400' : 'text-slate-500'}`} />
-                        {onlineUsers.has(contact.id) && (
-                          <div className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-white dark:border-[#0b0f19] rounded-full"></div>
-                        )}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex justify-between items-baseline">
-                          <p className={`font-semibold text-sm truncate ${selectedContact?.id === contact.id ? 'text-blue-600 dark:text-blue-400' : 'text-foreground'}`}>
-                            {contact.name}
-                          </p>
-                        </div>
-                        <p className="text-xs text-slate-500 truncate mt-0.5">
-                          {contact.role}
-                        </p>
-                        {contact.subtitle && (
-                          <p className="text-[10px] text-slate-600 truncate mt-0.5">
-                            {contact.subtitle}
-                          </p>
-                        )}
-                      </div>
-                    </button>
+                    />
                   ))
                 })()}
               </div>
@@ -448,52 +438,54 @@ export function ChatClient({
         </div>
       </div>
 
-      {/* RIGHT PANE: Chat Area */}
-      <div className={`flex-1 flex flex-col bg-white dark:bg-slate-900/50 relative ${!selectedContact ? 'hidden md:flex' : 'flex'}`}>
+      {/* ======================= RIGHT PANE: CHAT ======================= */}
+      <div className={`${chatOpen ? 'flex' : 'hidden md:flex'} flex-1 flex-col bg-white dark:bg-slate-950 relative overflow-hidden`}>
         {selectedContact ? (
           <>
             {/* Chat Header */}
-            <div className="h-20 px-6 border-b border-slate-200 dark:border-slate-800 flex items-center gap-4 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-10 shrink-0">
-              <button onClick={handleBackToContacts} className="md:hidden p-2 -ml-2 rounded-full hover:bg-slate-100 dark:hover:bg-[#1a2133] text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 transition-colors shrink-0">
+            <div className="h-16 px-4 md:px-6 border-b border-slate-200 dark:border-slate-800 flex items-center gap-3 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md shrink-0 z-10">
+              <button
+                onClick={handleBackToContacts}
+                className="md:hidden p-1.5 -ml-1 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 hover:text-slate-900 dark:hover:text-slate-200 transition-colors shrink-0"
+              >
                 <ArrowLeft className="w-5 h-5" />
               </button>
-              <UserCircle2 className="w-12 h-12 text-slate-400 shrink-0" />
+              <div className="w-10 h-10 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center shrink-0">
+                <UserCircle2 className="w-6 h-6 text-blue-400" />
+              </div>
               <div className="min-w-0 flex-1">
-                  <h3 className="font-bold text-foreground text-lg">{selectedContact.name}</h3>
+                <h3 className="font-bold text-foreground text-sm truncate">{selectedContact.name}</h3>
                 <p className="text-xs font-medium">
                   {onlineUsers.has(selectedContact.id) ? (
-                    <span className="text-emerald-400">Online</span>
+                    <span className="text-emerald-500">● Online</span>
                   ) : (
-                    <span className="text-slate-500">Offline</span>
+                    <span className="text-slate-400">● Offline</span>
                   )}
-                  <span className="text-slate-600 mx-1.5">•</span>
-                  <span className="text-slate-500 truncate">{selectedContact.role}</span>
+                  <span className="text-slate-400 mx-1.5">·</span>
+                  <span className="text-muted-foreground">{selectedContact.role}</span>
                 </p>
               </div>
             </div>
 
-            {/* Messages Background with subtle pattern */}
-            <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #000 1px, transparent 0)', backgroundSize: '24px 24px' }}></div>
-
-            {/* Messages List */}
-            <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-6 relative z-0">
+            {/* Messages */}
+            <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-1 relative z-0">
               {loading ? (
-                <div className="h-full flex flex-col items-center justify-center gap-4">
+                <div className="h-full flex flex-col items-center justify-center gap-3">
                   <Loader2 className="w-8 h-8 animate-spin text-blue-500" />
-                  <p className="text-slate-500 font-medium animate-pulse">Loading secure chat...</p>
+                  <p className="text-muted-foreground text-sm font-medium animate-pulse">Loading conversation...</p>
                 </div>
               ) : messages.length === 0 ? (
-                <div className="h-full flex flex-col items-center justify-center text-slate-500 max-w-sm mx-auto text-center space-y-4">
-                  <div className="w-20 h-20 rounded-full bg-blue-500/10 flex items-center justify-center">
-                    <UserCircle2 className="w-10 h-10 text-blue-400" />
+                <div className="h-full flex flex-col items-center justify-center text-center gap-4 px-6">
+                  <div className="w-16 h-16 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
+                    <MessageSquare className="w-8 h-8 text-blue-400" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-bold text-foreground mb-2">Start a conversation</h3>
-                    <p className="text-sm">End-to-end encrypted messaging with {selectedContact.name}. Say hello!</p>
+                    <h3 className="font-bold text-foreground mb-1">Start the conversation</h3>
+                    <p className="text-muted-foreground text-sm">Say hello to {selectedContact.name}!</p>
                   </div>
                 </div>
               ) : (
-                <div className="space-y-4 flex flex-col justify-end min-h-full">
+                <div className="space-y-1 flex flex-col justify-end min-h-full">
                   {messages.map((msg, idx) => {
                     const isMe = msg.sender_id === currentUser.id
                     const prevMsg = messages[idx - 1]
@@ -502,17 +494,17 @@ export function ChatClient({
                     return (
                       <div key={msg.id} className={`flex flex-col ${isMe ? 'items-end' : 'items-start'}`}>
                         {showTime && (
-                          <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3 mt-4 self-center bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full border border-slate-200 dark:border-slate-700">
+                          <span className="text-[10px] font-semibold text-slate-400 self-center bg-slate-100 dark:bg-slate-800/80 px-3 py-1 rounded-full my-3">
                             {new Date(msg.created_at).toLocaleDateString(undefined, { weekday: 'short', hour: '2-digit', minute: '2-digit' })}
                           </span>
                         )}
-                        <div className={`px-4 py-2.5 rounded-2xl max-w-[85%] shadow-sm ${
-                        isMe 
-                          ? 'bg-blue-600 text-white rounded-br-sm' 
-                          : 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-200 rounded-bl-sm border border-slate-200 dark:border-slate-700'
-                      }`}>
-                          <p className="text-[15px] leading-relaxed break-words">{msg.content}</p>
-                          <span className={`text-[10px] self-end font-medium mt-1 ${isMe ? 'text-blue-200/80' : 'text-slate-500'}`}>
+                        <div className={`px-4 py-2.5 rounded-2xl max-w-[80%] shadow-sm mb-1 ${
+                          isMe
+                            ? 'bg-blue-600 text-white rounded-br-sm'
+                            : 'bg-slate-100 dark:bg-slate-800 text-foreground rounded-bl-sm border border-slate-200 dark:border-slate-700'
+                        }`}>
+                          <p className="text-[14px] leading-relaxed break-words">{msg.content}</p>
+                          <span className={`text-[10px] font-medium mt-0.5 block ${isMe ? 'text-blue-200/80 text-right' : 'text-slate-400'}`}>
                             {formatTime(msg.created_at)}
                           </span>
                         </div>
@@ -524,38 +516,86 @@ export function ChatClient({
               )}
             </div>
 
-            {/* Input Area */}
-            <div className="p-4 bg-white dark:bg-slate-900/80 border-t border-slate-200 dark:border-slate-800 relative z-10 shrink-0 backdrop-blur-md">
-              <form onSubmit={handleSend} className="relative flex items-center max-w-4xl mx-auto">
+            {/* Input */}
+            <div className="p-3 md:p-4 bg-white/90 dark:bg-slate-900/90 border-t border-slate-200 dark:border-slate-800 backdrop-blur-md shrink-0 z-10">
+              <form onSubmit={handleSend} className="flex items-center gap-2">
                 <input
                   type="text"
                   value={input}
-                  onChange={(e) => setInput(e.target.value)}
+                  onChange={e => setInput(e.target.value)}
                   placeholder="Type a message..."
                   disabled={sending || !conversationId}
-                  className="w-full h-14 pl-6 pr-16 rounded-full border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all text-[15px] text-foreground placeholder:text-muted-foreground disabled:opacity-50 shadow-sm"
+                  className="flex-1 h-12 px-5 rounded-full border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all text-sm text-foreground placeholder:text-muted-foreground disabled:opacity-50"
                 />
                 <button
                   type="submit"
                   disabled={!input.trim() || sending || !conversationId}
-                  className="absolute right-2 w-10 h-10 flex items-center justify-center rounded-full bg-blue-600 text-white disabled:opacity-50 hover:bg-blue-700 hover:scale-105 active:scale-95 transition-all shadow-md"
+                  className="w-12 h-12 flex items-center justify-center rounded-full bg-blue-600 text-white disabled:opacity-40 hover:bg-blue-700 hover:scale-105 active:scale-95 transition-all shadow-md shrink-0"
                 >
-                  {sending ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-5 h-5 -ml-0.5" />}
+                  {sending ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-4 h-4 -ml-0.5" />}
                 </button>
               </form>
             </div>
           </>
         ) : (
-          <div className="flex-1 flex flex-col items-center justify-center text-slate-500">
-            <div className="w-24 h-24 rounded-full bg-slate-100 dark:bg-slate-800/50 flex items-center justify-center mb-6 shadow-sm border border-slate-200 dark:border-slate-800">
-              <Shield className="w-12 h-12 text-slate-700" />
+          // Empty state — desktop only (sidebar is shown on mobile)
+          <div className="flex-1 flex flex-col items-center justify-center text-center px-8 gap-4">
+            <div className="w-20 h-20 rounded-full bg-slate-100 dark:bg-slate-800/60 flex items-center justify-center border border-slate-200 dark:border-slate-700 shadow-sm">
+              <MessageSquare className="w-10 h-10 text-slate-400" />
             </div>
-            <h2 className="text-xl font-bold text-foreground mb-2">EduTrack Secure Messaging</h2>
-            <p className="text-slate-500 max-w-sm text-center">Select a contact directory from the left menu to start a conversation.</p>
+            <div>
+              <h2 className="text-lg font-bold text-foreground mb-1">EduTrack Messaging</h2>
+              <p className="text-muted-foreground text-sm max-w-xs">Select a contact from the directory on the left to start a secure conversation.</p>
+            </div>
           </div>
         )}
       </div>
-      </div>
     </div>
+  )
+}
+
+// Reusable contact row sub-component
+function ContactRow({
+  contact,
+  selected,
+  online,
+  onClick,
+}: {
+  contact: Contact
+  selected: boolean
+  online: boolean
+  onClick: () => void
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className={`w-full flex items-center gap-3 p-3 rounded-2xl transition-all border text-left ${
+        selected
+          ? 'bg-blue-50 dark:bg-blue-500/10 border-blue-200 dark:border-blue-500/30'
+          : 'border-transparent hover:bg-white dark:hover:bg-slate-900/60 hover:border-slate-200 dark:hover:border-slate-700'
+      }`}
+    >
+      <div className="relative shrink-0">
+        <div className={`w-10 h-10 rounded-full flex items-center justify-center border ${
+          selected
+            ? 'bg-blue-500/10 border-blue-500/20 text-blue-400'
+            : 'bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-400'
+        }`}>
+          <UserCircle2 className="w-6 h-6" />
+        </div>
+        {online && (
+          <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 border-2 border-white dark:border-slate-900 rounded-full" />
+        )}
+      </div>
+      <div className="flex-1 min-w-0">
+        <p className={`font-semibold text-sm truncate ${selected ? 'text-blue-600 dark:text-blue-400' : 'text-foreground'}`}>
+          {contact.name}
+        </p>
+        <p className="text-xs text-muted-foreground truncate mt-0.5">{contact.role}</p>
+        {contact.subtitle && (
+          <p className="text-[10px] text-slate-400 truncate">{contact.subtitle}</p>
+        )}
+      </div>
+    </button>
   )
 }
