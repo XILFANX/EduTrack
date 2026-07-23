@@ -38,16 +38,18 @@ export default async function ParentsDirectoryPage({ searchParams }: { searchPar
 
   // Show ClassDirectory if no class selected
   if (!selectedClassId) {
-    // Get student counts per class for informational labels
-    const { data: studentCounts } = await supabase
+    // Get counts of students who have at least one linked parent per class
+    const { data: studentsWithLinks } = await adminClient
       .from('students')
-      .select('class_id')
+      .select('class_id, student_parents(parent_id)')
       .eq('school_id', schoolId)
       .is('deleted_at', null)
 
     const countMap: Record<string, number> = {}
-    ;(studentCounts || []).forEach((s: any) => {
-      countMap[s.class_id] = (countMap[s.class_id] || 0) + 1
+    ;(studentsWithLinks || []).forEach((s: any) => {
+      if (s.student_parents && s.student_parents.length > 0) {
+        countMap[s.class_id] = (countMap[s.class_id] || 0) + 1
+      }
     })
 
     return (
@@ -57,7 +59,7 @@ export default async function ParentsDirectoryPage({ searchParams }: { searchPar
         classes={(classes || []).map((c: any) => ({
           id: c.id,
           name: c.name,
-          countLabel: `${countMap[c.id] || 0} students enrolled`,
+          countLabel: `${countMap[c.id] || 0} students with linked parents`,
         }))}
         basePath="/dashboard/parents?class"
       />

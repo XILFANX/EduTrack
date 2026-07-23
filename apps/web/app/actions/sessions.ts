@@ -8,7 +8,7 @@ const ADMIN_ROLES = ['admin', 'principal', 'headteacher']
 export async function createAcademicYear(name: string, startDate: string, endDate: string) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) throw new Error('Not authenticated')
+  if (!user) return { error: 'Not authenticated' }
 
   const { data: profile } = await supabase
     .from('users')
@@ -16,7 +16,7 @@ export async function createAcademicYear(name: string, startDate: string, endDat
     .eq('id', user.id)
     .single()
 
-  if (!profile?.school_id || !ADMIN_ROLES.includes(profile.role)) throw new Error('Unauthorized')
+  if (!profile?.school_id || !ADMIN_ROLES.includes(profile.role)) return { error: 'Unauthorized' }
 
   const { data, error } = await supabase
     .from('academic_years')
@@ -30,14 +30,14 @@ export async function createAcademicYear(name: string, startDate: string, endDat
     .select()
     .single()
 
-  if (error) throw new Error(error.message)
-  return data
+  if (error) return { error: error.message }
+  return { data }
 }
 
 export async function createAcademicTerm(yearId: string, name: string, startDate: string, endDate: string) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) throw new Error('Not authenticated')
+  if (!user) return { error: 'Not authenticated' }
 
   const { data: profile } = await supabase
     .from('users')
@@ -45,7 +45,7 @@ export async function createAcademicTerm(yearId: string, name: string, startDate
     .eq('id', user.id)
     .single()
 
-  if (!profile?.school_id || !ADMIN_ROLES.includes(profile.role)) throw new Error('Unauthorized')
+  if (!profile?.school_id || !ADMIN_ROLES.includes(profile.role)) return { error: 'Unauthorized' }
 
   const { data, error } = await supabase
     .from('academic_terms')
@@ -60,14 +60,14 @@ export async function createAcademicTerm(yearId: string, name: string, startDate
     .select()
     .single()
 
-  if (error) throw new Error(error.message)
-  return data
+  if (error) return { error: error.message }
+  return { data }
 }
 
 export async function toggleActiveSession(yearId: string, termId?: string) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) throw new Error('Not authenticated')
+  if (!user) return { error: 'Not authenticated' }
 
   const { data: profile } = await supabase
     .from('users')
@@ -75,7 +75,7 @@ export async function toggleActiveSession(yearId: string, termId?: string) {
     .eq('id', user.id)
     .single()
 
-  if (!profile?.school_id || !ADMIN_ROLES.includes(profile.role)) throw new Error('Unauthorized')
+  if (!profile?.school_id || !ADMIN_ROLES.includes(profile.role)) return { error: 'Unauthorized' }
 
   // 1. Deactivate all years and terms for this school
   await supabase
@@ -96,7 +96,7 @@ export async function toggleActiveSession(yearId: string, termId?: string) {
     .select()
     .single()
 
-  if (yearErr) throw new Error('Failed to activate year: ' + yearErr.message)
+  if (yearErr) return { error: 'Failed to activate year: ' + yearErr.message }
 
   let activeTermName = null
 
@@ -109,7 +109,7 @@ export async function toggleActiveSession(yearId: string, termId?: string) {
       .select()
       .single()
       
-    if (termErr) throw new Error('Failed to activate term: ' + termErr.message)
+    if (termErr) return { error: 'Failed to activate term: ' + termErr.message }
     activeTermName = activeTerm.name
   }
 

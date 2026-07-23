@@ -126,30 +126,30 @@ export function ParentsDirectoryClient({ classes, selectedClassId, studentsWithP
         ) : (
           <div className="divide-y divide-slate-100 dark:divide-slate-800/50">
             {uniqueParents.map(parent => (
-              <div key={parent.id} className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 px-5 py-4 hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
-                <div className="flex items-center gap-4 min-w-0">
-                  <div className="w-12 h-12 rounded-full overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-sm font-bold text-slate-500 dark:text-slate-300 shrink-0 shadow-sm">
+              <div key={parent.id} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-4 sm:px-5 py-3 sm:py-4 hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+                <div className="flex items-center gap-3 sm:gap-4 min-w-0">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-xs sm:text-sm font-bold text-slate-500 dark:text-slate-300 shrink-0 shadow-sm">
                     {parent.photo_url
                       ? <img src={parent.photo_url} alt="" className="w-full h-full object-cover" />
                       : getInitials(parent.full_name || '')}
                   </div>
                   <div className="min-w-0">
-                    <p className="font-bold text-foreground text-base truncate">
+                    <p className="font-bold text-foreground text-sm sm:text-base truncate">
                       {parent.salutation ? `${parent.salutation} ${parent.full_name}` : (parent.full_name || 'Parent')}
                     </p>
                     {parent.phone_number && (
-                      <p className="text-xs text-muted-foreground flex items-center gap-1.5 mt-0.5">
+                      <p className="text-xs text-muted-foreground flex items-center gap-1.5 mt-0.5 truncate">
                         <Phone className="w-3 h-3" /> {parent.phone_number}
                       </p>
                     )}
                   </div>
                 </div>
 
-                <div className="flex flex-col sm:flex-row sm:items-center gap-4 shrink-0 pl-16 sm:pl-0">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 shrink-0 pl-12 sm:pl-0">
                   {/* Attached Students Badges */}
                   <div className="flex flex-wrap gap-1.5 justify-start sm:justify-end">
                     {parent.students.map(student => (
-                      <div key={student.id} className="flex items-center gap-1.5 px-2 py-1 rounded-lg bg-blue-50 dark:bg-blue-500/10 border border-blue-100 dark:border-blue-500/20 max-w-[150px]">
+                      <div key={student.id} className="flex items-center gap-1.5 px-2 py-1 rounded-lg bg-blue-50 dark:bg-blue-500/10 border border-blue-100 dark:border-blue-500/20 max-w-[200px]">
                         <div className="w-4 h-4 rounded-full overflow-hidden bg-blue-100 dark:bg-blue-500/20 shrink-0">
                           {student.photo_url ? (
                             <img src={student.photo_url} className="w-full h-full object-cover" alt="" />
@@ -158,7 +158,7 @@ export function ParentsDirectoryClient({ classes, selectedClassId, studentsWithP
                           )}
                         </div>
                         <span className="text-[10px] font-bold text-blue-700 dark:text-blue-400 truncate">
-                          {student.first_name}
+                          {student.first_name} {student.last_name}
                         </span>
                       </div>
                     ))}
@@ -167,7 +167,7 @@ export function ParentsDirectoryClient({ classes, selectedClassId, studentsWithP
                   <button
                     onClick={() => handleMessage(parent.id)}
                     disabled={messagingId === parent.id}
-                    className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 hover:bg-blue-600 dark:hover:bg-blue-600 border border-slate-200 dark:border-slate-700 hover:border-blue-600 dark:hover:border-blue-500 text-slate-600 dark:text-slate-300 hover:text-white text-xs font-bold transition-all disabled:opacity-60 shadow-sm"
+                    className="flex items-center justify-center gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-white dark:bg-slate-900 hover:bg-blue-600 dark:hover:bg-blue-600 border border-slate-200 dark:border-slate-700 hover:border-blue-600 dark:hover:border-blue-500 text-slate-600 dark:text-slate-300 hover:text-white text-xs font-bold transition-all disabled:opacity-60 shadow-sm"
                   >
                     <MessageSquare className="w-4 h-4" />
                     {messagingId === parent.id ? 'Opening…' : 'Message'}

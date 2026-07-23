@@ -53,8 +53,10 @@ export function SessionsClient({ initialYears, initialTerms }: { initialYears: A
     setSubmitting(true)
     setError(null)
     try {
-      const newYear = await createAcademicYear(name, startDate, endDate)
-      setYears([newYear, ...years])
+      const res = await createAcademicYear(name, startDate, endDate)
+      if (res.error) throw new Error(res.error)
+      if (!res.data) throw new Error('No data returned')
+      setYears([res.data, ...years])
       resetForm()
       router.refresh()
     } catch (err: any) {
@@ -70,8 +72,10 @@ export function SessionsClient({ initialYears, initialTerms }: { initialYears: A
     setSubmitting(true)
     setError(null)
     try {
-      const newTerm = await createAcademicTerm(showTermModalFor, name, startDate, endDate)
-      setTerms([...terms, newTerm])
+      const res = await createAcademicTerm(showTermModalFor, name, startDate, endDate)
+      if (res.error) throw new Error(res.error)
+      if (!res.data) throw new Error('No data returned')
+      setTerms([...terms, res.data])
       resetForm()
       router.refresh()
     } catch (err: any) {
@@ -102,7 +106,8 @@ export function SessionsClient({ initialYears, initialTerms }: { initialYears: A
         tmId = id
       }
 
-      await toggleActiveSession(yrId, tmId)
+      const res = await toggleActiveSession(yrId, tmId)
+      if (res.error) throw new Error(res.error)
       
       setYears(years.map(y => ({ ...y, is_active: y.id === yrId })))
       if (type === 'term') {

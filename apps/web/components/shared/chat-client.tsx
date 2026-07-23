@@ -260,7 +260,7 @@ export function ChatClient({
         </div>
 
         {/* Sidebar Content */}
-        <div className="flex-1 overflow-hidden">
+        <div className="flex-1 overflow-hidden flex flex-col">
           {/* Global Search */}
           {!selectedCategory && (
             <div className="px-4 pt-4 shrink-0">
@@ -285,10 +285,16 @@ export function ChatClient({
                 {globalSearchResults.length === 0 ? (
                   <p className="text-sm text-slate-500 px-2 py-4 text-center">No contacts found matching "{searchQuery}"</p>
                 ) : (
-                  globalSearchResults.map(contact => (
+                  globalSearchResults.map(contact => {
+                    const ADMIN_ROLES = ['Admin', 'Principal', 'Headteacher']
+                    const displayContact = ADMIN_ROLES.includes(contact.role) 
+                      ? { ...contact, name: 'School Admin', role: 'Administrator' } 
+                      : contact
+                    
+                    return (
                     <button
-                      key={contact.id}
-                      onClick={() => handleSelectContact(contact)}
+                      key={displayContact.id}
+                      onClick={() => handleSelectContact(displayContact)}
                       className="w-full flex items-center gap-3 p-3 rounded-2xl border border-transparent hover:bg-white dark:hover:bg-slate-900/50 hover:border-slate-200 dark:hover:border-slate-800 transition-all shadow-sm"
                     >
                       <div className="relative shrink-0">
@@ -297,12 +303,13 @@ export function ChatClient({
                           <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 border-2 border-white dark:border-[#0b0f19] rounded-full"></div>
                         )}
                       </div>
-                      <div className="flex-1 min-w-0 text-left">
-                            <p className="font-semibold text-sm truncate text-foreground">{contact.name}</p>
-                        <p className="text-xs text-slate-500 truncate">{contact.role}</p>
-                      </div>
-                    </button>
-                  ))
+                        <div className="flex-1 min-w-0 text-left">
+                          <p className="font-semibold text-sm truncate text-foreground">{displayContact.name}</p>
+                          <p className="text-xs text-slate-500 truncate">{displayContact.role}</p>
+                        </div>
+                      </button>
+                    )
+                  })
                 )}
               </div>
             ) : !selectedCategory ? (
@@ -374,7 +381,17 @@ export function ChatClient({
 
               <div className="flex-1 overflow-y-auto space-y-1 pr-1">
                 {(() => {
-                  let viewContacts = filteredContacts
+                  let viewContacts = contacts.filter(c => activeCategory?.roles.includes(c.role))
+                  
+                  // Apply Smart Admin Masking
+                  const ADMIN_ROLES = ['Admin', 'Principal', 'Headteacher']
+                  viewContacts = viewContacts.map(c => {
+                    if (ADMIN_ROLES.includes(c.role)) {
+                      return { ...c, name: 'School Admin', role: 'Administrator' }
+                    }
+                    return c
+                  })
+
                   if (selectedClassId) {
                     viewContacts = viewContacts.filter(c => c.classIds?.includes(selectedClassId))
                   }

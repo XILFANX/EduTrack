@@ -44,7 +44,7 @@ export function AnnouncementsFeed({ announcements }: { announcements: Announceme
               </h3>
               <div className="flex items-center gap-3 text-xs font-semibold text-blue-900/60 dark:text-blue-200/60">
                 <span className="bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 px-2.5 py-1 rounded-lg">
-                  From: {ann.users ? (ann.users.salutation ? `${ann.users.salutation} ${ann.users.full_name}` : ann.users.full_name) : 'Admin'}
+                  From: School Admin
                 </span>
                 <span className="text-slate-500">{date}</span>
               </div>
