@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import { Menu, X, ChevronRight } from 'lucide-react'
-import type { DevGuideGroup } from './layout'
+import type { DevGuideGroup } from './docs-config'
 
 export function MobileDocsSidebar({ guides }: { guides: DevGuideGroup[] }) {
   const [isOpen, setIsOpen] = useState(false)

@@ -1,10 +1,12 @@
-"use client"
+'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { setupDevPin } from './action'
 import { Loader2, ShieldCheck, Eye, EyeOff } from 'lucide-react'
 
 export function SetupPinForm() {
+  const router = useRouter()
   const [pin, setPin] = useState('')
   const [confirmPin, setConfirmPin] = useState('')
   const [showPin, setShowPin] = useState(false)
@@ -19,7 +21,6 @@ export function SetupPinForm() {
       setError('PIN must be at least 4 characters.')
       return
     }
-
     if (pin !== confirmPin) {
       setError('PINs do not match.')
       setConfirmPin('')
@@ -36,14 +37,16 @@ export function SetupPinForm() {
       setError(res.error ?? 'Failed to set PIN.')
       setLoading(false)
     } else {
-      window.location.reload()
+      router.refresh()
     }
   }
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-5">
       <div className="flex flex-col gap-1.5">
-        <label className="text-xs font-mono text-zinc-400 tracking-widest uppercase">Create PIN</label>
+        <label className="text-xs font-mono text-zinc-400 tracking-widest uppercase">
+          Create PIN
+        </label>
         <div className="relative">
           <input
             type={showPin ? 'text' : 'password'}
@@ -53,6 +56,7 @@ export function SetupPinForm() {
             className="w-full bg-black border border-zinc-800 rounded-xl px-4 py-3 pr-12 text-center text-xl font-mono text-white tracking-widest focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
             disabled={loading}
             autoFocus
+            maxLength={12}
           />
           <button
             type="button"
@@ -65,14 +69,17 @@ export function SetupPinForm() {
       </div>
 
       <div className="flex flex-col gap-1.5">
-        <label className="text-xs font-mono text-zinc-400 tracking-widest uppercase">Confirm PIN</label>
+        <label className="text-xs font-mono text-zinc-400 tracking-widest uppercase">
+          Confirm PIN
+        </label>
         <input
           type="password"
           value={confirmPin}
           onChange={(e) => setConfirmPin(e.target.value)}
           placeholder="Re-enter PIN"
-          className="w-full bg-black border border-zinc-800 rounded-xl px-4 py-3 text-center text-xl font-mono text-white tracking-widest focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
+          className="w-full bg-black border border-zinc-800 rounded-xl px-4 py-3 pr-12 text-center text-xl font-mono text-white tracking-widest focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
           disabled={loading}
+          maxLength={12}
         />
       </div>
 
@@ -90,14 +97,14 @@ export function SetupPinForm() {
       <button
         type="submit"
         disabled={loading || pin.length < 4 || !confirmPin}
-        className="w-full bg-blue-500 text-black font-mono font-bold rounded-xl px-4 py-3 hover:bg-blue-400 active:scale-95 transition-all disabled:opacity-40 disabled:active:scale-100 flex items-center justify-center gap-2"
+        className="w-full bg-emerald-500 text-black font-mono font-bold rounded-xl px-4 py-3 hover:bg-emerald-400 active:scale-95 transition-all disabled:opacity-40 disabled:active:scale-100 flex items-center justify-center gap-2"
       >
         {loading ? (
           <Loader2 className="w-5 h-5 animate-spin" />
         ) : (
           <>
             <ShieldCheck className="w-5 h-5" />
-            SET PIN & UNLOCK
+            SET PIN &amp; UNLOCK
           </>
         )}
       </button>

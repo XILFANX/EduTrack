@@ -1,10 +1,12 @@
-"use client"
+'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { verifyDevPin } from './action'
 import { Loader2, Eye, EyeOff } from 'lucide-react'
 
 export function PinForm() {
+  const router = useRouter()
   const [pin, setPin] = useState('')
   const [showPin, setShowPin] = useState(false)
   const [error, setError] = useState('')
@@ -23,7 +25,7 @@ export function PinForm() {
       setError(res.error ?? 'Incorrect PIN.')
       setPin('')
     } else {
-      window.location.reload()
+      router.refresh()
     }
     setLoading(false)
   }
@@ -39,6 +41,7 @@ export function PinForm() {
           className="w-full bg-black border border-zinc-800 rounded-xl px-4 py-3 pr-12 text-center text-2xl font-mono text-white tracking-widest focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
           disabled={loading}
           autoFocus
+          maxLength={12}
         />
         <button
           type="button"
