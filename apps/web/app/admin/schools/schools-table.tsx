@@ -78,9 +78,10 @@ export function SchoolsTable({ initialData }: { initialData: SchoolData[] }) {
       ) : (
         <div className="divide-y divide-border/50">
           {filteredData.map((s) => (
-            <div
+            <Link
+              href={`/admin/schools/${s.id}`}
               key={s.id}
-              className="grid grid-cols-1 md:grid-cols-12 gap-4 p-5 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group items-center"
+              className="grid grid-cols-1 md:grid-cols-12 gap-4 p-5 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group items-center cursor-pointer"
             >
               <div className="md:col-span-5 flex items-center gap-4 min-w-0">
                 <div className="w-12 h-12 rounded-2xl bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 text-lg font-black flex items-center justify-center shrink-0 shadow-inner group-hover:scale-105 transition-transform">
@@ -88,7 +89,7 @@ export function SchoolsTable({ initialData }: { initialData: SchoolData[] }) {
                 </div>
                 <div className="min-w-0">
                   <div className="flex items-center gap-2">
-                    <p className="text-sm font-bold text-foreground truncate transition-colors">
+                    <p className="text-sm font-bold text-foreground truncate transition-colors group-hover:text-blue-600 dark:group-hover:text-blue-400">
                       {s.name}
                     </p>
                   </div>
@@ -118,7 +119,7 @@ export function SchoolsTable({ initialData }: { initialData: SchoolData[] }) {
               <div className="md:col-span-2 flex items-center justify-between md:justify-end">
                 <span className="text-xs font-bold text-slate-500 uppercase tracking-widest md:hidden">Joined</span>
                 <div className="flex flex-col items-end">
-                  <span className="text-sm font-bold text-foreground">
+                  <span className="text-sm font-bold text-foreground group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                     {s.created_at ? new Date(s.created_at).toLocaleDateString('en-KE', { day: 'numeric', month: 'short' }) : '—'}
                   </span>
                   <span className="text-xs font-semibold text-slate-500">
@@ -126,7 +127,7 @@ export function SchoolsTable({ initialData }: { initialData: SchoolData[] }) {
                   </span>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       )}

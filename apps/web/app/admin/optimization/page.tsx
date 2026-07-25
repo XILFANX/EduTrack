@@ -10,8 +10,8 @@ export default async function AdminOptimizationPage() {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login')
 
-  const ROOT_EMAIL = process.env.PRODUCT_ADMINISTRATOR_EMAIL
-  const isRoot = user.email === ROOT_EMAIL
+  const SUPA_ADMIN_EMAIL = 'plancknetworks@gmail.com'
+  const isRoot = user.email === SUPA_ADMIN_EMAIL
 
   if (!isRoot) {
     const { data: profile } = await supabase.from('users').select('role').eq('id', user.id).single()

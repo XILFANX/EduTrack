@@ -1,0 +1,3 @@
+ALTER TABLE public.schools
+ADD COLUMN IF NOT EXISTS subscription_status TEXT DEFAULT 'active',
+ADD COLUMN IF NOT EXISTS trial_ends_at TIMESTAMP WITH TIME ZONE;

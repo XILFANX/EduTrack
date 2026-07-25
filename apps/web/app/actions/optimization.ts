@@ -85,9 +85,90 @@ export async function purgeCategory(category: RetentionCategory): Promise<{ succ
   const admin = await createAdminClient()
   const threshold = getThresholdDate(RETENTION_POLICIES[category])
   try {
-    await admin.from(category).delete().lte('created_at', threshold)
+    if (category === 'invitations') {
+      await admin.from(category).delete().in('status', ['accepted', 'expired']).lte('created_at', threshold)
+    } else {
+      await admin.from(category).delete().lte('created_at', threshold)
+    }
     return { success: true }
   } catch (error: any) {
     return { success: false, error: error.message }
   }
+}
+
+async function notifyWarningPhase() {
+  const admin = await createAdminClient()
+  const { data: accounts } = await admin
+    .from('users')
+    .select('id, full_name')
+    .lte('last_login_at', getThresholdDate(DORMANT.warn_at))
+    .gt('last_login_at', getThresholdDate(DORMANT.final_warn_at))
+    .limit(100)
+    // Note: If you add 'dormant_warned_at' to users, check it here
+}
+
+async function notifyFinalPhase() {
+  const admin = await createAdminClient()
+  const { data: accounts } = await admin
+    .from('users')
+    .select('id, full_name')
+    .lte('last_login_at', getThresholdDate(DORMANT.final_warn_at))
+    .gt('last_login_at', getThresholdDate(DORMANT.delete_at))
+    .limit(100)
+}
+
+async function processDeletionPhase() {
+  const admin = await createAdminClient()
+  const { data: accounts } = await admin
+    .from('users')
+    .select('id, full_name, role')
+    .lte('last_login_at', getThresholdDate(DORMANT.delete_at))
+    .limit(50)
+
+  if (!accounts?.length) return
+
+  for (const account of accounts) {
+    try {
+      await admin.auth.admin.deleteUser(account.id)
+      await admin.from('users').delete().eq('id', account.id)
+    } catch (err) {
+      console.error(`[dormant] Failed to delete account ${account.id}:`, err)
+    }
+  }
+}
+
+export async function processAccountDeletion(userId: string): Promise<{ success: boolean, error?: string }> {
+  try {
+    const admin = await createAdminClient()
+    await admin.auth.admin.deleteUser(userId)
+    await admin.from('users').delete().eq('id', userId)
+    return { success: true }
+  } catch (error: any) {
+    return { success: false, error: error.message }
+  }
+}
+
+export async function runAutomatedOptimization(): Promise<{ success: boolean, error?: string }> {
+  console.log('[optimization] Automated cleanup started:', new Date().toISOString())
+  const errors: string[] = []
+
+  const categories: RetentionCategory[] = [
+    'communications', 'notifications', 'audit_logs', 'search_queries_log', 'invitations'
+  ]
+  for (const cat of categories) {
+    const result = await purgeCategory(cat)
+    if (!result.success) errors.push(`purge:${cat}: ${result.error}`)
+  }
+
+  try { await notifyWarningPhase() } catch (e: any) { errors.push(`dormant:warn: ${e.message}`) }
+  try { await notifyFinalPhase() } catch (e: any) { errors.push(`dormant:final: ${e.message}`) }
+  try { await processDeletionPhase() } catch (e: any) { errors.push(`dormant:delete: ${e.message}`) }
+
+  if (errors.length > 0) {
+    console.error('[optimization] Some tasks failed:', errors)
+    return { success: false, error: errors.join(' | ') }
+  }
+
+  console.log('[optimization] Automated cleanup completed:', new Date().toISOString())
+  return { success: true }
 }
