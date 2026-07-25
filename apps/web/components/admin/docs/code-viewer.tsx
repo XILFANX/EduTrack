@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism'
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 import { Loader2, AlertCircle, FileCode } from 'lucide-react'
 
 interface CodeViewerProps {

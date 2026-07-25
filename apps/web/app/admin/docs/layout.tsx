@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation'
 import { Terminal, Database, Shield, Lock, ChevronRight, Activity, Cpu, KeyRound, Menu } from 'lucide-react'
 import { PinForm } from './pin-form'
 import { SetupPinForm } from './setup-pin-form'
-import { createClient } from '@/lib/supabase/server'
+import { createClient, createAdminClient } from '@/lib/supabase/server'
 import { MobileDocsSidebar } from './mobile-sidebar'
 
 import type { LucideIcon } from 'lucide-react'
@@ -54,7 +54,8 @@ export default async function AdminDocsLayout({ children }: { children: React.Re
     redirect('/login?next=/admin/docs')
   }
 
-  const { data: profile } = await (supabase
+  const adminClient = await createAdminClient()
+  const { data: profile } = await (adminClient
     .from('users') as any)
     .select('role, dev_docs_pin_hash')
     .eq('id', user.id)

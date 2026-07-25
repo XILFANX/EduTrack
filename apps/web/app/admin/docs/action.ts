@@ -1,7 +1,7 @@
 "use server"
 
 import { cookies } from 'next/headers'
-import { createClient } from '@/lib/supabase/server'
+import { createClient, createAdminClient } from '@/lib/supabase/server'
 import { hashPin, verifyPin } from '@/lib/crypto'
 
 // Cookie name for the developer docs session
@@ -41,7 +41,8 @@ export async function setupDevPin(
   // Hash with scrypt before storing — PIN itself never touches the DB
   const hash = await hashPin(pin)
 
-  const { error: updateError } = await (supabase
+  const adminClient = await createAdminClient()
+  const { error: updateError } = await (adminClient
     .from('users') as any)
     .update({ dev_docs_pin_hash: hash })
     .eq('id', user.id)
@@ -87,7 +88,8 @@ export async function verifyDevPin(
     return { success: false, error: 'Authentication required.' }
   }
 
-  const { data: profile, error: profileError } = await (supabase
+  const adminClient = await createAdminClient()
+  const { data: profile, error: profileError } = await (adminClient
     .from('users') as any)
     .select('dev_docs_pin_hash')
     .eq('id', user.id)
