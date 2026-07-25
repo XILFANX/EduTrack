@@ -1,9 +1,14 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import dynamic from 'next/dynamic'
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 import { Loader2, AlertCircle, FileCode } from 'lucide-react'
+
+const SyntaxHighlighter = dynamic(
+  () => import('react-syntax-highlighter').then((mod) => mod.Prism),
+  { ssr: false }
+)
 
 interface CodeViewerProps {
   repoPath: string // e.g. "XILFANX/EduTrack/main/apps/web/app/page.tsx"
