@@ -36,7 +36,7 @@ export function PinForm() {
           value={pin}
           onChange={(e) => setPin(e.target.value)}
           placeholder="••••"
-          className="w-full bg-black border border-zinc-800 rounded-xl px-4 py-3 pr-12 text-center text-2xl font-mono text-white tracking-widest focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all"
+          className="w-full bg-black border border-zinc-800 rounded-xl px-4 py-3 pr-12 text-center text-2xl font-mono text-white tracking-widest focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
           disabled={loading}
           autoFocus
         />

@@ -2,17 +2,18 @@ import React from 'react'
 import { cookies } from 'next/headers'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import { Terminal, Database, Shield, Lock, ChevronRight, Activity, Cpu, KeyRound } from 'lucide-react'
+import { Terminal, Database, Shield, Lock, ChevronRight, Activity, Cpu, KeyRound, Menu } from 'lucide-react'
 import { PinForm } from './pin-form'
 import { SetupPinForm } from './setup-pin-form'
 import { createClient } from '@/lib/supabase/server'
+import { MobileDocsSidebar } from './mobile-sidebar'
 
 import type { LucideIcon } from 'lucide-react'
 
-type DevGuideItem = { slug: string; title: string; icon?: LucideIcon }
-type DevGuideGroup = { category: string; items: DevGuideItem[] }
+export type DevGuideItem = { slug: string; title: string; icon?: LucideIcon }
+export type DevGuideGroup = { category: string; items: DevGuideItem[] }
 
-const devGuides: DevGuideGroup[] = [
+export const devGuides: DevGuideGroup[] = [
   {
     category: 'Core',
     items: [
@@ -46,7 +47,6 @@ const devGuides: DevGuideGroup[] = [
 ]
 
 export default async function AdminDocsLayout({ children }: { children: React.ReactNode }) {
-  // 1. Ensure the visitor is a logged-in admin
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
@@ -54,14 +54,12 @@ export default async function AdminDocsLayout({ children }: { children: React.Re
     redirect('/login?next=/admin/docs')
   }
 
-  // 2. Fetch their profile to check if a PIN has been set
   const { data: profile } = await (supabase
     .from('users') as any)
     .select('role, dev_docs_pin_hash')
     .eq('id', user.id)
     .single() as { data: { role: string; dev_docs_pin_hash: string | null } | null }
 
-  // Only allow admins
   const isAdmin = profile?.role === 'admin' || 
     user.email?.toLowerCase() === (process.env.PRODUCT_ADMINISTRATOR_EMAIL ?? '').toLowerCase()
     
@@ -71,17 +69,15 @@ export default async function AdminDocsLayout({ children }: { children: React.Re
 
   const hasPinSetup = !!profile?.dev_docs_pin_hash
 
-  // 3. Check if session cookie is present (unlocked this session)
   const cookieStore = await cookies()
   const isSessionUnlocked = cookieStore.has('dev_docs_session')
 
-  // 4a. No PIN set yet → show PIN creation screen
   if (!hasPinSetup) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center p-4 selection:bg-emerald-900 selection:text-emerald-400">
+      <div className="min-h-screen bg-black flex items-center justify-center p-4 selection:bg-blue-900 selection:text-blue-400">
         <div className="max-w-md w-full bg-zinc-950 border border-zinc-800 rounded-2xl p-8 shadow-2xl">
           <div className="flex flex-col items-center text-center mb-8">
-            <div className="w-16 h-16 rounded-full bg-zinc-900 flex items-center justify-center text-emerald-500 mb-6 border border-zinc-800 shadow-inner">
+            <div className="w-16 h-16 rounded-full bg-zinc-900 flex items-center justify-center text-blue-500 mb-6 border border-zinc-800 shadow-inner">
               <KeyRound className="w-8 h-8" />
             </div>
             <h1 className="text-2xl font-mono font-bold text-white mb-2 tracking-tight">Set Up Developer PIN</h1>
@@ -96,10 +92,9 @@ export default async function AdminDocsLayout({ children }: { children: React.Re
     )
   }
 
-  // 4b. PIN exists but session not unlocked → show lock screen
   if (!isSessionUnlocked) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center p-4 selection:bg-emerald-900 selection:text-emerald-400">
+      <div className="min-h-screen bg-black flex items-center justify-center p-4 selection:bg-blue-900 selection:text-blue-400">
         <div className="max-w-md w-full bg-zinc-950 border border-zinc-800 rounded-2xl p-8 shadow-2xl">
           <div className="flex flex-col items-center text-center mb-8">
             <div className="w-16 h-16 rounded-full bg-zinc-900 flex items-center justify-center text-zinc-500 mb-6 border border-zinc-800 shadow-inner">
@@ -114,20 +109,20 @@ export default async function AdminDocsLayout({ children }: { children: React.Re
     )
   }
 
-
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-300 flex flex-col font-mono selection:bg-emerald-900 selection:text-emerald-400">
+    <div className="min-h-screen bg-zinc-950 text-zinc-300 flex flex-col font-mono selection:bg-blue-900 selection:text-blue-400">
       
       {/* Top Header */}
       <header className="sticky top-0 z-40 w-full border-b border-zinc-800 bg-zinc-950/80 backdrop-blur flex-none">
         <div className="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex h-14 items-center justify-between">
             <div className="flex items-center gap-4">
-              <Link href="/admin/dashboard" className="text-zinc-500 hover:text-white transition-colors">
+              <Link href="/admin/dashboard" className="hidden sm:block text-zinc-500 hover:text-white transition-colors">
                 &larr; Back to Admin
               </Link>
-              <div className="w-px h-6 bg-zinc-800"></div>
-              <Link href="/admin/docs" className="flex items-center gap-2 text-white hover:text-emerald-400 transition-colors">
+              <div className="hidden sm:block w-px h-6 bg-zinc-800"></div>
+              <MobileDocsSidebar guides={devGuides} />
+              <Link href="/admin/docs" className="flex items-center gap-2 text-white hover:text-blue-400 transition-colors ml-2 sm:ml-0">
                 <Terminal className="w-5 h-5" />
                 <span className="font-bold tracking-tight">internal_docs</span>
               </Link>
@@ -152,7 +147,7 @@ export default async function AdminDocsLayout({ children }: { children: React.Re
                       <li key={guide.slug}>
                         <Link 
                           href={`/admin/docs/${guide.slug}`} 
-                          className="flex items-center gap-3 px-3 py-2 text-sm rounded border border-transparent hover:bg-zinc-900 hover:border-zinc-800 hover:text-emerald-400 transition-all text-zinc-400 group"
+                          className="flex items-center gap-3 px-3 py-2 text-sm rounded border border-transparent hover:bg-zinc-900 hover:border-zinc-800 hover:text-blue-400 transition-all text-zinc-400 group"
                         >
                           <Icon className="w-4 h-4 opacity-50 group-hover:opacity-100" />
                           <span className="truncate">{guide.title}</span>

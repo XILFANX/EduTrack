@@ -4,7 +4,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { AdminNav } from '@/components/admin/admin-nav'
-import { LogOut, Bell } from 'lucide-react'
+import { NotificationBell } from '@/components/shared/notification-bell'
+import { NotificationPopup } from '@/components/shared/notification-popup'
+import { LogOut } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'EduTrack Admin',
@@ -48,8 +50,8 @@ export default async function AdminLayout({ children }: { children: React.ReactN
       <header className="sticky top-0 z-40 bg-white/70 dark:bg-[#0A0A0F]/70 backdrop-blur-2xl border-b border-slate-200/50 dark:border-slate-800/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
           <Link href="/admin/dashboard" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 relative rounded-[14px] overflow-hidden shrink-0 border border-slate-200/50 dark:border-slate-800 shadow-sm group-hover:scale-105 transition-transform bg-white flex items-center justify-center font-bold text-blue-600 text-xs">
-              EduTrack
+            <div className="w-10 h-10 relative rounded-[14px] overflow-hidden shrink-0 border border-slate-200/50 dark:border-slate-800 shadow-sm group-hover:scale-105 transition-transform bg-white">
+              <Image src="/logo.png" alt="EduTrack" fill className="object-cover" />
             </div>
             <div>
               <span className="font-extrabold text-slate-900 dark:text-white block leading-tight tracking-tight text-[15px]">EduTrack</span>
@@ -63,10 +65,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           </Link>
           
           <div className="flex items-center gap-4">
-            <button className="relative p-2 text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 transition-colors">
-              <Bell className="w-5 h-5" />
-              <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-red-500 animate-pulse border-2 border-white dark:border-[#0A0A0F]" />
-            </button>
+            <NotificationBell />
             <div className="h-6 w-px bg-slate-200 dark:bg-slate-800" />
             
             <div className="flex items-center gap-3">
@@ -94,6 +93,9 @@ export default async function AdminLayout({ children }: { children: React.ReactN
 
       {/* Floating Bottom Nav */}
       <AdminNav isRoot={isRoot} />
+
+      {/* Realtime notification popup */}
+      <NotificationPopup />
     </div>
   )
 }

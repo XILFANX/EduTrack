@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { Info, AlertTriangle, Monitor, ArrowRight } from 'lucide-react'
+import { CodeViewer } from '@/components/admin/docs/code-viewer'
 
 export interface Heading {
   id: string
@@ -90,6 +91,12 @@ export function parseMarkdown(content: string): { elements: React.ReactNode[], h
             <span className="text-sm font-medium">{desc}</span>
           </div>
         </div>
+      )
+    } else if (line.includes('[CODE:')) {
+      pushList()
+      const repoPath = line.replace('[CODE: ', '').replace(']', '').trim()
+      elements.push(
+        <CodeViewer key={i} repoPath={repoPath} />
       )
     } else if (line.startsWith('**Q:')) {
       pushList()

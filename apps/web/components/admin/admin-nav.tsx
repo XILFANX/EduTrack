@@ -24,7 +24,7 @@ export function AdminNav({ isRoot }: { isRoot: boolean }) {
       {/* Heavy glass blur backdrop */}
       <div className="absolute inset-0 bg-card/80 backdrop-blur-xl rounded-[1.75rem] shadow-xl shadow-black/10 dark:shadow-black/40 border border-border/60" />
       
-      <div className="relative flex items-center justify-around p-2">
+      <div className="relative flex items-center p-2 overflow-x-auto scroll-smooth snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         {items.map((t) => {
           const active = pathname === t.href || (pathname.startsWith(`${t.href}/`) && t.href !== '/admin/dashboard')
           const Icon = t.Icon
@@ -33,7 +33,7 @@ export function AdminNav({ isRoot }: { isRoot: boolean }) {
             <Link
               key={t.href}
               href={t.href}
-              className="relative py-2.5 px-3 rounded-2xl transition-all duration-300 tap-highlight-transparent group flex flex-col items-center flex-1"
+              className="relative py-2.5 px-3 rounded-2xl transition-all duration-300 tap-highlight-transparent group flex flex-col items-center flex-none min-w-[72px] snap-center"
             >
               {active && (
                 <motion.div
