@@ -49,3 +49,6 @@ The endpoints below are explicitly exposed for third-party integrations and webh
 **Endpoint:** `POST /api/cron/notifications`
 **Auth Required:** No (Protected via Vercel Cron Secret)
 **Description:** Processes the queue of pending WhatsApp/Email notifications (e.g., attendance alerts, fee reminders).
+
+
+[Link: /api-docs]

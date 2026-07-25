@@ -35,3 +35,6 @@ EduTrack utilizes a strictly relational schema built on PostgreSQL, utilizing UU
 ## Communications
 - **`announcements`**: Global broadcasts to specific audiences (e.g., 'Parents', 'Teachers').
 - **`conversations` & `messages`**: Direct messaging threads between users (e.g., Parent to Class Teacher).
+
+
+[Link: /admin/dashboard]

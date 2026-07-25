@@ -9,3 +9,6 @@ Definitions of common domain terms used throughout the EduTrack codebase.
 - **RLS (Row Level Security):** A PostgreSQL feature that allows us to restrict which rows a user can query based on their authenticated session (e.g., restricting a parent to only see their own child's data).
 - **Tenant:** In our multi-tenant architecture, a "Tenant" is a specific School. 
 - **Matron:** The transport coordinator responsible for bus routes.
+
+
+[Link: /admin/dashboard]

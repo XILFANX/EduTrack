@@ -62,3 +62,6 @@ sequenceDiagram
 - **Primary Data:** Supabase PostgreSQL (handles users, schools, invoices, attendance, exams).
 - **Session State:** Secure HTTP-only cookies (`sb-access-token`, `sb-refresh-token`).
 - **Files/Media:** (Planned) Supabase Storage for profile pictures and PDF report cards.
+
+
+[Link: /admin/dashboard]

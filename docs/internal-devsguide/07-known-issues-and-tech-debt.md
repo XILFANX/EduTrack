@@ -20,3 +20,6 @@ An honest register of where the code currently falls short of the PRD or require
 ## 4. M-Pesa C2B Paybill Auto-Reconciliation
 - **What it is:** The PRD mentions automatic matching of standard C2B Paybill payments.
 - **The Reality:** We only have explicit tracking for STK pushes (`mpesa_stk_requests`). If a parent goes to their SIM toolkit and manually pays via the Paybill number, there is no explicit ledger table built to catch and reconcile the C2B webhook payload yet.
+
+
+[Link: /admin/dashboard]

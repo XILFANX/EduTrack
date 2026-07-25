@@ -52,3 +52,6 @@ If a user navigates to a portal they don't own, they are instantly redirected to
 ## Best Practices for Developers
 1. **Never write raw SQL queries bypassing RLS:** Always use the authenticated Supabase client (`createClient()`) so that Postgres executes the query in the context of the user's `auth.uid()`.
 2. **Never expose `school_id` as an editable form field:** The `school_id` should always be derived server-side from the authenticated user's profile to prevent tenant-hopping attacks.
+
+
+[Link: /admin/dashboard]

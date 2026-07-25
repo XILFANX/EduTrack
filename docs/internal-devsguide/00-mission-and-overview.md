@@ -25,3 +25,6 @@ EduTrack supports a 9-tier role architecture spanning the entire educational eco
 
 3. **Delegated Onboarding via Token Invites**
    To prevent administrative bottlenecks at the start of a term, onboarding is decentralized. Principals invite Teachers, and Class Teachers invite Parents using secure token links. When a token is clicked, the invitee bypasses complex registration flows.
+
+
+[Link: /admin/dashboard]

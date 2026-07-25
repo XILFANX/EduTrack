@@ -35,3 +35,6 @@ Navigate to `http://localhost:3000`.
 
 ## 4. Make Your First Change
 To verify your setup, try adding a test log in `apps/web/middleware.ts` inside the `isAllowedForRole` function, save, and navigate between portal routes to see it fire in your terminal.
+
+
+[Link: /admin/dashboard]

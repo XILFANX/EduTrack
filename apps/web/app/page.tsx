@@ -7,6 +7,7 @@ import {
   ArrowRight, Activity, Settings, HelpCircle, Globe
 } from 'lucide-react'
 import { ModeToggleLanding } from '@/components/shared/mode-toggle-landing'
+import { PricingSection } from '@/components/landing/pricing-section'
 
 // ─── Theme tokens (blue / cyan — EduTrack only) ─────────────────────────────
 const T = {
@@ -81,6 +82,7 @@ function PortalCard({ emoji, role, tagline, color, bg, textAccent, benefits, cta
 function NavBar() {
   const navLinks = [
     { label: 'Features', href: '#features' },
+    { label: 'Pricing', href: '#pricing' },
     { label: 'Who we serve', href: '#portals' },
     { label: 'Contact', href: '/contact' },
     { label: 'Docs', href: '/help' },
@@ -116,10 +118,11 @@ function NavBar() {
         </div>
 
         {/* Mobile nav — always visible below the header row on small screens */}
-        <div className="md:hidden flex overflow-x-auto justify-center no-scrollbar gap-4 pb-2 pt-0.5">
+        <div className="md:hidden flex overflow-x-auto justify-center items-center no-scrollbar gap-4 pb-2 pt-0.5">
           {navLinks.map((l) => (
             <a key={l.label} href={l.href} className={`text-xs font-medium whitespace-nowrap text-slate-500 dark:text-slate-400 ${T.accentHover} transition-colors shrink-0`}>{l.label}</a>
           ))}
+          <Link href="/login" className={`text-xs font-bold whitespace-nowrap text-blue-600 dark:text-blue-400 ${T.accentHover} transition-colors shrink-0`}>Log in</Link>
         </div>
       </div>
     </nav>
@@ -377,6 +380,7 @@ export default async function RootPage() {
       <main className="pt-14">
         <HeroSection />
         <FeaturesSection />
+        <PricingSection />
         <PortalSection />
         <DocsSection />
       </main>
