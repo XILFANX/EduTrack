@@ -23,6 +23,9 @@ const nextConfig: NextConfig = {
     serverActions: {
       bodySizeLimit: '10mb',
     },
+    outputFileTracingIncludes: {
+      '/admin/docs/[...slug]': ['./../../docs/internal-devsguide/**/*'],
+    },
   },
   turbopack: {
     root: path.join(process.cwd(), '../../'),

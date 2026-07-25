@@ -97,7 +97,7 @@ export default async function AdminDocsLayout({ children }: { children: React.Re
       <header className="sticky top-0 z-40 w-full border-b border-zinc-800 bg-zinc-950/90 backdrop-blur flex-none">
         <div className="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex h-14 items-center gap-4">
-            <MobileDocsSidebar guides={devGuides} />
+            <MobileDocsSidebar />
             <Link
               href="/admin/dashboard"
               className="hidden sm:block text-zinc-500 hover:text-white transition-colors text-sm"

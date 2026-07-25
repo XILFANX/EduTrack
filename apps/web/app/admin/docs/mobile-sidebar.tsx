@@ -3,9 +3,9 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import { Menu, X, ChevronRight } from 'lucide-react'
-import type { DevGuideGroup } from './docs-config'
+import { devGuides, type DevGuideGroup } from './docs-config'
 
-export function MobileDocsSidebar({ guides }: { guides: DevGuideGroup[] }) {
+export function MobileDocsSidebar() {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
@@ -32,7 +32,7 @@ export function MobileDocsSidebar({ guides }: { guides: DevGuideGroup[] }) {
             </button>
             
             <nav className="mt-8 space-y-8">
-              {guides.map((group) => (
+              {devGuides.map((group) => (
                 <div key={group.category}>
                   <h3 className="font-bold text-white mb-3 text-xs tracking-widest uppercase">[{group.category}]</h3>
                   <ul className="space-y-1.5">
