@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic'
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 import { Loader2, AlertCircle, FileCode } from 'lucide-react'
 
-const SyntaxHighlighter = dynamic(
+const SyntaxHighlighter: any = dynamic(
   () => import('react-syntax-highlighter').then((mod) => ({ default: mod.Prism as any })),
   { ssr: false }
 )
