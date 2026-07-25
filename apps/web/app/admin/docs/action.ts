@@ -12,7 +12,6 @@ function sessionCookieOptions() {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'strict' as const,
-    maxAge: SESSION_TTL_SECONDS,
     path: '/admin/docs',
   }
 }

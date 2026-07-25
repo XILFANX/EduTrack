@@ -48,16 +48,16 @@ export default async function AdminDocsLayout({ children }: { children: React.Re
   // 5. First-time setup
   if (!hasPinSetup) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center p-4">
-        <div className="max-w-md w-full bg-zinc-950 border border-zinc-800 rounded-2xl p-8 shadow-2xl">
+      <div className="min-h-[calc(100vh-theme(spacing.16))] flex items-center justify-center p-4">
+        <div className="max-w-md w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 shadow-2xl">
           <div className="flex flex-col items-center text-center mb-8">
-            <div className="w-16 h-16 rounded-full bg-zinc-900 flex items-center justify-center text-blue-500 mb-6 border border-zinc-800">
+            <div className="w-16 h-16 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-violet-600 dark:text-violet-400 mb-6 border border-slate-200 dark:border-slate-700">
               <KeyRound className="w-8 h-8" />
             </div>
-            <h1 className="text-2xl font-mono font-bold text-white mb-2 tracking-tight">
+            <h1 className="text-2xl font-mono font-bold text-slate-900 dark:text-white mb-2 tracking-tight">
               Set Up Developer PIN
             </h1>
-            <p className="text-sm font-mono text-zinc-500 leading-relaxed">
+            <p className="text-sm font-mono text-slate-600 dark:text-slate-400 leading-relaxed">
               Create a secure PIN for your developer docs.<br />
               This is separate from your account password.
             </p>
@@ -71,16 +71,16 @@ export default async function AdminDocsLayout({ children }: { children: React.Re
   // 6. PIN entry gate
   if (!isSessionUnlocked) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center p-4">
-        <div className="max-w-md w-full bg-zinc-950 border border-zinc-800 rounded-2xl p-8 shadow-2xl">
+      <div className="min-h-[calc(100vh-theme(spacing.16))] flex items-center justify-center p-4">
+        <div className="max-w-md w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 shadow-2xl">
           <div className="flex flex-col items-center text-center mb-8">
-            <div className="w-16 h-16 rounded-full bg-zinc-900 flex items-center justify-center text-zinc-500 mb-6 border border-zinc-800">
+            <div className="w-16 h-16 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 dark:text-slate-400 mb-6 border border-slate-200 dark:border-slate-700">
               <Lock className="w-8 h-8" />
             </div>
-            <h1 className="text-2xl font-mono font-bold text-white mb-2 tracking-tight">
+            <h1 className="text-2xl font-mono font-bold text-slate-900 dark:text-white mb-2 tracking-tight">
               Developer Mode
             </h1>
-            <p className="text-sm font-mono text-zinc-500">
+            <p className="text-sm font-mono text-slate-600 dark:text-slate-400">
               Internal Architectural Docs are locked. Enter your PIN to proceed.
             </p>
           </div>
@@ -92,38 +92,36 @@ export default async function AdminDocsLayout({ children }: { children: React.Re
 
   // 7. Render docs layout
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-300 flex flex-col font-mono">
+    <div className="flex flex-col font-mono min-h-[calc(100vh-theme(spacing.32))] bg-white dark:bg-[#0A0A0F] rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
       {/* Header */}
-      <header className="sticky top-0 z-40 w-full border-b border-zinc-800 bg-zinc-950/90 backdrop-blur flex-none">
-        <div className="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex h-14 items-center gap-4">
-            <MobileDocsSidebar />
-            <Link
-              href="/admin/dashboard"
-              className="hidden sm:block text-zinc-500 hover:text-white transition-colors text-sm"
-            >
-              &larr; Back to Admin
-            </Link>
-            <div className="hidden sm:block w-px h-5 bg-zinc-800" />
-            <Link
-              href="/admin/docs"
-              className="flex items-center gap-2 text-white hover:text-blue-400 transition-colors"
-            >
-              <Terminal className="w-5 h-5" />
-              <span className="font-bold tracking-tight">internal_docs</span>
-            </Link>
-          </div>
+      <header className="w-full border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 flex-none px-4 sm:px-6 lg:px-8">
+        <div className="flex h-14 items-center gap-4">
+          <MobileDocsSidebar />
+          <Link
+            href="/admin/dashboard"
+            className="hidden sm:block text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors text-sm"
+          >
+            &larr; Back to Admin
+          </Link>
+          <div className="hidden sm:block w-px h-5 bg-slate-200 dark:bg-slate-700" />
+          <Link
+            href="/admin/docs"
+            className="flex items-center gap-2 text-slate-900 dark:text-white hover:text-violet-600 dark:hover:text-violet-400 transition-colors"
+          >
+            <Terminal className="w-5 h-5" />
+            <span className="font-bold tracking-tight">internal_docs</span>
+          </Link>
         </div>
       </header>
 
       {/* Body */}
-      <div className="flex-1 w-full max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row">
+      <div className="flex-1 w-full flex flex-col lg:flex-row">
         {/* Desktop Sidebar */}
-        <aside className="hidden lg:block w-72 shrink-0 py-8 pr-8 border-r border-zinc-800">
-          <nav className="sticky top-24 space-y-8">
+        <aside className="hidden lg:block w-72 shrink-0 py-8 px-6 border-r border-slate-200 dark:border-slate-800 bg-slate-50/30 dark:bg-slate-900/20 overflow-y-auto">
+          <nav className="space-y-8">
             {devGuides.map((group) => (
               <div key={group.category}>
-                <h3 className="font-bold text-white mb-3 text-xs tracking-widest uppercase">
+                <h3 className="font-bold text-slate-900 dark:text-white mb-3 text-xs tracking-widest uppercase">
                   [{group.category}]
                 </h3>
                 <ul className="space-y-1.5">
@@ -133,7 +131,7 @@ export default async function AdminDocsLayout({ children }: { children: React.Re
                       <li key={guide.slug}>
                         <Link
                           href={`/admin/docs/${guide.slug}`}
-                          className="flex items-center gap-3 px-3 py-2 text-sm rounded border border-transparent hover:bg-zinc-900 hover:border-zinc-800 hover:text-blue-400 transition-all text-zinc-400 group"
+                          className="flex items-center gap-3 px-3 py-2 text-sm rounded border border-transparent hover:bg-slate-100 hover:border-slate-200 dark:hover:bg-slate-800/50 dark:hover:border-slate-700 hover:text-violet-600 dark:hover:text-violet-400 transition-all text-slate-600 dark:text-slate-400 group"
                         >
                           <Icon className="w-4 h-4 opacity-50 group-hover:opacity-100 shrink-0" />
                           <span className="truncate">{guide.title}</span>
@@ -148,7 +146,7 @@ export default async function AdminDocsLayout({ children }: { children: React.Re
         </aside>
 
         {/* Main content */}
-        <main className="flex-1 min-w-0 py-8 lg:pl-10">{children}</main>
+        <main className="flex-1 min-w-0 p-6 sm:p-8 lg:p-10">{children}</main>
       </div>
     </div>
   )
