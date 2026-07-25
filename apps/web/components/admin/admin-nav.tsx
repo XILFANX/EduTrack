@@ -20,11 +20,11 @@ export function AdminNav({ isRoot }: { isRoot: boolean }) {
   const items = isRoot ? NAV_ITEMS : NAV_ITEMS.filter(i => !i.rootOnly)
   
   return (
-    <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-full max-w-[min(calc(100vw-2.5rem),26rem)]">
+    <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50" style={{ width: 'min(calc(100vw - 1.5rem), 44rem)' }}>
       {/* Heavy glass blur backdrop */}
       <div className="absolute inset-0 bg-card/80 backdrop-blur-xl rounded-[1.75rem] shadow-xl shadow-black/10 dark:shadow-black/40 border border-border/60" />
       
-      <div className="relative flex items-center p-2 overflow-x-auto scroll-smooth snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+      <div className="relative flex items-center justify-around p-1.5">
         {items.map((t) => {
           const active = pathname === t.href || (pathname.startsWith(`${t.href}/`) && t.href !== '/admin/dashboard')
           const Icon = t.Icon
@@ -33,7 +33,7 @@ export function AdminNav({ isRoot }: { isRoot: boolean }) {
             <Link
               key={t.href}
               href={t.href}
-              className="relative py-2.5 px-3 rounded-2xl transition-all duration-300 tap-highlight-transparent group flex flex-col items-center flex-none min-w-[72px] snap-center"
+              className="relative py-2 px-3 rounded-2xl transition-all duration-300 tap-highlight-transparent group flex flex-col items-center flex-1 min-w-0"
             >
               {active && (
                 <motion.div
