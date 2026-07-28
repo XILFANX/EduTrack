@@ -4,6 +4,7 @@ import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
 
 import { AppPrompts } from '@/components/layout/app-prompts'
+import { GlobalNotificationPopup } from '@/components/shared/global-notification-popup'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -66,6 +67,7 @@ export default function RootLayout({
           <UXProvider>
             {children}
             <AppPrompts />
+            <GlobalNotificationPopup />
           </UXProvider>
         </ThemeProvider>
       </body>
