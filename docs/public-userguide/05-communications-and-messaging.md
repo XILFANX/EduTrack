@@ -1,10 +1,30 @@
-# Communications & Messaging
+# Communications, Messaging & Notifications
 
-**Goal:** Send announcements, reminders, and direct messages to parents and staff without using external WhatsApp groups.
+**Goal:** Send announcements, reminders, and direct messages to parents and staff without using external WhatsApp groups. Stay informed of important events through real-time notifications.
 
 ---
 
-## 1. School-Wide Announcements
+## 1. Your Notification Bell
+
+Every portal has a **bell icon (🔔)** in the top navigation bar. The number on it tells you how many unread notifications you have.
+
+- **Click the bell** to open your full notification inbox.
+- Notifications include payment confirmations, system alerts, and messages — all in one place.
+
+---
+
+## 2. Notification Popups
+
+When something important happens, a popup appears in the center of your screen automatically. You have two choices:
+
+- **Read** — Shows you the full message. Marks it as read and removes it from your badge count.
+- **Later** — Dismisses the popup without marking it as read. The badge count stays so you can come back to it.
+
+Some notifications also include an action button (e.g., "View Invoice") that takes you directly to the relevant page.
+
+---
+
+## 3. School-Wide Announcements
 
 Principals can broadcast messages to the entire school community.
 
@@ -14,42 +34,34 @@ Principals can broadcast messages to the entire school community.
 4. Select the audience: **All Parents**, **All Staff**, or **Everyone**.
 5. Click **Send**.
 
-The announcement appears at the top of the recipients' dashboards the next time they log in. It also triggers an email/push notification.
+The announcement appears at the top of the recipients' dashboards the next time they log in.
 
 [SCREENSHOT: /dashboard/communications/new — the announcement compose window]
 
 ---
 
-## 2. Class-Specific Messaging
-
-Class Teachers can send messages specifically to the parents of their students.
-
-1. Navigate to your Class dashboard.
-2. Click the **Message Parents** button.
-3. Write your message. It will be sent to all parents linked to students in that class.
-
----
-
-## 3. Direct Messaging (In-App Chat)
+## 4. Direct Messaging (In-App Chat)
 
 If you need to discuss a specific student's performance with their parent, you can use direct messages.
 
-1. Go to the Student's profile.
-2. Click **Message Parent**.
-3. A chat window will open. 
+1. Go to the **Messages** section in the sidebar.
+2. Browse the directory by category (Teaching Staff, Parents, etc.) or search for a name.
+3. Click a contact to open the conversation.
 
-This chat history is securely stored within EduTrack. It ensures professional boundaries are maintained, unlike personal WhatsApp exchanges.
+The blue double-tick (✓✓) means your message has been read.
+
+> **Note:** Who you can message depends on your role. Parents can message their child's teachers and the bursar. Teachers can message parents of their students and school staff.
 
 ---
 
-## 4. Bulk SMS for Fee Reminders
+## 5. Bulk SMS for Fee Reminders
 
 Bursars can trigger automated SMS reminders to parents who have overdue fee balances.
 
 1. Navigate to **Finances → Invoices**.
 2. Filter the list to show **Overdue** invoices.
 3. Click **Send Reminders** (top right).
-4. Review the template (e.g., "Dear Parent, you have an outstanding balance of KES X for [Student Name]...") and click confirm.
+4. Review the template and click confirm.
 
 > **Note:** SMS features require your school to have a positive SMS credit balance. Contact the Platform Owner if your credits are depleted.
 

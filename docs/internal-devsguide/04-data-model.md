@@ -83,6 +83,39 @@ Consolidated table for all human actors.
 | `inventory_ledger` | Basic check-in/check-out log for the `storekeeper`. |
 | `bus_routes` | Transport logistics tracking. |
 
-> **Missing Tables:** There is currently no database schema for Library Inventory, Fines, or Health/Discipline logs, despite PRD mentions.
+
+---
+
+### Communications Schema (`20260629000002_communications.sql`)
+
+| Table | Purpose |
+|---|---|
+| `announcements` | Broadcast messages from admin/principal to selected audiences (All, Parents, Staff, Teachers). Scoped by `school_id`. |
+| `conversations` | A thread between two users in the same school. |
+| `conversation_participants` | M2M join tracking which users belong to which conversation and when they last read it. |
+| `messages` | Individual messages in a conversation. Contains `sender_id`, `content`, `created_at`. |
+
+> **Messaging Enhancement (`20260728000000`):** `messages.is_read` (boolean, default `false`) was added to power unread badge counts and double-tick read receipts. Index added on `(conversation_id, is_read)`.
+
+---
+
+### Notifications Schema (`20260728000001_notifications.sql`)
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | uuid PK | |
+| `user_id` | uuid FK → `users` | |
+| `title` | text | Short title for popup header |
+| `message` | text | Full body shown after "Read" is pressed |
+| `type` | text | e.g. `system`, `payment`, `message` |
+| `link` | text | Nullable — navigation target |
+| `action_label` | text | Nullable — label for contextual CTA button |
+| `action_href` | text | Nullable — href for contextual CTA button |
+| `is_read` | boolean | Drives bell badge count; set to `true` on popup "Read" |
+| `created_at` | timestamptz | |
+
+RLS: users can only `SELECT`, `UPDATE`, and `DELETE` their own rows. Server inserts use service-role client. Realtime enabled for the `GlobalNotificationPopup`.
+
+> **Automated Cleanup:** Notifications that are `is_read = true` and older than 3 months are purged nightly via `pg_cron` (uncomment in migration to activate).
 
 [Link: /admin/dashboard]

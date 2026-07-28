@@ -72,6 +72,35 @@ create policy "Admins can view all invoices"
 
 ---
 
+## 4. Messaging & Notification Role-Permission Matrix
+
+### Direct Messaging
+
+| Sender Role | Can Message |
+|---|---|
+| `admin` (Product Admin) | `principal` only |
+| `principal` / `headteacher` | All school staff and parents |
+| `class_teacher` / `subject_teacher` | Parents of their students |
+| `bursar` | Parents (fee inquiries) |
+| `parent` | Their child's class teacher, subject teachers, bursar |
+| `student` | No direct messaging |
+
+> **Key constraint:** Product Admin (`admin`) can only message school principals/headteachers. School-internal admins cannot initiate a chat with the Product Admin — the Product Admin initiates it. This is enforced at the server component level by filtering contacts based on the current user's role.
+
+### Announcements / Broadcasting
+
+| Author Role | Can Broadcast To |
+|---|---|
+| `admin` (Product Admin) | N/A — Product Admin uses the `/admin/messages` direct chat only |
+| `principal` / `headteacher` | All, Parents, Staff, Teachers |
+| `bursar` | Parents |
+
+### Notifications
+
+All notification rows are inserted by server actions or cron jobs using the service-role client (bypasses RLS). Users can only read/update/delete their own notification rows. See `backend/supabase/migrations/20260728000001_notifications.sql` for full RLS policy definitions.
+
+---
+
 ## Security Checklist for Developers
 
 1. **Adding a table?** Add `school_id`, enable RLS, and write policies using `get_auth_school_id()`.
