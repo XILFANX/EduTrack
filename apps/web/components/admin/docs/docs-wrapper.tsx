@@ -48,11 +48,8 @@ export function DocsWrapper({ elements, headings, repoPaths, accent = 'blue' }: 
           Documentation
         </button>
         <button
-          onClick={() => {
-            if (displayRepoPath) setTab('repo')
-          }}
-          disabled={!displayRepoPath}
-          className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed ${
+          onClick={() => setTab('repo')}
+          className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 ${
             activeTab === 'repo'
               ? `${accentActive} shadow-md`
               : `text-slate-500 dark:text-slate-400 ${accentHover}`
@@ -161,7 +158,7 @@ export function DocsWrapper({ elements, headings, repoPaths, accent = 'blue' }: 
             )}
 
             {displayRepoPath ? (
-              <CodeViewer repoPath={displayRepoPath} standalone />
+              <CodeViewer key={displayRepoPath} repoPath={displayRepoPath} standalone />
             ) : (
               <div className="flex-1 flex flex-col items-center justify-center text-center py-32 text-zinc-600 font-mono">
                 <GitBranch className="w-12 h-12 mb-4 opacity-30" />
