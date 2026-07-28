@@ -7,7 +7,8 @@ import { createClient } from '@/lib/supabase/server'
 import { PinForm } from './pin-form'
 import { SetupPinForm } from './setup-pin-form'
 import { MobileDocsSidebar } from './mobile-sidebar'
-import { devGuides } from './docs-config'
+import { DesktopDocsSidebar } from './desktop-sidebar'
+import { DocsHeaderNav } from './docs-header-nav'
 
 export default async function AdminDocsLayout({ children }: { children: React.ReactNode }) {
   // 1. Verify user is authenticated
@@ -99,51 +100,18 @@ export default async function AdminDocsLayout({ children }: { children: React.Re
           <MobileDocsSidebar />
           <Link
             href="/admin/dashboard"
-            className="hidden sm:block text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors text-sm"
+            className="hidden sm:block text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors text-sm shrink-0"
           >
             &larr; Back to Admin
           </Link>
-          <div className="hidden sm:block w-px h-5 bg-slate-200 dark:bg-slate-700" />
-          <Link
-            href="/admin/docs"
-            className="flex items-center gap-2 text-slate-900 dark:text-white hover:text-violet-600 dark:hover:text-violet-400 transition-colors"
-          >
-            <Terminal className="w-5 h-5" />
-            <span className="font-bold tracking-tight">internal_docs</span>
-          </Link>
+          <DocsHeaderNav accent="blue" />
         </div>
       </header>
 
       {/* Body */}
       <div className="flex-1 w-full flex flex-col lg:flex-row">
-        {/* Desktop Sidebar */}
-        <aside className="hidden lg:block w-72 shrink-0 py-8 px-6 border-r border-slate-200 dark:border-slate-800 bg-slate-50/30 dark:bg-slate-900/20 overflow-y-auto">
-          <nav className="space-y-8">
-            {devGuides.map((group) => (
-              <div key={group.category}>
-                <h3 className="font-bold text-slate-900 dark:text-white mb-3 text-xs tracking-widest uppercase">
-                  [{group.category}]
-                </h3>
-                <ul className="space-y-1.5">
-                  {group.items.map((guide) => {
-                    const Icon = guide.icon ?? ChevronRight
-                    return (
-                      <li key={guide.slug}>
-                        <Link
-                          href={`/admin/docs/${guide.slug}`}
-                          className="flex items-center gap-3 px-3 py-2 text-sm rounded border border-transparent hover:bg-slate-100 hover:border-slate-200 dark:hover:bg-slate-800/50 dark:hover:border-slate-700 hover:text-violet-600 dark:hover:text-violet-400 transition-all text-slate-600 dark:text-slate-400 group"
-                        >
-                          <Icon className="w-4 h-4 opacity-50 group-hover:opacity-100 shrink-0" />
-                          <span className="truncate">{guide.title}</span>
-                        </Link>
-                      </li>
-                    )
-                  })}
-                </ul>
-              </div>
-            ))}
-          </nav>
-        </aside>
+        {/* Desktop Sidebar (hides itself on codebase route) */}
+        <DesktopDocsSidebar />
 
         {/* Main content */}
         <main className="flex-1 min-w-0 p-6 sm:p-8 lg:p-10">{children}</main>

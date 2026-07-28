@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import Link from 'next/link'
-import { Menu, X, ChevronRight } from 'lucide-react'
+import { Menu, X, ChevronRight, Terminal } from 'lucide-react'
 import { devGuides, type DevGuideGroup } from './docs-config'
 
 export function MobileDocsSidebar() {
@@ -32,6 +32,22 @@ export function MobileDocsSidebar() {
             </button>
             
             <nav className="mt-8 space-y-8">
+              <div>
+                <h3 className="font-bold text-white mb-3 text-xs tracking-widest uppercase">[Global]</h3>
+                <ul className="space-y-1.5">
+                  <li>
+                    <Link 
+                      href="/admin/docs/codebase" 
+                      onClick={() => setIsOpen(false)}
+                      className="flex items-center gap-3 px-3 py-2 text-sm rounded border border-transparent hover:bg-zinc-900 hover:border-zinc-800 hover:text-white transition-all text-zinc-400 group"
+                    >
+                      <Terminal className="w-4 h-4 opacity-50 group-hover:opacity-100" />
+                      <span className="truncate">Code Explorer</span>
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+
               {devGuides.map((group) => (
                 <div key={group.category}>
                   <h3 className="font-bold text-white mb-3 text-xs tracking-widest uppercase">[{group.category}]</h3>

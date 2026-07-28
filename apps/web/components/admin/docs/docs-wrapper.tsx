@@ -47,17 +47,17 @@ export function DocsWrapper({ elements, headings, repoPaths, accent = 'blue' }: 
           <BookOpen className="w-4 h-4" />
           Documentation
         </button>
-        <button
-          onClick={() => setTab('repo')}
-          className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 ${
-            activeTab === 'repo'
-              ? `${accentActive} shadow-md`
-              : `text-slate-500 dark:text-slate-400 ${accentHover}`
-          }`}
-        >
-          <GitBranch className="w-4 h-4" />
-          Codebase
-          {repoPaths.length > 0 && (
+        {repoPaths.length > 0 && (
+          <button
+            onClick={() => setTab('repo')}
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 ${
+              activeTab === 'repo'
+                ? `${accentActive} shadow-md`
+                : `text-slate-500 dark:text-slate-400 ${accentHover}`
+            }`}
+          >
+            <GitBranch className="w-4 h-4" />
+            Source Files
             <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${
               activeTab === 'repo'
                 ? 'bg-white/20 text-white'
@@ -65,8 +65,8 @@ export function DocsWrapper({ elements, headings, repoPaths, accent = 'blue' }: 
             }`}>
               {repoPaths.length}
             </span>
-          )}
-        </button>
+          </button>
+        )}
       </div>
 
       {/* ── Content area ── */}
