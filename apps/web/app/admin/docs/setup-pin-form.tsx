@@ -53,7 +53,7 @@ export function SetupPinForm() {
             value={pin}
             onChange={(e) => setPin(e.target.value)}
             placeholder="Enter PIN (min 4 chars)"
-            className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 pr-12 text-center text-xl font-mono text-slate-900 dark:text-white tracking-widest focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-all"
+            className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 pr-12 text-center text-xl font-mono text-slate-900 dark:text-white tracking-widest focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
             disabled={loading}
             autoFocus
             maxLength={12}
@@ -77,7 +77,7 @@ export function SetupPinForm() {
           value={confirmPin}
           onChange={(e) => setConfirmPin(e.target.value)}
           placeholder="Re-enter PIN"
-          className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 pr-12 text-center text-xl font-mono text-slate-900 dark:text-white tracking-widest focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-all"
+          className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 pr-12 text-center text-xl font-mono text-slate-900 dark:text-white tracking-widest focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
           disabled={loading}
           maxLength={12}
         />
@@ -97,7 +97,7 @@ export function SetupPinForm() {
       <button
         type="submit"
         disabled={loading || pin.length < 4 || !confirmPin}
-        className="w-full bg-violet-600 text-white font-mono font-bold rounded-xl px-4 py-3 hover:bg-violet-700 active:scale-95 transition-all disabled:opacity-40 disabled:active:scale-100 flex items-center justify-center gap-2"
+        className="w-full bg-blue-600 text-white font-mono font-bold rounded-xl px-4 py-3 hover:bg-blue-700 active:scale-95 transition-all disabled:opacity-40 disabled:active:scale-100 flex items-center justify-center gap-2"
       >
         {loading ? (
           <Loader2 className="w-5 h-5 animate-spin" />

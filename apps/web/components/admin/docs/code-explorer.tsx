@@ -7,6 +7,8 @@ import {
   Copy, Check, Loader2, AlertCircle, PanelLeftClose, PanelLeftOpen,
   ExternalLink, RefreshCw,
 } from 'lucide-react'
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -242,12 +244,12 @@ export function CodeExplorer({ repo, branch = 'main', accent = 'blue' }: CodeExp
   const lineCount     = activeCode ? activeCode.split('\n').length : 0
 
   return (
-    <div className="flex flex-col h-full min-h-[600px] rounded-xl overflow-hidden border border-slate-800 bg-[#1e1e1e] shadow-2xl font-mono">
+    <div className="flex flex-col h-full min-h-[600px] rounded-xl overflow-hidden border border-slate-800 bg-[#0A0A0F] shadow-2xl font-mono">
       <div className="flex flex-1 min-h-0">
 
         {/* ── Sidebar ── */}
         {sidebarOpen && (
-          <div className="flex flex-col w-60 shrink-0 border-r border-slate-800 bg-[#252526]">
+          <div className="flex flex-col w-60 shrink-0 border-r border-slate-800 bg-[#050508]">
             <div className="flex items-center justify-between px-3 py-2 border-b border-slate-800">
               <span className="text-[10px] font-bold tracking-widest uppercase text-slate-500">Explorer</span>
               <button
@@ -290,7 +292,7 @@ export function CodeExplorer({ repo, branch = 'main', accent = 'blue' }: CodeExp
         {/* ── Editor pane ── */}
         <div className="flex-1 flex flex-col min-w-0">
           {/* Tab bar */}
-          <div className="flex items-center bg-[#2d2d2d] border-b border-slate-800 overflow-x-auto scrollbar-none shrink-0 min-h-[36px]">
+          <div className="flex items-center bg-[#050508] border-b border-slate-800 overflow-x-auto scrollbar-none shrink-0 min-h-[36px]">
             {!sidebarOpen && (
               <button
                 onClick={() => setSidebarOpen(true)}
@@ -314,8 +316,8 @@ export function CodeExplorer({ repo, branch = 'main', accent = 'blue' }: CodeExp
                   onClick={() => setActiveTab(tab.path)}
                   className={`flex items-center gap-1.5 px-3 py-2 text-[11px] border-r border-slate-800 transition-colors shrink-0 group/tab max-w-[160px] ${
                     isActive
-                      ? 'bg-[#1e1e1e] text-white border-t-2 border-t-[var(--accent)]'
-                      : 'text-slate-500 hover:bg-[#1e1e1e]/50 hover:text-slate-300 border-t-2 border-t-transparent'
+                      ? 'bg-[#0A0A0F] text-white border-t-2 border-t-[var(--accent)]'
+                      : 'text-slate-500 hover:bg-[#0A0A0F]/50 hover:text-slate-300 border-t-2 border-t-transparent'
                   }`}
                   style={{ '--accent': accentColor } as any}
                 >
@@ -334,9 +336,9 @@ export function CodeExplorer({ repo, branch = 'main', accent = 'blue' }: CodeExp
             })}
           </div>
 
-          {/* Breadcrumb + toolbar */}
+          {/* Breadcrumb / toolbar */}
           {activeTab && activeTabInfo && (
-            <div className="flex items-center justify-between px-4 py-1.5 bg-[#1e1e1e] border-b border-slate-800/50 text-[11px] text-slate-500 shrink-0">
+            <div className="flex items-center justify-between px-4 py-1.5 bg-[#0A0A0F] border-b border-slate-800/50 text-[11px] text-slate-500 shrink-0">
               <div className="flex items-center gap-1 overflow-hidden">
                 {activeTab.split('/').map((seg, i, arr) => (
                   <React.Fragment key={i}>
@@ -362,7 +364,7 @@ export function CodeExplorer({ repo, branch = 'main', accent = 'blue' }: CodeExp
           )}
 
           {/* Code area */}
-          <div className="flex-1 overflow-auto relative bg-[#1e1e1e]">
+          <div className="flex-1 overflow-auto relative bg-[#0A0A0F]">
             {!activeTab && (
               <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-700 gap-3">
                 <Code2 className="w-14 h-14 opacity-20" />
@@ -375,33 +377,30 @@ export function CodeExplorer({ repo, branch = 'main', accent = 'blue' }: CodeExp
               </div>
             )}
             {activeLoading && (
-              <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-slate-500 text-sm bg-[#1e1e1e]">
+              <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-slate-500 text-sm bg-[#0A0A0F]">
                 <Loader2 className={`w-6 h-6 animate-spin ${accentText}`} />
                 <span>Fetching from GitHub…</span>
               </div>
             )}
             {activeErr && !activeLoading && (
-              <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-red-400 text-sm px-8 text-center bg-[#1e1e1e]">
+              <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-red-400 text-sm px-8 text-center bg-[#0A0A0F]">
                 <AlertCircle className="w-8 h-8 opacity-50" />
                 <p className="font-semibold">Could not load file</p>
                 <p className="text-xs text-red-500/70 bg-red-900/20 px-3 py-1.5 rounded-md">{activeErr}</p>
               </div>
             )}
             {activeCode && !activeLoading && !activeErr && (
-              <table className="w-full border-collapse text-[13px] leading-5">
-                <tbody>
-                  {activeCode.split('\n').map((line, i) => (
-                    <tr key={i} className="hover:bg-white/[0.03] group">
-                      <td className="sticky left-0 select-none w-12 min-w-[3rem] text-right pr-4 pl-4 text-slate-600 group-hover:text-slate-500 bg-[#1e1e1e] border-r border-slate-800/40 transition-colors">
-                        {i + 1}
-                      </td>
-                      <td className="pl-5 pr-6 py-0 text-slate-300 whitespace-pre">
-                        {line || ' '}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              <div className="text-[13px] leading-relaxed [&>pre]:!m-0 [&>pre]:!bg-transparent [&>pre]:!p-4">
+                <SyntaxHighlighter
+                  language={activeTabInfo?.name.split('.').pop()?.toLowerCase() || 'typescript'}
+                  style={vscDarkPlus}
+                  showLineNumbers
+                  customStyle={{ margin: 0, background: 'transparent' }}
+                  lineNumberStyle={{ minWidth: '3rem', paddingRight: '1rem', color: '#475569', textAlign: 'right' }}
+                >
+                  {activeCode}
+                </SyntaxHighlighter>
+              </div>
             )}
           </div>
 
