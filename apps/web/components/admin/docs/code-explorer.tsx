@@ -236,7 +236,7 @@ export function CodeExplorer({ repo, branch = 'main', accent = 'blue' }: CodeExp
   // ── Derived state ──────────────────────────────────────────────────────────
   const activeCode    = activeTab ? code[activeTab]      ?? null : null
   const activeErr     = activeTab ? fileError[activeTab] ?? null : null
-  const activeLoading = fileLoading === activeTab
+  const activeLoading = activeTab ? fileLoading === activeTab : false
   const activeTabInfo = tabs.find(t => t.path === activeTab)
   const githubUrl     = activeTab ? `https://github.com/${repo}/blob/${branch}/${activeTab}` : '#'
   const lineCount     = activeCode ? activeCode.split('\n').length : 0
