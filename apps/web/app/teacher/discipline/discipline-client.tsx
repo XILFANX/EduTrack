@@ -1,5 +1,5 @@
 'use client'
-import { showFeedback, showError } from '@/lib/feedback'
+import { UX } from '@/lib/ux'
 
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
@@ -41,9 +41,9 @@ export function DisciplineClient({ schoolId, teacherId, cls, students, logs }: P
     setLoading(false)
 
     if (res?.error) {
-      showError(res.error)
+      UX.errorModal(res.error)
     } else {
-      showFeedback({ title: 'Log added successfully' })
+      UX.successModal({ title: 'Log added successfully' })
       setIsAdding(false)
       setFormData({ studentId: '', title: '', description: '', actionTaken: '' })
       router.refresh()

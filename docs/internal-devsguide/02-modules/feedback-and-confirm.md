@@ -1,179 +1,106 @@
-# Global Feedback & Confirmation Dialog
+# Global UX System (Tiered Feedback & Confirmation)
 
-**Location:** `components/ui/feedback-toast.tsx` · `lib/feedback.tsx` · `components/providers/confirm-provider.tsx`
+**Location:** `components/providers/ux-provider.tsx` · `lib/ux.ts`
 
-This is a single, centralized module. You build it once and call it from anywhere — the UI card is rendered from one place, and each call site supplies its own message.
+This is a single, centralized module that handles all user interactions globally. It implements a tiered UX system so we don't overwhelm users with aggressive popups for every minor action.
+
+## 🏗️ Architecture
+
+The system consists of two parts:
+1. **`<UXProvider>`** — Sits in `app/layout.tsx` and renders the modals/toasts. It listens for custom events fired by the UX API.
+2. **`UX` API & `useConfirm` Hook** — Provides a clean developer interface to trigger these UI components from anywhere (even outside React components).
+
+## 📊 Tiered Feedback Guidelines
+
+Use the appropriate tier depending on the action's importance and the user's focus:
+
+1. **Tier 1 (Major Interactions): Success/Error Modals**
+   - **Use case:** Destructive errors, completing a major form (e.g. adding a new student), or actions that require a "Next step" (e.g. "View Report").
+   - **Visuals:** Center-screen modal with backdrop blur. Auto-closes after 3.5s if no action button is provided.
+2. **Tier 2 (Minor Interactions): Toasts**
+   - **Use case:** Incoming chat messages, background task completion, minor state updates (e.g. "Grades saved").
+   - **Visuals:** Unobtrusive pill that slides up from the bottom. Auto-closes after 3s.
+3. **Tier 3: Confirmation Dialogs**
+   - **Use case:** Destructive actions (delete, logout) or actions with significant consequences.
+   - **Visuals:** Center-screen modal requiring explicit user choice.
 
 ---
 
-## Event Feedback Toaster
+## 💻 Usage Guide
 
-### Files
-| File | Role |
-|------|------|
-| `components/ui/feedback-toast.tsx` | The card component rendered inside the toast |
-| `lib/feedback.tsx` | Exported utility functions — `showFeedback()` and `showError()` |
-| `app/layout.tsx` | Mounts the `<Toaster>` globally — nothing per-page needed |
+### 1. Triggering Feedback (Success, Error, Toast)
 
-### Usage
+Import the `UX` object from `lib/ux`. You can use this **anywhere** (components, server actions wrapped in client helpers, regular TS files).
 
 ```typescript
-'use client'  // ← MUST be line 1, before any import
-import { showFeedback, showError } from '@/lib/feedback'
+import { UX } from '@/lib/ux'
 
-// Success — after any positive event
-showFeedback({ title: 'Student enrolled!' })
-
-// With description
-showFeedback({
-  title: 'Attendance saved',
-  description: '32 records submitted for Monday.'
+// 🟢 Tier 1: Success Modal (Auto-closes in 3.5s)
+UX.successModal({
+  title: 'Student admitted successfully',
+  description: 'The student has been added to the registry.'
 })
 
-// With an inline action button on the card itself
-showFeedback({
-  title: 'Timetable updated',
-  description: 'Changes saved for Monday.',
-  action: { label: 'View', onClick: () => router.push('/dashboard/timetable') }
+// 🟢 Tier 1: Success Modal WITH Action (Stays open until clicked)
+UX.successModal({
+  title: 'Report card generated',
+  action: {
+    label: 'View Report Card',
+    onClick: () => router.push(`/reports/${id}`)
+  }
 })
 
-// Error
-showError({ title: 'Failed to save', description: 'Please check your connection.' })
-showError('Something went wrong')  // shorthand string form
+// 🔴 Tier 1: Error Modal (Requires user to click "Got it")
+UX.errorModal('Failed to connect to the database. Please try again.')
+// OR
+UX.errorModal({
+  title: 'Submission Failed',
+  description: 'The grade exceeds the maximum allowed points.'
+})
+
+// 🔵 Tier 2: Minor Toast (Auto-closes in 3s, non-blocking)
+UX.toast('Attendance saved')
 ```
 
-### Design Spec
-- Card: `bg-slate-900`, `border-slate-800`, `rounded-2xl`, 360px wide
-- Top accent stripe: **blue-500** (success) · **red-500** (error)
-- Icon ring: **blue-500/10** (success) · **red-500/10** (error)
-- Duration: 5 000 ms success · 7 000 ms error
-- Position: top-right
+### 2. Requesting Confirmation
 
----
+For destructive actions, always request confirmation. Use the `useConfirm` hook.
 
-## Confirmation Dialog
+```tsx
+import { useConfirm } from '@/components/providers/ux-provider'
 
-### Files
-| File | Role |
-|------|------|
-| `components/providers/confirm-provider.tsx` | Global context + rendered `<AlertDialog>` |
-| `app/layout.tsx` | Mounts `<ConfirmProvider>` wrapping the whole app |
-
-### Usage
-
-```typescript
-'use client'
-import { useConfirm } from '@/components/providers/confirm-provider'
-
-export function MyComponent() {
+export function DeleteButton() {
   const confirm = useConfirm()
 
-  async function handleDeleteStudent(id: string) {
+  const handleDelete = async () => {
     const ok = await confirm({
-      title: 'Delete student?',
-      description: 'This will permanently remove the student and all associated records.',
-      confirmText: 'Delete',
-      cancelText: 'Keep',
-      variant: 'destructive'   // red confirm button
+      title: 'Delete this student record?',
+      description: 'This action cannot be undone. All associated academic history will be lost.',
+      confirmText: 'Delete Record',
+      variant: 'destructive' // Uses pure red styling (#FF0000)
     })
-    if (!ok) return            // user cancelled — stop here
 
-    await deleteStudent(id)
-    showFeedback({ title: 'Student deleted' })
+    if (!ok) return
+
+    // Proceed with deletion...
+    await deleteStudent()
+    UX.successModal({ title: 'Student record deleted' })
   }
+
+  return <button onClick={handleDelete}>Delete</button>
 }
 ```
 
-### Options
+## 🎨 Theming
 
-| Prop | Type | Default | Notes |
-|------|------|---------|-------|
-| `title` | `string` | — | Required |
-| `description` | `string` | — | Optional supporting text |
-| `confirmText` | `string` | `'Confirm'` | Label for the confirm button |
-| `cancelText` | `string` | `'Cancel'` | Label for the cancel button |
-| `variant` | `'default' \| 'destructive'` | `'default'` | `'destructive'` = red button |
+- **EduTrack:** Success modals use a **Cyan/Blue** theme (blue-600 buttons, cyan-500 icons, cyan borders).
+- **EstateTrack:** Success modals use a **Violet** theme (violet-600 buttons, violet-500 icons, violet borders).
+- **Destructive Actions:** Consistently use pure red (`#FF0000`) across both apps to clearly signal danger.
 
-### Design Spec
-- Card: `bg-slate-900`, `rounded-3xl`, max-width `sm`
-- Icon: amber warning triangle, 56px ring
-- Cancel button: `slate-800`
-- Confirm (default): **blue-600**
-- Confirm (destructive): **red-600**
+## ⚠️ Known Gotchas
 
----
+### 1. `'use client'` Directive Ordering
+If a file has a UTF-8 BOM (Byte Order Mark), the `'use client'` directive MUST be the very first thing in the file, bypassing the BOM. If you get a "useState only works in Client Components" error in a file that clearly has `'use client'`, check for invisible BOM characters.
 
-## Events Currently Wired
-
-| Component | Event | Type |
-|-----------|-------|------|
-| `components/admin/optimization-client.tsx` | Cache purge success/fail | feedback |
-| `components/shared/students/students-client.tsx` | Student removed/deleted | feedback |
-| `app/admin/admins/create-admin-modal.tsx` | Admin created | feedback |
-| `app/admin/schools/create-school-modal.tsx` | School registered | feedback |
-| `app/dashboard/classes/add-class-modal.tsx` | Class created | feedback |
-| `app/dashboard/classes/classes-client.tsx` | Class deleted | feedback |
-| `app/dashboard/classes/[id]/class-detail-client.tsx` | Class deleted | feedback |
-| `app/dashboard/exams/grade-scales-manager.tsx` | Grade scale CRUD | feedback |
-| `app/dashboard/grading/grading-client.tsx` | Grade scale CRUD | feedback |
-| `app/dashboard/staff/staff-page-client.tsx` | Staff removed / invite copied | feedback |
-| `app/dashboard/subjects/add-subject-modal.tsx` | Subject saved | feedback |
-| `app/dashboard/subjects/subject-client.tsx` | Subject / teacher CRUD | feedback |
-| `app/dashboard/timetable/timetable-builder.tsx` | Period / slot CRUD | feedback |
-| `app/store/log-stock-modal.tsx` | Stock logged | feedback |
-| `app/teacher/attendance/attendance-client.tsx` | Attendance saved | feedback |
-| `app/teacher/discipline/discipline-client.tsx` | Discipline log added | feedback |
-| `app/teacher/grades/grades-client.tsx` | Grades saved | feedback |
-| `components/shared/user-nav.tsx` | Log out | confirm (destructive) |
-
----
-
-## Adding Feedback to a New Event
-
-1. Ensure `'use client'` is **line 1** of the file (before any import — Next.js enforces this strictly).
-2. Import the utility:
-   ```typescript
-   import { showFeedback, showError } from '@/lib/feedback'
-   ```
-3. Call on outcome:
-   ```typescript
-   const result = await someAction(data)
-   if (result.error) {
-     showError({ title: 'Failed', description: result.error })
-   } else {
-     showFeedback({ title: 'Done!' })
-   }
-   ```
-
-## Adding a Confirm to a New Destructive Action
-
-1. Import and call the hook:
-   ```typescript
-   import { useConfirm } from '@/components/providers/confirm-provider'
-   const confirm = useConfirm()
-   ```
-2. Await before executing:
-   ```typescript
-   const ok = await confirm({ title: 'Are you sure?', variant: 'destructive' })
-   if (!ok) return
-   ```
-
----
-
-## ⚠️ Known Gotcha — `'use client'` Ordering
-
-When adding the feedback import to an existing client component, always put `'use client'` on the very first line:
-
-```typescript
-// ✅ Correct
-'use client'
-import { showFeedback } from '@/lib/feedback'
-import { useState } from 'react'
-
-// ❌ Will break the build
-import { showFeedback } from '@/lib/feedback'
-'use client'
-import { useState } from 'react'
-```
-
-Next.js throws `The "use client" directive must be placed before other expressions` if any import precedes it. Files with a UTF-8 BOM (`﻿`) prepended by a text editor are especially vulnerable to this — always check line 1 is clean.
+### 2. Hydration
+The `UXProvider` uses DOM events (`window.dispatchEvent`). It is safe to call `UX.successModal()` immediately after an async operation, but ensure it runs on the client.

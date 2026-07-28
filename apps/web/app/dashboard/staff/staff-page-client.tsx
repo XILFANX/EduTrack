@@ -1,5 +1,5 @@
 'use client'
-import { showFeedback, showError } from '@/lib/feedback'
+import { UX } from '@/lib/ux'
 
 import { useState } from 'react'
 import { UserPlus, UserCog, Search, Share2, Copy, Check, Trash2, Phone, Calendar, X, Link as LinkIcon } from 'lucide-react'
@@ -53,7 +53,7 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
     setCopiedToken(token)
     setTimeout(() => setCopiedToken(null), 2000)
     setShareOpen(null)
-    showFeedback({ title: 'Invite link copied!' })
+    UX.successModal({ title: 'Invite link copied!' })
   }
 
   async function handleDelete(invId: string, isActive: boolean, name?: string) {
@@ -71,7 +71,7 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
     setLoading(false)
     if (res.error) alert(res.error)
     else {
-      showFeedback({ title: isActive ? `${name ?? 'Staff member'} removed` : 'Invitation deleted' })
+      UX.successModal({ title: isActive ? `${name ?? 'Staff member'} removed` : 'Invitation deleted' })
       setDetailMember(null)
       router.refresh()
     }

@@ -1,5 +1,5 @@
 'use client'
-import { showFeedback, showError } from '@/lib/feedback'
+import { UX } from '@/lib/ux'
 
 import Link from 'next/link'
 import { useState } from 'react'
@@ -80,7 +80,7 @@ export function StudentsPageClient({
     setLoading(false)
     if ('success' in res) {
       setStudents(students.filter(s => s.id !== id))
-      showFeedback({ title: 'Student removed' })
+      UX.successModal({ title: 'Student removed' })
     } else {
       alert(res.error)
     }
@@ -100,7 +100,7 @@ export function StudentsPageClient({
     setLoading(false)
     if ('success' in res) {
       setStudents(students.filter(s => s.id !== id))
-      showFeedback({ title: `${res.success ? name : name} permanently deleted` })
+      UX.successModal({ title: `${res.success ? name : name} permanently deleted` })
     } else {
       alert(res.error)
     }

@@ -1,5 +1,5 @@
 'use client'
-import { showFeedback, showError } from '@/lib/feedback'
+import { UX } from '@/lib/ux'
 
 import { useState } from 'react'
 import { purgeCategory, getOptimizationStats, RetentionCategory } from '@/app/actions/optimization'
@@ -54,8 +54,8 @@ export function OptimizationClient({ initialStats }: { initialStats: Stats }) {
     if (!confirm(`Permanently delete all ${section.title.toLowerCase()} older than ${stats.policies[category]} days? This cannot be undone.`)) return
     setPurging(category)
     const result = await purgeCategory(category)
-    if (!result.success) showError(`Failed to purge: ${result.error}`)
-    else { showFeedback({ title: `${section.title} purged` }); await refreshStats() }
+    if (!result.success) UX.errorModal(`Failed to purge: ${result.error}`)
+    else { UX.successModal({ title: `${section.title} purged` }); await refreshStats() }
     setPurging(null)
   }
 
@@ -63,7 +63,7 @@ export function OptimizationClient({ initialStats }: { initialStats: Stats }) {
     if (!confirm('Permanently delete ALL dormant records across all categories?')) return
     setPurgingAll(true)
     for (const s of DATA_SECTIONS) await purgeCategory(s.key)
-    showFeedback({ title: 'All dormant records purged' })
+    UX.successModal({ title: 'All dormant records purged' })
     await refreshStats()
     setPurgingAll(false)
   }

@@ -1,5 +1,5 @@
 'use client'
-import { showFeedback, showError } from '@/lib/feedback'
+import { UX } from '@/lib/ux'
 
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
@@ -36,7 +36,7 @@ export function ClassesPageClient({ classes, studentCountMap, schoolId, curricul
       alert(res.error)
     } else {
       setClassList(prev => prev.filter(c => c.id !== id))
-      showFeedback({ title: `"${name}" deleted` })
+      UX.successModal({ title: `"${name}" deleted` })
     }
   }
 

@@ -1,5 +1,5 @@
 'use client'
-import { showFeedback, showError } from '@/lib/feedback'
+import { UX } from '@/lib/ux'
 
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
@@ -37,7 +37,7 @@ export function CreateSchoolModal({ onClose }: { onClose: () => void }) {
     if (res.error) {
       setError(res.error)
     } else {
-      showFeedback({ title: 'School registered successfully' })
+      UX.successModal({ title: 'School registered successfully' })
       router.refresh()
       onClose()
     }

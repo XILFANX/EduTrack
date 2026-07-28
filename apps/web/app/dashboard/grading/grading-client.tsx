@@ -1,5 +1,5 @@
 'use client'
-import { showFeedback, showError } from '@/lib/feedback'
+import { UX } from '@/lib/ux'
 
 import { useState, useMemo } from 'react'
 import { Plus, Edit2, Trash2, Loader2, Globe, GraduationCap, BookOpen, AlertCircle, Sliders } from 'lucide-react'
@@ -117,7 +117,7 @@ export function GradingClient({ allScales, classes, subjects, schoolId, initialC
         if (res.error) throw new Error(res.error)
         
         setScales(prev => prev.map(s => s.id === editingScale.id ? { ...s, ...payload, label: payload.label || null, remarks: payload.remarks || null } : s))
-        showFeedback({ title: 'Grade scale updated' })
+        UX.successModal({ title: 'Grade scale updated' })
       } else {
         const payload = {
           school_id: schoolId,
@@ -159,10 +159,10 @@ export function GradingClient({ allScales, classes, subjects, schoolId, initialC
     setDeletingId(null)
     
     if (res.error) {
-      showError(res.error)
+      UX.errorModal(res.error)
     } else {
       setScales(prev => prev.filter(s => s.id !== id))
-      showFeedback({ title: 'Grade scale deleted' })
+      UX.successModal({ title: 'Grade scale deleted' })
     }
   }
 

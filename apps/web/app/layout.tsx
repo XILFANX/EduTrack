@@ -4,7 +4,6 @@ import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
 
 import { AppPrompts } from '@/components/layout/app-prompts'
-import { Toaster } from '@/components/ui/sonner'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -45,7 +44,7 @@ export const viewport: Viewport = {
   maximumScale: 1,
 }
 
-import { ConfirmProvider } from '@/components/providers/confirm-provider'
+import { UXProvider } from '@/components/providers/ux-provider'
 
 export default function RootLayout({
   children,
@@ -64,11 +63,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <ConfirmProvider>
+          <UXProvider>
             {children}
             <AppPrompts />
-            <Toaster richColors position="top-right" />
-          </ConfirmProvider>
+          </UXProvider>
         </ThemeProvider>
       </body>
     </html>

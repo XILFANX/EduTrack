@@ -1,5 +1,5 @@
 'use client'
-import { showFeedback, showError } from '@/lib/feedback'
+import { UX } from '@/lib/ux'
 
 import { useState, useTransition } from 'react'
 import { Plus, Clock, Loader2, Edit2, Trash2, Save, X, GripVertical, Coffee } from 'lucide-react'
@@ -98,13 +98,13 @@ function PeriodModal({
       const res = await updatePeriod(existing.id, { name: name.trim(), start_time: start, end_time: end, is_break: isBreak })
       setSaving(false)
       if (res.error) { setErr(res.error); return }
-      showFeedback({ title: 'Period updated' })
+      UX.successModal({ title: 'Period updated' })
       onClose({ ...existing, name: name.trim(), start_time: start, end_time: end, is_break: isBreak })
     } else {
       const res = await createPeriod({ school_id: schoolId, name: name.trim(), start_time: start, end_time: end, is_break: isBreak })
       setSaving(false)
       if (res.error) { setErr(res.error); return }
-      showFeedback({ title: 'Period created' })
+      UX.successModal({ title: 'Period created' })
       onClose()
     }
   }
@@ -187,8 +187,8 @@ function SlotModal({
       subject_id: selectedSubject,
     })
     setSaving(false)
-    if (res.error) { showError(res.error); return }
-    showFeedback({ title: 'Timetable updated' })
+    if (res.error) { UX.errorModal(res.error); return }
+    UX.successModal({ title: 'Timetable updated' })
     onClose()
   }
 
@@ -196,7 +196,7 @@ function SlotModal({
     setSaving(true)
     await clearSlot(classId, period.id, day.num)
     setSaving(false)
-    showFeedback({ title: 'Slot cleared' })
+    UX.successModal({ title: 'Slot cleared' })
     onClose()
   }
 
@@ -312,10 +312,10 @@ export function TimetableBuilder({
     if (!ok) return
 
     const res = await deletePeriod(period.id)
-    if (res.error) { showError(res.error); return }
+    if (res.error) { UX.errorModal(res.error); return }
     setPeriods(prev => prev.filter(p => p.id !== period.id))
     setSlots(prev => prev.filter(s => s.period_id !== period.id))
-    showFeedback({ title: 'Period deleted' })
+    UX.successModal({ title: 'Period deleted' })
   }
 
   function handlePeriodModalClose(updated?: Period) {

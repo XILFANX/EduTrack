@@ -1,5 +1,5 @@
 'use client'
-import { showFeedback, showError } from '@/lib/feedback'
+import { UX } from '@/lib/ux'
 
 import { useState } from 'react'
 import { Plus, Loader2, Trash2, Edit2, Info } from 'lucide-react'
@@ -88,13 +88,13 @@ export function GradeScalesManager({ schoolId, initialGradeScales }: Props) {
         })
         if (res.error) throw new Error(res.error)
         setScales(prev => prev.map(s => s.id === editingScale.id ? { ...s, grade, min_score: Number(minScore), max_score: Number(maxScore), points: Number(points), remarks: remarks || null } : s).sort((a, b) => b.min_score - a.min_score))
-        showFeedback({ title: 'Grade scale updated' })
+        UX.successModal({ title: 'Grade scale updated' })
       } else {
         const res = await createGradeScale({
           school_id: schoolId, grade, min_score: Number(minScore), max_score: Number(maxScore), points: Number(points), remarks: remarks || undefined
         })
         if (res.error) throw new Error(res.error)
-        showFeedback({ title: 'Grade scale created' })
+        UX.successModal({ title: 'Grade scale created' })
         // Optimistic refresh implies we need server data, but we can just force a reload or do a partial refresh
         window.location.reload()
       }
@@ -119,10 +119,10 @@ export function GradeScalesManager({ schoolId, initialGradeScales }: Props) {
     const res = await deleteGradeScale(id)
     setDeletingId(null)
     if (res.error) {
-      showError(res.error)
+      UX.errorModal(res.error)
     } else {
       setScales(prev => prev.filter(s => s.id !== id))
-      showFeedback({ title: 'Grade scale deleted' })
+      UX.successModal({ title: 'Grade scale deleted' })
     }
   }
 

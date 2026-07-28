@@ -1,5 +1,5 @@
 'use client'
-import { showFeedback, showError } from '@/lib/feedback'
+import { UX } from '@/lib/ux'
 
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
@@ -45,7 +45,7 @@ export function LogStockModal({ schoolId, userId, onClose }: Props) {
     if (res.error) {
       setError(res.error)
     } else {
-      showFeedback({ title: `Stock ${type === 'in' ? 'received' : 'issued'} successfully` })
+      UX.successModal({ title: `Stock ${type === 'in' ? 'received' : 'issued'} successfully` })
       router.refresh()
       onClose()
     }

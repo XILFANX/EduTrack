@@ -1,5 +1,5 @@
 'use client'
-import { showFeedback, showError } from '@/lib/feedback'
+import { UX } from '@/lib/ux'
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
@@ -87,7 +87,7 @@ export function SubjectClient({ globalSubjects, classSubjects, classes, schoolId
       setMappings(prev => prev.map(m => m.id === selectedMapping.id ? { ...m, teacher_id: selectedTeacherId || null, users: t || null } : m))
       setSelectedMapping((prev: any) => ({ ...prev, teacher_id: selectedTeacherId || null, users: t || null }))
       setAssignMode(false)
-      showFeedback({ title: t ? `Assigned ${t.full_name} to ${selectedGlobal?.name}` : 'Teacher removed' })
+      UX.successModal({ title: t ? `Assigned ${t.full_name} to ${selectedGlobal?.name}` : 'Teacher removed' })
     }
   }
 
@@ -105,9 +105,9 @@ export function SubjectClient({ globalSubjects, classSubjects, classes, schoolId
     setLoading(false)
     
     if (res.error) {
-      showError(res.error)
+      UX.errorModal(res.error)
     } else {
-      showFeedback({ title: 'Subject removed from class' })
+      UX.successModal({ title: 'Subject removed from class' })
       setMappings(prev => prev.filter(m => m.id !== mappingId))
       setView('subjects')
     }
@@ -127,9 +127,9 @@ export function SubjectClient({ globalSubjects, classSubjects, classes, schoolId
     setLoading(false)
     
     if (res.error) {
-      showError(res.error)
+      UX.errorModal(res.error)
     } else {
-      showFeedback({ title: 'Global subject deleted' })
+      UX.successModal({ title: 'Global subject deleted' })
       setGlobalList(prev => prev.filter(g => g.id !== globalId))
       setMappings(prev => prev.filter(m => m.subject_id !== globalId))
       setView('subjects')

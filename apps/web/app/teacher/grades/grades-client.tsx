@@ -1,5 +1,5 @@
 'use client'
-import { showFeedback, showError } from '@/lib/feedback'
+import { UX } from '@/lib/ux'
 
 import { useState, useMemo } from 'react'
 import { Button } from '@/components/ui/button'
@@ -107,7 +107,7 @@ export function GradesClient({ schoolId, teacherId, cls, students, exams, subjec
       .filter(Boolean) as any[]
 
     if (payload.length === 0) {
-      showError('No new scores to save.')
+      UX.errorModal('No new scores to save.')
       setLoading(false)
       return
     }
@@ -117,9 +117,9 @@ export function GradesClient({ schoolId, teacherId, cls, students, exams, subjec
     setLoading(false)
 
     if (res?.error) {
-      showError(res.error)
+      UX.errorModal(res.error)
     } else {
-      showFeedback({ title: 'Grades saved successfully' })
+      UX.successModal({ title: 'Grades saved successfully' })
       setDirtyScores({})
       router.refresh()
     }

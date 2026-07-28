@@ -1,5 +1,5 @@
 'use client'
-import { showFeedback, showError } from '@/lib/feedback'
+import { UX } from '@/lib/ux'
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
@@ -80,7 +80,7 @@ export function ClassDetailClient({
     const res = await deleteClass(cls.id)
     setConfirmLoading(false)
     if ('error' in res && res.error) { alert(res.error) }
-    else { showFeedback({ title: `"${cls.name}" deleted` }); router.push('/dashboard/classes'); router.refresh() }
+    else { UX.successModal({ title: `"${cls.name}" deleted` }); router.push('/dashboard/classes'); router.refresh() }
   }
 
   async function handleDeleteStudent(id: string) {

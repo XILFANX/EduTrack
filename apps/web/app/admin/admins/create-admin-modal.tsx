@@ -1,5 +1,5 @@
 'use client'
-import { showFeedback, showError } from '@/lib/feedback'
+import { UX } from '@/lib/ux'
 
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
@@ -35,7 +35,7 @@ export function CreateAdminModal({ onClose }: { onClose: () => void }) {
     if (res.error) {
       setError(res.error)
     } else {
-      showFeedback({ title: 'Sub-admin added successfully. They can now log in.' })
+      UX.successModal({ title: 'Sub-admin added successfully. They can now log in.' })
       router.refresh()
       onClose()
     }

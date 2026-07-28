@@ -1,5 +1,5 @@
 'use client'
-import { showFeedback, showError } from '@/lib/feedback'
+import { UX } from '@/lib/ux'
 
 import { useState, useEffect } from 'react'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
@@ -112,7 +112,7 @@ export function AddClassModal({ open, onClose, schoolId, curriculumType }: AddCl
       if (res.error) {
         setError(res.error)
       } else {
-        showFeedback({ title: `Class "${fullName}" created!` })
+        UX.successModal({ title: `Class "${fullName}" created!` })
         router.refresh()
         handleClose()
       }
@@ -127,7 +127,7 @@ export function AddClassModal({ open, onClose, schoolId, curriculumType }: AddCl
       if (res.error) {
         setError(res.error)
       } else {
-        showFeedback({ title: `${names.length} class${names.length !== 1 ? 'es' : ''} created successfully!` })
+        UX.successModal({ title: `${names.length} class${names.length !== 1 ? 'es' : ''} created successfully!` })
         router.refresh()
         handleClose()
       }

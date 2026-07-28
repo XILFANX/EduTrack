@@ -1,5 +1,5 @@
 'use client'
-import { showFeedback, showError } from '@/lib/feedback'
+import { UX } from '@/lib/ux'
 
 import { useState, useEffect } from 'react'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
@@ -54,7 +54,7 @@ export function AddSubjectModal({ open, onClose, schoolId, onSuccess, preSelecte
     setLoading(false)
     if (res.error) { setError(res.error) }
     else {
-      showFeedback({ title: `"${name.trim()}" saved successfully!` })
+      UX.successModal({ title: `"${name.trim()}" saved successfully!` })
       onSuccess()
       handleClose()
     }

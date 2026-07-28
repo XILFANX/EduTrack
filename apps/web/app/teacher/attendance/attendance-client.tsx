@@ -1,5 +1,5 @@
 'use client'
-import { showFeedback, showError } from '@/lib/feedback'
+import { UX } from '@/lib/ux'
 
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
@@ -42,7 +42,7 @@ export function AttendanceClient({ schoolId, teacherId, cls, students, existingR
     const all: Record<string, AttendanceStatus> = {}
     students.forEach((s) => { all[s.id] = 'Present' })
     setRecords(all)
-    showFeedback({ title: 'All students marked as Present' })
+    UX.successModal({ title: 'All students marked as Present' })
   }
 
   const handleSave = async () => {
@@ -56,9 +56,9 @@ export function AttendanceClient({ schoolId, teacherId, cls, students, existingR
     setLoading(false)
 
     if (res?.error) {
-      showError(res.error)
+      UX.errorModal(res.error)
     } else {
-      showFeedback({ title: 'Attendance saved successfully' })
+      UX.successModal({ title: 'Attendance saved successfully' })
       router.refresh()
     }
   }

@@ -28,7 +28,7 @@ interface UserNavProps {
   }
 }
 
-import { useConfirm } from "@/components/providers/confirm-provider"
+import { useConfirm } from "@/components/providers/ux-provider"
 
 export function UserNav({ user }: UserNavProps) {
   const { setTheme } = useTheme()
