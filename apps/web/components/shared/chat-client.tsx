@@ -4,9 +4,10 @@ import { useState, useEffect, useRef } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import {
   Send, UserCircle2, Loader2, ArrowLeft, Users, Briefcase,
-  GraduationCap, Shield, ChevronRight, Search, MessageSquare
+  GraduationCap, Shield, ChevronRight, Search, MessageSquare, Check, CheckCheck
 } from 'lucide-react'
 import { getOrCreateConversation, markConversationAsRead, sendMessage } from '@/app/actions/chat'
+import { UX } from '@/lib/ux'
 
 interface Contact {
   id: string
@@ -29,6 +30,8 @@ interface Message {
   sender_id: string
   content: string
   created_at: string
+  is_read?: boolean
+  is_pending?: boolean
 }
 
 // Admin-level roles that get masked to "School Admin"
@@ -182,7 +185,17 @@ export function ChatClient({
           })
           if (newMsg.sender_id !== currentUser.id) {
             markConversationAsRead(conversationId)
+            // also mark the message itself as read in the messages table
+            supabase.from('messages').update({ is_read: true }).eq('id', newMsg.id).then()
           }
+        }
+      )
+      .on(
+        'postgres_changes',
+        { event: 'UPDATE', schema: 'public', table: 'messages', filter: `conversation_id=eq.${conversationId}` },
+        (payload) => {
+          const updatedMsg = payload.new as Message
+          setMessages(prev => prev.map(m => m.id === updatedMsg.id ? updatedMsg : m))
         }
       )
       .subscribe()
@@ -205,6 +218,8 @@ export function ChatClient({
       sender_id: currentUser.id,
       content: msgContent,
       created_at: new Date().toISOString(),
+      is_read: false,
+      is_pending: true
     }
     setMessages(prev => [...prev, newMsg])
 
@@ -221,6 +236,17 @@ export function ChatClient({
 
   const formatTime = (iso: string) =>
     new Date(iso).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+
+  const formatLastSeen = (dateString?: string | null) => {
+    if (!dateString) return 'Offline'
+    const date = new Date(dateString)
+    const now = new Date()
+    const diffHours = (now.getTime() - date.getTime()) / (1000 * 60 * 60)
+    if (diffHours < 24) {
+      return `last seen today at ${date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`
+    }
+    return `last seen ${date.toLocaleDateString()} at ${date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`
+  }
 
   const handleBackToDirectory = () => {
     if (selectedClassId) {
@@ -459,7 +485,7 @@ export function ChatClient({
                   {onlineUsers.has(selectedContact.id) ? (
                     <span className="text-emerald-500">● Online</span>
                   ) : (
-                    <span className="text-slate-400">● Offline</span>
+                    <span className="text-slate-400">● {formatLastSeen(selectedContact.last_seen_at)}</span>
                   )}
                   <span className="text-slate-400 mx-1.5">·</span>
                   <span className="text-muted-foreground">{selectedContact.role}</span>
@@ -504,9 +530,22 @@ export function ChatClient({
                             : 'bg-slate-100 dark:bg-slate-800 text-foreground rounded-bl-sm border border-slate-200 dark:border-slate-700'
                         }`}>
                           <p className="text-[14px] leading-relaxed break-words">{msg.content}</p>
-                          <span className={`text-[10px] font-medium mt-0.5 block ${isMe ? 'text-blue-200/80 text-right' : 'text-slate-400'}`}>
-                            {formatTime(msg.created_at)}
-                          </span>
+                          <div className="flex items-end justify-between gap-3 mt-0.5">
+                            <span className={`text-[10px] font-medium block ${isMe ? 'text-blue-200/80 text-right' : 'text-slate-400'}`}>
+                              {formatTime(msg.created_at)}
+                            </span>
+                            {isMe && (
+                              <span className="shrink-0 mb-0.5">
+                                {msg.is_pending ? (
+                                  <Check className="w-3.5 h-3.5 text-blue-200/70" />
+                                ) : msg.is_read ? (
+                                  <CheckCheck className="w-3.5 h-3.5 text-cyan-300" />
+                                ) : (
+                                  <CheckCheck className="w-3.5 h-3.5 text-blue-200" />
+                                )}
+                              </span>
+                            )}
+                          </div>
                         </div>
                       </div>
                     )

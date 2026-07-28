@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { redirect } from 'next/navigation'
-import { MessagesPageClient } from './messages-page-client'
+import { MessagesLayout } from '@/components/shared/messages-layout'
 import type { Announcement } from '@/components/shared/announcements-feed'
 
 export const dynamic = 'force-dynamic'
@@ -130,8 +130,8 @@ export default async function PrincipalMessagesPage({
   ]
 
   return (
-    <MessagesPageClient
-      currentUser={{ id: user.id, role: profile.role as string }}
+    <MessagesLayout
+      currentUser={{ id: user.id, role: profile.role }}
       contacts={contacts}
       classes={(classesData as any[]) || []}
       initialContactId={resolvedParams.contactId}

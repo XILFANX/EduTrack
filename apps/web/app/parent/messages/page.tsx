@@ -1,8 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
-import { MessageSquare, Megaphone } from 'lucide-react'
-import { ChatClient } from '@/components/shared/chat-client'
-import { AnnouncementsFeed, Announcement } from '@/components/shared/announcements-feed'
+import { MessagesLayout } from '@/components/shared/messages-layout'
+import type { Announcement } from '@/components/shared/announcements-feed'
 import { redirect } from 'next/navigation'
 
 export const dynamic = 'force-dynamic'
@@ -97,39 +96,13 @@ export default async function ParentMessagesPage() {
     .limit(15)
 
   return (
-    <div className="space-y-8 pb-20">
-      <div>
-        <h1 className="text-2xl font-bold text-foreground">Communications</h1>
-        <p className="text-sm text-muted-foreground mt-1">Read school announcements and message teachers.</p>
-      </div>
-
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
-        
-        {/* Left Column: Announcements */}
-        <div className="xl:col-span-1 space-y-6">
-          <section>
-            <div className="flex items-center gap-2 mb-4">
-              <Megaphone className="w-5 h-5 text-orange-500" />
-              <h2 className="text-lg font-semibold text-foreground">Announcements</h2>
-            </div>
-            <AnnouncementsFeed announcements={(announcementsData as Announcement[]) || []} />
-          </section>
-        </div>
-
-        {/* Right Column: Direct Messages */}
-        <div className="xl:col-span-2 space-y-4">
-          <div className="flex items-center gap-2 mb-4">
-            <MessageSquare className="w-5 h-5 text-blue-500" />
-            <h2 className="text-lg font-semibold text-foreground">Direct Messages</h2>
-          </div>
-          
-          <ChatClient 
-            currentUser={{ id: user.id, role: profile.role }} 
-            contacts={contacts} 
-          />
-        </div>
-        
-      </div>
-    </div>
+    <MessagesLayout
+      currentUser={{ id: user.id, role: profile.role }}
+      contacts={contacts}
+      classes={[]}
+      initialContactId={undefined}
+      announcements={(announcementsData as Announcement[]) || []}
+      audienceOptions={[]} // Parents cannot broadcast
+    />
   )
 }

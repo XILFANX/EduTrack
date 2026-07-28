@@ -17,7 +17,7 @@ interface Props {
 
 type Tab = 'messages' | 'broadcasts'
 
-export function MessagesPageClient({
+export function MessagesLayout({
   currentUser,
   contacts,
   classes,
@@ -75,31 +75,33 @@ export function MessagesPageClient({
       {activeTab === 'broadcasts' && (
         <div className="grid grid-cols-1 xl:grid-cols-5 gap-6">
           {/* Compose */}
-          <div className="xl:col-span-2 space-y-4">
-            <section className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm">
-              <div className="p-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/20 flex items-center gap-2">
-                <div className="w-8 h-8 rounded-xl bg-blue-500/10 flex items-center justify-center">
-                  <Megaphone className="w-4 h-4 text-blue-400" />
+          {audienceOptions.length > 0 && (
+            <div className="xl:col-span-2 space-y-4">
+              <section className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm">
+                <div className="p-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/20 flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-xl bg-blue-500/10 flex items-center justify-center">
+                    <Megaphone className="w-4 h-4 text-blue-400" />
+                  </div>
+                  <div>
+                    <h2 className="font-semibold text-foreground text-sm">New Broadcast</h2>
+                    <p className="text-[10px] text-muted-foreground">Send to targeted audience</p>
+                  </div>
                 </div>
-                <div>
-                  <h2 className="font-semibold text-foreground text-sm">New Broadcast</h2>
-                  <p className="text-[10px] text-muted-foreground">Send to targeted audience</p>
+                <div className="p-5">
+                  <AnnouncementsClient audienceOptions={audienceOptions} />
                 </div>
-              </div>
-              <div className="p-5">
-                <AnnouncementsClient audienceOptions={audienceOptions} />
-              </div>
-            </section>
-          </div>
+              </section>
+            </div>
+          )}
 
           {/* Feed */}
-          <div className="xl:col-span-3 space-y-4">
+          <div className={audienceOptions.length > 0 ? "xl:col-span-3 space-y-4" : "xl:col-span-5 space-y-4 max-w-3xl mx-auto"}>
             <div className="flex items-center justify-between px-1">
               <h3 className="font-semibold text-foreground text-sm uppercase tracking-widest">Recent Broadcasts</h3>
               <span className="text-xs text-muted-foreground">{announcements.length} total</span>
             </div>
             <div className="max-h-[700px] overflow-y-auto space-y-3 pr-1">
-              <AnnouncementsFeed announcements={announcements} />
+              <AnnouncementsFeed announcements={announcements} currentUserId={currentUser.id} />
             </div>
           </div>
         </div>

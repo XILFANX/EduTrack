@@ -12,7 +12,7 @@ export async function updateLastSeen() {
   // I will check database.ts first. Wait, I'll just write it. If it fails, I'll add the column.
   const { error } = await supabase
     .from('users')
-    .update({ updated_at: new Date().toISOString() }) // Using updated_at as a proxy for now if last_seen_at is missing
+    .update({ last_seen_at: new Date().toISOString() })
     .eq('id', user.id)
 }
 
@@ -149,3 +149,4 @@ export async function sendMessage(conversationId: string, content: string) {
   if (error) throw new Error('Failed to send message: ' + error.message)
   return data
 }
+export async function deleteAnnouncement(id: string) { const supabase = await createClient(); const { data: { user } } = await supabase.auth.getUser(); if (!user) throw new Error('Not authenticated'); const { error } = await supabase.from('announcements').delete().eq('id', id).eq('author_id', user.id); if (error) throw new Error('Failed to delete announcement'); return { success: true }; } 

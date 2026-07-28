@@ -26,7 +26,20 @@
 ```
 REQUEST
 
-<paste the request here>
+Now let's proceed the the in app messanging and broadcasting module for both apps. When I mention the messaging module, I'm talking about the main portals like the landlord /school administrator portals and the portals under them like caretaker, tenant, teachers, other staff portals. Currently, there's a rudimentary messaging system for both the apps.
+I want you to take inspiration from the school admin portal messaging and broadcasting. It the best world class one around. Take inspiration from it them redesign that of all portals under the school management system using the same strategy and theme while taking into account what their roles, ie the shopkeeper shouldn't be broadcasting anything.
+Using the same strategy, build the messaging and broadcasting module for EstateTrack from scratch but customise it for the apps needs and theme.
+
+You should analyse both the repo's codebase to understand what exists, what doesn't yet, what will never to be purged and what needs rewriting to avoid duplicating anything.
+
+
+I'd love you personal suggestions which would compliment this mission or make it better. Like how to make the module intelligent with the WhatsApp-like features such as status (online/offline), typing, double tick etc. 
+
+Ensure the system is intelligent to avoid some unprofessional things like the landlord seeing the landlord in their chat list among other dumb things which would compromise our mission. 
+
+Ensure you separate concerns to avoid mixing things up like bringing real estate management system into school management system.
+
+After have enough information on what you need, draft a detailed implementation plan before execution
 ```
 
 ---

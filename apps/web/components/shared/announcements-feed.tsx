@@ -1,5 +1,10 @@
+'use client'
+
+import { useState } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
-import { Megaphone } from 'lucide-react'
+import { Megaphone, Trash2, Loader2 } from 'lucide-react'
+import { UX } from '@/lib/ux'
+import { deleteAnnouncement } from '@/app/actions/chat'
 
 export interface Announcement {
   id: string
@@ -7,14 +12,40 @@ export interface Announcement {
   body: string
   target_audience: string
   created_at: string
+  author_id?: string
   users: {
     full_name: string
     salutation?: string | null
   } | null
 }
 
-export function AnnouncementsFeed({ announcements }: { announcements: Announcement[] }) {
-  if (announcements.length === 0) {
+export function AnnouncementsFeed({ announcements, currentUserId }: { announcements: Announcement[], currentUserId?: string }) {
+  const [items, setItems] = useState<Announcement[]>(announcements)
+  const [deletingId, setDeletingId] = useState<string | null>(null)
+
+  const handleDelete = async (id: string) => {
+    const confirm = await UX.confirm({
+      title: 'Delete Announcement',
+      message: 'Are you sure you want to delete this announcement? This action cannot be undone.',
+      type: 'destructive',
+      confirmText: 'Delete'
+    })
+    
+    if (!confirm) return
+
+    setDeletingId(id)
+    try {
+      await deleteAnnouncement(id)
+      setItems(prev => prev.filter(a => a.id !== id))
+      UX.toast('Announcement deleted successfully')
+    } catch (err: any) {
+      UX.errorModal(err.message || 'Failed to delete announcement')
+    } finally {
+      setDeletingId(null)
+    }
+  }
+
+  if (items.length === 0) {
     return (
       <div className="text-center py-12 bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-2xl">
         <div className="w-16 h-16 rounded-2xl bg-slate-100 dark:bg-slate-800/50 mx-auto flex items-center justify-center mb-4">
@@ -28,26 +59,45 @@ export function AnnouncementsFeed({ announcements }: { announcements: Announceme
 
   return (
     <div className="space-y-4">
-      {announcements.map((ann) => {
+      {items.map((ann) => {
         const date = new Date(ann.created_at).toLocaleDateString(undefined, { 
           month: 'short', 
           day: 'numeric',
           year: 'numeric'
         })
+        const isAuthor = currentUserId && ann.author_id === currentUserId
+
         return (
           <div key={ann.id} className="relative bg-white dark:bg-slate-900/50 border border-blue-500/20 rounded-2xl p-5 overflow-hidden group hover:border-blue-500/40 transition-colors shadow-sm">
             <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 blur-3xl rounded-full pointer-events-none group-hover:bg-blue-500/10 transition-colors" />
             
-            <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-3 mb-3">
-              <h3 className="font-bold text-blue-600 dark:text-blue-400 text-lg group-hover:text-blue-500 dark:group-hover:text-blue-300 transition-colors">
-                {ann.title}
-              </h3>
-              <div className="flex items-center gap-3 text-xs font-semibold text-blue-900/60 dark:text-blue-200/60">
-                <span className="bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 px-2.5 py-1 rounded-lg">
-                  From: School Admin
-                </span>
-                <span className="text-slate-500">{date}</span>
+            <div className="relative z-10 flex flex-col md:flex-row md:items-start justify-between gap-3 mb-3">
+              <div>
+                <h3 className="font-bold text-blue-600 dark:text-blue-400 text-lg group-hover:text-blue-500 dark:group-hover:text-blue-300 transition-colors">
+                  {ann.title}
+                </h3>
+                <div className="flex items-center gap-3 text-xs font-semibold text-blue-900/60 dark:text-blue-200/60 mt-1">
+                  <span className="bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 px-2.5 py-1 rounded-lg">
+                    From: {ann.users?.salutation ? `${ann.users.salutation} ${ann.users.full_name}` : (ann.users?.full_name || 'School Admin')}
+                  </span>
+                  <span className="text-slate-500">{date}</span>
+                </div>
               </div>
+              
+              {isAuthor && (
+                <button
+                  onClick={() => handleDelete(ann.id)}
+                  disabled={deletingId === ann.id}
+                  className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-full transition-colors disabled:opacity-50"
+                  title="Delete Announcement"
+                >
+                  {deletingId === ann.id ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <Trash2 className="w-4 h-4" />
+                  )}
+                </button>
+              )}
             </div>
             <p className="relative z-10 text-sm text-foreground whitespace-pre-wrap leading-relaxed">
               {ann.body}
