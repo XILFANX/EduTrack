@@ -282,7 +282,7 @@ Hold on every documentation edit, not just first-draft generation:
 ## History Log
 
 <!-- One line per completed request. Format: DATE — one-line mission — outcome (shipped/pushed, or pending + why). Newest on top. -->
-2026-07-28 — Repo cleanup (junk root files removed, migrations properly placed in backend/supabase/migrations) + full documentation sync (04-data-model, 05-multi-tenancy, 02-modules/07-messaging, public-userguide/05-communications) — shipped, push pending
+2026-07-28 — Repo cleanup (junk root files removed, migrations properly placed in backend/supabase/migrations) + full documentation sync (04-data-model, 05-multi-tenancy, 02-modules/07-messaging, public-userguide/05-communications) — shipped, pushed to EduTrack/main (99f20d2).
 2026-07-28 — Product Admin portal feature alignment: Messaging, badges, and ChatClient rewrite for root/platform admins — shipped, pushed to origin/main (a1580bc).
 2026-07-28 — Unified Global Notification System (GlobalNotificationPopup, NotificationCenter pages for all portals, Bell badge sync, TS strict type fixes, SQL scripts) — shipped, pushed to origin/main (25d90cc).
 2026-07-28 — Fixed unread badges race-condition on open (both apps) + added Messages to all horizontal portal nav bars — shipped, pushed to origin/main (3d694bb).
