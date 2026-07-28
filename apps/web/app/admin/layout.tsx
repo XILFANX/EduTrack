@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { AdminNav } from '@/components/admin/admin-nav'
 import { NotificationBell } from '@/components/shared/notification-bell'
-import { NotificationPopup } from '@/components/shared/notification-popup'
 import { LogOut } from 'lucide-react'
 
 export const metadata: Metadata = {
@@ -94,8 +93,6 @@ export default async function AdminLayout({ children }: { children: React.ReactN
       {/* Floating Bottom Nav */}
       <AdminNav isRoot={isRoot} />
 
-      {/* Realtime notification popup */}
-      <NotificationPopup />
     </div>
   )
 }

@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { LayoutDashboard, BarChart3, Building2, ShieldCheck, MessageSquare, DatabaseZap, Terminal } from 'lucide-react'
 import { motion } from 'framer-motion'
+import { UnreadMessagesBadge } from '@/components/shared/unread-messages-badge'
 
 const NAV_ITEMS = [
   { href: '/admin/dashboard', label: 'Overview', Icon: LayoutDashboard },
@@ -44,11 +45,16 @@ export function AdminNav({ isRoot }: { isRoot: boolean }) {
               )}
               
               <div className="relative z-10 flex flex-col items-center gap-1">
-                <Icon className={`w-[1.125rem] h-[1.125rem] transition-colors duration-300 ${
-                  active 
-                    ? 'text-white' 
-                    : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300'
-                }`} />
+                <div className="relative">
+                  <Icon className={`w-[1.125rem] h-[1.125rem] transition-colors duration-300 ${
+                    active 
+                      ? 'text-white' 
+                      : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300'
+                  }`} />
+                  {t.href === '/admin/messages' && (
+                    <UnreadMessagesBadge />
+                  )}
+                </div>
                 <span className={`text-[9px] font-bold tracking-wide transition-colors duration-300 ${
                   active 
                     ? 'text-white/90' 
