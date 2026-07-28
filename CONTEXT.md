@@ -283,5 +283,5 @@ Hold on every documentation edit, not just first-draft generation:
 ## History Log
 
 <!-- One line per completed request. Format: DATE — one-line mission — outcome (shipped/pushed, or pending + why). Newest on top. -->
-2026-07-28 — Redesign messaging and broadcasting module for EduTrack and EstateTrack — committed, push pending (no remote configured)
+2026-07-28 — Messaging & Broadcasting module overhaul (UX module, ChatClient, MessagesLayout, AnnouncementsClient/Feed, UnreadMessagesBadge, role-permission matrix, all portals) — shipped, pushed to origin/main (44c1637). Required user action: run `ALTER TABLE messages ADD COLUMN IF NOT EXISTS is_read boolean DEFAULT false;` in Supabase.
 <!-- Example: 2026-07-21 — Added webhook retry logic to payments module — shipped, pushed to origin/main -->
