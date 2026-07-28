@@ -44,7 +44,7 @@ export default async function AdminDocsLayout({ children }: { children: React.Re
   const hasPinSetup = !!userRecord.dev_docs_pin_hash
 
   const cookieStore = await cookies()
-  const isSessionUnlocked = cookieStore.has('dev_docs_session')
+  const isSessionUnlocked = cookieStore.has('dev_docs_session_v2')
 
   // 5. First-time setup
   if (!hasPinSetup) {

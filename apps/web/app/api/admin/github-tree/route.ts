@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
 
     // 2. Verify the developer docs session cookie is present
     const cookieStore = await cookies()
-    if (!cookieStore.has('dev_docs_session')) {
+    if (!cookieStore.has('dev_docs_session_v2')) {
       return NextResponse.json({ error: 'Dev docs session required' }, { status: 403 })
     }
 

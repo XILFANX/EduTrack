@@ -4,7 +4,7 @@ import { cookies } from 'next/headers'
 import { createClient } from '@/lib/supabase/server'
 import { hashPin, verifyPin } from '@/lib/crypto'
 
-const DEV_DOCS_COOKIE = 'dev_docs_session'
+const DEV_DOCS_COOKIE = 'dev_docs_session_v2'
 const SESSION_TTL_SECONDS = 60 * 60 * 2 // 2 hours
 
 function sessionCookieOptions() {
