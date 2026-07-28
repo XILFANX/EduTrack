@@ -2,12 +2,13 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Home, Receipt, BookOpen, Settings } from 'lucide-react'
+import { Home, Receipt, BookOpen, Settings, MessageSquare } from 'lucide-react'
 
 const NAV_ITEMS = [
   { label: 'Dashboard', href: '/bursar/dashboard', icon: Home },
   { label: 'Invoices', href: '/bursar/invoices', icon: Receipt },
   { label: 'Fee Structures', href: '/bursar/fee-structures', icon: BookOpen },
+  { label: 'Messages', href: '/bursar/messages', icon: MessageSquare },
   { label: 'Settings', href: '/bursar/settings', icon: Settings },
 ]
 

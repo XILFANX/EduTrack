@@ -2,12 +2,13 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Home, Truck, MapPin, Settings } from 'lucide-react'
+import { Home, Truck, MapPin, Settings, MessageSquare } from 'lucide-react'
 
 const NAV_ITEMS = [
   { label: 'Dashboard', href: '/transport/dashboard', icon: Home },
   { label: 'Routes', href: '/transport/routes', icon: MapPin },
   { label: 'Fleet', href: '/transport/fleet', icon: Truck },
+  { label: 'Messages', href: '/transport/messages', icon: MessageSquare },
   { label: 'Settings', href: '/transport/settings', icon: Settings },
 ]
 

@@ -60,13 +60,19 @@ export function UnreadMessagesBadge() {
         { event: 'UPDATE', schema: 'public', table: 'messages' },
         (payload) => {
           if (userId && payload.new?.sender_id !== userId && payload.new?.is_read) {
-            setCount(prev => Math.max(0, prev - 1))
+            // Re-fetch to guarantee accuracy and avoid race conditions
+            loadUnread()
           }
         }
       )
       .subscribe()
 
-    return () => { supabase.removeChannel(channel) }
+    window.addEventListener('messages-read', loadUnread)
+
+    return () => { 
+      supabase.removeChannel(channel)
+      window.removeEventListener('messages-read', loadUnread)
+    }
   }, [supabase])
 
   if (count === 0) return null

@@ -17,6 +17,7 @@ const TABS = [
   { href: '/dashboard/parents', icon: HeartHandshake, label: 'Parents' },
   { href: '/dashboard/classes', icon: GraduationCap, label: 'Classes' },
   { href: '/dashboard/students', icon: Users, label: 'Students' },
+  { href: '/dashboard/messages', icon: MessageSquare, label: 'Messages' },
   { href: '/dashboard/finance', icon: Banknote, label: 'Finance' },
 ]
 

@@ -156,6 +156,7 @@ export function ChatClient({
         if (data) {
           setMessages(data)
           await markConversationAsRead(cid)
+          window.dispatchEvent(new CustomEvent('messages-read'))
         }
       } catch (err) {
         console.error('Failed to load chat', err)

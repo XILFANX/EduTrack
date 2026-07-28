@@ -2,12 +2,13 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { LayoutDashboard, BookOpen, ArrowLeftRight } from 'lucide-react'
+import { LayoutDashboard, BookOpen, ArrowLeftRight, MessageSquare } from 'lucide-react'
 
 const NAV_ITEMS = [
   { label: 'Dashboard', href: '/library/dashboard', icon: LayoutDashboard },
   { label: 'Books', href: '/library/books', icon: BookOpen },
   { label: 'Issues', href: '/library/issues', icon: ArrowLeftRight },
+  { label: 'Messages', href: '/library/messages', icon: MessageSquare },
 ]
 
 export function LibraryNav() {
