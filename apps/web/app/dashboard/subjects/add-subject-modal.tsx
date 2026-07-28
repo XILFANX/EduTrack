@@ -1,4 +1,5 @@
-﻿'use client'
+'use client'
+import { showFeedback, showError } from '@/lib/feedback'
 
 import { useState, useEffect } from 'react'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
@@ -8,7 +9,6 @@ import { Label } from '@/components/ui/label'
 import { BookMarked, Info } from 'lucide-react'
 import { createSubject } from './actions'
 import { getClasses } from '../classes/actions'
-import { toast } from 'sonner'
 
 interface AddSubjectModalProps {
   open: boolean
@@ -54,7 +54,7 @@ export function AddSubjectModal({ open, onClose, schoolId, onSuccess, preSelecte
     setLoading(false)
     if (res.error) { setError(res.error) }
     else {
-      toast.success(`"${name.trim()}" saved successfully!`)
+      showFeedback({ title: `"${name.trim()}" saved successfully!` })
       onSuccess()
       handleClose()
     }

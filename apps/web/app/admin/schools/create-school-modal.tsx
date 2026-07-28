@@ -1,11 +1,11 @@
 'use client'
+import { showFeedback, showError } from '@/lib/feedback'
 
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { X, Loader2 } from 'lucide-react'
 import { createSchool } from './actions'
 import { useRouter } from 'next/navigation'
-import { toast } from 'sonner'
 
 export function CreateSchoolModal({ onClose }: { onClose: () => void }) {
   const router = useRouter()
@@ -37,7 +37,7 @@ export function CreateSchoolModal({ onClose }: { onClose: () => void }) {
     if (res.error) {
       setError(res.error)
     } else {
-      toast.success('School registered successfully')
+      showFeedback({ title: 'School registered successfully' })
       router.refresh()
       onClose()
     }

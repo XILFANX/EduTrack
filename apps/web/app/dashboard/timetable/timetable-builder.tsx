@@ -1,4 +1,5 @@
 'use client'
+import { showFeedback, showError } from '@/lib/feedback'
 
 import { useState, useTransition } from 'react'
 import { Plus, Clock, Loader2, Edit2, Trash2, Save, X, GripVertical, Coffee } from 'lucide-react'
@@ -7,7 +8,6 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { useConfirmDialog, ConfirmDialog } from '@/components/ui/confirm-dialog'
-import { toast } from 'sonner'
 import {
   createPeriod, updatePeriod, deletePeriod,
   upsertSlot, clearSlot
@@ -98,13 +98,13 @@ function PeriodModal({
       const res = await updatePeriod(existing.id, { name: name.trim(), start_time: start, end_time: end, is_break: isBreak })
       setSaving(false)
       if (res.error) { setErr(res.error); return }
-      toast.success('Period updated')
+      showFeedback({ title: 'Period updated' })
       onClose({ ...existing, name: name.trim(), start_time: start, end_time: end, is_break: isBreak })
     } else {
       const res = await createPeriod({ school_id: schoolId, name: name.trim(), start_time: start, end_time: end, is_break: isBreak })
       setSaving(false)
       if (res.error) { setErr(res.error); return }
-      toast.success('Period created')
+      showFeedback({ title: 'Period created' })
       onClose()
     }
   }
@@ -187,8 +187,8 @@ function SlotModal({
       subject_id: selectedSubject,
     })
     setSaving(false)
-    if (res.error) { toast.error(res.error); return }
-    toast.success('Timetable updated')
+    if (res.error) { showError(res.error); return }
+    showFeedback({ title: 'Timetable updated' })
     onClose()
   }
 
@@ -196,7 +196,7 @@ function SlotModal({
     setSaving(true)
     await clearSlot(classId, period.id, day.num)
     setSaving(false)
-    toast.success('Slot cleared')
+    showFeedback({ title: 'Slot cleared' })
     onClose()
   }
 
@@ -312,10 +312,10 @@ export function TimetableBuilder({
     if (!ok) return
 
     const res = await deletePeriod(period.id)
-    if (res.error) { toast.error(res.error); return }
+    if (res.error) { showError(res.error); return }
     setPeriods(prev => prev.filter(p => p.id !== period.id))
     setSlots(prev => prev.filter(s => s.period_id !== period.id))
-    toast.success('Period deleted')
+    showFeedback({ title: 'Period deleted' })
   }
 
   function handlePeriodModalClose(updated?: Period) {

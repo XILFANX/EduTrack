@@ -1,8 +1,8 @@
 'use client'
+import { showFeedback, showError } from '@/lib/feedback'
 
 import { useState } from 'react'
 import { purgeCategory, getOptimizationStats, RetentionCategory } from '@/app/actions/optimization'
-import { toast } from 'sonner'
 import {
   Loader2, DatabaseZap, MessageSquare, Bell, FileText,
   Search, UserPlus, RefreshCw, Trash2, ShieldCheck,
@@ -54,8 +54,8 @@ export function OptimizationClient({ initialStats }: { initialStats: Stats }) {
     if (!confirm(`Permanently delete all ${section.title.toLowerCase()} older than ${stats.policies[category]} days? This cannot be undone.`)) return
     setPurging(category)
     const result = await purgeCategory(category)
-    if (!result.success) toast.error(`Failed to purge: ${result.error}`)
-    else { toast.success(`${section.title} purged`); await refreshStats() }
+    if (!result.success) showError(`Failed to purge: ${result.error}`)
+    else { showFeedback({ title: `${section.title} purged` }); await refreshStats() }
     setPurging(null)
   }
 
@@ -63,7 +63,7 @@ export function OptimizationClient({ initialStats }: { initialStats: Stats }) {
     if (!confirm('Permanently delete ALL dormant records across all categories?')) return
     setPurgingAll(true)
     for (const s of DATA_SECTIONS) await purgeCategory(s.key)
-    toast.success('All dormant records purged')
+    showFeedback({ title: 'All dormant records purged' })
     await refreshStats()
     setPurgingAll(false)
   }

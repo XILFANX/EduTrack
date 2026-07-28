@@ -45,6 +45,8 @@ export const viewport: Viewport = {
   maximumScale: 1,
 }
 
+import { ConfirmProvider } from '@/components/providers/confirm-provider'
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -62,9 +64,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
-          <AppPrompts />
-          <Toaster richColors position="top-right" />
+          <ConfirmProvider>
+            {children}
+            <AppPrompts />
+            <Toaster richColors position="top-right" />
+          </ConfirmProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -1,4 +1,5 @@
 'use client'
+import { showFeedback, showError } from '@/lib/feedback'
 
 import { useState } from 'react'
 import { UserPlus, UserCog, Search, Share2, Copy, Check, Trash2, Phone, Calendar, X, Link as LinkIcon } from 'lucide-react'
@@ -7,7 +8,6 @@ import { InviteStaffModal } from './invite-staff-modal'
 import { useRouter } from 'next/navigation'
 import { useConfirmDialog, ConfirmDialog } from '@/components/ui/confirm-dialog'
 import { deleteInviteAndAccount } from './actions'
-import { toast } from 'sonner'
 
 const ROLE_LABELS: Record<string, { label: string; color: string }> = {
   class_teacher: { label: 'Class Teacher', color: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' },
@@ -53,7 +53,7 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
     setCopiedToken(token)
     setTimeout(() => setCopiedToken(null), 2000)
     setShareOpen(null)
-    toast.success('Invite link copied!')
+    showFeedback({ title: 'Invite link copied!' })
   }
 
   async function handleDelete(invId: string, isActive: boolean, name?: string) {
@@ -71,7 +71,7 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
     setLoading(false)
     if (res.error) alert(res.error)
     else {
-      toast.success(isActive ? `${name ?? 'Staff member'} removed` : 'Invitation deleted')
+      showFeedback({ title: isActive ? `${name ?? 'Staff member'} removed` : 'Invitation deleted' })
       setDetailMember(null)
       router.refresh()
     }

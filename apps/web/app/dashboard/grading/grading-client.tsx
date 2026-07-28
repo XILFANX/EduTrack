@@ -1,9 +1,9 @@
 'use client'
+import { showFeedback, showError } from '@/lib/feedback'
 
 import { useState, useMemo } from 'react'
 import { Plus, Edit2, Trash2, Loader2, Globe, GraduationCap, BookOpen, AlertCircle, Sliders } from 'lucide-react'
 import { createGradeScale, updateGradeScale, deleteGradeScale } from '@/app/actions/grading'
-import { toast } from 'sonner'
 import { ConfirmDialog, useConfirmDialog } from '@/components/ui/confirm-dialog'
 
 interface GradeScale {
@@ -117,7 +117,7 @@ export function GradingClient({ allScales, classes, subjects, schoolId, initialC
         if (res.error) throw new Error(res.error)
         
         setScales(prev => prev.map(s => s.id === editingScale.id ? { ...s, ...payload, label: payload.label || null, remarks: payload.remarks || null } : s))
-        toast.success('Grade scale updated')
+        showFeedback({ title: 'Grade scale updated' })
       } else {
         const payload = {
           school_id: schoolId,
@@ -159,10 +159,10 @@ export function GradingClient({ allScales, classes, subjects, schoolId, initialC
     setDeletingId(null)
     
     if (res.error) {
-      toast.error(res.error)
+      showError(res.error)
     } else {
       setScales(prev => prev.filter(s => s.id !== id))
-      toast.success('Grade scale deleted')
+      showFeedback({ title: 'Grade scale deleted' })
     }
   }
 

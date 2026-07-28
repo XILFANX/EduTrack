@@ -1,4 +1,5 @@
 'use client'
+import { showFeedback, showError } from '@/lib/feedback'
 
 import { useState } from 'react'
 import { Plus, Loader2, Trash2, Edit2, Info } from 'lucide-react'
@@ -9,7 +10,6 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { useConfirmDialog, ConfirmDialog } from '@/components/ui/confirm-dialog'
-import { toast } from 'sonner'
 
 interface GradeScale {
   id: string
@@ -88,13 +88,13 @@ export function GradeScalesManager({ schoolId, initialGradeScales }: Props) {
         })
         if (res.error) throw new Error(res.error)
         setScales(prev => prev.map(s => s.id === editingScale.id ? { ...s, grade, min_score: Number(minScore), max_score: Number(maxScore), points: Number(points), remarks: remarks || null } : s).sort((a, b) => b.min_score - a.min_score))
-        toast.success('Grade scale updated')
+        showFeedback({ title: 'Grade scale updated' })
       } else {
         const res = await createGradeScale({
           school_id: schoolId, grade, min_score: Number(minScore), max_score: Number(maxScore), points: Number(points), remarks: remarks || undefined
         })
         if (res.error) throw new Error(res.error)
-        toast.success('Grade scale created')
+        showFeedback({ title: 'Grade scale created' })
         // Optimistic refresh implies we need server data, but we can just force a reload or do a partial refresh
         window.location.reload()
       }
@@ -119,10 +119,10 @@ export function GradeScalesManager({ schoolId, initialGradeScales }: Props) {
     const res = await deleteGradeScale(id)
     setDeletingId(null)
     if (res.error) {
-      toast.error(res.error)
+      showError(res.error)
     } else {
       setScales(prev => prev.filter(s => s.id !== id))
-      toast.success('Grade scale deleted')
+      showFeedback({ title: 'Grade scale deleted' })
     }
   }
 

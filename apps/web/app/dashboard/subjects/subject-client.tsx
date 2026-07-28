@@ -1,4 +1,5 @@
 'use client'
+import { showFeedback, showError } from '@/lib/feedback'
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
@@ -7,7 +8,6 @@ import { AddSubjectModal } from './add-subject-modal'
 import { deleteGlobalSubject, assignSubjectTeacher, removeSubjectFromClass } from './actions'
 import { useConfirmDialog, ConfirmDialog } from '@/components/ui/confirm-dialog'
 import { getTeachers } from '../classes/actions'
-import { toast } from 'sonner'
 
 interface SubjectClientProps {
   globalSubjects: any[]
@@ -87,7 +87,7 @@ export function SubjectClient({ globalSubjects, classSubjects, classes, schoolId
       setMappings(prev => prev.map(m => m.id === selectedMapping.id ? { ...m, teacher_id: selectedTeacherId || null, users: t || null } : m))
       setSelectedMapping((prev: any) => ({ ...prev, teacher_id: selectedTeacherId || null, users: t || null }))
       setAssignMode(false)
-      toast.success(t ? `Assigned ${t.full_name} to ${selectedGlobal?.name}` : 'Teacher removed')
+      showFeedback({ title: t ? `Assigned ${t.full_name} to ${selectedGlobal?.name}` : 'Teacher removed' })
     }
   }
 
@@ -105,9 +105,9 @@ export function SubjectClient({ globalSubjects, classSubjects, classes, schoolId
     setLoading(false)
     
     if (res.error) {
-      toast.error(res.error)
+      showError(res.error)
     } else {
-      toast.success('Subject removed from class')
+      showFeedback({ title: 'Subject removed from class' })
       setMappings(prev => prev.filter(m => m.id !== mappingId))
       setView('subjects')
     }
@@ -127,9 +127,9 @@ export function SubjectClient({ globalSubjects, classSubjects, classes, schoolId
     setLoading(false)
     
     if (res.error) {
-      toast.error(res.error)
+      showError(res.error)
     } else {
-      toast.success('Global subject deleted')
+      showFeedback({ title: 'Global subject deleted' })
       setGlobalList(prev => prev.filter(g => g.id !== globalId))
       setMappings(prev => prev.filter(m => m.subject_id !== globalId))
       setView('subjects')

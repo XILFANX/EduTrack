@@ -1,4 +1,5 @@
 'use client'
+import { showFeedback, showError } from '@/lib/feedback'
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
@@ -19,7 +20,6 @@ import { MoreVertical, Edit } from 'lucide-react'
 import { deleteStudent } from '@/components/shared/students/actions'
 import { assignTeacher, deleteClass } from '../actions'
 import { useConfirmDialog, ConfirmDialog } from '@/components/ui/confirm-dialog'
-import { toast } from 'sonner'
 
 interface Teacher { id: string; full_name: string; role: string; salutation?: string | null }
 
@@ -80,7 +80,7 @@ export function ClassDetailClient({
     const res = await deleteClass(cls.id)
     setConfirmLoading(false)
     if ('error' in res && res.error) { alert(res.error) }
-    else { toast.success(`"${cls.name}" deleted`); router.push('/dashboard/classes'); router.refresh() }
+    else { showFeedback({ title: `"${cls.name}" deleted` }); router.push('/dashboard/classes'); router.refresh() }
   }
 
   async function handleDeleteStudent(id: string) {

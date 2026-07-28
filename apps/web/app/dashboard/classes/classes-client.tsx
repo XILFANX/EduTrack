@@ -1,4 +1,5 @@
 'use client'
+import { showFeedback, showError } from '@/lib/feedback'
 
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
@@ -7,7 +8,6 @@ import Link from 'next/link'
 import { AddClassModal } from './add-class-modal'
 import { deleteClass } from './actions'
 import { useConfirmDialog, ConfirmDialog } from '@/components/ui/confirm-dialog'
-import { toast } from 'sonner'
 
 interface ClassesClientProps {
   classes: any[]
@@ -36,7 +36,7 @@ export function ClassesPageClient({ classes, studentCountMap, schoolId, curricul
       alert(res.error)
     } else {
       setClassList(prev => prev.filter(c => c.id !== id))
-      toast.success(`"${name}" deleted`)
+      showFeedback({ title: `"${name}" deleted` })
     }
   }
 

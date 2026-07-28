@@ -28,13 +28,24 @@ interface UserNavProps {
   }
 }
 
+import { useConfirm } from "@/components/providers/confirm-provider"
+
 export function UserNav({ user }: UserNavProps) {
   const { setTheme } = useTheme()
   const router = useRouter()
   const supabase = createClient()
   const [isLoggingOut, setIsLoggingOut] = useState(false)
+  const confirm = useConfirm()
 
   const handleLogout = async () => {
+    const ok = await confirm({
+      title: 'Log out?',
+      description: 'You will be returned to the login screen.',
+      confirmText: 'Log out',
+      variant: 'destructive'
+    })
+    if (!ok) return
+
     setIsLoggingOut(true)
     await supabase.auth.signOut()
     router.push('/login')

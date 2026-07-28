@@ -1,10 +1,10 @@
 'use client'
+import { showFeedback, showError } from '@/lib/feedback'
 
 import { useState, useMemo } from 'react'
 import { Button } from '@/components/ui/button'
 import { Save, Loader2, PenTool } from 'lucide-react'
 import { saveExamResults } from './actions'
-import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 
 interface Student { id: string; first_name: string; last_name: string; admission_number: string; photo_url?: string | null }
@@ -107,7 +107,7 @@ export function GradesClient({ schoolId, teacherId, cls, students, exams, subjec
       .filter(Boolean) as any[]
 
     if (payload.length === 0) {
-      toast.error('No new scores to save.')
+      showError('No new scores to save.')
       setLoading(false)
       return
     }
@@ -117,9 +117,9 @@ export function GradesClient({ schoolId, teacherId, cls, students, exams, subjec
     setLoading(false)
 
     if (res?.error) {
-      toast.error(res.error)
+      showError(res.error)
     } else {
-      toast.success('Grades saved successfully')
+      showFeedback({ title: 'Grades saved successfully' })
       setDirtyScores({})
       router.refresh()
     }

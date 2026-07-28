@@ -1,10 +1,10 @@
 'use client'
+import { showFeedback, showError } from '@/lib/feedback'
 
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { X, ArrowUpRight, ArrowDownRight, Loader2 } from 'lucide-react'
 import { logStock } from './actions'
-import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 
 interface Props {
@@ -45,7 +45,7 @@ export function LogStockModal({ schoolId, userId, onClose }: Props) {
     if (res.error) {
       setError(res.error)
     } else {
-      toast.success(`Stock ${type === 'in' ? 'received' : 'issued'} successfully`)
+      showFeedback({ title: `Stock ${type === 'in' ? 'received' : 'issued'} successfully` })
       router.refresh()
       onClose()
     }

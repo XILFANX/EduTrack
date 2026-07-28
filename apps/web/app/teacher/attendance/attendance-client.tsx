@@ -1,10 +1,10 @@
 'use client'
+import { showFeedback, showError } from '@/lib/feedback'
 
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { ClipboardList, CheckCircle2, XCircle, Clock, Loader2, CheckCheck, CalendarDays } from 'lucide-react'
 import { saveAttendance } from './actions'
-import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 
 type AttendanceStatus = 'Present' | 'Absent' | 'Late'
@@ -42,7 +42,7 @@ export function AttendanceClient({ schoolId, teacherId, cls, students, existingR
     const all: Record<string, AttendanceStatus> = {}
     students.forEach((s) => { all[s.id] = 'Present' })
     setRecords(all)
-    toast.success('All students marked as Present')
+    showFeedback({ title: 'All students marked as Present' })
   }
 
   const handleSave = async () => {
@@ -56,9 +56,9 @@ export function AttendanceClient({ schoolId, teacherId, cls, students, existingR
     setLoading(false)
 
     if (res?.error) {
-      toast.error(res.error)
+      showError(res.error)
     } else {
-      toast.success('Attendance saved successfully')
+      showFeedback({ title: 'Attendance saved successfully' })
       router.refresh()
     }
   }

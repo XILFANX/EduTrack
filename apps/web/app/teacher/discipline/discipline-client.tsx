@@ -1,10 +1,10 @@
 'use client'
+import { showFeedback, showError } from '@/lib/feedback'
 
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { GraduationCap, Plus, Loader2 } from 'lucide-react'
 import { saveDisciplineLog } from './actions'
-import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 
 interface Student { id: string; first_name: string; last_name: string; admission_number: string; photo_url?: string | null }
@@ -41,9 +41,9 @@ export function DisciplineClient({ schoolId, teacherId, cls, students, logs }: P
     setLoading(false)
 
     if (res?.error) {
-      toast.error(res.error)
+      showError(res.error)
     } else {
-      toast.success('Log added successfully')
+      showFeedback({ title: 'Log added successfully' })
       setIsAdding(false)
       setFormData({ studentId: '', title: '', description: '', actionTaken: '' })
       router.refresh()

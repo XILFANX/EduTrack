@@ -1,11 +1,11 @@
 'use client'
+import { showFeedback, showError } from '@/lib/feedback'
 
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { X, Loader2 } from 'lucide-react'
 import { addSubAdmin } from './actions'
 import { useRouter } from 'next/navigation'
-import { toast } from 'sonner'
 
 export function CreateAdminModal({ onClose }: { onClose: () => void }) {
   const router = useRouter()
@@ -35,7 +35,7 @@ export function CreateAdminModal({ onClose }: { onClose: () => void }) {
     if (res.error) {
       setError(res.error)
     } else {
-      toast.success('Sub-admin added successfully. They can now log in.')
+      showFeedback({ title: 'Sub-admin added successfully. They can now log in.' })
       router.refresh()
       onClose()
     }

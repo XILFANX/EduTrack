@@ -1,4 +1,5 @@
 'use client'
+import { showFeedback, showError } from '@/lib/feedback'
 
 import { useState, useEffect } from 'react'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
@@ -8,7 +9,6 @@ import { Label } from '@/components/ui/label'
 import { Plus, BookOpen, Layers, Info, CheckCircle2 } from 'lucide-react'
 import { createClass, createBulkClasses, getTeachers } from './actions'
 import { useRouter } from 'next/navigation'
-import { toast } from 'sonner'
 
 interface AddClassModalProps {
   open: boolean
@@ -112,7 +112,7 @@ export function AddClassModal({ open, onClose, schoolId, curriculumType }: AddCl
       if (res.error) {
         setError(res.error)
       } else {
-        toast.success(`Class "${fullName}" created!`)
+        showFeedback({ title: `Class "${fullName}" created!` })
         router.refresh()
         handleClose()
       }
@@ -127,7 +127,7 @@ export function AddClassModal({ open, onClose, schoolId, curriculumType }: AddCl
       if (res.error) {
         setError(res.error)
       } else {
-        toast.success(`${names.length} class${names.length !== 1 ? 'es' : ''} created successfully!`)
+        showFeedback({ title: `${names.length} class${names.length !== 1 ? 'es' : ''} created successfully!` })
         router.refresh()
         handleClose()
       }
