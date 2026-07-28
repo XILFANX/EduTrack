@@ -18,18 +18,24 @@ export function UnreadMessagesBadge() {
 
       const { data: myConvos } = await supabase
         .from('conversation_participants')
-        .select('conversation_id')
+        .select('conversation_id, last_read_at')
         .eq('user_id', user.id)
 
       if (myConvos && myConvos.length > 0) {
-        const { count: unread } = await supabase
-          .from('messages')
-          .select('id', { count: 'exact', head: true })
-          .in('conversation_id', myConvos.map(c => c.conversation_id))
-          .neq('sender_id', user.id)
-          .eq('is_read', false)
-
-        setCount(unread ?? 0)
+        // Count messages newer than user's last_read_at per conversation
+        let total = 0
+        await Promise.all(
+          myConvos.map(async (cp: any) => {
+            const { count: unread } = await supabase
+              .from('messages')
+              .select('id', { count: 'exact', head: true })
+              .eq('conversation_id', cp.conversation_id)
+              .neq('sender_id', user.id)
+              .gt('created_at', cp.last_read_at ?? '1970-01-01')
+            total += unread ?? 0
+          })
+        )
+        setCount(total)
       }
     }
 

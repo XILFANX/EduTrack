@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Megaphone, Trash2, Loader2 } from 'lucide-react'
 import { UX } from '@/lib/ux'
+import { useConfirm } from '@/components/providers/ux-provider'
 import { deleteAnnouncement } from '@/app/actions/chat'
 
 export interface Announcement {
@@ -22,16 +23,17 @@ export interface Announcement {
 export function AnnouncementsFeed({ announcements, currentUserId }: { announcements: Announcement[], currentUserId?: string }) {
   const [items, setItems] = useState<Announcement[]>(announcements)
   const [deletingId, setDeletingId] = useState<string | null>(null)
+  const confirm = useConfirm()
 
   const handleDelete = async (id: string) => {
-    const confirm = await UX.confirm({
+    const isConfirmed = await confirm({
       title: 'Delete Announcement',
-      message: 'Are you sure you want to delete this announcement? This action cannot be undone.',
-      type: 'destructive',
+      description: 'Are you sure you want to delete this announcement? This action cannot be undone.',
+      variant: 'destructive',
       confirmText: 'Delete'
     })
     
-    if (!confirm) return
+    if (!isConfirmed) return
 
     setDeletingId(id)
     try {
