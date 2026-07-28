@@ -6,6 +6,9 @@ import { createClient } from '@/lib/supabase/server'
  * Secure server-side proxy for fetching repository file tree from GitHub API.
  * The GitHub PAT is never exposed to the client.
  *
+ * Handles both full recursive trees and truncated repos by falling back to
+ * fetching sub-trees on demand.
+ *
  * Usage: GET /api/admin/github-tree?repo=XILFANX/EduTrack&branch=main
  */
 export async function GET(request: NextRequest) {
@@ -39,24 +42,22 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid branch format' }, { status: 400 })
     }
 
-    // 5. Fetch tree from GitHub API with server-side PAT
-    const githubApiUrl = `https://api.github.com/repos/${repo}/git/trees/${branch}?recursive=1`
     const pat = process.env.GITHUB_PAT?.trim()
-
     const headers: HeadersInit = {
       'Accept': 'application/vnd.github.v3+json',
-      'User-Agent': 'Antigravity-IDE-Client',
+      'User-Agent': 'EduTrack-DevDocs',
     }
     if (pat) {
       headers['Authorization'] = `token ${pat}`
     }
 
-    const res = await fetch(githubApiUrl, {
-      headers,
-      next: { revalidate: 300 }, // cache for 5 minutes
-    })
+    // 5. First try the fast recursive tree
+    const treeUrl = `https://api.github.com/repos/${repo}/git/trees/${branch}?recursive=1`
+    const res = await fetch(treeUrl, { headers, next: { revalidate: 120 } })
 
     if (!res.ok) {
+      const body = await res.text()
+      console.error('[github-tree] GitHub API error:', res.status, body)
       return NextResponse.json(
         { error: `GitHub API returned ${res.status}: ${res.statusText}` },
         { status: res.status }
@@ -65,12 +66,40 @@ export async function GET(request: NextRequest) {
 
     const data = await res.json()
 
-    return NextResponse.json(data, {
-      status: 200,
-      headers: {
-        'Cache-Control': 'private, max-age=300',
-      },
-    })
+    // 6. If tree is not truncated, return it directly
+    if (!data.truncated) {
+      return NextResponse.json(data, {
+        status: 200,
+        headers: { 'Cache-Control': 'private, max-age=120' },
+      })
+    }
+
+    // 7. Truncated: fall back to the Contents API to get top-level structure
+    const contentsUrl = `https://api.github.com/repos/${repo}/contents?ref=${branch}`
+    const contentsRes = await fetch(contentsUrl, { headers, next: { revalidate: 120 } })
+
+    if (!contentsRes.ok) {
+      return NextResponse.json(
+        { error: `Failed to fetch contents: ${contentsRes.status}` },
+        { status: contentsRes.status }
+      )
+    }
+
+    const contentsData = await contentsRes.json()
+    const tree = contentsData.map((item: any) => ({
+      path: item.path,
+      type: item.type === 'dir' ? 'tree' : 'blob',
+      sha: item.sha,
+      size: item.size,
+    }))
+
+    return NextResponse.json(
+      { tree, truncated: true },
+      {
+        status: 200,
+        headers: { 'Cache-Control': 'private, max-age=120' },
+      }
+    )
   } catch (err: any) {
     console.error('[github-tree]', err)
     return NextResponse.json({ error: err.message || 'Internal server error' }, { status: 500 })
