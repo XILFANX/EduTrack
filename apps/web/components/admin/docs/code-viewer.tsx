@@ -26,13 +26,12 @@ export function CodeViewer({ repoPath, language = 'typescript', standalone = fal
       try {
         setLoading(true)
         setError(null)
-        const url = `https://raw.githubusercontent.com/${repoPath}`
-        const headers: Record<string, string> = {}
-        if (process.env.NEXT_PUBLIC_GITHUB_PAT) {
-          headers['Authorization'] = `token ${process.env.NEXT_PUBLIC_GITHUB_PAT}`
+        // Fetch via the secure server-side proxy — the GitHub PAT stays on the server
+        const res = await fetch(`/api/admin/github-source?path=${encodeURIComponent(repoPath)}`)
+        if (!res.ok) {
+          const body = await res.json().catch(() => ({}))
+          throw new Error(body.error || `Error ${res.status}: ${res.statusText}`)
         }
-        const res = await fetch(url, { headers })
-        if (!res.ok) throw new Error(`Failed to fetch: ${res.status} ${res.statusText}`)
         setCode(await res.text())
       } catch (err: any) {
         setError(err.message || 'Unknown error')
