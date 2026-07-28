@@ -1,30 +1,55 @@
 # Mission & Overview
 
-## What is EduTrack?
-EduTrack is a premium, automated SaaS platform serving as the digital infrastructure for modern schools. It eliminates fragmented tools (like WhatsApp groups, manual fee ledgers, and paper reports) in favor of a centralized system connecting administrators, teaching staff, and parents.
+EduTrack is a unified school management system designed to eliminate the friction of fragmented WhatsApp groups, paper report cards, and manual fee ledgers. It connects Administrators, Teaching Staff, and Parents within a single digital ecosystem.
 
-## Who is it for?
-EduTrack supports a 9-tier role architecture spanning the entire educational ecosystem:
-1. **Admin (Platform Owner):** Manages school subscriptions across the SaaS platform.
-2. **Principal / Headteacher:** Has grand overview and control over a single school (the tenant).
-3. **Class Teacher:** Manages specific classes, attendance, and parent onboarding.
-4. **Subject Teacher:** Manages grades for specific subjects.
-5. **Bursar:** Manages fee structures, invoicing, and M-Pesa payments.
-6. **Librarian:** Manages books and library inventory.
-7. **Storekeeper:** Manages kitchen and stationery inventory.
-8. **Transport Matron:** Manages bus routes and student transit.
-9. **Parent:** Read-only portal for tracking child performance, attendance, and paying fees.
+**Skimmable in 2 minutes.** This page covers the 4 decisions that shape every architectural choice in the codebase.
 
-## The 3 Key Architectural Decisions
+---
 
-1. **Multi-Tenant via Row-Level Security (RLS)**
-   Rather than managing separate databases or schemas for each school, all schools share the same tables. Tenant isolation is strictly enforced at the database layer via Supabase RLS using the `school_id` column.
+## 4 Decisions That Shape Everything
 
-2. **Unified Users Table with Enum Roles**
-   Instead of scattering users across a `parents` table, a `teachers` table, and a `principals` table, all human actors are stored in `public.users` with a `role` enum. This drastically simplifies authentication and the middleware routing logic.
+### 1. Unified Next.js Monorepo — Edge Middleware Guard
 
-3. **Delegated Onboarding via Token Invites**
-   To prevent administrative bottlenecks at the start of a term, onboarding is decentralized. Principals invite Teachers, and Class Teachers invite Parents using secure token links. When a token is clicked, the invitee bypasses complex registration flows.
+The entire product—serving 9 distinct roles—is served from a single Next.js App Router codebase in `apps/web/`. There are no microservices or decoupled APIs. A single edge-level middleware (`apps/web/middleware.ts`) intercepts every request and explicitly enforces route boundaries based on the user's role.
 
+### 2. Multi-Tenancy via Postgres Row-Level Security (RLS)
+
+EduTrack uses a **shared-schema multi-tenant model**. All schools share the same tables. Tenant isolation is strictly enforced at the PostgreSQL layer via Supabase RLS policies utilizing the `school_id` column.
+
+The application layer cannot bypass this isolation. It is physically impossible for a Principal at School A to query data from School B, even if a developer forgets to include a `WHERE` clause in a route handler.
+
+### 3. Unified Users Table (No Separate Parent/Teacher Tables)
+
+Instead of scattering human actors across separate `parents`, `teachers`, and `principals` tables, everyone authenticates and exists in `public.users` with a `role` enum. Access to specific students is handled via a many-to-many junction table (`student_parents`).
+
+**Why:** It vastly simplifies authentication, session management, and middleware role-checks.
+
+### 4. Decentralized Onboarding via Token Invites
+
+To prevent a massive administrative bottleneck at the start of a term, onboarding is distributed.
+1. The Principal generates invite links for Teachers.
+2. Class Teachers generate invite links for Parents.
+
+When clicked, the token bypasses complex registration. The user sets a password and is immediately linked to their correct role and students.
+
+---
+
+## The 9-Tier Role Architecture
+
+Every authenticated user maps to one of these roles in `public.users.role`.
+
+| Role | Access Scope | Description |
+|---|---|---|
+| `admin` | Global (`/admin`) | Platform owner. Manages school SaaS subscriptions. |
+| `principal` / `headteacher` | Single School (`/dashboard`) | Full oversight of students, classes, and finances. |
+| `class_teacher` | Specific Class (`/teacher`) | Manages attendance and parent onboarding. |
+| `subject_teacher` | Specific Subject (`/teacher`) | Can enter grades only for assigned subjects. |
+| `bursar` | Financials (`/bursar`) | Manages fee structures and generates invoices. |
+| `librarian` | Inventory (`/library`) | Manages library books and tracks fines. |
+| `storekeeper` | Inventory (`/store`) | Manages kitchen/stationery ledgers. |
+| `transport_matron` | Logistics (`/transport`) | Manages bus routes and pickup rosters. |
+| `parent` | Read-only (`/parent`) | Views linked children's grades and pays fees. |
+
+> **Note:** The `admin` role is typically assigned to the `PRODUCT_ADMINISTRATOR_EMAIL` configured in the environment variables and bypassed via the `/api/admin/bootstrap` script.
 
 [Link: /admin/dashboard]

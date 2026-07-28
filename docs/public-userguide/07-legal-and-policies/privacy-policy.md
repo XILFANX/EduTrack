@@ -1,22 +1,37 @@
-> DRAFT — factual inventory only, requires legal review before publishing.
-
 # Privacy Policy
 
-## 1. Information We Collect
-To provide the EduTrack service, we collect the following data:
-- **Personal Information:** Names, phone numbers, and email addresses of staff and parents.
-- **Student Data:** Student names, admission numbers, dates of birth, daily attendance records, and academic examination scores.
-- **Financial Data:** Invoices, fee balances, and payment logs (including M-Pesa receipt numbers).
+**Last Updated:** July 2026
 
-## 2. How We Use Your Information
-- To authenticate users via phone numbers or emails.
-- To isolate data so parents only see information pertaining to their specific children.
-- To generate automated notifications (via WhatsApp or email) regarding attendance or fee balances.
+EduTrack ("we", "our", "us") is deeply committed to protecting the privacy of the students, parents, and educators who use our platform.
 
-## 3. Data Sharing
-We do not sell your personal or academic data. Data is only shared with:
-- **Safaricom:** For the strict purpose of initiating M-Pesa STK push requests.
-- **The School Administration:** Principals and authorized staff have overarching access to all data generated within their specific school tenant.
+## 1. Data We Collect
+- **School & Staff Information:** Names, emails, and roles (e.g., Principal, Teacher).
+- **Student Data:** Names, admission numbers, dates of birth, attendance records, and academic grades.
+- **Parent Data:** Names, phone numbers, emails, and payment transaction histories.
+- **Communications:** Chat logs between teachers and parents sent within the platform.
 
-## 4. Data Security
-All data is stored securely in PostgreSQL databases, heavily protected by Row Level Security (RLS) ensuring strict multi-tenant isolation.
+## 2. The School is the Data Controller
+EduTrack acts purely as a **Data Processor**. The School you are affiliated with is the **Data Controller**. 
+- The school decides what data is entered into the system.
+- Parents seeking to correct, update, or delete a student's record must contact the school administration directly. EduTrack cannot alter student records on behalf of a parent.
+
+## 3. How We Use the Data
+We use the data exclusively to provide the EduTrack service to your school:
+- To generate report cards and fee invoices.
+- To send SMS and email notifications regarding school events or fee balances.
+- To facilitate secure logins.
+
+**We do not and will never sell student, parent, or school data to third parties for marketing or advertising purposes.**
+
+## 4. Data Sharing & Third Parties
+We share data only with the technical infrastructure partners necessary to run the platform:
+- **Hosting & Database:** Vercel and Supabase.
+- **Payments:** Safaricom (for M-Pesa fee collection).
+- **Notifications:** Resend (Email) and SMS gateway providers.
+
+## 5. Security Measures
+Student data is isolated. EduTrack uses strict Row-Level Security (RLS) in the database to ensure that:
+1. One school cannot access another school's data.
+2. A parent can only view the academic and financial records of their own linked children.
+
+For questions regarding data privacy, please contact privacy@edutrack.co.ke.

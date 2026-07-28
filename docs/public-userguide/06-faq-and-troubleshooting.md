@@ -1,27 +1,38 @@
-# FAQs & Troubleshooting
+# FAQ & Troubleshooting
 
-Find quick answers to the most common issues you might encounter while using EduTrack.
+Find quick answers to common issues across all roles in EduTrack.
 
-## General Issues
+---
 
-**Q: I forgot my password. How do I reset it?**
-A: Go to the login page and click "Forgot Password". Enter your registered phone number or email address. You will receive a secure OTP to reset your password. [Link: /forgot-password]
+## For Parents
 
-**Q: My invite link says it has expired.**
-A: For security reasons, invite tokens automatically expire after 7 days. Please contact your Class Teacher or Principal to generate a fresh invite link for you.
+### Q: I have two children at this school, but I only see one in my portal.
+**A:** You need to click the specific **Invite Link** for each child. When you click the invite link for your second child, log in using your existing email address. The system will merge both children under your single dashboard.
 
-## Parent Issues
+### Q: The M-Pesa payment failed. What should I do?
+**A:** Ensure your phone is unlocked and has a strong network connection when you initiate the payment. If the STK prompt still doesn't appear, you can pay directly to the school's Paybill number and present the SMS receipt to the Bursar for manual entry.
 
-**Q: I paid via M-Pesa but my balance hasn't updated on the dashboard.**
-A: Sometimes the Safaricom network experiences delays. Wait 5 minutes and refresh your page. If the balance is still not updated after an hour, please contact the school Bursar with your M-Pesa confirmation message; they can manually verify the payment.
+### Q: Where do I find my child's report card?
+**A:** In your Parent Portal, navigate to the **Academics** tab. You will see a list of past terms. Click on a term to view the itemized grades and download the official PDF report card.
 
-**Q: I have three children in the school, but I only see two on my dashboard.**
-A: Your youngest child has not been linked to your account yet. Ask their Class Teacher to generate an invite link for that specific child. Click the link, log in with your existing account, and the third child will be merged into your dashboard.
+---
 
-## Teacher Issues
+## For Teachers
 
-**Q: I entered grades for my class but I made a mistake. Can I change them?**
-A: Yes. You can edit grades in the `Exams` tab at any point before the end of the term. Once the Principal officially "Publishes" the term's report cards, the grades are locked and cannot be changed without the Principal's override.
+### Q: I can't see the subject I'm supposed to grade.
+**A:** An administrator (Principal) has not yet assigned you as the **Subject Teacher** for that specific class. Ask the Principal to go to `Classes → [Class Name] → Subjects` and assign your name to the subject.
 
-**Q: Why can't I see the Principal's dashboard?**
-A: Your account is restricted to the Teacher role. You can only view data relevant to the classes and subjects you are assigned to.
+### Q: A student is missing from my attendance roster.
+**A:** The student has likely not been officially enrolled in your Class in the system. Check with the Principal.
+
+---
+
+## For Bursars & Principals
+
+### Q: The automated invoices didn't generate this term.
+**A:** The system requires an **Active Academic Term** to generate invoices. Go to `Settings → Academic Terms` and ensure the current term is marked as Active. If it is not, the invoice generator skips the school to prevent billing errors.
+
+### Q: How do I change a student's fee amount? (e.g. for a scholarship)
+**A:** Rather than editing the global fee structure, open the student's specific invoice and add a **Discount** line item to reduce their total balance. This preserves the original audit trail of what the standard fee was.
+
+[Link: /dashboard]

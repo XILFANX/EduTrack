@@ -35,11 +35,14 @@ export async function GET(request: NextRequest) {
     }
 
     // 5. Fetch from GitHub with server-side PAT
-    const githubUrl = `https://raw.githubusercontent.com/${repoPath}`
+    const [owner, repoName, branch, ...rest] = repoPath.split('/')
+    const path = rest.join('/')
+    const githubUrl = `https://api.github.com/repos/${owner}/${repoName}/contents/${path}?ref=${branch}`
     const pat = process.env.GITHUB_PAT?.trim()
 
     const headers: HeadersInit = {
-      'Accept': 'text/plain',
+      'Accept': 'application/vnd.github.v3.raw',
+      'User-Agent': 'EduTrack-DevDocs',
     }
     if (pat) {
       headers['Authorization'] = `token ${pat}`
@@ -51,8 +54,9 @@ export async function GET(request: NextRequest) {
     })
 
     if (!res.ok) {
+      const hint = res.status === 404 ? ' (If private, ensure GITHUB_PAT is set and server restarted)' : ''
       return NextResponse.json(
-        { error: `GitHub returned ${res.status}: ${res.statusText}` },
+        { error: `GitHub returned ${res.status}: ${res.statusText}${hint}` },
         { status: res.status }
       )
     }

@@ -1,38 +1,70 @@
-# School Setup
+# School Setup & Administration
 
-If you are a Principal or Headteacher, this guide walks you through setting up your school on EduTrack for the very first time.
+**Goal:** Configure the basic academic structure of your school so teachers can start working.
 
-## 1. Setting up Academic Terms
-Before you can add classes or students, you must define the academic term.
+*This guide is for Principals and School Administrators.*
 
-1. Navigate to the **Settings** menu and click **Academic Terms**.
-2. Click the **Add Term** button.
-3. Enter the Term Name (e.g., "Term 1 - 2026").
-4. Select the Start Date and End Date.
-5. Click **Save**.
+---
 
-[SCREENSHOT: /dashboard/terms/new — The form for creating a new academic term]
+## 1. Setting the Academic Term
+
+Everything in EduTrack—from fee invoices to exam results—is tied to an active Academic Term.
+
+1. Navigate to **Settings → Academic Terms**.
+2. Click **Add Term**.
+3. Enter the Term Name (e.g., "Term 1 - 2026"), the start date, and the end date.
+4. Check the box to mark it as the **Active Term**.
+
+[SCREENSHOT: /admin/terms — showing the list of terms with one marked Active]
+
+---
 
 ## 2. Creating Classes
-Once your term is active, you can create the structural classes of your school.
 
-1. Go to the **Classes** section on your dashboard.
-2. Click **Add New Class**.
-3. Enter the class name (e.g., "Grade 1 Blue").
-4. Assign a **Class Teacher** from the dropdown list.
-5. Click **Save Class**.
+Next, you need to create the physical or logical classrooms.
 
-[Link: /dashboard/classes]
+1. Navigate to **Classes**. [Link: /dashboard/classes]
+2. Click **Add Class**.
+3. Enter the Class Name (e.g., "Grade 1", "Form 4").
+4. Assign a **Class Teacher** from the dropdown. (If you haven't added teachers yet, leave this blank and update it later).
+5. Click **Save**.
 
-## 3. Inviting Staff
-You do not need to manually type in all your staff members' details. Instead, you generate invite links.
+---
 
-1. Navigate to **Staff Management**.
-2. Click **Generate Invite**.
-3. Select the role you want to invite (e.g., "Bursar" or "Subject Teacher").
-4. The system will generate a secure link. Copy this link and send it to your staff member via WhatsApp or Email.
-5. When they click it, they will finish setting up their account and instantly join your school's workspace.
+## 3. Adding Subjects
 
-[SCREENSHOT: /dashboard/staff/invite — The modal displaying the generated secure invite link]
+Subjects are taught within classes. 
 
-> Warning: Never share an Admin or Bursar invite link in a public group chat. Anyone who clicks the link first will claim that role.
+1. Go to the **Subjects** tab inside a specific Class.
+2. Click **Add Subject**.
+3. Name the subject (e.g., "Mathematics").
+4. Assign a **Subject Teacher**. This grants that specific teacher the permission to enter grades for this subject.
+
+---
+
+## 4. Inviting Your Staff
+
+You do not need to manually create accounts for every teacher. You simply generate invite links and distribute them.
+
+1. Navigate to **Staff**. [Link: /dashboard/staff]
+2. Click **Invite Staff Member**.
+3. Select their Role (`Class Teacher`, `Bursar`, `Librarian`, etc.).
+4. Click **Generate Invite Link**.
+5. Send the link to the staff member via WhatsApp or Email.
+
+When they click the link, they will set their password and be instantly granted the correct access permissions.
+
+> **Warning:** Be careful when assigning the `Bursar` or `Principal` roles, as these grant access to sensitive financial records and fee configurations.
+
+---
+
+## 5. The Bursar & Finance Setup
+
+Before the term starts, your Bursar must configure the Fee Structures.
+
+- If you charge a flat fee for the whole school, they can set a **Global Fee Structure**.
+- If fees differ by grade (e.g., Grade 8 pays more than Grade 1), they can assign specific Fee Structures to specific Classes.
+
+See the [Fee Management Guide](/help/04-fee-management-and-payments) for detailed instructions.
+
+[Link: /dashboard]

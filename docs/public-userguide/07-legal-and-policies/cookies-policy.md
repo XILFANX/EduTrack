@@ -1,15 +1,24 @@
-> DRAFT — factual inventory only, requires legal review before publishing.
-
 # Cookies Policy
 
-## 1. What Are Cookies?
-Cookies are small text files stored on your device when you access EduTrack. They help us remember your session so you don't have to log in repeatedly.
+**Last Updated:** July 2026
 
-## 2. Cookies We Use
-EduTrack exclusively uses strictly necessary cookies required for the platform to function. We do not use third-party tracking cookies or advertising pixels.
+EduTrack uses cookies and similar technologies to secure your session and ensure the platform functions smoothly for all users.
 
-- **sb-access-token:** Stores your secure Supabase authentication token to keep you logged in across pages.
-- **sb-refresh-token:** Used to securely generate a new access token when your current session expires.
+## What Are Cookies?
+Cookies are tiny text files saved on your device when you log into the platform. They act as your digital ID card.
 
-## 3. Managing Cookies
-Because the cookies we use are strictly necessary for authentication and security (enforcing your user role and school access), they cannot be disabled if you wish to use the platform. If you block these cookies in your browser settings, you will be unable to log into the EduTrack portal.
+## How We Use Cookies
+
+### 1. Essential Authentication Cookies
+Because EduTrack handles sensitive student and financial data, we require strictly necessary HTTP-only cookies to keep you logged in securely.
+- **`sb-access-token` and `sb-refresh-token`**: These prove who you are as you navigate the platform. Without them, you would be logged out every time you clicked a link.
+
+*You cannot opt out of essential cookies, as the platform cannot function securely without them.*
+
+### 2. Analytics
+We use generalized, anonymized cookies to monitor system performance (e.g., checking if the grading page loads quickly for teachers). This data cannot be traced back to individual students or parents.
+
+## Third-Party Cookies
+When you initiate a school fee payment using integrated services (like Paddle for credit cards, if applicable), those providers may place their own secure cookies to process the transaction and prevent fraud.
+
+For details on how student data is protected, please see our [Privacy Policy](/help/07-legal-and-policies/privacy-policy).

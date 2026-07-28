@@ -1,54 +1,60 @@
 # API Reference
 
-This document outlines the externally exposed endpoints for EduTrack. Note that the primary application routes are Next.js Server Components and Server Actions, which do not expose traditional REST endpoints. 
+Like EstateTrack, EduTrack relies primarily on Server Actions and Supabase JS for data access. External APIs are exposed strictly for webhooks and cron schedulers.
 
-The endpoints below are explicitly exposed for third-party integrations and webhooks.
+---
 
-## Billing & M-Pesa
+## Authentication
 
-### 1. Initiate M-Pesa STK Push
-**Endpoint:** `POST /api/billing/mpesa-stk`
-**Auth Required:** Yes (Bursar or Parent session)
-**Description:** Initiates a Safaricom M-Pesa STK push prompt on the user's phone.
-**Request Body:**
-```json
-{
-  "invoiceId": "uuid",
-  "studentId": "uuid",
-  "amount": 5000,
-  "phoneNumber": "254700000000"
-}
-```
+Authentication is handled via the `@supabase/ssr` package. All route handlers must validate sessions using `createClient()` from `lib/supabase/server.ts`. 
 
-### 2. M-Pesa Webhook Callback
-**Endpoint:** `POST /api/billing/mpesa-webhook`
-**Auth Required:** No (Secured via Safaricom IP safelist / secret validation)
-**Description:** Safaricom calls this endpoint to deliver the success/failure result of an STK push or a C2B Paybill transaction.
-**Response:** HTTP 200 (Required by Safaricom)
+Do not use `createAdminClient()` (the service role key) unless processing a secure server-to-server webhook where the caller identity is verified via an external secret.
 
-### 3. Check M-Pesa Status
-**Endpoint:** `GET /api/billing/mpesa-status/[checkoutId]`
-**Auth Required:** Yes
-**Description:** Polls the status of an initiated STK push.
+---
 
-## Administration
+## Billing — M-Pesa Integration
 
-### 1. Bootstrap Admin
-**Endpoint:** `GET /api/admin/bootstrap`
-**Auth Required:** No (Protected via environment variables)
-**Description:** A utility endpoint used during initial deployment to set up the root `platform_owner` (Admin) account.
+### `POST /api/mpesa/callback`
 
-## Cron Jobs (Background Tasks)
+Receives the Safaricom Daraja callback for school fee payments.
 
-### 1. Generate Invoices
-**Endpoint:** `POST /api/cron/generate-invoices`
-**Auth Required:** No (Protected via Vercel Cron Secret)
-**Description:** Triggered at the start of a term to automatically generate fee invoices for all active students based on their class `fee_structures`.
+**Auth:** None (Public endpoint). 
 
-### 2. Send Notifications
-**Endpoint:** `POST /api/cron/notifications`
-**Auth Required:** No (Protected via Vercel Cron Secret)
-**Description:** Processes the queue of pending WhatsApp/Email notifications (e.g., attendance alerts, fee reminders).
+**Flow:**
+1. Validates the `stkCallback` payload structure.
+2. Extracts `CheckoutRequestID`, `ResultCode`, and `Amount`.
+3. If successful (`ResultCode === 0`):
+   - Finds the pending request in `mpesa_stk_requests` using `checkout_request_id`.
+   - Inserts a new record into `fee_payments` mapping the amount to the `student_id` and `invoice_id`.
+   - Deducts the paid amount from `invoices.balance`.
+   - Updates `invoices.status` to `paid` or `partial`.
+4. If failed: Updates `mpesa_stk_requests.status` to `Failed`.
 
+**Response:** Always returns `{ ResultCode: 0, ResultDesc: 'Accepted' }` to acknowledge receipt to Safaricom, even on payment failure (so Safaricom stops retrying).
 
-[Link: /api-docs]
+---
+
+## Cron Jobs
+
+### `GET /api/cron/generate-invoices`
+
+Runs automatically based on the Vercel cron schedule (typically the 1st of the month or start of term).
+
+**Auth:** Header `Authorization: Bearer <CRON_SECRET>` is required.
+
+**Flow:**
+1. Identifies the active `academic_term`. If none is active, execution halts.
+2. Selects all active students.
+3. Calculates the total fee by evaluating the `fee_structures` linked to their `class_id` or globally.
+4. Inserts rows into `invoices` and `invoice_items`.
+5. Sends an alert (SMS/Push) to the parent linked via `student_parents`.
+
+---
+
+## System Administration
+
+### `POST /api/admin/bootstrap`
+
+One-time setup route for provisioning the root Platform Owner (`admin` role).
+
+**Auth:** Header `X-Bootstrap-Secret` must match the `BOOTSTRAP_SECRET` env var.

@@ -58,8 +58,9 @@ export async function GET(request: NextRequest) {
     if (!res.ok) {
       const body = await res.text()
       console.error('[github-tree] GitHub API error:', res.status, body)
+      const hint = res.status === 404 ? ' (If private, ensure GITHUB_PAT is set and server restarted)' : ''
       return NextResponse.json(
-        { error: `GitHub API returned ${res.status}: ${res.statusText}` },
+        { error: `GitHub API returned ${res.status}: ${res.statusText}${hint}` },
         { status: res.status }
       )
     }

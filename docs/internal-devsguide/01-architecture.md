@@ -1,68 +1,109 @@
 # Architecture
 
-## The Big Picture
-EduTrack is built as a scalable monorepo. The core application logic is served by Next.js, while data persistence, real-time subscriptions, and security rules are handled by Supabase.
+EduTrack is built as a single Next.js web application utilizing Supabase (PostgreSQL) for persistence, authentication, and security.
 
-### Module Dependency Graph
+---
+
+## System Component Map
+
 ```mermaid
 graph TD
-    A[Next.js Frontend apps/web] --> B[Supabase Backend]
+    Browser[Browser] --> Middleware[Next.js Edge: middleware.ts]
+    Middleware --> Auth[Supabase Auth - session cookies]
+    Middleware --> App[Next.js App Router]
     
-    subgraph Frontend Portals
-    P1[Admin Portal]
-    P2[Principal Dashboard]
-    P3[Teacher Portal]
-    P4[Bursar Portal]
-    P5[Parent Portal]
-    end
+    App --> DB[(Supabase PostgreSQL + RLS)]
     
-    P1 --> A
-    P2 --> A
-    P3 --> A
-    P4 --> A
-    P5 --> A
-    
-    subgraph Supabase Backend
-    DB[(PostgreSQL)]
-    RLS{Row Level Security}
-    Auth[Supabase Auth]
-    Edge[Edge Functions]
-    end
-    
-    B --> Auth
-    B --> RLS
-    RLS --> DB
-    B --> Edge
+    App --> Mpesa[Safaricom Daraja API - M-Pesa]
+    Mpesa --> |Callback| Webhook[/api/mpesa/callback]
+    Webhook --> DB
+
+    Cron[Vercel Cron] --> |Generate Invoices| CronRoute[/api/cron/generate-invoices]
+    CronRoute --> DB
 ```
+
+---
 
 ## Repository Structure
-- `apps/web/`: The Next.js 16 (App Router) application serving all portals.
-- `backend/supabase/`: Database schemas, migrations (`production_migration.sql`), and Edge Functions.
-- `docs/`: The documentation you are currently reading.
 
-> **Note:** The PRD mentions an `apps/mobile/` Expo app for parents, but this has not yet been built. The Next.js web application is currently fully responsive and serves mobile users.
-
-## Core Request Flow: Auth & Routing
-```mermaid
-sequenceDiagram
-    participant User
-    participant Middleware (apps/web/middleware.ts)
-    participant Next.js (Server)
-    participant Supabase
-
-    User->>Middleware: GET /teacher/dashboard
-    Middleware->>Supabase: check session cookie
-    Supabase-->>Middleware: returns { user, profile: { role: 'class_teacher' } }
-    Middleware->>Middleware: isAllowedForRole('class_teacher', '/teacher/dashboard')
-    Middleware-->>Next.js: Proxy request to route
-    Next.js-->>User: Render Dashboard
+```
+EduTrack/
+├── apps/
+│   └── web/                      # The entire Next.js product
+│       ├── app/                  # Next.js App Router pages
+│       │   ├── (auth)/           # Login, Signup, Invite flows
+│       │   ├── (dashboard)/      # Principal portal
+│       │   ├── teacher/          # Teacher portal
+│       │   ├── bursar/           # Bursar portal
+│       │   ├── parent/           # Parent portal
+│       │   ├── library/          # Librarian portal
+│       │   ├── store/            # Storekeeper portal
+│       │   ├── transport/        # Transport matron portal
+│       │   ├── admin/            # Platform owner portal
+│       │   └── api/              # Webhooks and cron jobs
+│       ├── lib/                  # Server-side utilities
+│       │   ├── supabase/         # server.ts, admin.ts, middleware.ts
+│       │   └── utils.ts
+│       ├── components/           # UI components (shadcn)
+│       └── middleware.ts         # Edge route guard and session refresh
+├── backend/
+│   └── supabase/
+│       ├── migrations/           # Database schema (.sql files)
+│       └── config.toml
 ```
 
-## Where State Lives
-- **Primary Data:** Supabase PostgreSQL (handles users, schools, invoices, attendance, exams).
-- **Session State:** Secure HTTP-only cookies (`sb-access-token`, `sb-refresh-token`).
-- **Files/Media:** (Planned) Supabase Storage for profile pictures and PDF report cards.
+> **Note on Mobile:** The PRD mentions a React Native / Expo application (`apps/mobile`), but it has not been initialized. The current platform relies on the responsive Next.js web application for mobile users (Parents).
 
+---
+
+## Critical Request Flow: Routing & Auth Guard
+
+Because 9 distinct roles share the same domain, preventing unauthorized access across portals is handled at the network edge via `middleware.ts`.
+
+```mermaid
+sequenceDiagram
+    actor Parent
+    participant Middle as middleware.ts
+    participant SupaAuth as Supabase Auth
+    participant Next as Next.js Server
+
+    Parent->>Middle: GET /bursar/dashboard
+    Middle->>SupaAuth: updateSession()
+    SupaAuth-->>Middle: returns { profile: { role: 'parent' } }
+    Middle->>Middle: isAllowedForRole('parent', '/bursar/dashboard') → false
+    Middle->>Middle: roleHome('parent') → '/parent/dashboard'
+    Middle-->>Parent: HTTP 307 Redirect to /parent/dashboard
+```
+
+**Key Requirement:** The profile fetch in `middleware.ts` executes on every request. It must remain lightweight. Do not cache this profile payload, otherwise role demotions will not take immediate effect.
+
+---
+
+## Critical Request Flow: M-Pesa Payments
+
+M-Pesa payments (for school fees) are initiated client-side but resolved asynchronously via a webhook.
+
+```mermaid
+sequenceDiagram
+    participant Parent UI
+    participant Route as /api/billing/mpesa-stk
+    participant Daraja as Safaricom Daraja API
+    participant Webhook as /api/mpesa/callback
+    participant DB as PostgreSQL
+
+    Parent UI->>Route: POST (invoiceId, phone, amount)
+    Route->>Daraja: Initiate STK Push
+    Daraja-->>Route: checkoutRequestId
+    Route->>DB: Insert mpesa_stk_requests (Pending)
+    Route-->>Parent UI: Success
+
+    Note over Daraja,Webhook: User enters PIN on phone...
+
+    Daraja->>Webhook: POST Callback (Success or Failure)
+    Webhook->>DB: Lookup mpesa_stk_requests by CheckoutRequestID
+    Webhook->>DB: Insert fee_payments row
+    Webhook->>DB: Update invoices.balance
+    Webhook-->>Daraja: HTTP 200 OK
+```
 
 [Link: /admin/dashboard]
-[CODE: XILFANX/EduTrack/main/apps/web/app/page.tsx] 

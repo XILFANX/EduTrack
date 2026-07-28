@@ -1,36 +1,67 @@
 # Academic Grading & Attendance
 
-This guide is primarily for Teachers. It covers how to mark daily attendance and input exam scores for your students.
+**Goal:** Track daily student attendance and record exam results.
 
-## Marking Daily Attendance
-Attendance should be marked at the beginning of each school day by the **Class Teacher**.
+*This guide is primarily for Class Teachers and Subject Teachers.*
 
-1. Log into your **Teacher Portal**.
-2. Click on the **Attendance** tab in the sidebar.
-3. Select your class and the current date (it defaults to today).
-4. You will see a roster of all your students. By default, everyone is marked as **Present**.
-5. For any absent or late students, simply toggle their status to **Absent** or **Late**.
-6. (Optional) Add a brief note explaining the absence if known (e.g., "Sick leave").
-7. Click **Save Attendance Register**.
+---
 
-[SCREENSHOT: /teacher/attendance — The digital attendance register with Present/Absent/Late toggles]
+## 1. Daily Attendance
 
-> Note: If a student is marked Absent, the system automatically sends a WhatsApp notification to their parent to inform them.
+Class Teachers are responsible for marking the daily register.
 
-[Link: /teacher/attendance]
+1. Navigate to **Attendance**. [Link: /teacher/attendance]
+2. Select the current date.
+3. The roster for your assigned class will appear.
+4. By default, all students are marked **Present**.
+5. Tap on a student's status to toggle it to **Absent** or **Late**.
+6. Click **Save Register**.
 
-## Entering Exam Grades
-Subject Teachers are responsible for entering grades for their assigned subjects.
+Once saved, attendance statistics instantly update on the Principal's dashboard and become visible in the Parent Portal.
 
-1. Navigate to the **Exams** tab.
-2. Select the active exam period (e.g., "Term 1 Mid-Term").
-3. Select the subject and class you are grading.
-4. You will see a spreadsheet-like grid of your students.
-5. Enter the numeric score (out of 100) for each student. The system will automatically calculate the letter grade.
-6. Click **Save Scores**.
+[SCREENSHOT: /teacher/attendance — the daily attendance grid view]
 
-[SCREENSHOT: /teacher/exams — The grade entry grid showing students and score inputs]
+---
 
-> Warning: Once scores are saved, they are immediately visible to the Principal. However, they are NOT visible to parents until the Principal officially publishes the Report Cards at the end of the term.
+## 2. Setting Up Exams
 
-[Link: /teacher/exams]
+Before teachers can enter grades, an Administrator or Principal must create an Exam record.
+
+1. Go to **Academics → Exams**.
+2. Click **Create Exam**.
+3. Name the exam (e.g., "Mid-Term 1", "End of Year Finals").
+4. Select the Term it belongs to.
+5. Click **Save**.
+
+---
+
+## 3. Entering Grades
+
+Subject Teachers enter grades for the specific subjects they have been assigned to teach.
+
+1. Navigate to **Academics → Grading**. [Link: /teacher/grading]
+2. Select the Exam (e.g., "Mid-Term 1").
+3. Select your Subject (e.g., "Mathematics - Grade 4").
+4. A grid of students will appear. Enter the raw score (e.g., out of 100) for each student.
+5. The system automatically calculates the letter grade (A, B, C, etc.) based on the school's configured grading rubric.
+6. Click **Submit Grades**.
+
+> **Note:** EduTrack currently supports standard percentage-based grading. CBC (Competency Based Curriculum) rubric support is not yet available.
+
+[SCREENSHOT: /teacher/grading — the subject grading grid with auto-calculated letter grades]
+
+---
+
+## 4. Generating Report Cards
+
+At the end of the term, once all Subject Teachers have submitted their grades, Class Teachers can generate report cards.
+
+1. Navigate to **Academics → Reports**.
+2. Select the Class and the Exam.
+3. Click **Generate All Reports**.
+
+This compiles every subject score, the attendance record, and the Class Teacher's remarks into a single PDF per student. 
+
+The report cards are automatically published to the Parent Portal. You do not need to print them unless a parent explicitly requests a physical copy.
+
+[Link: /teacher/grading]

@@ -1,40 +1,88 @@
 # Data Model
 
-EduTrack utilizes a strictly relational schema built on PostgreSQL, utilizing UUIDs for all primary keys.
+The schema is defined in `backend/supabase/migrations/`. 
 
-## Core Entities
-- **`schools`**: The root tenant object. Everything belongs to a school.
-- **`users`**: All human actors (Admin, Principal, Teachers, Parents, Bursar, etc.). Their access is dictated by the `role` enum.
-- **`invitations`**: Handles the delegated onboarding tokens. Maps a token to a specific role and target (e.g., linking an invited Parent to a specific `student_id`).
+**Primary key convention:** All tables use `id uuid DEFAULT gen_random_uuid() PRIMARY KEY`.
 
-## Academic Entities
-- **`classes`**: E.g., "Grade 1". Linked to a `class_teacher_id`.
-- **`students`**: The core academic subject. Contains `admission_number`.
-- **`student_parents`**: A bridging table (Many-to-Many) linking `students` to `users` (where role is `parent`). This allows one parent to have multiple children, and a child to have multiple guardians.
-- **`subjects`**: E.g., "Mathematics". Linked to a `teacher_id` (Subject Teacher).
+---
 
-## Grading & Attendance
-- **`attendance`**: Logs daily presence. Contains `status` ('Present', 'Absent', 'Late').
-- **`exams`**: Defines an assessment period (e.g., "Term 1 Mid-Term") with a `max_score`.
-- **`exam_results`**: The actual grades. 
-  - *Tech Debt Note:* Currently supports simple `score numeric` and `grade text`. Does not yet support the complex CBC rubric structures outlined in the PRD.
+## Core Hierarchy (Multi-Tenancy)
 
-## Financial Entities
-- **`academic_terms`**: Defines the financial/academic period.
-- **`fee_structures`**: Defines what should be billed for a specific term, either globally for the school or specific to a `class_id`.
-- **`invoices`**: The actual bill sent to a student. Contains `amount` and `balance`.
-- **`invoice_items`**: Line items for an invoice (e.g., "Tuition: 5000", "Transport: 2000").
-- **`fee_payments`**: Ledger of received payments, linking to `mpesa_receipt`.
-- **`mpesa_stk_requests`**: Tracks the state of initiated STK pushes.
+```
+schools
+ └─ users → role: admin | principal | class_teacher | ... | parent
+ └─ classes
+     └─ students
+         └─ invoices
+             └─ fee_payments
+```
 
-## Ancillary Services
-- **`inventory_ledger`**: Logs items checking IN (positive `quantity_change`) and OUT (negative `quantity_change`) for the storekeeper.
-- **`bus_routes`**: Logs transport logistics.
-- **`salary_advances`**: Tracks staff requests for mid-month advances.
+---
 
-## Communications
-- **`announcements`**: Global broadcasts to specific audiences (e.g., 'Parents', 'Teachers').
-- **`conversations` & `messages`**: Direct messaging threads between users (e.g., Parent to Class Teacher).
+## Table Reference
 
+### `schools`
+
+The root tenant object. Everything belongs to a school.
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | uuid PK | |
+| `name` | text | |
+| `subscription_plan` | text | |
+| `subscription_status` | text | `active \| inactive` |
+
+---
+
+### `users`
+
+Consolidated table for all human actors. 
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | uuid PK | References `auth.users(id)` |
+| `school_id` | uuid FK | Null for `admin` |
+| `role` | text | Enforces middleware routing |
+| `full_name` | text | |
+| `phone` | text | |
+
+---
+
+### Academic Schema
+
+| Table | Purpose |
+|---|---|
+| `academic_terms` | Defines the term boundaries (e.g., "2026 Term 1"). Required for invoicing. |
+| `classes` | e.g. "Grade 1". Contains `class_teacher_id` FK. |
+| `students` | Core academic subject. Contains `admission_number`. |
+| `student_parents` | Join table. Maps a `student_id` to a `parent_id` (user). Allows parents to see multiple children. |
+| `subjects` | e.g. "Mathematics". Contains `teacher_id` (Subject Teacher). |
+| `attendance` | Daily roll call. Enums: `Present, Absent, Late`. |
+| `exams` | Defines an assessment instance. |
+| `exam_results` | Contains `score` (numeric) and `grade` (text). *Note: Does not yet support CBC rubrics.* |
+
+---
+
+### Financial Schema
+
+| Table | Purpose |
+|---|---|
+| `fee_structures` | Defines what is billed per term (either globally or tied to a `class_id`). |
+| `invoices` | Monthly/Termly bill generated per student. Contains `balance` and `status` (`unpaid \| partial \| paid`). |
+| `invoice_items` | Line items defining an invoice breakdown (e.g. "Tuition", "Transport"). |
+| `fee_payments` | Ledger of successfully received payments. |
+| `mpesa_stk_requests` | Tracks Daraja API push states (`checkout_request_id`, `status`). |
+| `salary_advances` | Tracks staff requests for mid-month advances. |
+
+---
+
+### Ancillary Schema
+
+| Table | Purpose |
+|---|---|
+| `inventory_ledger` | Basic check-in/check-out log for the `storekeeper`. |
+| `bus_routes` | Transport logistics tracking. |
+
+> **Missing Tables:** There is currently no database schema for Library Inventory, Fines, or Health/Discipline logs, despite PRD mentions.
 
 [Link: /admin/dashboard]

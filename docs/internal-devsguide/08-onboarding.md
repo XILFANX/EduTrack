@@ -1,40 +1,85 @@
-# Developer Onboarding
+# Onboarding & Local Setup
 
-Get EduTrack running locally in under 10 minutes.
+Get EduTrack running on your local machine in under 20 minutes.
+
+---
 
 ## Prerequisites
-- Node.js 20+
-- npm or pnpm
-- Supabase CLI installed (`npm install -g supabase`)
 
-## 1. Local Database Setup
-We use the Supabase CLI to run a local Postgres instance with our exact production schema.
+- Node.js v20+
+- npm v10+
+- Supabase CLI (`npm install -g supabase`)
+- Git
+
+---
+
+## 1. Installation
 
 ```bash
-cd backend
-supabase start
+git clone https://github.com/XILFANX/EduTrack.git
+cd EduTrack
+npm install
 ```
-This will start the local database, apply `production_migration.sql`, and output your local API keys.
+
+---
 
 ## 2. Environment Variables
-Copy the example environment file in the web app:
+
+Create your local env file:
 
 ```bash
-cd apps/web
-cp .env.example .env.local
+cp apps/web/.env.example apps/web/.env.local
 ```
-Fill in the `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` using the values outputted by `supabase start`.
 
-## 3. Run the Next.js App
-Start the development server:
+Ensure the following minimal variables are set:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=http://127.0.0.1:54321
+NEXT_PUBLIC_SUPABASE_ANON_KEY=<from local supabase start>
+SUPABASE_SERVICE_ROLE_KEY=<from local supabase start>
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+PRODUCT_ADMINISTRATOR_EMAIL=admin@edutrack.co.ke
+BOOTSTRAP_SECRET=local_secret_123
+CRON_SECRET=local_cron_123
+```
+
+---
+
+## 3. Start the Database
+
+```bash
+cd backend/supabase
+supabase start
+```
+
+This starts a local PostgreSQL instance on port `54321` and runs all migrations. It also launches Supabase Studio at `http://127.0.0.1:54323`.
+
+> **Note:** Copy the `anon` and `service_role` keys output by the CLI into your `.env.local` file.
+
+---
+
+## 4. Bootstrap the Platform Owner
+
+To bypass the invite system and create your root admin account:
+
+1. Go to `http://localhost:3000/signup` and register with the email matching `PRODUCT_ADMINISTRATOR_EMAIL`.
+2. Run this command in a separate terminal:
+
+```bash
+curl -X POST http://localhost:3000/api/admin/bootstrap \
+  -H "X-Bootstrap-Secret: local_secret_123"
+```
+
+3. Refresh your browser. You will be redirected to the `/admin/dashboard`.
+
+---
+
+## 5. Run the Application
 
 ```bash
 npm run dev
 ```
-Navigate to `http://localhost:3000`. 
 
-## 4. Make Your First Change
-To verify your setup, try adding a test log in `apps/web/middleware.ts` inside the `isAllowedForRole` function, save, and navigate between portal routes to see it fire in your terminal.
+The application is now running at `http://localhost:3000`. 
 
-
-[Link: /admin/dashboard]
+From the Admin Dashboard, you can create a test School, assign yourself as Principal, and begin exploring the tenant isolation features.

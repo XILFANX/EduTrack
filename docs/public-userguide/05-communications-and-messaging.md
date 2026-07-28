@@ -1,33 +1,56 @@
 # Communications & Messaging
 
-EduTrack completely replaces informal school WhatsApp groups with secure, official communication channels built directly into the platform.
+**Goal:** Send announcements, reminders, and direct messages to parents and staff without using external WhatsApp groups.
 
-## Global Announcements
-Principals can broadcast official announcements to the entire school or specific groups.
+---
 
-1. Go to the **Announcements** tab.
+## 1. School-Wide Announcements
+
+Principals can broadcast messages to the entire school community.
+
+1. Navigate to **Communications → Announcements**. [Link: /dashboard/communications]
 2. Click **New Announcement**.
-3. Enter a Title and the Body of the message.
-4. Select the target audience: **All**, **Parents**, or **Staff**.
-5. Click **Publish**. 
+3. Write your message (e.g., "School closes early on Friday due to sports day").
+4. Select the audience: **All Parents**, **All Staff**, or **Everyone**.
+5. Click **Send**.
 
-The announcement will instantly appear on the dashboard of every targeted user, and they will receive a notification.
+The announcement appears at the top of the recipients' dashboards the next time they log in. It also triggers an email/push notification.
 
-[SCREENSHOT: /dashboard/announcements/new — The form for creating a new school-wide announcement]
+[SCREENSHOT: /dashboard/communications/new — the announcement compose window]
 
-[Link: /dashboard/announcements]
+---
 
-## Direct Messaging (Conversations)
-Parents and Teachers can communicate directly regarding a student's progress or well-being.
+## 2. Class-Specific Messaging
 
-1. Navigate to the **Messages** tab on your portal.
-2. Click **New Conversation**.
-3. (For Parents): Select the Class Teacher of your child.
-4. (For Teachers): Search for a specific student's Parent.
-5. Type your message and hit **Send**.
+Class Teachers can send messages specifically to the parents of their students.
 
-[SCREENSHOT: /messages — The chat interface showing a conversation between a teacher and a parent]
+1. Navigate to your Class dashboard.
+2. Click the **Message Parents** button.
+3. Write your message. It will be sent to all parents linked to students in that class.
 
-> Warning: All direct messages on EduTrack are logged and securely stored as official school correspondence. Maintain professional conduct at all times.
+---
 
-[Link: /messages]
+## 3. Direct Messaging (In-App Chat)
+
+If you need to discuss a specific student's performance with their parent, you can use direct messages.
+
+1. Go to the Student's profile.
+2. Click **Message Parent**.
+3. A chat window will open. 
+
+This chat history is securely stored within EduTrack. It ensures professional boundaries are maintained, unlike personal WhatsApp exchanges.
+
+---
+
+## 4. Bulk SMS for Fee Reminders
+
+Bursars can trigger automated SMS reminders to parents who have overdue fee balances.
+
+1. Navigate to **Finances → Invoices**.
+2. Filter the list to show **Overdue** invoices.
+3. Click **Send Reminders** (top right).
+4. Review the template (e.g., "Dear Parent, you have an outstanding balance of KES X for [Student Name]...") and click confirm.
+
+> **Note:** SMS features require your school to have a positive SMS credit balance. Contact the Platform Owner if your credits are depleted.
+
+[Link: /dashboard]

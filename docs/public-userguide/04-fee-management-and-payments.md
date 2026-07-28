@@ -1,41 +1,75 @@
 # Fee Management & Payments
 
-This guide covers how Bursars configure school fees, and how Parents securely pay those fees via M-Pesa.
+**Goal:** Configure school fees, generate invoices, and collect payments.
 
-## For Bursars: Setting Up Fee Structures
-At the start of every academic term, the Bursar must define the fee structures before generating invoices.
+*This guide is for Bursars and Principals.*
 
-1. Navigate to **Financials > Fee Structures** on the Bursar dashboard.
-2. Click **Create Fee Item**.
-3. Select the target **Academic Term**.
-4. Define the amount and description (e.g., "Tuition: 5,000 KES").
-5. Choose whether this fee applies to the entire school, or only a specific class (e.g., a "Grade 8 Trip Fee" should only apply to Grade 8).
-6. Click **Save**.
+---
 
-[SCREENSHOT: /bursar/fees/structures — The fee structure configuration page]
+## 1. Setting Up Fee Structures
 
-[Link: /bursar/fees/structures]
+Before you can bill students, you must define what you are charging them for.
 
-## For Bursars: Generating Invoices
-Once the structures are set, you can instantly bill the students.
+1. Navigate to **Finances → Fee Structures**. [Link: /bursar/fees]
+2. Click **Create Structure**.
+3. Name the structure (e.g., "Grade 1-3 Tuition").
+4. Add line items:
+   - "Tuition": KES 15,000
+   - "Activity Fee": KES 2,000
+5. You can set this structure to apply globally to the whole school, or restrict it to specific classes.
 
-1. Navigate to **Invoices**.
-2. Click **Generate Batch Invoices**.
-3. Select the Term. The system will calculate exactly what each student owes based on the Fee Structures you defined.
-4. Confirm and click **Execute**. Every parent will immediately receive a digital invoice on their portal.
+---
 
-## For Parents: Paying Fees via M-Pesa
-Parents can securely pay their child's school fees directly from their mobile phone.
+## 2. Generating Invoices
 
-1. Log into your **Parent Portal**.
-2. You will see your child's current **Fee Balance** prominently displayed.
-3. Click the **Pay Fees** button.
-4. Enter the amount you wish to pay.
-5. Ensure your phone number is correct and click **Trigger M-Pesa Request**.
-6. A prompt will appear on your phone asking for your M-Pesa PIN. Enter your PIN to complete the transaction.
+Invoices are generated automatically by the system.
 
-[SCREENSHOT: /parent/dashboard — The parent dashboard highlighting the 'Pay Fees' button next to the current balance]
+- On the 1st of every month (or the start of a Term, depending on your school's configuration), the automated invoice generator runs.
+- It looks at the Fee Structures assigned to a student's class and creates a personalized invoice.
+- The invoice starts as **Unpaid** and parents are instantly notified in their portal.
 
-> Note: If you selected a country other than Kenya during onboarding, the M-Pesa option will be hidden, and you will be provided with alternative global payment methods (e.g., Bank Transfer, Credit Card).
+If a student joins mid-term, you can generate an invoice manually:
+1. Go to the student's profile.
+2. Click **Generate Invoice**.
 
-[Link: /parent/dashboard]
+[SCREENSHOT: /bursar/invoices — showing a list of unpaid and partially paid invoices]
+
+---
+
+## 3. How Parents Pay
+
+EduTrack makes fee collection completely frictionless via M-Pesa.
+
+1. A parent logs into their portal.
+2. They view the outstanding invoice and tap **Pay via M-Pesa**.
+3. A prompt appears on their phone. They enter their PIN.
+4. The payment is processed securely via Safaricom.
+5. The invoice balance in EduTrack updates instantly, and a digital receipt is generated.
+
+You (the Bursar) do not need to manually reconcile M-Pesa payments made through the portal.
+
+---
+
+## 4. Manually Recording Payments (Bank Transfers / Cash)
+
+If a parent pays directly to the school bank account or brings cash, you must record it manually.
+
+1. Navigate to **Finances → Payments**.
+2. Click **Log Payment**.
+3. Select the Student and the Invoice they are paying.
+4. Enter the amount and the payment method (Cash, Cheque, Bank Transfer).
+5. Enter the reference number (e.g., the bank slip number).
+6. Click **Save Payment**.
+
+The invoice balance will update, and the parent will see the receipt in their portal.
+
+---
+
+## 5. Handling Fee Balances & Arrears
+
+If a student has not paid in full by the due date:
+- Their invoice status changes to **Overdue**.
+- You can apply a manual penalty charge by opening the invoice and clicking **Add Charge**.
+- You can use the **Communications** tab to send bulk SMS reminders to all parents with overdue balances.
+
+[Link: /bursar/dashboard]
