@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
-import { ChatClient } from '@/components/shared/chat-client'
+import { MessagesLayout } from '@/components/shared/messages-layout'
+import type { Announcement } from '@/components/shared/announcements-feed'
 
 export const dynamic = 'force-dynamic'
 
@@ -32,20 +33,24 @@ export default async function AdminMessagesPage() {
     role: p.role,
   }))
 
-  const currentUser = { id: user.id, role: 'admin' }
+  const currentUser = { id: user.id, role: 'platform_admin' }
+
+  // Global platform announcements
+  const { data: announcementsData } = await admin
+    .from('announcements')
+    .select('*, users(full_name, salutation)')
+    .is('school_id', null)
+    .order('created_at', { ascending: false })
+    .limit(15)
 
   return (
-    <div className="p-4 md:p-6 space-y-6 max-w-5xl mx-auto h-[calc(100vh-140px)] flex flex-col">
-      <div className="flex items-center justify-between shrink-0">
-        <h1 className="text-xl md:text-2xl font-bold text-foreground tracking-tight">Messages</h1>
-      </div>
-
-      <div className="flex-1 bg-white dark:bg-slate-900/50 border border-border rounded-3xl shadow-sm overflow-hidden flex min-h-0">
-        <ChatClient 
-          currentUser={currentUser} 
-          contacts={contacts} 
-        />
-      </div>
-    </div>
+    <MessagesLayout
+      currentUser={currentUser}
+      contacts={contacts}
+      classes={[]}
+      initialContactId={undefined}
+      announcements={(announcementsData as Announcement[]) || []}
+      audienceOptions={[{ value: 'all_principals', label: 'All Principals' }]}
+    />
   )
 }

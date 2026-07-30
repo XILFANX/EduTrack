@@ -21,9 +21,11 @@ export interface Announcement {
 }
 
 export function AnnouncementsFeed({ announcements, currentUserId }: { announcements: Announcement[], currentUserId?: string }) {
-  const [items, setItems] = useState<Announcement[]>(announcements)
+  const [deletedIds, setDeletedIds] = useState<Set<string>>(new Set())
   const [deletingId, setDeletingId] = useState<string | null>(null)
   const confirm = useConfirm()
+  
+  const items = announcements.filter(a => !deletedIds.has(a.id))
 
   const handleDelete = async (id: string) => {
     const isConfirmed = await confirm({
@@ -38,7 +40,7 @@ export function AnnouncementsFeed({ announcements, currentUserId }: { announceme
     setDeletingId(id)
     try {
       await deleteAnnouncement(id)
-      setItems(prev => prev.filter(a => a.id !== id))
+      setDeletedIds(prev => new Set(prev).add(id))
       UX.toast('Announcement deleted successfully')
     } catch (err: any) {
       UX.errorModal(err.message || 'Failed to delete announcement')

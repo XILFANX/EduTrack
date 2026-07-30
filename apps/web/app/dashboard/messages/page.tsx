@@ -48,6 +48,12 @@ export default async function PrincipalMessagesPage({
     .neq('id', user.id)
     .neq('role', 'parent')
 
+  // Fetch Platform Admins (since they don't have a school_id)
+  const { data: adminData } = await adminClient
+    .from('users')
+    .select('id, full_name, salutation, role, last_seen_at')
+    .eq('role', 'admin')
+
   // 2. Fetch Parent contacts with linked students & class mapping
   const { data: parentsData } = await adminClient
     .from('users')
@@ -108,7 +114,16 @@ export default async function PrincipalMessagesPage({
     classIds: p.classIds,
   }))
 
-  const contacts = [...staffContacts, ...parentContacts].sort((a, b) => a.roleOrder - b.roleOrder)
+  const adminContacts = (adminData || []).map((u: any) => ({
+    id: u.id,
+    name: u.salutation ? `${u.salutation} ${u.full_name}` : (u.full_name || 'Platform Admin'),
+    role: 'Platform Admin',
+    roleOrder: 0,
+    last_seen_at: u.last_seen_at,
+    subtitle: undefined as string | undefined,
+  }))
+
+  const contacts = [...adminContacts, ...staffContacts, ...parentContacts].sort((a, b) => a.roleOrder - b.roleOrder)
 
   // 3. Fetch Announcements
   const { data: announcementsData } = await supabase

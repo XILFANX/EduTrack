@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import {
   Send, UserCircle2, Loader2, ArrowLeft, Users, Briefcase,
-  GraduationCap, Shield, ChevronRight, Search, MessageSquare, Check, CheckCheck
+  GraduationCap, Shield, ChevronRight, Search, MessageSquare, Check, CheckCheck, Trash2, MoreVertical
 } from 'lucide-react'
 import { getOrCreateConversation, markConversationAsRead, sendMessage } from '@/app/actions/chat'
 import { UX } from '@/lib/ux'
@@ -72,9 +72,13 @@ export function ChatClient({
   const [sending, setSending] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [onlineUsers, setOnlineUsers] = useState<Set<string>>(new Set())
+  const [typingUsers, setTypingUsers] = useState<Set<string>>(new Set())
+  const [unreadCounts, setUnreadCounts] = useState<Record<string, number>>({})
+  const [showMenu, setShowMenu] = useState(false)
 
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const presenceChannelRef = useRef<any>(null)
+  const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   const supabase = createClient()
 
   // Determine which categories the current user should NOT see
@@ -97,6 +101,23 @@ export function ChatClient({
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
+
+  useEffect(() => {
+    async function fetchUnread() {
+      const { data } = await supabase.from('messages')
+        .select('sender_id')
+        .neq('sender_id', currentUser.id)
+        .eq('is_read', false)
+      if (data) {
+        const counts: Record<string, number> = {}
+        data.forEach(m => {
+          counts[m.sender_id] = (counts[m.sender_id] || 0) + 1
+        })
+        setUnreadCounts(counts)
+      }
+    }
+    fetchUnread()
+  }, [currentUser.id, supabase])
 
   // Initialize selected contact from URL prop
   useEffect(() => {
@@ -122,8 +143,16 @@ export function ChatClient({
       .on('presence', { event: 'sync' }, () => {
         const state = channel.presenceState()
         const online = new Set<string>()
-        Object.keys(state).forEach(key => online.add(key))
+        const typing = new Set<string>()
+        Object.keys(state).forEach(key => {
+          online.add(key)
+          const userStates = state[key]
+          if (userStates && userStates.some((s: any) => s.typing_to === currentUser.id)) {
+            typing.add(key)
+          }
+        })
         setOnlineUsers(online)
+        setTypingUsers(typing)
       })
       .subscribe(async (status) => {
         if (status === 'SUBSCRIBED') {
@@ -156,6 +185,7 @@ export function ChatClient({
         if (data) {
           setMessages(data)
           await markConversationAsRead(cid)
+          setUnreadCounts(prev => ({ ...prev, [selectedContact!.id]: 0 }))
           window.dispatchEvent(new CustomEvent('messages-read'))
         }
       } catch (err) {
@@ -188,6 +218,11 @@ export function ChatClient({
             markConversationAsRead(conversationId)
             // also mark the message itself as read in the messages table
             supabase.from('messages').update({ is_read: true }).eq('id', newMsg.id).then()
+          } else {
+            // Update unread count if we receive a message in background (handled by fetchUnread but good to realtime it)
+            if (newMsg.sender_id !== currentUser.id) {
+               setUnreadCounts(prev => ({ ...prev, [newMsg.sender_id]: (prev[newMsg.sender_id] || 0) + 1 }))
+            }
           }
         }
       )
@@ -232,6 +267,35 @@ export function ChatClient({
       setMessages(prev => prev.filter(m => m.id !== tempId))
     } finally {
       setSending(false)
+      if (presenceChannelRef.current) {
+        presenceChannelRef.current.track({ online_at: new Date().toISOString(), typing_to: null })
+      }
+    }
+  }
+
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInput(e.target.value)
+    if (presenceChannelRef.current && selectedContact) {
+      presenceChannelRef.current.track({ online_at: new Date().toISOString(), typing_to: selectedContact.id })
+      if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current)
+      typingTimeoutRef.current = setTimeout(() => {
+        presenceChannelRef.current?.track({ online_at: new Date().toISOString(), typing_to: null })
+      }, 2000)
+    }
+  }
+
+  const handleClearChat = async () => {
+    if (!conversationId) return
+    const confirmed = window.confirm("Are you sure you want to clear this chat for both parties?")
+    if (!confirmed) return
+    setShowMenu(false)
+    try {
+      await supabase.from('messages').delete().eq('conversation_id', conversationId)
+      setMessages([])
+      UX.toast("Chat cleared")
+    } catch (err) {
+      console.error(err)
+      UX.errorModal("Failed to clear chat")
     }
   }
 
@@ -279,6 +343,14 @@ export function ChatClient({
         )
     : []
 
+  const sortedVisibleContacts = visibleContacts.map(maskAdminContact).sort((a, b) => {
+    const aUnread = unreadCounts[a.id] || 0
+    const bUnread = unreadCounts[b.id] || 0
+    if (aUnread > 0 && bUnread === 0) return -1
+    if (bUnread > 0 && aUnread === 0) return 1
+    return 0
+  })
+
   // =========================================================================
   // LAYOUT: on mobile, show either Directory OR Chat. On desktop, show both.
   // =========================================================================
@@ -311,7 +383,7 @@ export function ChatClient({
                 </p>
                 <p className="text-[11px] text-blue-500 font-medium">
                   {selectedClassId
-                    ? `${categoryContacts.filter(c => c.classIds?.includes(selectedClassId!)).length} parents`
+                    ? `${sortedVisibleContacts.filter(c => c.classIds?.includes(selectedClassId!)).length} parents`
                     : `${categoryContacts.length} contacts`}
                 </p>
               </div>
@@ -429,7 +501,7 @@ export function ChatClient({
               </div>
               <div className="flex-1 overflow-y-auto p-3 space-y-1">
                 {(() => {
-                  let viewContacts = categoryContacts
+                  let viewContacts = sortedVisibleContacts.filter(c => activeCategory?.roles.includes(c.role))
                   if (selectedClassId) {
                     viewContacts = viewContacts.filter(c => c.classIds?.includes(selectedClassId))
                   }
@@ -455,6 +527,7 @@ export function ChatClient({
                       contact={contact}
                       selected={selectedContact?.id === contact.id}
                       online={onlineUsers.has(contact.id)}
+                      unreadCount={unreadCounts[contact.id] || 0}
                       onClick={() => handleSelectContact(contact)}
                     />
                   ))
@@ -483,7 +556,9 @@ export function ChatClient({
               <div className="min-w-0 flex-1">
                 <h3 className="font-bold text-foreground text-sm truncate">{selectedContact.name}</h3>
                 <p className="text-xs font-medium">
-                  {onlineUsers.has(selectedContact.id) ? (
+                  {typingUsers.has(selectedContact.id) ? (
+                    <span className="text-blue-500 animate-pulse">typing...</span>
+                  ) : onlineUsers.has(selectedContact.id) ? (
                     <span className="text-emerald-500">● Online</span>
                   ) : (
                     <span className="text-slate-400">● {formatLastSeen(selectedContact.last_seen_at)}</span>
@@ -491,6 +566,24 @@ export function ChatClient({
                   <span className="text-slate-400 mx-1.5">·</span>
                   <span className="text-muted-foreground">{selectedContact.role}</span>
                 </p>
+              </div>
+              <div className="relative">
+                <button 
+                  onClick={() => setShowMenu(!showMenu)}
+                  className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 transition-colors"
+                >
+                  <MoreVertical className="w-5 h-5" />
+                </button>
+                {showMenu && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-lg overflow-hidden py-1 z-50">
+                    <button 
+                      onClick={handleClearChat}
+                      className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-500/10 flex items-center gap-2"
+                    >
+                      <Trash2 className="w-4 h-4" /> Clear Chat
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -562,7 +655,7 @@ export function ChatClient({
                 <input
                   type="text"
                   value={input}
-                  onChange={e => setInput(e.target.value)}
+                  onChange={handleInput}
                   placeholder="Type a message..."
                   disabled={sending || !conversationId}
                   className="flex-1 h-12 px-5 rounded-full border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all text-sm text-foreground placeholder:text-muted-foreground disabled:opacity-50"
@@ -599,11 +692,13 @@ function ContactRow({
   contact,
   selected,
   online,
+  unreadCount = 0,
   onClick,
 }: {
   contact: Contact
   selected: boolean
   online: boolean
+  unreadCount?: number
   onClick: () => void
 }) {
   return (
@@ -627,13 +722,20 @@ function ContactRow({
           <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 border-2 border-white dark:border-slate-900 rounded-full" />
         )}
       </div>
-      <div className="flex-1 min-w-0">
-        <p className={`font-semibold text-sm truncate ${selected ? 'text-blue-600 dark:text-blue-400' : 'text-foreground'}`}>
-          {contact.name}
-        </p>
-        <p className="text-xs text-muted-foreground truncate mt-0.5">{contact.role}</p>
-        {contact.subtitle && (
-          <p className="text-[10px] text-slate-400 truncate">{contact.subtitle}</p>
+      <div className="flex-1 min-w-0 flex items-center justify-between gap-2">
+        <div className="min-w-0">
+          <p className={`font-semibold text-sm truncate ${selected ? 'text-blue-600 dark:text-blue-400' : 'text-foreground'}`}>
+            {contact.name}
+          </p>
+          <p className="text-xs text-muted-foreground truncate mt-0.5">{contact.role}</p>
+          {contact.subtitle && (
+            <p className="text-[10px] text-slate-400 truncate">{contact.subtitle}</p>
+          )}
+        </div>
+        {unreadCount > 0 && (
+          <div className="w-5 h-5 rounded-full bg-emerald-500 text-white text-[10px] font-bold flex items-center justify-center shrink-0 shadow-sm">
+            {unreadCount > 9 ? '9+' : unreadCount}
+          </div>
         )}
       </div>
     </button>
