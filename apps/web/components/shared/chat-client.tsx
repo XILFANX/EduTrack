@@ -733,7 +733,7 @@ function ContactRow({
           )}
         </div>
         {unreadCount > 0 && (
-          <div className="w-5 h-5 rounded-full bg-emerald-500 text-white text-[10px] font-bold flex items-center justify-center shrink-0 shadow-sm">
+          <div className="w-5 h-5 rounded-full bg-cyan-500 text-white text-[10px] font-bold flex items-center justify-center shrink-0 shadow-sm">
             {unreadCount > 9 ? '9+' : unreadCount}
           </div>
         )}

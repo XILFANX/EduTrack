@@ -34,7 +34,7 @@ Principals can broadcast messages to the entire school community.
 4. Select the audience: **All Parents**, **All Staff**, or **Everyone**.
 5. Click **Send**.
 
-The announcement appears at the top of the recipients' dashboards the next time they log in.
+The announcement appears at the top of the recipients' dashboards the next time they log in. You can also delete your own announcements if you made a mistake.
 
 [SCREENSHOT: /dashboard/communications/new — the announcement compose window]
 
@@ -44,11 +44,20 @@ The announcement appears at the top of the recipients' dashboards the next time 
 
 If you need to discuss a specific student's performance with their parent, you can use direct messages.
 
-1. Go to the **Messages** section in the sidebar.
+1. Go to the **Messages** section in the sidebar. Contacts with unread messages will have a cyan badge with the number of unread messages and appear at the top of the directory.
 2. Browse the directory by category (Teaching Staff, Parents, etc.) or search for a name.
 3. Click a contact to open the conversation.
 
-The blue double-tick (✓✓) means your message has been read.
+**WhatsApp-Style Features:**
+- **Real-time Status:** See if the person is **● Online** or their **Last Seen** time.
+- **Typing Indicators:** See when the other person is actively typing a reply.
+- **Message Ticks:** 
+  - One tick (✓): Message sent.
+  - Two blue ticks (✓✓): Message delivered.
+  - Two cyan ticks (✓✓): Message read.
+
+**Clear Chat:**
+You can clear a conversation history by clicking the three dots (`⋮`) in the top right corner of the chat window and selecting **Clear Chat**. This clears the history for both you and the recipient.
 
 > **Note:** Who you can message depends on your role. Parents can message their child's teachers and the bursar. Teachers can message parents of their students and school staff.
 

@@ -74,7 +74,8 @@ create policy "Admins can view all invoices"
 
 ## 4. Messaging & Notification Role-Permission Matrix
 
-### Direct Messaging
+### Direct Messaging & RLS
+Direct messages are securely isolated using Row-Level Security (RLS). Users can only view or insert messages if they are an active participant in the `conversations` thread. This is enforced at the database level by checking the `conversation_participants` table against `auth.uid()`.
 
 | Sender Role | Can Message |
 |---|---|
@@ -88,6 +89,8 @@ create policy "Admins can view all invoices"
 > **Key constraint:** Product Admin (`admin`) can only message school principals/headteachers. School-internal admins cannot initiate a chat with the Product Admin — the Product Admin initiates it. This is enforced at the server component level by filtering contacts based on the current user's role.
 
 ### Announcements / Broadcasting
+
+Announcements are also protected by RLS. Users can only view announcements tied to their `school_id`, and only the author can delete their own announcements.
 
 | Author Role | Can Broadcast To |
 |---|---|
