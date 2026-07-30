@@ -50,7 +50,11 @@ export default async function AdminMessagesPage() {
       classes={[]}
       initialContactId={undefined}
       announcements={(announcementsData as Announcement[]) || []}
-      audienceOptions={[{ value: 'all_principals', label: 'All Principals' }]}
+      audienceOptions={[{ value: 'all_principals', label: 'Clients (Schools)' }]}
+      subjectPlaceholder="e.g. Scheduled Maintenance Tomorrow"
+      directoryCategories={[
+        { id: 'clients', label: 'Clients (Schools)', iconName: 'shield', roles: ['Principal'] },
+      ]}
     />
   )
 }

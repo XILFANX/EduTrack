@@ -65,7 +65,7 @@ function calculateGrade(score: number, maxScore: number, scales: GradeScale[]): 
 function gradeColorClass(grade: string | null) {
   if (!grade) return 'text-slate-400'
   if (grade.startsWith('A')) return 'text-emerald-600 dark:text-emerald-400'
-  if (grade.startsWith('B')) return 'text-blue-600 dark:text-blue-400'
+  if (grade.startsWith('B')) return 'text-cyan-600 dark:text-cyan-400'
   if (grade.startsWith('C')) return 'text-amber-600 dark:text-amber-400'
   return 'text-red-500 dark:text-red-400'
 }
@@ -73,7 +73,7 @@ function gradeColorClass(grade: string | null) {
 function gradeBgClass(grade: string | null) {
   if (!grade) return 'bg-slate-50 text-slate-400 border-transparent'
   if (grade.startsWith('A')) return 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-900/20 dark:text-emerald-300 dark:border-emerald-800/30'
-  if (grade.startsWith('B')) return 'bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-900/20 dark:text-blue-300 dark:border-blue-800/30'
+  if (grade.startsWith('B')) return 'bg-cyan-50 text-cyan-700 border-cyan-200 dark:bg-cyan-900/20 dark:text-cyan-300 dark:border-cyan-800/30'
   if (grade.startsWith('C')) return 'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-900/20 dark:text-amber-300 dark:border-amber-800/30'
   return 'bg-red-50 text-red-700 border-red-200 dark:bg-red-900/20 dark:text-red-300 dark:border-red-800/30'
 }
@@ -235,7 +235,7 @@ export function ResultsEntryTable({
       {/* Live Stats */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {[
-          { label: 'Students', value: totalCount, color: 'text-blue-600 dark:text-blue-400' },
+          { label: 'Students', value: totalCount, color: 'text-cyan-600 dark:text-cyan-400' },
           { label: 'Entered', value: `${enteredCount}/${totalCount}`, color: enteredCount === totalCount ? 'text-emerald-600 dark:text-emerald-400' : 'text-amber-600 dark:text-amber-400' },
           { label: 'Class Avg', value: avgScore ? `${avgScore}%` : '—', color: 'text-purple-600 dark:text-purple-400' },
           { label: 'Passing', value: avgScore ? `${passCount}/${enteredCount}` : '—', color: 'text-teal-600 dark:text-teal-400' },
@@ -249,7 +249,7 @@ export function ResultsEntryTable({
 
       {!isLocked && (
         <div className="flex items-start gap-2 text-xs text-muted-foreground bg-slate-50 dark:bg-slate-900/30 border border-border rounded-xl px-3 py-2">
-          <Info className="w-3.5 h-3.5 shrink-0 mt-0.5 text-blue-500" />
+          <Info className="w-3.5 h-3.5 shrink-0 mt-0.5 text-cyan-500" />
           <span>Use <kbd className="px-1.5 py-0.5 text-[10px] bg-white dark:bg-slate-800 border border-border rounded font-mono">↑</kbd> <kbd className="px-1.5 py-0.5 text-[10px] bg-white dark:bg-slate-800 border border-border rounded font-mono">↓</kbd> or <kbd className="px-1.5 py-0.5 text-[10px] bg-white dark:bg-slate-800 border border-border rounded font-mono">Enter</kbd> to navigate between students. Grade and remarks are calculated automatically.</span>
         </div>
       )}
@@ -337,7 +337,7 @@ export function ResultsEntryTable({
                   </td>
                   <td className="px-4 py-2.5 text-xs text-muted-foreground italic">{remarks || '—'}</td>
                   <td className="px-4 py-2.5">
-                    {status === 'saving' && <Loader2 className="w-3.5 h-3.5 animate-spin text-blue-500" />}
+                    {status === 'saving' && <Loader2 className="w-3.5 h-3.5 animate-spin text-cyan-500" />}
                     {status === 'saved' && <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />}
                     {status === 'error' && <AlertCircle className="w-3.5 h-3.5 text-red-500" />}
                   </td>

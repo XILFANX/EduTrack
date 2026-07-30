@@ -86,6 +86,12 @@ export default async function StaffMessagesPage() {
       initialContactId={undefined}
       announcements={(announcementsData as Announcement[]) || []}
       audienceOptions={[]} // Non-teaching staff cannot broadcast
+      directoryCategories={[
+        { id: 'admin', label: 'School Admin', iconName: 'shield', roles: ['Admin', 'Principal', 'Headteacher'] },
+        { id: 'teaching', label: 'Teaching Staff', iconName: 'graduation-cap', roles: ['Class Teacher', 'Subject Teacher'] },
+        { id: 'non_teaching', label: 'Support Staff', iconName: 'briefcase', roles: ['Bursar', 'Librarian', 'Storekeeper', 'Transport Matron'] },
+        { id: 'parents', label: 'Parents', iconName: 'users', roles: ['Parent'] },
+      ]}
     />
   )
 }

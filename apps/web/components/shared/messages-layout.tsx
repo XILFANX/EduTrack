@@ -7,6 +7,8 @@ import { AnnouncementsClient } from '@/components/shared/announcements-client'
 import { AnnouncementsFeed, Announcement } from '@/components/shared/announcements-feed'
 import { ClassGroupsClient } from '@/components/shared/class-groups-client'
 
+import type { DirectoryCategory } from '@/components/shared/chat-client'
+
 interface Props {
   currentUser: { id: string; role: string }
   contacts: any[]
@@ -15,6 +17,8 @@ interface Props {
   initialContactId?: string
   announcements: Announcement[]
   audienceOptions: { value: string; label: string }[]
+  subjectPlaceholder?: string
+  directoryCategories: DirectoryCategory[]
 }
 
 type Tab = 'messages' | 'groups' | 'broadcasts'
@@ -27,6 +31,8 @@ export function MessagesLayout({
   initialContactId,
   announcements,
   audienceOptions,
+  subjectPlaceholder,
+  directoryCategories,
 }: Props) {
   const [activeTab, setActiveTab] = useState<Tab>(
     initialContactId ? 'messages' : 'messages'
@@ -72,6 +78,7 @@ export function MessagesLayout({
             contacts={contacts}
             classes={classes}
             initialContactId={initialContactId}
+            directoryCategories={directoryCategories}
           />
         </div>
       )}
@@ -101,7 +108,7 @@ export function MessagesLayout({
                   </div>
                 </div>
                 <div className="p-5">
-                  <AnnouncementsClient audienceOptions={audienceOptions} />
+                  <AnnouncementsClient audienceOptions={audienceOptions} subjectPlaceholder={subjectPlaceholder} />
                 </div>
               </section>
             </div>

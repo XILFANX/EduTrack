@@ -23,27 +23,27 @@ This is a context protocol for AI coding agents. It defines one consistent path 
 
 This is the user request. It is the only input this file expects — everything below is protocol, not conversation.
 
-> `On my testing, I noticed that the messaging and broadcasting module we assumed was completed for both apps still needs serious improvements:
--First, the UI design for the messaging and broadcasting already looks great on the landlord and school administrator portals with an elegant tabbed view between message and broadcast, WhatsApp-style messaging. But this is not consistent across the other sub-portals and in product admin portal. Ensure this fixed across all portals in both apps for them to look consistent.
+> _After testing, I realised some major changes you promised to deliver for the messaging and broadcasting module for both EstateTrack and EduTrack.
 
--Secondly, I noticed that the existing messaging and broadcasting system for both apps is not intelligent enough to identify who should have the ability to broadcast to who like landlords, school admins, class teachers, subject teachers, caretaker, librarians etc and who should have a read-only access like parents, tenants etc
-It should also be intelligent enough to ensure landlord doesn't see the themselves in the list of people they can message
-It should be intelligent enough to know who shouldn't message who
-Therefore, make this module an intelligent module which can handle major contingencies even ones I've forgotten
+First, in the EduTrack's all portals for both apps, you promised to use the default app theme but I still still green tab highlighter in EduTrack's. Ensure this doesn't happen in any other portal 
+On the same product admin portals, both the apps should have a proper separation of concerns but I see the the broadcasting input fields  have "schools closure tomorrow" yet the admin has no business with the school.
+Also, I noticed on both that the list of directories list group which the product admin has no business with like the teaching staff, parents, tenants etc. The product admin only have business with their clients explicitly addressed as 'clients', not 'principal' or 'landlords' and this directory should list all the clients for each apps which they should be able to message directly (message the back too) and the same for broadcasting, they can only broadcast to this category on changes related to clientship
 
-Thirdly, I noticed that the class teacher couldn't send a message to the principal because it spins promisingly and then fails. Ensure this doesn't happen on all other portals
+I also see users seeing people they're not supposed to see like that of product admin seeing parents, I see caretaker seeing "staff" again. Ensure this doesn't happen on all other portals 
 
-Next, the current last seen, typing etc are not consistent across all portals and both apps. They're are also hard coded and not live server action like WhatsApp does. Fix this
+Secondly, for all the portals of both the apps, the name featuring on the messaging and broadcasting module shouldn't explicitly name someone as "John Smith" instead they should alway appear on this module as "Principal ", "headteacher ", "Grade 8 class/subject teacher", "unit A5 tenant" on product admin portals "Harriet school", "Leeds Properties" etc. This will make the messaging and broadcasting system very intuitive
 
-Next, for the EstateTrack messaging and broadcasting module, ensure that the landlord has to select the property first to enforce separation of concerns between what tenants/Caretaker of what property
+Thirdly, most directories across most portals in most apps shows zero people under them though those people exists in the actual system. For example the landlords tenants directory says zero tenants thought they're there. Fix this across all portals
 
-Next, you should implement the client-side optimization features  like clear chat, clear broadcasts etc which should write the database, not like the current delete broadcast which mocks the delete right before it reappears.
+The server optimization features like clear/delete  for both chats and broadcast and mock delete which comes back right immediately I refresh the page
 
-You earlier promised to to add some mordern features like those on WhatsApp on this module but it never took effect.
+The caretaker tried to message the landlord but the message appears briefly on the chat without the landlord receiving it and disappears immediately. I noticed this across most other portals. Could you check this out.
 
-Ensure every change you apply runs across all portals in both the apps but don't just blindly apply the feature to the portal unless the portal systematically needs the feature. This avoids the clutter of making portals like the tenants broadcasting.
+The advanced features like typing, online, last seen, tick/double and blue double tick are almost there but they are not stable enough. I noticed you used green when someone's online among other colours you used on the advanced features. I suggest you make these features stable and use the default apps theme (purple for EstateTrack and cyan for EduTrack)
 
-The most important thing is to ensure you bring your personal suggestions on how we could make this module better and ensure we enforce proper separation of concerns between EstateTrack and EduTrack to ensure we don't put the school management system (even terms) in the real estate management system like I already see some. Then ensure we also separate the school admin/manager, teachers, staff and parents concerns in EduTrack, same with the landlord/property manager, caretaker, tenants etc in EstateTrack`
+In brief video the entire messaging and broadcasting module is still poor though the UI is great, the underlying system is still poor. I'd love you to take time and draft a comprehensive implementation plan on how to intelligently make this module great. Also, try to make these fixes in parallel to ensure that all portals have consistency which still handling the contingencies which are specific to the individual portals.
+
+Finally, ensure to separate concerns between EduTrack and EstateTrack._
 
 ---
 
@@ -234,9 +234,9 @@ Keep `PLAN.md` and `TASKS.md` in sync — if a task's scope or its docs field ch
 
 ### Sync to remote
 
-The moment every item in `TASKS.md` — every task and the Tier 2 block — is checked off, sync before doing anything else — don't leave a fully-verified mission sitting unpushed while you go write up the walkthrough. Identify the current branch and the configured remote's URL, and confirm that URL actually matches this repo before doing anything else. Then fetch and compare against the remote branch:
+The moment every item in `TASKS.md` — every task and the Tier 2 block — is checked off, sync before doing anything else — don't leave a fully-verified mission sitting unpushed while you go write up the walkthrough. Identify the current branch and the configured remote's URL (`git remote -v`), and confirm that URL actually matches this repo before doing anything else. Note that the remote might not be named `origin` (e.g. it might be `EduTrack` or `XILFANX` or `origin`), so always use the actual configured remote name when fetching/pushing. Then fetch and compare against the remote branch:
 
-- **Matches, and local is even with or ahead** → push and confirm it.
+- **Matches, and local is even with or ahead** → push using the actual remote name (e.g. `git push <remote_name> main`) and confirm it.
 - **Matches, but local is behind or has diverged** → stop; surface this to the user instead of force-pushing. Merging or rebasing is their call, not something to resolve silently.
 - **No remote configured, or the configured one doesn't match this repo** → don't invent or guess a destination. Give the exact commands needed (`git remote add origin <url>`, `git fetch origin`, `git push -u origin <branch>`) and state plainly that the push is still pending.
 
@@ -351,6 +351,7 @@ Hold on every documentation edit, not just first-draft generation:
 
 | Date | Mission | Outcome |
 |---|---|---|
+| 2026-07-30 | Phase 2 Advanced Messaging: EstateTrack Property-first thread routing and EduTrack Automated Class Groups + Messaging Policies | Shipped, pushed to remote `main` |
 | 2026-07-28 | Repo cleanup (junk root files removed, migrations properly placed in `backend/supabase/migrations`) + full documentation sync (`04-data-model`, `05-multi-tenancy`, `02-modules/07-messaging`, `public-userguide/05-communications`) | Shipped, pushed to `EduTrack/main` (`99f20d2`) |
 | 2026-07-28 | Product Admin portal feature alignment: Messaging, badges, and ChatClient rewrite for root/platform admins | Shipped, pushed to `origin/main` (`a1580bc`) |
 | 2026-07-28 | Unified Global Notification System (GlobalNotificationPopup, NotificationCenter pages for all portals, Bell badge sync, TS strict type fixes, SQL scripts) | Shipped, pushed to `origin/main` (`25d90cc`) |

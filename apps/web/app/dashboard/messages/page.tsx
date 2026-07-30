@@ -155,6 +155,13 @@ export default async function PrincipalMessagesPage({
       initialContactId={resolvedParams.contactId}
       announcements={(announcementsData as Announcement[]) || []}
       audienceOptions={audienceOptions}
+      subjectPlaceholder="e.g. School Closure Tomorrow"
+      directoryCategories={[
+        { id: 'teaching', label: 'Teaching Staff', iconName: 'graduation-cap', roles: ['Class Teacher', 'Subject Teacher'] },
+        { id: 'non_teaching', label: 'Non-Teaching Staff', iconName: 'briefcase', roles: ['Bursar', 'Librarian', 'Storekeeper', 'Transport Matron'] },
+        { id: 'parents', label: 'Parents', iconName: 'users', roles: ['Parent'] },
+        { id: 'admin', label: 'School Admin', iconName: 'shield', roles: ['Admin', 'Principal', 'Headteacher', 'Platform Admin'] },
+      ]}
     />
   )
 }

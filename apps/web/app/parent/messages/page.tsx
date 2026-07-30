@@ -117,6 +117,10 @@ export default async function ParentMessagesPage() {
       initialContactId={undefined}
       announcements={(announcementsData as Announcement[]) || []}
       audienceOptions={[]} // Parents cannot broadcast
+      directoryCategories={[
+        { id: 'admin', label: 'School Admin', iconName: 'shield', roles: ['Admin'] },
+        { id: 'teaching', label: 'My Child\'s Teachers', iconName: 'graduation-cap', roles: ['Class Teacher'] },
+      ]}
     />
   )
 }

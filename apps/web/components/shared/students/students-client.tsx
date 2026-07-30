@@ -117,7 +117,7 @@ export function StudentsPageClient({
             <h1 className="text-2xl font-bold text-foreground">Student Management</h1>
             <p className="text-sm text-muted-foreground mt-1">Select a class to manage its enrolled students, or search globally.</p>
           </div>
-          <Button className="bg-blue-600 hover:bg-blue-700 gap-2 shrink-0" onClick={() => setIsModalOpen(true)}>
+          <Button className="bg-cyan-600 hover:bg-cyan-700 gap-2 shrink-0" onClick={() => setIsModalOpen(true)}>
             <UserPlus className="w-4 h-4" />
             <span className="hidden sm:inline">Enroll Student</span>
           </Button>
@@ -130,14 +130,14 @@ export function StudentsPageClient({
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
             placeholder="Search by name, admission number..."
-            className="w-full h-11 pl-10 pr-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-sm"
+            className="w-full h-11 pl-10 pr-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 transition-all text-sm"
           />
         </div>
 
         {classes.length === 0 ? (
           <div className="text-center py-20 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl">
-            <div className="w-16 h-16 rounded-2xl bg-blue-100 dark:bg-blue-900/40 mx-auto flex items-center justify-center mb-4">
-              <GraduationCap className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+            <div className="w-16 h-16 rounded-2xl bg-cyan-100 dark:bg-cyan-900/40 mx-auto flex items-center justify-center mb-4">
+              <GraduationCap className="w-8 h-8 text-cyan-600 dark:text-cyan-400" />
             </div>
             <h2 className="text-lg font-semibold text-foreground">No classes found</h2>
             <p className="text-sm text-muted-foreground max-w-sm mx-auto mt-2">
@@ -155,8 +155,8 @@ export function StudentsPageClient({
                     onClick={() => setSelectedClass(cls)}
                     className="w-full flex items-center gap-4 px-4 py-3.5 hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors group text-left"
                   >
-                    <div className="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center shrink-0 group-hover:bg-blue-200 transition-colors">
-                      <span className="text-sm font-bold text-blue-700 dark:text-blue-300">
+                    <div className="w-10 h-10 rounded-xl bg-cyan-100 dark:bg-cyan-900/30 flex items-center justify-center shrink-0 group-hover:bg-cyan-200 transition-colors">
+                      <span className="text-sm font-bold text-cyan-700 dark:text-cyan-300">
                         {cls.name.substring(0, 2).toUpperCase()}
                       </span>
                     </div>
@@ -166,7 +166,7 @@ export function StudentsPageClient({
                         {count > 0 ? `${count} student${count !== 1 ? 's' : ''}` : 'No students yet'}
                       </p>
                     </div>
-                    <ChevronRight className="w-4 h-4 text-slate-300 dark:text-slate-600 group-hover:text-blue-500 transition-colors shrink-0" />
+                    <ChevronRight className="w-4 h-4 text-slate-300 dark:text-slate-600 group-hover:text-cyan-500 transition-colors shrink-0" />
                   </button>
                 )
               })}
@@ -190,7 +190,7 @@ export function StudentsPageClient({
 
             <button
               onClick={() => setSelectedClass('all')}
-              className="w-full flex items-center justify-center px-4 py-3 border-t border-slate-100 dark:border-slate-800 text-sm font-medium text-blue-600 hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors"
+              className="w-full flex items-center justify-center px-4 py-3 border-t border-slate-100 dark:border-slate-800 text-sm font-medium text-cyan-600 hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors"
             >
               View all {students.length} students directory
             </button>
@@ -234,7 +234,7 @@ export function StudentsPageClient({
           <h1 className="text-2xl font-bold text-foreground truncate">{title}</h1>
           <p className="text-sm text-muted-foreground mt-0.5">{subtitle}</p>
         </div>
-        <Button className="bg-blue-600 hover:bg-blue-700 gap-2 shrink-0" onClick={() => setIsModalOpen(true)}>
+        <Button className="bg-cyan-600 hover:bg-cyan-700 gap-2 shrink-0" onClick={() => setIsModalOpen(true)}>
           <UserPlus className="w-4 h-4" />
           <span className="hidden sm:inline">Enroll Student</span>
         </Button>
@@ -247,14 +247,14 @@ export function StudentsPageClient({
           value={searchQuery}
           onChange={e => setSearchQuery(e.target.value)}
           placeholder="Search by name, admission number, or class..."
-          className="w-full h-11 pl-10 pr-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-sm"
+          className="w-full h-11 pl-10 pr-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 transition-all text-sm"
         />
       </div>
 
       {!students || students.length === 0 ? (
         <div className="text-center py-20 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl">
-          <div className="w-16 h-16 rounded-2xl bg-blue-100 dark:bg-blue-900/40 mx-auto flex items-center justify-center mb-4">
-            <GraduationCap className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+          <div className="w-16 h-16 rounded-2xl bg-cyan-100 dark:bg-cyan-900/40 mx-auto flex items-center justify-center mb-4">
+            <GraduationCap className="w-8 h-8 text-cyan-600 dark:text-cyan-400" />
           </div>
           <h2 className="text-lg font-semibold text-foreground">No students enrolled yet</h2>
           <p className="text-sm text-muted-foreground max-w-sm mx-auto mt-2 mb-6">
@@ -262,7 +262,7 @@ export function StudentsPageClient({
               ? `There are no students enrolled in ${selectedClass?.name || 'this class'}.`
               : 'Click Enroll Student to add your first student.'}
           </p>
-          <Button className="bg-blue-600 hover:bg-blue-700 gap-2" onClick={() => setIsModalOpen(true)}>
+          <Button className="bg-cyan-600 hover:bg-cyan-700 gap-2" onClick={() => setIsModalOpen(true)}>
             <UserPlus className="w-4 h-4" />
             Enroll Student
           </Button>
@@ -297,7 +297,7 @@ export function StudentsPageClient({
                         {student.photo_url ? (
                           <img src={student.photo_url} alt="" className="w-7 h-7 rounded-full object-cover border border-slate-200 dark:border-slate-700 shrink-0" />
                         ) : (
-                          <div className="w-7 h-7 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-bold flex items-center justify-center shrink-0">
+                          <div className="w-7 h-7 rounded-full bg-cyan-100 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-300 text-xs font-bold flex items-center justify-center shrink-0">
                             {student.first_name?.[0]}{student.last_name?.[0]}
                           </div>
                         )}
@@ -376,7 +376,7 @@ export function StudentsPageClient({
             </button>
 
             {/* Hero Header */}
-            <div className="h-32 bg-gradient-to-r from-blue-600 to-indigo-600 shrink-0 relative">
+            <div className="h-32 bg-gradient-to-r from-cyan-600 to-indigo-600 shrink-0 relative">
               {/* Overlapping Avatar */}
               <div className="absolute -bottom-10 left-6">
                 {quickViewStudent.photo_url ? (
@@ -397,7 +397,7 @@ export function StudentsPageClient({
                   {quickViewStudent.first_name} {quickViewStudent.middle_name ? quickViewStudent.middle_name + ' ' : ''}{quickViewStudent.last_name}
                 </h2>
                 <div className="flex items-center gap-2 mt-2">
-                  <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">
+                  <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-300">
                     Student
                   </span>
                   <span className={`text-sm font-medium px-2.5 py-1 rounded-full ${(quickViewStudent.status || 'Active').toLowerCase() === 'active'
@@ -446,7 +446,7 @@ export function StudentsPageClient({
               <div className="space-y-3 pt-2">
                 <Link
                   href={`/dashboard/students/${quickViewStudent.id}`}
-                  className="w-full flex items-center justify-center gap-2 h-11 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold transition-colors shadow-sm"
+                  className="w-full flex items-center justify-center gap-2 h-11 rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white text-sm font-semibold transition-colors shadow-sm"
                 >
                   <Pencil className="w-4 h-4" /> Full Profile
                 </Link>
