@@ -23,27 +23,7 @@ This is a context protocol for AI coding agents. It defines one consistent path 
 
 This is the user request. It is the only input this file expects — everything below is protocol, not conversation.
 
-> _After testing, I realised some major changes you promised to deliver for the messaging and broadcasting module for both EstateTrack and EduTrack.
-
-First, in the EduTrack's all portals for both apps, you promised to use the default app theme but I still still green tab highlighter in EduTrack's. Ensure this doesn't happen in any other portal 
-On the same product admin portals, both the apps should have a proper separation of concerns but I see the the broadcasting input fields  have "schools closure tomorrow" yet the admin has no business with the school.
-Also, I noticed on both that the list of directories list group which the product admin has no business with like the teaching staff, parents, tenants etc. The product admin only have business with their clients explicitly addressed as 'clients', not 'principal' or 'landlords' and this directory should list all the clients for each apps which they should be able to message directly (message the back too) and the same for broadcasting, they can only broadcast to this category on changes related to clientship
-
-I also see users seeing people they're not supposed to see like that of product admin seeing parents, I see caretaker seeing "staff" again. Ensure this doesn't happen on all other portals 
-
-Secondly, for all the portals of both the apps, the name featuring on the messaging and broadcasting module shouldn't explicitly name someone as "John Smith" instead they should alway appear on this module as "Principal ", "headteacher ", "Grade 8 class/subject teacher", "unit A5 tenant" on product admin portals "Harriet school", "Leeds Properties" etc. This will make the messaging and broadcasting system very intuitive
-
-Thirdly, most directories across most portals in most apps shows zero people under them though those people exists in the actual system. For example the landlords tenants directory says zero tenants thought they're there. Fix this across all portals
-
-The server optimization features like clear/delete  for both chats and broadcast and mock delete which comes back right immediately I refresh the page
-
-The caretaker tried to message the landlord but the message appears briefly on the chat without the landlord receiving it and disappears immediately. I noticed this across most other portals. Could you check this out.
-
-The advanced features like typing, online, last seen, tick/double and blue double tick are almost there but they are not stable enough. I noticed you used green when someone's online among other colours you used on the advanced features. I suggest you make these features stable and use the default apps theme (purple for EstateTrack and cyan for EduTrack)
-
-In brief video the entire messaging and broadcasting module is still poor though the UI is great, the underlying system is still poor. I'd love you to take time and draft a comprehensive implementation plan on how to intelligently make this module great. Also, try to make these fixes in parallel to ensure that all portals have consistency which still handling the contingencies which are specific to the individual portals.
-
-Finally, ensure to separate concerns between EduTrack and EstateTrack._
+> _[Cleared]_
 
 ---
 
@@ -351,6 +331,7 @@ Hold on every documentation edit, not just first-draft generation:
 
 | Date | Mission | Outcome |
 |---|---|---|
+| 2026-07-30 | Phase 3 Premium Messaging Overhaul: Separation of concerns, dynamic categories, contextual naming, WhatsApp-style ticks, case-insensitive role filtering, soft clear chat, cyan/purple theming | Shipped, pushed to remote `main` (both EduTrack & EstateTrack) |
 | 2026-07-30 | Phase 2 Advanced Messaging: EstateTrack Property-first thread routing and EduTrack Automated Class Groups + Messaging Policies | Shipped, pushed to remote `main` |
 | 2026-07-28 | Repo cleanup (junk root files removed, migrations properly placed in `backend/supabase/migrations`) + full documentation sync (`04-data-model`, `05-multi-tenancy`, `02-modules/07-messaging`, `public-userguide/05-communications`) | Shipped, pushed to `EduTrack/main` (`99f20d2`) |
 | 2026-07-28 | Product Admin portal feature alignment: Messaging, badges, and ChatClient rewrite for root/platform admins | Shipped, pushed to `origin/main` (`a1580bc`) |

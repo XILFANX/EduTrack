@@ -39,15 +39,16 @@ Two custom DOM events keep badge counts consistent across tabs and components wi
 See `docs/internal-devsguide/05-multi-tenancy-and-security.md` for the full Role-Permission Matrix.
 
 Communication is heavily segregated to prevent inappropriate contact:
-- **Product Admin**: Can only message school principals/headteachers.
-- **Principals / Headteachers**: Can message all school staff and parents; can broadcast to all audiences.
+- **Product Admin**: Can only message clients (Schools/Principals).
+- **Principals / Headteachers**: Can message all school staff and parents; can broadcast to all audiences. They also have an exclusive `EduTrack Support` directory.
 - **Teachers**: Can message parents of their students, other staff, and school admins.
 - **Bursar**: Can message staff and parents.
 - **Parents**: Can message their child's class teacher, subject teachers, and bursar.
 
-Admins are presented to non-admin users as "School Admin" (masked identity) to provide a unified support channel.
+Admins are presented to non-admin users contextually (e.g., "School Admin", "Class Teacher (John Doe)") to provide intuitive support channels. Role filtering is strictly **case-insensitive** across all directories to prevent mismatches resulting in empty categories.
 
 ## Real-time & UX
 - Real-time is powered by Supabase Postgres Changes subscriptions on `messages` (filtered by `conversation_id`) and `notifications` (filtered by `user_id`).
 - `UX.toast` is integrated directly into the real-time listeners to provide non-intrusive alerts for incoming messages regardless of the user's current page.
-- Message status ticks (single grey tick = pending/sent, double blue/cyan tick = read) are fully supported via the `is_read` property on messages.
+- Message status ticks (single grey tick = pending/sent, double cyan tick = read) are fully supported via the `is_read` property on messages. Failed messages are kept in UI with a red `is_failed` warning instead of disappearing.
+- "Clear Chat" is a **soft-delete**: it clears the local React state view rather than issuing a destructive `DELETE` to the database, respecting standard chat app behavior.

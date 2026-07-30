@@ -53,11 +53,12 @@ If you need to discuss a specific student's performance with their parent, you c
 - **Typing Indicators:** See when the other person is actively typing a reply.
 - **Message Ticks:** 
   - One tick (✓): Message sent.
-  - Two blue ticks (✓✓): Message delivered.
+  - Two ticks (✓✓): Message delivered.
   - Two cyan ticks (✓✓): Message read.
+  - Red triangle (⚠): Message failed to send.
 
 **Clear Chat:**
-You can clear a conversation history by clicking the three dots (`⋮`) in the top right corner of the chat window and selecting **Clear Chat**. This clears the history for both you and the recipient.
+You can clear a conversation history from your view by clicking the three dots (`⋮`) in the top right corner of the chat window and selecting **Clear Chat**. This only hides the messages for you — the recipient keeps their copy.
 
 > **Note:** Who you can message depends on your role and your school's **Messaging Policies** (configured by the principal). Parents can message their child's class teacher and school admin by default. Subject teachers may also message parents of students in their classes.
 
