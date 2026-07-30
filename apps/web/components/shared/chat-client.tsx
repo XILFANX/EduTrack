@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import {
-  Send, UserCircle2, Loader2, ArrowLeft, Users, Briefcase, Home,
+  Send, UserCircle2, Loader2, ArrowLeft, Users, Briefcase, Home, AlertTriangle,
   GraduationCap, Shield, ChevronRight, Search, MessageSquare, Check, CheckCheck, Trash2, MoreVertical
 } from 'lucide-react'
 import { getOrCreateConversation, markConversationAsRead, sendMessage } from '@/app/actions/chat'
@@ -32,10 +32,11 @@ interface Message {
   created_at: string
   is_read?: boolean
   is_pending?: boolean
+  is_failed?: boolean
 }
 
-// Roles that should be hidden from other admins in the contact list
-const ADMIN_ROLE_VALUES = ['Admin', 'Principal', 'Headteacher', 'Platform Admin', 'Support']
+// Roles that should be hidden from other admins in the contact list (School level only)
+const ADMIN_ROLE_VALUES = ['Admin', 'Principal', 'Headteacher']
 
 export interface DirectoryCategory {
   id: string
@@ -266,7 +267,8 @@ export function ChatClient({
       setMessages(prev => prev.map(m => m.id === tempId ? data as Message : m))
     } catch (err) {
       console.error('Send error:', err)
-      setMessages(prev => prev.filter(m => m.id !== tempId))
+      // Mark as failed — do NOT remove from UI, user can see it failed
+      setMessages(prev => prev.map(m => m.id === tempId ? { ...m, is_pending: false, is_failed: true } : m))
     } finally {
       setSending(false)
       if (presenceChannelRef.current) {
@@ -288,17 +290,12 @@ export function ChatClient({
 
   const handleClearChat = async () => {
     if (!conversationId) return
-    const confirmed = window.confirm("Are you sure you want to clear this chat for both parties?")
+    const confirmed = window.confirm('Clear your view of this chat? This only hides messages for you — the other person keeps their copy.')
     if (!confirmed) return
     setShowMenu(false)
-    try {
-      await supabase.from('messages').delete().eq('conversation_id', conversationId)
-      setMessages([])
-      UX.toast("Chat cleared")
-    } catch (err) {
-      console.error(err)
-      UX.errorModal("Failed to clear chat")
-    }
+    // Soft-delete: only clear local state. A future DB column (cleared_at per user) can persist this.
+    setMessages([])
+    UX.toast('Chat cleared for you')
   }
 
   const formatTime = (iso: string) =>
@@ -332,7 +329,7 @@ export function ChatClient({
   const isParentCategory = activeCategory?.id === 'parents'
 
   const categoryContacts = activeCategory
-    ? visibleContacts.filter(c => activeCategory.roles.includes(c.role)).map(maskAdminContact)
+    ? visibleContacts.filter(c => activeCategory.roles.some(r => r.toLowerCase() === (c.role || '').toLowerCase())).map(maskAdminContact)
     : []
 
   const globalSearchResults = searchQuery.trim()
@@ -438,7 +435,7 @@ export function ChatClient({
             <div className="p-3 space-y-1">
               <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-2 pb-2">Select Directory</p>
               {visibleCategories.map(category => {
-                const count = visibleContacts.filter(c => category.roles.includes(c.role)).length
+                const count = visibleContacts.filter(c => category.roles.some(r => r.toLowerCase() === (c.role || '').toLowerCase())).length
                 let Icon = Users
                 if (category.iconName === 'briefcase') Icon = Briefcase
                 if (category.iconName === 'shield') Icon = Shield
@@ -565,7 +562,7 @@ export function ChatClient({
                   {typingUsers.has(selectedContact.id) ? (
                     <span className="text-cyan-500 animate-pulse">typing...</span>
                   ) : onlineUsers.has(selectedContact.id) ? (
-                    <span className="text-emerald-500">● Online</span>
+                    <span className="text-cyan-500">● Online</span>
                   ) : (
                     <span className="text-slate-400">● {formatLastSeen(selectedContact.last_seen_at)}</span>
                   )}
@@ -636,7 +633,9 @@ export function ChatClient({
                             </span>
                             {isMe && (
                               <span className="shrink-0 mb-0.5">
-                                {msg.is_pending ? (
+                                {msg.is_failed ? (
+                                  <AlertTriangle className="w-3.5 h-3.5 text-red-400" />
+                                ) : msg.is_pending ? (
                                   <Check className="w-3.5 h-3.5 text-cyan-200/70" />
                                 ) : msg.is_read ? (
                                   <CheckCheck className="w-3.5 h-3.5 text-cyan-300" />
@@ -725,7 +724,7 @@ function ContactRow({
           <UserCircle2 className="w-6 h-6" />
         </div>
         {online && (
-          <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 border-2 border-white dark:border-slate-900 rounded-full" />
+          <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-cyan-500 border-2 border-white dark:border-slate-900 rounded-full" />
         )}
       </div>
       <div className="flex-1 min-w-0 flex items-center justify-between gap-2">
