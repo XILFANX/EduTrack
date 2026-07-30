@@ -3,6 +3,7 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import { MessagesLayout } from '@/components/shared/messages-layout'
 import type { Announcement } from '@/components/shared/announcements-feed'
 import { redirect } from 'next/navigation'
+import { getMyClassGroups, getMessagingPolicy } from '@/app/actions/chat'
 
 export const dynamic = 'force-dynamic'
 
@@ -21,8 +22,14 @@ export default async function ParentMessagesPage() {
 
   const adminClient = createAdminClient()
 
+  // Fetch policy and class groups in parallel
+  const [policy, classGroups] = await Promise.all([
+    getMessagingPolicy(),
+    getMyClassGroups()
+  ])
+
   // 1. Fetch Contacts
-  // Parents can see: Their children's teachers (class teachers for sure, maybe subject), and Admin.
+  // Parents can see: Their children's teachers (class teachers), and Admin — subject to policy.
   
   const { data: adminData } = await adminClient
     .from('users')
@@ -66,15 +73,21 @@ export default async function ParentMessagesPage() {
     if (data) teachersData = data
   }
 
+  // Apply policy: filter out admin contacts if parents_can_message_admin is false
+  const filteredAdminData = (policy && !policy.parents_can_message_admin) ? [] : (adminData || [])
+
+  // Apply policy: filter out teacher contacts if parents_can_message_teachers is false
+  const filteredTeachersData = (policy && !policy.parents_can_message_teachers) ? [] : teachersData
+
   const contacts = [
-    ...(adminData || []).map(a => ({
+    ...filteredAdminData.map((a: any) => ({
       id: a.id,
       name: a.salutation ? `${a.salutation} ${a.full_name}` : (a.full_name || 'School Admin'),
       role: 'Admin',
       last_seen_at: a.last_seen_at,
       roleOrder: 0
     })),
-    ...teachersData.map(t => ({
+    ...filteredTeachersData.map((t: any) => ({
       id: t.id,
       name: t.salutation ? `${t.salutation} ${t.full_name}` : (t.full_name || 'Class Teacher'),
       role: 'Class Teacher',
@@ -100,6 +113,7 @@ export default async function ParentMessagesPage() {
       currentUser={{ id: user.id, role: profile.role }}
       contacts={contacts}
       classes={[]}
+      classGroups={classGroups}
       initialContactId={undefined}
       announcements={(announcementsData as Announcement[]) || []}
       audienceOptions={[]} // Parents cannot broadcast

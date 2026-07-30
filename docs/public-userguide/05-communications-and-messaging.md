@@ -59,11 +59,48 @@ If you need to discuss a specific student's performance with their parent, you c
 **Clear Chat:**
 You can clear a conversation history by clicking the three dots (`⋮`) in the top right corner of the chat window and selecting **Clear Chat**. This clears the history for both you and the recipient.
 
-> **Note:** Who you can message depends on your role. Parents can message their child's teachers and the bursar. Teachers can message parents of their students and school staff.
+> **Note:** Who you can message depends on your role and your school's **Messaging Policies** (configured by the principal). Parents can message their child's class teacher and school admin by default. Subject teachers may also message parents of students in their classes.
 
 ---
 
-## 5. Bulk SMS for Fee Reminders
+## 5. Class Group Chats
+
+Class group chats are **automatically created** for every class in your school. You do not need to set them up.
+
+- **Class Teachers** are automatically added to their class's group.
+- **Parents** are automatically added when their child is enrolled in a class.
+- If a student changes class, the parent is added to the new class group.
+
+To access group chats:
+1. Go to **Messages** in the sidebar.
+2. Click the **Class Groups** tab (shown when you have at least one group).
+3. Select a group to open the conversation.
+
+All messages in a group are visible to every participant. Sender names are shown for all non-self messages.
+
+[SCREENSHOT: /messages?tab=groups — the class groups list and chat view]
+
+---
+
+## 6. Messaging Policies (School Admin Only)
+
+Principals and administrators can configure who is allowed to initiate conversations with whom.
+
+1. Navigate to **Settings → Messaging Policies**.
+2. Toggle the rules for your school:
+   - **Parents can message Class Teachers** — enabled by default.
+   - **Parents can message School Admin** — enabled by default.
+   - **Parents can message other Parents** — disabled by default (privacy).
+   - **Subject Teachers can message Parents** — enabled by default.
+3. Click **Save Policies**.
+
+> **Note:** Disabling a rule removes that contact category from the affected role's contact list. Existing conversations are not deleted. Class Group chats are always accessible regardless of policy settings.
+
+[SCREENSHOT: /dashboard/settings/messaging — the messaging policies toggles]
+
+---
+
+## 7. Bulk SMS for Fee Reminders
 
 Bursars can trigger automated SMS reminders to parents who have overdue fee balances.
 

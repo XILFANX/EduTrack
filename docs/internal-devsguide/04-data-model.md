@@ -86,16 +86,21 @@ Consolidated table for all human actors.
 
 ---
 
-### Communications Schema (`20260629000002_communications.sql`)
+### Communications Schema (`20260629000002_communications.sql`, `20260730000001_class_groups_and_policies.sql`)
 
 | Table | Purpose |
 |---|---|
-| `announcements` | Broadcast messages from admin/principal to selected audiences (All, Parents, Staff, Teachers). Scoped by `school_id`. |
-| `conversations` | A thread between two users in the same school. |
-| `conversation_participants` | M2M join tracking which users belong to which conversation and when they last read it. |
-| `messages` | Individual messages in a conversation. Contains `sender_id`, `content`, `created_at`. |
+| `announcements` | Broadcast messages from admin/principal to selected audiences. Scoped by `school_id`. |
+| `conversations` | A message thread. `group_type` = `direct` (1-on-1) or `class_group` (automated class group). `class_id` FK links a group to its class. |
+| `conversation_participants` | M2M join tracking which users belong to which conversation and `last_read_at`. |
+| `messages` | Individual messages. `sender_id`, `content`, `created_at`, `is_read`. |
+| `messaging_policies` | Per-school admin toggles for who can initiate conversations (e.g. `parents_can_message_teachers`). One row per school; defaults to permissive. |
 
-> **Messaging Enhancement (`20260728000000`):** `messages.is_read` (boolean, default `false`) was added to power unread badge counts and double-tick read receipts. Index added on `(conversation_id, is_read)`.
+**Automated Class Group Triggers (`20260730000001`):**
+- `trg_auto_enroll_parent` — fires `AFTER INSERT ON student_parents`. Calls `get_or_create_class_group()` to ensure a class group conversation exists for the student's class, then adds the parent as a participant automatically.
+- `trg_auto_update_class_teacher` — fires `AFTER UPDATE OF class_teacher_id ON classes`. Removes the old teacher from the class group and adds the new one.
+
+> **Messaging Enhancement (`20260728000000`):** `messages.is_read` added for badge counts and read-receipt ticks.
 
 ---
 

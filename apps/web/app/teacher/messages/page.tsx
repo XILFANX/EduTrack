@@ -3,6 +3,7 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import { MessagesLayout } from '@/components/shared/messages-layout'
 import type { Announcement } from '@/components/shared/announcements-feed'
 import { redirect } from 'next/navigation'
+import { getMyClassGroups, getMessagingPolicy } from '@/app/actions/chat'
 
 export const dynamic = 'force-dynamic'
 
@@ -36,6 +37,12 @@ export default async function TeacherMessagesPage() {
   if (!isTeacher) redirect('/dashboard')
 
   const adminClient = createAdminClient()
+
+  // Fetch messaging policy and class groups in parallel
+  const [policy, classGroups] = await Promise.all([
+    getMessagingPolicy(),
+    getMyClassGroups()
+  ])
 
   // Fetch all staff in the school (excluding self)
   const { data: staffData } = await adminClient
@@ -146,6 +153,12 @@ export default async function TeacherMessagesPage() {
     }
   }
 
+  // For subject teachers: respect policy on whether they can see/message parents
+  // If policy disallows it, clear parentsWithStudents
+  if (profile.role === 'subject_teacher' && policy && !policy.subject_teachers_can_message_parents) {
+    parentsWithStudents = []
+  }
+
   // Build sorted contacts: staff first (by role order), then parents
   const staffContacts = (staffData || []).map((u: any) => ({
     id: u.id,
@@ -181,6 +194,7 @@ export default async function TeacherMessagesPage() {
       currentUser={{ id: user.id, role: profile.role }}
       contacts={contacts}
       classes={profile.role === 'class_teacher' && audienceOptions.length > 0 ? [{ id: audienceOptions[0].value.split('_')[1], name: audienceOptions[0].label.replace('Parents of ', '') }] : []}
+      classGroups={classGroups}
       initialContactId={undefined}
       announcements={(announcementsData as Announcement[]) || []}
       audienceOptions={audienceOptions}

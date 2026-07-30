@@ -149,4 +149,95 @@ export async function sendMessage(conversationId: string, content: string) {
   if (error) throw new Error('Failed to send message: ' + error.message)
   return data
 }
-export async function deleteAnnouncement(id: string) { const supabase = await createClient(); const { data: { user } } = await supabase.auth.getUser(); if (!user) throw new Error('Not authenticated'); const { error } = await supabase.from('announcements').delete().eq('id', id).eq('author_id', user.id); if (error) throw new Error('Failed to delete announcement'); return { success: true }; } 
+export async function deleteAnnouncement(id: string) { const supabase = await createClient(); const { data: { user } } = await supabase.auth.getUser(); if (!user) throw new Error('Not authenticated'); const { error } = await supabase.from('announcements').delete().eq('id', id).eq('author_id', user.id); if (error) throw new Error('Failed to delete announcement'); return { success: true }; }
+
+/**
+ * Returns all class group conversations the current user is a participant of.
+ * Used by teachers, parents, and admins to show the "Groups" tab.
+ */
+export async function getMyClassGroups() {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return []
+
+  // Get conversation IDs this user participates in
+  const { data: participations } = await supabase
+    .from('conversation_participants')
+    .select('conversation_id')
+    .eq('user_id', user.id)
+
+  const conversationIds = (participations || []).map((p: any) => p.conversation_id)
+  if (conversationIds.length === 0) return []
+
+  // Filter to class group conversations only
+  const { data: groups } = await supabase
+    .from('conversations')
+    .select('id, title, class_id')
+    .in('id', conversationIds)
+    .eq('group_type' as any, 'class_group')
+    .not('class_id', 'is', null)
+
+  return (groups || []).map((g: any) => ({
+    id: g.class_id as string,
+    title: g.title as string,
+    conversationId: g.id as string,
+  }))
+}
+
+/**
+ * Fetches the messaging policy for the current user's school.
+ * Returns defaults if no policy has been configured yet.
+ */
+export async function getMessagingPolicy() {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return null
+
+  const { data: profile } = await supabase.from('users').select('school_id').eq('id', user.id).single()
+  if (!profile?.school_id) return null
+
+  const { data: policy } = await (supabase as any)
+    .from('messaging_policies')
+    .select('*')
+    .eq('school_id', profile.school_id)
+    .single()
+
+  // Return policy or sensible defaults
+  return (policy as {
+    parents_can_message_teachers: boolean
+    parents_can_message_admin: boolean
+    parents_can_message_parents: boolean
+    subject_teachers_can_message_parents: boolean
+  } | null) || {
+    parents_can_message_teachers: true,
+    parents_can_message_admin: true,
+    parents_can_message_parents: false,
+    subject_teachers_can_message_parents: true,
+  }
+}
+
+/**
+ * Upserts the messaging policy for the current user's school.
+ * Only principals and admins can call this (enforced via RLS).
+ */
+export async function upsertMessagingPolicy(policy: {
+  parents_can_message_teachers: boolean
+  parents_can_message_admin: boolean
+  parents_can_message_parents: boolean
+  subject_teachers_can_message_parents: boolean
+}) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error('Not authenticated')
+
+  const { data: profile } = await supabase.from('users').select('school_id, role').eq('id', user.id).single()
+  if (!profile?.school_id) throw new Error('No school profile')
+  if (!['admin', 'principal', 'headteacher'].includes(profile.role)) throw new Error('Unauthorized')
+
+  const { error } = await supabase
+    .from('messaging_policies')
+    .upsert({ school_id: profile.school_id, ...policy, updated_at: new Date().toISOString() }, { onConflict: 'school_id' })
+
+  if (error) throw new Error('Failed to save policy: ' + error.message)
+  return { success: true }
+}

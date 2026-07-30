@@ -1,26 +1,29 @@
 'use client'
 
 import { useState } from 'react'
-import { MessageSquare, Megaphone, ChevronRight } from 'lucide-react'
+import { MessageSquare, Megaphone, ChevronRight, Users2 } from 'lucide-react'
 import { ChatClient } from '@/components/shared/chat-client'
 import { AnnouncementsClient } from '@/components/shared/announcements-client'
 import { AnnouncementsFeed, Announcement } from '@/components/shared/announcements-feed'
+import { ClassGroupsClient } from '@/components/shared/class-groups-client'
 
 interface Props {
   currentUser: { id: string; role: string }
   contacts: any[]
   classes: any[]
+  classGroups?: { id: string; title: string; conversationId: string }[]
   initialContactId?: string
   announcements: Announcement[]
   audienceOptions: { value: string; label: string }[]
 }
 
-type Tab = 'messages' | 'broadcasts'
+type Tab = 'messages' | 'groups' | 'broadcasts'
 
 export function MessagesLayout({
   currentUser,
   contacts,
   classes,
+  classGroups,
   initialContactId,
   announcements,
   audienceOptions,
@@ -31,6 +34,7 @@ export function MessagesLayout({
 
   const tabs: { id: Tab; label: string; icon: React.ElementType; desc: string }[] = [
     { id: 'messages', label: 'Direct Messages', icon: MessageSquare, desc: 'Chat with staff & parents' },
+    ...(classGroups && classGroups.length > 0 ? [{ id: 'groups' as Tab, label: 'Class Groups', icon: Users2, desc: 'Class group conversations' }] : []),
     { id: 'broadcasts', label: 'Broadcasts', icon: Megaphone, desc: 'Send school-wide announcements' },
   ]
 
@@ -50,7 +54,7 @@ export function MessagesLayout({
             onClick={() => setActiveTab(id)}
             className={`flex-1 md:flex-none flex items-center justify-center gap-2.5 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all ${
               activeTab === id
-                ? 'bg-blue-600 text-white shadow-md'
+                ? 'bg-cyan-600 text-white shadow-md'
                 : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-white dark:hover:bg-slate-800'
             }`}
           >
@@ -72,6 +76,15 @@ export function MessagesLayout({
         </div>
       )}
 
+      {activeTab === 'groups' && classGroups && (
+        <div className="flex-1">
+          <ClassGroupsClient
+            currentUser={currentUser}
+            classGroups={classGroups}
+          />
+        </div>
+      )}
+
       {activeTab === 'broadcasts' && (
         <div className="grid grid-cols-1 xl:grid-cols-5 gap-6">
           {/* Compose */}
@@ -79,8 +92,8 @@ export function MessagesLayout({
             <div className="xl:col-span-2 space-y-4">
               <section className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm">
                 <div className="p-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/20 flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-xl bg-blue-500/10 flex items-center justify-center">
-                    <Megaphone className="w-4 h-4 text-blue-400" />
+                  <div className="w-8 h-8 rounded-xl bg-cyan-500/10 flex items-center justify-center">
+                    <Megaphone className="w-4 h-4 text-cyan-400" />
                   </div>
                   <div>
                     <h2 className="font-semibold text-foreground text-sm">New Broadcast</h2>

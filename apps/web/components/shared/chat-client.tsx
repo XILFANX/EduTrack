@@ -107,7 +107,7 @@ export function ChatClient({
       const { data } = await supabase.from('messages')
         .select('sender_id')
         .neq('sender_id', currentUser.id)
-        .eq('is_read', false)
+        .eq('is_read' as any, false)
       if (data) {
         const counts: Record<string, number> = {}
         data.forEach(m => {

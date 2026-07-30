@@ -26,11 +26,13 @@ export default async function SettingsPage() {
   const SETTINGS_SECTIONS = [
     { label: 'School Profile', href: '/dashboard/settings/school', icon: '🏫', desc: 'School name, logo, contact info' },
     { label: 'Subscription & Billing', href: '/dashboard/settings/billing', icon: '💳', desc: 'Manage your EduTrack subscription' },
+    { label: 'Messaging Policies', href: '/dashboard/settings/messaging', icon: '💬', desc: 'Who can message whom in your school' },
     { label: 'Notifications', href: '/dashboard/settings/notifications', icon: '🔔', desc: 'Email and SMS preferences' },
     { label: 'Fee Rules', href: '/dashboard/settings/fee-rules', icon: '📋', desc: 'Term dates, grace periods, penalty rate' },
     { label: 'Staff & Access', href: '/dashboard/staff', icon: '👥', desc: 'Manage teachers and support staff' },
     { label: 'Account', href: '/dashboard/settings/account', icon: '⚙️', desc: 'Profile, password, danger zone' },
   ]
+
 
   return (
     <div className="p-4 md:p-6 space-y-6 max-w-3xl mx-auto pb-32">

@@ -3,6 +3,7 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import { redirect } from 'next/navigation'
 import { MessagesLayout } from '@/components/shared/messages-layout'
 import type { Announcement } from '@/components/shared/announcements-feed'
+import { getMyClassGroups } from '@/app/actions/chat'
 
 export const dynamic = 'force-dynamic'
 
@@ -39,6 +40,7 @@ export default async function PrincipalMessagesPage({
   if (!profile?.school_id || !['admin', 'principal', 'headteacher'].includes(profile.role as string)) redirect('/dashboard')
 
   const adminClient = createAdminClient()
+  const classGroups = await getMyClassGroups()
 
   // 1. Fetch Staff contacts
   const { data: staffData } = await adminClient
@@ -149,6 +151,7 @@ export default async function PrincipalMessagesPage({
       currentUser={{ id: user.id, role: profile.role }}
       contacts={contacts}
       classes={(classesData as any[]) || []}
+      classGroups={classGroups}
       initialContactId={resolvedParams.contactId}
       announcements={(announcementsData as Announcement[]) || []}
       audienceOptions={audienceOptions}
