@@ -124,6 +124,10 @@ export function ChatClient({
     fetchUnread()
   }, [currentUser.id, supabase])
 
+  const handleSelectContact = (contact: Contact) => {
+    setSelectedContact(contact)
+  }
+
   // Initialize selected contact from URL prop
   useEffect(() => {
     if (initialContactId) {
@@ -133,10 +137,6 @@ export function ChatClient({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialContactId])
 
-  const handleSelectContact = (contact: Contact) => {
-    setSelectedContact(contact)
-  }
-
   // Presence channel setup
   useEffect(() => {
     const channel = supabase.channel('chat_presence', {
@@ -144,29 +144,37 @@ export function ChatClient({
     })
     presenceChannelRef.current = channel
 
-    channel
-      .on('presence', { event: 'sync' }, () => {
-        const state = channel.presenceState()
-        const online = new Set<string>()
-        const typing = new Set<string>()
-        const now = Date.now()
-        Object.keys(state).forEach(key => {
-          online.add(key)
-          const userStates = state[key]
-          if (userStates && userStates.some((s: any) => s.typing_to === currentUser.id && (now - new Date(s.online_at).getTime() < 5000))) {
-            typing.add(key)
-          }
-        })
-        setOnlineUsers(online)
-        setTypingUsers(typing)
+    const updatePresenceLocalState = () => {
+      const state = channel.presenceState()
+      const online = new Set<string>()
+      const typing = new Set<string>()
+      const now = Date.now()
+      Object.keys(state).forEach(key => {
+        online.add(key)
+        const userStates = state[key]
+        if (userStates && userStates.some((s: any) => s.typing_to === currentUser.id && (now - new Date(s.online_at).getTime() < 5000))) {
+          typing.add(key)
+        }
       })
+      setOnlineUsers(online)
+      setTypingUsers(typing)
+    }
+
+    channel
+      .on('presence', { event: 'sync' }, updatePresenceLocalState)
       .subscribe(async (status) => {
         if (status === 'SUBSCRIBED') {
           await channel.track({ online_at: new Date().toISOString() })
         }
       })
 
-    return () => { supabase.removeChannel(channel) }
+    // Poll local state every second to clear stale typing indicators without waiting for a sync event
+    const interval = setInterval(updatePresenceLocalState, 1000)
+
+    return () => { 
+      clearInterval(interval)
+      supabase.removeChannel(channel) 
+    }
   }, [currentUser.id, supabase])
 
   // Load conversation & messages when contact is selected
@@ -315,14 +323,7 @@ export function ChatClient({
     new Date(iso).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
 
   const formatLastSeen = (dateString?: string | null) => {
-    if (!dateString) return 'Offline'
-    const date = new Date(dateString)
-    const now = new Date()
-    const diffHours = (now.getTime() - date.getTime()) / (1000 * 60 * 60)
-    if (diffHours < 24) {
-      return `last seen today at ${date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`
-    }
-    return `last seen ${date.toLocaleDateString()} at ${date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`
+    return 'Offline'
   }
 
   const handleBackToDirectory = () => {

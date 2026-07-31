@@ -38,9 +38,11 @@ To issue a new task, simply paste it into the `Request` block below and prompt t
 
 This is the user request. It is the only input this file expects — everything below is protocol, not conversation.
 
+> "Hey! the quoted request below was the initil prompt i gave you to patch the entire messaging and broadcasting module for both EstateTrack and EduTrack across all their indidual portals and I explicitly used just one portal(the class teacher's) to use as your benchmark for this work but instructed you to ensure you enforce those changes across all portals which has the same issues for both the two repos but I noticed you only forked on that benchmark portal and abandoned the other portals which really needed the fix..." (Fix missing messaging module directory sync and features across all portals)
+>
 > _During testing of the messaging and broadcasting module for both EstateTrack and EduTrack across all their indidual portal, I noticed some subtle problems which really need serious fixing.
 Since the module logic is identical for both apps across all portals (of course while separating concerns and handling portal-wise contingencies, I going to use one portal(the class teacher's portal) as the example to avoid context clutter.
-
+>
 **[STATUS: ✅ COMPLETE — Shipped 2026-07-31 | Commits: EduTrack ee60667, EstateTrack 25c2458]**
 
 First is about aesthetics, I noticed this strange theme (greenishness/bluishness) which is not consistent with the global UI for that particular app as you aught to have enforced (purple for EstateTrack and cyan for EduTrack). Fix this in the entire module even the tiny features like "online", "typing", unread badges etc. for both the apps and across all the portals while carefully separating concerns between EstateTrack and EduTrack while still maintaining the portal-wise contingencies . 

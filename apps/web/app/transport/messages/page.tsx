@@ -51,19 +51,55 @@ export default async function StaffMessagesPage() {
     last_seen_at: u.last_seen_at
   }))
 
-  // 2. Fetch Parent Contacts
-  const { data: parentData } = await adminClient
+  // 2. Fetch Parent Contacts with linked students & class mapping
+  const { data: parentsData } = await adminClient
     .from('users')
     .select('id, full_name, salutation, role, last_seen_at')
     .eq('school_id', profile.school_id)
     .eq('role', 'parent')
 
-  const parentContacts = (parentData || []).map((p: any) => ({
+  const { data: classesData } = await supabase
+    .from('classes')
+    .select('id, name')
+    .eq('school_id', profile.school_id)
+    .order('name')
+
+  let parentsWithStudents: any[] = []
+  if (parentsData && parentsData.length > 0) {
+    const parentIds = parentsData.map(p => p.id)
+    const { data: links } = await adminClient
+      .from('student_parents' as any)
+      .select('parent_id, student_id, students(first_name, last_name, student_classes(class_id))')
+      .in('parent_id', parentIds)
+
+    const parentStudentMap: Record<string, string[]> = {}
+    const parentClassMap: Record<string, Set<string>> = {}
+    ;((links as any[]) || []).forEach((l: any) => {
+      if (!parentStudentMap[l.parent_id]) parentStudentMap[l.parent_id] = []
+      if (!parentClassMap[l.parent_id]) parentClassMap[l.parent_id] = new Set()
+      if (l.students) {
+        parentStudentMap[l.parent_id].push(`${l.students.first_name} ${l.students.last_name}`)
+        if (l.students.student_classes?.length > 0) {
+          l.students.student_classes.forEach((sc: any) => parentClassMap[l.parent_id].add(sc.class_id))
+        }
+      }
+    })
+
+    parentsWithStudents = parentsData.map((p: any) => ({
+      ...p,
+      studentNames: parentStudentMap[p.id] || [],
+      classIds: Array.from(parentClassMap[p.id] || []),
+    }))
+  }
+
+  const parentContacts = parentsWithStudents.map((p: any) => ({
     id: p.id,
     name: p.salutation ? `${p.salutation} ${p.full_name}` : (p.full_name || 'Parent'),
     role: 'Parent',
     roleOrder: 4,
-    last_seen_at: p.last_seen_at
+    last_seen_at: p.last_seen_at,
+    subtitle: p.studentNames.length > 0 ? `Parent of: ${p.studentNames.join(', ')}` : undefined,
+    classIds: p.classIds,
   }))
 
   const contacts = [...staffContacts, ...parentContacts].sort((a, b) => a.roleOrder - b.roleOrder)
@@ -82,7 +118,7 @@ export default async function StaffMessagesPage() {
     <MessagesLayout
       currentUser={{ id: user.id, role: profile.role }}
       contacts={contacts}
-      classes={[]}
+      classes={(classesData as any[]) || []}
       initialContactId={undefined}
       announcements={(announcementsData as Announcement[]) || []}
       audienceOptions={[]} // Non-teaching staff cannot broadcast
