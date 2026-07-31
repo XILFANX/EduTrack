@@ -1,210 +1,135 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
-import { Receipt, CheckCircle2, AlertCircle, Smartphone } from 'lucide-react'
+import { ChevronLeft, Receipt, CheckCircle2, AlertCircle } from 'lucide-react'
+import Link from 'next/link'
+import { ParentPostPaymentClient } from './post-payment-client'
 
 export const dynamic = 'force-dynamic'
 
-export default async function ParentPayments() {
+const fmt = (n: number, currency = 'KES') =>
+  new Intl.NumberFormat('en-KE', { style: 'currency', currency, maximumFractionDigits: 0 }).format(n)
+
+export default async function ParentPaymentsPage() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login')
 
   const { data: profileResult } = await supabase
     .from('users')
-    .select('school_id, schools(name, fee_due_day)')
+    .select('school_id, schools(name, currency)')
     .eq('id', user.id)
     .single()
 
   const profile = profileResult as any
   if (!profile?.school_id) return null
-  const school = profile.schools
+  const currency = (profile.schools as any)?.currency ?? 'KES'
 
-  // Get all linked students
-  const { data: studentLinks } = await supabase
-    .from('student_parents')
-    .select('students(id, first_name, last_name, admission_number)')
-    .eq('parent_id', user.id)
+  // Load open fee_term obligations for this parent
+  const { data: openObls } = await supabase
+    .from('obligations')
+    .select('id, payer_display_ref, period_label, amount_due, balance, currency, status, due_date')
+    .eq('payer_account_id', user.id)
+    .eq('type', 'fee_term')
+    .in('status', ['open', 'partial'])
+    .order('due_date', { ascending: true })
 
-  const students = ((studentLinks as any[]) || []).map((l: any) => l.students).filter(Boolean)
-  const studentIds = students.map((s: any) => s.id)
+  // Load paid history
+  const { data: historyObls } = await supabase
+    .from('obligations')
+    .select('id, payer_display_ref, period_label, amount_due, currency, status')
+    .eq('payer_account_id', user.id)
+    .eq('type', 'fee_term')
+    .in('status', ['settled', 'overpaid'])
+    .order('due_date', { ascending: false })
+    .limit(20)
 
-  // Active term
-  const { data: activeTerm } = await supabase
-    .from('academic_terms')
-    .select('id, name')
-    .eq('school_id', profile.school_id)
-    .eq('is_active', true)
-    .single()
-
-  // Invoices
-  let invoices: any[] = []
-  let payments: any[] = []
-
-  if (studentIds.length > 0 && activeTerm) {
-    const { data: invData } = await supabase
-      .from('invoices')
-      .select('id, amount, balance, status, student_id, students(first_name, last_name)')
-      .eq('school_id', profile.school_id)
-      .eq('term_id', activeTerm.id)
-      .in('student_id', studentIds)
-      .is('deleted_at', null)
-
-    invoices = (invData as any[]) || []
-
-    // Payment history for these invoices
-    const invoiceIds = invoices.map((inv: any) => inv.id)
-    if (invoiceIds.length > 0) {
-      const { data: payData } = await supabase
-        .from('fee_payments')
-        .select('amount, payment_method, mpesa_receipt, payment_date, invoice_id, students(first_name, last_name)')
-        .in('invoice_id', invoiceIds)
-        .order('payment_date', { ascending: false })
-
-      payments = (payData as any[]) || []
-    }
-  }
-
-  const formatKES = (n: number) =>
-    new Intl.NumberFormat('en-KE', { style: 'currency', currency: 'KES', maximumFractionDigits: 0 }).format(n)
-
-  const totalOwed = invoices.reduce((sum: number, inv: any) => sum + (inv.balance || 0), 0)
+  const openList = (openObls ?? []) as any[]
+  const historyList = (historyObls ?? []) as any[]
+  const totalDue = openList.reduce((s: number, o: any) => s + o.balance, 0)
 
   return (
-    <div className="space-y-6 pb-20">
-      <div>
-        <h1 className="text-2xl font-bold text-foreground">Payments</h1>
-        <p className="text-sm text-muted-foreground mt-1">
-          {activeTerm?.name ?? 'No active term'} · Fee Overview
-        </p>
+    <div className="max-w-2xl mx-auto px-4 py-6 space-y-6 pb-24">
+      <div className="flex items-center gap-3">
+        <Link href="/parent/dashboard" className="text-muted-foreground hover:text-foreground text-sm flex items-center">
+          <ChevronLeft className="w-4 h-4 mr-1" /> Dashboard
+        </Link>
       </div>
 
-      {students.length === 0 && (
-        <div className="text-center py-16 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl">
-          <Receipt className="w-8 h-8 text-slate-300 mx-auto mb-3" />
-          <p className="text-sm text-muted-foreground">No students linked to your account yet.</p>
-        </div>
-      )}
+      <div>
+        <h1 className="text-2xl font-bold text-foreground">School Fees</h1>
+        <p className="text-sm text-muted-foreground mt-1">Submit your payment evidence for bursar verification.</p>
+      </div>
 
-      {/* Overall balance banner */}
-      {invoices.length > 0 && (
-        <div className={`rounded-2xl p-5 text-white ${totalOwed > 0 ? 'bg-gradient-to-br from-red-500 to-red-600' : 'bg-gradient-to-br from-cyan-500 to-cyan-600'}`}>
-          <p className="text-sm font-medium opacity-90">Outstanding Balance</p>
-          <p className="text-4xl font-bold mt-1">{formatKES(totalOwed)}</p>
-          <p className="text-sm mt-2 opacity-80">
-            {totalOwed > 0 ? 'Please settle before the end of term.' : 'All fees cleared. Thank you! 🎉'}
-          </p>
-        </div>
-      )}
+      {/* Balance card */}
+      <div className={`p-6 rounded-3xl shadow-lg ${totalDue > 0
+        ? 'bg-gradient-to-br from-rose-500/10 to-red-600/10 border border-red-400/20'
+        : 'bg-gradient-to-br from-cyan-500/10 to-teal-600/10 border border-cyan-500/20'}`}>
+        <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">
+          {totalDue > 0 ? 'Total Outstanding' : 'All Caught Up!'}
+        </p>
+        <h2 className={`text-4xl font-extrabold tabular-nums ${totalDue > 0 ? 'text-rose-400' : 'text-cyan-400'}`}>
+          {fmt(totalDue, currency)}
+        </h2>
+      </div>
 
-      {/* Per-student invoice breakdown */}
-      {invoices.map((inv: any) => {
-        const paid = inv.amount - inv.balance
-        return (
-          <div key={inv.id} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden">
-            <div className="flex items-center justify-between px-4 py-3 border-b border-slate-100 dark:border-slate-800">
-              <div>
-                <p className="font-semibold text-foreground text-sm">
-                  {inv.students?.first_name} {inv.students?.last_name}
-                </p>
-                <p className="text-xs text-muted-foreground">{activeTerm?.name}</p>
-              </div>
-              <span className={`text-xs font-semibold px-2 py-1 rounded-full ${
-                inv.status === 'paid'
-                  ? 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/40 dark:text-cyan-400'
-                  : inv.status === 'partial'
-                  ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400'
-                  : 'bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400'
-              }`}>
-                {inv.status === 'paid' ? 'Paid' : inv.status === 'partial' ? 'Partial' : 'Unpaid'}
-              </span>
-            </div>
-            <div className="grid grid-cols-3 text-center divide-x divide-slate-100 dark:divide-slate-800">
-              <div className="p-4">
-                <p className="text-xs text-muted-foreground mb-1">Billed</p>
-                <p className="font-bold text-sm text-foreground">{formatKES(inv.amount)}</p>
-              </div>
-              <div className="p-4">
-                <p className="text-xs text-muted-foreground mb-1">Paid</p>
-                <p className="font-bold text-sm text-cyan-600">{formatKES(paid)}</p>
-              </div>
-              <div className="p-4">
-                <p className="text-xs text-muted-foreground mb-1">Balance</p>
-                <p className={`font-bold text-sm ${inv.balance > 0 ? 'text-red-500' : 'text-cyan-600'}`}>
-                  {formatKES(inv.balance)}
-                </p>
-              </div>
-            </div>
-          </div>
-        )
-      })}
-
-      {/* Payment history */}
-      {payments.length > 0 && (
-        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden">
-          <div className="px-4 py-3 border-b border-slate-100 dark:border-slate-800">
-            <h2 className="text-sm font-semibold text-foreground">Payment History</h2>
-          </div>
-          <div className="divide-y divide-slate-100 dark:divide-slate-800">
-            {payments.map((p: any, i: number) => (
-              <div key={i} className="flex items-center justify-between px-4 py-3">
+      {/* Open obligations */}
+      {openList.length > 0 && (
+        <div className="space-y-3">
+          <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wider px-1">Outstanding Fees</h3>
+          {openList.map((obl: any) => (
+            <div key={obl.id} className="bg-card border border-border rounded-2xl overflow-hidden">
+              <div className="px-4 py-3 flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-foreground">
-                    {p.students?.first_name} {p.students?.last_name}
-                  </p>
-                  <div className="flex items-center gap-2 mt-0.5">
-                    <span className="text-xs text-muted-foreground">{p.payment_method}</span>
-                    {p.mpesa_receipt && (
-                      <span className="text-xs font-mono text-muted-foreground">· {p.mpesa_receipt}</span>
-                    )}
-                  </div>
+                  <p className="font-semibold text-sm text-foreground">{obl.payer_display_ref}</p>
                   <p className="text-xs text-muted-foreground">
-                    {new Date(p.payment_date).toLocaleDateString('en-KE', { day: 'numeric', month: 'short', year: 'numeric' })}
+                    {obl.period_label} · Due {new Date(obl.due_date).toLocaleDateString('en-KE', { day: 'numeric', month: 'short' })}
                   </p>
                 </div>
-                <div className="flex items-center gap-1 text-cyan-600 dark:text-cyan-400">
-                  <CheckCircle2 className="w-4 h-4" />
-                  <span className="font-bold text-sm">{formatKES(p.amount)}</span>
+                <div className="text-right shrink-0 ml-2">
+                  <p className="font-bold text-foreground">{fmt(obl.amount_due, obl.currency)}</p>
+                  {obl.balance < obl.amount_due && (
+                    <p className="text-xs text-blue-500">{fmt(obl.balance, obl.currency)} remaining</p>
+                  )}
                 </div>
               </div>
-            ))}
-          </div>
+              <div className="border-t border-border px-4 py-4 bg-muted/10">
+                <ParentPostPaymentClient
+                  obligationId={obl.id}
+                  obligationBalance={obl.balance}
+                  periodLabel={obl.period_label}
+                  currency={obl.currency}
+                />
+              </div>
+            </div>
+          ))}
         </div>
       )}
 
-      {/* M-Pesa payment instructions */}
-      {students.length > 0 && totalOwed > 0 && (
-        <div className="bg-gradient-to-br from-cyan-600 to-cyan-700 rounded-2xl p-5 text-white">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
-              <Smartphone className="w-5 h-5" />
+      {openList.length === 0 && historyList.length === 0 && (
+        <div className="text-center py-16 border border-dashed border-border rounded-2xl">
+          <Receipt className="w-8 h-8 text-muted-foreground/30 mx-auto mb-3" />
+          <p className="text-sm text-muted-foreground">No fee obligations found. Check back when your school generates the next term's fees.</p>
+        </div>
+      )}
+
+      {/* Paid history */}
+      {historyList.length > 0 && (
+        <div className="space-y-2">
+          <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wider px-1">Paid History</h3>
+          {historyList.map((obl: any) => (
+            <div key={obl.id} className="bg-card border border-border rounded-xl px-4 py-3 flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-foreground">{obl.payer_display_ref}</p>
+                <p className="text-xs text-muted-foreground">{obl.period_label}</p>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-bold text-foreground">{fmt(obl.amount_due, obl.currency)}</span>
+                <span className="text-[10px] font-bold text-cyan-700 bg-cyan-100 dark:bg-cyan-900/30 dark:text-cyan-300 px-2 py-0.5 rounded-full">
+                  {obl.status === 'overpaid' ? 'Overpaid' : 'Paid ✓'}
+                </span>
+              </div>
             </div>
-            <div>
-              <p className="font-bold">How to Pay via M-Pesa</p>
-              <p className="text-xs text-cyan-100">Follow these steps on your phone</p>
-            </div>
-          </div>
-          <ol className="space-y-2 text-sm text-cyan-50">
-            <li className="flex gap-2">
-              <span className="w-5 h-5 rounded-full bg-white/20 text-xs flex items-center justify-center shrink-0 font-bold">1</span>
-              Go to <strong className="mx-1">M-Pesa</strong> → <strong className="mx-1">Lipa na M-Pesa</strong> → <strong className="ml-1">Pay Bill</strong>
-            </li>
-            <li className="flex gap-2">
-              <span className="w-5 h-5 rounded-full bg-white/20 text-xs flex items-center justify-center shrink-0 font-bold">2</span>
-              Business No: <strong className="font-mono ml-1">247 247</strong>
-            </li>
-            <li className="flex gap-2">
-              <span className="w-5 h-5 rounded-full bg-white/20 text-xs flex items-center justify-center shrink-0 font-bold">3</span>
-              Account No: <strong className="font-mono ml-1">{school?.name ?? 'Your School Code'}</strong>
-            </li>
-            <li className="flex gap-2">
-              <span className="w-5 h-5 rounded-full bg-white/20 text-xs flex items-center justify-center shrink-0 font-bold">4</span>
-              Enter the exact amount and your M-Pesa PIN
-            </li>
-            <li className="flex gap-2">
-              <span className="w-5 h-5 rounded-full bg-white/20 text-xs flex items-center justify-center shrink-0 font-bold">5</span>
-              Share the <strong className="mx-1">receipt code</strong> with the school bursar to confirm payment
-            </li>
-          </ol>
+          ))}
         </div>
       )}
     </div>
