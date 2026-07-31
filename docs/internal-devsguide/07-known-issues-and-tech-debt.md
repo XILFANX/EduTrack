@@ -43,3 +43,17 @@ The current fee payment flow relies on STK Push, where a parent initiates the pa
 Because the `admin` role lacks a `school_id`, standard RLS policies (`school_id = get_auth_school_id()`) lock the admin out of all tenant tables. Every time a new table is added, developers must remember to explicitly grant the `admin` role access via a secondary policy clause.
 
 **Fix:** A cleaner approach might be to assign the Platform Owner a dummy `school_id` and handle global access in a centralized `get_auth_school_id()` override, though this introduces its own risks. For now, strict vigilance during schema creation is required.
+
+---
+
+## 5. Clear Chat — localStorage Only (No Server Persistence)
+
+> **Severity: Low (UX limitation)**
+
+"Clear Chat" uses a client-side `localStorage` entry (`cleared_chat_${conversationId}_${userId}`) to record when a user cleared a conversation. Messages with `created_at` older than this timestamp are filtered out on load.
+
+**Impact:**
+- Clearing a chat on Device A does not clear it on Device B (e.g. mobile and desktop).
+- Clearing browser storage (private mode, clearing site data) restores all previously cleared messages.
+
+**Fix required (if server-side enforcement is needed):** Add `cleared_at_user1` and `cleared_at_user2` nullable timestamp columns to the `conversations` table. The server page passes `cleared_at` to the client on load; the client uses it instead of `localStorage`. This requires a schema migration and a new server action to persist the timestamp.

@@ -58,7 +58,10 @@ If you need to discuss a specific student's performance with their parent, you c
   - Red triangle (⚠): Message failed to send.
 
 **Clear Chat:**
-You can clear a conversation history from your view by clicking the three dots (`⋮`) in the top right corner of the chat window and selecting **Clear Chat**. This only hides the messages for you — the recipient keeps their copy.
+You can clear a conversation history from your view by clicking the three dots (`⋮`) in the top right corner of the chat window and selecting **Clear Chat**. A confirmation dialog will appear before anything is deleted. This only hides the messages for **you** — the recipient keeps their full copy. The cleared state is remembered even if you close and reopen the page.
+
+**Typing Indicators:**
+The "typing..." status disappears as soon as the other person stops typing. If a connection is lost mid-session, the indicator automatically clears within a few seconds rather than remaining stuck.
 
 > **Note:** Who you can message depends on your role and your school's **Messaging Policies** (configured by the principal). Parents can message their child's class teacher and school admin by default. Subject teachers may also message parents of students in their classes.
 

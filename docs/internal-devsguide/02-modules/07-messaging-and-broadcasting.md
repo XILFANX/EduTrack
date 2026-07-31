@@ -39,16 +39,59 @@ Two custom DOM events keep badge counts consistent across tabs and components wi
 See `docs/internal-devsguide/05-multi-tenancy-and-security.md` for the full Role-Permission Matrix.
 
 Communication is heavily segregated to prevent inappropriate contact:
-- **Product Admin**: Can only message clients (Schools/Principals).
-- **Principals / Headteachers**: Can message all school staff and parents; can broadcast to all audiences. They also have an exclusive `EduTrack Support` directory.
-- **Teachers**: Can message parents of their students, other staff, and school admins.
+- **Product Admin**: Can only message clients (Schools/Principals). Displayed as "EduTrack Support" to school-level users.
+- **Principals / Headteachers**: Can message all school staff and parents; can broadcast to all audiences. They also have an exclusive `EduTrack Support` directory entry. Other school admins (Admin/Principal/Headteacher roles) are filtered out of each admin's contact list so they do not appear as peers.
+- **Teachers**: Can message parents of their assigned students, other staff, and school admins.
 - **Bursar**: Can message staff and parents.
 - **Parents**: Can message their child's class teacher, subject teachers, and bursar.
 
-Admins are presented to non-admin users contextually (e.g., "School Admin", "Class Teacher (John Doe)") to provide intuitive support channels. Role filtering is strictly **case-insensitive** across all directories to prevent mismatches resulting in empty categories.
+Admins are presented to non-admin users contextually (e.g., "EduTrack Support", "Class Teacher (John Doe)") to provide intuitive support channels. Role filtering is strictly **case-insensitive** across all directories to prevent mismatches resulting in empty categories.
 
 ## Real-time & UX
+
 - Real-time is powered by Supabase Postgres Changes subscriptions on `messages` (filtered by `conversation_id`) and `notifications` (filtered by `user_id`).
 - `UX.toast` is integrated directly into the real-time listeners to provide non-intrusive alerts for incoming messages regardless of the user's current page.
 - Message status ticks (single grey tick = pending/sent, double cyan tick = read) are fully supported via the `is_read` property on messages. Failed messages are kept in UI with a red `is_failed` warning instead of disappearing.
-- "Clear Chat" is a **soft-delete**: it clears the local React state view rather than issuing a destructive `DELETE` to the database, respecting standard chat app behavior.
+
+## Clear Chat (Soft-Delete via localStorage)
+
+"Clear Chat" uses a **client-side soft-delete** backed by `localStorage`:
+1. When confirmed, `localStorage.setItem('cleared_chat_${conversationId}_${userId}', new Date().toISOString())` records a `cleared_at` timestamp.
+2. On next load, messages are filtered: only messages with `created_at` **after** `cleared_at` are shown.
+3. Incoming realtime messages older than `cleared_at` are silently dropped.
+4. The other participant's view is completely unaffected.
+5. The confirmation dialog uses the app's `ConfirmDialog` / `useConfirmDialog()` system — **never** `window.confirm`.
+
+> **Why not a database column?** This avoids a schema migration and RLS changes while still persisting the cleared state across refreshes. A `cleared_at_user1` / `cleared_at_user2` column pair on `conversations` would be the database-native alternative if a future requirement demands server-side enforcement.
+
+## Unread Badge Persistence
+
+The badge count is backed by `messages.is_read`. When a conversation is opened, `markConversationAsRead` (in `app/actions/chat.ts`) performs **two** atomic writes using the admin client (to bypass RLS):
+1. `conversation_participants.last_read_at = now()` — for future reads without a full table scan.
+2. `messages.is_read = true` WHERE `conversation_id = ? AND sender_id != currentUser` — this is the authoritative source the badge query reads from.
+
+Without step 2, the badge re-appears on page refresh because the query reads `messages.is_read`, not `last_read_at`.
+
+## Typing Indicator Staleness
+
+Typing state is broadcast via the Supabase Presence channel (`chat_presence`). A user's presence state includes an `online_at` timestamp (refreshed on each keypress). On every `sync` event, the `typing` set is only populated if the presence entry's `online_at` is **less than 5 seconds old** (`Date.now() - new Date(s.online_at) < 5000`). This prevents stale "is typing..." indicators from persisting after a user disconnects, navigates away, or stops typing without sending.
+
+## Theme Tokens
+
+The module enforces app-level brand colors for all interactive states:
+- **EduTrack**: `cyan-500` for Online status, typing indicator, success feedback, and read ticks.
+- **EstateTrack**: `purple-500` for the same elements.
+
+These are applied in `chat-client.tsx` and `announcements-client.tsx` within each app's `apps/web/components/shared/` directory. Any deviation (e.g. `emerald-500`, `green-500`) is a bug.
+
+## Directory Sync (classIds)
+
+For the teacher portal, parents are associated to their child's class via a `classIds: string[]` field on each contact object. This field is built in the server page (`app/teacher/messages/page.tsx`) by:
+- For **class teachers**: querying the class they own → querying students in that class → querying `student_parents` links → assigning `classIds: [cls.id]`.
+- For **subject teachers**: querying `class_subjects` assignments → building a multi-class parent map.
+
+The `ChatClient` uses `classIds` to filter contacts when the user drills into a specific class folder. If `classIds` is missing on a parent contact, they will appear in the top-level parent count but not inside any class folder — this is the "folder says 1 member, opens to show 0" bug.
+
+## Broadcast Deletion Cache Invalidation
+
+`deleteAnnouncement` in `app/actions/chat.ts` calls `revalidatePath('/', 'layout')` after the Supabase delete. This busts the Next.js full-route cache so the deleted broadcast does not re-appear on page refresh. Without this call, Next.js serves the stale cached server component output.
