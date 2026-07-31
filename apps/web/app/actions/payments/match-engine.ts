@@ -6,8 +6,8 @@
  */
 
 import { createAdminClient } from '@/lib/supabase/admin'
-import { findMatch } from '@estatetrack/shared/payments/engine'
-import type { Submission, Obligation, MatchEngineOptions } from '@estatetrack/shared/payments/types'
+import { findMatch } from '@edutrack/shared/payments/engine'
+import type { Submission, Obligation, MatchEngineOptions } from '@edutrack/shared/payments/types'
 import { dispatchNotification } from './notifications'
 
 interface MatchEngineInput {
@@ -23,7 +23,7 @@ export interface MatchEngineResult {
 }
 
 export async function runMatchingEngine(input: MatchEngineInput): Promise<MatchEngineResult> {
-  const admin = createAdminClient()
+  const admin = createAdminClient() as any
 
   const { data: newSubRaw, error: subErr } = await admin
     .from('submissions').select('*').eq('id', input.newSubmissionId).single()

@@ -36,9 +36,9 @@ To issue a new task, simply paste it into the `Request` block below and prompt t
 
 ## Request
 
-"Payment Settlement Reconciliation Engine — Full Replacement Spec. EstateTrack (rent) & EduTrack (school fees) — including provider subscription billing. Analyse both codebases in parallel to understand the current payment and subscription modules before making any changes. This new system will replace the existing payment and subscription billing module entirely across EstateTrack (rent/bill) and EduTrack (school fees/bill). These two repos share the same logic — implement for both repos in parallel, ensure proper separation of concerns. Obligation types: Rent period (Tenant→Landlord, EstateTrack), School fee term (Parent→Bursar/School, EduTrack), EstateTrack subscription cycle (Landlord→EstateTrack, landlord portal), EduTrack subscription cycle (Bursar/School→EduTrack, bursar portal). Two-independent-witness model. Core philosophy: payer submits their transaction message; payee independently submits what they received; auto-match on reference code + amount agreement. Blindness enforced: payee submission flow must never display, hint at, or pre-fill anything from a pending payer claim. Core models: Obligation, PayeeRailProfile, Submission, MatchRecord, LedgerEntry, DisputeCase, CaretakerAssignment (EstateTrack only). See full spec for functional flows, matching engine rules, unmatched pool/dispute logic, caretaker role, subscription-specific logic, notification matrix (15 events), and edge cases."
+"..."
 
-_Status: Audit complete. Plan drafted and awaiting user approval on 5 open questions before execution begins._
+_Status: Idle_
 ---
 
 ## Step 0 — Fast Path
@@ -345,6 +345,7 @@ Hold on every documentation edit, not just first-draft generation:
 
 | Date | Mission | Outcome |
 |---|---|---|
+| 2026-07-31 | Payment Settlement Reconciliation Engine — Full replacement (two-witness model, shared engine, matching logic, blinded UI, immutable ledger). | Shipped, pushed to `main` (EduTrack `195ac59`, EstateTrack `e525030`) |
 | 2026-07-31 | Regional Pricing Engine full replacement — schema, billing engine, codebase deprecations, onboarding cleanup, docs | Shipped, pushed to `main` (EstateTrack `9f5bc64`, EduTrack `9884b23`) |
 | 2026-07-31 | Documented messaging module fixes (`classIds` sync, typing, `Online/Offline` UX) in `internal-devsguide` and `public-userguide` | Shipped, pushed to `main` |
 | 2026-07-31 | Purged stray `emerald` theme strings globally and replaced with `cyan` | Shipped, pushed to `main` |

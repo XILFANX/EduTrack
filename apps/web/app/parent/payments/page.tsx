@@ -24,8 +24,12 @@ export default async function ParentPaymentsPage() {
   if (!profile?.school_id) return null
   const currency = (profile.schools as any)?.currency ?? 'KES'
 
+  // TODO: re-run `npx supabase gen types` after applying migration 20260801000000
+  const db = supabase as any
+
   // Load open fee_term obligations for this parent
-  const { data: openObls } = await supabase
+  const { data: openObls } = await db
+
     .from('obligations')
     .select('id, payer_display_ref, period_label, amount_due, balance, currency, status, due_date')
     .eq('payer_account_id', user.id)
@@ -34,7 +38,7 @@ export default async function ParentPaymentsPage() {
     .order('due_date', { ascending: true })
 
   // Load paid history
-  const { data: historyObls } = await supabase
+  const { data: historyObls } = await db
     .from('obligations')
     .select('id, payer_display_ref, period_label, amount_due, currency, status')
     .eq('payer_account_id', user.id)
@@ -42,6 +46,7 @@ export default async function ParentPaymentsPage() {
     .in('status', ['settled', 'overpaid'])
     .order('due_date', { ascending: false })
     .limit(20)
+
 
   const openList = (openObls ?? []) as any[]
   const historyList = (historyObls ?? []) as any[]

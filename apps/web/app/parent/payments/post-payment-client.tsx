@@ -8,7 +8,7 @@
 import { useState } from 'react'
 import { submitPayerPayment, submitCashPayment } from '@/app/actions/payments/submit-payment'
 import { Send, CheckCircle2, Loader2, ShieldOff, CreditCard } from 'lucide-react'
-import type { PaymentRail } from '@estatetrack/shared/payments/types'
+import type { PaymentRail } from '@edutrack/shared/payments/types'
 
 interface Props {
   obligationId: string

@@ -7,7 +7,7 @@
 
 import { createAdminClient } from '@/lib/supabase/admin'
 import { sendNotification } from '@/lib/notifications'
-import type { NotificationEvent } from '@estatetrack/shared/payments/types'
+import type { NotificationEvent } from '@edutrack/shared/payments/types'
 
 export interface NotificationInput {
   event: NotificationEvent
@@ -84,7 +84,7 @@ function getNotificationUrl(event: NotificationEvent): string {
 
 export async function dispatchNotification(input: NotificationInput): Promise<void> {
   if (!input.recipientIds?.length) return
-  const admin = createAdminClient()
+  const admin = createAdminClient() as any
   const { title, body } = buildNotificationContent(input.event, input.blind, input.data)
 
   await admin.from('notification_log').insert({
@@ -102,7 +102,7 @@ export async function dispatchNotification(input: NotificationInput): Promise<vo
 }
 
 export async function escalateUnmatchedSubmissions(): Promise<{ escalated: number }> {
-  const admin = createAdminClient()
+  const admin = createAdminClient() as any
   const { data: configRow } = await admin.from('billing_config').select('value').eq('key', 'unmatched_grace_period_hours').single()
   const gracePeriodHours = configRow?.value ? Number(configRow.value) : 72
   const cutoff = new Date(Date.now() - gracePeriodHours * 60 * 60 * 1000).toISOString()

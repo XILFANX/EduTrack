@@ -9,8 +9,8 @@
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { revalidatePath } from 'next/cache'
-import { normalizeReferenceCode, isReferenceCodeValid } from '@estatetrack/shared/payments/engine'
-import type { PaymentRail } from '@estatetrack/shared/payments/types'
+import { normalizeReferenceCode, isReferenceCodeValid } from '@edutrack/shared/payments/engine'
+import type { PaymentRail } from '@edutrack/shared/payments/types'
 import { dispatchNotification } from './notifications'
 import { runMatchingEngine } from './match-engine'
 
@@ -24,11 +24,11 @@ interface PayeeSubmissionInput {
 }
 
 export async function submitPayeeVerification(input: PayeeSubmissionInput) {
-  const supabase = await createClient()
+  const supabase = (await createClient()) as any
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return { error: 'Not authenticated' }
 
-  const admin = createAdminClient()
+  const admin = createAdminClient() as any
 
   const { data: profile } = await supabase
     .from('users')
@@ -105,11 +105,11 @@ interface CashConfirmationInput {
 }
 
 export async function confirmCashPayment(input: CashConfirmationInput) {
-  const supabase = await createClient()
+  const supabase = (await createClient()) as any
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return { error: 'Not authenticated' }
 
-  const admin = createAdminClient()
+  const admin = createAdminClient() as any
 
   const { data: profile } = await supabase.from('users').select('role').eq('id', user.id).single()
   if (!['bursar', 'school_admin'].includes(profile?.role ?? '')) {

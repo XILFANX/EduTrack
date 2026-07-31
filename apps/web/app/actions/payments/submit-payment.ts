@@ -10,8 +10,8 @@
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { revalidatePath } from 'next/cache'
-import { normalizeReferenceCode, isReferenceCodeValid } from '@estatetrack/shared/payments/engine'
-import type { PaymentRail } from '@estatetrack/shared/payments/types'
+import { normalizeReferenceCode, isReferenceCodeValid } from '@edutrack/shared/payments/engine'
+import type { PaymentRail } from '@edutrack/shared/payments/types'
 import { dispatchNotification } from './notifications'
 import { runMatchingEngine } from './match-engine'
 
@@ -26,11 +26,11 @@ interface PayerSubmissionInput {
 }
 
 export async function submitPayerPayment(input: PayerSubmissionInput) {
-  const supabase = await createClient()
+  const supabase = (await createClient()) as any
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return { error: 'Not authenticated' }
 
-  const admin = createAdminClient()
+  const admin = createAdminClient() as any
 
   // Verify obligation belongs to this payer
   const { data: obligation, error: oblErr } = await admin
@@ -124,11 +124,11 @@ interface CashPaymentInput {
 }
 
 export async function submitCashPayment(input: CashPaymentInput) {
-  const supabase = await createClient()
+  const supabase = (await createClient()) as any
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return { error: 'Not authenticated' }
 
-  const admin = createAdminClient()
+  const admin = createAdminClient() as any
 
   const { data: submission, error: subErr } = await admin
     .from('submissions')

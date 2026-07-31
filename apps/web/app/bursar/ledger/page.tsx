@@ -28,7 +28,11 @@ export default async function BursarLedgerPage() {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login')
 
-  const { data: obligations } = await supabase
+  // TODO: re-run `npx supabase gen types` after applying migration 20260801000000
+  const db = supabase as any
+
+  const { data: obligations } = await db
+
     .from('obligations')
     .select(`
       id, type, payer_display_ref, period_label, amount_due, balance, currency, status, due_date,

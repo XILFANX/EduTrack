@@ -17,7 +17,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { submitPayeeVerification, submitBatchPayeeVerification } from '@/app/actions/payments/verify-payment'
 import { ShieldCheck, EyeOff, CheckCircle2, Loader2, Plus, Trash2, AlertTriangle } from 'lucide-react'
-import type { PaymentRail } from '@estatetrack/shared/payments/types'
+import type { PaymentRail } from '@edutrack/shared/payments/types'
 
 const RAILS: { value: PaymentRail; label: string }[] = [
   { value: 'mpesa_paybill', label: '📱 M-Pesa Paybill' },
