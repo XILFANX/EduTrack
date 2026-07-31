@@ -8,12 +8,11 @@ interface Props {
   propertyId: string
   landlordId: string
   onCreated: (count: number) => void
-  planLimits?: { maxUnits: number, currentCount: number } | null
 }
 
 const UNIT_TYPES = ['bedsitter', '1br', '2br', '3br', 'studio', 'shop', 'office', 'other']
 
-export function BulkUnitGenerator({ propertyId, landlordId, onCreated, planLimits }: Props) {
+export function BulkUnitGenerator({ propertyId, landlordId, onCreated }: Props) {
   const [open, setOpen] = useState(false)
   const [startNum, setStartNum] = useState(1)
   const [count, setCount] = useState(10)
@@ -29,11 +28,7 @@ export function BulkUnitGenerator({ propertyId, landlordId, onCreated, planLimit
   const hasMore = count > 5
 
   async function handleGenerate() {
-    if (planLimits && planLimits.currentCount + count > planLimits.maxUnits) {
-      const allowed = Math.max(0, planLimits.maxUnits - planLimits.currentCount);
-      setError(`Subscription limit reached. You can only add ${allowed} more unit(s). Upgrade for more.`);
-      return;
-    }
+
     if (!defaultRent || isNaN(parseFloat(defaultRent))) { setError('Enter a valid rent amount'); return }
     if (count < 1 || count > 50) { setError('Count must be between 1 and 50'); return }
 

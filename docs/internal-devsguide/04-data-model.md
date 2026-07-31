@@ -29,10 +29,13 @@ The root tenant object. Everything belongs to a school.
 |---|---|---|
 | `id` | uuid PK | |
 | `name` | text | |
-| `subscription_plan` | text | |
-| `subscription_status` | text | `active \| inactive` |
+| `country_code` | text | ISO alpha-2, set at onboarding. Determines pricing region. |
+| `currency` | text | ISO currency code |
+
+> **Migration note:** Legacy `subscription_plan` and `subscription_status` columns have been replaced by the `subscriptions` table (`20260731000000_regional_pricing_engine.sql`).
 
 ---
+
 
 ### `users`
 
@@ -122,5 +125,27 @@ Consolidated table for all human actors.
 RLS: users can only `SELECT`, `UPDATE`, and `DELETE` their own rows. Server inserts use service-role client. Realtime enabled for the `GlobalNotificationPopup`.
 
 > **Automated Cleanup:** Notifications that are `is_read = true` and older than 3 months are purged nightly via `pg_cron` (uncomment in migration to activate).
+
+---
+
+## Regional Pricing Engine (`20260731000000_regional_pricing_engine.sql`)
+
+Shared schema with EstateTrack (same migration file). The engine is product-aware via the `product` column on `plan_bands` and `subscriptions`.
+
+### `plan_bands`
+Pricing tiers for EduTrack (per-student count bands). Linked to `country_regions` for local-currency prices.
+
+### `subscriptions`
+Live subscription record. Created at school onboarding (status: `trialing`).
+
+| Column | Notes |
+|---|---|
+| `account_id` | FK → `schools.id` |
+| `product` | `edutrack` |
+| `current_band_id` | FK → `plan_bands` |
+| `status` | `trialing \| active \| past_due \| canceled \| paused` |
+| `trial_ends_at` | Default: 90 days from signup (configurable per school) |
+
+> **Engine rule:** Band transitions happen at cycle boundaries only. A 10% headroom buffer delays upgrades. Feature access is **not** gated by band.
 
 [Link: /admin/dashboard]

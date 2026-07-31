@@ -38,7 +38,7 @@ To issue a new task, simply paste it into the `Request` block below and prompt t
 
 This is the user request. It is the only input this file expects — everything below is protocol, not conversation.
 
-<The user's exact, unedited request goes here. If empty, you have no mission. Do not paraphrase — this stops context drift over long sessions.>
+> "# Subscription & Regional Pricing Engine — Full Replacement Spec..." (Full spec provided)
 ---
 
 ## Step 0 — Fast Path
@@ -351,10 +351,5 @@ Hold on every documentation edit, not just first-draft generation:
 | 2026-07-31 | Hardened workflow protocol in `AGENTS.md`, enforced sync strategy, updated Internal/Public docs, and added `localStorage` Clear Chat tech debt | Shipped, pushed to `main` |
 | 2026-07-30 | Phase 3 Premium Messaging Overhaul: Separation of concerns, dynamic categories, contextual naming, WhatsApp-style ticks, case-insensitive role filtering, soft clear chat, cyan/purple theming | Shipped, pushed to remote `main` (both EduTrack & EstateTrack) |
 | 2026-07-30 | Phase 2 Advanced Messaging: EstateTrack Property-first thread routing and EduTrack Automated Class Groups + Messaging Policies | Shipped, pushed to remote `main` |
-| 2026-07-28 | Repo cleanup (junk root files removed, migrations properly placed in `backend/supabase/migrations`) + full documentation sync (`04-data-model`, `05-multi-tenancy`, `02-modules/07-messaging`, `public-userguide/05-communications`) | Shipped, pushed to `EduTrack/main` (`99f20d2`) |
-| 2026-07-28 | Product Admin portal feature alignment: Messaging, badges, and ChatClient rewrite for root/platform admins | Shipped, pushed to `origin/main` (`a1580bc`) |
-| 2026-07-28 | Unified Global Notification System (GlobalNotificationPopup, NotificationCenter pages for all portals, Bell badge sync, TS strict type fixes, SQL scripts) | Shipped, pushed to `origin/main` (`25d90cc`) |
-| 2026-07-28 | Fixed unread badges race-condition on open (both apps) + added Messages to all horizontal portal nav bars | Shipped, pushed to `origin/main` (`3d694bb`) |
-| 2026-07-28 | Messaging & Broadcasting module overhaul (UX module, ChatClient, MessagesLayout, AnnouncementsClient/Feed, UnreadMessagesBadge, role-permission matrix, all portals) | Shipped, pushed to `origin/main` (`44c1637`). Required user action: run `ALTER TABLE messages ADD COLUMN IF NOT EXISTS is_read boolean DEFAULT false;` in Supabase. |
 
 <!-- Example: 2026-07-21 — Added webhook retry logic to payments module — shipped, pushed to origin/main -->
