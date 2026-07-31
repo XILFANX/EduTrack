@@ -524,11 +524,11 @@ SELECT
     (SELECT at.name FROM public.academic_terms at WHERE at.id = i.term_id),
     'Unknown Term'
   ),
-  CASE
+  (CASE
     WHEN i.balance <= 0 THEN 'settled'
     WHEN i.balance < i.amount THEN 'partial'
     ELSE 'open'
-  END,
+  END)::public.obligation_status_et,
   GREATEST(0, i.balance)
 FROM public.invoices i
 WHERE i.deleted_at IS NULL
