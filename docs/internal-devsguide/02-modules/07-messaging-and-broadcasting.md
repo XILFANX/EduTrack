@@ -74,7 +74,11 @@ Without step 2, the badge re-appears on page refresh because the query reads `me
 
 ## Typing Indicator Staleness
 
-Typing state is broadcast via the Supabase Presence channel (`chat_presence`). A user's presence state includes an `online_at` timestamp (refreshed on each keypress). On every `sync` event, the `typing` set is only populated if the presence entry's `online_at` is **less than 5 seconds old** (`Date.now() - new Date(s.online_at) < 5000`). This prevents stale "is typing..." indicators from persisting after a user disconnects, navigates away, or stops typing without sending.
+Typing state is broadcast via the Supabase Presence channel (`chat_presence`). A user's presence state includes an `online_at` timestamp (refreshed on each keypress). To prevent stale "is typing..." indicators when a user abruptly disconnects or stops typing without a final sync event, the `chat-client.tsx` implements a local `setInterval` garbage collector. This interval polls the local presence state every 1,000ms. Any user whose `online_at` timestamp is older than 5,000ms is automatically and instantly removed from the typing UI.
+
+## Last Seen Format
+
+The application enforces a strictly binary "Online" or "Offline" status for users. The `formatLastSeen` function does not attempt to calculate or display explicit "last seen at 5:40 PM" timestamps to avoid UX confusion. A dynamic `● Online` badge is displayed when a user is actively in the `chat_presence` channel; otherwise, they are designated as `● Offline`.
 
 ## Theme Tokens
 
@@ -86,11 +90,12 @@ These are applied in `chat-client.tsx` and `announcements-client.tsx` within eac
 
 ## Directory Sync (classIds)
 
-For the teacher portal, parents are associated to their child's class via a `classIds: string[]` field on each contact object. This field is built in the server page (`app/teacher/messages/page.tsx`) by:
-- For **class teachers**: querying the class they own → querying students in that class → querying `student_parents` links → assigning `classIds: [cls.id]`.
-- For **subject teachers**: querying `class_subjects` assignments → building a multi-class parent map.
+For staff portals (Teacher, Bursar, Library, Store, Transport), parents are associated to their child's class via a `classIds: string[]` field on each contact object. This field is built in the server page (`app/[portal]/messages/page.tsx`) by:
+- Querying `student_parents` links for all parent contacts.
+- Mapping each parent to the `class_id` of their linked students (`student_classes` relationship).
+- Assigning `classIds: [cls.id, ...]` directly into the contact object.
 
-The `ChatClient` uses `classIds` to filter contacts when the user drills into a specific class folder. If `classIds` is missing on a parent contact, they will appear in the top-level parent count but not inside any class folder — this is the "folder says 1 member, opens to show 0" bug.
+The `ChatClient` uses `classIds` to filter contacts when the user drills into a specific class folder. If `classIds` is missing on a parent contact, they will appear in the top-level parent count but not inside any class folder — this is the "folder says 1 member, opens to show 0" bug. This mapping logic must be present in every staff portal that allows filtering parents by class.
 
 ## Broadcast Deletion Cache Invalidation
 

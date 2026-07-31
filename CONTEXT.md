@@ -38,25 +38,7 @@ To issue a new task, simply paste it into the `Request` block below and prompt t
 
 This is the user request. It is the only input this file expects — everything below is protocol, not conversation.
 
-> "Hey! the quoted request below was the initil prompt i gave you to patch the entire messaging and broadcasting module for both EstateTrack and EduTrack across all their indidual portals and I explicitly used just one portal(the class teacher's) to use as your benchmark for this work but instructed you to ensure you enforce those changes across all portals which has the same issues for both the two repos but I noticed you only forked on that benchmark portal and abandoned the other portals which really needed the fix..." (Fix missing messaging module directory sync and features across all portals)
->
-> _During testing of the messaging and broadcasting module for both EstateTrack and EduTrack across all their indidual portal, I noticed some subtle problems which really need serious fixing.
-Since the module logic is identical for both apps across all portals (of course while separating concerns and handling portal-wise contingencies, I going to use one portal(the class teacher's portal) as the example to avoid context clutter.
->
-**[STATUS: ✅ COMPLETE — Shipped 2026-07-31 | Commits: EduTrack ee60667, EstateTrack 25c2458]**
-
-First is about aesthetics, I noticed this strange theme (greenishness/bluishness) which is not consistent with the global UI for that particular app as you aught to have enforced (purple for EstateTrack and cyan for EduTrack). Fix this in the entire module even the tiny features like "online", "typing", unread badges etc. for both the apps and across all the portals while carefully separating concerns between EstateTrack and EduTrack while still maintaining the portal-wise contingencies . 
-
-Secondly, the folders are still not in sync with the database. I noticed that in the parents directory correctly say there's one member but upon launching grade 1 where there should be a parent, no member exists. Fix this to ensure all members in the database for that particular folder are available for both the apps and across all the portals while carefully separating concerns between EstateTrack and EduTrack while still maintaining the portal-wise contingencies .
-
-Thirdly, the client side optimization like clear messages and deleting broadcasts, it promisingly clears/deletes them from the UI but quickly appears on the page refresh. All portals should be able to both clear/delete chats and broadcasts without affecting the other counterparties data. Fix this for both the apps and across all the portals while carefully separating concerns between EstateTrack and EduTrack while still maintaining the portal-wise contingencies .
-
-The forth one is the advanced chating features like typing, online last seen. They're almost there but I noticed that they're unreliable. The principal stopped typing 2 minutes ago but the UI still shows typing even on refresh. Fix this for both the apps and across all the portals while carefully separating concerns between EstateTrack and EduTrack while still maintaining the portal-wise contingencies .
-
-The unread badge works great on the main navigation menu but in the directory, it promisingly dissappears after the message is read then reappears again on refresh. Fix this for both the apps and across all the portals while carefully separating concerns between EstateTrack and EduTrack while still maintaining the portal-wise contingencies .
-
-Finally, when I want clear a chat, this browser default confirmation dialog is too unprofessional. I suggest we use the systems default configuration dialogue as in the EstateTrack and EduTrack. Fix this for both the apps and across all the portals while carefully separating concerns between EstateTrack and EduTrack while still maintaining the portal-wise contingencies ._
-
+> "did you build and document the changes?"
 ---
 
 ## Step 0 — Fast Path
@@ -363,6 +345,7 @@ Hold on every documentation edit, not just first-draft generation:
 
 | Date | Mission | Outcome |
 |---|---|---|
+| 2026-07-31 | Purged stray `emerald` theme strings globally and replaced with `cyan` | Shipped, pushed to `main` |
 | 2026-07-31 | Messaging module sync & patch across all staff portals (EstateTrack/EduTrack) | Shipped, pushed to `main` (EduTrack `ee60667`, EstateTrack `25c2458`) |
 | 2026-07-31 | Hardened workflow protocol in `AGENTS.md`, enforced sync strategy, updated Internal/Public docs, and added `localStorage` Clear Chat tech debt | Shipped, pushed to `main` |
 | 2026-07-30 | Phase 3 Premium Messaging Overhaul: Separation of concerns, dynamic categories, contextual naming, WhatsApp-style ticks, case-insensitive role filtering, soft clear chat, cyan/purple theming | Shipped, pushed to remote `main` (both EduTrack & EstateTrack) |
