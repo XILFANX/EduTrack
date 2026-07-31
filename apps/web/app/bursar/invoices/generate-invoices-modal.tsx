@@ -63,19 +63,19 @@ export function GenerateInvoicesModal({ open, onClose, schoolId, terms, classes 
 
         {result ? (
           <div className="text-center py-4 space-y-4">
-            <div className="w-16 h-16 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 flex items-center justify-center mx-auto">
+            <div className="w-16 h-16 rounded-full bg-cyan-100 dark:bg-cyan-900/30 text-cyan-600 flex items-center justify-center mx-auto">
               <Check className="w-8 h-8" />
             </div>
             <div>
               <p className="font-bold text-lg">Done!</p>
               <p className="text-sm text-muted-foreground mt-1">
-                <span className="text-emerald-600 font-semibold">{result.created}</span> invoices created.
+                <span className="text-cyan-600 font-semibold">{result.created}</span> invoices created.
                 {result.skipped > 0 && (
                   <span className="text-amber-500"> {result.skipped} students already had invoices and were skipped.</span>
                 )}
               </p>
             </div>
-            <Button className="w-full bg-emerald-600 hover:bg-emerald-700" onClick={handleClose}>
+            <Button className="w-full bg-cyan-600 hover:bg-cyan-700" onClick={handleClose}>
               Done
             </Button>
           </div>

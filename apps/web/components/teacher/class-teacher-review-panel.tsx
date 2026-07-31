@@ -73,14 +73,14 @@ export function ClassTeacherReviewPanel({ examId, classId, subjects }: Props) {
           <button
             onClick={handleFinalizeAll}
             disabled={isPending}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white text-xs font-bold rounded-xl transition-colors disabled:opacity-60"
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-cyan-600 to-teal-600 hover:from-cyan-700 hover:to-teal-700 text-white text-xs font-bold rounded-xl transition-colors disabled:opacity-60"
           >
             {isPending ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <CheckCircle2 className="w-3.5 h-3.5" />}
             Finalize All
           </button>
         )}
         {allFinalized && (
-          <span className="flex items-center gap-1 text-xs text-emerald-600 dark:text-emerald-400 font-semibold">
+          <span className="flex items-center gap-1 text-xs text-cyan-600 dark:text-cyan-400 font-semibold">
             <CheckCircle2 className="w-3.5 h-3.5" /> All Finalized
           </span>
         )}
@@ -96,7 +96,7 @@ export function ClassTeacherReviewPanel({ examId, classId, subjects }: Props) {
         {sorted.map(subject => (
           <div key={subject.subject_id} className="flex items-center gap-3 px-4 py-3">
             <div className={`w-2 h-2 rounded-full shrink-0 ${
-              subject.status === 'finalized' ? 'bg-emerald-400' :
+              subject.status === 'finalized' ? 'bg-cyan-400' :
               subject.status === 'submitted' ? 'bg-amber-400' :
               'bg-slate-300'
             }`} />
@@ -112,14 +112,14 @@ export function ClassTeacherReviewPanel({ examId, classId, subjects }: Props) {
               <button
                 onClick={() => handleFinalize(subject.subject_id)}
                 disabled={finalizing === subject.subject_id || isPending}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition-colors disabled:opacity-60 shrink-0"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-cyan-600 hover:bg-cyan-700 text-white text-xs font-bold rounded-xl transition-colors disabled:opacity-60 shrink-0"
               >
                 {finalizing === subject.subject_id ? <Loader2 className="w-3 h-3 animate-spin" /> : <CheckCircle2 className="w-3 h-3" />}
                 Finalize
               </button>
             )}
             {subject.status === 'finalized' && (
-              <span className="flex items-center gap-1 text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 shrink-0">
+              <span className="flex items-center gap-1 text-[11px] font-semibold text-cyan-600 dark:text-cyan-400 shrink-0">
                 <CheckCircle2 className="w-3 h-3" /> Done
               </span>
             )}

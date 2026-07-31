@@ -82,7 +82,7 @@ The module enforces app-level brand colors for all interactive states:
 - **EduTrack**: `cyan-500` for Online status, typing indicator, success feedback, and read ticks.
 - **EstateTrack**: `purple-500` for the same elements.
 
-These are applied in `chat-client.tsx` and `announcements-client.tsx` within each app's `apps/web/components/shared/` directory. Any deviation (e.g. `emerald-500`, `green-500`) is a bug.
+These are applied in `chat-client.tsx` and `announcements-client.tsx` within each app's `apps/web/components/shared/` directory. Any deviation (e.g. `cyan-500`, `green-500`) is a bug.
 
 ## Directory Sync (classIds)
 

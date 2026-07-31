@@ -105,7 +105,7 @@ export function CodeViewer({ repoPath, language = 'typescript', standalone = fal
               className="flex items-center gap-1.5 px-3 py-1.5 rounded bg-[#333333] text-zinc-300 hover:text-white hover:bg-[#444444] transition-colors"
               title="Copy to clipboard"
             >
-              {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+              {copied ? <Check className="w-3.5 h-3.5 text-cyan-400" /> : <Copy className="w-3.5 h-3.5" />}
               <span>{copied ? 'Copied' : 'Copy'}</span>
             </button>
           )}

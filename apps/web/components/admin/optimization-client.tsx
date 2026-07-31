@@ -24,7 +24,7 @@ const DATA_SECTIONS: { key: RetentionCategory, title: string, Icon: any, desc: s
   { key: 'communications', title: 'Chat Messages', Icon: MessageSquare, desc: 'Historical chat across all portals.', color: 'text-blue-600', bg: 'bg-blue-100 dark:bg-blue-900/20' },
   { key: 'notifications', title: 'Notifications', Icon: Bell, desc: 'System & activity notifications.', color: 'text-amber-600', bg: 'bg-amber-100 dark:bg-amber-900/20' },
   { key: 'audit_logs', title: 'Activity Logs', Icon: FileText, desc: 'Audit trail & compliance records.', color: 'text-cyan-600', bg: 'bg-cyan-100 dark:bg-cyan-900/20' },
-  { key: 'search_queries_log', title: 'Search Analytics', Icon: Search, desc: 'Portal search logs.', color: 'text-emerald-600', bg: 'bg-emerald-100 dark:bg-emerald-900/20' },
+  { key: 'search_queries_log', title: 'Search Analytics', Icon: Search, desc: 'Portal search logs.', color: 'text-cyan-600', bg: 'bg-cyan-100 dark:bg-cyan-900/20' },
   { key: 'invitations', title: 'Used Invitations', Icon: UserPlus, desc: 'Accepted or expired invitations.', color: 'text-rose-600', bg: 'bg-rose-100 dark:bg-rose-900/20' },
 ]
 
@@ -96,8 +96,8 @@ export function OptimizationClient({ initialStats }: { initialStats: Stats }) {
         </div>
         {totalDormant === 0 && (
           <div className="mt-4 flex items-center gap-2 text-sm">
-            <ShieldCheck className="w-4 h-4 text-emerald-300" />
-            <span className="text-emerald-300 font-medium">Database is fully optimized.</span>
+            <ShieldCheck className="w-4 h-4 text-cyan-300" />
+            <span className="text-cyan-300 font-medium">Database is fully optimized.</span>
           </div>
         )}
       </div>

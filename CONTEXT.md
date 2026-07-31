@@ -363,7 +363,8 @@ Hold on every documentation edit, not just first-draft generation:
 
 | Date | Mission | Outcome |
 |---|---|---|
-| 2026-07-31 | Messaging module bug fixes: cyan/purple theme enforcement, clear-chat localStorage persistence, `useConfirmDialog` replacing `window.confirm`, ghost-typing staleness filter, `markConversationAsRead` also marks `messages.is_read = true` via admin client, `revalidatePath` added to `deleteAnnouncement`, `classIds` directory sync for EduTrack teacher portal | Shipped, pushed to `main` (EduTrack `ee60667`, EstateTrack `25c2458`) |
+| 2026-07-31 | Messaging module sync & patch across all staff portals (EstateTrack/EduTrack) | Shipped, pushed to `main` (EduTrack `ee60667`, EstateTrack `25c2458`) |
+| 2026-07-31 | Hardened workflow protocol in `AGENTS.md`, enforced sync strategy, updated Internal/Public docs, and added `localStorage` Clear Chat tech debt | Shipped, pushed to `main` |
 | 2026-07-30 | Phase 3 Premium Messaging Overhaul: Separation of concerns, dynamic categories, contextual naming, WhatsApp-style ticks, case-insensitive role filtering, soft clear chat, cyan/purple theming | Shipped, pushed to remote `main` (both EduTrack & EstateTrack) |
 | 2026-07-30 | Phase 2 Advanced Messaging: EstateTrack Property-first thread routing and EduTrack Automated Class Groups + Messaging Policies | Shipped, pushed to remote `main` |
 | 2026-07-28 | Repo cleanup (junk root files removed, migrations properly placed in `backend/supabase/migrations`) + full documentation sync (`04-data-model`, `05-multi-tenancy`, `02-modules/07-messaging`, `public-userguide/05-communications`) | Shipped, pushed to `EduTrack/main` (`99f20d2`) |

@@ -75,17 +75,17 @@ export function ParentDashboardClient({ childrenList, recentPayments }: { childr
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Fees Widget */}
-        <div className="bg-gradient-to-br from-emerald-500 to-teal-600 rounded-3xl p-6 text-white shadow-md relative overflow-hidden">
+        <div className="bg-gradient-to-br from-cyan-500 to-teal-600 rounded-3xl p-6 text-white shadow-md relative overflow-hidden">
           <div className="absolute right-0 top-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -mr-10 -mt-10" />
           <div className="flex items-center justify-between mb-4 relative z-10">
             <div className="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
               <Wallet className="w-6 h-6 text-white" />
             </div>
           </div>
-          <p className="text-emerald-50 font-medium mb-1 relative z-10">Current Fee Balance</p>
+          <p className="text-cyan-50 font-medium mb-1 relative z-10">Current Fee Balance</p>
           <h3 className="text-3xl font-bold text-white relative z-10">KES 12,500</h3>
           
-          <Button className="w-full mt-6 bg-white hover:bg-slate-50 text-emerald-700 font-bold rounded-xl shadow-sm relative z-10">
+          <Button className="w-full mt-6 bg-white hover:bg-slate-50 text-cyan-700 font-bold rounded-xl shadow-sm relative z-10">
             Pay via M-Pesa STK
           </Button>
         </div>
@@ -100,7 +100,7 @@ export function ParentDashboardClient({ childrenList, recentPayments }: { childr
           <p className="text-sm text-muted-foreground font-medium mb-1">Recent Exam: Mid Term 2</p>
           <div className="flex items-baseline gap-2">
             <h3 className="text-3xl font-bold text-foreground">A-</h3>
-            <span className="text-sm font-semibold text-emerald-600">Top 15%</span>
+            <span className="text-sm font-semibold text-cyan-600">Top 15%</span>
           </div>
           
           <Button variant="outline" className="w-full mt-6 font-semibold rounded-xl border-slate-200 dark:border-slate-800">
@@ -119,7 +119,7 @@ export function ParentDashboardClient({ childrenList, recentPayments }: { childr
         ) : (
           <div className="space-y-4">
             {recentPayments.map((p, i) => (
-              <div key={i} className="border-l-2 border-emerald-500 pl-4 py-1">
+              <div key={i} className="border-l-2 border-cyan-500 pl-4 py-1">
                 <p className="text-sm font-medium text-foreground">KES {Number(p.amount).toLocaleString()} Received</p>
                 <p className="text-xs text-muted-foreground mt-0.5">
                   {new Date(p.payment_date).toLocaleDateString('en-KE', { year: 'numeric', month: 'long', day: 'numeric' })}

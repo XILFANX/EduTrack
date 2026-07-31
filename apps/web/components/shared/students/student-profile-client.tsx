@@ -122,12 +122,12 @@ export function StudentProfileClient({ student, classes }: { student: any, class
             <div className="space-y-4">
               <div className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50">
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center shrink-0">
-                    <User className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                  <div className="w-8 h-8 rounded-lg bg-cyan-100 dark:bg-cyan-900/30 flex items-center justify-center shrink-0">
+                    <User className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
                   </div>
                   <div>
                     <p className="text-xs text-muted-foreground font-medium">Status</p>
-                    <p className={`text-sm font-semibold ${status.toLowerCase() === 'active' ? 'text-emerald-600 dark:text-emerald-400' : 'text-amber-600 dark:text-amber-400'}`}>{status}</p>
+                    <p className={`text-sm font-semibold ${status.toLowerCase() === 'active' ? 'text-cyan-600 dark:text-cyan-400' : 'text-amber-600 dark:text-amber-400'}`}>{status}</p>
                   </div>
                 </div>
                 <DropdownMenu>

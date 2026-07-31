@@ -87,7 +87,7 @@ export default async function ParentPayments() {
 
       {/* Overall balance banner */}
       {invoices.length > 0 && (
-        <div className={`rounded-2xl p-5 text-white ${totalOwed > 0 ? 'bg-gradient-to-br from-red-500 to-red-600' : 'bg-gradient-to-br from-emerald-500 to-emerald-600'}`}>
+        <div className={`rounded-2xl p-5 text-white ${totalOwed > 0 ? 'bg-gradient-to-br from-red-500 to-red-600' : 'bg-gradient-to-br from-cyan-500 to-cyan-600'}`}>
           <p className="text-sm font-medium opacity-90">Outstanding Balance</p>
           <p className="text-4xl font-bold mt-1">{formatKES(totalOwed)}</p>
           <p className="text-sm mt-2 opacity-80">
@@ -110,7 +110,7 @@ export default async function ParentPayments() {
               </div>
               <span className={`text-xs font-semibold px-2 py-1 rounded-full ${
                 inv.status === 'paid'
-                  ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-400'
+                  ? 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/40 dark:text-cyan-400'
                   : inv.status === 'partial'
                   ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400'
                   : 'bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400'
@@ -125,11 +125,11 @@ export default async function ParentPayments() {
               </div>
               <div className="p-4">
                 <p className="text-xs text-muted-foreground mb-1">Paid</p>
-                <p className="font-bold text-sm text-emerald-600">{formatKES(paid)}</p>
+                <p className="font-bold text-sm text-cyan-600">{formatKES(paid)}</p>
               </div>
               <div className="p-4">
                 <p className="text-xs text-muted-foreground mb-1">Balance</p>
-                <p className={`font-bold text-sm ${inv.balance > 0 ? 'text-red-500' : 'text-emerald-600'}`}>
+                <p className={`font-bold text-sm ${inv.balance > 0 ? 'text-red-500' : 'text-cyan-600'}`}>
                   {formatKES(inv.balance)}
                 </p>
               </div>
@@ -161,7 +161,7 @@ export default async function ParentPayments() {
                     {new Date(p.payment_date).toLocaleDateString('en-KE', { day: 'numeric', month: 'short', year: 'numeric' })}
                   </p>
                 </div>
-                <div className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
+                <div className="flex items-center gap-1 text-cyan-600 dark:text-cyan-400">
                   <CheckCircle2 className="w-4 h-4" />
                   <span className="font-bold text-sm">{formatKES(p.amount)}</span>
                 </div>
@@ -173,17 +173,17 @@ export default async function ParentPayments() {
 
       {/* M-Pesa payment instructions */}
       {students.length > 0 && totalOwed > 0 && (
-        <div className="bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-2xl p-5 text-white">
+        <div className="bg-gradient-to-br from-cyan-600 to-cyan-700 rounded-2xl p-5 text-white">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
               <Smartphone className="w-5 h-5" />
             </div>
             <div>
               <p className="font-bold">How to Pay via M-Pesa</p>
-              <p className="text-xs text-emerald-100">Follow these steps on your phone</p>
+              <p className="text-xs text-cyan-100">Follow these steps on your phone</p>
             </div>
           </div>
-          <ol className="space-y-2 text-sm text-emerald-50">
+          <ol className="space-y-2 text-sm text-cyan-50">
             <li className="flex gap-2">
               <span className="w-5 h-5 rounded-full bg-white/20 text-xs flex items-center justify-center shrink-0 font-bold">1</span>
               Go to <strong className="mx-1">M-Pesa</strong> → <strong className="mx-1">Lipa na M-Pesa</strong> → <strong className="ml-1">Pay Bill</strong>

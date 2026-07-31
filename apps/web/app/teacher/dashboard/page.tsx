@@ -142,7 +142,7 @@ export default async function TeacherDashboard() {
             <div className="flex items-end gap-1.5 h-16">
               {weekHistory.map((day) => {
                 const pct = day.total > 0 ? (day.present / day.total) * 100 : 0
-                const color = pct >= 90 ? 'bg-emerald-500' : pct >= 70 ? 'bg-amber-400' : 'bg-red-400'
+                const color = pct >= 90 ? 'bg-cyan-500' : pct >= 70 ? 'bg-amber-400' : 'bg-red-400'
                 const label = new Date(day.date).toLocaleDateString('en', { weekday: 'short' }).slice(0, 2)
                 return (
                   <div key={day.date} className="flex-1 flex flex-col items-center gap-1">
@@ -161,7 +161,7 @@ export default async function TeacherDashboard() {
         <div className="grid grid-cols-2 gap-3">
           {[
             { href: '/teacher/attendance', label: 'Take Attendance', icon: ClipboardList, color: 'text-blue-500', bg: 'bg-blue-50 dark:bg-blue-900/20' },
-            { href: '/teacher/grades', label: 'Enter Grades', icon: TrendingUp, color: 'text-emerald-500', bg: 'bg-emerald-50 dark:bg-emerald-900/20' },
+            { href: '/teacher/grades', label: 'Enter Grades', icon: TrendingUp, color: 'text-cyan-500', bg: 'bg-cyan-50 dark:bg-cyan-900/20' },
             { href: '/teacher/students', label: 'My Students', icon: Users, color: 'text-indigo-500', bg: 'bg-indigo-50 dark:bg-indigo-900/20' },
             { href: '/teacher/discipline', label: 'Discipline Log', icon: GraduationCap, color: 'text-amber-500', bg: 'bg-amber-50 dark:bg-amber-900/20' },
           ].map(({ href, label, icon: Icon, color, bg }) => (

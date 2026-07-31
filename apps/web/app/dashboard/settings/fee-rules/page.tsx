@@ -12,8 +12,8 @@ export default function FeeRulesPage() {
       </div>
 
       <div className="text-center py-20 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl">
-        <div className="w-16 h-16 rounded-2xl bg-emerald-100 dark:bg-emerald-900/40 mx-auto flex items-center justify-center mb-4">
-          <FileText className="w-8 h-8 text-emerald-600 dark:text-emerald-400" />
+        <div className="w-16 h-16 rounded-2xl bg-cyan-100 dark:bg-cyan-900/40 mx-auto flex items-center justify-center mb-4">
+          <FileText className="w-8 h-8 text-cyan-600 dark:text-cyan-400" />
         </div>
         <h2 className="text-lg font-semibold text-foreground">Fee policy configuration</h2>
         <p className="text-sm text-muted-foreground max-w-sm mx-auto mt-2">

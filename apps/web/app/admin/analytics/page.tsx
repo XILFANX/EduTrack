@@ -96,7 +96,7 @@ export default async function AdminAnalyticsPage() {
           { label: 'Total Schools', value: allSchools?.length ?? 0, Icon: Building2, color: 'text-blue-500', bg: 'bg-blue-50 dark:bg-blue-900/20' },
           { label: 'Total Students', value: totalStudents, Icon: Users, color: 'text-indigo-500', bg: 'bg-indigo-50 dark:bg-indigo-900/20' },
           { label: 'Platform Billed', value: `KSh ${(totalBilled/1000000).toFixed(1)}M`, Icon: Receipt, color: 'text-amber-500', bg: 'bg-amber-50 dark:bg-amber-900/20' },
-          { label: 'Platform Collected', value: `KSh ${(totalCollected/1000000).toFixed(1)}M`, Icon: TrendingUp, color: 'text-emerald-500', bg: 'bg-emerald-50 dark:bg-emerald-900/20' },
+          { label: 'Platform Collected', value: `KSh ${(totalCollected/1000000).toFixed(1)}M`, Icon: TrendingUp, color: 'text-cyan-500', bg: 'bg-cyan-50 dark:bg-cyan-900/20' },
         ].map(({ label, value, Icon, color, bg }) => (
           <div key={label} className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800/60 rounded-3xl p-5 hover:shadow-lg transition-all duration-300">
             <div className={`w-10 h-10 rounded-2xl ${bg} flex items-center justify-center mb-4`}>
@@ -144,8 +144,8 @@ export default async function AdminAnalyticsPage() {
         {/* Top Schools */}
         <div className="bg-white dark:bg-slate-900/50 border border-border rounded-3xl p-6 shadow-sm flex flex-col">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center shrink-0">
-              <Building2 className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+            <div className="w-10 h-10 rounded-xl bg-cyan-100 dark:bg-cyan-900/30 flex items-center justify-center shrink-0">
+              <Building2 className="h-5 w-5 text-cyan-600 dark:text-cyan-400" />
             </div>
             <h2 className="text-lg font-extrabold text-foreground tracking-tight">Top Schools by Enrollment</h2>
           </div>
@@ -164,7 +164,7 @@ export default async function AdminAnalyticsPage() {
                       <span className="font-black text-slate-700 dark:text-slate-300 shrink-0">{s.count} <span className="opacity-60 text-xs">({pct}%)</span></span>
                     </div>
                     <div className="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-3 overflow-hidden">
-                      <div className="bg-emerald-500 h-3 rounded-full transition-all duration-1000 ease-out" style={{ width: `${pct}%` }} />
+                      <div className="bg-cyan-500 h-3 rounded-full transition-all duration-1000 ease-out" style={{ width: `${pct}%` }} />
                     </div>
                   </div>
                 )
@@ -218,7 +218,7 @@ export default async function AdminAnalyticsPage() {
                     <circle 
                       cx="50" cy="50" r="40" 
                       stroke="currentColor" strokeWidth="8" fill="none" 
-                      className="text-emerald-500 transition-all duration-1000 ease-out"
+                      className="text-cyan-500 transition-all duration-1000 ease-out"
                       strokeDasharray="251.2"
                       strokeDashoffset={251.2 - (251.2 * collectionRate) / 100}
                     />

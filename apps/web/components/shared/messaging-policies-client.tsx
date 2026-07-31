@@ -100,8 +100,8 @@ export function MessagingPoliciesClient({ initialPolicy }: { initialPolicy: Poli
         <div className="flex items-center gap-2 text-sm">
           {status === 'success' && (
             <>
-              <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-              <span className="text-emerald-600 font-medium">Policies saved successfully</span>
+              <CheckCircle2 className="w-4 h-4 text-cyan-500" />
+              <span className="text-cyan-600 font-medium">Policies saved successfully</span>
             </>
           )}
           {status === 'error' && (

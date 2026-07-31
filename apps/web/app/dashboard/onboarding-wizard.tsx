@@ -121,7 +121,7 @@ export function OnboardingWizard({ totalStaff, totalClasses, totalSubjects, tota
                 className="flex items-center gap-3 bg-white/70 dark:bg-slate-900/40 rounded-xl border border-blue-100 dark:border-blue-500/10 px-3 py-2.5 md:flex-col md:items-start md:p-4"
               >
                 {/* Step number badge */}
-                <div className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 text-xs font-bold md:hidden ${step.completed ? 'bg-emerald-100 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400' : 'bg-blue-100 text-blue-600 dark:bg-blue-500/20 dark:text-blue-400'}`}>
+                <div className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 text-xs font-bold md:hidden ${step.completed ? 'bg-cyan-100 text-cyan-600 dark:bg-cyan-500/20 dark:text-cyan-400' : 'bg-blue-100 text-blue-600 dark:bg-blue-500/20 dark:text-blue-400'}`}>
                   {step.completed ? <CheckCircle2 className="w-3.5 h-3.5" /> : idx + 1}
                 </div>
 
@@ -130,7 +130,7 @@ export function OnboardingWizard({ totalStaff, totalClasses, totalSubjects, tota
                   <div className="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-500/10 flex items-center justify-center">
                     <step.icon className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                   </div>
-                  {step.completed && <CheckCircle2 className="w-5 h-5 text-emerald-500" />}
+                  {step.completed && <CheckCircle2 className="w-5 h-5 text-cyan-500" />}
                 </div>
 
                 {/* Label + desc */}
@@ -141,7 +141,7 @@ export function OnboardingWizard({ totalStaff, totalClasses, totalSubjects, tota
 
                 {/* Action */}
                 {step.completed ? (
-                  <span className="shrink-0 text-xs font-semibold text-emerald-600 dark:text-emerald-400 md:hidden">Done</span>
+                  <span className="shrink-0 text-xs font-semibold text-cyan-600 dark:text-cyan-400 md:hidden">Done</span>
                 ) : (
                   <Link
                     href={step.href}
@@ -155,7 +155,7 @@ export function OnboardingWizard({ totalStaff, totalClasses, totalSubjects, tota
 
                 {/* Desktop completed button */}
                 {step.completed && (
-                  <div className="hidden md:flex w-full mt-2 py-1.5 rounded-lg bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-semibold justify-center border border-emerald-100 dark:border-emerald-500/20">
+                  <div className="hidden md:flex w-full mt-2 py-1.5 rounded-lg bg-cyan-50 dark:bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 text-xs font-semibold justify-center border border-cyan-100 dark:border-cyan-500/20">
                     Completed
                   </div>
                 )}

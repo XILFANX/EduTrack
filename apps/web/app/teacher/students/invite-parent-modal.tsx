@@ -146,8 +146,8 @@ export function InviteParentModal({ open, onClose, studentId, studentName, schoo
           </>
         ) : (
           <div className="text-center py-4 space-y-6">
-            <div className="w-16 h-16 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center mx-auto mb-2">
-              <CheckCircle2 className="w-8 h-8 text-emerald-600 dark:text-emerald-400" />
+            <div className="w-16 h-16 rounded-full bg-cyan-100 dark:bg-cyan-900/30 flex items-center justify-center mx-auto mb-2">
+              <CheckCircle2 className="w-8 h-8 text-cyan-600 dark:text-cyan-400" />
             </div>
             
             <div className="space-y-1">
@@ -165,7 +165,7 @@ export function InviteParentModal({ open, onClose, studentId, studentName, schoo
 
             <div className="flex gap-2 max-w-sm mx-auto">
               <Button variant="outline" onClick={handleCopy} className="flex-1 gap-1.5 h-10">
-                {copied ? <CheckCircle2 className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4" />}
+                {copied ? <CheckCircle2 className="w-4 h-4 text-cyan-500" /> : <Copy className="w-4 h-4" />}
                 {copied ? 'Copied' : 'Copy Link'}
               </Button>
               <a

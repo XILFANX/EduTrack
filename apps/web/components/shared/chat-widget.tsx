@@ -51,7 +51,7 @@ export function ChatWidget({ currentUserId, recipientName, initialMessages = [],
         </div>
         <div>
           <h3 className="font-semibold text-foreground">{recipientName}</h3>
-          <p className="text-xs text-emerald-500 font-medium">Online</p>
+          <p className="text-xs text-cyan-500 font-medium">Online</p>
         </div>
       </div>
 

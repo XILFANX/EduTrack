@@ -92,7 +92,7 @@ export default async function AdminDashboardPage() {
         {[
           { label: 'Active Schools', value: totalSchools ?? 0, icon: Building2, color: 'from-blue-500 to-indigo-600', shadow: 'shadow-blue-500/20' },
           { label: 'Total Students', value: totalStudents ?? 0, icon: Users, color: 'from-sky-400 to-sky-600', shadow: 'shadow-sky-500/20' },
-          { label: 'Platform Revenue', value: `KSh ${(totalCollected/1000000).toFixed(1)}M`, icon: Receipt, color: 'from-emerald-400 to-emerald-600', shadow: 'shadow-emerald-500/20' },
+          { label: 'Platform Revenue', value: `KSh ${(totalCollected/1000000).toFixed(1)}M`, icon: Receipt, color: 'from-cyan-400 to-cyan-600', shadow: 'shadow-cyan-500/20' },
           { label: 'Platform Admins', value: totalAdmins ?? 0, icon: Shield, color: 'from-indigo-400 to-indigo-600', shadow: 'shadow-indigo-500/20' },
         ].map(({ label, value, icon: Icon, color, shadow }) => (
           <div key={label} className="relative group overflow-hidden rounded-[24px] bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800/60 p-5 md:p-6 backdrop-blur-xl transition-all hover:shadow-xl dark:hover:border-slate-700">

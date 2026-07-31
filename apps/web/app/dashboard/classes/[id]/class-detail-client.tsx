@@ -218,7 +218,7 @@ export function ClassDetailClient({
             {[
               { label: 'Students', value: students.length, icon: Users, color: 'blue' },
               { label: 'Subjects', value: '—', icon: BookOpen, color: 'indigo' },
-              { label: 'Avg. Score', value: '—', icon: TrendingUp, color: 'emerald' },
+              { label: 'Avg. Score', value: '—', icon: TrendingUp, color: 'cyan' },
             ].map(({ label, value, icon: Icon, color }) => (
               <div key={label} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4">
                 <div className={`w-9 h-9 rounded-xl bg-${color}-100 dark:bg-${color}-900/30 flex items-center justify-center mb-3`}>
@@ -252,15 +252,15 @@ export function ClassDetailClient({
             className="w-full flex items-center justify-between px-4 py-3.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group"
           >
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-emerald-50 dark:bg-emerald-900/20 flex items-center justify-center">
-                <BarChart3 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+              <div className="w-9 h-9 rounded-xl bg-cyan-50 dark:bg-cyan-900/20 flex items-center justify-center">
+                <BarChart3 className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
               </div>
               <div className="text-left">
                 <p className="font-semibold text-foreground text-sm">See performance</p>
                 <p className="text-xs text-muted-foreground">Ranked student results, term by term</p>
               </div>
             </div>
-            <ArrowLeft className="w-4 h-4 text-slate-400 rotate-180 group-hover:text-emerald-500 transition-colors" />
+            <ArrowLeft className="w-4 h-4 text-slate-400 rotate-180 group-hover:text-cyan-500 transition-colors" />
           </button>
         </div>
       )}
@@ -324,7 +324,7 @@ export function ClassDetailClient({
                       <p className="text-xs text-muted-foreground font-mono">{student.admission_number}</p>
                     </div>
                     <div className="flex items-center gap-2 shrink-0" onClick={e => e.stopPropagation()}>
-                      <span className="hidden sm:inline-flex px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 text-xs font-medium">
+                      <span className="hidden sm:inline-flex px-2 py-0.5 rounded-full bg-cyan-100 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-400 text-xs font-medium">
                         Active
                       </span>
                       <DropdownMenu>
@@ -366,8 +366,8 @@ export function ClassDetailClient({
       {activeTab === 'performance' && (
         <div className="space-y-4">
           <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 text-center">
-            <div className="w-16 h-16 rounded-2xl bg-emerald-100 dark:bg-emerald-900/30 mx-auto flex items-center justify-center mb-4">
-              <TrendingUp className="w-8 h-8 text-emerald-600 dark:text-emerald-400" />
+            <div className="w-16 h-16 rounded-2xl bg-cyan-100 dark:bg-cyan-900/30 mx-auto flex items-center justify-center mb-4">
+              <TrendingUp className="w-8 h-8 text-cyan-600 dark:text-cyan-400" />
             </div>
             <h2 className="text-lg font-semibold text-foreground">Performance Analytics</h2>
             <p className="text-sm text-muted-foreground max-w-sm mx-auto mt-2">
@@ -440,7 +440,7 @@ export function ClassDetailClient({
                   <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">
                     Student
                   </span>
-                  <span className="text-sm font-medium px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400">
+                  <span className="text-sm font-medium px-2.5 py-1 rounded-full bg-cyan-100 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-400">
                     Active
                   </span>
                 </div>

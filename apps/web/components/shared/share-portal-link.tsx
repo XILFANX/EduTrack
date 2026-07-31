@@ -58,7 +58,7 @@ export function SharePortalLink({ link, label = "Share Portal", className = "", 
               onClick={handleCopy}
               className="flex items-center gap-2 px-4 py-2.5 text-xs text-foreground hover:bg-muted transition-colors text-left"
             >
-              {copied ? <Check className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4 text-muted-foreground" />}
+              {copied ? <Check className="w-4 h-4 text-cyan-500" /> : <Copy className="w-4 h-4 text-muted-foreground" />}
               {copied ? 'Copied!' : 'Copy Link'}
             </button>
             <a
@@ -68,7 +68,7 @@ export function SharePortalLink({ link, label = "Share Portal", className = "", 
               onClick={() => setIsOpen(false)}
               className="flex items-center gap-2 px-4 py-2.5 text-xs text-foreground hover:bg-muted transition-colors text-left"
             >
-              <MessageCircle className="w-4 h-4 text-emerald-500" />
+              <MessageCircle className="w-4 h-4 text-cyan-500" />
               Share via WhatsApp
             </a>
           </div>

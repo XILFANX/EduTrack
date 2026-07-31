@@ -298,8 +298,8 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
           /* ── Success: Invite link created ── */
           <div className="space-y-5 pt-1">
             <div className="text-center space-y-2">
-              <div className="w-16 h-16 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center mx-auto mb-3">
-                <Check className="w-8 h-8 text-emerald-600 dark:text-emerald-400" />
+              <div className="w-16 h-16 rounded-full bg-cyan-100 dark:bg-cyan-900/30 flex items-center justify-center mx-auto mb-3">
+                <Check className="w-8 h-8 text-cyan-600 dark:text-cyan-400" />
               </div>
               <p className="font-bold text-xl text-foreground">Invite link created!</p>
               <p className="text-sm text-muted-foreground">

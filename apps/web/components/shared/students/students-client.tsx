@@ -307,7 +307,7 @@ export function StudentsPageClient({
                     <td className="px-6 py-4 text-muted-foreground">{(student.classes as any)?.name || 'Unassigned'}</td>
                     <td className="px-6 py-4">
                       <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${(student.status || 'Active').toLowerCase() === 'active'
-                          ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400'
+                          ? 'bg-cyan-100 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-400'
                           : 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400'
                         }`}>
                         {student.status || 'Active'}
@@ -401,7 +401,7 @@ export function StudentsPageClient({
                     Student
                   </span>
                   <span className={`text-sm font-medium px-2.5 py-1 rounded-full ${(quickViewStudent.status || 'Active').toLowerCase() === 'active'
-                      ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400'
+                      ? 'bg-cyan-100 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-400'
                       : 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400'
                     }`}>
                     {quickViewStudent.status || 'Active'}

@@ -190,7 +190,7 @@ export function GradingClient({ allScales, classes, subjects, schoolId, initialC
           <button
             onClick={() => setScope('subject')}
             className={`flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-lg transition-colors ${
-              scope === 'subject' ? 'bg-[#1a2133] text-emerald-400 border border-slate-700 shadow-sm' : 'text-slate-400 hover:text-slate-200 hover:bg-[#1a2133]/50'
+              scope === 'subject' ? 'bg-[#1a2133] text-cyan-400 border border-slate-700 shadow-sm' : 'text-slate-400 hover:text-slate-200 hover:bg-[#1a2133]/50'
             }`}
           >
             <BookOpen className="w-4 h-4" /> Subject Override

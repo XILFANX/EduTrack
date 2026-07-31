@@ -64,7 +64,7 @@ function calculateGrade(score: number, maxScore: number, scales: GradeScale[]): 
 
 function gradeColorClass(grade: string | null) {
   if (!grade) return 'text-slate-400'
-  if (grade.startsWith('A')) return 'text-emerald-600 dark:text-emerald-400'
+  if (grade.startsWith('A')) return 'text-cyan-600 dark:text-cyan-400'
   if (grade.startsWith('B')) return 'text-cyan-600 dark:text-cyan-400'
   if (grade.startsWith('C')) return 'text-amber-600 dark:text-amber-400'
   return 'text-red-500 dark:text-red-400'
@@ -72,7 +72,7 @@ function gradeColorClass(grade: string | null) {
 
 function gradeBgClass(grade: string | null) {
   if (!grade) return 'bg-slate-50 text-slate-400 border-transparent'
-  if (grade.startsWith('A')) return 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-900/20 dark:text-emerald-300 dark:border-emerald-800/30'
+  if (grade.startsWith('A')) return 'bg-cyan-50 text-cyan-700 border-cyan-200 dark:bg-cyan-900/20 dark:text-cyan-300 dark:border-cyan-800/30'
   if (grade.startsWith('B')) return 'bg-cyan-50 text-cyan-700 border-cyan-200 dark:bg-cyan-900/20 dark:text-cyan-300 dark:border-cyan-800/30'
   if (grade.startsWith('C')) return 'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-900/20 dark:text-amber-300 dark:border-amber-800/30'
   return 'bg-red-50 text-red-700 border-red-200 dark:bg-red-900/20 dark:text-red-300 dark:border-red-800/30'
@@ -221,7 +221,7 @@ export function ResultsEntryTable({
         </div>
         <div className="flex flex-wrap items-center gap-2">
           {isFinalized ? (
-            <span className="flex items-center gap-1.5 text-xs font-semibold text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800/30 rounded-full px-3 py-1.5">
+            <span className="flex items-center gap-1.5 text-xs font-semibold text-cyan-700 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-900/20 border border-cyan-200 dark:border-cyan-800/30 rounded-full px-3 py-1.5">
               <CheckCircle2 className="w-3.5 h-3.5" /> Results Finalized
             </span>
           ) : submitted ? (
@@ -236,7 +236,7 @@ export function ResultsEntryTable({
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {[
           { label: 'Students', value: totalCount, color: 'text-cyan-600 dark:text-cyan-400' },
-          { label: 'Entered', value: `${enteredCount}/${totalCount}`, color: enteredCount === totalCount ? 'text-emerald-600 dark:text-emerald-400' : 'text-amber-600 dark:text-amber-400' },
+          { label: 'Entered', value: `${enteredCount}/${totalCount}`, color: enteredCount === totalCount ? 'text-cyan-600 dark:text-cyan-400' : 'text-amber-600 dark:text-amber-400' },
           { label: 'Class Avg', value: avgScore ? `${avgScore}%` : '—', color: 'text-purple-600 dark:text-purple-400' },
           { label: 'Passing', value: avgScore ? `${passCount}/${enteredCount}` : '—', color: 'text-teal-600 dark:text-teal-400' },
         ].map((stat, i) => (
@@ -338,7 +338,7 @@ export function ResultsEntryTable({
                   <td className="px-4 py-2.5 text-xs text-muted-foreground italic">{remarks || '—'}</td>
                   <td className="px-4 py-2.5">
                     {status === 'saving' && <Loader2 className="w-3.5 h-3.5 animate-spin text-cyan-500" />}
-                    {status === 'saved' && <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />}
+                    {status === 'saved' && <CheckCircle2 className="w-3.5 h-3.5 text-cyan-500" />}
                     {status === 'error' && <AlertCircle className="w-3.5 h-3.5 text-red-500" />}
                   </td>
                 </tr>

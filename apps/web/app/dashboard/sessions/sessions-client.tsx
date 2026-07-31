@@ -252,7 +252,7 @@ export function SessionsClient({ initialYears, initialTerms }: { initialYears: A
                     className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors border ${
                       year.is_active 
                         ? 'bg-rose-50 dark:bg-rose-500/10 text-rose-600 border-rose-200 dark:border-rose-500/20 hover:bg-rose-100 dark:hover:bg-rose-500/20' 
-                        : 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 border-emerald-200 dark:border-emerald-500/20 hover:bg-emerald-100 dark:hover:bg-emerald-500/20'
+                        : 'bg-cyan-50 dark:bg-cyan-500/10 text-cyan-600 border-cyan-200 dark:border-cyan-500/20 hover:bg-cyan-100 dark:hover:bg-cyan-500/20'
                     } disabled:opacity-50`}
                     title={year.is_active ? "Deactivate Year" : "Activate Year"}
                   >
@@ -288,7 +288,7 @@ export function SessionsClient({ initialYears, initialTerms }: { initialYears: A
                         className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wide transition-colors border ${
                           term.is_active 
                             ? 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-slate-500 hover:text-rose-500 hover:border-rose-200 dark:hover:border-rose-800 hover:bg-rose-50 dark:hover:bg-rose-900/20' 
-                            : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-slate-500 hover:text-emerald-600 hover:border-emerald-200 dark:hover:border-emerald-800 hover:bg-emerald-50 dark:hover:bg-emerald-900/20'
+                            : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-slate-500 hover:text-cyan-600 hover:border-cyan-200 dark:hover:border-cyan-800 hover:bg-cyan-50 dark:hover:bg-cyan-900/20'
                         } disabled:opacity-50`}
                       >
                         {loadingId === term.id ? 'Updating...' : term.is_active ? 'Deactivate' : 'Activate'}

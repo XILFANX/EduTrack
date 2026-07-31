@@ -9,7 +9,7 @@ import { recordPayment } from './actions'
 import { CreditCard, Check, Smartphone, Building2, Banknote } from 'lucide-react'
 
 const PAYMENT_METHODS = [
-  { value: 'mpesa', label: 'M-Pesa', icon: Smartphone, color: 'text-emerald-600', bg: 'bg-emerald-50 border-emerald-200 dark:bg-emerald-900/20 dark:border-emerald-800' },
+  { value: 'mpesa', label: 'M-Pesa', icon: Smartphone, color: 'text-cyan-600', bg: 'bg-cyan-50 border-cyan-200 dark:bg-cyan-900/20 dark:border-cyan-800' },
   { value: 'cash', label: 'Cash', icon: Banknote, color: 'text-amber-600', bg: 'bg-amber-50 border-amber-200 dark:bg-amber-900/20 dark:border-amber-800' },
   { value: 'bank_transfer', label: 'Bank Transfer', icon: Building2, color: 'text-blue-600', bg: 'bg-blue-50 border-blue-200 dark:bg-blue-900/20 dark:border-blue-800' },
   { value: 'cheque', label: 'Cheque', icon: CreditCard, color: 'text-violet-600', bg: 'bg-violet-50 border-violet-200 dark:bg-violet-900/20 dark:border-violet-800' },
@@ -88,8 +88,8 @@ export function RecordPaymentModal({ open, onClose, invoice, schoolId }: Props) 
       <DialogContent className="max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-6">
         <DialogHeader className="mb-4">
           <DialogTitle className="flex items-center gap-2 text-lg font-bold">
-            <div className="w-8 h-8 rounded-lg bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center">
-              <CreditCard className="w-4 h-4 text-emerald-600" />
+            <div className="w-8 h-8 rounded-lg bg-cyan-100 dark:bg-cyan-900/40 flex items-center justify-center">
+              <CreditCard className="w-4 h-4 text-cyan-600" />
             </div>
             Record Payment
           </DialogTitle>
@@ -97,14 +97,14 @@ export function RecordPaymentModal({ open, onClose, invoice, schoolId }: Props) 
 
         {done ? (
           <div className="text-center space-y-4 py-4">
-            <div className="w-16 h-16 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 flex items-center justify-center mx-auto">
+            <div className="w-16 h-16 rounded-full bg-cyan-100 dark:bg-cyan-900/30 text-cyan-600 flex items-center justify-center mx-auto">
               <Check className="w-8 h-8" />
             </div>
             <p className="font-bold text-lg">Payment Recorded!</p>
             <p className="text-sm text-muted-foreground">
               {formatKES(Number(amount))} payment has been applied to {invoice.studentName}'s account.
             </p>
-            <Button className="w-full bg-emerald-600 hover:bg-emerald-700" onClick={handleClose}>
+            <Button className="w-full bg-cyan-600 hover:bg-cyan-700" onClick={handleClose}>
               Done
             </Button>
           </div>
@@ -157,7 +157,7 @@ export function RecordPaymentModal({ open, onClose, invoice, schoolId }: Props) 
               />
               <button
                 type="button"
-                className="text-xs text-emerald-600 dark:text-emerald-400 font-medium hover:underline"
+                className="text-xs text-cyan-600 dark:text-cyan-400 font-medium hover:underline"
                 onClick={() => setAmount(String(invoice.balance))}
               >
                 Pay full balance ({formatKES(invoice.balance)})
@@ -198,7 +198,7 @@ export function RecordPaymentModal({ open, onClose, invoice, schoolId }: Props) 
               <Button type="button" variant="outline" className="flex-1" onClick={handleClose} disabled={loading}>
                 Cancel
               </Button>
-              <Button type="submit" className="flex-1 bg-emerald-600 hover:bg-emerald-700" disabled={loading}>
+              <Button type="submit" className="flex-1 bg-cyan-600 hover:bg-cyan-700" disabled={loading}>
                 {loading ? 'Saving…' : 'Record Payment'}
               </Button>
             </div>

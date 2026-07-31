@@ -64,7 +64,7 @@ export default async function LibraryBooks() {
                     <td className="px-6 py-4 text-right">
                       <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${
                         book.status === 'available'
-                          ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400'
+                          ? 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-400'
                           : book.status === 'issued'
                           ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'
                           : 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'

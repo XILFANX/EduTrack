@@ -154,8 +154,8 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
           {/* ── Success State ── */}
           {done ? (
             <div className="text-center py-6 space-y-4">
-              <div className="w-16 h-16 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center mx-auto">
-                <CheckCircle2 className="w-8 h-8 text-emerald-600 dark:text-emerald-400" />
+              <div className="w-16 h-16 rounded-full bg-cyan-100 dark:bg-cyan-900/30 flex items-center justify-center mx-auto">
+                <CheckCircle2 className="w-8 h-8 text-cyan-600 dark:text-cyan-400" />
               </div>
               <div>
                 <p className="font-bold text-foreground text-lg">{firstName} {middleName ? middleName + ' ' : ''}{lastName}</p>

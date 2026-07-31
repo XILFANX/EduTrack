@@ -188,7 +188,7 @@ export function TeacherStudentsClient({ students, invitations, parentLinks, scho
                                 className="gap-1.5 h-8 text-xs"
                                 onClick={() => handleCopyLink(pendingInvite.token)}
                               >
-                                {copiedToken === pendingInvite.token ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <LinkIcon className="w-3.5 h-3.5" />}
+                                {copiedToken === pendingInvite.token ? <Check className="w-3.5 h-3.5 text-cyan-500" /> : <LinkIcon className="w-3.5 h-3.5" />}
                                 <span className="hidden sm:inline">{copiedToken === pendingInvite.token ? 'Copied' : 'Link'}</span>
                               </Button>
                               <a
@@ -258,7 +258,7 @@ export function TeacherStudentsClient({ students, invitations, parentLinks, scho
             
             <div className={`mt-3 inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold ${
               (!quickViewStudent.status || quickViewStudent.status.toLowerCase() === 'active') 
-                ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' 
+                ? 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-400' 
                 : 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'
             }`}>
               {quickViewStudent.status || 'Active'}

@@ -47,7 +47,7 @@ export function LibraryDashboardClient({ stats, borrowedBooks }: {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {[
               { label: 'Total Books', value: stats.totalBooks, color: 'bg-white/10' },
-              { label: 'Available', value: stats.availableBooks, color: 'bg-emerald-400/20' },
+              { label: 'Available', value: stats.availableBooks, color: 'bg-cyan-400/20' },
               { label: 'Borrowed', value: stats.borrowedBooks, color: 'bg-amber-400/20' },
               { label: 'Lost/Missing', value: stats.lostBooks, color: 'bg-red-400/20' },
             ].map((s, i) => (
@@ -78,7 +78,7 @@ export function LibraryDashboardClient({ stats, borrowedBooks }: {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {[
           { label: 'Issue Book', href: '/library/issues', icon: BookMarked, color: 'text-indigo-600', bg: 'bg-indigo-50 dark:bg-indigo-900/20', border: 'border-indigo-100 dark:border-indigo-800/30' },
-          { label: 'Return Book', href: '/library/issues', icon: CheckCircle2, color: 'text-emerald-600', bg: 'bg-emerald-50 dark:bg-emerald-900/20', border: 'border-emerald-100 dark:border-emerald-800/30' },
+          { label: 'Return Book', href: '/library/issues', icon: CheckCircle2, color: 'text-cyan-600', bg: 'bg-cyan-50 dark:bg-cyan-900/20', border: 'border-cyan-100 dark:border-cyan-800/30' },
           { label: 'All Books', href: '/library/books', icon: BookOpen, color: 'text-purple-600', bg: 'bg-purple-50 dark:bg-purple-900/20', border: 'border-purple-100 dark:border-purple-800/30' },
           { label: 'Overdue', href: '/library/issues', icon: AlertOctagon, color: 'text-red-600', bg: 'bg-red-50 dark:bg-red-900/20', border: 'border-red-100 dark:border-red-800/30' },
         ].map((a, i) => {

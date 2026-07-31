@@ -22,7 +22,7 @@ interface Props {
 const ROLE_COLORS: Record<string, { badge: string; btn: string; glow: string }> = {
   class_teacher:    { badge: 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300',   btn: 'bg-blue-600 hover:bg-blue-700',   glow: 'from-blue-500/20 to-slate-900' },
   subject_teacher:  { badge: 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/40 dark:text-cyan-300',           btn: 'bg-cyan-600 hover:bg-cyan-700',       glow: 'from-cyan-500/20 to-slate-900' },
-  bursar:           { badge: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300', btn: 'bg-emerald-600 hover:bg-emerald-700', glow: 'from-emerald-500/20 to-slate-900' },
+  bursar:           { badge: 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/40 dark:text-cyan-300', btn: 'bg-cyan-600 hover:bg-cyan-700', glow: 'from-cyan-500/20 to-slate-900' },
   librarian:        { badge: 'bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300',       btn: 'bg-amber-500 hover:bg-amber-600',     glow: 'from-amber-500/20 to-slate-900' },
   storekeeper:      { badge: 'bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-300',   btn: 'bg-orange-600 hover:bg-orange-700',   glow: 'from-orange-500/20 to-slate-900' },
   transport_matron: { badge: 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300',          btn: 'bg-slate-700 hover:bg-slate-800',     glow: 'from-slate-500/20 to-slate-900' },
@@ -298,7 +298,7 @@ export default function InviteClient({
             )}
 
             {successMsg && (
-              <div className="bg-emerald-950/50 border border-emerald-800/50 text-emerald-300 text-sm px-4 py-3 rounded-xl leading-snug">
+              <div className="bg-cyan-950/50 border border-cyan-800/50 text-cyan-300 text-sm px-4 py-3 rounded-xl leading-snug">
                 {successMsg}
               </div>
             )}

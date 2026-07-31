@@ -12,7 +12,7 @@ import { deleteInviteAndAccount } from './actions'
 const ROLE_LABELS: Record<string, { label: string; color: string }> = {
   class_teacher: { label: 'Class Teacher', color: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' },
   subject_teacher: { label: 'Subject Teacher', color: 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-300' },
-  bursar: { label: 'Bursar', color: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300' },
+  bursar: { label: 'Bursar', color: 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-300' },
   librarian: { label: 'Librarian', color: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300' },
   storekeeper: { label: 'Storekeeper', color: 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300' },
   transport_matron: { label: 'Transport Matron', color: 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300' },
@@ -150,7 +150,7 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
                               onClick={() => handleCopyLink(inv.token)}
                               className="w-full flex items-center gap-2.5 px-4 py-3 text-sm text-foreground hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
                             >
-                              {copiedToken === inv.token ? <Check className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4 text-muted-foreground" />}
+                              {copiedToken === inv.token ? <Check className="w-4 h-4 text-cyan-500" /> : <Copy className="w-4 h-4 text-muted-foreground" />}
                               Copy Link
                             </button>
                             <a
@@ -267,7 +267,7 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
                   <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${ROLE_LABELS[detailMember.role]?.color ?? 'bg-slate-200 text-slate-700'}`}>
                     {ROLE_LABELS[detailMember.role]?.label ?? detailMember.role}
                   </span>
-                  <span className="text-sm font-medium px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400">
+                  <span className="text-sm font-medium px-2.5 py-1 rounded-full bg-cyan-100 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-400">
                     Active
                   </span>
                 </div>
@@ -302,7 +302,7 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
                   <div className="flex gap-2">
                     <button onClick={() => handleCopyLink(detailInvite.token)}
                       className="flex-1 flex items-center justify-center gap-2 h-11 rounded-xl border border-slate-200 dark:border-slate-700 text-sm font-semibold text-foreground hover:bg-white dark:hover:bg-slate-800 transition-colors shadow-sm bg-slate-50 dark:bg-slate-900">
-                      {copiedToken === detailInvite.token ? <Check className="w-4 h-4 text-emerald-500" /> : <LinkIcon className="w-4 h-4" />}
+                      {copiedToken === detailInvite.token ? <Check className="w-4 h-4 text-cyan-500" /> : <LinkIcon className="w-4 h-4" />}
                       {copiedToken === detailInvite.token ? 'Copied!' : 'Copy Link'}
                     </button>
                     <a href={buildWA(detailMember.full_name, detailInvite.token)} target="_blank" rel="noopener noreferrer"

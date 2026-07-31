@@ -51,7 +51,7 @@ export function ReturnBookButton({
       <DropdownMenuContent align="end" className="w-48 rounded-xl">
         <DropdownMenuItem 
           onClick={() => handleReturn(false, false)}
-          className="gap-2 cursor-pointer py-2 text-emerald-600 focus:text-emerald-700"
+          className="gap-2 cursor-pointer py-2 text-cyan-600 focus:text-cyan-700"
         >
           <CheckCircle className="w-4 h-4" />
           Mark as Returned

@@ -58,7 +58,7 @@ export function StoreDashboardClient({
       {/* Quick Actions */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {[
-          { label: 'Log Stock In', href: '/store/ledger', icon: ArrowDownToLine, color: 'text-emerald-600', bg: 'bg-emerald-50 dark:bg-emerald-900/20', border: 'border-emerald-100 dark:border-emerald-800/30' },
+          { label: 'Log Stock In', href: '/store/ledger', icon: ArrowDownToLine, color: 'text-cyan-600', bg: 'bg-cyan-50 dark:bg-cyan-900/20', border: 'border-cyan-100 dark:border-cyan-800/30' },
           { label: 'Disburse Items', href: '/store/ledger', icon: ArrowUpFromLine, color: 'text-orange-600', bg: 'bg-orange-50 dark:bg-orange-900/20', border: 'border-orange-100 dark:border-orange-800/30' },
           { label: 'View All Stock', href: '/store/stock', icon: Boxes, color: 'text-amber-600', bg: 'bg-amber-50 dark:bg-amber-900/20', border: 'border-amber-100 dark:border-amber-800/30' },
           { label: 'New Item', href: '/store/stock', icon: Plus, color: 'text-blue-600', bg: 'bg-blue-50 dark:bg-blue-900/20', border: 'border-blue-100 dark:border-blue-800/30' },
@@ -103,7 +103,7 @@ export function StoreDashboardClient({
         {/* Check-ins */}
         <div className="bg-card border border-border rounded-3xl overflow-hidden shadow-sm">
           <div className="px-5 py-4 border-b border-border flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-emerald-400" />
+            <div className="w-2 h-2 rounded-full bg-cyan-400" />
             <h2 className="font-bold text-foreground text-sm">Recent Check-Ins</h2>
           </div>
           {recentTransactions.filter(t => t.transaction_type === 'in').length === 0 ? (
@@ -115,14 +115,14 @@ export function StoreDashboardClient({
             <div className="divide-y divide-border">
               {recentTransactions.filter(t => t.transaction_type === 'in').slice(0, 5).map((tx: any, i: number) => (
                 <div key={i} className="flex items-center gap-3 px-5 py-3 hover:bg-slate-50/60 dark:hover:bg-slate-900/20 transition-colors">
-                  <div className="w-8 h-8 rounded-xl bg-emerald-50 dark:bg-emerald-900/20 flex items-center justify-center shrink-0">
-                    <ArrowDownToLine className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                  <div className="w-8 h-8 rounded-xl bg-cyan-50 dark:bg-cyan-900/20 flex items-center justify-center shrink-0">
+                    <ArrowDownToLine className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="font-semibold text-sm text-foreground truncate">{tx.item_name}</p>
                     <p className="text-xs text-muted-foreground">{fmtDate(tx.created_at)} · By {tx.logged_by}</p>
                   </div>
-                  <span className="text-emerald-600 dark:text-emerald-400 font-bold text-sm">+{tx.quantity}</span>
+                  <span className="text-cyan-600 dark:text-cyan-400 font-bold text-sm">+{tx.quantity}</span>
                 </div>
               ))}
             </div>

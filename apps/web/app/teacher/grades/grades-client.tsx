@@ -49,7 +49,7 @@ function calculateGrade(scoreStr: string, gradeScales?: { grade: string; min_sco
 }
 
 function gradeColor(grade: string): string {
-  if (['A', 'A-'].includes(grade)) return 'text-emerald-600 dark:text-emerald-400'
+  if (['A', 'A-'].includes(grade)) return 'text-cyan-600 dark:text-cyan-400'
   if (['B+', 'B', 'B-'].includes(grade)) return 'text-blue-600 dark:text-blue-400'
   if (['C+', 'C', 'C-'].includes(grade)) return 'text-amber-600 dark:text-amber-400'
   if (grade === '--') return 'text-slate-300 dark:text-slate-600'
@@ -214,7 +214,7 @@ export function GradesClient({ schoolId, teacherId, cls, students, exams, subjec
           {avg !== null && (
             <div className="flex gap-4 mt-3 text-xs">
               <span className="text-muted-foreground">Avg: <strong className="text-foreground">{avg}</strong></span>
-              <span className="text-muted-foreground">Highest: <strong className="text-emerald-600">{highest}</strong></span>
+              <span className="text-muted-foreground">Highest: <strong className="text-cyan-600">{highest}</strong></span>
               <span className="text-muted-foreground">Lowest: <strong className="text-red-500">{lowest}</strong></span>
             </div>
           )}

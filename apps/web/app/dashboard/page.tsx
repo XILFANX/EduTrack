@@ -62,7 +62,7 @@ export default async function DashboardPage() {
 
   const quickActions = [
     { href: '/dashboard/staff', label: 'Staff', sublabel: 'Manage Staff', icon: Users, color: 'text-blue-600 dark:text-blue-400', bg: 'bg-blue-500/10 border border-blue-500/20', hoverBg: 'group-hover:bg-blue-500/20' },
-    { href: '/dashboard/students', label: 'Students', sublabel: 'Student Records', icon: GraduationCap, color: 'text-emerald-600 dark:text-emerald-400', bg: 'bg-emerald-500/10 border border-emerald-500/20', hoverBg: 'group-hover:bg-emerald-500/20' },
+    { href: '/dashboard/students', label: 'Students', sublabel: 'Student Records', icon: GraduationCap, color: 'text-cyan-600 dark:text-cyan-400', bg: 'bg-cyan-500/10 border border-cyan-500/20', hoverBg: 'group-hover:bg-cyan-500/20' },
     { href: '/dashboard/classes', label: 'Classes', sublabel: 'Class Rosters', icon: BookOpen, color: 'text-amber-600 dark:text-amber-400', bg: 'bg-amber-500/10 border border-amber-500/20', hoverBg: 'group-hover:bg-amber-500/20' },
     { href: '/dashboard/subjects', label: 'Subjects', sublabel: 'Subject Engine', icon: ClipboardList, color: 'text-violet-600 dark:text-violet-400', bg: 'bg-violet-500/10 border border-violet-500/20', hoverBg: 'group-hover:bg-violet-500/20' },
     { href: '/dashboard/exams', label: 'Exams', sublabel: 'Examinations', icon: FileText, color: 'text-rose-600 dark:text-rose-400', bg: 'bg-rose-500/10 border border-rose-500/20', hoverBg: 'group-hover:bg-rose-500/20' },
@@ -150,7 +150,7 @@ export default async function DashboardPage() {
         <SectionHeader title="FINANCE SUMMARY" />
         <div className="grid grid-cols-2 gap-3">
           <Link href="/bursar/dashboard" className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col gap-3 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-            <Banknote className="w-5 h-5 text-emerald-500" />
+            <Banknote className="w-5 h-5 text-cyan-500" />
             <div>
               <p className="text-xl font-bold text-foreground">{formatKES(totalCollected)}</p>
               <p className="text-xs font-medium text-slate-500">Term Fees Collected</p>

@@ -35,7 +35,7 @@ function formatDate(d: string) {
 const STATUS_BG: Record<string, string> = {
   pending: 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400',
   submitted: 'bg-amber-50 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400',
-  finalized: 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400',
+  finalized: 'bg-cyan-50 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-400',
 }
 
 export function ExamScheduler({ exam, subjects, classes, initialSlots }: Props) {
@@ -130,7 +130,7 @@ export function ExamScheduler({ exam, subjects, classes, initialSlots }: Props) 
           {slots.length} subjects scheduled
         </div>
         {published ? (
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-100 dark:border-emerald-800/30 text-emerald-700 dark:text-emerald-300 text-xs font-semibold">
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-cyan-50 dark:bg-cyan-900/20 border border-cyan-100 dark:border-cyan-800/30 text-cyan-700 dark:text-cyan-300 text-xs font-semibold">
             <CheckCircle2 className="w-3.5 h-3.5" />
             Schedule Published — Staff Notified
           </div>
