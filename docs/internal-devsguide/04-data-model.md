@@ -66,16 +66,29 @@ Consolidated table for all human actors.
 
 ---
 
-### Financial Schema
+### Financial Schema (`20260801000000_reconciliation_engine.sql`)
 
 | Table | Purpose |
 |---|---|
 | `fee_structures` | Defines what is billed per term (either globally or tied to a `class_id`). |
 | `invoices` | Monthly/Termly bill generated per student. Contains `balance` and `status` (`unpaid \| partial \| paid`). |
 | `invoice_items` | Line items defining an invoice breakdown (e.g. "Tuition", "Transport"). |
-| `fee_payments` | Ledger of successfully received payments. |
-| `mpesa_stk_requests` | Tracks Daraja API push states (`checkout_request_id`, `status`). |
 | `salary_advances` | Tracks staff requests for mid-month advances. |
+
+### Payment Settlement Reconciliation Engine
+
+This engine replaces all legacy push-based payments with a deterministic two-independent-witness matching model.
+
+| Table | Purpose |
+|---|---|
+| `payee_rail_profiles` | Receiving account configurations (e.g., School Paybill, Bank Account). Version-controlled for immutability. |
+| `obligations` | The debt to be settled (e.g., Term Fee). Contains `amount_due`, `balance`, and `status`. |
+| `submissions` | Assertions of payment (e.g., Parent uploads M-Pesa code, Bursar bulk-uploads statement). |
+| `match_records` | The outcome of matching one or more Submissions to an Obligation. |
+| `ledger_entries` | Immutable ledger reflecting balance changes on an Obligation (`payment`, `partial`, `overpayment`, `correction`). |
+| `dispute_cases` | Created when a submission cannot be resolved or is flagged by a Bursar. |
+
+> **Important note:** The legacy tables (`fee_payments`, `mpesa_stk_requests`) are deprecated and placed in a 90-day read-only archive window. They are NOT dropped, to preserve historical data.
 
 ---
 

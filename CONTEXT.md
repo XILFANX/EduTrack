@@ -36,9 +36,9 @@ To issue a new task, simply paste it into the `Request` block below and prompt t
 
 ## Request
 
-"..."
+"Update documentation (data model and public user guides) to reflect the new Payment Settlement Reconciliation Engine (blind verification flow and new schemas)."
 
-_Status: Idle_
+_Status: Step 1 - Planning_
 ---
 
 ## Step 0 — Fast Path
