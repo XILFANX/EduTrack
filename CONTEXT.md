@@ -38,7 +38,7 @@ To issue a new task, simply paste it into the `Request` block below and prompt t
 
 This is the user request. It is the only input this file expects — everything below is protocol, not conversation.
 
-> "# Subscription & Regional Pricing Engine — Full Replacement Spec..." (Full spec provided)
+<The user's exact, unedited request goes here. If empty, you have no mission. Do not paraphrase — this stops context drift over long sessions.>
 ---
 
 ## Step 0 — Fast Path
@@ -345,6 +345,7 @@ Hold on every documentation edit, not just first-draft generation:
 
 | Date | Mission | Outcome |
 |---|---|---|
+| 2026-07-31 | Regional Pricing Engine full replacement — schema, billing engine, codebase deprecations, onboarding cleanup, docs | Shipped, pushed to `main` (EstateTrack `9f5bc64`, EduTrack `9884b23`) |
 | 2026-07-31 | Documented messaging module fixes (`classIds` sync, typing, `Online/Offline` UX) in `internal-devsguide` and `public-userguide` | Shipped, pushed to `main` |
 | 2026-07-31 | Purged stray `emerald` theme strings globally and replaced with `cyan` | Shipped, pushed to `main` |
 | 2026-07-31 | Messaging module sync & patch across all staff portals (EstateTrack/EduTrack) | Shipped, pushed to `main` (EduTrack `ee60667`, EstateTrack `25c2458`) |

@@ -3,15 +3,16 @@
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { revalidatePath } from 'next/cache'
+import { computeTrialEnd } from '@/../../packages/shared/billing/engine'
 
 export interface OnboardingData {
   schoolName: string
   schoolPhone: string
   schoolAddress: string
   curriculumType: 'cbc' | '844' | 'igcse' | 'other'
-  subscriptionPlan: string
   feeDueDay: number
   adminTitle: 'principal' | 'headteacher'
+  countryCode: string   // ISO 3166-1 alpha-2 — required for pricing region
   logoUrl?: string | null
 }
 
@@ -23,9 +24,10 @@ export async function completeOnboarding(
     const { data: { user }, error: authError } = await supabase.auth.getUser()
     if (authError || !user) return { error: 'Not authenticated. Please log in again.' }
 
-    const admin = createAdminClient()
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const admin = createAdminClient() as any
 
-    // 1. Create the school record
+    // 1. Create the school record — no legacy subscription_tier column
     const slug =
       data.schoolName
         .toLowerCase()
@@ -36,24 +38,49 @@ export async function completeOnboarding(
       '-' +
       Math.random().toString(36).slice(2, 7)
 
-    const { data: schoolResult, error: schoolError } = await admin
+    const { data: school, error: schoolError } = await admin
       .from('schools')
       .insert({
         name: data.schoolName,
         domain: slug,
-        subscription_tier: data.subscriptionPlan,
+        country_code: data.countryCode,
         logo_url: data.logoUrl || null,
       })
       .select('id')
       .single()
 
-    const school = schoolResult as any
-
     if (schoolError || !school) {
       return { error: `Failed to create school: ${schoolError?.message ?? 'Unknown error'}` }
     }
 
-    // 2. Upsert the user profile — works whether the row already exists or not
+    // 2. Read billing_config + Band 1 from DB — trial duration must never be hardcoded.
+    const [{ data: billingConfig }, { data: band }] = await Promise.all([
+      admin.from('billing_config').select('trial_days_default').eq('product', 'edutrack').single(),
+      admin.from('plan_bands').select('id').eq('product', 'edutrack').eq('band_index', 1).single(),
+    ])
+
+    if (!billingConfig || !band) {
+      console.error('EduTrack billing config or plan bands not seeded. billingConfig:', billingConfig, 'band:', band)
+      return { error: 'Billing configuration is not ready. Please contact support.' }
+    }
+
+    const trialStart = new Date()
+    const trialEnd = computeTrialEnd(trialStart, billingConfig.trial_days_default)
+
+    await admin.from('subscriptions').insert({
+      account_id: school.id,
+      product: 'edutrack',
+      current_band_id: band.id,
+      status: 'trialing',
+      billing_cycle: 'termly',
+      trial_starts_at: trialStart.toISOString(),
+      trial_ends_at: trialEnd.toISOString(),
+      current_period_start: trialStart.toISOString(),
+      current_period_end: trialEnd.toISOString(),
+      current_band_unit_count: 0,
+    })
+
+    // 3. Upsert the user profile
     const { error: profileError } = await admin
       .from('users')
       .upsert({
@@ -69,7 +96,7 @@ export async function completeOnboarding(
       return { error: `Failed to save your profile: ${profileError.message}` }
     }
 
-    // 3. Verify the write actually took effect before telling the client to proceed
+    // 4. Verify the write took effect before proceeding
     const { data: verified, error: verifyError } = await admin
       .from('users')
       .select('school_id')
@@ -82,7 +109,8 @@ export async function completeOnboarding(
 
     revalidatePath('/', 'layout')
     return { success: true }
-  } catch (err: any) {
-    return { error: err.message || 'An unexpected server error occurred.' }
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : 'An unexpected server error occurred.'
+    return { error: message }
   }
 }

@@ -15,42 +15,26 @@ import { useRef } from 'react'
 const STEPS = [
   { id: 1, title: 'School Details', desc: 'Tell us about your school' },
   { id: 2, title: 'Curriculum Type', desc: 'What curriculum does your school follow?' },
-  { id: 3, title: 'Subscription Plan', desc: 'Choose the right tier for your school' },
-  { id: 4, title: 'Almost done!', desc: 'Final preferences & confirmation' },
+  { id: 3, title: 'Region & Preferences', desc: 'Final setup & confirmation' },
 ]
 
 const CURRICULUM_OPTIONS = [
-  {
-    id: 'cbc',
-    name: 'CBC',
-    desc: 'Competency-Based Curriculum — Kenya (Grade 1 to 9)',
-    flag: '🇰🇪',
-  },
-  {
-    id: '844',
-    name: '8-4-4',
-    desc: 'Traditional Kenyan system — Standard 1 to Form 6',
-    flag: '🇰🇪',
-  },
-  {
-    id: 'igcse',
-    name: 'IGCSE / A-Levels',
-    desc: 'Cambridge international curriculum',
-    flag: '🌍',
-  },
-  {
-    id: 'other',
-    name: 'Other / Mixed',
-    desc: 'Custom or hybrid curriculum',
-    flag: '📚',
-  },
+  { id: 'cbc', name: 'CBC', desc: 'Competency-Based Curriculum — Kenya (Grade 1 to 9)', flag: '🇰🇪' },
+  { id: '844', name: '8-4-4', desc: 'Traditional Kenyan system — Standard 1 to Form 6', flag: '🇰🇪' },
+  { id: 'igcse', name: 'IGCSE / A-Levels', desc: 'Cambridge international curriculum', flag: '🌍' },
+  { id: 'other', name: 'Other / Mixed', desc: 'Custom or hybrid curriculum', flag: '📚' },
 ]
 
-const PLANS = [
-  { id: 'trial', name: 'Trial', price: 'Free', desc: 'Up to 50 students' },
-  { id: 'basic', name: 'Basic', price: 'KES 3,500', desc: 'Up to 300 students' },
-  { id: 'standard', name: 'Standard', price: 'KES 7,500', desc: 'Up to 800 students' },
-  { id: 'premium', name: 'Premium', price: 'Custom', desc: 'Unlimited students' },
+const COUNTRIES = [
+  { code: 'KE', name: 'Kenya',        flag: '🇰🇪', currency: 'KES' },
+  { code: 'UG', name: 'Uganda',       flag: '🇺🇬', currency: 'UGX' },
+  { code: 'TZ', name: 'Tanzania',     flag: '🇹🇿', currency: 'TZS' },
+  { code: 'RW', name: 'Rwanda',       flag: '🇷🇼', currency: 'RWF' },
+  { code: 'NG', name: 'Nigeria',      flag: '🇳🇬', currency: 'NGN' },
+  { code: 'GH', name: 'Ghana',        flag: '🇬🇭', currency: 'GHS' },
+  { code: 'ZA', name: 'South Africa', flag: '🇿🇦', currency: 'ZAR' },
+  { code: 'US', name: 'United States',flag: '🇺🇸', currency: 'USD' },
+  { code: 'GB', name: 'United Kingdom',flag:'🇬🇧', currency: 'GBP' },
 ]
 
 export default function OnboardingPage() {
@@ -64,9 +48,10 @@ export default function OnboardingPage() {
   const [schoolPhone, setSchoolPhone] = useState('')
   const [schoolAddress, setSchoolAddress] = useState('')
   const [curriculumType, setCurriculumType] = useState<'cbc' | '844' | 'igcse' | 'other'>('cbc')
-  const [subscriptionPlan, setSubscriptionPlan] = useState('trial')
+  const [countryCode, setCountryCode] = useState('KE')
   const [feeDueDay, setFeeDueDay] = useState(5)
   const [adminTitle, setAdminTitle] = useState<'principal' | 'headteacher'>('principal')
+  
   const [logoFile, setLogoFile] = useState<File | null>(null)
   const [logoPreview, setLogoPreview] = useState<string | null>(null)
   const [uploadingLogo, setUploadingLogo] = useState(false)
@@ -119,7 +104,7 @@ export default function OnboardingPage() {
       schoolPhone,
       schoolAddress,
       curriculumType,
-      subscriptionPlan,
+      countryCode,
       feeDueDay,
       adminTitle,
       logoUrl,
@@ -130,9 +115,6 @@ export default function OnboardingPage() {
         setError(res.error)
         setLoading(false)
       } else {
-        // Hard navigation — bypasses Next.js client-side router cache
-        // which would otherwise serve a stale profile (no school_id yet)
-        // and silently redirect back to /onboarding.
         window.location.href = '/dashboard'
       }
     } catch (err: any) {
@@ -241,9 +223,6 @@ export default function OnboardingPage() {
                       value={schoolName}
                       onChange={(e) => setSchoolName(e.target.value)}
                     />
-                    <p className="text-xs text-muted-foreground">
-                      This appears on report cards, receipts, and leaving certificates.
-                    </p>
                   </div>
                 </div>
                 <div className="space-y-2">
@@ -291,12 +270,6 @@ export default function OnboardingPage() {
                       Headteacher
                     </label>
                   </div>
-                  <p className="text-xs text-muted-foreground">
-                    This is how the system will address you and label your dashboard.
-                  </p>
-                </div>
-                <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800/50 rounded-lg p-3 text-sm text-blue-800 dark:text-blue-400">
-                  🏫 <strong>You&apos;ll add classes, subjects, and staff from your dashboard</strong> after setup.
                 </div>
               </>
             )}
@@ -327,56 +300,49 @@ export default function OnboardingPage() {
                     </div>
                   </button>
                 ))}
-                <p className="text-xs text-muted-foreground">
-                  This determines how grades are recorded — numeric (8-4-4 / IGCSE) or rubric-based (CBC).
-                </p>
               </div>
             )}
 
-            {/* ── Step 3: Subscription Plan ── */}
+            {/* ── Step 3: Country / Billing Region & Final ── */}
             {step === 3 && (
-              <div className="grid grid-cols-1 gap-3">
-                {PLANS.map((plan) => (
-                  <button
-                    key={plan.id}
-                    type="button"
-                    onClick={() => setSubscriptionPlan(plan.id)}
-                    className={`text-left p-4 rounded-xl border transition-all ${
-                      subscriptionPlan === plan.id
-                        ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/20 ring-1 ring-blue-600'
-                        : 'border-border hover:border-blue-300'
-                    }`}
-                  >
-                    <div className="flex justify-between items-center">
-                      <div>
-                        <p className="font-bold text-foreground">{plan.name}</p>
-                        <p className="text-xs text-muted-foreground mt-0.5">{plan.desc}</p>
-                      </div>
-                      <div className="text-right">
-                        <p className="font-bold text-blue-600 dark:text-blue-400">{plan.price}</p>
-                        <p className="text-[10px] text-muted-foreground">/ term</p>
-                      </div>
-                    </div>
-                  </button>
-                ))}
-              </div>
-            )}
+              <div className="space-y-6">
+                
+                {/* Region */}
+                <div className="space-y-2">
+                  <Label>Country (Billing Region)</Label>
+                  <p className="text-xs text-muted-foreground">
+                    This determines your local currency and pricing.
+                  </p>
+                  <div className="grid grid-cols-1 gap-2 max-h-48 overflow-y-auto p-1 border rounded-md">
+                    {COUNTRIES.map((c) => (
+                      <button
+                        key={c.code}
+                        type="button"
+                        onClick={() => setCountryCode(c.code)}
+                        className={`text-left p-2 rounded-lg border transition-all flex items-center gap-3 ${
+                          countryCode === c.code
+                            ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/20 ring-1 ring-blue-600'
+                            : 'border-transparent hover:border-blue-200 bg-muted/30'
+                        }`}
+                      >
+                        <span className="text-lg">{c.flag}</span>
+                        <span className="font-medium text-sm text-foreground">{c.name}</span>
+                        <span className="ml-auto text-[10px] font-mono text-muted-foreground">{c.currency}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
 
-            {/* ── Step 4: Final Preferences ── */}
-            {step === 4 && (
-              <>
+                {/* Fees Due Day */}
                 <div className="space-y-2">
                   <Label>Term fee due day</Label>
-                  <p className="text-sm text-muted-foreground">
-                    On which day of the month do school fees become due?
-                  </p>
                   <div className="grid grid-cols-5 gap-2 mt-2">
                     {[1, 2, 5, 10, 15].map((day) => (
                       <button
                         key={day}
                         type="button"
                         onClick={() => setFeeDueDay(day)}
-                        className={`py-3 rounded-lg border text-sm font-semibold transition-colors ${
+                        className={`py-2 rounded-lg border text-sm font-semibold transition-colors ${
                           feeDueDay === day
                             ? 'border-blue-600 bg-blue-600 text-white'
                             : 'border-border text-foreground hover:border-blue-400 hover:bg-muted'
@@ -396,10 +362,9 @@ export default function OnboardingPage() {
                   <div className="text-sm text-muted-foreground space-y-1.5 bg-muted/50 rounded-xl p-4">
                     {[
                       { label: 'School', value: schoolName || '—' },
-                      { label: 'Phone', value: schoolPhone || '—' },
                       { label: 'Curriculum', value: curriculumType.toUpperCase() },
-                      { label: 'Plan', value: subscriptionPlan.charAt(0).toUpperCase() + subscriptionPlan.slice(1) },
-                      { label: 'Fees due', value: `Day ${feeDueDay} of each month` },
+                      { label: 'Region', value: COUNTRIES.find(c => c.code === countryCode)?.name },
+                      { label: 'Fees due', value: `Day ${feeDueDay}` },
                     ].map(({ label, value }) => (
                       <div key={label} className="flex justify-between">
                         <span>{label}</span>
@@ -408,7 +373,8 @@ export default function OnboardingPage() {
                     ))}
                   </div>
                 </div>
-              </>
+                
+              </div>
             )}
 
             {error && (
@@ -445,7 +411,7 @@ export default function OnboardingPage() {
               onClick={handleComplete}
               disabled={loading || uploadingLogo}
             >
-              {loading || uploadingLogo ? 'Setting up your school…' : '🎓 Go to my dashboard'}
+              {loading || uploadingLogo ? 'Setting up...' : '🎓 Go to dashboard'}
             </Button>
           )}
         </div>
