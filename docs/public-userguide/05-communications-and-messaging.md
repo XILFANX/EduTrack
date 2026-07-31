@@ -49,7 +49,7 @@ If you need to discuss a specific student's performance with their parent, you c
 3. Click a contact to open the conversation.
 
 **WhatsApp-Style Features:**
-- **Real-time Status:** See if the person is **● Online** or their **Last Seen** time.
+- **Real-time Status:** See if the person is **● Online** or **● Offline**.
 - **Typing Indicators:** See when the other person is actively typing a reply.
 - **Message Ticks:** 
   - One tick (✓): Message sent.
