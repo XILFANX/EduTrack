@@ -8,6 +8,7 @@ import {
 } from 'lucide-react'
 import { getOrCreateConversation, markConversationAsRead, sendMessage } from '@/app/actions/chat'
 import { UX } from '@/lib/ux'
+import { ConfirmDialog, useConfirmDialog } from '@/components/ui/confirm-dialog'
 
 interface Contact {
   id: string
@@ -78,6 +79,7 @@ export function ChatClient({
   const [typingUsers, setTypingUsers] = useState<Set<string>>(new Set())
   const [unreadCounts, setUnreadCounts] = useState<Record<string, number>>({})
   const [showMenu, setShowMenu] = useState(false)
+  const { dialogProps, confirm } = useConfirmDialog()
 
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const presenceChannelRef = useRef<any>(null)
@@ -147,10 +149,11 @@ export function ChatClient({
         const state = channel.presenceState()
         const online = new Set<string>()
         const typing = new Set<string>()
+        const now = Date.now()
         Object.keys(state).forEach(key => {
           online.add(key)
           const userStates = state[key]
-          if (userStates && userStates.some((s: any) => s.typing_to === currentUser.id)) {
+          if (userStates && userStates.some((s: any) => s.typing_to === currentUser.id && (now - new Date(s.online_at).getTime() < 5000))) {
             typing.add(key)
           }
         })
@@ -186,7 +189,9 @@ export function ChatClient({
           .limit(100)
 
         if (data) {
-          setMessages(data)
+          const clearedAtStr = localStorage.getItem(`cleared_chat_${cid}_${currentUser.id}`)
+          const clearedAt = clearedAtStr ? new Date(clearedAtStr).getTime() : 0
+          setMessages(data.filter((m: any) => new Date(m.created_at).getTime() > clearedAt))
           await markConversationAsRead(cid)
           setUnreadCounts(prev => ({ ...prev, [selectedContact!.id]: 0 }))
           window.dispatchEvent(new CustomEvent('messages-read'))
@@ -213,6 +218,10 @@ export function ChatClient({
         { event: 'INSERT', schema: 'public', table: 'messages', filter: `conversation_id=eq.${conversationId}` },
         (payload) => {
           const newMsg = payload.new as Message
+          const clearedAtStr = localStorage.getItem(`cleared_chat_${conversationId}_${currentUser.id}`)
+          const clearedAt = clearedAtStr ? new Date(clearedAtStr).getTime() : 0
+          if (new Date(newMsg.created_at).getTime() <= clearedAt) return
+
           setMessages(prev => {
             if (prev.find(m => m.id === newMsg.id)) return prev
             return [...prev, newMsg]
@@ -289,12 +298,16 @@ export function ChatClient({
   }
 
   const handleClearChat = async () => {
-    if (!conversationId) return
-    const confirmed = window.confirm('Clear your view of this chat? This only hides messages for you — the other person keeps their copy.')
-    if (!confirmed) return
-    setShowMenu(false)
-    // Soft-delete: only clear local state. A future DB column (cleared_at per user) can persist this.
+    const isConfirmed = await confirm({ 
+      title: 'Clear Chat', 
+      description: 'Clear your view of this chat? This only hides messages for you — the other person keeps their copy.' 
+    })
+    if (!isConfirmed || !conversationId) return
+
+    // Soft-delete: clear local state and persist to localStorage
+    localStorage.setItem(`cleared_chat_${conversationId}_${currentUser.id}`, new Date().toISOString())
     setMessages([])
+    setShowMenu(false)
     UX.toast('Chat cleared for you')
   }
 
@@ -688,6 +701,7 @@ export function ChatClient({
           </div>
         )}
       </div>
+      <ConfirmDialog {...dialogProps} />
     </div>
   )
 }

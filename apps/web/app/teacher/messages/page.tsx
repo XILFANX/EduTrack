@@ -100,6 +100,7 @@ export default async function TeacherMessagesPage() {
           parentsWithStudents = (parents || []).map((p: any) => ({
             ...p,
             studentNames: parentStudentMap[p.id] || [],
+            classIds: [cls.id]
           }))
         }
       }

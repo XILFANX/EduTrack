@@ -2,6 +2,7 @@
 
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
+import { revalidatePath } from 'next/cache'
 
 export async function updateLastSeen() {
   const supabase = await createClient()
@@ -112,11 +113,18 @@ export async function markConversationAsRead(conversationId: string) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return
 
-  await supabase
+  const admin = createAdminClient()
+  await admin
     .from('conversation_participants')
     .update({ last_read_at: new Date().toISOString() })
     .eq('conversation_id', conversationId)
     .eq('user_id', user.id)
+
+  await admin
+    .from('messages')
+    .update({ is_read: true })
+    .eq('conversation_id', conversationId)
+    .neq('sender_id', user.id)
 }
 
 export async function sendMessage(conversationId: string, content: string) {
@@ -149,7 +157,15 @@ export async function sendMessage(conversationId: string, content: string) {
   if (error) throw new Error('Failed to send message: ' + error.message)
   return data
 }
-export async function deleteAnnouncement(id: string) { const supabase = await createClient(); const { data: { user } } = await supabase.auth.getUser(); if (!user) throw new Error('Not authenticated'); const { error } = await supabase.from('announcements').delete().eq('id', id).eq('author_id', user.id); if (error) throw new Error('Failed to delete announcement'); return { success: true }; }
+export async function deleteAnnouncement(id: string) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) throw new Error('Not authenticated');
+  const { error } = await supabase.from('announcements').delete().eq('id', id).eq('author_id', user.id);
+  if (error) throw new Error('Failed to delete announcement');
+  revalidatePath('/', 'layout');
+  return { success: true };
+}
 
 /**
  * Returns all class group conversations the current user is a participant of.
