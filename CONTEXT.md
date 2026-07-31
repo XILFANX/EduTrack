@@ -4,6 +4,7 @@ This is a context protocol for AI coding agents. It defines one consistent path 
 
 ## Table of Contents
 
+- [The Protocol Bridge](#the-protocol-bridge)
 - [Request](#request)
 - [Step 0 — Fast Path](#step-0--fast-path)
 - [Step 1 — Request Understanding](#step-1--request-understanding)
@@ -16,6 +17,20 @@ This is a context protocol for AI coding agents. It defines one consistent path 
 - [Documentation Map](#documentation-map)
 - [Conventions](#conventions)
 - [History Log](#history-log)
+
+---
+
+## The Protocol Bridge
+
+This file is bound to the AI model's permanent context via a bridge file located at `.agents/AGENTS.md`. 
+The AI framework automatically scans for and loads any `AGENTS.md` files located in the `.agents` folder. By placing a small, highly prioritized directive there, the instructions to read and follow this `CONTEXT.md` file are permanently injected into the model's core system memory (its "system prompt") on every single request.
+
+**Why this architecture works flawlessly:**
+- **Zero manual reminders:** It is impossible for the model to "forget" to check `CONTEXT.md` because its core system instructions explicitly order it to do so before taking any action.
+- **Context window preservation:** Instead of dumping all lines of this protocol into the model's memory on every turn (which would degrade reasoning and waste tokens), the model only holds a tiny directive that forces it to read this file dynamically as a normal task.
+- **Automated progress tracking:** The model is strictly ordered by the bridge to actively edit the `Request` section below as it works, ensuring the user always knows what is being done in real-time.
+
+To issue a new task, simply paste it into the `Request` block below and prompt the agent to begin.
 
 ---
 
