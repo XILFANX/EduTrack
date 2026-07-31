@@ -130,10 +130,43 @@ RLS: users can only `SELECT`, `UPDATE`, and `DELETE` their own rows. Server inse
 
 ## Regional Pricing Engine (`20260731000000_regional_pricing_engine.sql`)
 
-Shared schema with EstateTrack (same migration file). The engine is product-aware via the `product` column on `plan_bands` and `subscriptions`.
+### `billing_config`
+Global configuration settings for the billing engine, removing hardcoded logic from the application.
+
+| Column | Notes |
+|---|---|
+| `key` | e.g. `trial_days_default`, `buffer_percent` |
+| `value` | `numeric` |
 
 ### `plan_bands`
-Pricing tiers for EduTrack (per-student count bands). Linked to `country_regions` for local-currency prices.
+Defines per-product pricing tiers. No flat prices — amounts are resolved per region via `plan_band_prices`.
+
+| Column | Notes |
+|---|---|
+| `product_key` | `estatetrack` or `edutrack` (ENUM) |
+| `band_index` | 1-based sort index (Band 1 = first active tier) |
+| `band_label` | Display name (e.g. `"Starter"`) |
+| `min_units` | Inclusive lower bound |
+| `max_units` | Inclusive bound. NULL = unlimited. |
+
+### `plan_band_prices`
+Normalized pricing table replacing legacy JSONB structures.
+
+| Column | Notes |
+|---|---|
+| `band_id` | FK → `plan_bands` |
+| `currency_code` | ISO currency code (e.g. 'KES', 'USD') |
+| `price` | The flat band price in that currency |
+
+### `account_price_overrides`
+Stores fixed local price overrides for specific accounts (custom enterprise deals).
+
+| Column | Notes |
+|---|---|
+| `account_id` | FK → `landlords.id` (EstateTrack) or `schools.id` (EduTrack) |
+| `currency_code` | ISO currency |
+| `fixed_price` | The flat price shown to this specific customer |
+| `effective_until` | Nullable expiration date for temporary discounts |
 
 ### `subscriptions`
 Live subscription record. Created at school onboarding (status: `trialing`).
