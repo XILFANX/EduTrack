@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Home, Receipt, BookOpen, Settings, MessageSquare, CreditCard, CheckCircle2 } from 'lucide-react'
+import { Home, Receipt, BookOpen, Settings, MessageSquare, Banknote, CheckCircle2 } from 'lucide-react'
 
 const NAV_ITEMS = [
   { label: 'Dashboard', href: '/bursar/dashboard', icon: Home },
@@ -10,7 +10,7 @@ const NAV_ITEMS = [
   { label: 'Invoices', href: '/bursar/invoices', icon: Receipt },
   { label: 'Fee Structures', href: '/bursar/fee-structures', icon: BookOpen },
   { label: 'Messages', href: '/bursar/messages', icon: MessageSquare },
-  { label: 'Pay Subscription', href: '/bursar/billing', icon: CreditCard },
+  { label: 'Pay Subscription', href: '/bursar/billing', icon: Banknote },
   { label: 'Settings', href: '/bursar/settings', icon: Settings },
 ]
 

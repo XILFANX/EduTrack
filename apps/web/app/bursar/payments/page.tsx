@@ -20,10 +20,12 @@ import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import type { PaymentRail } from '@edutrack/shared/payments/types'
+import { parseTransactionMessage } from '@/lib/utils/payment-parser'
 
 const RAILS: { value: PaymentRail; label: string; placeholder: string }[] = [
-  { value: 'mpesa_paybill', label: '📱 Mobile Wallet (Paybill)', placeholder: 'e.g. QJK23XF89H' },
-  { value: 'mpesa_till', label: '📱 Mobile Wallet (Till)', placeholder: 'e.g. QJK23XF89H' },
+  { value: 'mobile_money', label: '📱 Mobile Money', placeholder: 'e.g. QJK23XF89H' },
+  { value: 'mpesa_paybill', label: '📱 M-Pesa Paybill', placeholder: 'e.g. QJK23XF89H' },
+  { value: 'mpesa_till', label: '📱 M-Pesa Buy Goods', placeholder: 'e.g. QJK23XF89H' },
   { value: 'bank_transfer', label: '🏦 Bank Transfer', placeholder: 'e.g. REF2026001234' },
   { value: 'cash', label: '💵 Cash', placeholder: '' },
   { value: 'cheque', label: '📋 Cheque', placeholder: '' },
@@ -38,6 +40,9 @@ interface SubmissionRow {
   parsedCurrency: string
   parsedTransactionAt: string
   paymentRail: PaymentRail
+  parsedCounterparty: string
+  parsedSelfIdentity: string
+  detectedProvider: string
 }
 
 function makeRow(): SubmissionRow {
@@ -49,7 +54,10 @@ function makeRow(): SubmissionRow {
     parsedFee: '',
     parsedCurrency: 'KES',
     parsedTransactionAt: '',
-    paymentRail: 'mpesa_paybill',
+    paymentRail: 'mobile_money',
+    parsedCounterparty: '',
+    parsedSelfIdentity: '',
+    detectedProvider: '',
   }
 }
 
@@ -71,25 +79,24 @@ export default function VerifyPaymentPage() {
     setRows((prev) => (prev.length > 1 ? prev.filter((r) => r.id !== id) : prev))
   }
 
-  // Auto-parse SMS: extract code, amount, fee from raw message
+  // Auto-parse SMS using shared parser (§7.0)
   function parseMessage(raw: string, rowId: string) {
-    const codeMatch = raw.match(/\b([A-Z0-9]{10})\b/)
-    const amountMatch = raw.match(/KES\s?([\d,]+(?:\.\d{1,2})?)/i)
-    const feeMatch = raw.match(/Transaction cost,?\s*KES\s?([\d,]+(?:\.\d{1,2})?)/i)
-    const dateMatch = raw.match(/(\d{1,2}\/\d{1,2}\/\d{2,4})\s+at\s+(\d{1,2}:\d{2}\s*[AP]M)/i)
-
-    const patch: Partial<SubmissionRow> = { rawMessage: raw }
-    if (codeMatch) patch.referenceCode = codeMatch[1]
-    if (amountMatch) patch.parsedAmount = amountMatch[1].replace(/,/g, '')
-    if (feeMatch) patch.parsedFee = feeMatch[1].replace(/,/g, '')
-    if (dateMatch) {
-      try {
-        const combined = `${dateMatch[1]} ${dateMatch[2]}`
-        const d = new Date(combined)
-        if (!isNaN(d.getTime())) patch.parsedTransactionAt = d.toISOString()
-      } catch {}
-    }
-    updateRow(rowId, patch)
+    setRows(current => current.map(row => {
+      if (row.id !== rowId) return row
+      const parsed = parseTransactionMessage(raw)
+      return {
+        ...row,
+        rawMessage: raw,
+        referenceCode: parsed.referenceCode || row.referenceCode,
+        parsedAmount: parsed.parsedAmount ? parsed.parsedAmount.toString() : row.parsedAmount,
+        parsedFee: parsed.parsedFee ? parsed.parsedFee.toString() : row.parsedFee,
+        parsedTransactionAt: parsed.parsedTransactionAt || row.parsedTransactionAt,
+        paymentRail: parsed.paymentRail !== 'other' ? parsed.paymentRail : row.paymentRail,
+        parsedCounterparty: parsed.parsedCounterparty || '',
+        parsedSelfIdentity: parsed.parsedSelfIdentity || '',
+        detectedProvider: parsed.detectedProvider || '',
+      }
+    }))
   }
 
   async function handleSubmit(e: React.FormEvent) {

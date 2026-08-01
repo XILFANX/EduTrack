@@ -117,6 +117,29 @@ export default async function ParentPaymentsPage() {
         </div>
       )}
 
+      {/* Zero Balance Post Payment Form */}
+      {openList.length === 0 && historyList.length > 0 && (
+        <div className="bg-card border border-border rounded-2xl overflow-hidden mb-6">
+          <div className="px-4 py-3 bg-muted/20 border-b border-border">
+            <h3 className="font-semibold text-sm text-foreground flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-blue-500" />
+              Pre-pay Next Term / Advance Payment
+            </h3>
+            <p className="text-xs text-muted-foreground mt-1">
+              Your balance is zero, but you can still post payments in advance.
+            </p>
+          </div>
+          <div className="px-4 py-4">
+            <ParentPostPaymentClient
+              obligationId={historyList[0].id}
+              obligationBalance={0}
+              periodLabel="Advance Payment"
+              currency={historyList[0].currency}
+            />
+          </div>
+        </div>
+      )}
+
       {/* Paid history */}
       {historyList.length > 0 && (
         <div className="space-y-2">

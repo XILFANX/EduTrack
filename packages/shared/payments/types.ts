@@ -59,6 +59,7 @@ export type SubmitterRole = 'payer' | 'payee'
 export type PaymentRail =
   | 'mpesa_paybill'
   | 'mpesa_till'
+  | 'mobile_money'    // ← agnostic: auto-detected provider stored separately
   | 'bank_transfer'
   | 'cash'
   | 'cheque'

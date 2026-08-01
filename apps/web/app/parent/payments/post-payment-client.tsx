@@ -9,6 +9,7 @@ import { useState } from 'react'
 import { submitPayerPayment, submitCashPayment } from '@/app/actions/payments/submit-payment'
 import { Send, CheckCircle2, Loader2, ShieldOff, CreditCard } from 'lucide-react'
 import type { PaymentRail } from '@edutrack/shared/payments/types'
+import { parseTransactionMessage } from '@/lib/utils/payment-parser'
 
 interface Props {
   obligationId: string
@@ -20,8 +21,9 @@ interface Props {
 type Mode = 'digital' | 'cash'
 
 const DIGITAL_RAILS: { value: PaymentRail; label: string }[] = [
-  { value: 'mpesa_paybill', label: '📱 Mobile Wallet (Paybill)' },
-  { value: 'mpesa_till', label: '📱 Mobile Wallet (Till)' },
+  { value: 'mobile_money', label: '📱 Mobile Money' },
+  { value: 'mpesa_paybill', label: '📱 M-Pesa Paybill' },
+  { value: 'mpesa_till', label: '📱 M-Pesa Buy Goods' },
   { value: 'bank_transfer', label: '🏦 Bank Transfer' },
   { value: 'other', label: '💳 Card Payment / Other' },
 ]
@@ -33,7 +35,7 @@ export function ParentPostPaymentClient({ obligationId, obligationBalance, perio
   const [parsedAmount, setParsedAmount] = useState('')
   const [parsedFee, setParsedFee] = useState('')
   const [parsedTransactionAt, setParsedTransactionAt] = useState('')
-  const [paymentRail, setPaymentRail] = useState<PaymentRail>('mpesa_paybill')
+  const [paymentRail, setPaymentRail] = useState<PaymentRail>('mobile_money')
   const [cashAmount, setCashAmount] = useState('')
   const [cashNotes, setCashNotes] = useState('')
   const [loading, setLoading] = useState(false)
@@ -43,21 +45,15 @@ export function ParentPostPaymentClient({ obligationId, obligationBalance, perio
   const fmt = (n: number) =>
     new Intl.NumberFormat('en-KE', { style: 'currency', currency, maximumFractionDigits: 0 }).format(n)
 
+  // Auto-parse SMS using shared parser (§7.0)
   function parseMessage(raw: string) {
     setRawMessage(raw)
-    const codeMatch = raw.match(/\b([A-Z0-9]{10})\b/)
-    const amountMatch = raw.match(/KES\s?([\d,]+(?:\.\d{1,2})?)/i)
-    const feeMatch = raw.match(/Transaction cost,?\s*KES\s?([\d,]+(?:\.\d{1,2})?)/i)
-    const dateMatch = raw.match(/(\d{1,2}\/\d{1,2}\/\d{2,4})\s+at\s+(\d{1,2}:\d{2}\s*[AP]M)/i)
-    if (codeMatch) setReferenceCode(codeMatch[1])
-    if (amountMatch) setParsedAmount(amountMatch[1].replace(/,/g, ''))
-    if (feeMatch) setParsedFee(feeMatch[1].replace(/,/g, ''))
-    if (dateMatch) {
-      try {
-        const d = new Date(`${dateMatch[1]} ${dateMatch[2]}`)
-        if (!isNaN(d.getTime())) setParsedTransactionAt(d.toISOString())
-      } catch {}
-    }
+    const parsed = parseTransactionMessage(raw)
+    if (parsed.referenceCode) setReferenceCode(parsed.referenceCode)
+    if (parsed.parsedAmount) setParsedAmount(parsed.parsedAmount.toString())
+    if (parsed.parsedFee) setParsedFee(parsed.parsedFee.toString())
+    if (parsed.parsedTransactionAt) setParsedTransactionAt(parsed.parsedTransactionAt)
+    if (parsed.paymentRail !== 'other') setPaymentRail(parsed.paymentRail)
   }
 
   async function handleDigitalSubmit(e: React.FormEvent) {

@@ -38,54 +38,7 @@ interface Props {
   periodLabel: string
 }
 
-// Simple parser: extract reference code, amount, timestamp, counterparty from raw message
-function parseTransactionMessage(raw: string): {
-  referenceCode: string
-  parsedAmount: number | null
-  parsedFee: number | null
-  parsedTransactionAt: string | null
-  parsedCounterparty: string | null
-  parsedNarration: string | null
-  paymentRail: 'mpesa_paybill' | 'mpesa_till' | 'bank_transfer' | 'other'
-} {
-  const text = raw.trim()
-
-  // Detect M-Pesa: 10-char alphanumeric code at start
-  const mpesaCode = text.match(/^([A-Z0-9]{10})\b/i)
-  const referenceCode = mpesaCode ? mpesaCode[1].toUpperCase() : ''
-
-  // Detect amount: KES X,XXX.XX or $X,XXX.XX
-  const amountMatch = text.match(/(?:KES|USD|UGX|TZS|NGN|GBP|ZAR|EUR|CAD|AUD)\s*([\d,]+(?:\.\d{1,2})?)/i)
-  const parsedAmount = amountMatch ? parseFloat(amountMatch[1].replace(/,/g, '')) : null
-
-  // Detect fee (e.g. "Transaction cost, KES 6.00")
-  const feeMatch = text.match(/Transaction cost,?\s*(?:KES|USD|UGX|TZS|NGN|GBP|ZAR|EUR|CAD|AUD)?\s*([\d,]+(?:\.\d{1,2})?)/i)
-  const parsedFee = feeMatch ? parseFloat(feeMatch[1].replace(/,/g, '')) : null
-
-  // Detect date/time (M-Pesa format: d/M/YY at HH:MM AM/PM)
-  const dateMatch = text.match(/(\d{1,2}\/\d{1,2}\/\d{2,4})\s+at\s+(\d{1,2}:\d{2}\s*(?:AM|PM)?)/i)
-  let parsedTransactionAt: string | null = null
-  if (dateMatch) {
-    const [, datePart, timePart] = dateMatch
-    try {
-      const [d, m, y] = datePart.split('/')
-      const year = y.length === 2 ? `20${y}` : y
-      const parsed = new Date(`${year}-${m.padStart(2, '0')}-${d.padStart(2, '0')}T${timePart.trim()}`)
-      if (!isNaN(parsed.getTime())) parsedTransactionAt = parsed.toISOString()
-    } catch { /* ignore */ }
-  }
-
-  // Detect counterparty (name or phone from "from 0712345678" / "from JOHN DOE")
-  const counterpartyMatch = text.match(/(?:from|to)\s+([A-Z0-9 ]{4,40}?)(?:\s+on|\s+\d|$)/i)
-  const parsedCounterparty = counterpartyMatch ? counterpartyMatch[1].trim() : null
-
-  // Payment rail detection
-  const isMpesa = /M-Pesa|Mpesa|M-PESA/i.test(text) || mpesaCode !== null
-  const isBank = /bank|EFT|transfer|RTGS|SWIFT/i.test(text)
-  const paymentRail = isMpesa ? 'mpesa_paybill' : isBank ? 'bank_transfer' : 'other'
-
-  return { referenceCode, parsedAmount, parsedFee, parsedTransactionAt, parsedCounterparty, parsedNarration: null, paymentRail }
-}
+import { parseTransactionMessage } from '@/lib/utils/payment-parser'
 
 export default function SubscriptionPostPaymentForm({ obligationId, amountDue, currency, periodLabel }: Props) {
   const [expanded, setExpanded] = useState(false)

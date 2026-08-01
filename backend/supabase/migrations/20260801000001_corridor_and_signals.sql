@@ -56,6 +56,7 @@ CREATE INDEX corridors_rails_idx ON corridors (payer_rail, payee_rail);
 
 ALTER TABLE submissions
   ADD COLUMN IF NOT EXISTS payer_display_ref     text,
+  ADD COLUMN IF NOT EXISTS parsed_self_identity  text,
   ADD COLUMN IF NOT EXISTS parsed_counterparty   text,
   ADD COLUMN IF NOT EXISTS parsed_narration      text,
   ADD COLUMN IF NOT EXISTS parsed_fee            numeric(14,2),

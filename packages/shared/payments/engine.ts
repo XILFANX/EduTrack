@@ -67,7 +67,8 @@ export function isReferenceCodeValid(code: string, rail: PaymentRail): boolean {
   const normalized = code.trim().toUpperCase()
   if (MANUAL_RAILS.includes(rail)) return false
   if (normalized.length < MIN_REFERENCE_CODE_LENGTH) return false
-  if (rail === 'mpesa_paybill' || rail === 'mpesa_till') {
+  if (rail === 'mpesa_paybill' || rail === 'mpesa_till' || rail === 'mobile_money') {
+    // Mobile money codes (M-Pesa, Airtel, MTN, etc.) are 10 alphanumeric chars
     return /^[A-Z0-9]{10}$/.test(normalized)
   }
   return normalized.length >= MIN_REFERENCE_CODE_LENGTH
