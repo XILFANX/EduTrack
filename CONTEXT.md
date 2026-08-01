@@ -343,6 +343,7 @@ Hold on every documentation edit, not just first-draft generation:
 
 | Date | Mission | Outcome |
 |---|---|---|
+| 2026-08-01 | Payment Parsing & UI Consistency Enforcement — Rebuilt payment parser (M-Pesa/Bank detection, glued amounts KES453.81). Fixed portal navigation and Quick Actions (Verify Payments vs Record Payment). Ensured "Post Payment" form is accessible on zero balance. | Shipped, pushed to `main` |
 | 2026-08-01 | UI Consistency Enforcement (Blue/Purple Split & Orange Alerts) — Globally purged decorative colors and standardized EduTrack to strict blue theme. | Shipped, pushed to `main` (`ff8ac30`) |
 | 2026-08-01 | Portal Coverage Audit & Navigation Fixes (v4) — Fixed missing/hidden Verify Payment and Subscription UI endpoints across Tenant, Landlord, Parent, Bursar, and Admin portals. | Shipped, pushed to `main` |
 | 2026-08-01 | Payment Settlement Reconciliation Engine (v4) — fee direction fixes, cross-currency corridors, generic channel labels, parsedFee capture, 30d sweep cron, UI updates. | Shipped, pushed to `main` (EduTrack `3a9402a`, EstateTrack `74a25f1`) |
