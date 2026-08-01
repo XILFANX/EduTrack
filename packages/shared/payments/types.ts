@@ -265,6 +265,10 @@ export interface Corridor {
    * Only set after explicit evidence (§7.4) — never defaulted.
    */
   amount_tolerance_fraction: number | null
+  /** How fees are structured on this corridor */
+  fee_model: 'fee_added_to_sender_debit' | 'fee_deducted_from_received_amount'
+  /** If true, amount exact match is skipped, currency mismatch is ignored */
+  cross_currency: boolean
   created_at: string
   updated_at: string
 }

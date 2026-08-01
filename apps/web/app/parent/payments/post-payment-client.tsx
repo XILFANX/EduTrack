@@ -20,9 +20,10 @@ interface Props {
 type Mode = 'digital' | 'cash'
 
 const DIGITAL_RAILS: { value: PaymentRail; label: string }[] = [
-  { value: 'mpesa_paybill', label: '📱 M-Pesa Paybill' },
-  { value: 'mpesa_till', label: '📱 M-Pesa Till' },
+  { value: 'mpesa_paybill', label: '📱 Mobile Wallet (Paybill)' },
+  { value: 'mpesa_till', label: '📱 Mobile Wallet (Till)' },
   { value: 'bank_transfer', label: '🏦 Bank Transfer' },
+  { value: 'other', label: '💳 Card Payment / Other' },
 ]
 
 export function ParentPostPaymentClient({ obligationId, obligationBalance, periodLabel, currency }: Props) {
@@ -30,6 +31,7 @@ export function ParentPostPaymentClient({ obligationId, obligationBalance, perio
   const [rawMessage, setRawMessage] = useState('')
   const [referenceCode, setReferenceCode] = useState('')
   const [parsedAmount, setParsedAmount] = useState('')
+  const [parsedFee, setParsedFee] = useState('')
   const [parsedTransactionAt, setParsedTransactionAt] = useState('')
   const [paymentRail, setPaymentRail] = useState<PaymentRail>('mpesa_paybill')
   const [cashAmount, setCashAmount] = useState('')
@@ -45,9 +47,11 @@ export function ParentPostPaymentClient({ obligationId, obligationBalance, perio
     setRawMessage(raw)
     const codeMatch = raw.match(/\b([A-Z0-9]{10})\b/)
     const amountMatch = raw.match(/KES\s?([\d,]+(?:\.\d{1,2})?)/i)
+    const feeMatch = raw.match(/Transaction cost,?\s*KES\s?([\d,]+(?:\.\d{1,2})?)/i)
     const dateMatch = raw.match(/(\d{1,2}\/\d{1,2}\/\d{2,4})\s+at\s+(\d{1,2}:\d{2}\s*[AP]M)/i)
     if (codeMatch) setReferenceCode(codeMatch[1])
     if (amountMatch) setParsedAmount(amountMatch[1].replace(/,/g, ''))
+    if (feeMatch) setParsedFee(feeMatch[1].replace(/,/g, ''))
     if (dateMatch) {
       try {
         const d = new Date(`${dateMatch[1]} ${dateMatch[2]}`)
@@ -64,7 +68,9 @@ export function ParentPostPaymentClient({ obligationId, obligationBalance, perio
     const res = await submitPayerPayment({
       obligationId, rawMessage: rawMessage || null, referenceCode,
       parsedAmount: parseFloat(parsedAmount), parsedCurrency: currency,
-      parsedTransactionAt: parsedTransactionAt || null, paymentRail,
+      parsedTransactionAt: parsedTransactionAt || null, 
+      parsedFee: parsedFee ? parseFloat(parsedFee) : null,
+      paymentRail,
     })
     setLoading(false)
     if (res.error) setError(res.error)

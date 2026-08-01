@@ -21,6 +21,11 @@ CREATE TYPE corridor_match_strategy_et AS ENUM (
   'unmapped'
 );
 
+CREATE TYPE fee_model_et AS ENUM (
+  'fee_added_to_sender_debit',
+  'fee_deducted_from_received_amount'
+);
+
 CREATE TABLE IF NOT EXISTS corridors (
   id                        uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   payer_rail                text NOT NULL,
@@ -35,6 +40,8 @@ CREATE TABLE IF NOT EXISTS corridors (
   time_window_hours         numeric(6,2),
   -- NULL until evidence-gated (§7.4) — never defaulted
   amount_tolerance_fraction numeric(6,5) CHECK (amount_tolerance_fraction >= 0 AND amount_tolerance_fraction < 0.1),
+  fee_model                 fee_model_et NOT NULL DEFAULT 'fee_added_to_sender_debit',
+  cross_currency            boolean NOT NULL DEFAULT false,
   created_at                timestamptz NOT NULL DEFAULT now(),
   updated_at                timestamptz NOT NULL DEFAULT now(),
   -- One row per (payer_rail, payee_rail) pair

@@ -36,9 +36,12 @@ To issue a new task, simply paste it into the `Request` block below and prompt t
 
 ## Request
 
-"Payment Settlement Reconciliation Engine — Full Replacement Spec. EstateTrack (rent) & EduTrack (school fees) — including provider subscription billing. Full replacement of existing payment and subscription billing module across both repos in parallel. Two-independent-witness model. Triage (§1) + portal audit (§14) required before any code."
+could youu be guided by @[.agents/AGENTS.md] and @[CONTEXT.md] and execute this "# Payment Settlement Reconciliation Engine — Full Replacement Spec (v4)
+EstateTrack (rent) & EduTrack (school fees) — including provider subscription billing
+... (rest of the spec to be executed) ...
+"
 
-_Status: Step 2 — Context Building (codebase analysis in progress)_
+_Status: Step 1 — Request Understanding_
 ---
 
 ## Step 0 — Fast Path

@@ -196,15 +196,28 @@ const FLOAT_EPSILON = 0.009
  * Corridor tolerance for in-transit fees is applied only if explicitly set.
  */
 export function compareAmount(
-  payerAmount: number,
-  payeeAmount: number,
-  payerCurrency: string,
-  payeeCurrency: string,
+  payer: Submission,
+  payee: Submission,
   corridor: Corridor,
 ): SignalState {
+  if (corridor.cross_currency) {
+    return 'agrees'
+  }
+
+  const payerCurrency = payer.parsed_currency
+  const payeeCurrency = payee.parsed_currency
   if (payerCurrency.toUpperCase() !== payeeCurrency.toUpperCase()) return 'disagrees'
 
-  const diff = Math.abs(payerAmount - payeeAmount)
+  const payerAmount = Number(payer.parsed_amount)
+  const payeeAmount = Number(payee.parsed_amount)
+  const payeeFee = payee.parsed_fee ? Number(payee.parsed_fee) : 0
+
+  let effectivePayeeAmount = payeeAmount
+  if (corridor.fee_model === 'fee_deducted_from_received_amount' && payeeFee > 0) {
+    effectivePayeeAmount = payeeAmount + payeeFee
+  }
+
+  const diff = Math.abs(payerAmount - effectivePayeeAmount)
   if (diff <= FLOAT_EPSILON) return 'agrees'
 
   // Check corridor's evidence-set tolerance for in-transit fee deductions
@@ -265,19 +278,23 @@ export function evaluateSignals(
   const strategy = corridor.match_strategy
   const windowHours = resolveTimeWindow(corridor)
 
-  // ── 1. Amount (required on every corridor, always) ──────────────────────────
+  // ── 1. Amount (required on every corridor unless cross_currency) ────────────
   const payerAmount = Number(payer.parsed_amount)
   const payeeAmount = Number(payee.parsed_amount)
-  const amountState = compareAmount(
-    payerAmount, payeeAmount,
-    payer.parsed_currency, payee.parsed_currency,
-    corridor,
-  )
-  signals.push(sig('amount', 'required', amountState,
-    amountState === 'agrees'
+  const amountState = compareAmount(payer, payee, corridor)
+  
+  const amountRole: SignalRole = corridor.cross_currency ? 'corroborating' : 'required'
+  
+  let amountDetail = ''
+  if (corridor.cross_currency) {
+    amountDetail = `Cross-currency: payer ${payerAmount} ${payer.parsed_currency}, payee ${payeeAmount} ${payee.parsed_currency}`
+  } else {
+    amountDetail = amountState === 'agrees'
       ? `Amount agrees: ${payerAmount} ${payer.parsed_currency}`
-      : `Amount mismatch: payer ${payerAmount} ${payer.parsed_currency} vs payee ${payeeAmount} ${payee.parsed_currency}`,
-  ))
+      : `Amount mismatch: payer ${payerAmount} ${payer.parsed_currency} vs payee ${payeeAmount} ${payee.parsed_currency}`
+  }
+
+  signals.push(sig('amount', amountRole, amountState, amountDetail))
 
   // ── 2. Reference code (required on exact + transform; not used on unmapped) ──
   if (strategy === 'exact' || strategy === 'transform_pattern') {

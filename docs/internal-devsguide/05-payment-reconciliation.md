@@ -89,3 +89,50 @@ Bursars confirm cash payments via `confirmCashPayment()` in `verify-payment.ts`.
 | `match_plausibility_window_hours` | `48` | Timestamp gap tolerance |
 | `unmatched_grace_period_hours` | `72` | Grace before dispute escalation |
 | `platform_account_id` | — | Sentinel UUID for platform payee |
+
+---
+
+## v4 Engine Updates (2026-08-01)
+
+### Fee Direction Correction (§7.1)
+
+Previous v3 logic incorrectly subtracted fees from the received amount by default, which caused valid payments to be flagged as mismatches.
+
+**v4 rule:**
+- Default: fee is charged on top of principal by the sender's rail and **does not reduce** the amount arriving at the payee. No fee subtraction is applied.
+- Exception: if `corridors.fee_model = 'fee_deducted_from_received_amount'`, the engine adds back `payee.parsed_fee` to the payee amount before comparing.
+
+**Files changed:**
+- `packages/shared/payments/types.ts`: `Corridor` now has `fee_model: 'fee_added_to_sender_debit' | 'fee_deducted_from_received_amount'`
+- `packages/shared/payments/engine.ts`: `compareAmount()` now accepts `Submission` objects (not raw numbers) so it can read `parsed_fee` and apply the corridor's `fee_model`
+
+### Cross-Currency Corridors (§7.1)
+
+When `corridors.cross_currency = true`, the amount signal is downgraded to **corroborating** (never required). The engine still records both amounts in the signal detail string for audit.
+
+**Files changed:**
+- `packages/shared/payments/types.ts`: `Corridor.cross_currency: boolean`
+- `packages/shared/payments/engine.ts`: `evaluateSignals()` derives `amountRole` dynamically
+- `backend/supabase/migrations/20260801000001_corridor_and_signals.sql`: adds `fee_model_et` enum + columns
+
+### parsed_fee Capture
+
+All submission entry points now capture the fee from the transaction message:
+- `apps/web/app/actions/payments/submit-payment.ts`: `parsedFee` field added to `PayerSubmissionInput`
+- `apps/web/app/actions/payments/verify-payment.ts`: `parsedFee` field added to `PayeeSubmissionInput`
+- `apps/web/app/parent/payments/post-payment-client.tsx`: SMS parser extracts `Transaction cost, KES X` pattern
+- `apps/web/app/bursar/billing/post-subscription-payment.tsx`: same fee-match regex
+
+### Generic Channel Labels
+
+All payment channel selectors now use rail-agnostic labels:
+- `'mpesa_paybill'` → **"Mobile Wallet (Paybill)"**
+- `'mpesa_till'` → **"Mobile Wallet (Till)"**
+- Added **"Card Payment / Other"** option (`other` rail) for non-wallet digital payments
+
+This prevents the system from encoding a specific provider name in the UI while still routing to the correct corridor via `payment_rail` value.
+
+### 30-Day Stale Submission Sweep
+
+`apps/web/app/api/cron/sweep-unmatched/route.ts` — marks payee-side submissions older than 30 days as `expired`. Should be scheduled in `vercel.json` or equivalent cron config at `0 3 * * *`.
+

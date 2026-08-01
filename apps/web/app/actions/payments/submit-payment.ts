@@ -29,6 +29,7 @@ interface PayerSubmissionInput {
   parsedCounterparty?: string | null
   /** Narration / reference text from the message */
   parsedNarration?: string | null
+  parsedFee?: number | null
   paymentRail: PaymentRail
 }
 
@@ -125,6 +126,7 @@ export async function submitPayerPayment(input: PayerSubmissionInput) {
       parsed_transaction_at: input.parsedTransactionAt,
       parsed_counterparty: input.parsedCounterparty ?? null,
       parsed_narration: input.parsedNarration ?? null,
+      parsed_fee: input.parsedFee ?? null,
       payment_rail: input.paymentRail,
       source: 'manual',
       status: 'unmatched',

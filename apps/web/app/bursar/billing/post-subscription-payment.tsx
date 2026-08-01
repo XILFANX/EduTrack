@@ -57,6 +57,10 @@ function parseTransactionMessage(raw: string): {
   const amountMatch = text.match(/(?:KES|USD|UGX|TZS|NGN|GBP|ZAR|EUR|CAD|AUD)\s*([\d,]+(?:\.\d{1,2})?)/i)
   const parsedAmount = amountMatch ? parseFloat(amountMatch[1].replace(/,/g, '')) : null
 
+  // Detect fee (e.g. "Transaction cost, KES 6.00")
+  const feeMatch = text.match(/Transaction cost,?\s*(?:KES|USD|UGX|TZS|NGN|GBP|ZAR|EUR|CAD|AUD)?\s*([\d,]+(?:\.\d{1,2})?)/i)
+  const parsedFee = feeMatch ? parseFloat(feeMatch[1].replace(/,/g, '')) : null
+
   // Detect date/time (M-Pesa format: d/M/YY at HH:MM AM/PM)
   const dateMatch = text.match(/(\d{1,2}\/\d{1,2}\/\d{2,4})\s+at\s+(\d{1,2}:\d{2}\s*(?:AM|PM)?)/i)
   let parsedTransactionAt: string | null = null
@@ -79,7 +83,7 @@ function parseTransactionMessage(raw: string): {
   const isBank = /bank|EFT|transfer|RTGS|SWIFT/i.test(text)
   const paymentRail = isMpesa ? 'mpesa_paybill' : isBank ? 'bank_transfer' : 'other'
 
-  return { referenceCode, parsedAmount, parsedTransactionAt, parsedCounterparty, parsedNarration: null, paymentRail }
+  return { referenceCode, parsedAmount, parsedFee, parsedTransactionAt, parsedCounterparty, parsedNarration: null, paymentRail }
 }
 
 export default function SubscriptionPostPaymentForm({ obligationId, amountDue, currency, periodLabel }: Props) {
@@ -124,6 +128,7 @@ export default function SubscriptionPostPaymentForm({ obligationId, amountDue, c
         parsedTransactionAt: parsed.parsedTransactionAt,
         parsedCounterparty: parsed.parsedCounterparty,
         parsedNarration: null,
+        parsedFee: parsed.parsedFee ?? null,
         paymentRail: parsed.paymentRail,
       })
 
