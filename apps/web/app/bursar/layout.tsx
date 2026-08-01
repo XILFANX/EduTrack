@@ -43,7 +43,7 @@ export default async function BursarLayout({ children }: { children: React.React
             </div>
             <div>
               <p className="font-bold text-sm text-foreground leading-tight">{school?.name || 'School Portal'}</p>
-              <p className="text-xs text-cyan-600 dark:text-cyan-400 font-medium">Bursar Portal</p>
+              <p className="text-xs text-blue-600 dark:text-blue-400 font-medium">Bursar Portal</p>
             </div>
           </div>
           

@@ -27,13 +27,13 @@ export function parseMarkdown(
 
   const generateId = (text: string) => text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
 
-  const accentNoteIcon = accent === 'violet' ? 'text-violet-600 dark:text-violet-400' : 'text-blue-600 dark:text-blue-400'
-  const accentNoteText = accent === 'violet' ? 'text-violet-700 dark:text-violet-300' : 'text-blue-700 dark:text-blue-300'
+  const accentNoteIcon = accent === 'violet' ? 'text-blue-600 dark:text-blue-400' : 'text-blue-600 dark:text-blue-400'
+  const accentNoteText = accent === 'violet' ? 'text-blue-700 dark:text-blue-300' : 'text-blue-700 dark:text-blue-300'
   const accentLink = accent === 'violet'
-    ? 'text-violet-600 dark:text-violet-400 hover:text-violet-700 dark:hover:text-violet-300 bg-violet-50 dark:bg-violet-500/10'
+    ? 'text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 bg-blue-50 dark:bg-blue-500/10'
     : 'text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 bg-blue-50 dark:bg-blue-500/10'
   const accentNum = accent === 'violet'
-    ? 'bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-400'
+    ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400'
     : 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400'
 
   for (let i = 0; i < lines.length; i++) {
@@ -77,10 +77,10 @@ export function parseMarkdown(
     } else if (line.startsWith('> Warning:')) {
       pushList()
       elements.push(
-        <div key={i} className="p-5 rounded-2xl bg-red-50 border border-red-100 text-red-900 dark:bg-red-950/30 dark:border-red-900/30 dark:text-red-200 text-sm mb-8 flex items-start gap-3 shadow-sm">
-          <AlertTriangle className="w-5 h-5 shrink-0 text-red-600 dark:text-red-400 mt-0.5" />
+        <div key={i} className="p-5 rounded-2xl bg-orange-50 border border-orange-100 text-orange-900 dark:bg-orange-950/30 dark:border-orange-900/30 dark:text-orange-200 text-sm mb-8 flex items-start gap-3 shadow-sm">
+          <AlertTriangle className="w-5 h-5 shrink-0 text-orange-600 dark:text-orange-400 mt-0.5" />
           <div className="leading-relaxed">
-            <strong className="text-red-700 dark:text-red-400">Warning:</strong> {line.substring(line.indexOf(':') + 1).trim()}
+            <strong className="text-orange-700 dark:text-orange-400">Warning:</strong> {line.substring(line.indexOf(':') + 1).trim()}
           </div>
         </div>
       )
@@ -107,13 +107,13 @@ export function parseMarkdown(
         <div key={i} className="w-full rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm overflow-hidden mb-10 mt-6">
           <div className="h-10 bg-slate-50 dark:bg-slate-950/50 border-b border-slate-200 dark:border-slate-800 flex items-center px-4 gap-2">
             <div className="flex gap-1.5">
-              <div className="w-3 h-3 rounded-full bg-red-400 dark:bg-red-500/50"></div>
-              <div className="w-3 h-3 rounded-full bg-amber-400 dark:bg-amber-500/50"></div>
-              <div className="w-3 h-3 rounded-full bg-green-400 dark:bg-green-500/50"></div>
+              <div className="w-3 h-3 rounded-full bg-orange-400 dark:bg-orange-500/50"></div>
+              <div className="w-3 h-3 rounded-full bg-orange-400 dark:bg-orange-500/50"></div>
+              <div className="w-3 h-3 rounded-full bg-orange-400 dark:bg-orange-500/50"></div>
             </div>
           </div>
           <div className="h-48 flex flex-col items-center justify-center text-slate-400 dark:text-slate-600 bg-slate-50/50 dark:bg-slate-900/50 p-6 text-center">
-            <Monitor className={`w-10 h-10 mb-3 opacity-50 ${accent === 'violet' ? 'text-violet-500' : 'text-blue-500'}`} />
+            <Monitor className={`w-10 h-10 mb-3 opacity-50 ${accent === 'violet' ? 'text-blue-500' : 'text-blue-500'}`} />
             <span className="text-sm font-medium">{desc}</span>
           </div>
         </div>

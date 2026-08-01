@@ -24,9 +24,9 @@ export function StoreDashboardClient({
   return (
     <div className="space-y-6 pb-24">
       {/* Hero */}
-      <div className="relative bg-gradient-to-br from-amber-600 via-orange-600 to-amber-900 rounded-3xl p-6 overflow-hidden text-white shadow-xl">
+      <div className="relative bg-gradient-to-br from-orange-600 via-orange-600 to-orange-900 rounded-3xl p-6 overflow-hidden text-white shadow-xl">
         <div className="absolute -top-12 -right-12 w-48 h-48 rounded-full bg-orange-400/20 blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-32 h-32 rounded-full bg-amber-300/10 blur-2xl pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-32 h-32 rounded-full bg-orange-300/10 blur-2xl pointer-events-none" />
 
         <div className="relative z-10">
           <div className="flex items-center gap-3 mb-5">
@@ -35,7 +35,7 @@ export function StoreDashboardClient({
             </div>
             <div>
               <h1 className="text-2xl font-black tracking-tight">Store Inventory</h1>
-              <p className="text-amber-200 text-sm">Track school supplies and disbursements</p>
+              <p className="text-orange-200 text-sm">Track school supplies and disbursements</p>
             </div>
           </div>
 
@@ -48,7 +48,7 @@ export function StoreDashboardClient({
             ].map((s, i) => (
               <div key={i} className="bg-white/10 backdrop-blur-sm rounded-2xl px-3 py-3 text-center">
                 <p className="text-2xl font-extrabold text-white">{s.value}</p>
-                <p className="text-[10px] text-amber-200 font-semibold uppercase tracking-wide mt-0.5">{s.label}</p>
+                <p className="text-[10px] text-orange-200 font-semibold uppercase tracking-wide mt-0.5">{s.label}</p>
               </div>
             ))}
           </div>
@@ -58,9 +58,9 @@ export function StoreDashboardClient({
       {/* Quick Actions */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {[
-          { label: 'Log Stock In', href: '/store/ledger', icon: ArrowDownToLine, color: 'text-cyan-600', bg: 'bg-cyan-50 dark:bg-cyan-900/20', border: 'border-cyan-100 dark:border-cyan-800/30' },
+          { label: 'Log Stock In', href: '/store/ledger', icon: ArrowDownToLine, color: 'text-blue-600', bg: 'bg-blue-50 dark:bg-blue-900/20', border: 'border-blue-100 dark:border-blue-800/30' },
           { label: 'Disburse Items', href: '/store/ledger', icon: ArrowUpFromLine, color: 'text-orange-600', bg: 'bg-orange-50 dark:bg-orange-900/20', border: 'border-orange-100 dark:border-orange-800/30' },
-          { label: 'View All Stock', href: '/store/stock', icon: Boxes, color: 'text-amber-600', bg: 'bg-amber-50 dark:bg-amber-900/20', border: 'border-amber-100 dark:border-amber-800/30' },
+          { label: 'View All Stock', href: '/store/stock', icon: Boxes, color: 'text-orange-600', bg: 'bg-orange-50 dark:bg-orange-900/20', border: 'border-orange-100 dark:border-orange-800/30' },
           { label: 'New Item', href: '/store/stock', icon: Plus, color: 'text-blue-600', bg: 'bg-blue-50 dark:bg-blue-900/20', border: 'border-blue-100 dark:border-blue-800/30' },
         ].map((a, i) => {
           const Icon = a.icon
@@ -78,17 +78,17 @@ export function StoreDashboardClient({
 
       {/* Low stock warnings */}
       {lowStockItems.length > 0 && (
-        <div className="bg-amber-50 dark:bg-amber-900/10 border border-amber-200 dark:border-amber-800/30 rounded-2xl p-4">
+        <div className="bg-orange-50 dark:bg-orange-900/10 border border-orange-200 dark:border-orange-800/30 rounded-2xl p-4">
           <div className="flex items-center gap-2 mb-3">
-            <AlertTriangle className="w-4 h-4 text-amber-600" />
-            <h3 className="font-bold text-amber-800 dark:text-amber-400 text-sm">Low Stock Alerts ({lowStockItems.length})</h3>
+            <AlertTriangle className="w-4 h-4 text-orange-600" />
+            <h3 className="font-bold text-orange-800 dark:text-orange-400 text-sm">Low Stock Alerts ({lowStockItems.length})</h3>
           </div>
           <div className="flex flex-wrap gap-2">
             {lowStockItems.map((item, i) => (
               <div key={i} className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border ${
                 item.qty <= 0
-                  ? 'bg-red-50 text-red-700 border-red-200 dark:bg-red-900/20 dark:text-red-400 dark:border-red-800/30'
-                  : 'bg-amber-100 text-amber-800 border-amber-200 dark:bg-amber-900/20 dark:text-amber-300 dark:border-amber-800/30'
+                  ? 'bg-orange-50 text-orange-700 border-orange-200 dark:bg-orange-900/20 dark:text-orange-400 dark:border-orange-800/30'
+                  : 'bg-orange-100 text-orange-800 border-orange-200 dark:bg-orange-900/20 dark:text-orange-300 dark:border-orange-800/30'
               }`}>
                 <span>{item.name}</span>
                 <span className="font-extrabold">{item.qty <= 0 ? 'OUT' : `×${item.qty}`}</span>
@@ -103,7 +103,7 @@ export function StoreDashboardClient({
         {/* Check-ins */}
         <div className="bg-card border border-border rounded-3xl overflow-hidden shadow-sm">
           <div className="px-5 py-4 border-b border-border flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-cyan-400" />
+            <div className="w-2 h-2 rounded-full bg-blue-400" />
             <h2 className="font-bold text-foreground text-sm">Recent Check-Ins</h2>
           </div>
           {recentTransactions.filter(t => t.transaction_type === 'in').length === 0 ? (
@@ -115,14 +115,14 @@ export function StoreDashboardClient({
             <div className="divide-y divide-border">
               {recentTransactions.filter(t => t.transaction_type === 'in').slice(0, 5).map((tx: any, i: number) => (
                 <div key={i} className="flex items-center gap-3 px-5 py-3 hover:bg-slate-50/60 dark:hover:bg-slate-900/20 transition-colors">
-                  <div className="w-8 h-8 rounded-xl bg-cyan-50 dark:bg-cyan-900/20 flex items-center justify-center shrink-0">
-                    <ArrowDownToLine className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
+                  <div className="w-8 h-8 rounded-xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center shrink-0">
+                    <ArrowDownToLine className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="font-semibold text-sm text-foreground truncate">{tx.item_name}</p>
                     <p className="text-xs text-muted-foreground">{fmtDate(tx.created_at)} · By {tx.logged_by}</p>
                   </div>
-                  <span className="text-cyan-600 dark:text-cyan-400 font-bold text-sm">+{tx.quantity}</span>
+                  <span className="text-blue-600 dark:text-blue-400 font-bold text-sm">+{tx.quantity}</span>
                 </div>
               ))}
             </div>
@@ -164,7 +164,7 @@ export function StoreDashboardClient({
         <div className="bg-card border border-border rounded-3xl overflow-hidden shadow-sm">
           <div className="px-5 py-4 border-b border-border flex items-center justify-between">
             <h2 className="font-bold text-foreground">Current Stock Levels</h2>
-            <Link href="/store/stock" className="text-xs font-semibold text-amber-600 hover:text-amber-700 flex items-center gap-1">
+            <Link href="/store/stock" className="text-xs font-semibold text-orange-600 hover:text-orange-700 flex items-center gap-1">
               View all <ChevronRight className="w-3.5 h-3.5" />
             </Link>
           </div>
@@ -174,11 +174,11 @@ export function StoreDashboardClient({
               const isOut = item.qty <= 0
               return (
                 <div key={i} className={`rounded-xl px-3 py-2.5 border ${
-                  isOut ? 'bg-red-50 dark:bg-red-900/10 border-red-200 dark:border-red-800/30'
-                        : isLow ? 'bg-amber-50 dark:bg-amber-900/10 border-amber-200 dark:border-amber-800/30'
+                  isOut ? 'bg-orange-50 dark:bg-orange-900/10 border-orange-200 dark:border-orange-800/30'
+                        : isLow ? 'bg-orange-50 dark:bg-orange-900/10 border-orange-200 dark:border-orange-800/30'
                         : 'bg-slate-50 dark:bg-slate-900/30 border-border'
                 }`}>
-                  <p className={`text-lg font-extrabold ${isOut ? 'text-red-600 dark:text-red-400' : isLow ? 'text-amber-700 dark:text-amber-400' : 'text-foreground'}`}>{item.qty}</p>
+                  <p className={`text-lg font-extrabold ${isOut ? 'text-orange-600 dark:text-orange-400' : isLow ? 'text-orange-700 dark:text-orange-400' : 'text-foreground'}`}>{item.qty}</p>
                   <p className="text-xs text-muted-foreground truncate mt-0.5">{item.name}</p>
                 </div>
               )

@@ -54,7 +54,7 @@ export default async function StoreOverviewPage() {
       <div className="grid grid-cols-3 gap-4">
         {[
           { label: 'Total Items', value: totalItems, icon: Package, color: 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400' },
-          { label: 'Low Stock', value: lowStockItems, icon: TrendingDown, color: lowStockItems > 0 ? 'bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400' : 'bg-cyan-100 dark:bg-cyan-900/30 text-cyan-600 dark:text-cyan-400' },
+          { label: 'Low Stock', value: lowStockItems, icon: TrendingDown, color: lowStockItems > 0 ? 'bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400' : 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400' },
           { label: 'Transactions', value: transactions?.length ?? 0, icon: ArrowRightLeft, color: 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400' },
         ].map(stat => {
           const Icon = stat.icon
@@ -106,7 +106,7 @@ export default async function StoreOverviewPage() {
                         {item.quantity_on_hand} {item.unit || 'units'}
                       </td>
                       <td className="px-6 py-3">
-                        <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${isLow ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400' : 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-400'}`}>
+                        <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${isLow ? 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400' : 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'}`}>
                           {isLow ? 'Low Stock' : 'Adequate'}
                         </span>
                       </td>

@@ -64,8 +64,8 @@ export default async function ParentTimetablePage() {
   return (
     <div className="space-y-8 max-w-4xl pb-24">
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-2xl bg-indigo-500/10 flex items-center justify-center">
-          <CalendarDays className="w-5 h-5 text-indigo-600" />
+        <div className="w-10 h-10 rounded-2xl bg-blue-500/10 flex items-center justify-center">
+          <CalendarDays className="w-5 h-5 text-blue-600" />
         </div>
         <div>
           <h1 className="text-2xl font-bold text-foreground">Class Timetable</h1>

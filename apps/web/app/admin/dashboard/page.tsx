@@ -90,10 +90,10 @@ export default async function AdminDashboardPage() {
       {/* ── Stats Grid ── */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
         {[
-          { label: 'Active Schools', value: totalSchools ?? 0, icon: Building2, color: 'from-blue-500 to-indigo-600', shadow: 'shadow-blue-500/20' },
-          { label: 'Total Students', value: totalStudents ?? 0, icon: Users, color: 'from-sky-400 to-sky-600', shadow: 'shadow-sky-500/20' },
-          { label: 'Platform Revenue', value: `KSh ${(totalCollected/1000000).toFixed(1)}M`, icon: Receipt, color: 'from-cyan-400 to-cyan-600', shadow: 'shadow-cyan-500/20' },
-          { label: 'Platform Admins', value: totalAdmins ?? 0, icon: Shield, color: 'from-indigo-400 to-indigo-600', shadow: 'shadow-indigo-500/20' },
+          { label: 'Active Schools', value: totalSchools ?? 0, icon: Building2, color: 'from-blue-500 to-blue-600', shadow: 'shadow-blue-500/20' },
+          { label: 'Total Students', value: totalStudents ?? 0, icon: Users, color: 'from-blue-400 to-blue-600', shadow: 'shadow-blue-500/20' },
+          { label: 'Platform Revenue', value: `KSh ${(totalCollected/1000000).toFixed(1)}M`, icon: Receipt, color: 'from-blue-400 to-blue-600', shadow: 'shadow-blue-500/20' },
+          { label: 'Platform Admins', value: totalAdmins ?? 0, icon: Shield, color: 'from-blue-400 to-blue-600', shadow: 'shadow-blue-500/20' },
         ].map(({ label, value, icon: Icon, color, shadow }) => (
           <div key={label} className="relative group overflow-hidden rounded-[24px] bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800/60 p-5 md:p-6 backdrop-blur-xl transition-all hover:shadow-xl dark:hover:border-slate-700">
             <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${color} opacity-[0.08] dark:opacity-[0.15] blur-2xl rounded-full -mr-10 -mt-10 transition-transform group-hover:scale-150 duration-700`} />
@@ -154,7 +154,7 @@ export default async function AdminDashboardPage() {
                         </p>
                       </div>
                     </div>
-                    <span className="text-[10px] px-3 py-1.5 rounded-full font-black uppercase tracking-wider shadow-sm bg-indigo-50 text-indigo-600 border border-indigo-200 dark:bg-indigo-900/20 dark:border-indigo-800/50">
+                    <span className="text-[10px] px-3 py-1.5 rounded-full font-black uppercase tracking-wider shadow-sm bg-blue-50 text-blue-600 border border-blue-200 dark:bg-blue-900/20 dark:border-blue-800/50">
                       {s.subscription_tier}
                     </span>
                   </Link>

@@ -73,7 +73,7 @@ export default async function TransportRoutes() {
                     <Map className="w-6 h-6" />
                   </div>
                   {isFull && (
-                    <span className="px-2.5 py-1 rounded-full bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400 text-xs font-bold uppercase tracking-wider">
+                    <span className="px-2.5 py-1 rounded-full bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400 text-xs font-bold uppercase tracking-wider">
                       Full
                     </span>
                   )}
@@ -105,7 +105,7 @@ export default async function TransportRoutes() {
                   {capacity > 0 && (
                     <div className="mt-3 h-1.5 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
                       <div 
-                        className={`h-full rounded-full ${isFull ? 'bg-red-500' : 'bg-blue-500'}`} 
+                        className={`h-full rounded-full ${isFull ? 'bg-orange-500' : 'bg-blue-500'}`} 
                         style={{ width: `${Math.min((assigned / capacity) * 100, 100)}%` }}
                       />
                     </div>

@@ -158,8 +158,8 @@ export default function SubscriptionPostPaymentForm({ obligationId, amountDue, c
 
   if (result?.status === 'success') {
     return (
-      <div className="bg-emerald-500/5 border border-emerald-500/20 rounded-xl p-5 text-center space-y-3">
-        <CheckCircle2 className="w-10 h-10 text-emerald-400 mx-auto" />
+      <div className="bg-blue-500/5 border border-blue-500/20 rounded-xl p-5 text-center space-y-3">
+        <CheckCircle2 className="w-10 h-10 text-blue-400 mx-auto" />
         <div>
           <p className="font-bold text-foreground">Payment Submitted</p>
           <p className="text-sm text-muted-foreground mt-1">
@@ -245,7 +245,7 @@ export default function SubscriptionPostPaymentForm({ obligationId, amountDue, c
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className="space-y-1.5">
               <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
-                Reference Code <span className="text-rose-400">*</span>
+                Reference Code <span className="text-blue-400">*</span>
               </label>
               <div className="relative">
                 <input
@@ -262,7 +262,7 @@ export default function SubscriptionPostPaymentForm({ obligationId, amountDue, c
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                     title="Copy reference code"
                   >
-                    {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                    {copied ? <Check className="w-3.5 h-3.5 text-blue-400" /> : <Copy className="w-3.5 h-3.5" />}
                   </button>
                 )}
               </div>
@@ -284,9 +284,9 @@ export default function SubscriptionPostPaymentForm({ obligationId, amountDue, c
 
           {/* Error state */}
           {result?.status === 'error' && (
-            <div className="bg-rose-500/5 border border-rose-500/20 rounded-xl p-3 flex items-start gap-2">
-              <AlertCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
-              <p className="text-sm text-rose-400">{result.message}</p>
+            <div className="bg-blue-500/5 border border-blue-500/20 rounded-xl p-3 flex items-start gap-2">
+              <AlertCircle className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" />
+              <p className="text-sm text-blue-400">{result.message}</p>
             </div>
           )}
 

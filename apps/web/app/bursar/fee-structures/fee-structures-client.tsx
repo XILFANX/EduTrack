@@ -38,7 +38,7 @@ export function FeeStructuresClient({ schoolId, structures: initial, terms, clas
           <p className="text-sm text-muted-foreground mt-1">Define standard fees for each class and term.</p>
         </div>
         <Button
-          className="bg-cyan-600 hover:bg-cyan-700 gap-2"
+          className="bg-blue-600 hover:bg-blue-700 gap-2"
           onClick={() => setOpen(true)}
         >
           <Plus className="w-4 h-4" />
@@ -48,14 +48,14 @@ export function FeeStructuresClient({ schoolId, structures: initial, terms, clas
 
       {structures.length === 0 ? (
         <div className="text-center py-20 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl">
-          <div className="w-16 h-16 rounded-2xl bg-cyan-100 dark:bg-cyan-900/40 mx-auto flex items-center justify-center mb-4">
-            <BookOpen className="w-8 h-8 text-cyan-600 dark:text-cyan-400" />
+          <div className="w-16 h-16 rounded-2xl bg-blue-100 dark:bg-blue-900/40 mx-auto flex items-center justify-center mb-4">
+            <BookOpen className="w-8 h-8 text-blue-600 dark:text-blue-400" />
           </div>
           <h2 className="text-lg font-semibold text-foreground">No fee structures yet</h2>
           <p className="text-sm text-muted-foreground max-w-sm mx-auto mt-2 mb-4">
             Create a fee structure to start billing students for this term.
           </p>
-          <Button className="bg-cyan-600 hover:bg-cyan-700 gap-2" onClick={() => setOpen(true)}>
+          <Button className="bg-blue-600 hover:bg-blue-700 gap-2" onClick={() => setOpen(true)}>
             <Plus className="w-4 h-4" />
             Add First Structure
           </Button>
@@ -67,7 +67,7 @@ export function FeeStructuresClient({ schoolId, structures: initial, terms, clas
               <CardHeader className="pb-2">
                 <CardTitle className="text-base font-semibold flex justify-between items-start">
                   <span>{s.description || 'General Fee'}</span>
-                  <span className="text-cyan-600 dark:text-cyan-400 text-lg font-bold">{formatKES(s.amount)}</span>
+                  <span className="text-blue-600 dark:text-blue-400 text-lg font-bold">{formatKES(s.amount)}</span>
                 </CardTitle>
               </CardHeader>
               <CardContent>

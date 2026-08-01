@@ -101,7 +101,7 @@ export function ExamsManager({ years, terms, classes, initialExams }: Props) {
   return (
     <div className="space-y-6">
       {error && (
-        <div className="bg-red-500/10 text-red-500 p-4 rounded-xl text-sm">{error}</div>
+        <div className="bg-orange-500/10 text-orange-500 p-4 rounded-xl text-sm">{error}</div>
       )}
 
       <div className="flex justify-end">
@@ -153,7 +153,7 @@ export function ExamsManager({ years, terms, classes, initialExams }: Props) {
                         <button
                           onClick={() => handleDelete(exam.id)}
                           disabled={deletingId === exam.id}
-                          className="p-2 text-slate-400 hover:text-red-500 transition-colors"
+                          className="p-2 text-slate-400 hover:text-orange-500 transition-colors"
                         >
                           {deletingId === exam.id ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
                         </button>
@@ -173,7 +173,7 @@ export function ExamsManager({ years, terms, classes, initialExams }: Props) {
           <div className="bg-card w-full max-w-md rounded-3xl p-6 shadow-2xl border border-border">
             <h3 className="text-xl font-bold mb-5">Create New Exam</h3>
             <form onSubmit={handleCreate} className="space-y-4">
-              {error && <p className="text-sm text-red-500">{error}</p>}
+              {error && <p className="text-sm text-orange-500">{error}</p>}
 
               <div className="space-y-1.5">
                 <label className="text-xs font-semibold uppercase text-muted-foreground">Exam Name</label>

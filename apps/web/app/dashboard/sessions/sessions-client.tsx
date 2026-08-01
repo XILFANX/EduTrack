@@ -183,14 +183,14 @@ export function SessionsClient({ initialYears, initialTerms }: { initialYears: A
   return (
     <div className="space-y-6">
       {error && (
-        <div className="p-4 bg-rose-500/10 border border-rose-500/20 rounded-2xl flex items-center gap-3 text-rose-600 dark:text-rose-400">
+        <div className="p-4 bg-blue-500/10 border border-blue-500/20 rounded-2xl flex items-center gap-3 text-blue-600 dark:text-blue-400">
           <ShieldAlert className="w-5 h-5 shrink-0" />
           <p className="text-sm font-medium">{error}</p>
         </div>
       )}
 
       {/* Active Session Status */}
-      <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
+      <div className="bg-gradient-to-r from-blue-600 to-blue-600 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-[50px] rounded-full pointer-events-none" />
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
@@ -251,8 +251,8 @@ export function SessionsClient({ initialYears, initialTerms }: { initialYears: A
                     disabled={loadingId === year.id}
                     className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors border ${
                       year.is_active 
-                        ? 'bg-rose-50 dark:bg-rose-500/10 text-rose-600 border-rose-200 dark:border-rose-500/20 hover:bg-rose-100 dark:hover:bg-rose-500/20' 
-                        : 'bg-cyan-50 dark:bg-cyan-500/10 text-cyan-600 border-cyan-200 dark:border-cyan-500/20 hover:bg-cyan-100 dark:hover:bg-cyan-500/20'
+                        ? 'bg-blue-50 dark:bg-blue-500/10 text-blue-600 border-blue-200 dark:border-blue-500/20 hover:bg-blue-100 dark:hover:bg-blue-500/20' 
+                        : 'bg-blue-50 dark:bg-blue-500/10 text-blue-600 border-blue-200 dark:border-blue-500/20 hover:bg-blue-100 dark:hover:bg-blue-500/20'
                     } disabled:opacity-50`}
                     title={year.is_active ? "Deactivate Year" : "Activate Year"}
                   >
@@ -287,8 +287,8 @@ export function SessionsClient({ initialYears, initialTerms }: { initialYears: A
                         disabled={loadingId === term.id}
                         className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wide transition-colors border ${
                           term.is_active 
-                            ? 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-slate-500 hover:text-rose-500 hover:border-rose-200 dark:hover:border-rose-800 hover:bg-rose-50 dark:hover:bg-rose-900/20' 
-                            : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-slate-500 hover:text-cyan-600 hover:border-cyan-200 dark:hover:border-cyan-800 hover:bg-cyan-50 dark:hover:bg-cyan-900/20'
+                            ? 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-slate-500 hover:text-blue-500 hover:border-blue-200 dark:hover:border-blue-800 hover:bg-blue-50 dark:hover:bg-blue-900/20' 
+                            : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-slate-500 hover:text-blue-600 hover:border-blue-200 dark:hover:border-blue-800 hover:bg-blue-50 dark:hover:bg-blue-900/20'
                         } disabled:opacity-50`}
                       >
                         {loadingId === term.id ? 'Updating...' : term.is_active ? 'Deactivate' : 'Activate'}

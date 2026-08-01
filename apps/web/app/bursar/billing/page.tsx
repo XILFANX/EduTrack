@@ -111,10 +111,10 @@ export default async function BursarBillingPage() {
   const isSuspended = school?.subscription_status === 'suspended'
 
   const StatusIcon = isActive ? CheckCircle2 : isTrial ? Clock : isGrace ? AlertTriangle : XCircle
-  const statusColor = isActive    ? 'text-emerald-400'
-    : isTrial   ? 'text-amber-400'
+  const statusColor = isActive    ? 'text-blue-400'
+    : isTrial   ? 'text-orange-400'
     : isGrace   ? 'text-orange-400'
-    : 'text-rose-400'
+    : 'text-blue-400'
 
   const pendingObligations = (subscriptionObligations ?? []) as Array<{
     id: string; amount_due: number; currency: string; period_label: string
@@ -133,11 +133,11 @@ export default async function BursarBillingPage() {
       {/* Suspension / Grace Banner */}
       {(isSuspended || isGrace) && (
         <div className={`rounded-2xl border p-4 flex items-start gap-3 ${
-          isSuspended ? 'bg-rose-500/5 border-rose-500/20' : 'bg-orange-500/5 border-orange-500/20'
+          isSuspended ? 'bg-blue-500/5 border-blue-500/20' : 'bg-orange-500/5 border-orange-500/20'
         }`}>
-          <AlertTriangle className={`w-5 h-5 shrink-0 mt-0.5 ${isSuspended ? 'text-rose-400' : 'text-orange-400'}`} />
+          <AlertTriangle className={`w-5 h-5 shrink-0 mt-0.5 ${isSuspended ? 'text-blue-400' : 'text-orange-400'}`} />
           <div>
-            <p className={`font-semibold text-sm ${isSuspended ? 'text-rose-400' : 'text-orange-400'}`}>
+            <p className={`font-semibold text-sm ${isSuspended ? 'text-blue-400' : 'text-orange-400'}`}>
               {isSuspended ? 'Account Suspended' : 'Grace Period Active'}
             </p>
             <p className="text-sm text-muted-foreground mt-0.5">
@@ -150,10 +150,10 @@ export default async function BursarBillingPage() {
       )}
 
       {priceError && (
-        <div className="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-4 flex items-start gap-3">
-          <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
+        <div className="rounded-2xl border border-orange-500/20 bg-orange-500/5 p-4 flex items-start gap-3">
+          <AlertTriangle className="w-5 h-5 text-orange-400 shrink-0 mt-0.5" />
           <div>
-            <p className="text-sm font-semibold text-amber-400">Pricing configuration issue</p>
+            <p className="text-sm font-semibold text-orange-400">Pricing configuration issue</p>
             <p className="text-xs text-muted-foreground mt-1 font-mono">{priceError}</p>
           </div>
         </div>
@@ -161,18 +161,18 @@ export default async function BursarBillingPage() {
 
       {/* Status Card */}
       <div className={`relative overflow-hidden rounded-3xl p-6 border ${
-        isActive  ? 'bg-gradient-to-br from-emerald-500/10 to-teal-600/5 border-emerald-500/20'
-        : isTrial ? 'bg-gradient-to-br from-violet-500/10 to-indigo-600/5 border-violet-500/20'
-        : isGrace ? 'bg-gradient-to-br from-orange-500/10 to-amber-600/5 border-orange-500/20'
-        : 'bg-gradient-to-br from-rose-500/10 to-red-600/5 border-rose-500/20'
+        isActive  ? 'bg-gradient-to-br from-blue-500/10 to-blue-600/5 border-blue-500/20'
+        : isTrial ? 'bg-gradient-to-br from-blue-500/10 to-blue-600/5 border-blue-500/20'
+        : isGrace ? 'bg-gradient-to-br from-orange-500/10 to-orange-600/5 border-orange-500/20'
+        : 'bg-gradient-to-br from-blue-500/10 to-orange-600/5 border-blue-500/20'
       }`}>
         <div className={`absolute -top-10 -right-10 w-40 h-40 rounded-full opacity-20 blur-3xl ${
-          isActive ? 'bg-emerald-400' : isTrial ? 'bg-violet-400' : isGrace ? 'bg-orange-400' : 'bg-rose-400'
+          isActive ? 'bg-blue-400' : isTrial ? 'bg-blue-400' : isGrace ? 'bg-orange-400' : 'bg-blue-400'
         }`} />
         <div className="relative flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-start gap-4">
             <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 ${
-              isActive ? 'bg-emerald-500/20' : isTrial ? 'bg-violet-500/20' : isGrace ? 'bg-orange-500/20' : 'bg-rose-500/20'
+              isActive ? 'bg-blue-500/20' : isTrial ? 'bg-blue-500/20' : isGrace ? 'bg-orange-500/20' : 'bg-blue-500/20'
             }`}>
               <StatusIcon className={`w-6 h-6 ${statusColor}`} />
             </div>
@@ -232,8 +232,8 @@ export default async function BursarBillingPage() {
                     </p>
                     <span className={`text-xs px-2 py-0.5 rounded-full font-semibold border ${
                       obl.status === 'partial'
-                        ? 'bg-amber-500/10 border-amber-500/20 text-amber-400'
-                        : 'bg-rose-500/10 border-rose-500/20 text-rose-400'
+                        ? 'bg-orange-500/10 border-orange-500/20 text-orange-400'
+                        : 'bg-blue-500/10 border-blue-500/20 text-blue-400'
                     }`}>
                       {obl.status === 'partial' ? 'Partial' : 'Unpaid'}
                     </span>
@@ -284,10 +284,10 @@ export default async function BursarBillingPage() {
                 </div>
                 <span className={`text-xs px-2.5 py-1 rounded-full font-semibold border capitalize ${
                   entry.entry_type === 'payment'
-                    ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
+                    ? 'bg-blue-500/10 border-blue-500/20 text-blue-400'
                     : entry.entry_type === 'partial'
-                    ? 'bg-amber-500/10 border-amber-500/20 text-amber-400'
-                    : 'bg-violet-500/10 border-violet-500/20 text-violet-400'
+                    ? 'bg-orange-500/10 border-orange-500/20 text-orange-400'
+                    : 'bg-blue-500/10 border-blue-500/20 text-blue-400'
                 }`}>
                   {entry.entry_type === 'payment' ? 'Verified' : entry.entry_type}
                 </span>

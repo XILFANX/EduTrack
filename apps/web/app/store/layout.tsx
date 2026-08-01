@@ -41,7 +41,7 @@ export default async function StoreLayout({ children }: { children: React.ReactN
             </div>
             <div>
               <p className="font-bold text-sm text-foreground leading-tight">{school?.name || 'School Portal'}</p>
-              <p className="text-xs text-amber-600 dark:text-amber-400 font-medium">Store Portal</p>
+              <p className="text-xs text-orange-600 dark:text-orange-400 font-medium">Store Portal</p>
             </div>
           </div>
           <form action="/api/auth/signout" method="post">

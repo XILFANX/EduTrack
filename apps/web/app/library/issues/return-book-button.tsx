@@ -51,14 +51,14 @@ export function ReturnBookButton({
       <DropdownMenuContent align="end" className="w-48 rounded-xl">
         <DropdownMenuItem 
           onClick={() => handleReturn(false, false)}
-          className="gap-2 cursor-pointer py-2 text-cyan-600 focus:text-cyan-700"
+          className="gap-2 cursor-pointer py-2 text-blue-600 focus:text-blue-700"
         >
           <CheckCircle className="w-4 h-4" />
           Mark as Returned
         </DropdownMenuItem>
         <DropdownMenuItem 
           onClick={() => handleReturn(true, false)}
-          className="gap-2 cursor-pointer py-2 text-red-600 focus:text-red-700"
+          className="gap-2 cursor-pointer py-2 text-orange-600 focus:text-orange-700"
         >
           <AlertTriangle className="w-4 h-4" />
           Mark as Lost

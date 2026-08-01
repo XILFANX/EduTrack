@@ -22,16 +22,16 @@ interface Stats {
 
 const DATA_SECTIONS: { key: RetentionCategory, title: string, Icon: any, desc: string, color: string, bg: string }[] = [
   { key: 'communications', title: 'Chat Messages', Icon: MessageSquare, desc: 'Historical chat across all portals.', color: 'text-blue-600', bg: 'bg-blue-100 dark:bg-blue-900/20' },
-  { key: 'notifications', title: 'Notifications', Icon: Bell, desc: 'System & activity notifications.', color: 'text-amber-600', bg: 'bg-amber-100 dark:bg-amber-900/20' },
-  { key: 'audit_logs', title: 'Activity Logs', Icon: FileText, desc: 'Audit trail & compliance records.', color: 'text-cyan-600', bg: 'bg-cyan-100 dark:bg-cyan-900/20' },
-  { key: 'search_queries_log', title: 'Search Analytics', Icon: Search, desc: 'Portal search logs.', color: 'text-cyan-600', bg: 'bg-cyan-100 dark:bg-cyan-900/20' },
-  { key: 'invitations', title: 'Used Invitations', Icon: UserPlus, desc: 'Accepted or expired invitations.', color: 'text-rose-600', bg: 'bg-rose-100 dark:bg-rose-900/20' },
+  { key: 'notifications', title: 'Notifications', Icon: Bell, desc: 'System & activity notifications.', color: 'text-orange-600', bg: 'bg-orange-100 dark:bg-orange-900/20' },
+  { key: 'audit_logs', title: 'Activity Logs', Icon: FileText, desc: 'Audit trail & compliance records.', color: 'text-blue-600', bg: 'bg-blue-100 dark:bg-blue-900/20' },
+  { key: 'search_queries_log', title: 'Search Analytics', Icon: Search, desc: 'Portal search logs.', color: 'text-blue-600', bg: 'bg-blue-100 dark:bg-blue-900/20' },
+  { key: 'invitations', title: 'Used Invitations', Icon: UserPlus, desc: 'Accepted or expired invitations.', color: 'text-blue-600', bg: 'bg-blue-100 dark:bg-blue-900/20' },
 ]
 
 const DORMANT_PHASES = [
-  { key: 'warning_phase' as const, label: 'Warning Phase', sublabel: '60–84 days inactive', Icon: Clock, color: 'text-amber-600', bg: 'bg-amber-50 dark:bg-amber-900/10', border: 'border-amber-200 dark:border-amber-800/40' },
+  { key: 'warning_phase' as const, label: 'Warning Phase', sublabel: '60–84 days inactive', Icon: Clock, color: 'text-orange-600', bg: 'bg-orange-50 dark:bg-orange-900/10', border: 'border-orange-200 dark:border-orange-800/40' },
   { key: 'final_phase' as const, label: 'Final Notice', sublabel: '85–89 days inactive', Icon: AlertTriangle, color: 'text-orange-600', bg: 'bg-orange-50 dark:bg-orange-900/10', border: 'border-orange-200 dark:border-orange-800/40' },
-  { key: 'deletion_phase' as const, label: 'Pending Deletion', sublabel: '90+ days inactive', Icon: UserX, color: 'text-red-600', bg: 'bg-red-50 dark:bg-red-900/10', border: 'border-red-200 dark:border-red-800/40' },
+  { key: 'deletion_phase' as const, label: 'Pending Deletion', sublabel: '90+ days inactive', Icon: UserX, color: 'text-orange-600', bg: 'bg-orange-50 dark:bg-orange-900/10', border: 'border-orange-200 dark:border-orange-800/40' },
 ]
 
 export function OptimizationClient({ initialStats }: { initialStats: Stats }) {
@@ -71,7 +71,7 @@ export function OptimizationClient({ initialStats }: { initialStats: Stats }) {
   return (
     <div className="space-y-10">
       {/* ── Summary Banner ──────────────────────────────────────────────────── */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-800 p-6 text-white shadow-xl">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-600 to-blue-800 p-6 text-white shadow-xl">
         <div className="absolute -top-10 -right-10 w-48 h-48 rounded-full bg-white/5 blur-2xl" />
         <div className="absolute -bottom-12 -left-6 w-40 h-40 rounded-full bg-white/5 blur-2xl" />
         <div className="relative flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
@@ -96,8 +96,8 @@ export function OptimizationClient({ initialStats }: { initialStats: Stats }) {
         </div>
         {totalDormant === 0 && (
           <div className="mt-4 flex items-center gap-2 text-sm">
-            <ShieldCheck className="w-4 h-4 text-cyan-300" />
-            <span className="text-cyan-300 font-medium">Database is fully optimized.</span>
+            <ShieldCheck className="w-4 h-4 text-blue-300" />
+            <span className="text-blue-300 font-medium">Database is fully optimized.</span>
           </div>
         )}
       </div>
@@ -147,7 +147,7 @@ export function OptimizationClient({ initialStats }: { initialStats: Stats }) {
                 </div>
                 <div className="flex items-center justify-between pt-1 border-t border-border/60 mt-auto">
                   <div className="flex items-center gap-1.5 text-[12px] text-muted-foreground">
-                    <span className="w-1.5 h-1.5 rounded-full bg-amber-500 inline-block" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-orange-500 inline-block" />
                     <span>Retention: <strong className="text-foreground">{stats.policies[key]}d</strong></span>
                   </div>
                   <button

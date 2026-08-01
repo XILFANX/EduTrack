@@ -26,7 +26,7 @@ export function ParentDashboardClient({ childrenList, recentPayments }: { childr
   return (
     <div className="space-y-6">
       {/* Hero */}
-      <div className="bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-500 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
+      <div className="bg-gradient-to-br from-blue-600 via-blue-500 to-blue-500 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
         <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 blur-[40px] rounded-full pointer-events-none" />
         <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
@@ -75,18 +75,18 @@ export function ParentDashboardClient({ childrenList, recentPayments }: { childr
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Fees Widget */}
-        <div className="bg-gradient-to-br from-cyan-500 to-teal-600 rounded-3xl p-6 text-white shadow-md relative overflow-hidden">
+        <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-3xl p-6 text-white shadow-md relative overflow-hidden">
           <div className="absolute right-0 top-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -mr-10 -mt-10" />
           <div className="flex items-center justify-between mb-4 relative z-10">
             <div className="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
               <Wallet className="w-6 h-6 text-white" />
             </div>
           </div>
-          <p className="text-cyan-50 font-medium mb-1 relative z-10">Current Fee Balance</p>
+          <p className="text-blue-50 font-medium mb-1 relative z-10">Current Fee Balance</p>
           <h3 className="text-3xl font-bold text-white relative z-10">KES 12,500</h3>
           
           <Button 
-            className="w-full mt-6 bg-white hover:bg-slate-50 text-cyan-700 font-bold rounded-xl shadow-sm relative z-10"
+            className="w-full mt-6 bg-white hover:bg-slate-50 text-blue-700 font-bold rounded-xl shadow-sm relative z-10"
             onClick={() => window.location.href = '/parent/payments'}
           >
             Pay Fees
@@ -103,7 +103,7 @@ export function ParentDashboardClient({ childrenList, recentPayments }: { childr
           <p className="text-sm text-muted-foreground font-medium mb-1">Recent Exam: Mid Term 2</p>
           <div className="flex items-baseline gap-2">
             <h3 className="text-3xl font-bold text-foreground">A-</h3>
-            <span className="text-sm font-semibold text-cyan-600">Top 15%</span>
+            <span className="text-sm font-semibold text-blue-600">Top 15%</span>
           </div>
           
           <Button variant="outline" className="w-full mt-6 font-semibold rounded-xl border-slate-200 dark:border-slate-800">
@@ -114,7 +114,7 @@ export function ParentDashboardClient({ childrenList, recentPayments }: { childr
 
       <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm">
         <h2 className="text-lg font-bold text-foreground flex items-center gap-2 mb-4">
-          <Bell className="w-5 h-5 text-amber-500" />
+          <Bell className="w-5 h-5 text-orange-500" />
           Recent Payments
         </h2>
         {recentPayments.length === 0 ? (
@@ -122,7 +122,7 @@ export function ParentDashboardClient({ childrenList, recentPayments }: { childr
         ) : (
           <div className="space-y-4">
             {recentPayments.map((p, i) => (
-              <div key={i} className="border-l-2 border-cyan-500 pl-4 py-1">
+              <div key={i} className="border-l-2 border-blue-500 pl-4 py-1">
                 <p className="text-sm font-medium text-foreground">KES {Number(p.amount).toLocaleString()} Received</p>
                 <p className="text-xs text-muted-foreground mt-0.5">
                   {new Date(p.payment_date).toLocaleDateString('en-KE', { year: 'numeric', month: 'long', day: 'numeric' })}

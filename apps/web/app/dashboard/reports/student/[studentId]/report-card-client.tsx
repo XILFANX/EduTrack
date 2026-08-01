@@ -30,18 +30,18 @@ interface Props {
 
 function gradeColor(grade: string | null) {
   if (!grade) return 'text-slate-400'
-  if (grade.startsWith('A')) return 'text-cyan-600'
+  if (grade.startsWith('A')) return 'text-blue-600'
   if (grade.startsWith('B')) return 'text-blue-600'
-  if (grade.startsWith('C')) return 'text-yellow-600'
-  return 'text-red-500'
+  if (grade.startsWith('C')) return 'text-orange-600'
+  return 'text-orange-500'
 }
 
 function gradeBg(grade: string | null) {
   if (!grade) return 'bg-slate-100 text-slate-500'
-  if (grade.startsWith('A')) return 'bg-cyan-50 text-cyan-700 border border-cyan-200'
+  if (grade.startsWith('A')) return 'bg-blue-50 text-blue-700 border border-blue-200'
   if (grade.startsWith('B')) return 'bg-blue-50 text-blue-700 border border-blue-200'
-  if (grade.startsWith('C')) return 'bg-yellow-50 text-yellow-700 border border-yellow-200'
-  return 'bg-red-50 text-red-700 border border-red-200'
+  if (grade.startsWith('C')) return 'bg-orange-50 text-orange-700 border border-orange-200'
+  return 'bg-orange-50 text-orange-700 border border-orange-200'
 }
 
 export function ReportCardClient({ school, student, activeTerm, activeYear, allTerms, results, attendanceSummary, currentStudentId, isParentView = false }: Props) {
@@ -226,8 +226,8 @@ export function ReportCardClient({ school, student, activeTerm, activeYear, allT
                 </div>
                 <div className="text-center bg-slate-50 border border-slate-200 rounded-2xl p-4">
                   <div className="flex justify-between text-xs font-medium mb-1">
-                    <span className="text-cyan-600">P: {attendanceSummary.present}</span>
-                    <span className="text-red-500">A: {attendanceSummary.absent}</span>
+                    <span className="text-blue-600">P: {attendanceSummary.present}</span>
+                    <span className="text-orange-500">A: {attendanceSummary.absent}</span>
                     <span className="text-orange-500">L: {attendanceSummary.late}</span>
                   </div>
                   <p className="text-2xl font-extrabold text-slate-700">

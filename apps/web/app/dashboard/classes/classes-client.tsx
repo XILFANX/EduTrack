@@ -119,7 +119,7 @@ export function ClassesPageClient({ classes, studentCountMap, schoolId, curricul
                   {/* Delete button — positioned absolute on the right edge */}
                   <button
                     onClick={e => { e.stopPropagation(); handleDeleteClass(cls.id, cls.name) }}
-                    className="absolute right-3 p-2 rounded-lg text-slate-300 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+                    className="absolute right-3 p-2 rounded-lg text-slate-300 hover:text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-900/20 transition-colors"
                     title="Delete class"
                   >
                     <Trash2 className="w-4 h-4" />

@@ -43,7 +43,7 @@ export function ManageClientCard({ schoolId, currentStatus }: Props) {
       </div>
 
       {error && (
-        <div className="text-xs font-semibold bg-red-500/10 text-red-500 border border-red-500/20 px-3 py-2 rounded-lg">
+        <div className="text-xs font-semibold bg-orange-500/10 text-orange-500 border border-orange-500/20 px-3 py-2 rounded-lg">
           {error}
         </div>
       )}
@@ -64,7 +64,7 @@ export function ManageClientCard({ schoolId, currentStatus }: Props) {
             <button
               onClick={() => handleUpdateStatus('active')}
               disabled={isPending || currentStatus === 'active'}
-              className="flex items-center gap-1.5 bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 border border-cyan-500/20 px-3 py-2 rounded-lg text-xs font-semibold transition-colors disabled:opacity-50"
+              className="flex items-center gap-1.5 bg-blue-500/10 hover:bg-blue-500/20 text-blue-600 dark:text-blue-400 border border-blue-500/20 px-3 py-2 rounded-lg text-xs font-semibold transition-colors disabled:opacity-50"
             >
               <CheckCircle2 className="w-3.5 h-3.5" />
               Active
@@ -72,7 +72,7 @@ export function ManageClientCard({ schoolId, currentStatus }: Props) {
             <button
               onClick={() => handleUpdateStatus('suspended')}
               disabled={isPending || currentStatus === 'suspended'}
-              className="flex items-center gap-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-600 dark:text-red-400 border border-red-500/20 px-3 py-2 rounded-lg text-xs font-semibold transition-colors disabled:opacity-50"
+              className="flex items-center gap-1.5 bg-orange-500/10 hover:bg-orange-500/20 text-orange-600 dark:text-orange-400 border border-orange-500/20 px-3 py-2 rounded-lg text-xs font-semibold transition-colors disabled:opacity-50"
             >
               <ShieldAlert className="w-3.5 h-3.5" />
               Suspend Account

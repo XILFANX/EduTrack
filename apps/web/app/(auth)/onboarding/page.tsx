@@ -200,7 +200,7 @@ export default function OnboardingPage() {
                         <button
                           type="button"
                           onClick={() => { setLogoFile(null); setLogoPreview(null) }}
-                          className="ml-3 text-xs text-red-500 hover:underline"
+                          className="ml-3 text-xs text-orange-500 hover:underline"
                         >
                           Remove
                         </button>
@@ -378,7 +378,7 @@ export default function OnboardingPage() {
             )}
 
             {error && (
-              <p className="text-sm text-red-600 bg-red-50 dark:bg-red-900/20 px-3 py-2 rounded-md border border-red-200 dark:border-red-800/40">
+              <p className="text-sm text-orange-600 bg-orange-50 dark:bg-orange-900/20 px-3 py-2 rounded-md border border-orange-200 dark:border-orange-800/40">
                 {error}
               </p>
             )}

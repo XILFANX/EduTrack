@@ -202,7 +202,7 @@ export default async function TeacherGrades({ searchParams }: Props) {
                 </div>
                 {visibleSlots.filter(s => s.exam_id === selectedExamId).map(slot => {
                   const status = subjectStatuses.find(st => st.subject_id === slot.subject_id)?.status || 'pending'
-                  const dotColor = status === 'finalized' ? 'bg-cyan-400' : status === 'submitted' ? 'bg-amber-400' : 'bg-slate-300'
+                  const dotColor = status === 'finalized' ? 'bg-blue-400' : status === 'submitted' ? 'bg-orange-400' : 'bg-slate-300'
                   return (
                     <Link
                       key={slot.id}

@@ -29,9 +29,9 @@ export function LibraryDashboardClient({ stats, borrowedBooks }: {
   return (
     <div className="space-y-6 pb-24">
       {/* Hero */}
-      <div className="relative bg-gradient-to-br from-indigo-700 via-purple-700 to-indigo-900 rounded-3xl p-6 overflow-hidden text-white shadow-xl">
+      <div className="relative bg-gradient-to-br from-blue-700 via-purple-700 to-blue-900 rounded-3xl p-6 overflow-hidden text-white shadow-xl">
         <div className="absolute -top-12 -right-12 w-48 h-48 rounded-full bg-purple-500/20 blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-32 h-32 rounded-full bg-indigo-400/10 blur-2xl pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-32 h-32 rounded-full bg-blue-400/10 blur-2xl pointer-events-none" />
 
         <div className="relative z-10">
           <div className="flex items-center gap-3 mb-5">
@@ -40,20 +40,20 @@ export function LibraryDashboardClient({ stats, borrowedBooks }: {
             </div>
             <div>
               <h1 className="text-2xl font-black tracking-tight">Library Management</h1>
-              <p className="text-indigo-200 text-sm">Book inventory and lending records</p>
+              <p className="text-blue-200 text-sm">Book inventory and lending records</p>
             </div>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {[
               { label: 'Total Books', value: stats.totalBooks, color: 'bg-white/10' },
-              { label: 'Available', value: stats.availableBooks, color: 'bg-cyan-400/20' },
-              { label: 'Borrowed', value: stats.borrowedBooks, color: 'bg-amber-400/20' },
-              { label: 'Lost/Missing', value: stats.lostBooks, color: 'bg-red-400/20' },
+              { label: 'Available', value: stats.availableBooks, color: 'bg-blue-400/20' },
+              { label: 'Borrowed', value: stats.borrowedBooks, color: 'bg-orange-400/20' },
+              { label: 'Lost/Missing', value: stats.lostBooks, color: 'bg-orange-400/20' },
             ].map((s, i) => (
               <div key={i} className={`${s.color} backdrop-blur-sm rounded-2xl px-3 py-3 text-center`}>
                 <p className="text-2xl font-extrabold text-white">{s.value}</p>
-                <p className="text-[10px] text-indigo-200 font-semibold uppercase tracking-wide mt-0.5">{s.label}</p>
+                <p className="text-[10px] text-blue-200 font-semibold uppercase tracking-wide mt-0.5">{s.label}</p>
               </div>
             ))}
           </div>
@@ -69,7 +69,7 @@ export function LibraryDashboardClient({ stats, borrowedBooks }: {
           className="flex-1 bg-transparent text-foreground placeholder-muted-foreground text-sm outline-none"
         />
         <div className="flex items-center gap-2 shrink-0">
-          <ScanBarcode className="w-4 h-4 text-indigo-500" />
+          <ScanBarcode className="w-4 h-4 text-blue-500" />
           <span className="text-xs text-muted-foreground hidden sm:block">Scan ISBN</span>
         </div>
       </div>
@@ -77,10 +77,10 @@ export function LibraryDashboardClient({ stats, borrowedBooks }: {
       {/* Quick actions */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {[
-          { label: 'Issue Book', href: '/library/issues', icon: BookMarked, color: 'text-indigo-600', bg: 'bg-indigo-50 dark:bg-indigo-900/20', border: 'border-indigo-100 dark:border-indigo-800/30' },
-          { label: 'Return Book', href: '/library/issues', icon: CheckCircle2, color: 'text-cyan-600', bg: 'bg-cyan-50 dark:bg-cyan-900/20', border: 'border-cyan-100 dark:border-cyan-800/30' },
+          { label: 'Issue Book', href: '/library/issues', icon: BookMarked, color: 'text-blue-600', bg: 'bg-blue-50 dark:bg-blue-900/20', border: 'border-blue-100 dark:border-blue-800/30' },
+          { label: 'Return Book', href: '/library/issues', icon: CheckCircle2, color: 'text-blue-600', bg: 'bg-blue-50 dark:bg-blue-900/20', border: 'border-blue-100 dark:border-blue-800/30' },
           { label: 'All Books', href: '/library/books', icon: BookOpen, color: 'text-purple-600', bg: 'bg-purple-50 dark:bg-purple-900/20', border: 'border-purple-100 dark:border-purple-800/30' },
-          { label: 'Overdue', href: '/library/issues', icon: AlertOctagon, color: 'text-red-600', bg: 'bg-red-50 dark:bg-red-900/20', border: 'border-red-100 dark:border-red-800/30' },
+          { label: 'Overdue', href: '/library/issues', icon: AlertOctagon, color: 'text-orange-600', bg: 'bg-orange-50 dark:bg-orange-900/20', border: 'border-orange-100 dark:border-orange-800/30' },
         ].map((a, i) => {
           const Icon = a.icon
           return (
@@ -99,10 +99,10 @@ export function LibraryDashboardClient({ stats, borrowedBooks }: {
       <div className="bg-card border border-border rounded-3xl overflow-hidden shadow-sm">
         <div className="px-5 py-4 border-b border-border flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Clock className="w-4 h-4 text-amber-500" />
+            <Clock className="w-4 h-4 text-orange-500" />
             <h2 className="font-bold text-foreground">Currently Borrowed</h2>
           </div>
-          <Link href="/library/issues" className="text-xs font-semibold text-indigo-600 hover:text-indigo-700 flex items-center gap-1">
+          <Link href="/library/issues" className="text-xs font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1">
             View all <ChevronRight className="w-3.5 h-3.5" />
           </Link>
         </div>
@@ -119,8 +119,8 @@ export function LibraryDashboardClient({ stats, borrowedBooks }: {
               const isOverdue = issue.due_date && new Date(issue.due_date) < new Date()
               return (
                 <div key={i} className="flex items-center gap-4 px-5 py-3.5 hover:bg-slate-50/60 dark:hover:bg-slate-900/30 transition-colors">
-                  <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${isOverdue ? 'bg-red-50 dark:bg-red-900/20' : 'bg-indigo-50 dark:bg-indigo-900/20'}`}>
-                    <BookMarked className={`w-4 h-4 ${isOverdue ? 'text-red-500' : 'text-indigo-500'}`} />
+                  <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${isOverdue ? 'bg-orange-50 dark:bg-orange-900/20' : 'bg-blue-50 dark:bg-blue-900/20'}`}>
+                    <BookMarked className={`w-4 h-4 ${isOverdue ? 'text-orange-500' : 'text-blue-500'}`} />
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="font-semibold text-sm text-foreground truncate">{issue.book?.title || 'Unknown Book'}</p>
@@ -131,7 +131,7 @@ export function LibraryDashboardClient({ stats, borrowedBooks }: {
                   <div className="text-right shrink-0">
                     <p className="text-xs text-muted-foreground">{days}d out</p>
                     {isOverdue
-                      ? <span className="text-[10px] font-bold text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 px-2 py-0.5 rounded-full">Overdue</span>
+                      ? <span className="text-[10px] font-bold text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-900/20 px-2 py-0.5 rounded-full">Overdue</span>
                       : issue.due_date
                         ? <span className="text-[10px] text-muted-foreground">Due {fmtDate(issue.due_date)}</span>
                         : null}

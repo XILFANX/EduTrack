@@ -84,7 +84,7 @@ export function SetupPinForm() {
       </div>
 
       {error && (
-        <p className="text-red-600 dark:text-red-400 text-sm font-mono text-center bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900/30 rounded-lg px-3 py-2">
+        <p className="text-orange-600 dark:text-orange-400 text-sm font-mono text-center bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-900/30 rounded-lg px-3 py-2">
           {error}
         </p>
       )}

@@ -11,12 +11,12 @@ export function DocsHeaderNav({ accent = 'blue' }: { accent?: 'violet' | 'blue' 
 
   const activePill =
     accent === 'violet'
-      ? 'bg-violet-600 text-white shadow-md shadow-violet-500/30'
+      ? 'bg-blue-600 text-white shadow-md shadow-blue-500/30'
       : 'bg-blue-600 text-white shadow-md shadow-blue-500/30'
 
   const inactivePill =
     accent === 'violet'
-      ? 'text-slate-500 dark:text-slate-400 hover:text-violet-600 dark:hover:text-violet-400 hover:bg-violet-50 dark:hover:bg-violet-900/20'
+      ? 'text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20'
       : 'text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20'
 
   return (

@@ -185,7 +185,7 @@ export function GradeScalesManager({ schoolId, initialGradeScales }: Props) {
                           size="icon"
                           onClick={() => handleDelete(s.id)}
                           disabled={deletingId === s.id}
-                          className="h-8 w-8 text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30"
+                          className="h-8 w-8 text-orange-500 hover:text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-950/30"
                         >
                           {deletingId === s.id ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
                         </Button>
@@ -228,7 +228,7 @@ export function GradeScalesManager({ schoolId, initialGradeScales }: Props) {
               <Input placeholder="e.g. Excellent, Good, Pass" value={remarks} onChange={e => setRemarks(e.target.value)} />
             </div>
 
-            {error && <p className="text-sm text-red-500 bg-red-50 dark:bg-red-900/20 p-3 rounded-lg border border-red-200 dark:border-red-800">{error}</p>}
+            {error && <p className="text-sm text-orange-500 bg-orange-50 dark:bg-orange-900/20 p-3 rounded-lg border border-orange-200 dark:border-orange-800">{error}</p>}
 
             <div className="flex justify-end gap-3 pt-4 border-t border-border mt-4">
               <Button type="button" variant="outline" onClick={() => setShowModal(false)} className="rounded-xl">Cancel</Button>

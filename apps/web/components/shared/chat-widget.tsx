@@ -46,12 +46,12 @@ export function ChatWidget({ currentUserId, recipientName, initialMessages = [],
   return (
     <div className="flex flex-col h-[600px] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm">
       <div className="p-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full bg-cyan-100 dark:bg-cyan-900/30 text-cyan-600 flex items-center justify-center">
+        <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 flex items-center justify-center">
           <User className="w-5 h-5" />
         </div>
         <div>
           <h3 className="font-semibold text-foreground">{recipientName}</h3>
-          <p className="text-xs text-cyan-500 font-medium">Online</p>
+          <p className="text-xs text-blue-500 font-medium">Online</p>
         </div>
       </div>
 
@@ -67,7 +67,7 @@ export function ChatWidget({ currentUserId, recipientName, initialMessages = [],
               <div key={msg.id} className={`flex ${isMe ? 'justify-end' : 'justify-start'}`}>
                 <div className={`max-w-[75%] rounded-2xl px-4 py-2 ${
                   isMe 
-                    ? 'bg-cyan-600 text-white rounded-br-sm' 
+                    ? 'bg-blue-600 text-white rounded-br-sm' 
                     : 'bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-foreground rounded-bl-sm'
                 }`}>
                   <p className="text-sm">{msg.content}</p>
@@ -85,12 +85,12 @@ export function ChatWidget({ currentUserId, recipientName, initialMessages = [],
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Type a message..."
-            className="w-full h-12 pl-4 pr-12 rounded-full border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 transition-all text-sm text-foreground"
+            className="w-full h-12 pl-4 pr-12 rounded-full border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-sm text-foreground"
           />
           <button
             type="submit"
             disabled={!input.trim() || isSending}
-            className="absolute right-2 w-8 h-8 flex items-center justify-center rounded-full bg-cyan-600 text-white disabled:opacity-50 hover:bg-cyan-700 transition-colors"
+            className="absolute right-2 w-8 h-8 flex items-center justify-center rounded-full bg-blue-600 text-white disabled:opacity-50 hover:bg-blue-700 transition-colors"
           >
             <Send className="w-4 h-4" />
           </button>

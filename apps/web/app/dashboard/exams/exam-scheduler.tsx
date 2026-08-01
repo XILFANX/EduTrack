@@ -34,8 +34,8 @@ function formatDate(d: string) {
 
 const STATUS_BG: Record<string, string> = {
   pending: 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400',
-  submitted: 'bg-amber-50 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400',
-  finalized: 'bg-cyan-50 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-400',
+  submitted: 'bg-orange-50 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400',
+  finalized: 'bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400',
 }
 
 export function ExamScheduler({ exam, subjects, classes, initialSlots }: Props) {
@@ -130,7 +130,7 @@ export function ExamScheduler({ exam, subjects, classes, initialSlots }: Props) 
           {slots.length} subjects scheduled
         </div>
         {published ? (
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-cyan-50 dark:bg-cyan-900/20 border border-cyan-100 dark:border-cyan-800/30 text-cyan-700 dark:text-cyan-300 text-xs font-semibold">
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800/30 text-blue-700 dark:text-blue-300 text-xs font-semibold">
             <CheckCircle2 className="w-3.5 h-3.5" />
             Schedule Published — Staff Notified
           </div>
@@ -138,7 +138,7 @@ export function ExamScheduler({ exam, subjects, classes, initialSlots }: Props) 
       </div>
 
       {error && (
-        <div className="flex items-center gap-2 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800/30 text-red-700 dark:text-red-400 rounded-2xl px-4 py-3 text-sm">
+        <div className="flex items-center gap-2 bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800/30 text-orange-700 dark:text-orange-400 rounded-2xl px-4 py-3 text-sm">
           <AlertCircle className="w-4 h-4 shrink-0" /> {error}
         </div>
       )}
@@ -167,7 +167,7 @@ export function ExamScheduler({ exam, subjects, classes, initialSlots }: Props) 
                       <button
                         onClick={() => handleRemove(slot.id)}
                         disabled={removing === slot.id}
-                        className="w-8 h-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+                        className="w-8 h-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-orange-500 hover:bg-orange-50 dark:hover:bg-orange-900/20 transition-colors"
                       >
                         {removing === slot.id ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Trash2 className="w-3.5 h-3.5" />}
                       </button>
@@ -248,7 +248,7 @@ export function ExamScheduler({ exam, subjects, classes, initialSlots }: Props) 
 
       {/* Publish button */}
       {slots.length > 0 && !published && (
-        <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl p-4 flex items-center justify-between">
+        <div className="bg-gradient-to-r from-blue-600 to-blue-600 rounded-2xl p-4 flex items-center justify-between">
           <div>
             <p className="text-white font-semibold text-sm">Ready to notify staff?</p>
             <p className="text-blue-200 text-xs mt-0.5">This will broadcast the exam schedule to all staff members.</p>

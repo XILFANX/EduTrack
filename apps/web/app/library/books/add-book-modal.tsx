@@ -51,15 +51,15 @@ export function AddBookModal({ schoolId }: { schoolId: string }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="bg-violet-600 hover:bg-violet-700 gap-2">
+        <Button className="bg-blue-600 hover:bg-blue-700 gap-2">
           <Plus className="w-4 h-4" />
           Add Book
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] rounded-3xl">
         <DialogHeader>
-          <div className="w-12 h-12 rounded-full bg-violet-100 dark:bg-violet-900/40 flex items-center justify-center mb-4">
-            <BookOpen className="w-6 h-6 text-violet-600 dark:text-violet-400" />
+          <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center mb-4">
+            <BookOpen className="w-6 h-6 text-blue-600 dark:text-blue-400" />
           </div>
           <DialogTitle className="text-xl">Add New Book</DialogTitle>
           <DialogDescription>
@@ -115,7 +115,7 @@ export function AddBookModal({ schoolId }: { schoolId: string }) {
             </div>
           </div>
           
-          <Button type="submit" disabled={loading} className="w-full rounded-xl bg-violet-600 hover:bg-violet-700 h-11 mt-2">
+          <Button type="submit" disabled={loading} className="w-full rounded-xl bg-blue-600 hover:bg-blue-700 h-11 mt-2">
             {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Add to Inventory'}
           </Button>
         </form>

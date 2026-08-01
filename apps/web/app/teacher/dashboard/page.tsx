@@ -92,7 +92,7 @@ export default async function TeacherDashboard() {
     return (
       <div className="space-y-6 pb-4">
         {/* Class Hero */}
-        <div className="bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-500 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
+        <div className="bg-gradient-to-br from-blue-600 via-blue-500 to-blue-500 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
           <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 blur-[40px] rounded-full pointer-events-none" />
           <div className="relative z-10">
             <div className="flex items-center gap-3 mb-4">
@@ -142,7 +142,7 @@ export default async function TeacherDashboard() {
             <div className="flex items-end gap-1.5 h-16">
               {weekHistory.map((day) => {
                 const pct = day.total > 0 ? (day.present / day.total) * 100 : 0
-                const color = pct >= 90 ? 'bg-cyan-500' : pct >= 70 ? 'bg-amber-400' : 'bg-red-400'
+                const color = pct >= 90 ? 'bg-blue-500' : pct >= 70 ? 'bg-orange-400' : 'bg-orange-400'
                 const label = new Date(day.date).toLocaleDateString('en', { weekday: 'short' }).slice(0, 2)
                 return (
                   <div key={day.date} className="flex-1 flex flex-col items-center gap-1">
@@ -161,9 +161,9 @@ export default async function TeacherDashboard() {
         <div className="grid grid-cols-2 gap-3">
           {[
             { href: '/teacher/attendance', label: 'Take Attendance', icon: ClipboardList, color: 'text-blue-500', bg: 'bg-blue-50 dark:bg-blue-900/20' },
-            { href: '/teacher/grades', label: 'Enter Grades', icon: TrendingUp, color: 'text-cyan-500', bg: 'bg-cyan-50 dark:bg-cyan-900/20' },
-            { href: '/teacher/students', label: 'My Students', icon: Users, color: 'text-indigo-500', bg: 'bg-indigo-50 dark:bg-indigo-900/20' },
-            { href: '/teacher/discipline', label: 'Discipline Log', icon: GraduationCap, color: 'text-amber-500', bg: 'bg-amber-50 dark:bg-amber-900/20' },
+            { href: '/teacher/grades', label: 'Enter Grades', icon: TrendingUp, color: 'text-blue-500', bg: 'bg-blue-50 dark:bg-blue-900/20' },
+            { href: '/teacher/students', label: 'My Students', icon: Users, color: 'text-blue-500', bg: 'bg-blue-50 dark:bg-blue-900/20' },
+            { href: '/teacher/discipline', label: 'Discipline Log', icon: GraduationCap, color: 'text-orange-500', bg: 'bg-orange-50 dark:bg-orange-900/20' },
           ].map(({ href, label, icon: Icon, color, bg }) => (
             <Link key={href} href={href} className={`flex items-center gap-3 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors shadow-sm`}>
               <div className={`w-9 h-9 rounded-xl ${bg} flex items-center justify-center shrink-0`}>
@@ -204,7 +204,7 @@ export default async function TeacherDashboard() {
   return (
     <div className="space-y-6 pb-4">
       {/* Hero */}
-      <div className="bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-500 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
+      <div className="bg-gradient-to-br from-blue-600 via-blue-500 to-blue-500 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
         <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 blur-[40px] rounded-full pointer-events-none" />
         <div className="relative z-10">
           <div className="flex items-center gap-3 mb-5">

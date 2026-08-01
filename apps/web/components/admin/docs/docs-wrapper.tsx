@@ -19,16 +19,16 @@ export function DocsWrapper({ elements, headings, repoPaths, accent = 'blue' }: 
 
   const accentActive =
     accent === 'violet'
-      ? 'bg-violet-600 text-white shadow-violet-500/30'
+      ? 'bg-blue-600 text-white shadow-blue-500/30'
       : 'bg-blue-600 text-white shadow-blue-500/30'
 
   const accentHover =
     accent === 'violet'
-      ? 'hover:text-violet-600 dark:hover:text-violet-400 hover:bg-violet-50 dark:hover:bg-violet-900/20'
+      ? 'hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20'
       : 'hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20'
 
   const accentIndicator =
-    accent === 'violet' ? 'bg-violet-500' : 'bg-blue-500'
+    accent === 'violet' ? 'bg-blue-500' : 'bg-blue-500'
 
   const displayRepoPath = activeRepoPath ?? repoPaths[0] ?? null
 

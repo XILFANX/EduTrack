@@ -67,12 +67,12 @@ export default async function ParentPaymentsPage() {
 
       {/* Balance card */}
       <div className={`p-6 rounded-3xl shadow-lg ${totalDue > 0
-        ? 'bg-gradient-to-br from-rose-500/10 to-red-600/10 border border-red-400/20'
-        : 'bg-gradient-to-br from-cyan-500/10 to-teal-600/10 border border-cyan-500/20'}`}>
+        ? 'bg-gradient-to-br from-blue-500/10 to-orange-600/10 border border-orange-400/20'
+        : 'bg-gradient-to-br from-blue-500/10 to-blue-600/10 border border-blue-500/20'}`}>
         <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">
           {totalDue > 0 ? 'Total Outstanding' : 'All Caught Up!'}
         </p>
-        <h2 className={`text-4xl font-extrabold tabular-nums ${totalDue > 0 ? 'text-rose-400' : 'text-cyan-400'}`}>
+        <h2 className={`text-4xl font-extrabold tabular-nums ${totalDue > 0 ? 'text-blue-400' : 'text-blue-400'}`}>
           {fmt(totalDue, currency)}
         </h2>
       </div>
@@ -129,7 +129,7 @@ export default async function ParentPaymentsPage() {
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-sm font-bold text-foreground">{fmt(obl.amount_due, obl.currency)}</span>
-                <span className="text-[10px] font-bold text-cyan-700 bg-cyan-100 dark:bg-cyan-900/30 dark:text-cyan-300 px-2 py-0.5 rounded-full">
+                <span className="text-[10px] font-bold text-blue-700 bg-blue-100 dark:bg-blue-900/30 dark:text-blue-300 px-2 py-0.5 rounded-full">
                   {obl.status === 'overpaid' ? 'Overpaid' : 'Paid ✓'}
                 </span>
               </div>

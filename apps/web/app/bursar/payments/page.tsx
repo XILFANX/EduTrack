@@ -125,8 +125,8 @@ export default function VerifyPaymentPage() {
   if (result) {
     return (
       <div className="max-w-lg mx-auto px-4 py-16 text-center space-y-4">
-        <div className={`w-20 h-20 rounded-full flex items-center justify-center mx-auto ${result.matched > 0 ? 'bg-green-100 dark:bg-green-900/30' : 'bg-amber-100 dark:bg-amber-900/30'}`}>
-          <CheckCircle2 className={`w-10 h-10 ${result.matched > 0 ? 'text-green-600' : 'text-amber-600'}`} />
+        <div className={`w-20 h-20 rounded-full flex items-center justify-center mx-auto ${result.matched > 0 ? 'bg-orange-100 dark:bg-orange-900/30' : 'bg-orange-100 dark:bg-orange-900/30'}`}>
+          <CheckCircle2 className={`w-10 h-10 ${result.matched > 0 ? 'text-orange-600' : 'text-orange-600'}`} />
         </div>
         <h2 className="text-xl font-bold text-foreground">
           {result.submitted} submitted · {result.matched} auto-matched
@@ -139,9 +139,9 @@ export default function VerifyPaymentPage() {
             : 'Submissions recorded. They will auto-match when parents post their side.'}
         </p>
         {result.errors.length > 0 && (
-          <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 rounded-xl p-3 text-left space-y-1">
+          <div className="bg-orange-50 dark:bg-orange-950/30 border border-orange-200 rounded-xl p-3 text-left space-y-1">
             {result.errors.map((e, i) => (
-              <p key={i} className="text-sm text-red-600">{e}</p>
+              <p key={i} className="text-sm text-orange-600">{e}</p>
             ))}
           </div>
         )}
@@ -149,7 +149,7 @@ export default function VerifyPaymentPage() {
           <Button variant="outline" onClick={() => { setResult(null); setRows([makeRow()]) }}>
             Submit more
           </Button>
-          <Button className="bg-cyan-600 hover:bg-cyan-700" onClick={() => window.location.href = '/bursar/ledger'}>
+          <Button className="bg-blue-600 hover:bg-blue-700" onClick={() => window.location.href = '/bursar/ledger'}>
             View Ledger
           </Button>
         </div>
@@ -162,16 +162,16 @@ export default function VerifyPaymentPage() {
       {/* Header */}
       <div>
         <div className="flex items-center gap-2 mb-1">
-          <ShieldCheck className="w-5 h-5 text-cyan-600" />
+          <ShieldCheck className="w-5 h-5 text-blue-600" />
           <h1 className="text-xl font-bold text-foreground">Verify Payment</h1>
         </div>
         <p className="text-sm text-muted-foreground">
           Paste what you received from your bank or M-Pesa. Do not look up students/parents — just paste the message.
         </p>
         {/* Blindness notice */}
-        <div className="mt-3 bg-cyan-50 dark:bg-cyan-900/20 border border-cyan-200 dark:border-cyan-800 rounded-xl px-4 py-3 flex gap-3 items-start">
-          <EyeOff className="w-4 h-4 text-cyan-600 mt-0.5 shrink-0" />
-          <p className="text-xs text-cyan-700 dark:text-cyan-300">
+        <div className="mt-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl px-4 py-3 flex gap-3 items-start">
+          <EyeOff className="w-4 h-4 text-blue-600 mt-0.5 shrink-0" />
+          <p className="text-xs text-blue-700 dark:text-blue-300">
             <strong>Blind verification:</strong> You will not see any parent claims or notifications. Just submit what you received — the system matches independently.
           </p>
         </div>
@@ -183,7 +183,7 @@ export default function VerifyPaymentPage() {
             {rows.length > 1 && (
               <div className="flex items-center justify-between mb-1">
                 <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Entry {idx + 1}</span>
-                <button type="button" onClick={() => removeRow(row.id)} className="text-muted-foreground hover:text-red-500 transition-colors">
+                <button type="button" onClick={() => removeRow(row.id)} className="text-muted-foreground hover:text-orange-500 transition-colors">
                   <Trash2 className="w-4 h-4" />
                 </button>
               </div>
@@ -205,14 +205,14 @@ export default function VerifyPaymentPage() {
               <textarea
                 id={`raw-${row.id}`}
                 rows={3}
-                className="w-full bg-muted border border-border rounded-xl px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-cyan-500/40 font-mono"
+                className="w-full bg-muted border border-border rounded-xl px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-500/40 font-mono"
                 placeholder="e.g. QJK23XF89H Confirmed. Ksh 15,000.00 received from 0712 345 678 on 1/8/26 at 10:30 AM."
                 value={showRaw[row.id] ? row.rawMessage : row.rawMessage ? '● '.repeat(6) + ' (hidden)' : ''}
                 onChange={(e) => parseMessage(e.target.value, row.id)}
                 onFocus={() => setShowRaw((s) => ({ ...s, [row.id]: true }))}
               />
               {row.rawMessage && (
-                <p className="text-xs text-green-600 dark:text-green-400">
+                <p className="text-xs text-orange-600 dark:text-orange-400">
                   Auto-parsed: code <span className="font-mono font-bold">{row.referenceCode || '—'}</span> · amount <strong>{row.parsedAmount || '—'}</strong>
                 </p>
               )}
@@ -255,8 +255,8 @@ export default function VerifyPaymentPage() {
                     onClick={() => updateRow(row.id, { paymentRail: r.value })}
                     className={`px-3 py-1.5 rounded-lg border text-xs font-medium transition-all ${
                       row.paymentRail === r.value
-                        ? 'border-cyan-600 bg-cyan-50 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-300'
-                        : 'border-border text-muted-foreground hover:border-cyan-300'
+                        ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300'
+                        : 'border-border text-muted-foreground hover:border-blue-300'
                     }`}
                   >
                     {r.label}
@@ -264,7 +264,7 @@ export default function VerifyPaymentPage() {
                 ))}
               </div>
               {(row.paymentRail === 'cash' || row.paymentRail === 'cheque') && (
-                <p className="text-xs text-amber-600 dark:text-amber-400 mt-1">
+                <p className="text-xs text-orange-600 dark:text-orange-400 mt-1">
                   ⚠ Cash/cheque entries will not auto-match. They go to your Pending Cash list for you to confirm.
                 </p>
               )}
@@ -276,13 +276,13 @@ export default function VerifyPaymentPage() {
         <button
           type="button"
           onClick={addRow}
-          className="w-full flex items-center justify-center gap-2 py-3 rounded-xl border-2 border-dashed border-border text-sm text-muted-foreground hover:border-cyan-400 hover:text-cyan-600 transition-all"
+          className="w-full flex items-center justify-center gap-2 py-3 rounded-xl border-2 border-dashed border-border text-sm text-muted-foreground hover:border-blue-400 hover:text-blue-600 transition-all"
         >
           <Plus className="w-4 h-4" />
           Add another transaction
         </button>
 
-        <Button type="submit" disabled={loading} className="w-full bg-cyan-600 hover:bg-cyan-700 text-white py-3 rounded-xl font-semibold">
+        <Button type="submit" disabled={loading} className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-semibold">
           {loading ? (
             <span className="flex items-center gap-2"><Loader2 className="w-4 h-4 animate-spin" /> Submitting…</span>
           ) : (

@@ -64,7 +64,7 @@ export function MessagingPoliciesClient({ initialPolicy }: { initialPolicy: Poli
           key={rule.key}
           className={`flex items-start justify-between gap-6 p-5 rounded-2xl border transition-colors ${
             policy[rule.key]
-              ? 'bg-cyan-50/50 dark:bg-cyan-900/10 border-cyan-200 dark:border-cyan-800'
+              ? 'bg-blue-50/50 dark:bg-blue-900/10 border-blue-200 dark:border-blue-800'
               : 'bg-slate-50 dark:bg-slate-900/50 border-slate-200 dark:border-slate-800'
           }`}
         >
@@ -72,7 +72,7 @@ export function MessagingPoliciesClient({ initialPolicy }: { initialPolicy: Poli
             <div className="flex items-center gap-2">
               <p className="font-semibold text-foreground text-sm">{rule.label}</p>
               {rule.warn && (
-                <span className="text-[10px] font-bold text-amber-500 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700 px-2 py-0.5 rounded-full">
+                <span className="text-[10px] font-bold text-orange-500 bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-700 px-2 py-0.5 rounded-full">
                   Privacy Risk
                 </span>
               )}
@@ -81,8 +81,8 @@ export function MessagingPoliciesClient({ initialPolicy }: { initialPolicy: Poli
           </div>
           <button
             onClick={() => toggle(rule.key)}
-            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors shrink-0 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 ${
-              policy[rule.key] ? 'bg-cyan-600' : 'bg-slate-300 dark:bg-slate-600'
+            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors shrink-0 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
+              policy[rule.key] ? 'bg-blue-600' : 'bg-slate-300 dark:bg-slate-600'
             }`}
             role="switch"
             aria-checked={policy[rule.key]}
@@ -100,21 +100,21 @@ export function MessagingPoliciesClient({ initialPolicy }: { initialPolicy: Poli
         <div className="flex items-center gap-2 text-sm">
           {status === 'success' && (
             <>
-              <CheckCircle2 className="w-4 h-4 text-cyan-500" />
-              <span className="text-cyan-600 font-medium">Policies saved successfully</span>
+              <CheckCircle2 className="w-4 h-4 text-blue-500" />
+              <span className="text-blue-600 font-medium">Policies saved successfully</span>
             </>
           )}
           {status === 'error' && (
             <>
-              <AlertCircle className="w-4 h-4 text-red-500" />
-              <span className="text-red-600 font-medium">Failed to save. Try again.</span>
+              <AlertCircle className="w-4 h-4 text-orange-500" />
+              <span className="text-orange-600 font-medium">Failed to save. Try again.</span>
             </>
           )}
         </div>
         <button
           onClick={handleSave}
           disabled={isPending}
-          className="flex items-center gap-2 px-6 py-2.5 bg-cyan-600 hover:bg-cyan-700 text-white font-semibold text-sm rounded-xl transition-colors disabled:opacity-60 shadow-sm"
+          className="flex items-center gap-2 px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm rounded-xl transition-colors disabled:opacity-60 shadow-sm"
         >
           {isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <ShieldCheck className="w-4 h-4" />}
           Save Policies

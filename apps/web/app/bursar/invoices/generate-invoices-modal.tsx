@@ -63,19 +63,19 @@ export function GenerateInvoicesModal({ open, onClose, schoolId, terms, classes 
 
         {result ? (
           <div className="text-center py-4 space-y-4">
-            <div className="w-16 h-16 rounded-full bg-cyan-100 dark:bg-cyan-900/30 text-cyan-600 flex items-center justify-center mx-auto">
+            <div className="w-16 h-16 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 flex items-center justify-center mx-auto">
               <Check className="w-8 h-8" />
             </div>
             <div>
               <p className="font-bold text-lg">Done!</p>
               <p className="text-sm text-muted-foreground mt-1">
-                <span className="text-cyan-600 font-semibold">{result.created}</span> invoices created.
+                <span className="text-blue-600 font-semibold">{result.created}</span> invoices created.
                 {result.skipped > 0 && (
-                  <span className="text-amber-500"> {result.skipped} students already had invoices and were skipped.</span>
+                  <span className="text-orange-500"> {result.skipped} students already had invoices and were skipped.</span>
                 )}
               </p>
             </div>
-            <Button className="w-full bg-cyan-600 hover:bg-cyan-700" onClick={handleClose}>
+            <Button className="w-full bg-blue-600 hover:bg-blue-700" onClick={handleClose}>
               Done
             </Button>
           </div>
@@ -121,7 +121,7 @@ export function GenerateInvoicesModal({ open, onClose, schoolId, terms, classes 
             </div>
 
             {error && (
-              <p className="text-sm text-red-600 bg-red-50 dark:bg-red-950/30 px-3 py-2 rounded-lg border border-red-200">
+              <p className="text-sm text-orange-600 bg-orange-50 dark:bg-orange-950/30 px-3 py-2 rounded-lg border border-orange-200">
                 {error}
               </p>
             )}

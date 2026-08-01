@@ -59,13 +59,13 @@ export function LedgerClient({ transactions }: { transactions: any[] }) {
                   <tr key={tx.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors">
                     <td className="px-6 py-4 font-medium text-foreground">{tx.item_name}</td>
                     <td className="px-6 py-4">
-                      <div className={`font-bold ${tx.transaction_type === 'in' ? 'text-cyan-600' : 'text-amber-600'}`}>
+                      <div className={`font-bold ${tx.transaction_type === 'in' ? 'text-blue-600' : 'text-orange-600'}`}>
                         {tx.transaction_type === 'in' ? '+' : '-'}{tx.quantity}
                       </div>
                     </td>
                     <td className="px-6 py-4">
                       <span className={`px-2.5 py-1 rounded-full text-xs font-medium uppercase tracking-wider flex items-center w-fit gap-1 ${
-                        tx.transaction_type === 'in' ? 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30' : 'bg-amber-100 text-amber-700 dark:bg-amber-900/30'
+                        tx.transaction_type === 'in' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30' : 'bg-orange-100 text-orange-700 dark:bg-orange-900/30'
                       }`}>
                         {tx.transaction_type === 'in' ? <ArrowDownRight className="w-3.5 h-3.5" /> : <ArrowUpRight className="w-3.5 h-3.5" />}
                         {tx.transaction_type}

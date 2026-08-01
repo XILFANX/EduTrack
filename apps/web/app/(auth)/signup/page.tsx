@@ -61,7 +61,7 @@ export default function SignupPage() {
 
   if (emailSent) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-violet-50 to-slate-100 dark:from-slate-950 dark:to-slate-900 flex items-center justify-center px-4">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-slate-100 dark:from-slate-950 dark:to-slate-900 flex items-center justify-center px-4">
         <div className="w-full max-w-sm text-center space-y-4">
           <div className="text-5xl">📧</div>
           <h2 className="text-xl font-bold text-slate-800 dark:text-slate-100">Check your email</h2>
@@ -75,7 +75,7 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-violet-50 to-slate-100 dark:from-slate-950 dark:to-slate-900 flex items-center justify-center px-4 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-slate-100 dark:from-slate-950 dark:to-slate-900 flex items-center justify-center px-4 py-8">
       <div className="w-full max-w-sm space-y-6">
 
         {/* Logo */}
@@ -151,7 +151,7 @@ export default function SignupPage() {
             </div>
 
             {error && (
-              <p className="text-sm text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/50 border border-red-100 dark:border-red-900/50 px-3 py-2 rounded-lg leading-snug">
+              <p className="text-sm text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-950/50 border border-orange-100 dark:border-orange-900/50 px-3 py-2 rounded-lg leading-snug">
                 {error}
               </p>
             )}

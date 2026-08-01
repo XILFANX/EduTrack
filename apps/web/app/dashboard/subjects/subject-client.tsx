@@ -279,11 +279,11 @@ export function SubjectClient({ globalSubjects, classSubjects, classes, schoolId
               </div>
             </div>
             {selectedMapping ? (
-              <button className="flex items-center gap-2 px-3 py-1.5 text-sm font-semibold text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg transition-colors shrink-0 border border-transparent hover:border-red-500/20" onClick={() => handleRemoveFromClass(selectedMapping.id)}>
+              <button className="flex items-center gap-2 px-3 py-1.5 text-sm font-semibold text-orange-400 hover:text-orange-300 hover:bg-orange-500/10 rounded-lg transition-colors shrink-0 border border-transparent hover:border-orange-500/20" onClick={() => handleRemoveFromClass(selectedMapping.id)}>
                 <Trash2 className="w-4 h-4" /> Remove from Class
               </button>
             ) : (
-              <button className="flex items-center gap-2 px-3 py-1.5 text-sm font-semibold text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg transition-colors shrink-0 border border-transparent hover:border-red-500/20" onClick={() => handleDeleteGlobal(selectedGlobal.id)}>
+              <button className="flex items-center gap-2 px-3 py-1.5 text-sm font-semibold text-orange-400 hover:text-orange-300 hover:bg-orange-500/10 rounded-lg transition-colors shrink-0 border border-transparent hover:border-orange-500/20" onClick={() => handleDeleteGlobal(selectedGlobal.id)}>
                 <Trash2 className="w-4 h-4" /> Delete Subject
               </button>
             )}
@@ -309,7 +309,7 @@ export function SubjectClient({ globalSubjects, classSubjects, classes, schoolId
                             <option key={t.id} value={t.id}>{t.full_name}</option>
                           ))}
                         </select>
-                        {assignError && <p className="text-xs text-red-400">{assignError}</p>}
+                        {assignError && <p className="text-xs text-orange-400">{assignError}</p>}
                         <div className="flex gap-2">
                           <button onClick={handleAssignTeacher} disabled={assigning} className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl text-sm font-semibold transition-colors disabled:opacity-50 min-w-[100px]">
                             {assigning ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Save'}

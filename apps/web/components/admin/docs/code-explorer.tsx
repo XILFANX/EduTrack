@@ -44,14 +44,14 @@ function fileIcon(name: string) {
   const map: Record<string, { icon: React.ElementType; color: string }> = {
     ts:   { icon: FileCode,  color: 'text-blue-400' },
     tsx:  { icon: FileCode,  color: 'text-blue-400' },
-    js:   { icon: FileCode,  color: 'text-yellow-400' },
-    jsx:  { icon: FileCode,  color: 'text-yellow-400' },
-    json: { icon: FileJson,  color: 'text-amber-400' },
+    js:   { icon: FileCode,  color: 'text-orange-400' },
+    jsx:  { icon: FileCode,  color: 'text-orange-400' },
+    json: { icon: FileJson,  color: 'text-orange-400' },
     md:   { icon: FileText,  color: 'text-slate-400' },
     mdx:  { icon: FileText,  color: 'text-slate-400' },
-    css:  { icon: FileType,  color: 'text-pink-400' },
-    env:  { icon: FileCog,   color: 'text-cyan-400' },
-    sql:  { icon: FileCog,   color: 'text-teal-400' },
+    css:  { icon: FileType,  color: 'text-blue-400' },
+    env:  { icon: FileCog,   color: 'text-blue-400' },
+    sql:  { icon: FileCog,   color: 'text-blue-400' },
   }
   return map[ext] ?? { icon: FileCode, color: 'text-slate-400' }
 }
@@ -110,7 +110,7 @@ export function CodeExplorer({ repo, branch = 'main', accent = 'blue' }: CodeExp
   const [copied, setCopied]           = useState(false)
 
   const accentColor = accent === 'violet' ? '#7c3aed' : '#2563eb'
-  const accentText  = accent === 'violet' ? 'text-violet-400' : 'text-blue-400'
+  const accentText  = accent === 'violet' ? 'text-blue-400' : 'text-blue-400'
 
   // ── Load tree ──────────────────────────────────────────────────────────────
   const loadTree = useCallback(async () => {
@@ -207,7 +207,7 @@ export function CodeExplorer({ repo, branch = 'main', accent = 'blue' }: CodeExp
             <span className="text-slate-500 group-hover:text-slate-300 shrink-0 transition-colors">
               {isOpen ? <ChevronDown className="w-3 h-3" /> : <ChevronRight className="w-3 h-3" />}
             </span>
-            <span className="text-slate-500 shrink-0 transition-colors group-hover:text-yellow-300">
+            <span className="text-slate-500 shrink-0 transition-colors group-hover:text-orange-300">
               {isOpen ? <FolderOpen className="w-3.5 h-3.5" /> : <Folder className="w-3.5 h-3.5" />}
             </span>
             <span className="text-[12px] text-slate-300 group-hover:text-white truncate select-none">
@@ -272,7 +272,7 @@ export function CodeExplorer({ repo, branch = 'main', accent = 'blue' }: CodeExp
                 </div>
               ) : treeError ? (
                 <div className="px-4 py-4 space-y-3">
-                  <div className="flex items-center gap-2 text-red-400 text-xs">
+                  <div className="flex items-center gap-2 text-orange-400 text-xs">
                     <AlertCircle className="w-3.5 h-3.5 shrink-0" />
                     <span className="leading-snug">{treeError}</span>
                   </div>
@@ -355,7 +355,7 @@ export function CodeExplorer({ repo, branch = 'main', accent = 'blue' }: CodeExp
                 </a>
                 {activeCode && !activeErr && (
                   <button onClick={handleCopy} className="flex items-center gap-1 hover:text-slate-200 transition-colors">
-                    {copied ? <Check className="w-3 h-3 text-cyan-400" /> : <Copy className="w-3 h-3" />}
+                    {copied ? <Check className="w-3 h-3 text-blue-400" /> : <Copy className="w-3 h-3" />}
                     <span>{copied ? 'Copied!' : 'Copy'}</span>
                   </button>
                 )}
@@ -383,10 +383,10 @@ export function CodeExplorer({ repo, branch = 'main', accent = 'blue' }: CodeExp
               </div>
             )}
             {activeErr && !activeLoading && (
-              <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-red-400 text-sm px-8 text-center bg-[#0A0A0F]">
+              <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-orange-400 text-sm px-8 text-center bg-[#0A0A0F]">
                 <AlertCircle className="w-8 h-8 opacity-50" />
                 <p className="font-semibold">Could not load file</p>
-                <p className="text-xs text-red-500/70 bg-red-900/20 px-3 py-1.5 rounded-md">{activeErr}</p>
+                <p className="text-xs text-orange-500/70 bg-orange-900/20 px-3 py-1.5 rounded-md">{activeErr}</p>
               </div>
             )}
             {activeCode && !activeLoading && !activeErr && (

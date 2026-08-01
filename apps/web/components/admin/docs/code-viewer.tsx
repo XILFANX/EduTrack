@@ -105,7 +105,7 @@ export function CodeViewer({ repoPath, language = 'typescript', standalone = fal
               className="flex items-center gap-1.5 px-3 py-1.5 rounded bg-[#333333] text-zinc-300 hover:text-white hover:bg-[#444444] transition-colors"
               title="Copy to clipboard"
             >
-              {copied ? <Check className="w-3.5 h-3.5 text-cyan-400" /> : <Copy className="w-3.5 h-3.5" />}
+              {copied ? <Check className="w-3.5 h-3.5 text-blue-400" /> : <Copy className="w-3.5 h-3.5" />}
               <span>{copied ? 'Copied' : 'Copy'}</span>
             </button>
           )}
@@ -128,10 +128,10 @@ export function CodeViewer({ repoPath, language = 'typescript', standalone = fal
           </div>
         )}
         {error && (
-          <div className="absolute inset-0 z-10 bg-[#1E1E1E] p-6 flex flex-col items-center justify-center text-red-400 font-mono text-sm gap-2">
+          <div className="absolute inset-0 z-10 bg-[#1E1E1E] p-6 flex flex-col items-center justify-center text-orange-400 font-mono text-sm gap-2">
             <AlertCircle className="w-8 h-8 opacity-60 mb-2" />
-            <p className="font-bold text-base text-red-300">Unable to load source code</p>
-            <p className="text-xs opacity-70 bg-red-950/30 px-3 py-1.5 rounded-md mt-2">{error}</p>
+            <p className="font-bold text-base text-orange-300">Unable to load source code</p>
+            <p className="text-xs opacity-70 bg-orange-950/30 px-3 py-1.5 rounded-md mt-2">{error}</p>
           </div>
         )}
         {!loading && !error && code && (

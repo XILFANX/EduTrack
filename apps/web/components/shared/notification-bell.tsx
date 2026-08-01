@@ -94,8 +94,8 @@ export function NotificationBell() {
       <Bell className="w-5 h-5" />
       {unreadCount > 0 && (
         <span className="absolute top-1.5 right-1.5 flex h-2.5 w-2.5">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-          <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-cyan-600"></span>
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+          <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-blue-600"></span>
         </span>
       )}
     </Link>

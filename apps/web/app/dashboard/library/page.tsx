@@ -57,8 +57,8 @@ export default async function LibraryOverviewPage() {
       <div className="grid grid-cols-3 gap-4">
         {[
           { label: 'Total Books', value: totalBooks, icon: BookOpen, color: 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400' },
-          { label: 'Checked Out', value: checkedOut, icon: BookMarked, color: 'bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400' },
-          { label: 'Overdue', value: overdue, icon: AlertCircle, color: overdue > 0 ? 'bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400' : 'bg-cyan-100 dark:bg-cyan-900/30 text-cyan-600 dark:text-cyan-400' },
+          { label: 'Checked Out', value: checkedOut, icon: BookMarked, color: 'bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400' },
+          { label: 'Overdue', value: overdue, icon: AlertCircle, color: overdue > 0 ? 'bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400' : 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400' },
         ].map(stat => {
           const Icon = stat.icon
           return (
@@ -109,10 +109,10 @@ export default async function LibraryOverviewPage() {
                     <td className="px-6 py-3">
                       <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${
                         b.status === 'available'
-                          ? 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-400'
+                          ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'
                           : b.status === 'issued'
-                          ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400'
-                          : 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'
+                          ? 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400'
+                          : 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400'
                       }`}>
                         {b.status ?? 'Unknown'}
                       </span>
@@ -165,8 +165,8 @@ export default async function LibraryOverviewPage() {
                       <td className="px-6 py-3">
                         <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${
                           isOverdue
-                            ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'
-                            : 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400'
+                            ? 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400'
+                            : 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400'
                         }`}>
                           {isOverdue ? 'Overdue' : 'On Loan'}
                         </span>

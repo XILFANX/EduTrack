@@ -10,7 +10,7 @@ function PricingCard({ tier, price, description, features, highlighted = false, 
   return (
     <div className={`relative p-6 rounded-2xl flex flex-col ${highlighted ? 'bg-blue-600 border border-blue-500 shadow-xl z-10 text-white ring-2 ring-blue-500 ring-offset-2 dark:ring-offset-slate-950' : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white'}`}>
       {highlighted && (
-        <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-cyan-300 to-cyan-400 text-blue-950 text-sm font-bold rounded-full shadow-sm whitespace-nowrap">
+        <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-blue-300 to-blue-400 text-blue-950 text-sm font-bold rounded-full shadow-sm whitespace-nowrap">
           Most Popular
         </div>
       )}

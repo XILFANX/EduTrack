@@ -190,7 +190,7 @@ export function GradingClient({ allScales, classes, subjects, schoolId, initialC
           <button
             onClick={() => setScope('subject')}
             className={`flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-lg transition-colors ${
-              scope === 'subject' ? 'bg-[#1a2133] text-cyan-400 border border-slate-700 shadow-sm' : 'text-slate-400 hover:text-slate-200 hover:bg-[#1a2133]/50'
+              scope === 'subject' ? 'bg-[#1a2133] text-blue-400 border border-slate-700 shadow-sm' : 'text-slate-400 hover:text-slate-200 hover:bg-[#1a2133]/50'
             }`}
           >
             <BookOpen className="w-4 h-4" /> Subject Override
@@ -302,7 +302,7 @@ export function GradingClient({ allScales, classes, subjects, schoolId, initialC
                           <button 
                             onClick={() => handleDelete(s.id)}
                             disabled={deletingId === s.id}
-                            className="p-2 text-slate-500 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors disabled:opacity-50"
+                            className="p-2 text-slate-500 hover:text-orange-400 hover:bg-orange-500/10 rounded-lg transition-colors disabled:opacity-50"
                           >
                             {deletingId === s.id ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
                           </button>
@@ -393,7 +393,7 @@ export function GradingClient({ allScales, classes, subjects, schoolId, initialC
                 </div>
 
                 {error && (
-                  <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-sm">
+                  <div className="p-3 rounded-lg bg-orange-500/10 border border-orange-500/20 text-orange-400 text-sm">
                     {error}
                   </div>
                 )}

@@ -29,7 +29,7 @@ export default function AccountClient({ initialName, initialPhone }: Props) {
   return (
     <form onSubmit={handleSubmit} className="space-y-4 max-w-md">
       {status && (
-        <div className={`p-3 rounded-xl text-sm font-medium ${status.type === 'success' ? 'bg-cyan-500/10 text-cyan-600 dark:text-cyan-400' : 'bg-red-500/10 text-red-600 dark:text-red-400'}`}>
+        <div className={`p-3 rounded-xl text-sm font-medium ${status.type === 'success' ? 'bg-blue-500/10 text-blue-600 dark:text-blue-400' : 'bg-orange-500/10 text-orange-600 dark:text-orange-400'}`}>
           {status.text}
         </div>
       )}

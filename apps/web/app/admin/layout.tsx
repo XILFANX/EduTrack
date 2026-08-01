@@ -76,7 +76,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
                 {initials}
               </div>
               <form action="/api/auth/signout" method="post" className="ml-1">
-                <button title="Sign out" className="w-9 h-9 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-500 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 hover:border-red-200 dark:hover:border-red-800 transition-colors">
+                <button title="Sign out" className="w-9 h-9 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-500 hover:text-orange-500 hover:bg-orange-50 dark:hover:bg-orange-900/20 hover:border-orange-200 dark:hover:border-orange-800 transition-colors">
                   <LogOut className="w-4 h-4" />
                 </button>
               </form>

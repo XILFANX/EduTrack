@@ -131,7 +131,7 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
         {/* Progress bar */}
         <div className="h-1 bg-slate-100 dark:bg-slate-800">
           <div
-            className="h-1 bg-gradient-to-r from-cyan-500 to-cyan-400 transition-all duration-500"
+            className="h-1 bg-gradient-to-r from-blue-500 to-blue-400 transition-all duration-500"
             style={{ width: `${done ? 100 : ((step - 1) / STEPS.length) * 100}%` }}
           />
         </div>
@@ -139,8 +139,8 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
         <div className="p-6">
           <DialogHeader className="mb-5">
             <div className="flex items-center gap-3 mb-1">
-              <div className="w-9 h-9 rounded-xl bg-cyan-100 dark:bg-cyan-900/40 flex items-center justify-center">
-                <GraduationCap className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
+              <div className="w-9 h-9 rounded-xl bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center">
+                <GraduationCap className="w-5 h-5 text-blue-600 dark:text-blue-400" />
               </div>
               <div>
                 <DialogTitle className="text-base font-bold text-foreground">
@@ -154,8 +154,8 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
           {/* ── Success State ── */}
           {done ? (
             <div className="text-center py-6 space-y-4">
-              <div className="w-16 h-16 rounded-full bg-cyan-100 dark:bg-cyan-900/30 flex items-center justify-center mx-auto">
-                <CheckCircle2 className="w-8 h-8 text-cyan-600 dark:text-cyan-400" />
+              <div className="w-16 h-16 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mx-auto">
+                <CheckCircle2 className="w-8 h-8 text-blue-600 dark:text-blue-400" />
               </div>
               <div>
                 <p className="font-bold text-foreground text-lg">{firstName} {middleName ? middleName + ' ' : ''}{lastName}</p>
@@ -166,7 +166,7 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
               </div>
               <div className="flex gap-2 pt-2">
                 <Button variant="outline" className="flex-1" onClick={handleClose}>Done</Button>
-                <Button className="flex-1 bg-cyan-600 hover:bg-cyan-700" onClick={() => { reset() }}>
+                <Button className="flex-1 bg-blue-600 hover:bg-blue-700" onClick={() => { reset() }}>
                   Enroll Another
                 </Button>
               </div>
@@ -181,12 +181,12 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
                     <button
                       type="button"
                       onClick={() => photoInputRef.current?.click()}
-                      className="w-16 h-16 rounded-full border-2 border-dashed border-slate-300 dark:border-slate-600 hover:border-cyan-400 flex items-center justify-center bg-slate-50 dark:bg-slate-800/50 transition-colors shrink-0 overflow-hidden group relative"
+                      className="w-16 h-16 rounded-full border-2 border-dashed border-slate-300 dark:border-slate-600 hover:border-blue-400 flex items-center justify-center bg-slate-50 dark:bg-slate-800/50 transition-colors shrink-0 overflow-hidden group relative"
                     >
                       {photoPreview ? (
                         <img src={photoPreview} alt="preview" className="w-full h-full object-cover" />
                       ) : (
-                        <Camera className="w-6 h-6 text-slate-400 group-hover:text-cyan-500 transition-colors" />
+                        <Camera className="w-6 h-6 text-slate-400 group-hover:text-blue-500 transition-colors" />
                       )}
                     </button>
                     <div className="flex-1 min-w-0">
@@ -195,7 +195,7 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
                       <button
                         type="button"
                         onClick={() => photoInputRef.current?.click()}
-                        className="mt-1.5 text-xs text-cyan-600 dark:text-cyan-400 hover:underline font-medium"
+                        className="mt-1.5 text-xs text-blue-600 dark:text-blue-400 hover:underline font-medium"
                       >
                         {photoPreview ? 'Change photo' : 'Upload photo'}
                       </button>
@@ -203,7 +203,7 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
                         <button
                           type="button"
                           onClick={() => { setPhotoFile(null); setPhotoPreview(null) }}
-                          className="ml-3 text-xs text-red-500 hover:underline"
+                          className="ml-3 text-xs text-orange-500 hover:underline"
                         >
                           Remove
                         </button>
@@ -221,7 +221,7 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
                   {/* Admission Number — prominent */}
                   <div className="space-y-1.5">
                     <Label htmlFor="enroll-adm" className="flex items-center gap-1.5">
-                      <Hash className="w-3.5 h-3.5 text-cyan-500" />
+                      <Hash className="w-3.5 h-3.5 text-blue-500" />
                       Admission Number *
                     </Label>
                     <Input
@@ -284,8 +284,8 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
                             onClick={() => setGender(g)}
                             className={`flex-1 py-2 rounded-xl border text-sm font-semibold transition-all ${
                               gender === g
-                                ? 'border-cyan-600 bg-cyan-600 text-white'
-                                : 'border-slate-200 dark:border-slate-700 text-muted-foreground hover:border-cyan-300'
+                                ? 'border-blue-600 bg-blue-600 text-white'
+                                : 'border-slate-200 dark:border-slate-700 text-muted-foreground hover:border-blue-300'
                             }`}
                           >
                             {g}
@@ -304,8 +304,8 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
                         onClick={() => setClassId(null)}
                         className={`text-left px-4 py-2.5 rounded-xl border text-sm transition-all ${
                           classId === null
-                            ? 'border-cyan-600 bg-cyan-50 dark:bg-cyan-900/20 ring-1 ring-cyan-600 text-cyan-700 dark:text-cyan-300 font-semibold'
-                            : 'border-slate-200 dark:border-slate-700 text-muted-foreground hover:border-cyan-300'
+                            ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/20 ring-1 ring-blue-600 text-blue-700 dark:text-blue-300 font-semibold'
+                            : 'border-slate-200 dark:border-slate-700 text-muted-foreground hover:border-blue-300'
                         }`}
                       >
                         Unassigned
@@ -317,8 +317,8 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
                           onClick={() => setClassId(cls.id)}
                           className={`text-left px-4 py-2.5 rounded-xl border text-sm font-medium transition-all ${
                             classId === cls.id
-                              ? 'border-cyan-600 bg-cyan-50 dark:bg-cyan-900/20 ring-1 ring-cyan-600 text-cyan-700 dark:text-cyan-300'
-                              : 'border-slate-200 dark:border-slate-700 text-foreground hover:border-cyan-300'
+                              ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/20 ring-1 ring-blue-600 text-blue-700 dark:text-blue-300'
+                              : 'border-slate-200 dark:border-slate-700 text-foreground hover:border-blue-300'
                           }`}
                         >
                           {cls.name}
@@ -336,8 +336,8 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
                     {photoPreview ? (
                       <img src={photoPreview} alt="" className="w-12 h-12 rounded-full object-cover shrink-0 border border-slate-200 dark:border-slate-700" />
                     ) : (
-                      <div className="w-12 h-12 rounded-full bg-cyan-100 dark:bg-cyan-900/40 flex items-center justify-center shrink-0">
-                        <span className="text-base font-bold text-cyan-700 dark:text-cyan-300">{firstName[0]}{lastName[0]}</span>
+                      <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center shrink-0">
+                        <span className="text-base font-bold text-blue-700 dark:text-blue-300">{firstName[0]}{lastName[0]}</span>
                       </div>
                     )}
                     <div>
@@ -365,7 +365,7 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
               )}
 
               {error && (
-                <p className="text-sm text-red-600 bg-red-50 dark:bg-red-900/20 px-3 py-2 rounded-lg border border-red-200 dark:border-red-800/40">
+                <p className="text-sm text-orange-600 bg-orange-50 dark:bg-orange-900/20 px-3 py-2 rounded-lg border border-orange-200 dark:border-orange-800/40">
                   {error}
                 </p>
               )}
@@ -378,12 +378,12 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
                   </Button>
                 )}
                 {step < STEPS.length ? (
-                  <Button className="flex-1 gap-1 bg-cyan-600 hover:bg-cyan-700" onClick={handleNext}>
+                  <Button className="flex-1 gap-1 bg-blue-600 hover:bg-blue-700" onClick={handleNext}>
                     Review <ChevronRight className="w-4 h-4" />
                   </Button>
                 ) : (
                   <Button
-                    className="flex-1 bg-cyan-600 hover:bg-cyan-700"
+                    className="flex-1 bg-blue-600 hover:bg-blue-700"
                     onClick={handleSubmit}
                     disabled={loading}
                   >

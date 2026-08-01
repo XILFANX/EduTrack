@@ -124,13 +124,13 @@ export function AttendanceClient({ schoolId, teacherId, cls, students, existingR
       {/* Stats bar */}
       {Object.keys(records).length > 0 && (
         <div className="grid grid-cols-3 gap-2">
-          <div className="bg-cyan-50 dark:bg-cyan-900/20 border border-cyan-200 dark:border-cyan-800 rounded-xl p-3 text-center">
-            <p className="text-xl font-bold text-cyan-700 dark:text-cyan-400">{presentCount}</p>
-            <p className="text-xs text-cyan-600 dark:text-cyan-500 font-medium">Present</p>
+          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-3 text-center">
+            <p className="text-xl font-bold text-blue-700 dark:text-blue-400">{presentCount}</p>
+            <p className="text-xs text-blue-600 dark:text-blue-500 font-medium">Present</p>
           </div>
-          <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-3 text-center">
-            <p className="text-xl font-bold text-red-700 dark:text-red-400">{absentCount}</p>
-            <p className="text-xs text-red-600 dark:text-red-500 font-medium">Absent</p>
+          <div className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-xl p-3 text-center">
+            <p className="text-xl font-bold text-orange-700 dark:text-orange-400">{absentCount}</p>
+            <p className="text-xs text-orange-600 dark:text-orange-500 font-medium">Absent</p>
           </div>
           <div className="bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 text-center">
             <p className="text-xl font-bold text-foreground">{students.length - Object.keys(records).length}</p>
@@ -158,12 +158,12 @@ export function AttendanceClient({ schoolId, teacherId, cls, students, existingR
       {activeTab === 'register' && (
         <>
           {!allMarked && (
-            <div className="flex items-center justify-between bg-amber-50 dark:bg-amber-950/30 text-amber-700 dark:text-amber-400 p-3 rounded-xl text-sm">
+            <div className="flex items-center justify-between bg-orange-50 dark:bg-orange-950/30 text-orange-700 dark:text-orange-400 p-3 rounded-xl text-sm">
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4 shrink-0" />
                 <span>{students.length - Object.keys(records).length} students not yet marked</span>
               </div>
-              <Button variant="outline" size="sm" onClick={markAllPresent} className="gap-1.5 border-amber-300 text-amber-700 hover:bg-amber-100 h-7 text-xs">
+              <Button variant="outline" size="sm" onClick={markAllPresent} className="gap-1.5 border-orange-300 text-orange-700 hover:bg-orange-100 h-7 text-xs">
                 <CheckCheck className="w-3.5 h-3.5" /> All Present
               </Button>
             </div>
@@ -195,14 +195,14 @@ export function AttendanceClient({ schoolId, teacherId, cls, students, existingR
                     <div className="flex items-center gap-1.5">
                       <button
                         onClick={() => handleStatusChange(student.id, 'Present')}
-                        className={`w-9 h-9 rounded-full border-2 flex items-center justify-center transition-colors ${status === 'Present' ? 'bg-cyan-100 border-cyan-500 text-cyan-700 dark:bg-cyan-900/40 dark:border-cyan-500 dark:text-cyan-400' : 'border-slate-200 dark:border-slate-700 text-slate-400 hover:border-cyan-400 hover:text-cyan-600'}`}
+                        className={`w-9 h-9 rounded-full border-2 flex items-center justify-center transition-colors ${status === 'Present' ? 'bg-blue-100 border-blue-500 text-blue-700 dark:bg-blue-900/40 dark:border-blue-500 dark:text-blue-400' : 'border-slate-200 dark:border-slate-700 text-slate-400 hover:border-blue-400 hover:text-blue-600'}`}
                         title="Present"
                       >
                         <CheckCircle2 className="w-4 h-4" />
                       </button>
                       <button
                         onClick={() => handleStatusChange(student.id, 'Absent')}
-                        className={`w-9 h-9 rounded-full border-2 flex items-center justify-center transition-colors ${status === 'Absent' ? 'bg-red-100 border-red-500 text-red-700 dark:bg-red-900/40 dark:border-red-500 dark:text-red-400' : 'border-slate-200 dark:border-slate-700 text-slate-400 hover:border-red-400 hover:text-red-600'}`}
+                        className={`w-9 h-9 rounded-full border-2 flex items-center justify-center transition-colors ${status === 'Absent' ? 'bg-orange-100 border-orange-500 text-orange-700 dark:bg-orange-900/40 dark:border-orange-500 dark:text-orange-400' : 'border-slate-200 dark:border-slate-700 text-slate-400 hover:border-orange-400 hover:text-orange-600'}`}
                         title="Absent"
                       >
                         <XCircle className="w-4 h-4" />
@@ -231,7 +231,7 @@ export function AttendanceClient({ schoolId, teacherId, cls, students, existingR
               let bg = 'bg-slate-100 dark:bg-slate-800'
               let title = `${day.date}: No data`
               if (day.pct !== null) {
-                bg = day.pct >= 90 ? 'bg-cyan-400' : day.pct >= 70 ? 'bg-amber-400' : 'bg-red-400'
+                bg = day.pct >= 90 ? 'bg-blue-400' : day.pct >= 70 ? 'bg-orange-400' : 'bg-orange-400'
                 title = `${day.date}: ${day.pct}% present`
               }
               return (
@@ -243,9 +243,9 @@ export function AttendanceClient({ schoolId, teacherId, cls, students, existingR
             })}
           </div>
           <div className="flex items-center gap-4 mt-4 text-xs text-muted-foreground">
-            <div className="flex items-center gap-1.5"><div className="w-3 h-3 rounded bg-cyan-400" />≥ 90%</div>
-            <div className="flex items-center gap-1.5"><div className="w-3 h-3 rounded bg-amber-400" />70–90%</div>
-            <div className="flex items-center gap-1.5"><div className="w-3 h-3 rounded bg-red-400" />{'< 70%'}</div>
+            <div className="flex items-center gap-1.5"><div className="w-3 h-3 rounded bg-blue-400" />≥ 90%</div>
+            <div className="flex items-center gap-1.5"><div className="w-3 h-3 rounded bg-orange-400" />70–90%</div>
+            <div className="flex items-center gap-1.5"><div className="w-3 h-3 rounded bg-orange-400" />{'< 70%'}</div>
             <div className="flex items-center gap-1.5"><div className="w-3 h-3 rounded bg-slate-200 dark:bg-slate-700" />No data</div>
           </div>
         </div>

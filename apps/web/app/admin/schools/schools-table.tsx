@@ -108,7 +108,7 @@ export function SchoolsTable({ initialData }: { initialData: SchoolData[] }) {
               <div className="md:col-span-3 flex items-center justify-between md:justify-center">
                 <span className="text-xs font-bold text-slate-500 uppercase tracking-widest md:hidden">Tier</span>
                 <span className={`text-[10px] px-3 py-1.5 rounded-full font-black uppercase tracking-wider shadow-sm ${
-                  s.subscription_tier === 'premium' ? 'bg-indigo-50 text-indigo-600 border border-indigo-200 dark:bg-indigo-900/20 dark:border-indigo-800/50' :
+                  s.subscription_tier === 'premium' ? 'bg-blue-50 text-blue-600 border border-blue-200 dark:bg-blue-900/20 dark:border-blue-800/50' :
                   s.subscription_tier === 'standard' ? 'bg-blue-50 text-blue-600 border border-blue-200 dark:bg-blue-900/20 dark:border-blue-800/50' :
                   'bg-slate-100 text-slate-600 border border-slate-200 dark:bg-slate-800 dark:border-slate-700'
                 }`}>

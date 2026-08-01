@@ -75,15 +75,15 @@ export default async function ParentAcademics() {
 
   const gradeColor = (grade: string) => {
     if (!grade || grade === '--') return 'text-slate-400'
-    if (grade.startsWith('A')) return 'text-cyan-600 dark:text-cyan-400'
+    if (grade.startsWith('A')) return 'text-blue-600 dark:text-blue-400'
     if (grade.startsWith('B')) return 'text-blue-600 dark:text-blue-400'
-    if (grade.startsWith('C')) return 'text-yellow-600 dark:text-yellow-400'
-    return 'text-red-500 dark:text-red-400'
+    if (grade.startsWith('C')) return 'text-orange-600 dark:text-orange-400'
+    return 'text-orange-500 dark:text-orange-400'
   }
 
   const statusIcon = (status: string) => {
-    if (status === 'Present') return <CheckCircle2 className="w-4 h-4 text-cyan-500" />
-    if (status === 'Absent') return <XCircle className="w-4 h-4 text-red-500" />
+    if (status === 'Present') return <CheckCircle2 className="w-4 h-4 text-blue-500" />
+    if (status === 'Absent') return <XCircle className="w-4 h-4 text-orange-500" />
     return <Clock className="w-4 h-4 text-orange-500" />
   }
 
@@ -135,11 +135,11 @@ export default async function ParentAcademics() {
             </div>
             <div className="grid grid-cols-3 gap-px bg-slate-100 dark:bg-slate-800">
               <div className="bg-white dark:bg-slate-900 p-4 text-center">
-                <p className="text-2xl font-bold text-cyan-600">{presentDays}</p>
+                <p className="text-2xl font-bold text-blue-600">{presentDays}</p>
                 <p className="text-xs text-muted-foreground mt-1">Present</p>
               </div>
               <div className="bg-white dark:bg-slate-900 p-4 text-center">
-                <p className="text-2xl font-bold text-red-500">{absentDays}</p>
+                <p className="text-2xl font-bold text-orange-500">{absentDays}</p>
                 <p className="text-xs text-muted-foreground mt-1">Absent</p>
               </div>
               <div className="bg-white dark:bg-slate-900 p-4 text-center">

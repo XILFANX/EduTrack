@@ -53,8 +53,8 @@ export default async function TransportOverviewPage() {
       <div className="grid grid-cols-3 gap-4">
         {[
           { label: 'Total Vehicles', value: fleetCount, icon: Bus, color: 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400' },
-          { label: 'Active', value: activeVehicles, icon: Bus, color: 'bg-cyan-100 dark:bg-cyan-900/30 text-cyan-600 dark:text-cyan-400' },
-          { label: 'Routes', value: routeCount, icon: MapPin, color: 'bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400' },
+          { label: 'Active', value: activeVehicles, icon: Bus, color: 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400' },
+          { label: 'Routes', value: routeCount, icon: MapPin, color: 'bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400' },
         ].map(stat => {
           const Icon = stat.icon
           return (
@@ -101,7 +101,7 @@ export default async function TransportOverviewPage() {
                     <td className="px-6 py-3 text-muted-foreground">{v.make || '—'}</td>
                     <td className="px-6 py-3 text-muted-foreground">{v.capacity ? `${v.capacity} seats` : '—'}</td>
                     <td className="px-6 py-3">
-                      <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${v.status === 'active' ? 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-400' : 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400'}`}>
+                      <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${v.status === 'active' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400' : 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400'}`}>
                         {v.status ?? 'Unknown'}
                       </span>
                     </td>

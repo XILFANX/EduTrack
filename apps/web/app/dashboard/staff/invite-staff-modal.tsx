@@ -165,7 +165,7 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
               <div className="space-y-2">
                 <Label htmlFor="staffClass">Assign to class <span className="text-muted-foreground font-normal">(Optional)</span></Label>
                 {classes.length === 0 ? (
-                  <p className="text-xs text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800/50 rounded-lg px-3 py-2">
+                  <p className="text-xs text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800/50 rounded-lg px-3 py-2">
                     No classes found. You can invite the teacher now and assign a class later.
                   </p>
                 ) : (
@@ -189,7 +189,7 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
               <div className="space-y-2">
                 <Label htmlFor="staffSubject">Assign Subject <span className="text-muted-foreground font-normal">(Optional)</span></Label>
                 {unoccupiedSubjects.length === 0 ? (
-                  <p className="text-xs text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800/50 rounded-lg px-3 py-2">
+                  <p className="text-xs text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800/50 rounded-lg px-3 py-2">
                     No unoccupied subjects found. You can invite the teacher now and assign them subjects later.
                   </p>
                 ) : (
@@ -261,7 +261,7 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
                     <p className="text-sm font-semibold text-foreground">Photo uploaded</p>
                     <p className="text-xs text-muted-foreground">Will be shown on their profile.</p>
                   </div>
-                  <Button variant="ghost" size="sm" onClick={() => setPhotoUrl(null)} className="text-red-500 hover:text-red-600">Remove</Button>
+                  <Button variant="ghost" size="sm" onClick={() => setPhotoUrl(null)} className="text-orange-500 hover:text-orange-600">Remove</Button>
                 </div>
               ) : (
                 <FileUpload
@@ -276,7 +276,7 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
             </div>
 
             {error && (
-              <p className="text-sm text-red-600 bg-red-50 dark:bg-red-950/30 px-3 py-2 rounded-lg border border-red-200 dark:border-red-900/50">
+              <p className="text-sm text-orange-600 bg-orange-50 dark:bg-orange-950/30 px-3 py-2 rounded-lg border border-orange-200 dark:border-orange-900/50">
                 {error}
               </p>
             )}
@@ -298,8 +298,8 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
           /* ── Success: Invite link created ── */
           <div className="space-y-5 pt-1">
             <div className="text-center space-y-2">
-              <div className="w-16 h-16 rounded-full bg-cyan-100 dark:bg-cyan-900/30 flex items-center justify-center mx-auto mb-3">
-                <Check className="w-8 h-8 text-cyan-600 dark:text-cyan-400" />
+              <div className="w-16 h-16 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mx-auto mb-3">
+                <Check className="w-8 h-8 text-blue-600 dark:text-blue-400" />
               </div>
               <p className="font-bold text-xl text-foreground">Invite link created!</p>
               <p className="text-sm text-muted-foreground">

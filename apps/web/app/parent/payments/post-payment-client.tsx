@@ -92,8 +92,8 @@ export function ParentPostPaymentClient({ obligationId, obligationBalance, perio
 
   if (done) {
     return (
-      <div className="bg-cyan-50 dark:bg-cyan-900/20 border border-cyan-200 dark:border-cyan-800 rounded-xl p-4 text-center space-y-2">
-        <CheckCircle2 className="w-7 h-7 text-cyan-600 mx-auto" />
+      <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-4 text-center space-y-2">
+        <CheckCircle2 className="w-7 h-7 text-blue-600 mx-auto" />
         <p className="font-bold text-sm text-foreground">Payment Submitted</p>
         <p className="text-xs text-muted-foreground">
           {mode === 'digital'
@@ -110,7 +110,7 @@ export function ParentPostPaymentClient({ obligationId, obligationBalance, perio
       <div className="flex border border-border rounded-xl overflow-hidden mb-4">
         {(['digital', 'cash'] as Mode[]).map((m) => (
           <button key={m} type="button" onClick={() => { setMode(m); setError(null) }}
-            className={`flex-1 py-2 text-xs font-semibold transition-colors ${mode === m ? 'bg-cyan-600 text-white' : 'text-muted-foreground hover:bg-muted'}`}>
+            className={`flex-1 py-2 text-xs font-semibold transition-colors ${mode === m ? 'bg-blue-600 text-white' : 'text-muted-foreground hover:bg-muted'}`}>
             {m === 'digital' ? '📱 M-Pesa / Bank' : '💵 Cash / Cheque'}
           </button>
         ))}
@@ -127,7 +127,7 @@ export function ParentPostPaymentClient({ obligationId, obligationBalance, perio
           <div className="flex flex-wrap gap-1.5">
             {DIGITAL_RAILS.map((r) => (
               <button key={r.value} type="button" onClick={() => setPaymentRail(r.value)}
-                className={`px-2.5 py-1 rounded-lg border text-xs font-medium transition-all ${paymentRail === r.value ? 'border-cyan-600 bg-cyan-50 dark:bg-cyan-900/30 text-cyan-700' : 'border-border text-muted-foreground'}`}>
+                className={`px-2.5 py-1 rounded-lg border text-xs font-medium transition-all ${paymentRail === r.value ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/30 text-blue-700' : 'border-border text-muted-foreground'}`}>
                 {r.label}
               </button>
             ))}
@@ -135,59 +135,59 @@ export function ParentPostPaymentClient({ obligationId, obligationBalance, perio
 
           {/* SMS paste */}
           <textarea rows={2}
-            className="w-full bg-muted border border-border rounded-xl px-3 py-2 text-xs resize-none focus:outline-none focus:ring-2 focus:ring-cyan-500/40 font-mono"
+            className="w-full bg-muted border border-border rounded-xl px-3 py-2 text-xs resize-none focus:outline-none focus:ring-2 focus:ring-blue-500/40 font-mono"
             placeholder="Paste your M-Pesa confirmation message here…"
             value={rawMessage}
             onChange={(e) => parseMessage(e.target.value)} />
-          {referenceCode && <p className="text-[11px] text-green-600">✓ Code: <span className="font-mono font-bold">{referenceCode}</span> · {parsedAmount} {currency}</p>}
+          {referenceCode && <p className="text-[11px] text-orange-600">✓ Code: <span className="font-mono font-bold">{referenceCode}</span> · {parsedAmount} {currency}</p>}
 
           <div className="grid grid-cols-2 gap-2">
             <div>
               <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Reference *</label>
-              <input className="w-full mt-0.5 bg-muted border border-border rounded-xl px-3 py-1.5 text-sm font-mono uppercase focus:outline-none focus:ring-2 focus:ring-cyan-500/40"
+              <input className="w-full mt-0.5 bg-muted border border-border rounded-xl px-3 py-1.5 text-sm font-mono uppercase focus:outline-none focus:ring-2 focus:ring-blue-500/40"
                 placeholder="QJK23XF89H" value={referenceCode}
                 onChange={(e) => setReferenceCode(e.target.value.toUpperCase().trim())} required />
             </div>
             <div>
               <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Amount *</label>
               <input type="number"
-                className="w-full mt-0.5 bg-muted border border-border rounded-xl px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500/40"
+                className="w-full mt-0.5 bg-muted border border-border rounded-xl px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/40"
                 placeholder={String(obligationBalance)} value={parsedAmount}
                 onChange={(e) => setParsedAmount(e.target.value)} required />
             </div>
           </div>
 
-          {error && <p className="text-xs text-red-600 bg-red-50 dark:bg-red-950/30 px-3 py-2 rounded-lg border border-red-200">{error}</p>}
+          {error && <p className="text-xs text-orange-600 bg-orange-50 dark:bg-orange-950/30 px-3 py-2 rounded-lg border border-orange-200">{error}</p>}
           <button type="submit" disabled={loading}
-            className="w-full bg-cyan-600 hover:bg-cyan-700 disabled:opacity-50 text-white font-bold py-2.5 rounded-xl flex items-center justify-center gap-2 text-sm">
+            className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-bold py-2.5 rounded-xl flex items-center justify-center gap-2 text-sm">
             {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
             {loading ? 'Submitting…' : 'Post Payment'}
           </button>
         </form>
       ) : (
         <form onSubmit={handleCashSubmit} className="space-y-3">
-          <div className="flex gap-2 items-start bg-amber-50 dark:bg-amber-900/20 rounded-xl p-2.5 border border-amber-200 dark:border-amber-800">
-            <CreditCard className="w-3.5 h-3.5 text-amber-600 mt-0.5 shrink-0" />
-            <p className="text-[11px] text-amber-700 dark:text-amber-300">Cash payments require the bursar to confirm on their side.</p>
+          <div className="flex gap-2 items-start bg-orange-50 dark:bg-orange-900/20 rounded-xl p-2.5 border border-orange-200 dark:border-orange-800">
+            <CreditCard className="w-3.5 h-3.5 text-orange-600 mt-0.5 shrink-0" />
+            <p className="text-[11px] text-orange-700 dark:text-orange-300">Cash payments require the bursar to confirm on their side.</p>
           </div>
 
           <div>
             <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Amount Paid ({currency}) *</label>
             <input type="number"
-              className="w-full mt-0.5 bg-muted border border-border rounded-xl px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500/40"
+              className="w-full mt-0.5 bg-muted border border-border rounded-xl px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/40"
               placeholder={String(obligationBalance)} value={cashAmount}
               onChange={(e) => setCashAmount(e.target.value)} required />
           </div>
           <div>
             <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Notes (optional)</label>
-            <input className="w-full mt-0.5 bg-muted border border-border rounded-xl px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500/40"
+            <input className="w-full mt-0.5 bg-muted border border-border rounded-xl px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/40"
               placeholder="e.g. Paid at school reception" value={cashNotes}
               onChange={(e) => setCashNotes(e.target.value)} />
           </div>
 
-          {error && <p className="text-xs text-red-600 bg-red-50 dark:bg-red-950/30 px-3 py-2 rounded-lg border border-red-200">{error}</p>}
+          {error && <p className="text-xs text-orange-600 bg-orange-50 dark:bg-orange-950/30 px-3 py-2 rounded-lg border border-orange-200">{error}</p>}
           <button type="submit" disabled={loading}
-            className="w-full bg-rose-600 hover:bg-rose-700 disabled:opacity-50 text-white font-bold py-2.5 rounded-xl flex items-center justify-center gap-2 text-sm">
+            className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-bold py-2.5 rounded-xl flex items-center justify-center gap-2 text-sm">
             {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
             {loading ? 'Submitting…' : 'Submit Cash Payment'}
           </button>

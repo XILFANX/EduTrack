@@ -102,8 +102,8 @@ export default async function SubjectTeacherSubjects() {
                     className="flex items-center justify-between px-4 py-3.5 hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors"
                   >
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-lg bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center shrink-0">
-                        <GraduationCap className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+                      <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center shrink-0">
+                        <GraduationCap className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                       </div>
                       <div>
                         <p className="font-semibold text-sm text-foreground">{a.classes?.name}</p>

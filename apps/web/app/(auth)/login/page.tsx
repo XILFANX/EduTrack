@@ -117,7 +117,7 @@ export default function LoginPage() {
             </div>
 
             {error && (
-              <p className="text-sm text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/50 border border-red-100 dark:border-red-900/50 px-3 py-2 rounded-lg leading-snug">
+              <p className="text-sm text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-950/50 border border-orange-100 dark:border-orange-900/50 px-3 py-2 rounded-lg leading-snug">
                 {error}
               </p>
             )}
@@ -186,7 +186,7 @@ export default function LoginPage() {
               Go →
             </button>
           </form>
-          {inviteError && <p className="text-xs text-red-500">{inviteError}</p>}
+          {inviteError && <p className="text-xs text-orange-500">{inviteError}</p>}
         </div>
 
       </div>

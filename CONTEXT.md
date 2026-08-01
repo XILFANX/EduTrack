@@ -36,7 +36,9 @@ To issue a new task, simply paste it into the `Request` block below and prompt t
 
 ## Request
 
-_Status: Idle_
+_Status: In Progress_
+
+Hey! I need us to enforce a tight UI consistency across all portals in both EstateTrack(purple) and EduTrack(blue). Remove all other strange colors green, cyan, red, yellow etc existing cards to avoid any invonstencies. Only exempt the alert colors like the orange in EstateTrack alerts or orange in confirmation dialogue. Anything strange and not in the apps default color, purge. Be guided by the @[.agents/AGENTS.md] in all you do and try to seperate concerns between the two repos carefully.
 ---
 
 ## Step 0 — Fast Path

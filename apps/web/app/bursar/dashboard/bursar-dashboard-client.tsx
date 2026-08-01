@@ -11,9 +11,9 @@ const fmt = (n: number) => new Intl.NumberFormat('en-KE', { style: 'currency', c
 const fmtDate = (d: string) => new Date(d).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
 
 const STATUS_CONFIG: Record<string, { label: string; bg: string; dot: string }> = {
-  paid: { label: 'Paid', bg: 'bg-cyan-50 text-cyan-700 dark:bg-cyan-900/20 dark:text-cyan-400', dot: 'bg-cyan-400' },
-  partial: { label: 'Partial', bg: 'bg-amber-50 text-amber-700 dark:bg-amber-900/20 dark:text-amber-400', dot: 'bg-amber-400' },
-  unpaid: { label: 'Unpaid', bg: 'bg-red-50 text-red-700 dark:bg-red-900/20 dark:text-red-400', dot: 'bg-red-400' },
+  paid: { label: 'Paid', bg: 'bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400', dot: 'bg-blue-400' },
+  partial: { label: 'Partial', bg: 'bg-orange-50 text-orange-700 dark:bg-orange-900/20 dark:text-orange-400', dot: 'bg-orange-400' },
+  unpaid: { label: 'Unpaid', bg: 'bg-orange-50 text-orange-700 dark:bg-orange-900/20 dark:text-orange-400', dot: 'bg-orange-400' },
 }
 
 export function BursarDashboardClient({ stats, recentPayments }: { stats: any; recentPayments: any[] }) {
@@ -23,10 +23,10 @@ export function BursarDashboardClient({ stats, recentPayments }: { stats: any; r
   return (
     <div className="space-y-6 pb-24">
       {/* Premium hero banner */}
-      <div className="relative bg-gradient-to-br from-cyan-700 via-teal-700 to-cyan-900 rounded-3xl p-6 overflow-hidden text-white shadow-xl">
+      <div className="relative bg-gradient-to-br from-blue-700 via-teal-700 to-blue-900 rounded-3xl p-6 overflow-hidden text-white shadow-xl">
         {/* decorative blobs */}
-        <div className="absolute -top-12 -right-12 w-48 h-48 rounded-full bg-cyan-500/20 blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-32 h-32 rounded-full bg-teal-400/10 blur-2xl pointer-events-none" />
+        <div className="absolute -top-12 -right-12 w-48 h-48 rounded-full bg-blue-500/20 blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-32 h-32 rounded-full bg-blue-400/10 blur-2xl pointer-events-none" />
 
         <div className="relative z-10 flex flex-col sm:flex-row sm:items-center gap-6">
           <div className="flex-1">
@@ -36,12 +36,12 @@ export function BursarDashboardClient({ stats, recentPayments }: { stats: any; r
               </div>
               <div>
                 <h1 className="text-2xl font-black tracking-tight">Finance Dashboard</h1>
-                <p className="text-cyan-200 text-sm">School Fee Collection Overview</p>
+                <p className="text-blue-200 text-sm">School Fee Collection Overview</p>
               </div>
             </div>
 
             {/* Collection rate bar */}
-            <div className="mb-1.5 flex items-center justify-between text-xs text-cyan-200">
+            <div className="mb-1.5 flex items-center justify-between text-xs text-blue-200">
               <span>Collection Rate</span>
               <span className="font-bold text-white">{collectionPct.toFixed(1)}%</span>
             </div>
@@ -56,14 +56,14 @@ export function BursarDashboardClient({ stats, recentPayments }: { stats: any; r
           <div className="grid grid-cols-2 gap-3 sm:w-64">
             {[
               { label: 'Expected', value: fmt(stats.totalExpected), icon: BarChart3, accent: 'bg-white/10' },
-              { label: 'Collected', value: fmt(stats.totalCollected), icon: TrendingUp, accent: 'bg-cyan-400/20' },
-              { label: 'Arrears', value: fmt(stats.outstanding), icon: TrendingDown, accent: 'bg-red-400/20' },
+              { label: 'Collected', value: fmt(stats.totalCollected), icon: TrendingUp, accent: 'bg-blue-400/20' },
+              { label: 'Arrears', value: fmt(stats.outstanding), icon: TrendingDown, accent: 'bg-orange-400/20' },
               { label: 'Students', value: stats.totalStudents, icon: Users, accent: 'bg-white/10' },
             ].map((item, i) => {
               const Icon = item.icon
               return (
                 <div key={i} className={`${item.accent} backdrop-blur-sm rounded-2xl px-3 py-2.5 flex flex-col gap-0.5`}>
-                  <div className="flex items-center gap-1.5 text-cyan-200">
+                  <div className="flex items-center gap-1.5 text-blue-200">
                     <Icon className="w-3.5 h-3.5" />
                     <span className="text-[10px] font-semibold uppercase tracking-wide">{item.label}</span>
                   </div>
@@ -78,9 +78,9 @@ export function BursarDashboardClient({ stats, recentPayments }: { stats: any; r
       {/* Quick Actions */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {[
-          { label: 'Verify Payments', href: '/bursar/payments', icon: CheckCircle2, color: 'text-cyan-600', bg: 'bg-cyan-50 dark:bg-cyan-900/20', border: 'border-cyan-100 dark:border-cyan-800/30' },
+          { label: 'Verify Payments', href: '/bursar/payments', icon: CheckCircle2, color: 'text-blue-600', bg: 'bg-blue-50 dark:bg-blue-900/20', border: 'border-blue-100 dark:border-blue-800/30' },
           { label: 'Pay Subscription', href: '/bursar/billing', icon: CreditCard, color: 'text-blue-600', bg: 'bg-blue-50 dark:bg-blue-900/20', border: 'border-blue-100 dark:border-blue-800/30' },
-          { label: 'Defaulters List', href: '/bursar/invoices', icon: AlertTriangle, color: 'text-amber-600', bg: 'bg-amber-50 dark:bg-amber-900/20', border: 'border-amber-100 dark:border-amber-800/30' },
+          { label: 'Defaulters List', href: '/bursar/invoices', icon: AlertTriangle, color: 'text-orange-600', bg: 'bg-orange-50 dark:bg-orange-900/20', border: 'border-orange-100 dark:border-orange-800/30' },
           { label: 'Fee Structures', href: '/bursar/fee-structures', icon: BarChart3, color: 'text-purple-600', bg: 'bg-purple-50 dark:bg-purple-900/20', border: 'border-purple-100 dark:border-purple-800/30' },
         ].map((action, i) => {
           const Icon = action.icon
@@ -104,7 +104,7 @@ export function BursarDashboardClient({ stats, recentPayments }: { stats: any; r
       <div className="bg-card border border-border rounded-3xl overflow-hidden shadow-sm">
         <div className="px-5 py-4 border-b border-border flex items-center justify-between">
           <h2 className="font-bold text-foreground">Recent Payments</h2>
-          <Link href="/bursar/invoices" className="text-xs font-semibold text-cyan-600 hover:text-cyan-700 transition-colors flex items-center gap-1">
+          <Link href="/bursar/invoices" className="text-xs font-semibold text-blue-600 hover:text-blue-700 transition-colors flex items-center gap-1">
             View all <ChevronRight className="w-3.5 h-3.5" />
           </Link>
         </div>

@@ -68,7 +68,7 @@ export function LogStockModal({ schoolId, userId, onClose }: Props) {
               type="button"
               onClick={() => setType('in')}
               className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-sm font-semibold transition-all ${
-                type === 'in' ? 'bg-cyan-600 text-white' : 'text-slate-500 hover:text-foreground'
+                type === 'in' ? 'bg-blue-600 text-white' : 'text-slate-500 hover:text-foreground'
               }`}
             >
               <ArrowUpRight className="w-4 h-4" />
@@ -78,7 +78,7 @@ export function LogStockModal({ schoolId, userId, onClose }: Props) {
               type="button"
               onClick={() => setType('out')}
               className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-sm font-semibold transition-all ${
-                type === 'out' ? 'bg-red-500 text-white' : 'text-slate-500 hover:text-foreground'
+                type === 'out' ? 'bg-orange-500 text-white' : 'text-slate-500 hover:text-foreground'
               }`}
             >
               <ArrowDownRight className="w-4 h-4" />
@@ -93,7 +93,7 @@ export function LogStockModal({ schoolId, userId, onClose }: Props) {
               value={itemName}
               onChange={e => setItemName(e.target.value)}
               placeholder="e.g. Maize Flour, Pencils"
-              className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none"
+              className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
               required
             />
           </div>
@@ -106,7 +106,7 @@ export function LogStockModal({ schoolId, userId, onClose }: Props) {
               value={quantity}
               onChange={e => setQuantity(e.target.value)}
               placeholder="0"
-              className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none"
+              className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none"
               required
             />
           </div>
@@ -118,16 +118,16 @@ export function LogStockModal({ schoolId, userId, onClose }: Props) {
               onChange={e => setNotes(e.target.value)}
               placeholder="e.g. Received from supplier, Issued to kitchen"
               rows={2}
-              className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none resize-none"
+              className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none resize-none"
             />
           </div>
 
-          {error && <p className="text-sm text-red-500">{error}</p>}
+          {error && <p className="text-sm text-orange-500">{error}</p>}
 
           <Button
             type="submit"
             disabled={loading}
-            className={`w-full gap-2 ${type === 'in' ? 'bg-cyan-600 hover:bg-cyan-700' : 'bg-red-500 hover:bg-red-600'}`}
+            className={`w-full gap-2 ${type === 'in' ? 'bg-blue-600 hover:bg-blue-700' : 'bg-orange-500 hover:bg-orange-600'}`}
           >
             {loading && <Loader2 className="w-4 h-4 animate-spin" />}
             {type === 'in' ? 'Confirm Stock In' : 'Confirm Stock Out'}

@@ -41,7 +41,7 @@ export default async function LibraryLayout({ children }: { children: React.Reac
             </div>
             <div>
               <p className="font-bold text-sm text-foreground leading-tight">{school?.name || 'School Portal'}</p>
-              <p className="text-xs text-violet-600 dark:text-violet-400 font-medium">Library Portal</p>
+              <p className="text-xs text-blue-600 dark:text-blue-400 font-medium">Library Portal</p>
             </div>
           </div>
           <form action="/api/auth/signout" method="post">

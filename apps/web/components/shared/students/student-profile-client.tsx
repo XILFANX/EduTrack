@@ -86,7 +86,7 @@ export function StudentProfileClient({ student, classes }: { student: any, class
       {/* ── Left Column: Main Profile Card ── */}
       <div className="md:col-span-1">
         <Card className="border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden relative">
-          <div className="h-24 bg-gradient-to-r from-cyan-600 to-cyan-500" />
+          <div className="h-24 bg-gradient-to-r from-blue-600 to-blue-500" />
           <CardContent className="px-6 pb-6 pt-0 relative">
             <div className="w-20 h-20 rounded-2xl bg-white dark:bg-slate-900 border-4 border-white dark:border-slate-950 shadow-sm mx-auto -mt-10 flex items-center justify-center relative z-10 overflow-hidden group">
               {photoUrl ? (
@@ -122,12 +122,12 @@ export function StudentProfileClient({ student, classes }: { student: any, class
             <div className="space-y-4">
               <div className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50">
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-cyan-100 dark:bg-cyan-900/30 flex items-center justify-center shrink-0">
-                    <User className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
+                  <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center shrink-0">
+                    <User className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                   </div>
                   <div>
                     <p className="text-xs text-muted-foreground font-medium">Status</p>
-                    <p className={`text-sm font-semibold ${status.toLowerCase() === 'active' ? 'text-cyan-600 dark:text-cyan-400' : 'text-amber-600 dark:text-amber-400'}`}>{status}</p>
+                    <p className={`text-sm font-semibold ${status.toLowerCase() === 'active' ? 'text-blue-600 dark:text-blue-400' : 'text-orange-600 dark:text-orange-400'}`}>{status}</p>
                   </div>
                 </div>
                 <DropdownMenu>
@@ -143,7 +143,7 @@ export function StudentProfileClient({ student, classes }: { student: any, class
                         className={`gap-2 ${status === s ? 'bg-slate-100 dark:bg-slate-800' : ''}`}
                         onClick={() => handleStatusChange(s)}
                       >
-                        {status === s && <Check className="w-4 h-4 text-cyan-600" />} 
+                        {status === s && <Check className="w-4 h-4 text-blue-600" />} 
                         <span className={status === s ? 'ml-0' : 'ml-6'}>{s}</span>
                       </DropdownMenuItem>
                     ))}
@@ -153,8 +153,8 @@ export function StudentProfileClient({ student, classes }: { student: any, class
 
               <div className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50">
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-cyan-100 dark:bg-cyan-900/30 flex items-center justify-center shrink-0">
-                    <GraduationCap className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
+                  <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center shrink-0">
+                    <GraduationCap className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                   </div>
                   <div>
                     <p className="text-xs text-muted-foreground font-medium">Class Assignment</p>
@@ -172,7 +172,7 @@ export function StudentProfileClient({ student, classes }: { student: any, class
                       className={`gap-2 ${currentClassId === null ? 'bg-slate-100 dark:bg-slate-800' : ''}`}
                       onClick={() => handleAssignClass(null)}
                     >
-                      {currentClassId === null && <Check className="w-4 h-4 text-cyan-600" />} 
+                      {currentClassId === null && <Check className="w-4 h-4 text-blue-600" />} 
                       <span className={currentClassId === null ? 'ml-0' : 'ml-6'}>Unassigned</span>
                     </DropdownMenuItem>
                     {classes.map(c => (
@@ -181,7 +181,7 @@ export function StudentProfileClient({ student, classes }: { student: any, class
                         className={`gap-2 ${currentClassId === c.id ? 'bg-slate-100 dark:bg-slate-800' : ''}`}
                         onClick={() => handleAssignClass(c.id)}
                       >
-                        {currentClassId === c.id && <Check className="w-4 h-4 text-cyan-600" />} 
+                        {currentClassId === c.id && <Check className="w-4 h-4 text-blue-600" />} 
                         <span className={currentClassId === c.id ? 'ml-0' : 'ml-6'}>{c.name}</span>
                       </DropdownMenuItem>
                     ))}

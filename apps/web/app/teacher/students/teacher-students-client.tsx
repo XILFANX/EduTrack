@@ -148,7 +148,7 @@ export function TeacherStudentsClient({ students, invitations, parentLinks, scho
                         <div>
                           <p className="font-semibold text-foreground text-sm group-hover:text-blue-600 transition-colors">
                             {student.first_name} {student.last_name}
-                            {isSuspended && <span className="ml-2 text-[10px] uppercase tracking-wider bg-red-100 text-red-700 px-1.5 py-0.5 rounded-sm">Suspended</span>}
+                            {isSuspended && <span className="ml-2 text-[10px] uppercase tracking-wider bg-orange-100 text-orange-700 px-1.5 py-0.5 rounded-sm">Suspended</span>}
                           </p>
                           <p className="text-xs text-muted-foreground font-mono">
                             {student.admission_number}
@@ -167,7 +167,7 @@ export function TeacherStudentsClient({ students, invitations, parentLinks, scho
                               <Button 
                                 variant="ghost" 
                                 size="icon" 
-                                className="h-8 w-8 text-slate-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20"
+                                className="h-8 w-8 text-slate-400 hover:text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-900/20"
                                 onClick={() => handleDeleteInvite(usedInvite.id, true)}
                                 title="Revoke Access"
                               >
@@ -178,7 +178,7 @@ export function TeacherStudentsClient({ students, invitations, parentLinks, scho
                         ) : pendingInvite ? (
                           <div className="flex items-center gap-3">
                             <div className="text-right hidden sm:block">
-                              <p className="text-sm font-medium text-amber-600 dark:text-amber-500">Invite Sent</p>
+                              <p className="text-sm font-medium text-orange-600 dark:text-orange-500">Invite Sent</p>
                               <p className="text-xs text-muted-foreground">Waiting for {pendingInvite.target_name}</p>
                             </div>
                             <div className="flex items-center gap-1">
@@ -188,7 +188,7 @@ export function TeacherStudentsClient({ students, invitations, parentLinks, scho
                                 className="gap-1.5 h-8 text-xs"
                                 onClick={() => handleCopyLink(pendingInvite.token)}
                               >
-                                {copiedToken === pendingInvite.token ? <Check className="w-3.5 h-3.5 text-cyan-500" /> : <LinkIcon className="w-3.5 h-3.5" />}
+                                {copiedToken === pendingInvite.token ? <Check className="w-3.5 h-3.5 text-blue-500" /> : <LinkIcon className="w-3.5 h-3.5" />}
                                 <span className="hidden sm:inline">{copiedToken === pendingInvite.token ? 'Copied' : 'Link'}</span>
                               </Button>
                               <a
@@ -202,7 +202,7 @@ export function TeacherStudentsClient({ students, invitations, parentLinks, scho
                               <Button 
                                 variant="ghost" 
                                 size="icon" 
-                                className="h-8 w-8 text-slate-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20"
+                                className="h-8 w-8 text-slate-400 hover:text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-900/20"
                                 onClick={() => handleDeleteInvite(pendingInvite.id, false)}
                                 title="Delete Invite"
                               >
@@ -258,8 +258,8 @@ export function TeacherStudentsClient({ students, invitations, parentLinks, scho
             
             <div className={`mt-3 inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold ${
               (!quickViewStudent.status || quickViewStudent.status.toLowerCase() === 'active') 
-                ? 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-400' 
-                : 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'
+                ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400' 
+                : 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400'
             }`}>
               {quickViewStudent.status || 'Active'}
             </div>
@@ -286,8 +286,8 @@ export function TeacherStudentsClient({ students, invitations, parentLinks, scho
                 )
               } else if (pending) {
                 return (
-                  <div className="bg-amber-50 dark:bg-amber-900/10 rounded-xl p-3 border border-amber-100 dark:border-amber-900/30">
-                    <p className="text-xs text-amber-600 dark:text-amber-400 font-medium mb-1">Pending Invite</p>
+                  <div className="bg-orange-50 dark:bg-orange-900/10 rounded-xl p-3 border border-orange-100 dark:border-orange-900/30">
+                    <p className="text-xs text-orange-600 dark:text-orange-400 font-medium mb-1">Pending Invite</p>
                     <p className="text-sm font-semibold">{pending.target_name}</p>
                   </div>
                 )

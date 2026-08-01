@@ -90,7 +90,7 @@ export function AddSubjectModal({ open, onClose, schoolId, onSuccess, preSelecte
               Assign to Classes <span className="text-muted-foreground font-normal">(Select multiple)</span>
             </Label>
             {classes.length === 0 ? (
-              <p className="text-xs text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800/50 rounded-lg px-3 py-2 flex items-center gap-1.5">
+              <p className="text-xs text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800/50 rounded-lg px-3 py-2 flex items-center gap-1.5">
                 <Info className="w-3.5 h-3.5 shrink-0" />
                 No classes yet. Create classes first before assigning subjects.
               </p>
@@ -111,7 +111,7 @@ export function AddSubjectModal({ open, onClose, schoolId, onSuccess, preSelecte
             )}
           </div>
 
-          {error && <p className="text-xs text-red-500 bg-red-50 dark:bg-red-900/10 border border-red-200 dark:border-red-800/30 p-3 rounded-lg">{error}</p>}
+          {error && <p className="text-xs text-orange-500 bg-orange-50 dark:bg-orange-900/10 border border-orange-200 dark:border-orange-800/30 p-3 rounded-lg">{error}</p>}
         </div>
 
         <div className="flex items-center justify-end gap-3 mt-6">

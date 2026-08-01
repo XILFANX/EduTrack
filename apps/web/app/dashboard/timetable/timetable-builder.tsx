@@ -25,21 +25,21 @@ const DAYS = [
 
 const DAY_COLORS: Record<number, string> = {
   1: 'from-blue-500 to-blue-600',
-  2: 'from-indigo-500 to-indigo-600',
-  3: 'from-violet-500 to-violet-600',
+  2: 'from-blue-500 to-blue-600',
+  3: 'from-blue-500 to-blue-600',
   4: 'from-purple-500 to-purple-600',
-  5: 'from-fuchsia-500 to-fuchsia-600',
+  5: 'from-blue-500 to-blue-600',
 }
 
 const SUBJECT_PALETTE = [
   'bg-blue-50 border-blue-200 text-blue-800 dark:bg-blue-950/40 dark:border-blue-800/50 dark:text-blue-300',
-  'bg-cyan-50 border-cyan-200 text-cyan-800 dark:bg-cyan-950/40 dark:border-cyan-800/50 dark:text-cyan-300',
-  'bg-amber-50 border-amber-200 text-amber-800 dark:bg-amber-950/40 dark:border-amber-800/50 dark:text-amber-300',
-  'bg-rose-50 border-rose-200 text-rose-800 dark:bg-rose-950/40 dark:border-rose-800/50 dark:text-rose-300',
-  'bg-cyan-50 border-cyan-200 text-cyan-800 dark:bg-cyan-950/40 dark:border-cyan-800/50 dark:text-cyan-300',
+  'bg-blue-50 border-blue-200 text-blue-800 dark:bg-blue-950/40 dark:border-blue-800/50 dark:text-blue-300',
+  'bg-orange-50 border-orange-200 text-orange-800 dark:bg-orange-950/40 dark:border-orange-800/50 dark:text-orange-300',
+  'bg-blue-50 border-blue-200 text-blue-800 dark:bg-blue-950/40 dark:border-blue-800/50 dark:text-blue-300',
+  'bg-blue-50 border-blue-200 text-blue-800 dark:bg-blue-950/40 dark:border-blue-800/50 dark:text-blue-300',
   'bg-purple-50 border-purple-200 text-purple-800 dark:bg-purple-950/40 dark:border-purple-800/50 dark:text-purple-300',
   'bg-orange-50 border-orange-200 text-orange-800 dark:bg-orange-950/40 dark:border-orange-800/50 dark:text-orange-300',
-  'bg-teal-50 border-teal-200 text-teal-800 dark:bg-teal-950/40 dark:border-teal-800/50 dark:text-teal-300',
+  'bg-blue-50 border-blue-200 text-blue-800 dark:bg-blue-950/40 dark:border-blue-800/50 dark:text-blue-300',
 ]
 
 function subjectColor(subjectId: string | null | undefined, subjects: any[]) {
@@ -137,7 +137,7 @@ function PeriodModal({
               type="checkbox"
               checked={isBreak}
               onChange={e => setIsBreak(e.target.checked)}
-              className="w-4 h-4 accent-amber-500"
+              className="w-4 h-4 accent-orange-500"
             />
             <div>
               <p className="text-sm font-medium text-foreground">This is a break / lunch slot</p>
@@ -145,11 +145,11 @@ function PeriodModal({
             </div>
           </label>
 
-          {err && <p className="text-sm text-red-500 bg-red-50 dark:bg-red-900/20 px-3 py-2 rounded-lg border border-red-200 dark:border-red-800">{err}</p>}
+          {err && <p className="text-sm text-orange-500 bg-orange-50 dark:bg-orange-900/20 px-3 py-2 rounded-lg border border-orange-200 dark:border-orange-800">{err}</p>}
 
           <div className="flex justify-end gap-3 pt-2 border-t border-border">
             <Button type="button" variant="outline" onClick={() => onClose()} className="rounded-xl">Cancel</Button>
-            <Button type="submit" disabled={saving} className="rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white">
+            <Button type="submit" disabled={saving} className="rounded-xl bg-blue-600 hover:bg-blue-700 text-white">
               {saving ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
               {existing ? 'Save Changes' : 'Add Period'}
             </Button>
@@ -245,7 +245,7 @@ function SlotModal({
               variant="ghost"
               onClick={handleClear}
               disabled={saving}
-              className="text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 rounded-xl"
+              className="text-orange-500 hover:text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-950/30 rounded-xl"
             >
               <X className="w-4 h-4 mr-1" /> Clear Slot
             </Button>
@@ -255,7 +255,7 @@ function SlotModal({
             <Button
               onClick={handleSave}
               disabled={saving}
-              className="rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white"
+              className="rounded-xl bg-blue-600 hover:bg-blue-700 text-white"
             >
               {saving ? <Loader2 className="w-4 h-4 animate-spin mr-1.5" /> : <Save className="w-4 h-4 mr-1.5" />}
               Save
@@ -341,7 +341,7 @@ export function TimetableBuilder({
           </div>
           <Button
             onClick={() => setPeriodModal({ open: true, existing: null })}
-            className="bg-indigo-600 hover:bg-indigo-700 text-white gap-2 rounded-xl"
+            className="bg-blue-600 hover:bg-blue-700 text-white gap-2 rounded-xl"
           >
             <Plus className="w-4 h-4" />
             Add Period
@@ -367,19 +367,19 @@ export function TimetableBuilder({
               >
                 <GripVertical className="w-4 h-4 text-slate-300 shrink-0" />
                 {period.is_break ? (
-                  <div className="w-8 h-8 rounded-lg bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center shrink-0">
-                    <Coffee className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+                  <div className="w-8 h-8 rounded-lg bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center shrink-0">
+                    <Coffee className="w-4 h-4 text-orange-600 dark:text-orange-400" />
                   </div>
                 ) : (
-                  <div className="w-8 h-8 rounded-lg bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center shrink-0">
-                    <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400">{idx + 1}</span>
+                  <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center shrink-0">
+                    <span className="text-xs font-bold text-blue-600 dark:text-blue-400">{idx + 1}</span>
                   </div>
                 )}
                 <div className="flex-1 min-w-0">
                   <p className="font-semibold text-foreground text-sm">{period.name}</p>
                   <p className="text-xs text-muted-foreground">
                     {fmt12(period.start_time)} – {fmt12(period.end_time)}
-                    {period.is_break && <span className="ml-2 text-amber-600 dark:text-amber-400 font-medium">· Break</span>}
+                    {period.is_break && <span className="ml-2 text-orange-600 dark:text-orange-400 font-medium">· Break</span>}
                   </p>
                 </div>
                 <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -393,7 +393,7 @@ export function TimetableBuilder({
                   <Button
                     variant="ghost" size="icon"
                     onClick={() => handleDeletePeriod(period)}
-                    className="h-8 w-8 text-red-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30"
+                    className="h-8 w-8 text-orange-400 hover:text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-950/30"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
                   </Button>
@@ -447,9 +447,9 @@ export function TimetableBuilder({
                         {idx % 2 === 0 ? null : <div className="absolute inset-0 bg-[#1a2133]" />}
                         <div className="relative flex items-center gap-2">
                           {period.is_break ? (
-                            <Coffee className="w-3.5 h-3.5 text-amber-500 shrink-0" />
+                            <Coffee className="w-3.5 h-3.5 text-orange-500 shrink-0" />
                           ) : (
-                            <Clock className="w-3.5 h-3.5 text-indigo-400 shrink-0" />
+                            <Clock className="w-3.5 h-3.5 text-blue-400 shrink-0" />
                           )}
                           <div>
                             <p className="font-semibold text-slate-200 text-xs">{period.name}</p>
@@ -471,16 +471,16 @@ export function TimetableBuilder({
                             onClick={() => openSlotModal(period, day)}
                           >
                             {period.is_break ? (
-                              <div className="rounded-xl bg-amber-500/10 border border-amber-500/20 px-2 py-3 text-center cursor-default">
-                                <Coffee className="w-3.5 h-3.5 text-amber-400 mx-auto" />
+                              <div className="rounded-xl bg-orange-500/10 border border-orange-500/20 px-2 py-3 text-center cursor-default">
+                                <Coffee className="w-3.5 h-3.5 text-orange-400 mx-auto" />
                               </div>
                             ) : subjectName ? (
                               <div className={`rounded-xl border px-2 py-2 text-center text-xs font-semibold cursor-pointer hover:opacity-80 transition-opacity ${color}`}>
                                 {subjectName}
                               </div>
                             ) : (
-                              <div className="rounded-xl border-2 border-dashed border-slate-700 px-2 py-3 text-center cursor-pointer hover:border-indigo-500/50 hover:bg-indigo-500/10 transition-all group/cell">
-                                <Plus className="w-3.5 h-3.5 text-slate-600 group-hover/cell:text-indigo-400 mx-auto transition-colors" />
+                              <div className="rounded-xl border-2 border-dashed border-slate-700 px-2 py-3 text-center cursor-pointer hover:border-blue-500/50 hover:bg-blue-500/10 transition-all group/cell">
+                                <Plus className="w-3.5 h-3.5 text-slate-600 group-hover/cell:text-blue-400 mx-auto transition-colors" />
                               </div>
                             )}
                           </td>
