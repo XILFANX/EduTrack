@@ -158,7 +158,7 @@ $$ LANGUAGE sql STABLE;
 -- Requires pg_cron extension enabled on the project.
 -- Runs every hour; the functions themselves guard against running if no rows match.
 
-DO $$
+DO $migration$
 BEGIN
   -- Check pg_cron is available before scheduling
   IF EXISTS (SELECT 1 FROM pg_extension WHERE extname = 'pg_cron') THEN
@@ -204,7 +204,7 @@ BEGIN
 
   END IF;
 END;
-$$;
+$migration$;
 
 -- ─────────────────────────────────────────────────────────────────────────────
 -- 8. UPDATED_AT trigger for corridors

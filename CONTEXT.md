@@ -36,12 +36,9 @@ To issue a new task, simply paste it into the `Request` block below and prompt t
 
 ## Request
 
-could youu be guided by @[.agents/AGENTS.md] and @[CONTEXT.md] and execute this "# Payment Settlement Reconciliation Engine — Full Replacement Spec (v4)
-EstateTrack (rent) & EduTrack (school fees) — including provider subscription billing
-... (rest of the spec to be executed) ...
-"
+<!-- Paste request here -->
 
-_Status: Step 1 — Request Understanding_
+_Status: Idle_
 ---
 
 ## Step 0 — Fast Path
@@ -348,6 +345,7 @@ Hold on every documentation edit, not just first-draft generation:
 
 | Date | Mission | Outcome |
 |---|---|---|
+| 2026-08-01 | Payment Settlement Reconciliation Engine (v4) — fee direction fixes, cross-currency corridors, generic channel labels, parsedFee capture, 30d sweep cron, UI updates. | Shipped, pushed to `main` (EduTrack `3a9402a`, EstateTrack `74a25f1`) |
 | 2026-07-31 | Payment Settlement Reconciliation Engine — Full replacement (two-witness model, shared engine, matching logic, blinded UI, immutable ledger). | Shipped, pushed to `main` (EduTrack `195ac59`, EstateTrack `e525030`) |
 | 2026-07-31 | Regional Pricing Engine full replacement — schema, billing engine, codebase deprecations, onboarding cleanup, docs | Shipped, pushed to `main` (EstateTrack `9f5bc64`, EduTrack `9884b23`) |
 | 2026-07-31 | Documented messaging module fixes (`classIds` sync, typing, `Online/Offline` UX) in `internal-devsguide` and `public-userguide` | Shipped, pushed to `main` |
