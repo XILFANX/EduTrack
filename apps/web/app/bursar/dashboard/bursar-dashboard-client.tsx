@@ -78,8 +78,8 @@ export function BursarDashboardClient({ stats, recentPayments }: { stats: any; r
       {/* Quick Actions */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {[
-          { label: 'Record Payment', href: '/bursar/invoices', icon: CreditCard, color: 'text-cyan-600', bg: 'bg-cyan-50 dark:bg-cyan-900/20', border: 'border-cyan-100 dark:border-cyan-800/30' },
-          { label: 'View Invoices', href: '/bursar/invoices', icon: FileText, color: 'text-blue-600', bg: 'bg-blue-50 dark:bg-blue-900/20', border: 'border-blue-100 dark:border-blue-800/30' },
+          { label: 'Verify Payments', href: '/bursar/payments', icon: CheckCircle2, color: 'text-cyan-600', bg: 'bg-cyan-50 dark:bg-cyan-900/20', border: 'border-cyan-100 dark:border-cyan-800/30' },
+          { label: 'Pay Subscription', href: '/bursar/billing', icon: CreditCard, color: 'text-blue-600', bg: 'bg-blue-50 dark:bg-blue-900/20', border: 'border-blue-100 dark:border-blue-800/30' },
           { label: 'Defaulters List', href: '/bursar/invoices', icon: AlertTriangle, color: 'text-amber-600', bg: 'bg-amber-50 dark:bg-amber-900/20', border: 'border-amber-100 dark:border-amber-800/30' },
           { label: 'Fee Structures', href: '/bursar/fee-structures', icon: BarChart3, color: 'text-purple-600', bg: 'bg-purple-50 dark:bg-purple-900/20', border: 'border-purple-100 dark:border-purple-800/30' },
         ].map((action, i) => {

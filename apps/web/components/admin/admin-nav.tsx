@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { LayoutDashboard, BarChart3, Building2, ShieldCheck, MessageSquare, DatabaseZap, Terminal } from 'lucide-react'
+import { LayoutDashboard, BarChart3, Building2, ShieldCheck, MessageSquare, DatabaseZap, Terminal, CreditCard } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { UnreadMessagesBadge } from '@/components/shared/unread-messages-badge'
 
@@ -10,6 +10,7 @@ const NAV_ITEMS = [
   { href: '/admin/dashboard', label: 'Overview', Icon: LayoutDashboard },
   { href: '/admin/analytics', label: 'Analytics', Icon: BarChart3 },
   { href: '/admin/schools', label: 'Schools', Icon: Building2 },
+  { href: '/admin/billing', label: 'Verify Subs', Icon: CreditCard },
   { href: '/admin/messages', label: 'Messages', Icon: MessageSquare },
   { href: '/admin/admins', label: 'Admins', Icon: ShieldCheck, rootOnly: true },
   { href: '/admin/optimization', label: 'Optimize', Icon: DatabaseZap, rootOnly: true },

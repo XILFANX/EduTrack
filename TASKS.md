@@ -12,3 +12,7 @@
 - [x] Full lint clean
 - [x] Full existing test suite passes (57/57 passed)
 - [x] Documentation re-sync confirmed
+
+## Phase 6: Portal Coverage & Navigation Audit (v4)
+- [x] Portal navigation updates (Parent, Bursar, Admin) — tier 1: skip — commit: `pending` — docs: `none: navigation UI only`
+- [x] Tier 2 (build clean, manual UI check)

@@ -36,8 +36,6 @@ To issue a new task, simply paste it into the `Request` block below and prompt t
 
 ## Request
 
-<!-- Paste request here -->
-
 _Status: Idle_
 ---
 
@@ -345,6 +343,7 @@ Hold on every documentation edit, not just first-draft generation:
 
 | Date | Mission | Outcome |
 |---|---|---|
+| 2026-08-01 | Portal Coverage Audit & Navigation Fixes (v4) — Fixed missing/hidden Verify Payment and Subscription UI endpoints across Tenant, Landlord, Parent, Bursar, and Admin portals. | Shipped, pushed to `main` |
 | 2026-08-01 | Payment Settlement Reconciliation Engine (v4) — fee direction fixes, cross-currency corridors, generic channel labels, parsedFee capture, 30d sweep cron, UI updates. | Shipped, pushed to `main` (EduTrack `3a9402a`, EstateTrack `74a25f1`) |
 | 2026-07-31 | Payment Settlement Reconciliation Engine — Full replacement (two-witness model, shared engine, matching logic, blinded UI, immutable ledger). | Shipped, pushed to `main` (EduTrack `195ac59`, EstateTrack `e525030`) |
 | 2026-07-31 | Regional Pricing Engine full replacement — schema, billing engine, codebase deprecations, onboarding cleanup, docs | Shipped, pushed to `main` (EstateTrack `9f5bc64`, EduTrack `9884b23`) |

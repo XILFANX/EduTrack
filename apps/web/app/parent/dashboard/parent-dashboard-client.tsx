@@ -89,7 +89,7 @@ export function ParentDashboardClient({ childrenList, recentPayments }: { childr
             className="w-full mt-6 bg-white hover:bg-slate-50 text-cyan-700 font-bold rounded-xl shadow-sm relative z-10"
             onClick={() => window.location.href = '/parent/payments'}
           >
-            Report Payment
+            Pay Fees
           </Button>
         </div>
 
