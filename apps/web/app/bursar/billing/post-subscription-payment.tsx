@@ -42,6 +42,7 @@ interface Props {
 function parseTransactionMessage(raw: string): {
   referenceCode: string
   parsedAmount: number | null
+  parsedFee: number | null
   parsedTransactionAt: string | null
   parsedCounterparty: string | null
   parsedNarration: string | null
