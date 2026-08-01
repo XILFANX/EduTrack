@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from 'next/server'
 import { updateSession } from '@/lib/supabase/middleware'
+import { createServerClient } from '@supabase/ssr'
 
 const PUBLIC_ROUTES = [
   '/login',
@@ -114,6 +115,43 @@ export async function middleware(request: NextRequest) {
   // Cross-portal access guard
   if (!isAllowedForRole(role, pathname)) {
     return NextResponse.redirect(new URL(roleHome(role), request.url))
+  }
+
+  // ── §5 Suspension enforcement (school portal only) ────────────────────────────────
+  // Suspension ONLY affects school-admin portals (bursar, principal, headteacher).
+  // Parents and students are NEVER affected — their portals are always accessible.
+  // Suspended schools may access:
+  //   - /bursar/billing (to post payment and reinstate)
+  //   - /bursar/invoices (read-only fee ledger — must never be locked per spec §11)
+  //   - /bursar/ledger
+  //   - /api/*, /auth/*
+  const SCHOOL_ADMIN_ROLES = ['bursar', 'principal', 'headteacher']
+  if (SCHOOL_ADMIN_ROLES.includes(role) && profile?.school_id) {
+    const SUSPENSION_EXEMPT = [
+      '/bursar/billing',
+      '/bursar/invoices',
+      '/bursar/ledger',
+      '/api',
+      '/auth',
+    ]
+    const isExempt = SUSPENSION_EXEMPT.some((r) => pathname === r || pathname.startsWith(r + '/'))
+
+    if (!isExempt) {
+      const supabaseCheck = createServerClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+        { cookies: { getAll: () => request.cookies.getAll(), setAll: () => {} } }
+      )
+      const { data: schoolRow } = await supabaseCheck
+        .from('schools')
+        .select('subscription_status')
+        .eq('id', profile.school_id)
+        .single()
+
+      if (schoolRow?.subscription_status === 'suspended') {
+        return NextResponse.redirect(new URL('/bursar/billing', request.url))
+      }
+    }
   }
 
   return supabaseResponse

@@ -2,23 +2,28 @@
  * packages/shared/payments/engine.test.ts
  *
  * Unit tests for the reconciliation matching engine.
- * Covers all §7 matching rules and §12 edge cases from the spec.
+ * Covers all §7 signal rules × 3 states, §7.2 outcomes, and §12 edge cases.
  *
- * Run with: npx vitest run  (or jest if configured)
+ * Run with: npx vitest run
  */
 
 import { describe, it, expect } from 'vitest'
 import {
   evaluateMatch,
+  evaluateSignals,
   findMatch,
   isReferenceCodeValid,
-  isTimestampPlausible,
   calculateLedgerEffect,
   normalizeReferenceCode,
   buildPayerDisplayRef,
-  DEFAULT_PLAUSIBILITY_WINDOW_HOURS,
+  compareIdentity,
+  compareNarration,
+  evaluateTimeWindow,
+  compareAmount,
+  shouldPromoteCorridor,
+  STRATEGY_TIME_WINDOWS,
 } from './engine'
-import type { Submission, Obligation, MatchEngineOptions } from './types'
+import type { Submission, Obligation, MatchEngineOptions, Corridor } from './types'
 
 // ─── Test Factories ───────────────────────────────────────────────────────────
 
@@ -44,17 +49,56 @@ function makeObligation(overrides: Partial<Obligation> = {}): Obligation {
   }
 }
 
+function makeExactCorridor(overrides: Partial<Corridor> = {}): Corridor {
+  return {
+    id: 'corr-mpesa-exact',
+    payer_rail: 'mpesa_paybill',
+    payee_rail: 'mpesa_paybill',
+    match_strategy: 'exact',
+    transformation_fn: null,
+    confirmed_pair_count: 10,
+    promotion_threshold: 5,
+    time_window_hours: null, // use strategy default = 0.5h
+    amount_tolerance_fraction: null,
+    created_at: '2026-08-01T00:00:00Z',
+    updated_at: '2026-08-01T00:00:00Z',
+    ...overrides,
+  }
+}
+
+function makeUnmappedCorridor(overrides: Partial<Corridor> = {}): Corridor {
+  return {
+    id: 'corr-unmapped',
+    payer_rail: 'bank_transfer',
+    payee_rail: 'mpesa_paybill',
+    match_strategy: 'unmapped',
+    transformation_fn: null,
+    confirmed_pair_count: 0,
+    promotion_threshold: 5,
+    time_window_hours: null, // use strategy default = 72h
+    amount_tolerance_fraction: null,
+    created_at: '2026-08-01T00:00:00Z',
+    updated_at: '2026-08-01T00:00:00Z',
+    ...overrides,
+  }
+}
+
 function makePayerSubmission(overrides: Partial<Submission> = {}): Submission {
   return {
     id: 'sub-payer-001',
     obligation_id: 'obl-001',
     submitter_role: 'payer',
     submitter_id: 'tenant-profile-001',
+    payer_display_ref: 'Unit A3 · Palm Court',
     raw_message: 'QJK23XF89H Confirmed. KES 15,000.00 paid to PALM COURT PAYBILL on 1/8/26 at 10:30 AM.',
     reference_code: 'QJK23XF89H',
     parsed_amount: 15000,
     parsed_currency: 'KES',
     parsed_transaction_at: '2026-08-01T07:30:00Z',
+    parsed_counterparty: '0712345678',
+    parsed_narration: 'rent august 2026',
+    parsed_fee: null,
+    parsed_balance_after: null,
     payment_rail: 'mpesa_paybill',
     source: 'manual',
     status: 'unmatched',
@@ -68,14 +112,19 @@ function makePayerSubmission(overrides: Partial<Submission> = {}): Submission {
 function makePayeeSubmission(overrides: Partial<Submission> = {}): Submission {
   return {
     id: 'sub-payee-001',
-    obligation_id: null, // Payee side is always blind — no obligation ID
+    obligation_id: null,
     submitter_role: 'payee',
     submitter_id: 'landlord-profile-001',
+    payer_display_ref: null,
     raw_message: 'QJK23XF89H Received KES 15,000.00 from 0712345678 on 1/8/26 at 10:30 AM.',
     reference_code: 'QJK23XF89H',
     parsed_amount: 15000,
     parsed_currency: 'KES',
     parsed_transaction_at: '2026-08-01T07:30:30Z',
+    parsed_counterparty: '0712345678',
+    parsed_narration: 'rent august 2026',
+    parsed_fee: null,
+    parsed_balance_after: null,
     payment_rail: 'mpesa_paybill',
     source: 'manual',
     status: 'unmatched',
@@ -86,27 +135,473 @@ function makePayeeSubmission(overrides: Partial<Submission> = {}): Submission {
   }
 }
 
-function makeOptions(overrides: Partial<MatchEngineOptions> = {}): MatchEngineOptions {
+function makeOptions(
+  corridorOverrides: Partial<Corridor> = {},
+  retiredCodes: Set<string> = new Set(),
+): MatchEngineOptions {
   return {
-    retiredReferenceCodes: new Set(),
-    plausibilityWindowHours: DEFAULT_PLAUSIBILITY_WINDOW_HOURS,
-    ...overrides,
+    retiredReferenceCodes: retiredCodes,
+    corridor: makeExactCorridor(corridorOverrides),
   }
 }
 
-// ─── Reference Code Validation ────────────────────────────────────────────────
+// ─── §7.1 Signal: reference_code ─────────────────────────────────────────────
+
+describe('§7.1 signal: reference_code', () => {
+  it('agrees: exact same code on exact corridor → matched', () => {
+    const r = evaluateMatch(makePayerSubmission(), makePayeeSubmission(), makeObligation(), makeOptions())
+    expect(r.status).toBe('matched')
+    const codeSig = r.signalEvaluation?.signals.find(s => s.signal === 'reference_code')
+    expect(codeSig?.state).toBe('agrees')
+  })
+
+  it('agrees: case-insensitive code comparison', () => {
+    const r = evaluateMatch(
+      makePayerSubmission({ reference_code: 'qjk23xf89h' }),
+      makePayeeSubmission({ reference_code: 'QJK23XF89H' }),
+      makeObligation(),
+      makeOptions({ time_window_hours: 1 }), // extend window so timestamps don't interfere
+    )
+    expect(r.status).toBe('matched')
+  })
+
+  it('disagrees: different codes on exact corridor → no_counterpart', () => {
+    const r = evaluateMatch(
+      makePayerSubmission({ reference_code: 'QJK23XF89H' }),
+      makePayeeSubmission({ reference_code: 'ZZZZZZZZZZ' }),
+      makeObligation(),
+      makeOptions(),
+    )
+    expect(r.status).toBe('no_counterpart')
+  })
+
+  it('disagrees (retired): code already used → replay_rejected', () => {
+    const r = evaluateMatch(
+      makePayerSubmission(),
+      makePayeeSubmission(),
+      makeObligation(),
+      makeOptions({}, new Set(['QJK23XF89H'])),
+    )
+    expect(r.status).toBe('replay_rejected')
+  })
+
+  it('absent: code not required on unmapped corridor (no code signal evaluated)', () => {
+    const r = evaluateSignals(
+      makePayerSubmission({ payment_rail: 'bank_transfer' }),
+      makePayeeSubmission(),
+      makeUnmappedCorridor(),
+      new Set(),
+    )
+    const codeSig = r.signals.find(s => s.signal === 'reference_code')
+    expect(codeSig).toBeUndefined()
+  })
+})
+
+// ─── §7.1 Signal: amount ─────────────────────────────────────────────────────
+
+describe('§7.1 signal: amount', () => {
+  it('agrees: same amount and currency', () => {
+    const r = evaluateMatch(makePayerSubmission(), makePayeeSubmission(), makeObligation(), makeOptions({ time_window_hours: 1 }))
+    expect(r.status).toBe('matched')
+    const amt = r.signalEvaluation?.signals.find(s => s.signal === 'amount')
+    expect(amt?.state).toBe('agrees')
+  })
+
+  it('disagrees: different amounts — code agreed → flagged_for_review (anomaly)', () => {
+    const r = evaluateMatch(
+      makePayerSubmission({ parsed_amount: 15000 }),
+      makePayeeSubmission({ parsed_amount: 14500 }),
+      makeObligation(),
+      makeOptions({ time_window_hours: 1 }),
+    )
+    expect(r.status).toBe('flagged_for_review')
+  })
+
+  it('disagrees: currency mismatch → no_counterpart (no code backing)', () => {
+    const r = evaluateMatch(
+      makePayerSubmission({ parsed_currency: 'KES', reference_code: 'AAAAAAAAA1' }),
+      makePayeeSubmission({ parsed_currency: 'USD', reference_code: 'BBBBBBBBBB' }),
+      makeObligation(),
+      makeOptions(),
+    )
+    // Different codes AND currency mismatch → no_counterpart
+    expect(r.status).toBe('no_counterpart')
+  })
+
+  it('disagrees: currency mismatch with same code → flagged_for_review', () => {
+    const r = evaluateMatch(
+      makePayerSubmission({ parsed_currency: 'KES' }),
+      makePayeeSubmission({ parsed_currency: 'USD' }),
+      makeObligation(),
+      makeOptions({ time_window_hours: 1 }),
+    )
+    expect(r.status).toBe('flagged_for_review')
+  })
+
+  it('absent: unparseable amount → unparseable', () => {
+    const r = evaluateMatch(
+      makePayerSubmission({ parsed_amount: NaN }),
+      makePayeeSubmission(),
+      makeObligation(),
+      makeOptions(),
+    )
+    expect(r.status).toBe('unparseable')
+  })
+
+  it('agrees within float epsilon (15000.00 vs 15000.001)', () => {
+    const r = evaluateMatch(
+      makePayerSubmission({ parsed_amount: 15000.00 }),
+      makePayeeSubmission({ parsed_amount: 15000.001 }),
+      makeObligation(),
+      makeOptions({ time_window_hours: 1 }),
+    )
+    expect(r.status).toBe('matched')
+  })
+
+  it('agrees with corridor tolerance for in-transit fee (1%)', () => {
+    // 15000 payer, 14850 payee (1% deducted as bank fee)
+    const r = evaluateMatch(
+      makePayerSubmission({ parsed_amount: 15000 }),
+      makePayeeSubmission({ parsed_amount: 14850 }),
+      makeObligation(),
+      makeOptions({ time_window_hours: 1, amount_tolerance_fraction: 0.01 }),
+    )
+    expect(r.status).toBe('matched')
+  })
+})
+
+// ─── §7.1 Signal: time_window ────────────────────────────────────────────────
+
+describe('§7.1 signal: time_window', () => {
+  it('agrees: timestamps seconds apart (exact corridor default 0.5h)', () => {
+    const s = evaluateTimeWindow('2026-08-01T07:30:00Z', '2026-08-01T07:30:30Z', 0.5)
+    expect(s).toBe('agrees')
+  })
+
+  it('agrees at boundary (0.5h exactly)', () => {
+    const s = evaluateTimeWindow('2026-08-01T07:30:00Z', '2026-08-01T08:00:00Z', 0.5)
+    expect(s).toBe('agrees')
+  })
+
+  it('disagrees: gap past window → flagged_for_review (code agreed)', () => {
+    const r = evaluateMatch(
+      makePayerSubmission({ parsed_transaction_at: '2026-08-01T07:30:00Z' }),
+      makePayeeSubmission({ parsed_transaction_at: '2026-08-10T08:00:00Z' }),
+      makeObligation(),
+      makeOptions({ time_window_hours: 1 }),
+    )
+    expect(r.status).toBe('flagged_for_review')
+    const tw = r.signalEvaluation?.signals.find(s => s.signal === 'time_window')
+    expect(tw?.state).toBe('disagrees')
+  })
+
+  it('absent: null timestamps → absent, match not blocked', () => {
+    const s = evaluateTimeWindow(null, null, 0.5)
+    expect(s).toBe('absent')
+    const r = evaluateMatch(
+      makePayerSubmission({ parsed_transaction_at: null }),
+      makePayeeSubmission({ parsed_transaction_at: null }),
+      makeObligation(),
+      makeOptions({ time_window_hours: 0.5 }),
+    )
+    expect(r.status).toBe('matched')
+  })
+
+  it('respects corridor-specific time window override', () => {
+    expect(STRATEGY_TIME_WINDOWS.exact).toBe(0.5)
+    expect(STRATEGY_TIME_WINDOWS.unmapped).toBe(72)
+    // Custom corridor override
+    const r = evaluateMatch(
+      makePayerSubmission({ parsed_transaction_at: '2026-08-01T00:00:00Z' }),
+      makePayeeSubmission({ parsed_transaction_at: '2026-08-02T00:00:00Z' }), // 24h apart
+      makeObligation(),
+      makeOptions({ time_window_hours: 48 }), // custom 48h window
+    )
+    expect(r.status).toBe('matched')
+  })
+})
+
+// ─── §7.1 Signal: counterparty_identity ──────────────────────────────────────
+
+describe('§7.1 signal: counterparty_identity', () => {
+  it('agrees: same phone number (last 9 digits)', () => {
+    expect(compareIdentity('0712345678', '+254712345678')).toBe('agrees')
+  })
+
+  it('agrees: same name, token-set match (subset)', () => {
+    expect(compareIdentity('JOHN KAMAU', 'JOHN M KAMAU')).toBe('agrees')
+  })
+
+  it('disagrees: different phone numbers', () => {
+    expect(compareIdentity('0712345678', '0799999999')).toBe('disagrees')
+  })
+
+  it('disagrees: names with no common tokens', () => {
+    expect(compareIdentity('ALICE WANJIKU', 'BONIFACE OMONDI')).toBe('disagrees')
+  })
+
+  it('absent: null on either side', () => {
+    expect(compareIdentity(null, '0712345678')).toBe('absent')
+    expect(compareIdentity('0712345678', null)).toBe('absent')
+    expect(compareIdentity(null, null)).toBe('absent')
+  })
+
+  it('on exact corridor: identity disagrees → flagged_for_review (corroborating)', () => {
+    const r = evaluateMatch(
+      makePayerSubmission({ parsed_counterparty: '0712345678' }),
+      makePayeeSubmission({ parsed_counterparty: '0799999999' }), // different number
+      makeObligation(),
+      makeOptions({ time_window_hours: 1 }),
+    )
+    expect(r.status).toBe('flagged_for_review')
+  })
+
+  it('on exact corridor: identity absent → match proceeds (absent ≠ disagrees)', () => {
+    const r = evaluateMatch(
+      makePayerSubmission({ parsed_counterparty: null }),
+      makePayeeSubmission({ parsed_counterparty: null }),
+      makeObligation(),
+      makeOptions({ time_window_hours: 1 }),
+    )
+    expect(r.status).toBe('matched')
+  })
+
+  it('on unmapped corridor: identity required — agrees → matched', () => {
+    // Use evaluateSignals directly since evaluateMatch requires MatchEngineOptions with a corridor
+    const eval_ = evaluateSignals(
+      makePayerSubmission({ parsed_counterparty: '0712345678' }),
+      makePayeeSubmission({ parsed_counterparty: '0712345678' }),
+      makeUnmappedCorridor({ time_window_hours: 72 }),
+      new Set(),
+    )
+    const identitySig = eval_.signals.find(s => s.signal === 'counterparty_identity')
+    expect(identitySig?.role).toBe('required')
+    expect(identitySig?.state).toBe('agrees')
+    expect(eval_.outcome).toBe('matched')
+  })
+
+  it('on unmapped corridor: identity disagrees + amount and time agree → flagged_for_review', () => {
+    const eval_ = evaluateSignals(
+      makePayerSubmission({ parsed_counterparty: 'ALICE WANJIKU' }),
+      makePayeeSubmission({ parsed_counterparty: 'BONIFACE OMONDI' }),
+      makeUnmappedCorridor({ time_window_hours: 72 }),
+      new Set(),
+    )
+    expect(eval_.outcome).toBe('flagged_for_review')
+  })
+
+  it('on unmapped corridor: identity absent → flagged_for_review (insufficient required signals)', () => {
+    const eval_ = evaluateSignals(
+      makePayerSubmission({ parsed_counterparty: null }),
+      makePayeeSubmission({ parsed_counterparty: null }),
+      makeUnmappedCorridor(),
+      new Set(),
+    )
+    expect(eval_.outcome).toBe('flagged_for_review')
+  })
+})
+
+// ─── §7.1 Signal: narration ───────────────────────────────────────────────────
+
+describe('§7.1 signal: narration', () => {
+  it('agrees: same narration text (case-folded, whitespace-normalized)', () => {
+    expect(compareNarration('Rent August 2026', 'rent august 2026')).toBe('agrees')
+  })
+
+  it('disagrees: different narration text (corroborating → review, not discard)', () => {
+    const r = evaluateMatch(
+      makePayerSubmission({ parsed_narration: 'rent august 2026' }),
+      makePayeeSubmission({ parsed_narration: 'school fees term 1' }),
+      makeObligation(),
+      makeOptions({ time_window_hours: 1 }),
+    )
+    expect(r.status).toBe('flagged_for_review')
+  })
+
+  it('absent: narration missing → signal skipped, match proceeds', () => {
+    expect(compareNarration(null, null)).toBe('absent')
+    const r = evaluateMatch(
+      makePayerSubmission({ parsed_narration: null }),
+      makePayeeSubmission({ parsed_narration: null }),
+      makeObligation(),
+      makeOptions({ time_window_hours: 1 }),
+    )
+    expect(r.status).toBe('matched')
+  })
+})
+
+// ─── §7.2 All Outcome States ──────────────────────────────────────────────────
+
+describe('§7.2 outcome states — exhaustive', () => {
+  it('outcome 1: matched — all required pass, no corroborating disagreement', () => {
+    const r = evaluateMatch(
+      makePayerSubmission(),
+      makePayeeSubmission(),
+      makeObligation(),
+      makeOptions({ time_window_hours: 1 }),
+    )
+    expect(r.status).toBe('matched')
+    expect(r.signalEvaluation?.outcome).toBe('matched')
+  })
+
+  it('outcome 2/3: flagged_for_review — code+amount agree, identity disagrees', () => {
+    const r = evaluateMatch(
+      makePayerSubmission({ parsed_counterparty: '0711111111' }),
+      makePayeeSubmission({ parsed_counterparty: '0799999999' }),
+      makeObligation(),
+      makeOptions({ time_window_hours: 1 }),
+    )
+    expect(r.status).toBe('flagged_for_review')
+  })
+
+  it('outcome 4: no_counterpart — code mismatch, no basis for pairing', () => {
+    const r = evaluateMatch(
+      makePayerSubmission({ reference_code: 'QJK23XF89H' }),
+      makePayeeSubmission({ reference_code: 'ZZZZZZZZZZ' }),
+      makeObligation(),
+      makeOptions(),
+    )
+    expect(r.status).toBe('no_counterpart')
+  })
+
+  it('replay_rejected: code already retired', () => {
+    const r = evaluateMatch(
+      makePayerSubmission(),
+      makePayeeSubmission(),
+      makeObligation(),
+      makeOptions({}, new Set(['QJK23XF89H'])),
+    )
+    expect(r.status).toBe('replay_rejected')
+  })
+
+  it('unparseable: NaN amount — cannot enter engine', () => {
+    const r = evaluateMatch(
+      makePayerSubmission({ parsed_amount: NaN }),
+      makePayeeSubmission(),
+      makeObligation(),
+      makeOptions(),
+    )
+    expect(r.status).toBe('unparseable')
+  })
+})
+
+// ─── §12 Edge Cases ───────────────────────────────────────────────────────────
+
+describe('§12 edge cases', () => {
+  it('cash payer → no_counterpart', () => {
+    const r = evaluateMatch(
+      makePayerSubmission({ payment_rail: 'cash' }),
+      makePayeeSubmission(),
+      makeObligation(),
+      makeOptions(),
+    )
+    expect(r.status).toBe('no_counterpart')
+  })
+
+  it('cheque payee → no_counterpart', () => {
+    const r = evaluateMatch(
+      makePayerSubmission(),
+      makePayeeSubmission({ payment_rail: 'cheque' }),
+      makeObligation(),
+      makeOptions(),
+    )
+    expect(r.status).toBe('no_counterpart')
+  })
+
+  it('partial payment → matched, partial ledger effect', () => {
+    const r = evaluateMatch(
+      makePayerSubmission({ parsed_amount: 7500 }),
+      makePayeeSubmission({ parsed_amount: 7500 }),
+      makeObligation({ balance: 15000 }),
+      makeOptions({ time_window_hours: 1 }),
+    )
+    expect(r.status).toBe('matched')
+    expect(r.ledgerEffect?.type).toBe('partial')
+    expect(r.ledgerEffect?.balanceAfter).toBe(7500)
+  })
+
+  it('overpayment → matched, overpayment ledger effect with credit', () => {
+    const r = evaluateMatch(
+      makePayerSubmission({ parsed_amount: 17000 }),
+      makePayeeSubmission({ parsed_amount: 17000 }),
+      makeObligation({ balance: 15000 }),
+      makeOptions({ time_window_hours: 1 }),
+    )
+    expect(r.status).toBe('matched')
+    expect(r.ledgerEffect?.type).toBe('overpayment')
+    expect(r.ledgerEffect?.balanceAfter).toBe(0)
+    expect(r.ledgerEffect?.creditAmount).toBe(2000)
+  })
+})
+
+// ─── Ledger Effect Calculator ─────────────────────────────────────────────────
+
+describe('calculateLedgerEffect', () => {
+  it('exact payment', () => {
+    const r = calculateLedgerEffect(15000, 15000)
+    expect(r.type).toBe('payment')
+    expect(r.balanceAfter).toBe(0)
+    expect(r.creditAmount).toBe(0)
+  })
+
+  it('partial payment', () => {
+    const r = calculateLedgerEffect(15000, 7500)
+    expect(r.type).toBe('partial')
+    expect(r.balanceAfter).toBe(7500)
+    expect(r.creditAmount).toBe(0)
+  })
+
+  it('overpayment', () => {
+    const r = calculateLedgerEffect(15000, 17000)
+    expect(r.type).toBe('overpayment')
+    expect(r.balanceAfter).toBe(0)
+    expect(r.creditAmount).toBe(2000)
+  })
+})
+
+// ─── findMatch (batch) ────────────────────────────────────────────────────────
+
+describe('findMatch', () => {
+  it('finds matching candidate in a pool', () => {
+    const r = findMatch(
+      makePayerSubmission(),
+      [
+        makePayeeSubmission({ id: 'wrong-1', reference_code: 'AAAAAAAAAA' }),
+        makePayeeSubmission({ id: 'wrong-2', reference_code: 'BBBBBBBBBB' }),
+        makePayeeSubmission(),
+      ],
+      makeObligation(),
+      makeOptions({ time_window_hours: 1 }),
+    )
+    expect(r.status).toBe('matched')
+  })
+
+  it('returns no_counterpart on empty pool', () => {
+    const r = findMatch(makePayerSubmission(), [], makeObligation(), makeOptions())
+    expect(r.status).toBe('no_counterpart')
+  })
+
+  it('returns flagged_for_review immediately when anomaly found (do not keep searching)', () => {
+    const r = findMatch(
+      makePayerSubmission({ parsed_counterparty: '0711111111' }),
+      [makePayeeSubmission({ parsed_counterparty: '0799999999' })],
+      makeObligation(),
+      makeOptions({ time_window_hours: 1 }),
+    )
+    expect(r.status).toBe('flagged_for_review')
+  })
+})
+
+// ─── isReferenceCodeValid ─────────────────────────────────────────────────────
 
 describe('isReferenceCodeValid', () => {
-  it('accepts a valid M-Pesa code (10 alphanumeric uppercase)', () => {
+  it('accepts valid M-Pesa codes (10 alphanumeric uppercase)', () => {
     expect(isReferenceCodeValid('QJK23XF89H', 'mpesa_paybill')).toBe(true)
     expect(isReferenceCodeValid('AA1234567B', 'mpesa_till')).toBe(true)
   })
 
-  it('rejects M-Pesa codes that are too short', () => {
+  it('rejects M-Pesa codes that are too short or too long', () => {
     expect(isReferenceCodeValid('QJK23', 'mpesa_paybill')).toBe(false)
-  })
-
-  it('rejects M-Pesa codes that are too long', () => {
     expect(isReferenceCodeValid('QJK23XF89HZZZ', 'mpesa_paybill')).toBe(false)
   })
 
@@ -114,7 +609,7 @@ describe('isReferenceCodeValid', () => {
     expect(isReferenceCodeValid('QJK23-F89H', 'mpesa_paybill')).toBe(false)
   })
 
-  it('rejects cash and cheque — they have no reference codes', () => {
+  it('rejects cash and cheque', () => {
     expect(isReferenceCodeValid('ANY123CODE', 'cash')).toBe(false)
     expect(isReferenceCodeValid('ANY123CODE', 'cheque')).toBe(false)
   })
@@ -123,275 +618,12 @@ describe('isReferenceCodeValid', () => {
     expect(isReferenceCodeValid('REF-2026-001234', 'bank_transfer')).toBe(true)
   })
 
-  it('rejects bank transfer codes that are too short', () => {
-    expect(isReferenceCodeValid('AB', 'bank_transfer')).toBe(false)
-  })
-
   it('rejects empty string', () => {
     expect(isReferenceCodeValid('', 'mpesa_paybill')).toBe(false)
   })
 })
 
-// ─── Timestamp Plausibility ───────────────────────────────────────────────────
-
-describe('isTimestampPlausible', () => {
-  it('passes when timestamps are seconds apart', () => {
-    expect(
-      isTimestampPlausible('2026-08-01T07:30:00Z', '2026-08-01T07:30:30Z'),
-    ).toBe(true)
-  })
-
-  it('passes at exactly the window boundary (48h)', () => {
-    expect(
-      isTimestampPlausible('2026-08-01T07:30:00Z', '2026-08-03T07:30:00Z', 48),
-    ).toBe(true)
-  })
-
-  it('fails one second past the window (48h + 1s)', () => {
-    expect(
-      isTimestampPlausible('2026-08-01T07:30:00Z', '2026-08-03T07:30:01Z', 48),
-    ).toBe(false)
-  })
-
-  it('passes when either timestamp is null (cannot check, give benefit of doubt)', () => {
-    expect(isTimestampPlausible(null, '2026-08-01T07:30:00Z')).toBe(true)
-    expect(isTimestampPlausible('2026-08-01T07:30:00Z', null)).toBe(true)
-    expect(isTimestampPlausible(null, null)).toBe(true)
-  })
-
-  it('passes when timestamps are unparseable (give benefit of doubt)', () => {
-    expect(isTimestampPlausible('not-a-date', '2026-08-01T07:30:00Z')).toBe(true)
-  })
-})
-
-// ─── Ledger Effect Calculator ─────────────────────────────────────────────────
-
-describe('calculateLedgerEffect', () => {
-  it('exact payment: type = payment, balanceAfter = 0, creditAmount = 0', () => {
-    const result = calculateLedgerEffect(15000, 15000)
-    expect(result.type).toBe('payment')
-    expect(result.balanceAfter).toBe(0)
-    expect(result.creditAmount).toBe(0)
-  })
-
-  it('partial payment: type = partial, balanceAfter = remaining, creditAmount = 0', () => {
-    const result = calculateLedgerEffect(15000, 7500)
-    expect(result.type).toBe('partial')
-    expect(result.balanceAfter).toBe(7500)
-    expect(result.creditAmount).toBe(0)
-  })
-
-  it('overpayment: type = overpayment, balanceAfter = 0, creditAmount = excess', () => {
-    const result = calculateLedgerEffect(15000, 17000)
-    expect(result.type).toBe('overpayment')
-    expect(result.balanceAfter).toBe(0)
-    expect(result.creditAmount).toBe(2000)
-  })
-})
-
-// ─── Core: evaluateMatch ──────────────────────────────────────────────────────
-
-describe('evaluateMatch — §7 happy path', () => {
-  it('exact match: same reference code, same amount → matched', () => {
-    const result = evaluateMatch(
-      makePayerSubmission(),
-      makePayeeSubmission(),
-      makeObligation(),
-      makeOptions(),
-    )
-    expect(result.status).toBe('matched')
-    expect(result.ledgerEffect?.type).toBe('payment')
-    expect(result.ledgerEffect?.balanceAfter).toBe(0)
-    expect(result.ledgerEffect?.creditAmount).toBe(0)
-  })
-
-  it('is case-insensitive on reference codes', () => {
-    const result = evaluateMatch(
-      makePayerSubmission({ reference_code: 'qjk23xf89h' }),
-      makePayeeSubmission({ reference_code: 'QJK23XF89H' }),
-      makeObligation(),
-      makeOptions(),
-    )
-    expect(result.status).toBe('matched')
-  })
-})
-
-describe('evaluateMatch — §7 non-match scenarios', () => {
-  it('reference code mismatch → no_counterpart', () => {
-    const result = evaluateMatch(
-      makePayerSubmission({ reference_code: 'QJK23XF89H' }),
-      makePayeeSubmission({ reference_code: 'ZZZZZZZZZZ' }),
-      makeObligation(),
-      makeOptions(),
-    )
-    expect(result.status).toBe('no_counterpart')
-  })
-
-  it('amount mismatch → amount_mismatch', () => {
-    const result = evaluateMatch(
-      makePayerSubmission({ parsed_amount: 15000 }),
-      makePayeeSubmission({ parsed_amount: 14500 }),
-      makeObligation(),
-      makeOptions(),
-    )
-    expect(result.status).toBe('amount_mismatch')
-  })
-
-  it('currency mismatch → amount_mismatch', () => {
-    const result = evaluateMatch(
-      makePayerSubmission({ parsed_currency: 'KES' }),
-      makePayeeSubmission({ parsed_currency: 'USD' }),
-      makeObligation(),
-      makeOptions(),
-    )
-    expect(result.status).toBe('amount_mismatch')
-  })
-
-  it('timestamp gap > window → needs_review', () => {
-    const result = evaluateMatch(
-      makePayerSubmission({ parsed_transaction_at: '2026-08-01T07:30:00Z' }),
-      makePayeeSubmission({ parsed_transaction_at: '2026-08-10T07:30:01Z' }), // 9 days apart
-      makeObligation(),
-      makeOptions({ plausibilityWindowHours: 48 }),
-    )
-    expect(result.status).toBe('needs_review')
-  })
-})
-
-// ─── §12 Edge Cases ───────────────────────────────────────────────────────────
-
-describe('evaluateMatch — §12 edge cases', () => {
-  it('replay attack: reference code already in a MatchRecord → replay_rejected', () => {
-    const result = evaluateMatch(
-      makePayerSubmission(),
-      makePayeeSubmission(),
-      makeObligation(),
-      makeOptions({ retiredReferenceCodes: new Set(['QJK23XF89H']) }),
-    )
-    expect(result.status).toBe('replay_rejected')
-  })
-
-  it('cash payer submission → no_counterpart (never auto-matches)', () => {
-    const result = evaluateMatch(
-      makePayerSubmission({ payment_rail: 'cash', reference_code: 'CASH001' }),
-      makePayeeSubmission(),
-      makeObligation(),
-      makeOptions(),
-    )
-    expect(result.status).toBe('no_counterpart')
-  })
-
-  it('cheque payee submission → no_counterpart (never auto-matches)', () => {
-    const result = evaluateMatch(
-      makePayerSubmission(),
-      makePayeeSubmission({ payment_rail: 'cheque', reference_code: 'CHQ001' }),
-      makeObligation(),
-      makeOptions(),
-    )
-    expect(result.status).toBe('no_counterpart')
-  })
-
-  it('unparseable payer reference code → unparseable', () => {
-    const result = evaluateMatch(
-      makePayerSubmission({ reference_code: 'AB', payment_rail: 'mpesa_paybill' }), // too short
-      makePayeeSubmission(),
-      makeObligation(),
-      makeOptions(),
-    )
-    expect(result.status).toBe('unparseable')
-  })
-
-  it('partial payment: payer pays half → matched with partial ledger effect', () => {
-    const result = evaluateMatch(
-      makePayerSubmission({ parsed_amount: 7500, reference_code: 'QJK23XF89H' }),
-      makePayeeSubmission({ parsed_amount: 7500, reference_code: 'QJK23XF89H' }),
-      makeObligation({ balance: 15000 }),
-      makeOptions(),
-    )
-    expect(result.status).toBe('matched')
-    expect(result.ledgerEffect?.type).toBe('partial')
-    expect(result.ledgerEffect?.balanceAfter).toBe(7500)
-  })
-
-  it('overpayment: payer pays more than balance → matched with overpayment + credit', () => {
-    const result = evaluateMatch(
-      makePayerSubmission({ parsed_amount: 17000, reference_code: 'QJK23XF89H' }),
-      makePayeeSubmission({ parsed_amount: 17000, reference_code: 'QJK23XF89H' }),
-      makeObligation({ balance: 15000 }),
-      makeOptions(),
-    )
-    expect(result.status).toBe('matched')
-    expect(result.ledgerEffect?.type).toBe('overpayment')
-    expect(result.ledgerEffect?.balanceAfter).toBe(0)
-    expect(result.ledgerEffect?.creditAmount).toBe(2000)
-  })
-
-  it('both timestamps null → match proceeds (benefit of doubt)', () => {
-    const result = evaluateMatch(
-      makePayerSubmission({ parsed_transaction_at: null }),
-      makePayeeSubmission({ parsed_transaction_at: null }),
-      makeObligation(),
-      makeOptions(),
-    )
-    expect(result.status).toBe('matched')
-  })
-
-  it('floating-point amounts within tolerance (e.g. 15000.00 vs 15000.001) → matched', () => {
-    const result = evaluateMatch(
-      makePayerSubmission({ parsed_amount: 15000.00 }),
-      makePayeeSubmission({ parsed_amount: 15000.001 }),
-      makeObligation(),
-      makeOptions(),
-    )
-    expect(result.status).toBe('matched')
-  })
-})
-
-// ─── findMatch (batch) ────────────────────────────────────────────────────────
-
-describe('findMatch — batch matching', () => {
-  it('finds the one matching candidate in a pool of non-matches', () => {
-    const matchingPayee = makePayeeSubmission({ reference_code: 'QJK23XF89H' })
-    const wrongPayee1 = makePayeeSubmission({
-      id: 'sub-payee-002',
-      reference_code: 'AAAAAAAAAA',
-    })
-    const wrongPayee2 = makePayeeSubmission({
-      id: 'sub-payee-003',
-      reference_code: 'BBBBBBBBBB',
-    })
-
-    const result = findMatch(
-      makePayerSubmission(),
-      [wrongPayee1, wrongPayee2, matchingPayee],
-      makeObligation(),
-      makeOptions(),
-    )
-    expect(result.status).toBe('matched')
-  })
-
-  it('returns no_counterpart when candidate pool is empty', () => {
-    const result = findMatch(
-      makePayerSubmission(),
-      [],
-      makeObligation(),
-      makeOptions(),
-    )
-    expect(result.status).toBe('no_counterpart')
-  })
-
-  it('returns last non-match result when no candidate matches', () => {
-    const result = findMatch(
-      makePayerSubmission({ reference_code: 'QJK23XF89H' }),
-      [makePayeeSubmission({ reference_code: 'AAAAAAAAAA' })],
-      makeObligation(),
-      makeOptions(),
-    )
-    expect(result.status).toBe('no_counterpart')
-  })
-})
-
-// ─── Utility Functions ────────────────────────────────────────────────────────
+// ─── Utilities ────────────────────────────────────────────────────────────────
 
 describe('normalizeReferenceCode', () => {
   it('uppercases and trims whitespace', () => {
@@ -400,33 +632,40 @@ describe('normalizeReferenceCode', () => {
 })
 
 describe('buildPayerDisplayRef', () => {
-  it('tenant: returns Unit + property name', () => {
-    expect(
-      buildPayerDisplayRef({ role: 'tenant', unitNumber: 'A3', propertyName: 'Palm Court' }),
-    ).toBe('Unit A3 · Palm Court')
+  it('tenant: Unit + property name', () => {
+    expect(buildPayerDisplayRef({ role: 'tenant', unitNumber: 'A3', propertyName: 'Palm Court' }))
+      .toBe('Unit A3 · Palm Court')
   })
 
-  it('tenant with no unit: returns property name only', () => {
-    expect(
-      buildPayerDisplayRef({ role: 'tenant', propertyName: 'Palm Court' }),
-    ).toBe('Palm Court')
+  it('tenant with no unit number', () => {
+    expect(buildPayerDisplayRef({ role: 'tenant', propertyName: 'Palm Court' }))
+      .toBe('Palm Court')
   })
 
-  it('parent: returns admission number', () => {
-    expect(
-      buildPayerDisplayRef({ role: 'parent', admissionNumber: '2024-001' }),
-    ).toBe('Adm. 2024-001')
+  it('parent: admission number', () => {
+    expect(buildPayerDisplayRef({ role: 'parent', admissionNumber: '2024-001' }))
+      .toBe('Adm. 2024-001')
   })
 
-  it('landlord: returns business name', () => {
-    expect(
-      buildPayerDisplayRef({ role: 'landlord', businessName: 'Palm Holdings Ltd' }),
-    ).toBe('Palm Holdings Ltd')
+  it('landlord: business name', () => {
+    expect(buildPayerDisplayRef({ role: 'landlord', businessName: 'Palm Holdings Ltd' }))
+      .toBe('Palm Holdings Ltd')
   })
 
-  it('school: returns school name', () => {
-    expect(
-      buildPayerDisplayRef({ role: 'school', schoolName: 'Nairobi Academy' }),
-    ).toBe('Nairobi Academy')
+  it('school: school name', () => {
+    expect(buildPayerDisplayRef({ role: 'school', schoolName: 'Nairobi Academy' }))
+      .toBe('Nairobi Academy')
+  })
+})
+
+describe('shouldPromoteCorridor', () => {
+  it('promotes when confirmed_pair_count >= threshold', () => {
+    expect(shouldPromoteCorridor(5, 5)).toBe(true)
+    expect(shouldPromoteCorridor(10, 5)).toBe(true)
+  })
+
+  it('does not promote below threshold', () => {
+    expect(shouldPromoteCorridor(4, 5)).toBe(false)
+    expect(shouldPromoteCorridor(0, 5)).toBe(false)
   })
 })

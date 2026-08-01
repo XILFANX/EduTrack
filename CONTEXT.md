@@ -36,9 +36,9 @@ To issue a new task, simply paste it into the `Request` block below and prompt t
 
 ## Request
 
-"Update documentation (data model and public user guides) to reflect the new Payment Settlement Reconciliation Engine (blind verification flow and new schemas)."
+"Payment Settlement Reconciliation Engine — Full Replacement Spec. EstateTrack (rent) & EduTrack (school fees) — including provider subscription billing. Full replacement of existing payment and subscription billing module across both repos in parallel. Two-independent-witness model. Triage (§1) + portal audit (§14) required before any code."
 
-_Status: Step 1 - Planning_
+_Status: Step 2 — Context Building (codebase analysis in progress)_
 ---
 
 ## Step 0 — Fast Path

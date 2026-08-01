@@ -20,6 +20,8 @@ interface PayeeSubmissionInput {
   parsedAmount: number
   parsedCurrency: string
   parsedTransactionAt: string | null
+  parsedCounterparty?: string | null
+  parsedNarration?: string | null
   paymentRail: PaymentRail
 }
 
@@ -59,6 +61,8 @@ export async function submitPayeeVerification(input: PayeeSubmissionInput) {
       parsed_amount: input.parsedAmount,
       parsed_currency: input.parsedCurrency,
       parsed_transaction_at: input.parsedTransactionAt,
+      parsed_counterparty: input.parsedCounterparty ?? null,
+      parsed_narration: input.parsedNarration ?? null,
       payment_rail: input.paymentRail,
       source: 'manual',
       status: 'unmatched',

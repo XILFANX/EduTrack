@@ -1,16 +1,19 @@
 'use server'
 
 /**
- * EduTrack — Payer Submission Action
+ * EstateTrack — Payer Submission Action
  *
- * Used by PARENTS (fee_term) and SCHOOLS/BURSARS (edutrack_subscription).
- * Same two-witness model as EstateTrack — obligation_id carried on payer side only.
+ * Used by TENANTS (rent_period) and LANDLORDS (estatetrack_subscription).
+ * The payer submits their own transaction message/code, tagged to an obligation.
+ *
+ * BLINDNESS RULE: this action posts nothing visible to the payee.
+ * The payee is only sent a generic nudge (no amount/name/unit revealed).
  */
 
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { revalidatePath } from 'next/cache'
-import { normalizeReferenceCode, isReferenceCodeValid } from '@edutrack/shared/payments/engine'
+import { normalizeReferenceCode, isReferenceCodeValid, buildPayerDisplayRef } from '@edutrack/shared/payments/engine'
 import type { PaymentRail } from '@edutrack/shared/payments/types'
 import { dispatchNotification } from './notifications'
 import { runMatchingEngine } from './match-engine'
@@ -22,6 +25,10 @@ interface PayerSubmissionInput {
   parsedAmount: number
   parsedCurrency: string
   parsedTransactionAt: string | null
+  /** Counterparty as it appears in the user's message (name or phone) */
+  parsedCounterparty?: string | null
+  /** Narration / reference text from the message */
+  parsedNarration?: string | null
   paymentRail: PaymentRail
 }
 
@@ -32,10 +39,16 @@ export async function submitPayerPayment(input: PayerSubmissionInput) {
 
   const admin = createAdminClient() as any
 
-  // Verify obligation belongs to this payer
+  // ── Validate the obligation belongs to this payer ──────────────────────────
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('landlord_id, role')
+    .eq('id', user.id)
+    .single()
+
   const { data: obligation, error: oblErr } = await admin
     .from('obligations')
-    .select('id, type, payer_account_id, payer_role, payee_account_id, balance, status, currency')
+    .select('id, type, payer_account_id, payer_role, payee_account_id, payee_role, balance, status, currency')
     .eq('id', input.obligationId)
     .single()
 
@@ -43,23 +56,24 @@ export async function submitPayerPayment(input: PayerSubmissionInput) {
   if (obligation.status === 'settled') return { error: 'This obligation is already fully settled.' }
   if (obligation.status === 'cancelled') return { error: 'This obligation has been cancelled.' }
 
-  // For fee_term: payer_account_id = parent user id (= auth.uid())
-  // For edutrack_subscription: payer_account_id = school id (check via users.school_id)
-  const isParentPayer = obligation.payer_role === 'parent' && obligation.payer_account_id === user.id
-  const isSchoolPayer = obligation.payer_role === 'school' && (
-    await admin.from('users').select('school_id').eq('id', user.id).single()
-  ).data?.school_id === obligation.payer_account_id
+  // Verify the caller is the payer for this obligation
+  const isLandlordPayer =
+    obligation.payer_role === 'landlord' && obligation.payer_account_id === profile?.landlord_id
+  const isTenantPayer =
+    obligation.payer_role === 'tenant' &&
+    (await admin.from('tenants').select('id').eq('id', obligation.payer_account_id).eq('profile_id', user.id).single()).data !== null
 
-  if (!isParentPayer && !isSchoolPayer) {
+  if (!isLandlordPayer && !isTenantPayer) {
     return { error: 'You are not the payer for this obligation.' }
   }
 
-  // Validate reference code
+  // ── Validate reference code ────────────────────────────────────────────────
   if (input.paymentRail !== 'cash' && input.paymentRail !== 'cheque') {
     const normalized = normalizeReferenceCode(input.referenceCode)
     if (!isReferenceCodeValid(normalized, input.paymentRail)) {
       return { error: `Invalid reference code format for ${input.paymentRail}. Please check and re-enter.` }
     }
+    // Replay check: code already used in a MatchRecord?
     const { data: existingMatch } = await admin
       .from('submissions')
       .select('id')
@@ -69,22 +83,48 @@ export async function submitPayerPayment(input: PayerSubmissionInput) {
       .single()
 
     if (existingMatch) {
-      return { error: 'This reference code has already been recorded. If you believe this is an error, please contact the school bursar.' }
+      return { error: 'This reference code has already been recorded. If you believe this is an error, please contact support.' }
     }
   }
 
-  // Create Submission
+  // ── Build payer_display_ref based on obligation payer role (§3 spec) ─────────
+  let payerDisplayRef: string | null = null
+  if (obligation.payer_role === 'tenant') {
+    const { data: tenantUnit } = await admin
+      .from('tenants')
+      .select('units ( unit_number, properties ( name ) )')
+      .eq('id', obligation.payer_account_id)
+      .single()
+    const unit = (tenantUnit?.units as any)
+    payerDisplayRef = buildPayerDisplayRef({
+      role: 'tenant',
+      unitNumber: unit?.unit_number,
+      propertyName: unit?.properties?.name,
+    })
+  } else if (obligation.payer_role === 'landlord') {
+    const { data: landlord } = await admin
+      .from('landlords')
+      .select('name')
+      .eq('id', obligation.payer_account_id)
+      .single()
+    payerDisplayRef = buildPayerDisplayRef({ role: 'landlord', businessName: landlord?.name })
+  }
+
+  // ── Create the Submission ──────────────────────────────────────────────────
   const { data: submission, error: subErr } = await admin
     .from('submissions')
     .insert({
-      obligation_id: input.obligationId,
+      obligation_id: input.obligationId,        // payer side carries the obligation
       submitter_role: 'payer',
       submitter_id: user.id,
+      payer_display_ref: payerDisplayRef,
       raw_message: input.rawMessage,
       reference_code: normalizeReferenceCode(input.referenceCode),
       parsed_amount: input.parsedAmount,
       parsed_currency: input.parsedCurrency || obligation.currency,
       parsed_transaction_at: input.parsedTransactionAt,
+      parsed_counterparty: input.parsedCounterparty ?? null,
+      parsed_narration: input.parsedNarration ?? null,
       payment_rail: input.paymentRail,
       source: 'manual',
       status: 'unmatched',
@@ -92,28 +132,32 @@ export async function submitPayerPayment(input: PayerSubmissionInput) {
     .select('id')
     .single()
 
-  if (subErr || !submission) return { error: 'Failed to record your submission. Please try again.' }
+  if (subErr || !submission) {
+    return { error: 'Failed to record your submission. Please try again.' }
+  }
 
-  // Notify payer only — blind
+  // ── Notify payer: "Submitted — awaiting verification" ─────────────────────
   await dispatchNotification({
     event: 'payer_submission_received',
     recipientIds: [user.id],
-    blind: true,
+    blind: true,   // No payee info in this notification
     obligationId: input.obligationId,
     submissionId: submission.id,
-    data: { status: 'Submitted — awaiting bursar verification' },
+    data: { status: 'Submitted — awaiting verification' },
   })
 
-  // Trigger auto-match
+  // ── Attempt auto-match immediately ────────────────────────────────────────
   await runMatchingEngine({ newSubmissionId: submission.id, obligationId: input.obligationId })
 
-  revalidatePath('/parent/payments')
+  revalidatePath('/tenant/payments')
   revalidatePath('/billing')
 
   return { success: true, submissionId: submission.id }
 }
 
 // ── Cash/Cheque: manual confirmation path ─────────────────────────────────────
+// Cash/cheque bypass the auto-match engine entirely.
+// Creates a Submission that waits for explicit payee confirmation.
 
 interface CashPaymentInput {
   obligationId: string
@@ -136,29 +180,30 @@ export async function submitCashPayment(input: CashPaymentInput) {
       obligation_id: input.obligationId,
       submitter_role: 'payer',
       submitter_id: user.id,
-      raw_message: input.notes ? `${input.method} note: ${input.notes}` : null,
+      raw_message: input.notes ? `Cash/cheque payment note: ${input.notes}` : null,
       reference_code: `CASH_${input.obligationId.slice(0, 8).toUpperCase()}_${Date.now()}`,
       parsed_amount: input.amount,
       parsed_currency: input.currency,
       parsed_transaction_at: new Date().toISOString(),
       payment_rail: input.method,
       source: 'manual',
-      status: 'unmatched',
+      status: 'unmatched',   // Waits for payee to confirm — never auto-matches
     })
     .select('id')
     .single()
 
   if (subErr || !submission) return { error: 'Failed to record payment.' }
 
+  // Notify payer
   await dispatchNotification({
     event: 'payer_submission_received',
     recipientIds: [user.id],
     blind: true,
     obligationId: input.obligationId,
     submissionId: submission.id,
-    data: { status: 'Cash/cheque submitted — awaiting bursar confirmation' },
+    data: { status: 'Cash/cheque submitted — awaiting bursar/landlord confirmation' },
   })
 
-  revalidatePath('/parent/payments')
+  revalidatePath('/tenant/payments')
   return { success: true, submissionId: submission.id }
 }

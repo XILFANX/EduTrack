@@ -85,8 +85,11 @@ export function ParentDashboardClient({ childrenList, recentPayments }: { childr
           <p className="text-cyan-50 font-medium mb-1 relative z-10">Current Fee Balance</p>
           <h3 className="text-3xl font-bold text-white relative z-10">KES 12,500</h3>
           
-          <Button className="w-full mt-6 bg-white hover:bg-slate-50 text-cyan-700 font-bold rounded-xl shadow-sm relative z-10">
-            Pay via M-Pesa STK
+          <Button 
+            className="w-full mt-6 bg-white hover:bg-slate-50 text-cyan-700 font-bold rounded-xl shadow-sm relative z-10"
+            onClick={() => window.location.href = '/parent/payments'}
+          >
+            Report Payment
           </Button>
         </div>
 

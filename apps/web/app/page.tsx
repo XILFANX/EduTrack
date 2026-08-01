@@ -175,7 +175,7 @@ function HeroSection() {
 // ─── Features ─────────────────────────────────────────────────────────────────
 function FeaturesSection() {
   const features = [
-    { icon: Receipt, title: 'Automated Fee Engine', description: 'Trigger M-Pesa STK pushes. Generate invoices, track arrears, and automate reconciliations for the Bursar.' },
+    { icon: Receipt, title: 'Automated Fee Engine', description: 'Blindly reconcile offline payments. Generate invoices, track arrears, and automate ledgers for the Bursar.' },
     { icon: BookOpen, title: 'Academics & Grades', description: 'Spreadsheet-style gradebook for teachers. Track termly exams, continuous assessments, and generate reports.' },
     { icon: Users, title: 'Attendance Tracking', description: 'Lightning-fast daily registers. Teachers can mark attendance in seconds, parents are instantly in the loop.' },
     { icon: Megaphone, title: 'Unified Communications', description: 'Secure direct messaging between parents and teachers, plus global announcements from the Principal.' },

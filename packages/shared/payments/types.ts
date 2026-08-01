@@ -100,6 +100,15 @@ export interface Submission {
   obligation_id: string | null  // Required on payer-side; null on payee-side (blindness rule)
   submitter_role: SubmitterRole
   submitter_id: string          // profile_id / user_id
+  /**
+   * Composed payer identifier per role (§3 spec):
+   *   tenant  → unit_property_number  (e.g. "A3·PalmCourt")
+   *   parent  → student_admission_number
+   *   landlord (as subscription payer) → property_name / business_name
+   *   school  → school_name
+   * Stored on the submission so matching never requires a join to infer identity.
+   */
+  payer_display_ref: string | null
   /** The raw text the user pasted (SMS, app notification, etc.) */
   raw_message: string | null
   /** Parsed from raw_message or entered directly */
@@ -108,6 +117,14 @@ export interface Submission {
   parsed_currency: string
   /** ISO timestamp of the transaction as stated in the message */
   parsed_transaction_at: string | null
+  /** Counterparty name or number as it appears in the message (used for identity signal) */
+  parsed_counterparty: string | null
+  /** Narration/reference text if present in the message */
+  parsed_narration: string | null
+  /** In-transit fee amount if present in the message */
+  parsed_fee: number | null
+  /** Balance-after if present in the message */
+  parsed_balance_after: number | null
   payment_rail: PaymentRail
   source: SubmissionSource
   status: SubmissionStatus
@@ -120,9 +137,11 @@ export interface Submission {
 // ─── MatchRecord ──────────────────────────────────────────────────────────────
 
 export type MatchMethod =
-  | 'auto_code_match'    // reference_code exact match, amount exact match
-  | 'manual_override'    // Admin or payee forced a match
-  | 'legacy_import'      // Synthetic match created during data migration
+  | 'exact_code'           // reference_code exact match + amount
+  | 'transform_pattern'    // Corridor-defined code transformation + amount
+  | 'unmapped_fallback'    // Amount + time-window + identity (no code)
+  | 'manual_override'      // Admin or payee forced a match
+  | 'legacy_import'        // Synthetic match created during data migration
 
 export interface MatchRecord {
   id: string
@@ -132,6 +151,14 @@ export interface MatchRecord {
   matched_amount: number
   currency: string
   match_method: MatchMethod
+  /** Which corridor was resolved for this match */
+  corridor_id: string | null
+  /** Per-signal audit: signals that passed (agreed) */
+  signals_passed: string[] | null
+  /** Per-signal audit: signals absent or unparseable on one/both sides */
+  signals_absent: string[] | null
+  /** Per-signal audit: corroborating signals that actively disagreed (triggered flag) */
+  signals_disagreed: string[] | null
   /** Required if match_method = 'manual_override' */
   override_reason: string | null
   /** profile_id of the person who triggered the override, if any */
@@ -170,11 +197,20 @@ export type DisputeStatus =
   | 'resolved_no_match'   // Resolved by determining no match exists
   | 'resolved_credit'     // Resolved with a credit entry
 
+export type DisputeOrigin =
+  | 'timeout'        // No candidate found after 5d/7d timeout (§8)
+  | 'flagged_pair'   // Candidate found but a required/corroborating signal disagreed (§7.2 outcomes 2+3)
+  | 'legacy_import'  // Unresolvable during migration import
+
 export interface DisputeCase {
   id: string
   obligation_id: string
   payer_submission_id: string | null
   payee_submission_id: string | null
+  /** Distinguishes how this dispute was opened — different UX and notification copy per §8 */
+  origin: DisputeOrigin
+  /** Snapshot of the PayeeRailProfile at the time of dispute — immutable, not affected by later rail updates */
+  rail_profile_snapshot: Record<string, unknown> | null
   status: DisputeStatus
   resolution_notes: string | null
   resolved_by: string | null         // profile_id
@@ -201,15 +237,80 @@ export interface CaretakerAssignment {
   revoked_at: string | null     // Null = currently active
 }
 
+// ─── Corridor ─────────────────────────────────────────────────────────────────
+
+export type CorridorMatchStrategy =
+  | 'exact'             // Code is shared verbatim by both parties — exact string match
+  | 'transform_pattern' // A known transformation maps one side's code to the other
+  | 'unmapped'          // No code relationship known — rely on amount + time + identity
+
+export interface Corridor {
+  id: string
+  payer_rail: PaymentRail
+  payee_rail: PaymentRail
+  match_strategy: CorridorMatchStrategy
+  /** Only set when match_strategy = 'transform_pattern' */
+  transformation_fn: string | null  // Serialised as a named function key, applied in engine
+  /** Number of manually confirmed pairs on this corridor (feeds promotion logic) */
+  confirmed_pair_count: number
+  /** How many confirmed pairs needed to promote unmapped → transform_pattern (Q4: 5) */
+  promotion_threshold: number
+  /**
+   * Corridor-specific time window overrides (hours).
+   * Null = use the strategy default from spec: exact=0.5, transform=24, unmapped=72
+   */
+  time_window_hours: number | null
+  /**
+   * Amount tolerance for in-transit fees (as a fraction, e.g. 0.01 = 1%).
+   * Only set after explicit evidence (§7.4) — never defaulted.
+   */
+  amount_tolerance_fraction: number | null
+  created_at: string
+  updated_at: string
+}
+
+// ─── Signal Evaluation ────────────────────────────────────────────────────────
+
+export type SignalName =
+  | 'reference_code'
+  | 'amount'
+  | 'currency'
+  | 'time_window'
+  | 'counterparty_identity'
+  | 'narration'
+
+export type SignalState =
+  | 'agrees'           // Signal is present on both sides and matches
+  | 'disagrees'        // Signal is present on both sides and does not match
+  | 'absent'           // Signal is missing or unparseable on one or both sides
+
+export type SignalRole =
+  | 'required'         // Failure blocks the match on this corridor
+  | 'eligibility_gate' // Narrows candidates; does not match by itself
+  | 'corroborating'    // Supplements required signals; disagreement triggers review
+
+export interface SignalResult {
+  signal: SignalName
+  role: SignalRole
+  state: SignalState
+  detail: string  // Human-readable explanation for logging / dispute notes
+}
+
+export interface SignalEvaluation {
+  signals: SignalResult[]
+  outcome: MatchResultStatus
+  reason: string
+}
+
 // ─── Matching Engine Types ────────────────────────────────────────────────────
 
 export type MatchResultStatus =
-  | 'matched'           // Perfect match — create MatchRecord + LedgerEntry
-  | 'amount_mismatch'   // Same code, different amount — do NOT auto-match
-  | 'replay_rejected'   // Reference code already used in an existing MatchRecord
-  | 'needs_review'      // Time gap between messages is implausibly large
-  | 'no_counterpart'    // No opposite-side submission with this reference code
-  | 'unparseable'       // Reference code failed format validation for this rail
+  | 'matched'            // §7.2 outcome 1: all required signals pass, no corroborating disagreement
+  | 'flagged_for_review' // §7.2 outcomes 2+3: plausible pair but a signal disagrees — open DisputeCase immediately
+  | 'amount_mismatch'    // Code agreed but amounts differ (anomaly — §7.1 amount rule)
+  | 'replay_rejected'    // Reference code already used in an existing MatchRecord
+  | 'no_counterpart'     // §7.2 outcome 4/5: pairing discarded or no candidate found
+  | 'unparseable'        // Amount missing — cannot enter auto-match engine at all (§3)
 
 export interface MatchCandidate {
   payer: Submission
@@ -219,6 +320,10 @@ export interface MatchCandidate {
 export interface MatchResult {
   status: MatchResultStatus
   candidate: MatchCandidate | null
+  /** Signal-by-signal evaluation for auditability */
+  signalEvaluation?: SignalEvaluation
+  /** Which corridor was used */
+  corridorId?: string
   /** Only present when status = 'matched' */
   ledgerEffect?: {
     type: LedgerEntryType
@@ -233,7 +338,7 @@ export interface MatchResult {
 
 export interface MatchEngineOptions {
   retiredReferenceCodes: Set<string>
-  plausibilityWindowHours?: number
+  corridor: Corridor
 }
 
 // ─── Notification Events ──────────────────────────────────────────────────────
