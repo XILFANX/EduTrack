@@ -60,9 +60,9 @@ function detectProvider(text: string): { rail: PaymentRail; provider: string | n
   // M-Pesa (Safaricom)
   if (t.includes('m-pesa') || t.includes('mpesa') || t.includes('safaricom')) {
     if (t.includes('buy goods') || t.includes('till number')) {
-      return { rail: 'mpesa_till', provider: 'M-Pesa (Buy Goods)' }
+      return { rail: 'mobile_money', provider: 'M-Pesa (Buy Goods)' }
     }
-    return { rail: 'mpesa_paybill', provider: 'M-Pesa' }
+    return { rail: 'mobile_money', provider: 'M-Pesa' }
   }
   // Airtel Money
   if (t.includes('airtel money') || t.includes('airtel')) {

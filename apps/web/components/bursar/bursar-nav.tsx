@@ -6,11 +6,11 @@ import { Home, Receipt, BookOpen, Settings, MessageSquare, Banknote, CheckCircle
 
 const NAV_ITEMS = [
   { label: 'Dashboard', href: '/bursar/dashboard', icon: Home },
-  { label: 'Verify Payments', href: '/bursar/payments', icon: CheckCircle2 },
+  { label: 'Fees', href: '/bursar/payments', icon: CheckCircle2 },
   { label: 'Invoices', href: '/bursar/invoices', icon: Receipt },
   { label: 'Fee Structures', href: '/bursar/fee-structures', icon: BookOpen },
   { label: 'Messages', href: '/bursar/messages', icon: MessageSquare },
-  { label: 'Pay Subscription', href: '/bursar/billing', icon: Banknote },
+  { label: 'Subscription', href: '/bursar/billing', icon: Banknote },
   { label: 'Settings', href: '/bursar/settings', icon: Settings },
 ]
 

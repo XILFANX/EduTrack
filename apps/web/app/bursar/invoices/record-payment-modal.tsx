@@ -20,8 +20,7 @@ import { ShieldCheck, EyeOff, CheckCircle2, Loader2, Plus, Trash2, AlertTriangle
 import type { PaymentRail } from '@edutrack/shared/payments/types'
 
 const RAILS: { value: PaymentRail; label: string }[] = [
-  { value: 'mpesa_paybill', label: '📱 M-Pesa Paybill' },
-  { value: 'mpesa_till', label: '📱 M-Pesa Till' },
+  { value: 'mobile_money', label: '📱 Mobile Money' },
   { value: 'bank_transfer', label: '🏦 Bank Transfer' },
   { value: 'cash', label: '💵 Cash' },
   { value: 'cheque', label: '📋 Cheque' },
@@ -45,7 +44,7 @@ function makeRow(): SubmissionRow {
     parsedAmount: '',
     parsedCurrency: 'KES',
     parsedTransactionAt: '',
-    paymentRail: 'mpesa_paybill',
+    paymentRail: 'mobile_money',
   }
 }
 

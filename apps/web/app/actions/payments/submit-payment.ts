@@ -41,9 +41,11 @@ export async function submitPayerPayment(input: PayerSubmissionInput) {
   const admin = createAdminClient() as any
 
   // ── Validate the obligation belongs to this payer ──────────────────────────
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('landlord_id, role')
+  // EduTrack uses the 'users' table (not 'profiles').
+  // Payer roles in EduTrack are: 'parent' (fee_term) and 'school' (edutrack_subscription).
+  const { data: userProfile } = await supabase
+    .from('users')
+    .select('school_id, role')
     .eq('id', user.id)
     .single()
 
@@ -57,14 +59,15 @@ export async function submitPayerPayment(input: PayerSubmissionInput) {
   if (obligation.status === 'settled') return { error: 'This obligation is already fully settled.' }
   if (obligation.status === 'cancelled') return { error: 'This obligation has been cancelled.' }
 
-  // Verify the caller is the payer for this obligation
-  const isLandlordPayer =
-    obligation.payer_role === 'landlord' && obligation.payer_account_id === profile?.landlord_id
-  const isTenantPayer =
-    obligation.payer_role === 'tenant' &&
-    (await admin.from('tenants').select('id').eq('id', obligation.payer_account_id).eq('profile_id', user.id).single()).data !== null
+  // EduTrack payer validation:
+  //   - Parent pays fee_term obligations → payer_account_id = user.id (auth UID)
+  //   - School (bursar) pays edutrack_subscription → payer_account_id = school_id from users table
+  const isParentPayer =
+    obligation.payer_role === 'parent' && obligation.payer_account_id === user.id
+  const isSchoolPayer =
+    obligation.payer_role === 'school' && obligation.payer_account_id === userProfile?.school_id
 
-  if (!isLandlordPayer && !isTenantPayer) {
+  if (!isParentPayer && !isSchoolPayer) {
     return { error: 'You are not the payer for this obligation.' }
   }
 
@@ -90,25 +93,21 @@ export async function submitPayerPayment(input: PayerSubmissionInput) {
 
   // ── Build payer_display_ref based on obligation payer role (§3 spec) ─────────
   let payerDisplayRef: string | null = null
-  if (obligation.payer_role === 'tenant') {
-    const { data: tenantUnit } = await admin
-      .from('tenants')
-      .select('units ( unit_number, properties ( name ) )')
+  if (obligation.payer_role === 'parent') {
+    // Parent: use student admission reference if available, else user.id
+    const { data: parentUser } = await admin
+      .from('users')
+      .select('full_name')
       .eq('id', obligation.payer_account_id)
       .single()
-    const unit = (tenantUnit?.units as any)
-    payerDisplayRef = buildPayerDisplayRef({
-      role: 'tenant',
-      unitNumber: unit?.unit_number,
-      propertyName: unit?.properties?.name,
-    })
-  } else if (obligation.payer_role === 'landlord') {
-    const { data: landlord } = await admin
-      .from('landlords')
+    payerDisplayRef = buildPayerDisplayRef({ role: 'parent', businessName: parentUser?.full_name })
+  } else if (obligation.payer_role === 'school') {
+    const { data: school } = await admin
+      .from('schools')
       .select('name')
       .eq('id', obligation.payer_account_id)
       .single()
-    payerDisplayRef = buildPayerDisplayRef({ role: 'landlord', businessName: landlord?.name })
+    payerDisplayRef = buildPayerDisplayRef({ role: 'school', businessName: school?.name })
   }
 
   // ── Create the Submission ──────────────────────────────────────────────────
@@ -151,8 +150,8 @@ export async function submitPayerPayment(input: PayerSubmissionInput) {
   // ── Attempt auto-match immediately ────────────────────────────────────────
   await runMatchingEngine({ newSubmissionId: submission.id, obligationId: input.obligationId })
 
-  revalidatePath('/tenant/payments')
-  revalidatePath('/billing')
+  revalidatePath('/parent/payments')
+  revalidatePath('/bursar/billing')
 
   return { success: true, submissionId: submission.id }
 }

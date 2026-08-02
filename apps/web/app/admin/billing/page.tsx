@@ -23,7 +23,7 @@ export default async function AdminBillingPage() {
       <div>
         <h1 className="text-2xl font-black text-slate-800 dark:text-slate-100 flex items-center gap-2">
           <CheckCircle2 className="w-6 h-6 text-blue-600 dark:text-blue-500" />
-          Verify Subscriptions
+          Verify Subscription Payments
         </h1>
         <p className="text-sm text-slate-500 mt-1">
           Reconcile incoming platform subscription payments from schools.
@@ -31,10 +31,10 @@ export default async function AdminBillingPage() {
       </div>
 
       <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[2rem] overflow-hidden">
-        {/* We reuse the VerifyClient but tell it this is for subscriptions if it supported that via prop. 
-            Currently, verify-client is tied to payee logic. We will render the existing one for now. */}
-        <VerifyPaymentPage />
+        {/* VerifyPaymentPage accepts title & ledgerHref props for context-awareness */}
+        <VerifyPaymentPage title="Verify Subscription Payment" ledgerHref="/admin/billing" />
       </div>
     </div>
   )
 }
+

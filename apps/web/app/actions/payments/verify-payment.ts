@@ -39,8 +39,8 @@ export async function submitPayeeVerification(input: PayeeSubmissionInput) {
     .eq('id', user.id)
     .single()
 
-  if (!profile || !['bursar', 'school_admin', 'platform_owner'].includes(profile.role)) {
-    return { error: 'Only bursars can submit payment verifications.' }
+  if (!profile || !['bursar', 'school_admin', 'platform_owner', 'admin', 'superadmin'].includes(profile.role)) {
+    return { error: 'Only bursars and platform admins can submit payment verifications.' }
   }
 
   if (input.paymentRail !== 'cash' && input.paymentRail !== 'cheque') {

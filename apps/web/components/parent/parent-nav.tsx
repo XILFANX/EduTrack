@@ -6,7 +6,7 @@ import { Home, Receipt, BookOpen, MessageSquare } from 'lucide-react'
 
 const NAV_ITEMS = [
   { label: 'Dashboard', href: '/parent/dashboard', icon: Home },
-  { label: 'Post Payment', href: '/parent/payments', icon: Receipt },
+  { label: 'Fees', href: '/parent/payments', icon: Receipt },
   { label: 'Academics', href: '/parent/academics', icon: BookOpen },
   { label: 'Messages', href: '/parent/messages', icon: MessageSquare },
 ]

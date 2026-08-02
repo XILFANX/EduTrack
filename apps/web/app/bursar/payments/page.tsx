@@ -1,16 +1,14 @@
 'use client'
 
 /**
- * EduTrack — Bursar: Verify Payment (Blind Payee Submission)
+ * EduTrack — Verify Fees Payment (Blind Payee Submission)
  *
- * Replaces the old RecordPaymentModal which let bursars enter
- * payments on parents' behalf (claim-and-confirm model).
+ * Context-aware via title prop:
+ *   - Bursar: "Verify Fees Payment"
+ *   - Platform Admin: "Verify Subscription Payment"
  *
- * NEW MODEL:
- *   - Bursar pastes what they RECEIVED (SMS/bank alert)
- *   - Never shown any pending payer claims — blindness enforced
- *   - Engine matches automatically; result shown without payer identity
- *   - Cash/cheque: shown in a separate "Pending Cash" list to confirm
+ * Submit phases: Submit → Verifying... → Payment Verified → Recording... → done
+ * Transaction Details card shown after auto-parse.
  */
 
 import { useState } from 'react'
@@ -22,13 +20,12 @@ import { Input } from '@/components/ui/input'
 import type { PaymentRail } from '@edutrack/shared/payments/types'
 import { parseTransactionMessage } from '@/lib/utils/payment-parser'
 
-const RAILS: { value: PaymentRail; label: string; placeholder: string }[] = [
-  { value: 'mobile_money', label: '📱 Mobile Money', placeholder: 'e.g. QJK23XF89H' },
-  { value: 'mpesa_paybill', label: '📱 M-Pesa Paybill', placeholder: 'e.g. QJK23XF89H' },
-  { value: 'mpesa_till', label: '📱 M-Pesa Buy Goods', placeholder: 'e.g. QJK23XF89H' },
-  { value: 'bank_transfer', label: '🏦 Bank Transfer', placeholder: 'e.g. REF2026001234' },
-  { value: 'cash', label: '💵 Cash', placeholder: '' },
-  { value: 'cheque', label: '📋 Cheque', placeholder: '' },
+const RAILS: { value: PaymentRail; label: string }[] = [
+  { value: 'mobile_money', label: '📱 Mobile Money' },
+  { value: 'bank_transfer', label: '🏦 Bank Transfer' },
+  { value: 'crypto', label: '₿ Crypto' },
+  { value: 'cash', label: '💵 Cash' },
+  { value: 'cheque', label: '📋 Cheque' },
 ]
 
 interface SubmissionRow {
@@ -54,16 +51,23 @@ function makeRow(): SubmissionRow {
     parsedFee: '',
     parsedCurrency: 'KES',
     parsedTransactionAt: '',
-    paymentRail: 'mobile_money',
     parsedCounterparty: '',
     parsedSelfIdentity: '',
     detectedProvider: '',
+    paymentRail: 'mobile_money',
   }
 }
 
-export default function VerifyPaymentPage() {
+type SubmitPhase = 'idle' | 'verifying' | 'verified' | 'recording' | 'done'
+
+interface Props {
+  title?: string
+  ledgerHref?: string
+}
+
+export default function VerifyPaymentPage({ title = 'Verify Fees Payment', ledgerHref = '/bursar/ledger' }: Props) {
   const [rows, setRows] = useState<SubmissionRow[]>([makeRow()])
-  const [loading, setLoading] = useState(false)
+  const [phase, setPhase] = useState<SubmitPhase>('idle')
   const [result, setResult] = useState<{ submitted: number; matched: number; errors: string[] } | null>(null)
   const [showRaw, setShowRaw] = useState<Record<string, boolean>>({})
 
@@ -79,7 +83,6 @@ export default function VerifyPaymentPage() {
     setRows((prev) => (prev.length > 1 ? prev.filter((r) => r.id !== id) : prev))
   }
 
-  // Auto-parse SMS using shared parser (§7.0)
   function parseMessage(raw: string, rowId: string) {
     setRows(current => current.map(row => {
       if (row.id !== rowId) return row
@@ -101,8 +104,8 @@ export default function VerifyPaymentPage() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    setLoading(true)
     setResult(null)
+    setPhase('verifying')
 
     const inputs = rows
       .filter((r) => r.referenceCode.trim() || r.rawMessage.trim())
@@ -113,37 +116,48 @@ export default function VerifyPaymentPage() {
         parsedFee: r.parsedFee ? parseFloat(r.parsedFee) : null,
         parsedCurrency: r.parsedCurrency,
         parsedTransactionAt: r.parsedTransactionAt || null,
+        parsedCounterparty: r.parsedCounterparty || null,
+        parsedSelfIdentity: r.parsedSelfIdentity || null,
         paymentRail: r.paymentRail,
       }))
 
+    await new Promise(r => setTimeout(r, 700))
+    setPhase('verified')
+    await new Promise(r => setTimeout(r, 800))
+    setPhase('recording')
+
     const res = rows.length === 1
       ? await submitPayeeVerification(inputs[0])
-        .then((r) => ({
-          submitted: r.success ? 1 : 0,
-          matched: r.matched ? 1 : 0,
-          errors: r.error ? [r.error] : [],
-        }))
+          .then((r) => ({
+            submitted: r.success ? 1 : 0,
+            matched: r.matched ? 1 : 0,
+            errors: r.error ? [r.error] : [],
+          }))
       : await submitBatchPayeeVerification(inputs)
 
-    setLoading(false)
+    setPhase('done')
     setResult(res)
   }
 
-  if (result) {
+  if (phase === 'done' && result) {
     return (
       <div className="max-w-lg mx-auto px-4 py-16 text-center space-y-4">
-        <div className={`w-20 h-20 rounded-full flex items-center justify-center mx-auto ${result.matched > 0 ? 'bg-orange-100 dark:bg-orange-900/30' : 'bg-orange-100 dark:bg-orange-900/30'}`}>
-          <CheckCircle2 className={`w-10 h-10 ${result.matched > 0 ? 'text-orange-600' : 'text-orange-600'}`} />
+        <div className={`w-20 h-20 rounded-full flex items-center justify-center mx-auto ${result.errors.length > 0 ? 'bg-orange-100 dark:bg-orange-900/30' : 'bg-blue-100 dark:bg-blue-900/30'}`}>
+          {result.errors.length > 0
+            ? <AlertCircle className="w-10 h-10 text-orange-500" />
+            : <CheckCircle2 className="w-10 h-10 text-blue-600" />}
         </div>
         <h2 className="text-xl font-bold text-foreground">
-          {result.submitted} submitted · {result.matched} auto-matched
+          {result.matched > 0
+            ? `${result.matched} Payment${result.matched > 1 ? 's' : ''} Recorded to Ledger`
+            : 'Submission Received'}
         </h2>
         <p className="text-sm text-muted-foreground">
           {result.matched === result.submitted
-            ? 'All verified payments matched and posted to the ledger.'
+            ? 'All payments matched and successfully recorded to the ledger.'
             : result.matched > 0
-            ? 'Some payments matched. Unmatched ones are in the pool awaiting payer submissions.'
-            : 'Submissions recorded. They will auto-match when parents post their side.'}
+            ? 'Some payments matched. Unmatched ones will auto-match when the payer posts their side.'
+            : 'Your submission is in the pool. It will auto-match when the parent submits their transaction.'}
         </p>
         {result.errors.length > 0 && (
           <div className="bg-orange-50 dark:bg-orange-950/30 border border-orange-200 rounded-xl p-3 text-left space-y-1">
@@ -153,10 +167,10 @@ export default function VerifyPaymentPage() {
           </div>
         )}
         <div className="flex gap-3 justify-center pt-2">
-          <Button variant="outline" onClick={() => { setResult(null); setRows([makeRow()]) }}>
+          <Button variant="outline" onClick={() => { setResult(null); setRows([makeRow()]); setPhase('idle') }}>
             Submit more
           </Button>
-          <Button className="bg-blue-600 hover:bg-blue-700" onClick={() => window.location.href = '/bursar/ledger'}>
+          <Button className="bg-blue-600 hover:bg-blue-700" onClick={() => window.location.href = ledgerHref}>
             View Ledger
           </Button>
         </div>
@@ -165,28 +179,20 @@ export default function VerifyPaymentPage() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-6 space-y-6 pb-24">
-      {/* Header */}
+    <div className="max-w-2xl mx-auto px-4 py-6 space-y-6">
       <div>
         <div className="flex items-center gap-2 mb-1">
           <ShieldCheck className="w-5 h-5 text-blue-600" />
-          <h1 className="text-xl font-bold text-foreground">Verify Payment</h1>
+          <h1 className="text-xl font-bold text-foreground">{title}</h1>
         </div>
         <p className="text-sm text-muted-foreground">
-          Paste what you received from your bank or M-Pesa. Do not look up students/parents — just paste the message.
+          Paste the exact confirmation message you received from your bank or payment provider. The system will automatically extract the details and record it to the ledger.
         </p>
-        {/* Blindness notice */}
-        <div className="mt-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl px-4 py-3 flex gap-3 items-start">
-          <EyeOff className="w-4 h-4 text-blue-600 mt-0.5 shrink-0" />
-          <p className="text-xs text-blue-700 dark:text-blue-300">
-            <strong>Blind verification:</strong> You will not see any parent claims or notifications. Just submit what you received — the system matches independently.
-          </p>
-        </div>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         {rows.map((row, idx) => (
-          <div key={row.id} className="bg-card border border-border rounded-2xl p-4 space-y-4 relative">
+          <div key={row.id} className="bg-card border border-border rounded-2xl p-4 space-y-4">
             {rows.length > 1 && (
               <div className="flex items-center justify-between mb-1">
                 <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Entry {idx + 1}</span>
@@ -196,15 +202,11 @@ export default function VerifyPaymentPage() {
               </div>
             )}
 
-            {/* Raw message paste area */}
-            <div className="space-y-1.5">
+            <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <Label htmlFor={`raw-${row.id}`}>Transaction Message (paste SMS or app notification)</Label>
-                <button
-                  type="button"
-                  onClick={() => setShowRaw((s) => ({ ...s, [row.id]: !s[row.id] }))}
-                  className="text-xs text-muted-foreground flex items-center gap-1"
-                >
+                <button type="button" onClick={() => setShowRaw((s) => ({ ...s, [row.id]: !s[row.id] }))}
+                  className="text-xs text-muted-foreground flex items-center gap-1 hover:text-foreground">
                   {showRaw[row.id] ? <EyeOff className="w-3 h-3" /> : <Eye className="w-3 h-3" />}
                   {showRaw[row.id] ? 'Hide' : 'Show'}
                 </button>
@@ -214,87 +216,77 @@ export default function VerifyPaymentPage() {
                 rows={3}
                 className="w-full bg-muted border border-border rounded-xl px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-500/40 font-mono"
                 placeholder="e.g. QJK23XF89H Confirmed. Ksh 15,000.00 received from 0712 345 678 on 1/8/26 at 10:30 AM."
-                value={showRaw[row.id] ? row.rawMessage : row.rawMessage ? '● '.repeat(6) + ' (hidden)' : ''}
+                value={showRaw[row.id] ? row.rawMessage : (row.rawMessage ? '●●●●●● (tap Show to edit)' : '')}
                 onChange={(e) => parseMessage(e.target.value, row.id)}
                 onFocus={() => setShowRaw((s) => ({ ...s, [row.id]: true }))}
               />
+
               {row.rawMessage && (
-                <p className="text-xs text-orange-600 dark:text-orange-400">
-                  Auto-parsed: code <span className="font-mono font-bold">{row.referenceCode || '—'}</span> · amount <strong>{row.parsedAmount || '—'}</strong>
-                </p>
+                <div className="bg-blue-500/5 border border-blue-500/20 rounded-xl p-3 space-y-2">
+                  <p className="text-xs font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-wide">Transaction Details</p>
+                  <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-xs">
+                    {row.detectedProvider && <><span className="text-muted-foreground">Provider</span><span className="font-medium text-foreground">{row.detectedProvider}</span></>}
+                    {row.referenceCode && <><span className="text-muted-foreground">Reference</span><span className="font-mono font-bold text-foreground">{row.referenceCode}</span></>}
+                    {row.parsedAmount && <><span className="text-muted-foreground">Amount</span><span className="font-semibold text-foreground">{row.parsedCurrency} {parseFloat(row.parsedAmount).toLocaleString()}</span></>}
+                    {row.parsedFee && <><span className="text-muted-foreground">Transaction Fee</span><span className="text-foreground">{row.parsedCurrency} {parseFloat(row.parsedFee).toLocaleString()}</span></>}
+                    {row.parsedTransactionAt && <><span className="text-muted-foreground">Date / Time</span><span className="text-foreground">{row.parsedTransactionAt}</span></>}
+                    {row.parsedCounterparty && <><span className="text-muted-foreground">From</span><span className="italic text-foreground">{row.parsedCounterparty}</span></>}
+                    {row.parsedSelfIdentity && <><span className="text-muted-foreground">To Account</span><span className="italic text-foreground">{row.parsedSelfIdentity}</span></>}
+                  </div>
+                </div>
               )}
             </div>
 
-            {/* Manual entry (if paste didn't parse) */}
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-1.5">
                 <Label htmlFor={`ref-${row.id}`}>Reference Code *</Label>
-                <Input
-                  id={`ref-${row.id}`}
-                  className="font-mono uppercase"
-                  placeholder="QJK23XF89H"
+                <Input id={`ref-${row.id}`} className="font-mono uppercase" placeholder="QJK23XF89H"
                   value={row.referenceCode}
                   onChange={(e) => updateRow(row.id, { referenceCode: e.target.value.toUpperCase().trim() })}
-                  required={row.paymentRail !== 'cash' && row.paymentRail !== 'cheque'}
-                />
+                  required={row.paymentRail !== 'cash' && row.paymentRail !== 'cheque'} />
               </div>
               <div className="space-y-1.5">
-                <Label htmlFor={`amount-${row.id}`}>Amount Received (KES) *</Label>
-                <Input
-                  id={`amount-${row.id}`}
-                  type="number"
-                  placeholder="15000"
-                  value={row.parsedAmount}
-                  onChange={(e) => updateRow(row.id, { parsedAmount: e.target.value })}
-                  required
-                />
+                <Label htmlFor={`amount-${row.id}`}>Amount Received *</Label>
+                <Input id={`amount-${row.id}`} type="number" placeholder="15000" value={row.parsedAmount}
+                  onChange={(e) => updateRow(row.id, { parsedAmount: e.target.value })} required />
               </div>
             </div>
 
-            {/* Rail selector */}
             <div className="space-y-1.5">
               <Label>Payment Channel</Label>
               <div className="flex flex-wrap gap-2">
                 {RAILS.map((r) => (
-                  <button
-                    key={r.value}
-                    type="button"
-                    onClick={() => updateRow(row.id, { paymentRail: r.value })}
+                  <button key={r.value} type="button" onClick={() => updateRow(row.id, { paymentRail: r.value })}
                     className={`px-3 py-1.5 rounded-lg border text-xs font-medium transition-all ${
                       row.paymentRail === r.value
-                        ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300'
+                        ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/30 text-blue-700'
                         : 'border-border text-muted-foreground hover:border-blue-300'
-                    }`}
-                  >
+                    }`}>
                     {r.label}
                   </button>
                 ))}
               </div>
               {(row.paymentRail === 'cash' || row.paymentRail === 'cheque') && (
                 <p className="text-xs text-orange-600 dark:text-orange-400 mt-1">
-                  ⚠ Cash/cheque entries will not auto-match. They go to your Pending Cash list for you to confirm.
+                  ⚠ Cash/cheque payments won't auto-match. They go to your Pending Cash list for manual confirmation.
                 </p>
               )}
             </div>
           </div>
         ))}
 
-        {/* Add another */}
-        <button
-          type="button"
-          onClick={addRow}
-          className="w-full flex items-center justify-center gap-2 py-3 rounded-xl border-2 border-dashed border-border text-sm text-muted-foreground hover:border-blue-400 hover:text-blue-600 transition-all"
-        >
+        <button type="button" onClick={addRow}
+          className="w-full flex items-center justify-center gap-2 py-3 rounded-xl border-2 border-dashed border-border text-sm text-muted-foreground hover:border-blue-400 hover:text-blue-600 transition-all">
           <Plus className="w-4 h-4" />
           Add another transaction
         </button>
 
-        <Button type="submit" disabled={loading} className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-semibold">
-          {loading ? (
-            <span className="flex items-center gap-2"><Loader2 className="w-4 h-4 animate-spin" /> Submitting…</span>
-          ) : (
-            <span className="flex items-center gap-2"><ShieldCheck className="w-4 h-4" /> Submit Verification{rows.length > 1 ? `s (${rows.length})` : ''}</span>
-          )}
+        <Button type="submit" disabled={phase !== 'idle'}
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-semibold transition-all">
+          {phase === 'idle' && <span className="flex items-center gap-2"><ShieldCheck className="w-4 h-4" /> Submit{rows.length > 1 ? ' All' : ''}</span>}
+          {phase === 'verifying' && <span className="flex items-center gap-2"><Loader2 className="w-4 h-4 animate-spin" /> Verifying...</span>}
+          {phase === 'verified' && <span className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4" /> Payment Verified ✓</span>}
+          {phase === 'recording' && <span className="flex items-center gap-2"><Loader2 className="w-4 h-4 animate-spin" /> Recording to ledger...</span>}
         </Button>
       </form>
     </div>

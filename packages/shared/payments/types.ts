@@ -57,13 +57,12 @@ export type SubmitterRole = 'payer' | 'payee'
 // ─── PayeeRailProfile ─────────────────────────────────────────────────────────
 
 export type PaymentRail =
-  | 'mpesa_paybill'
-  | 'mpesa_till'
-  | 'mobile_money'    // ← agnostic: auto-detected provider stored separately
-  | 'bank_transfer'
-  | 'cash'
-  | 'cheque'
-  | 'other'
+  | 'mobile_money'    // Generic: M-Pesa, Airtel, MTN etc — auto-detected via parser
+  | 'bank_transfer'   // Bank wire / EFT
+  | 'crypto'          // Crypto wallet
+  | 'cash'            // Physical cash
+  | 'cheque'          // Cheque
+  | 'other'           // Fallback — manually specified
 
 export interface PayeeRailProfile {
   id: string

@@ -36,7 +36,7 @@ const MENU_SECTIONS = [
   {
     label: 'People',
     items: [
-      { href: '/dashboard/parents', label: 'Parents Directory', icon: HeartHandshake },
+      { href: '/dashboard/parents', label: 'Parents', icon: HeartHandshake },
       { href: '/dashboard/messages', label: 'Messages', icon: MessageSquare },
     ],
   },

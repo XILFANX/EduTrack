@@ -78,10 +78,10 @@ export function BursarDashboardClient({ stats, recentPayments }: { stats: any; r
       {/* Quick Actions */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {[
-          { label: 'Verify Payments', href: '/bursar/payments', icon: CheckCircle2, color: 'text-blue-600', bg: 'bg-blue-50 dark:bg-blue-900/20', border: 'border-blue-100 dark:border-blue-800/30' },
-          { label: 'Pay Subscription', href: '/bursar/billing', icon: Banknote, color: 'text-blue-600', bg: 'bg-blue-50 dark:bg-blue-900/20', border: 'border-blue-100 dark:border-blue-800/30' },
+          { label: 'Verify Fees', href: '/bursar/payments', icon: CheckCircle2, color: 'text-blue-600', bg: 'bg-blue-50 dark:bg-blue-900/20', border: 'border-blue-100 dark:border-blue-800/30' },
           { label: 'Defaulters List', href: '/bursar/invoices', icon: AlertTriangle, color: 'text-blue-600', bg: 'bg-blue-50 dark:bg-blue-900/20', border: 'border-blue-100 dark:border-blue-800/30' },
           { label: 'Fee Structures', href: '/bursar/fee-structures', icon: BarChart3, color: 'text-blue-600', bg: 'bg-blue-50 dark:bg-blue-900/20', border: 'border-blue-100 dark:border-blue-800/30' },
+          { label: 'Ledger', href: '/bursar/ledger', icon: Banknote, color: 'text-blue-600', bg: 'bg-blue-50 dark:bg-blue-900/20', border: 'border-blue-100 dark:border-blue-800/30' },
         ].map((action, i) => {
           const Icon = action.icon
           return (

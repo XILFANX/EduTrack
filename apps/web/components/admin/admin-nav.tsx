@@ -10,7 +10,7 @@ const NAV_ITEMS = [
   { href: '/admin/dashboard', label: 'Overview', Icon: LayoutDashboard },
   { href: '/admin/analytics', label: 'Analytics', Icon: BarChart3 },
   { href: '/admin/schools', label: 'Schools', Icon: Building2 },
-  { href: '/admin/billing', label: 'Verify Subs', Icon: CreditCard },
+  { href: '/admin/billing', label: 'Subscriptions', Icon: CreditCard },
   { href: '/admin/messages', label: 'Messages', Icon: MessageSquare },
   { href: '/admin/admins', label: 'Admins', Icon: ShieldCheck, rootOnly: true },
   { href: '/admin/optimization', label: 'Optimize', Icon: DatabaseZap, rootOnly: true },

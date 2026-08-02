@@ -52,8 +52,8 @@ function makeObligation(overrides: Partial<Obligation> = {}): Obligation {
 function makeExactCorridor(overrides: Partial<Corridor> = {}): Corridor {
   return {
     id: 'corr-mpesa-exact',
-    payer_rail: 'mpesa_paybill',
-    payee_rail: 'mpesa_paybill',
+    payer_rail: 'mobile_money',
+    payee_rail: 'mobile_money',
     match_strategy: 'exact',
     transformation_fn: null,
     confirmed_pair_count: 10,
@@ -70,7 +70,7 @@ function makeUnmappedCorridor(overrides: Partial<Corridor> = {}): Corridor {
   return {
     id: 'corr-unmapped',
     payer_rail: 'bank_transfer',
-    payee_rail: 'mpesa_paybill',
+    payee_rail: 'mobile_money',
     match_strategy: 'unmapped',
     transformation_fn: null,
     confirmed_pair_count: 0,
@@ -99,7 +99,7 @@ function makePayerSubmission(overrides: Partial<Submission> = {}): Submission {
     parsed_narration: 'rent august 2026',
     parsed_fee: null,
     parsed_balance_after: null,
-    payment_rail: 'mpesa_paybill',
+    payment_rail: 'mobile_money',
     source: 'manual',
     status: 'unmatched',
     created_at: '2026-08-01T07:31:00Z',
@@ -125,7 +125,7 @@ function makePayeeSubmission(overrides: Partial<Submission> = {}): Submission {
     parsed_narration: 'rent august 2026',
     parsed_fee: null,
     parsed_balance_after: null,
-    payment_rail: 'mpesa_paybill',
+    payment_rail: 'mobile_money',
     source: 'manual',
     status: 'unmatched',
     created_at: '2026-08-01T07:32:00Z',
@@ -596,17 +596,17 @@ describe('findMatch', () => {
 
 describe('isReferenceCodeValid', () => {
   it('accepts valid M-Pesa codes (10 alphanumeric uppercase)', () => {
-    expect(isReferenceCodeValid('QJK23XF89H', 'mpesa_paybill')).toBe(true)
-    expect(isReferenceCodeValid('AA1234567B', 'mpesa_till')).toBe(true)
+    expect(isReferenceCodeValid('QJK23XF89H', 'mobile_money')).toBe(true)
+    expect(isReferenceCodeValid('AA1234567B', 'mobile_money')).toBe(true)
   })
 
   it('rejects M-Pesa codes that are too short or too long', () => {
-    expect(isReferenceCodeValid('QJK23', 'mpesa_paybill')).toBe(false)
-    expect(isReferenceCodeValid('QJK23XF89HZZZ', 'mpesa_paybill')).toBe(false)
+    expect(isReferenceCodeValid('QJK23', 'mobile_money')).toBe(false)
+    expect(isReferenceCodeValid('QJK23XF89HZZZ', 'mobile_money')).toBe(false)
   })
 
   it('rejects M-Pesa codes with special characters', () => {
-    expect(isReferenceCodeValid('QJK23-F89H', 'mpesa_paybill')).toBe(false)
+    expect(isReferenceCodeValid('QJK23-F89H', 'mobile_money')).toBe(false)
   })
 
   it('rejects cash and cheque', () => {
@@ -619,7 +619,7 @@ describe('isReferenceCodeValid', () => {
   })
 
   it('rejects empty string', () => {
-    expect(isReferenceCodeValid('', 'mpesa_paybill')).toBe(false)
+    expect(isReferenceCodeValid('', 'mobile_money')).toBe(false)
   })
 })
 

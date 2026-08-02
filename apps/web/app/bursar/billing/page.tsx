@@ -29,7 +29,7 @@ export default async function BursarBillingPage() {
   const admin = createAdminClient() as any
 
   const { data: profile } = await (supabase as any)
-    .from('profiles')
+    .from('users')
     .select('school_id, role')
     .eq('id', user.id)
     .single()
