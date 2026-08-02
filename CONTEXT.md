@@ -343,6 +343,7 @@ Hold on every documentation edit, not just first-draft generation:
 
 | Date | Mission | Outcome |
 |---|---|---|
+| 2026-08-02 | UI Consistency, Navigation Overlaps, and Robust Parsing Enforcement — Standardized theme colors, fixed Nav overlap (hints vs quick access), unified PaymentRails to `mobile_money`, replaced M-Pesa till/paybill hardcoding, added missing Bursar/Landlord endpoints. | Shipped, pushed to `main` (EduTrack `abaa99a`, EstateTrack `9552e03`) |
 | 2026-08-01 | Payment Parsing & UI Consistency Enforcement — Rebuilt payment parser (M-Pesa/Bank detection, glued amounts KES453.81). Fixed portal navigation and Quick Actions (Verify Payments vs Record Payment). Ensured "Post Payment" form is accessible on zero balance. | Shipped, pushed to `main` |
 | 2026-08-01 | UI Consistency Enforcement (Blue/Purple Split & Orange Alerts) — Globally purged decorative colors and standardized EduTrack to strict blue theme. | Shipped, pushed to `main` (`ff8ac30`) |
 | 2026-08-01 | Portal Coverage Audit & Navigation Fixes (v4) — Fixed missing/hidden Verify Payment and Subscription UI endpoints across Tenant, Landlord, Parent, Bursar, and Admin portals. | Shipped, pushed to `main` |
