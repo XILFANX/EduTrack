@@ -111,9 +111,12 @@ export default async function ParentPaymentsPage() {
       )}
 
       {openList.length === 0 && historyList.length === 0 && (
-        <div className="text-center py-16 border border-dashed border-border rounded-2xl">
-          <Receipt className="w-8 h-8 text-muted-foreground/30 mx-auto mb-3" />
-          <p className="text-sm text-muted-foreground">No fee obligations found. Check back when your school generates the next term's fees.</p>
+        <div className="text-center py-16 border border-dashed border-border rounded-2xl bg-card">
+          <div className="w-12 h-12 rounded-full bg-blue-500/10 flex items-center justify-center mx-auto mb-3">
+            <AlertCircle className="w-6 h-6 text-blue-500" />
+          </div>
+          <p className="text-sm font-semibold text-foreground">No fee obligations found</p>
+          <p className="text-xs text-muted-foreground mt-1">Check back when your school generates the next term's fees, or contact the bursar if you need to make an advance payment.</p>
         </div>
       )}
 

@@ -18,7 +18,7 @@ import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import type { PaymentRail } from '@edutrack/shared/payments/types'
-import { parseTransactionMessage } from '@/lib/utils/payment-parser'
+import { parseTransactionMessage, formatParsedTimestamp } from '@/lib/utils/payment-parser'
 
 const RAILS: { value: PaymentRail; label: string }[] = [
   { value: 'mobile_money', label: '📱 Mobile Money' },
@@ -93,6 +93,7 @@ export default function VerifyPaymentPage({ title = 'Verify Fees Payment', ledge
         referenceCode: parsed.referenceCode || row.referenceCode,
         parsedAmount: parsed.parsedAmount ? parsed.parsedAmount.toString() : row.parsedAmount,
         parsedFee: parsed.parsedFee ? parsed.parsedFee.toString() : row.parsedFee,
+        parsedCurrency: parsed.parsedCurrency || row.parsedCurrency,
         parsedTransactionAt: parsed.parsedTransactionAt || row.parsedTransactionAt,
         paymentRail: parsed.paymentRail !== 'other' ? parsed.paymentRail : row.paymentRail,
         parsedCounterparty: parsed.parsedCounterparty || '',
@@ -121,12 +122,7 @@ export default function VerifyPaymentPage({ title = 'Verify Fees Payment', ledge
         paymentRail: r.paymentRail,
       }))
 
-    await new Promise(r => setTimeout(r, 700))
-    setPhase('verified')
-    await new Promise(r => setTimeout(r, 800))
-    setPhase('recording')
-
-    const res = rows.length === 1
+    const res = inputs.length === 1
       ? await submitPayeeVerification(inputs[0])
           .then((r) => ({
             submitted: r.success ? 1 : 0,
@@ -134,6 +130,13 @@ export default function VerifyPaymentPage({ title = 'Verify Fees Payment', ledge
             errors: r.error ? [r.error] : [],
           }))
       : await submitBatchPayeeVerification(inputs)
+
+    if (res.matched > 0) {
+      setPhase('verified')
+      await new Promise(r => setTimeout(r, 400))
+      setPhase('recording')
+      await new Promise(r => setTimeout(r, 400))
+    }
 
     setPhase('done')
     setResult(res)
@@ -229,7 +232,7 @@ export default function VerifyPaymentPage({ title = 'Verify Fees Payment', ledge
                     {row.referenceCode && <><span className="text-muted-foreground">Reference</span><span className="font-mono font-bold text-foreground">{row.referenceCode}</span></>}
                     {row.parsedAmount && <><span className="text-muted-foreground">Amount</span><span className="font-semibold text-foreground">{row.parsedCurrency} {parseFloat(row.parsedAmount).toLocaleString()}</span></>}
                     {row.parsedFee && <><span className="text-muted-foreground">Transaction Fee</span><span className="text-foreground">{row.parsedCurrency} {parseFloat(row.parsedFee).toLocaleString()}</span></>}
-                    {row.parsedTransactionAt && <><span className="text-muted-foreground">Date / Time</span><span className="text-foreground">{row.parsedTransactionAt}</span></>}
+                    {row.parsedTransactionAt && <><span className="text-muted-foreground">Date / Time</span><span className="text-foreground">{formatParsedTimestamp(row.parsedTransactionAt) || row.parsedTransactionAt}</span></>}
                     {row.parsedCounterparty && <><span className="text-muted-foreground">From</span><span className="italic text-foreground">{row.parsedCounterparty}</span></>}
                     {row.parsedSelfIdentity && <><span className="text-muted-foreground">To Account</span><span className="italic text-foreground">{row.parsedSelfIdentity}</span></>}
                   </div>

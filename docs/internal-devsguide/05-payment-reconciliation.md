@@ -136,3 +136,16 @@ This prevents the system from encoding a specific provider name in the UI while 
 
 `apps/web/app/api/cron/sweep-unmatched/route.ts` — marks payee-side submissions older than 30 days as `expired`. Should be scheduled in `vercel.json` or equivalent cron config at `0 3 * * *`.
 
+---
+
+## v5 Engine Updates (2026-08-02)
+
+### Dynamic Currency & Date Parsing
+The UI forms (`verify-client.tsx`, `post-payment-client.tsx`, `post-subscription-payment.tsx`) now display currency exactly as extracted from the raw message (`parsedCurrency`), eliminating hardcoded `KES` fallbacks. Date and time are formatted into human-readable strings via `formatParsedTimestamp()`, gracefully hiding fields if not present rather than showing `null`.
+
+### Real-Time Engine-Driven Validation UX
+The fake `setTimeout` simulation during payment submission (`Verifying... -> Recording...`) has been replaced by an event-driven flow that matches the actual backend API result. Submissions show true backend status.
+
+### Subscription Gating & Generic Payment UI
+Subscription payment interfaces (school and landlord billing) have been upgraded to use the generic payment posting flow. The transaction details card cleanly lists Provider, Reference Code, Amount, Transaction Fee, Date/Time, and Counterparty, matching standard parent/tenant flows.
+

@@ -18,6 +18,7 @@ import { Label } from '@/components/ui/label'
 import { submitPayeeVerification, submitBatchPayeeVerification } from '@/app/actions/payments/verify-payment'
 import { ShieldCheck, EyeOff, CheckCircle2, Loader2, Plus, Trash2, AlertTriangle } from 'lucide-react'
 import type { PaymentRail } from '@edutrack/shared/payments/types'
+import { parseTransactionMessage } from '@/lib/utils/payment-parser'
 
 const RAILS: { value: PaymentRail; label: string }[] = [
   { value: 'mobile_money', label: '📱 Mobile Money' },
@@ -80,20 +81,14 @@ export function VerifyPaymentModal({ open, onClose }: Props) {
     setRows((prev) => (prev.length > 1 ? prev.filter((r) => r.id !== id) : prev))
   }
 
-  // Auto-parse M-Pesa SMS
   function parseMessage(raw: string, rowId: string) {
-    const codeMatch = raw.match(/\b([A-Z0-9]{10})\b/)
-    const amountMatch = raw.match(/KES\s?([\d,]+(?:\.\d{1,2})?)/i)
-    const dateMatch = raw.match(/(\d{1,2}\/\d{1,2}\/\d{2,4})\s+at\s+(\d{1,2}:\d{2}\s*[AP]M)/i)
+    const parsed = parseTransactionMessage(raw)
     const patch: Partial<SubmissionRow> = { rawMessage: raw }
-    if (codeMatch) patch.referenceCode = codeMatch[1]
-    if (amountMatch) patch.parsedAmount = amountMatch[1].replace(/,/g, '')
-    if (dateMatch) {
-      try {
-        const d = new Date(`${dateMatch[1]} ${dateMatch[2]}`)
-        if (!isNaN(d.getTime())) patch.parsedTransactionAt = d.toISOString()
-      } catch {}
-    }
+    if (parsed.referenceCode) patch.referenceCode = parsed.referenceCode
+    if (parsed.parsedAmount) patch.parsedAmount = parsed.parsedAmount.toString()
+    if (parsed.parsedTransactionAt) patch.parsedTransactionAt = parsed.parsedTransactionAt
+    if (parsed.paymentRail && parsed.paymentRail !== 'other') patch.paymentRail = parsed.paymentRail
+    if (parsed.parsedCurrency) patch.parsedCurrency = parsed.parsedCurrency
     updateRow(rowId, patch)
   }
 

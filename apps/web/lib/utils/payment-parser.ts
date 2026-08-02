@@ -31,6 +31,23 @@ export interface ParsedTransaction {
   /** Human-readable provider auto-detected from message text (e.g., "M-Pesa", "Airtel Money") */
   detectedProvider: string | null
   isTimestampDeviceSourced: boolean
+  /** Detected currency prefix from message */
+  parsedCurrency: string | null
+}
+
+// ── Date formatting helper ──────────────────────────────────────────────────
+export function formatParsedTimestamp(isoStr: string | null | undefined): string | null {
+  if (!isoStr) return null
+  try {
+    const d = new Date(isoStr)
+    if (isNaN(d.getTime())) return null
+    return d.toLocaleString('en-KE', { 
+      day: 'numeric', month: 'short', year: 'numeric', 
+      hour: 'numeric', minute: '2-digit', hour12: true 
+    })
+  } catch {
+    return null
+  }
 }
 
 // ── Currency / amount helper ──────────────────────────────────────────────────
@@ -38,20 +55,28 @@ export interface ParsedTransaction {
 // The key fix: currency prefix is immediately followed (optional space) by the amount.
 // Uses non-capturing optional space so: `KES42000` and `KES 42,000` both work.
 
-function extractAmount(text: string): number | null {
+function extractAmount(text: string): { amount: number | null; currency: string | null } {
   // Priority 1: currency-prefixed amount (handles glued and spaced variants)
   const prefixed = text.match(
-    /(?:KES|Ksh|USD|UGX|TZS|NGN|GBP|ZAR|EUR|CAD|AUD|GHS|XOF|ETB|RWF|ZMW)\s*([\d,]+(?:\.[\d]{1,2})?)/i
+    /(\b(?:KES|Ksh|USD|UGX|TZS|NGN|GBP|ZAR|EUR|CAD|AUD|GHS|XOF|ETB|RWF|ZMW)\b)\s*([\d,]+(?:\.[\d]{1,2})?)/i
   )
-  if (prefixed) return parseFloat(prefixed[1].replace(/,/g, ''))
+  if (prefixed) {
+    const currency = prefixed[1].toUpperCase()
+    // Normalize Ksh to KES
+    const normalizedCurrency = currency === 'KSH' ? 'KES' : currency
+    return { 
+      amount: parseFloat(prefixed[2].replace(/,/g, '')), 
+      currency: normalizedCurrency 
+    }
+  }
 
   // Priority 2: bare decimal that looks like an amount (e.g., "453.81" in bank templates)
   const bare = text.match(/\b(\d{1,10}(?:,\d{3})*(?:\.\d{1,2})?)\b/)
   if (bare) {
     const n = parseFloat(bare[1].replace(/,/g, ''))
-    return n > 0 ? n : null
+    return { amount: n > 0 ? n : null, currency: null }
   }
-  return null
+  return { amount: null, currency: null }
 }
 
 // ── Provider detection ────────────────────────────────────────────────────────
@@ -171,6 +196,7 @@ export function parseTransactionMessage(raw: string): ParsedTransaction {
     paymentRail: 'other',
     detectedProvider: null,
     isTimestampDeviceSourced: false,
+    parsedCurrency: null,
   }
 
   if (!text) return result
@@ -222,8 +248,10 @@ export function parseTransactionMessage(raw: string): ParsedTransaction {
     result.parsedSelfIdentity = sentTo[1].trim()
   }
 
-  // 5. Amount — extract after identity parsing strips template verbs
-  result.parsedAmount = extractAmount(text)
+  // 5. Amount & Currency — extract after identity parsing strips template verbs
+  const { amount, currency } = extractAmount(text)
+  result.parsedAmount = amount
+  result.parsedCurrency = currency
 
   // 6. Timestamp
   const { ts, isDeviceSourced } = extractTimestamp(text)

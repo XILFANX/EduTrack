@@ -14,7 +14,7 @@ import { useState } from 'react'
 import { submitPayerPayment, submitCashPayment } from '@/app/actions/payments/submit-payment'
 import { Send, CheckCircle2, Loader2, CreditCard } from 'lucide-react'
 import type { PaymentRail } from '@edutrack/shared/payments/types'
-import { parseTransactionMessage } from '@/lib/utils/payment-parser'
+import { parseTransactionMessage, formatParsedTimestamp } from '@/lib/utils/payment-parser'
 
 interface Props {
   obligationId: string
@@ -43,6 +43,7 @@ export function ParentPostPaymentClient({ obligationId, obligationBalance, perio
   const [parsedCounterparty, setParsedCounterparty] = useState('')
   const [detectedProvider, setDetectedProvider] = useState('')
   const [paymentRail, setPaymentRail] = useState<PaymentRail>('mobile_money')
+  const [parsedCurrency, setParsedCurrency] = useState(currency)
   const [cashAmount, setCashAmount] = useState('')
   const [cashNotes, setCashNotes] = useState('')
   const [phase, setPhase] = useState<Phase>('idle')
@@ -61,6 +62,7 @@ export function ParentPostPaymentClient({ obligationId, obligationBalance, perio
     if (parsed.parsedCounterparty) setParsedCounterparty(parsed.parsedCounterparty)
     if (parsed.detectedProvider) setDetectedProvider(parsed.detectedProvider)
     if (parsed.paymentRail !== 'other') setPaymentRail(parsed.paymentRail)
+    if (parsed.parsedCurrency) setParsedCurrency(parsed.parsedCurrency)
   }
 
   async function handleDigitalSubmit(e: React.FormEvent) {
@@ -76,7 +78,7 @@ export function ParentPostPaymentClient({ obligationId, obligationBalance, perio
       rawMessage: rawMessage || null,
       referenceCode,
       parsedAmount: parseFloat(parsedAmount),
-      parsedCurrency: currency,
+      parsedCurrency,
       parsedTransactionAt: parsedTransactionAt || null,
       parsedCounterparty: parsedCounterparty || null,
       parsedFee: parsedFee ? parseFloat(parsedFee) : null,
@@ -183,9 +185,9 @@ export function ParentPostPaymentClient({ obligationId, obligationBalance, perio
                   <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-xs">
                     {detectedProvider && <><span className="text-muted-foreground">Provider</span><span className="font-medium text-foreground">{detectedProvider}</span></>}
                     {referenceCode && <><span className="text-muted-foreground">Reference</span><span className="font-mono font-bold text-foreground">{referenceCode}</span></>}
-                    {parsedAmount && <><span className="text-muted-foreground">Amount</span><span className="font-semibold text-foreground">{currency} {parseFloat(parsedAmount).toLocaleString()}</span></>}
-                    {parsedFee && <><span className="text-muted-foreground">Transaction Fee</span><span className="text-foreground">{currency} {parseFloat(parsedFee).toLocaleString()}</span></>}
-                    {parsedTransactionAt && <><span className="text-muted-foreground">Date / Time</span><span className="text-foreground">{parsedTransactionAt}</span></>}
+                    {parsedAmount && <><span className="text-muted-foreground">Amount</span><span className="font-semibold text-foreground">{parsedCurrency} {parseFloat(parsedAmount).toLocaleString()}</span></>}
+                    {parsedFee && <><span className="text-muted-foreground">Transaction Fee</span><span className="text-foreground">{parsedCurrency} {parseFloat(parsedFee).toLocaleString()}</span></>}
+                    {parsedTransactionAt && <><span className="text-muted-foreground">Date / Time</span><span className="text-foreground">{formatParsedTimestamp(parsedTransactionAt) || parsedTransactionAt}</span></>}
                     {parsedCounterparty && <><span className="text-muted-foreground">To</span><span className="italic text-foreground">{parsedCounterparty}</span></>}
                   </div>
                 </div>
@@ -200,7 +202,7 @@ export function ParentPostPaymentClient({ obligationId, obligationBalance, perio
                   onChange={(e) => setReferenceCode(e.target.value.toUpperCase().trim())} required />
               </div>
               <div className="space-y-1">
-                <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Amount Sent ({currency}) *</label>
+                <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Amount Sent ({parsedCurrency}) *</label>
                 <input type="number" className="w-full bg-muted border border-border rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/40"
                   placeholder="15000" value={parsedAmount}
                   onChange={(e) => setParsedAmount(e.target.value)} required />

@@ -38,13 +38,20 @@ interface Props {
   periodLabel: string
 }
 
-import { parseTransactionMessage } from '@/lib/utils/payment-parser'
+import { parseTransactionMessage, formatParsedTimestamp } from '@/lib/utils/payment-parser'
+import type { PaymentRail } from '@edutrack/shared/payments/types'
 
 export default function SubscriptionPostPaymentForm({ obligationId, amountDue, currency, periodLabel }: Props) {
   const [expanded, setExpanded] = useState(false)
   const [rawMessage, setRawMessage] = useState('')
   const [referenceCode, setReferenceCode] = useState('')
   const [parsedAmount, setParsedAmount] = useState<string>('')
+  const [parsedFee, setParsedFee] = useState('')
+  const [parsedTransactionAt, setParsedTransactionAt] = useState('')
+  const [parsedCounterparty, setParsedCounterparty] = useState('')
+  const [detectedProvider, setDetectedProvider] = useState('')
+  const [parsedCurrency, setParsedCurrency] = useState(currency)
+  const [paymentRail, setPaymentRail] = useState<PaymentRail>('mobile_money')
   const [showParsed, setShowParsed] = useState(false)
   const [copied, setCopied] = useState(false)
   const [isPending, startTransition] = useTransition()
@@ -61,6 +68,12 @@ export default function SubscriptionPostPaymentForm({ obligationId, amountDue, c
       const parsed = parseTransactionMessage(msg)
       if (parsed.referenceCode) setReferenceCode(parsed.referenceCode)
       if (parsed.parsedAmount) setParsedAmount(String(parsed.parsedAmount))
+      if (parsed.parsedFee) setParsedFee(String(parsed.parsedFee))
+      if (parsed.parsedTransactionAt) setParsedTransactionAt(parsed.parsedTransactionAt)
+      if (parsed.parsedCounterparty) setParsedCounterparty(parsed.parsedCounterparty)
+      if (parsed.detectedProvider) setDetectedProvider(parsed.detectedProvider)
+      if (parsed.paymentRail && parsed.paymentRail !== 'other') setPaymentRail(parsed.paymentRail)
+      if (parsed.parsedCurrency) setParsedCurrency(parsed.parsedCurrency)
       setShowParsed(true)
     } else {
       setShowParsed(false)
@@ -78,12 +91,12 @@ export default function SubscriptionPostPaymentForm({ obligationId, amountDue, c
         rawMessage: rawMessage || null,
         referenceCode: referenceCode.trim(),
         parsedAmount: amount,
-        parsedCurrency: currency,
-        parsedTransactionAt: parsed.parsedTransactionAt,
-        parsedCounterparty: parsed.parsedCounterparty,
+        parsedCurrency,
+        parsedTransactionAt: parsedTransactionAt || null,
+        parsedCounterparty: parsedCounterparty || null,
         parsedNarration: null,
-        parsedFee: parsed.parsedFee ?? null,
-        paymentRail: parsed.paymentRail,
+        parsedFee: parsedFee ? parseFloat(parsedFee) : null,
+        paymentRail,
       })
 
       if ('error' in res && res.error) {
@@ -184,12 +197,14 @@ export default function SubscriptionPostPaymentForm({ obligationId, amountDue, c
           {/* Parsed preview */}
           {showParsed && (
             <div className="bg-primary/5 border border-primary/20 rounded-xl p-3 space-y-2">
-              <p className="text-xs font-semibold text-primary">Extracted from message</p>
-              <div className="grid grid-cols-2 gap-2 text-xs text-muted-foreground">
-                <span>Reference Code</span>
-                <span className="font-mono text-foreground font-semibold">{referenceCode || '—'}</span>
-                <span>Amount</span>
-                <span className="font-mono text-foreground">{parsedAmount ? formatCurrency(parseFloat(parsedAmount), currency) : '—'}</span>
+              <p className="text-xs font-semibold text-primary uppercase tracking-wide">Transaction Details</p>
+              <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-xs">
+                {detectedProvider && <><span className="text-muted-foreground">Provider</span><span className="font-medium text-foreground">{detectedProvider}</span></>}
+                {referenceCode && <><span className="text-muted-foreground">Reference</span><span className="font-mono font-bold text-foreground">{referenceCode}</span></>}
+                {parsedAmount && <><span className="text-muted-foreground">Amount</span><span className="font-semibold text-foreground">{parsedCurrency} {parseFloat(parsedAmount).toLocaleString()}</span></>}
+                {parsedFee && <><span className="text-muted-foreground">Transaction Fee</span><span className="text-foreground">{parsedCurrency} {parseFloat(parsedFee).toLocaleString()}</span></>}
+                {parsedTransactionAt && <><span className="text-muted-foreground">Date / Time</span><span className="text-foreground">{formatParsedTimestamp(parsedTransactionAt) || parsedTransactionAt}</span></>}
+                {parsedCounterparty && <><span className="text-muted-foreground">To</span><span className="italic text-foreground">{parsedCounterparty}</span></>}
               </div>
             </div>
           )}

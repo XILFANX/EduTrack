@@ -52,8 +52,10 @@ If a student joins mid-term, you can generate an invoice manually:
 When a parent pays school fees, EduTrack handles the reconciliation automatically using two independent submissions:
 
 ### Step A: The Parent's Submission
-1. The parent pays the fees directly to the school's bank account or M-Pesa Paybill (off-platform).
-2. The parent logs into their portal, clicks **Submit Payment**, and enters the **Reference Code** (e.g., the M-Pesa code) and the **Amount** they paid.
+1. The parent pays the fees directly to the school's bank account or mobile wallet (off-platform).
+2. The parent logs into their portal, clicks **Submit Payment**, and simply pastes the transaction confirmation message they received (e.g., M-Pesa SMS or Bank SMS).
+3. The system automatically extracts the reference code, amount, currency, transaction fee, and date. The parent can verify these extracted details in real-time before clicking Submit.
+   *(Note: If a parent has no active fee invoice generated yet, the system provides a fallback option to check back later or make an advance payment).*
 
 ### Step B: The Bursar's Receipt
 1. The Bursar looks at the school's actual bank or M-Pesa statement.
