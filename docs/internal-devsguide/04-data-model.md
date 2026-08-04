@@ -51,7 +51,7 @@ Consolidated table for all human actors.
 
 ---
 
-### Academic Schema
+### Academic & Assessment Schema (`20260804_module_rewrite.sql`)
 
 | Table | Purpose |
 |---|---|
@@ -61,8 +61,15 @@ Consolidated table for all human actors.
 | `student_parents` | Join table. Maps a `student_id` to a `parent_id` (user). Allows parents to see multiple children. |
 | `subjects` | e.g. "Mathematics". Contains `teacher_id` (Subject Teacher). |
 | `attendance` | Daily roll call. Enums: `Present, Absent, Late`. |
-| `exams` | Defines an assessment instance. |
-| `exam_results` | Contains `score` (numeric) and `grade` (text). *Note: Does not yet support CBC rubrics.* |
+| `timetable_periods` | Bell schedule periods (start_time, end_time, is_break, sort_order) managed school-wide by Admin. |
+| `timetable_slots` | School-wide period schedule mapping (`class_id`, `subject_id`, `teacher_id`, `day_of_week`, `period_id`, `term_id`, `is_published`). |
+| `grade_scales` | School-wide grading scale definition (`grade`, `min_score`, `max_score`, `points`, `remarks`). |
+| `exam_events` | School-wide assessment instances (`name`, `term_id`, `year_id`, `status: draft \| published \| closed`). |
+| `exam_event_classes` | M2M linking exam events to participating classes. |
+| `exam_timetables` | Assessment schedule slots (`exam_id`, `subject_id`, `class_id`, `exam_date`, `start_time`, `end_time`). |
+| `exam_results` | Per-student assessment score, grade, remarks, and approval workflow status (`draft \| submitted \| approved`). |
+| `exam_grading_status` | Status tracking table for class-teacher approval workflow per exam/class/subject (`submitted \| approved \| rejected`). |
+| `report_cards` | Aggregated term assessment reports per student (`total_score`, `average_score`, `overall_grade`, `position_in_class`, `class_size`, `published_at`). |
 
 ---
 
@@ -70,8 +77,10 @@ Consolidated table for all human actors.
 
 | Table | Purpose |
 |---|---|
+| `fee_templates` | Multi-component fee template structures (`name`, `term_id`, `year_id`, `class_id`). |
+| `fee_items` | Individual line items within a fee template (`description`, `amount`, `sort_order`). |
 | `fee_structures` | Defines what is billed per term (either globally or tied to a `class_id`). |
-| `invoices` | Monthly/Termly bill generated per student. Contains `balance` and `status` (`unpaid \| partial \| paid`). |
+| `invoices` | Monthly/Termly bill generated per student. Contains `amount`, `paid`, `discount_amount`, and `status` (`unpaid \| partial \| paid`). |
 | `invoice_items` | Line items defining an invoice breakdown (e.g. "Tuition", "Transport"). |
 | `salary_advances` | Tracks staff requests for mid-month advances. |
 

@@ -1,67 +1,62 @@
-# Academic Grading & Attendance
+# Academic Grading, Examinations & Timetable
 
-**Goal:** Track daily student attendance and record exam results.
+**Goal:** Manage school-wide timetables, define grade boundaries, conduct multi-class exam events, and execute the two-tier teacher approval workflow for student report cards.
 
-*This guide is primarily for Class Teachers and Subject Teachers.*
-
----
-
-## 1. Daily Attendance
-
-Class Teachers are responsible for marking the daily register.
-
-1. Navigate to **Attendance**. [Link: /teacher/attendance]
-2. Select the current date.
-3. The roster for your assigned class will appear.
-4. By default, all students are marked **Present**.
-5. Tap on a student's status to toggle it to **Absent** or **Late**.
-6. Click **Save Register**.
-
-Once saved, attendance statistics instantly update on the Principal's dashboard and become visible in the Parent Portal.
-
-[SCREENSHOT: /teacher/attendance — the daily attendance grid view]
+*This guide is for Administrators, Class Teachers, Subject Teachers, and Parents.*
 
 ---
 
-## 2. Setting Up Exams
+## 1. School-Wide Timetable Management
 
-Before teachers can enter grades, an Administrator or Principal must create an Exam record.
+The timetable in EduTrack is controlled centrally at the Grand School Admin level.
 
-1. Go to **Academics → Exams**.
-2. Click **Create Exam**.
-3. Name the exam (e.g., "Mid-Term 1", "End of Year Finals").
-4. Select the Term it belongs to.
-5. Click **Save**.
+### Administrator Setup:
+1. Navigate to **Timetable**. [Link: /dashboard/timetable]
+2. **Bell Schedule:** Click **Setup Bell Schedule** to define periods (start/end times) and break intervals school-wide.
+3. **Timetable Builder:** Switch to the **Grid Builder** tab.
+   - Select a Class and Day of Week.
+   - Assign Subject and Teacher to each period slot.
+   - Real-time conflict detection alerts you if a teacher is double-booked across another class or period.
+4. **Publishing:** Click **Publish Timetable** to release the schedule to teachers and parents.
 
----
-
-## 3. Entering Grades
-
-Subject Teachers enter grades for the specific subjects they have been assigned to teach.
-
-1. Navigate to **Academics → Grading**. [Link: /teacher/grading]
-2. Select the Exam (e.g., "Mid-Term 1").
-3. Select your Subject (e.g., "Mathematics - Grade 4").
-4. A grid of students will appear. Enter the raw score (e.g., out of 100) for each student.
-5. The system automatically calculates the letter grade (A, B, C, etc.) based on the school's configured grading rubric.
-6. Click **Submit Grades**.
-
-> **Note:** EduTrack currently supports standard percentage-based grading. CBC (Competency Based Curriculum) rubric support is not yet available.
-
-[SCREENSHOT: /teacher/grading — the subject grading grid with auto-calculated letter grades]
+### Teacher & Parent Access:
+- **Teachers:** Navigate to **My Timetable** [Link: /teacher/timetable] to view your personal teaching schedule (Subject Teachers) or full class schedule (Class Teachers).
+- **Parents:** Navigate to **Class Timetable** [Link: /parent/academics/timetable] to view the weekly published timetable for all linked children.
 
 ---
 
-## 4. Generating Report Cards
+## 2. School-Wide Grading Engine
 
-At the end of the term, once all Subject Teachers have submitted their grades, Class Teachers can generate report cards.
+Administrators set global grade scale boundaries used for automatic score-to-grade assignment.
 
-1. Navigate to **Academics → Reports**.
-2. Select the Class and the Exam.
-3. Click **Generate All Reports**.
+1. Navigate to **Grading Engine**. [Link: /dashboard/grading]
+2. Click **Add Grade** to define grade symbols (e.g., A, B+), score ranges (min/max score), GPA points, and remarks (e.g., Distinction, Pass).
+3. The visual coverage bar checks for gaps in score ranges from 0 to 100 marks.
 
-This compiles every subject score, the attendance record, and the Class Teacher's remarks into a single PDF per student. 
+---
 
-The report cards are automatically published to the Parent Portal. You do not need to print them unless a parent explicitly requests a physical copy.
+## 3. Examination & Grading Approval Workflow
 
-[Link: /teacher/grading]
+EduTrack enforces a strict 3-stage examination workflow: **Draft Entry → Class Teacher Review → Admin Publication**.
+
+### Step 1: Exam Event Creation (Admin)
+1. Go to **Examinations**. [Link: /dashboard/exams]
+2. Click **New Exam Event**.
+3. Select Academic Year, Term, and Participating Classes.
+4. Click **Publish** to open mark entry for subject teachers.
+
+### Step 2: Mark Entry & Auto-Grading (Subject Teacher)
+1. Go to **Results Entry**. [Link: /teacher/grades]
+2. Select the Exam Event, Class, and Subject.
+3. Enter student scores. The system auto-saves each row and assigns letter grades based on the school's Grade Scale.
+4. Click **Submit for Review**. Once submitted, the mark entry locks to prevent unauthorized edits.
+
+### Step 3: Review & Verification (Class Teacher)
+1. Go to **Results Review**. [Link: /teacher/grades] (Class Teacher Portal)
+2. View submitted subject marks for your class.
+3. Review scores and tap **Approve** or **Reject** (with mandatory feedback comment for correction).
+
+### Step 4: Report Card Generation (Admin & Parent)
+1. In **Examinations → Monitor**, administrators view real-time progress across all classes and subjects.
+2. Click **Generate Report Cards** once all subjects are approved.
+3. **Parents** can view published report cards under **Report Cards** [Link: /parent/results], including class rank, overall grade, and subject breakdowns.

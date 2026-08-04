@@ -1,267 +1,230 @@
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { redirect } from 'next/navigation'
-import Link from 'next/link'
-import { PenTool, BookOpen, ChevronRight } from 'lucide-react'
-import { ResultsEntryTable } from '@/components/shared/results-entry-table'
-import { ClassTeacherReviewPanel } from '@/components/teacher/class-teacher-review-panel'
+import { SubjectTeacherGradesView } from './subject-teacher-grades-view'
+import { ClassTeacherReviewView } from './class-teacher-review-view'
 
 export const dynamic = 'force-dynamic'
 
 interface Props {
-  searchParams: Promise<{ examId?: string; classId?: string; subjectId?: string }>
+  searchParams: Promise<{ examEventId?: string; subjectId?: string; classId?: string }>
 }
 
-export default async function TeacherGrades({ searchParams }: Props) {
+export default async function TeacherGradesPage({ searchParams }: Props) {
   const params = await searchParams
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login')
 
-  const { data: profileResult } = await supabase
-    .from('users')
-    .select('school_id, role')
-    .eq('id', user.id)
-    .single()
+  const { data: profileRaw } = await supabase
+    .from('users').select('school_id, role, full_name').eq('id', user.id).single()
+  const profile = profileRaw as any
+  if (!profile?.school_id) redirect('/login')
 
-  const profile = profileResult as any
-  if (!profile?.school_id) return null
-
+  const adminClient = createAdminClient()
   const isSubjectTeacher = profile.role === 'subject_teacher'
   const isClassTeacher = profile.role === 'class_teacher'
-  const adminClient = createAdminClient()
 
-  // Grade scales for this school
-  const { data: scalesData } = await supabase
-    .from('grade_scales')
-    .select('grade, min_score, max_score, points, remarks')
+  // Grade scales for auto-grading
+  const { data: scalesRaw } = await supabase
+    .from('grade_scales').select('grade, min_score, max_score, points, remarks')
+    .eq('school_id', profile.school_id).order('min_score', { ascending: false })
+  const gradeScales = (scalesRaw || []) as any[]
+
+  // Active term
+  const { data: activeTermRaw } = await supabase
+    .from('academic_terms').select('id, name').eq('school_id', profile.school_id).eq('is_active', true).single()
+  const activeTerm = activeTermRaw as any
+
+  // Published exam events
+  const { data: eventsRaw } = await adminClient
+    .from('exam_events' as any)
+    .select('id, name, status, term_id, exam_event_classes(class_id)')
     .eq('school_id', profile.school_id)
-    .order('min_score', { ascending: false })
-  const gradeScales = (scalesData || []) as any[]
+    .in('status', ['published', 'closed'])
+    .order('created_at', { ascending: false })
+  const events = (eventsRaw || []) as any[]
 
-  // Fetch exams — for subject teacher: exams for their scheduled subjects
-  // For class teacher: all exams for their class
-  let myClassId: string | null = null
-  let assignments: any[] = []
-
-  if (isClassTeacher) {
-    const { data: cls } = await supabase
-      .from('classes')
-      .select('id')
-      .eq('class_teacher_id', user.id)
-      .eq('school_id', profile.school_id)
-      .single()
-    myClassId = (cls as any)?.id || null
-  } else if (isSubjectTeacher) {
-    const { data: asgn } = await supabase
+  if (isSubjectTeacher) {
+    // ── SUBJECT TEACHER ──────────────────────────────────────────
+    // Get their subject assignments
+    const { data: assignmentsRaw } = await supabase
       .from('class_subjects')
       .select('class_id, subject_id, classes(id, name), subjects(id, name)')
       .eq('teacher_id', user.id)
       .eq('school_id', profile.school_id)
-    assignments = (asgn || []) as any[]
-    myClassId = params.classId || assignments[0]?.class_id || null
-  }
+    const assignments = (assignmentsRaw || []) as any[]
 
-  // Fetch published exam timetable entries relevant to this teacher
-  const { data: timetableSlots } = myClassId
-    ? await adminClient
+    const myClassIds = [...new Set(assignments.map((a: any) => a.class_id))]
+    const mySubjectIds = [...new Set(assignments.map((a: any) => a.subject_id))]
+
+    // Filter events relevant to this teacher's classes
+    const relevantEvents = events.filter((e: any) =>
+      (e.exam_event_classes || []).some((ec: any) => myClassIds.includes(ec.class_id))
+    )
+
+    const selectedEventId = params.examEventId || relevantEvents[0]?.id || ''
+    const selectedEvent = relevantEvents.find((e: any) => e.id === selectedEventId) || null
+
+    // Exam timetable slots for this teacher's classes/subjects in the selected event
+    let examSlots: any[] = []
+    if (selectedEventId && myClassIds.length > 0) {
+      const { data: slotsRaw } = await adminClient
         .from('exam_timetables')
-        .select('id, exam_id, subject_id, class_id, exam_date, start_time, end_time, exams(id, name, max_score)')
-        .eq('class_id', myClassId)
+        .select('id, exam_id, subject_id, class_id, exam_date, start_time, end_time, subjects(id, name), classes(id, name)')
+        .eq('exam_id', selectedEventId)
         .eq('school_id', profile.school_id)
+        .in('class_id', myClassIds)
+        .in('subject_id', mySubjectIds)
         .order('exam_date')
-    : { data: [] }
+      examSlots = (slotsRaw || []) as any[]
+    }
 
-  const slots = (timetableSlots || []) as any[]
+    const selectedClassId = params.classId || examSlots[0]?.class_id || ''
+    const selectedSubjectId = params.subjectId || examSlots[0]?.subject_id || ''
+    const selectedSlot = examSlots.find(s => s.class_id === selectedClassId && s.subject_id === selectedSubjectId) || null
 
-  // Filter slots for subject teacher to only their subjects
-  const mySubjectIds = assignments.map((a: any) => a.subject_id)
-  const visibleSlots = isSubjectTeacher
-    ? slots.filter(s => mySubjectIds.includes(s.subject_id))
-    : slots
+    // Students for selected class
+    let students: any[] = []
+    if (selectedClassId) {
+      const { data: studentsRaw } = await adminClient
+        .from('students')
+        .select('id, first_name, last_name, admission_number')
+        .eq('class_id', selectedClassId)
+        .eq('school_id', profile.school_id)
+        .order('last_name')
+      students = (studentsRaw || []) as any[]
+    }
 
-  // Which slot is selected
-  const selectedExamId = params.examId || visibleSlots[0]?.exam_id || ''
-  const selectedClassId = params.classId || myClassId || ''
-  const selectedSubjectId = params.subjectId || visibleSlots[0]?.subject_id || ''
-  const selectedSlot = visibleSlots.find(s => s.exam_id === selectedExamId && s.subject_id === selectedSubjectId)
+    // Existing results for this exam+class+subject
+    let existingResults: any[] = []
+    if (selectedEventId && selectedClassId && selectedSubjectId) {
+      const examId = selectedSlot?.exam_id || ''
+      if (examId) {
+        const { data: resultsRaw } = await adminClient
+          .from('exam_results')
+          .select('student_id, score, grade, remarks, status')
+          .eq('exam_id', examId)
+          .eq('subject_id', selectedSubjectId)
+          .eq('school_id', profile.school_id)
+        existingResults = (resultsRaw || []) as any[]
+      }
+    }
 
-  // Fetch subjects for breadcrumb lookup
-  const { data: subjectsData } = await supabase
-    .from('subjects')
-    .select('id, name')
-    .eq('school_id', profile.school_id)
-  const subjects = (subjectsData || []) as any[]
-  const getSubjectName = (id: string) => subjects.find(s => s.id === id)?.name || id
+    // Grading status for this slot
+    let slotGradingStatus: any = null
+    if (selectedSlot && selectedClassId && selectedSubjectId) {
+      const { data: gsRaw } = await adminClient
+        .from('exam_grading_status' as any)
+        .select('status, rejection_comment, submitted_at')
+        .eq('exam_id', selectedSlot.exam_id)
+        .eq('class_id', selectedClassId)
+        .eq('subject_id', selectedSubjectId)
+        .single()
+      slotGradingStatus = gsRaw as any
+    }
 
-  // Fetch unique exams from slots
-  const examMap = new Map<string, any>()
-  visibleSlots.forEach(s => {
-    if (s.exams && !examMap.has(s.exam_id)) examMap.set(s.exam_id, s.exams)
-  })
-  const myExams = [...examMap.values()]
-
-  // Fetch students for the selected class
-  let students: any[] = []
-  if (selectedClassId) {
-    const { data } = await supabase
-      .from('students')
-      .select('id, first_name, last_name, admission_number, photo_url')
-      .eq('class_id', selectedClassId)
-      .eq('school_id', profile.school_id)
-      .is('deleted_at', null)
-      .order('last_name')
-    students = (data || []) as any[]
+    return (
+      <SubjectTeacherGradesView
+        teacherId={user.id}
+        schoolId={profile.school_id}
+        events={relevantEvents}
+        examSlots={examSlots}
+        selectedEventId={selectedEventId}
+        selectedClassId={selectedClassId}
+        selectedSubjectId={selectedSubjectId}
+        selectedSlot={selectedSlot}
+        students={students}
+        existingResults={existingResults}
+        gradeScales={gradeScales}
+        slotGradingStatus={slotGradingStatus}
+      />
+    )
   }
 
-  // Existing results for selected exam + subject + class students
-  let existingResults: any[] = []
-  if (students.length > 0 && selectedExamId && selectedSubjectId) {
-    const { data: results } = await adminClient
-      .from('exam_results')
-      .select('student_id, score, grade, remarks')
-      .in('student_id', students.map(s => s.id))
-      .eq('exam_id', selectedExamId)
-      .eq('subject_id', selectedSubjectId)
-    existingResults = (results || []) as any[]
+  if (isClassTeacher) {
+    // ── CLASS TEACHER ─────────────────────────────────────────────
+    const { data: clsRaw } = await supabase
+      .from('classes').select('id, name')
+      .eq('class_teacher_id', user.id).eq('school_id', profile.school_id).single()
+    const myClass = clsRaw as any
+    if (!myClass) {
+      return (
+        <div className="text-center py-20 text-muted-foreground">
+          <p>You are not assigned as a class teacher to any class.</p>
+        </div>
+      )
+    }
+
+    const selectedEventId = params.examEventId || events[0]?.id || ''
+    const selectedEvent = events.find((e: any) => e.id === selectedEventId) || null
+
+    // Subjects scheduled for this class in the selected event
+    let classSlots: any[] = []
+    let gradingStatuses: any[] = []
+
+    if (selectedEventId) {
+      const [{ data: slotsRaw }, { data: statusesRaw }] = await Promise.all([
+        adminClient
+          .from('exam_timetables')
+          .select('id, exam_id, subject_id, class_id, exam_date, subjects(id, name)')
+          .eq('exam_id', selectedEventId)
+          .eq('class_id', myClass.id)
+          .eq('school_id', profile.school_id)
+          .order('exam_date'),
+        adminClient
+          .from('exam_grading_status' as any)
+          .select('*')
+          .eq('exam_id', selectedEventId)
+          .eq('class_id', myClass.id),
+      ])
+      classSlots = (slotsRaw || []) as any[]
+      gradingStatuses = (statusesRaw || []) as any[]
+    }
+
+    // For selected subject to review — fetch results
+    const selectedSubjectId = params.subjectId || ''
+    let reviewResults: any[] = []
+    let reviewStudents: any[] = []
+
+    if (selectedSubjectId && selectedEventId) {
+      const selectedSlot = classSlots.find(s => s.subject_id === selectedSubjectId)
+      if (selectedSlot) {
+        const [{ data: resultsRaw }, { data: studentsRaw }] = await Promise.all([
+          adminClient
+            .from('exam_results')
+            .select('student_id, score, grade, remarks, status')
+            .eq('exam_id', selectedSlot.exam_id)
+            .eq('subject_id', selectedSubjectId)
+            .eq('school_id', profile.school_id),
+          adminClient
+            .from('students')
+            .select('id, first_name, last_name, admission_number')
+            .eq('class_id', myClass.id)
+            .eq('school_id', profile.school_id)
+            .order('last_name'),
+        ])
+        reviewResults = (resultsRaw || []) as any[]
+        reviewStudents = (studentsRaw || []) as any[]
+      }
+    }
+
+    return (
+      <ClassTeacherReviewView
+        teacherId={user.id}
+        schoolId={profile.school_id}
+        myClass={myClass}
+        events={events}
+        selectedEventId={selectedEventId}
+        classSlots={classSlots}
+        gradingStatuses={gradingStatuses}
+        selectedSubjectId={selectedSubjectId}
+        reviewResults={reviewResults}
+        reviewStudents={reviewStudents}
+        gradeScales={gradeScales}
+      />
+    )
   }
 
-  // Grading status for selected combo
-  let gradingStatus = 'pending'
-  if (selectedExamId && selectedClassId && selectedSubjectId) {
-    const { data: statusRow } = await supabase
-      .from('exam_grading_status')
-      .select('status')
-      .eq('exam_id', selectedExamId)
-      .eq('class_id', selectedClassId)
-      .eq('subject_id', selectedSubjectId)
-      .single()
-    if (statusRow) gradingStatus = (statusRow as any).status
-  }
-
-  const selectedExam = myExams.find(e => e.id === selectedExamId)
-
-  // For class teacher: show grading status table for all subjects
-  let subjectStatuses: any[] = []
-  if (isClassTeacher && selectedExamId && selectedClassId) {
-    const { data: statuses } = await supabase
-      .from('exam_grading_status')
-      .select('subject_id, status, submitted_at, finalized_at')
-      .eq('exam_id', selectedExamId)
-      .eq('class_id', selectedClassId)
-    subjectStatuses = (statuses || []) as any[]
-  }
-
-
-
-  return (
-    <div className="space-y-8 max-w-5xl pb-24">
-      {/* Header */}
-      <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-2xl bg-purple-500/10 flex items-center justify-center">
-          <PenTool className="w-5 h-5 text-purple-600" />
-        </div>
-        <div>
-          <h1 className="text-2xl font-bold text-foreground">Grades & Results</h1>
-          <p className="text-sm text-muted-foreground">Record and submit exam results for review.</p>
-        </div>
-      </div>
-
-      {visibleSlots.length === 0 ? (
-        <div className="text-center py-16 bg-card border border-border rounded-3xl">
-          <BookOpen className="w-10 h-10 text-slate-300 mx-auto mb-3" />
-          <h3 className="font-semibold text-foreground">No Exams Scheduled</h3>
-          <p className="text-sm text-muted-foreground mt-1">The administrator hasn't scheduled any exams for your subjects yet.</p>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-6 items-start">
-          {/* Left sidebar: exam + subject selector */}
-          <div className="space-y-4">
-            {/* Exams */}
-            <div className="bg-card border border-border rounded-2xl overflow-hidden">
-              <div className="px-4 py-2.5 bg-slate-50 dark:bg-slate-900 border-b border-border">
-                <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Exams</p>
-              </div>
-              {myExams.map(exam => (
-                <Link
-                  key={exam.id}
-                  href={`/teacher/grades?examId=${exam.id}&classId=${selectedClassId}&subjectId=${visibleSlots.find(s => s.exam_id === exam.id)?.subject_id || ''}`}
-                  className={`flex items-center justify-between px-4 py-3 border-b border-border/50 last:border-b-0 transition-colors ${exam.id === selectedExamId ? 'bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300' : 'hover:bg-slate-50 dark:hover:bg-slate-900/30 text-foreground'}`}
-                >
-                  <span className="font-medium text-sm">{exam.name}</span>
-                  <ChevronRight className="w-4 h-4 opacity-50" />
-                </Link>
-              ))}
-            </div>
-
-            {/* Subjects for selected exam */}
-            {selectedExamId && (
-              <div className="bg-card border border-border rounded-2xl overflow-hidden">
-                <div className="px-4 py-2.5 bg-slate-50 dark:bg-slate-900 border-b border-border">
-                  <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Subjects</p>
-                </div>
-                {visibleSlots.filter(s => s.exam_id === selectedExamId).map(slot => {
-                  const status = subjectStatuses.find(st => st.subject_id === slot.subject_id)?.status || 'pending'
-                  const dotColor = status === 'finalized' ? 'bg-blue-400' : status === 'submitted' ? 'bg-orange-400' : 'bg-slate-300'
-                  return (
-                    <Link
-                      key={slot.id}
-                      href={`/teacher/grades?examId=${selectedExamId}&classId=${slot.class_id}&subjectId=${slot.subject_id}`}
-                      className={`flex items-center justify-between px-4 py-3 border-b border-border/50 last:border-b-0 transition-colors ${slot.subject_id === selectedSubjectId ? 'bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300' : 'hover:bg-slate-50 dark:hover:bg-slate-900/30 text-foreground'}`}
-                    >
-                      <div className="flex items-center gap-2.5">
-                        <div className={`w-2 h-2 rounded-full ${dotColor}`} />
-                        <span className="font-medium text-sm">{getSubjectName(slot.subject_id)}</span>
-                      </div>
-                      <ChevronRight className="w-4 h-4 opacity-50" />
-                    </Link>
-                  )
-                })}
-              </div>
-            )}
-
-            {/* Class teacher review panel */}
-            {isClassTeacher && selectedExamId && selectedClassId && subjects.length > 0 && (
-              <ClassTeacherReviewPanel
-                examId={selectedExamId}
-                classId={selectedClassId}
-                subjects={subjects.map(s => ({
-                  subject_id: s.id,
-                  subject_name: s.name,
-                  status: subjectStatuses.find(st => st.subject_id === s.id)?.status || 'pending',
-                  submitted_at: subjectStatuses.find(st => st.subject_id === s.id)?.submitted_at || null,
-                }))}
-              />
-            )}
-          </div>
-
-          {/* Main content: grade entry table */}
-          <div className="bg-card border border-border rounded-3xl p-5 min-h-[400px]">
-            {selectedSlot && selectedExam && students.length > 0 ? (
-              <ResultsEntryTable
-                examId={selectedExamId}
-                classId={selectedClassId}
-                subjectId={selectedSubjectId}
-                subjectName={getSubjectName(selectedSubjectId)}
-                examName={selectedExam.name}
-                maxScore={selectedExam.max_score}
-                students={students}
-                gradeScales={gradeScales}
-                existingResults={existingResults}
-                gradingStatus={gradingStatus}
-                isSubjectTeacher={isSubjectTeacher}
-              />
-            ) : (
-              <div className="flex items-center justify-center h-full min-h-[300px]">
-                <div className="text-center">
-                  <PenTool className="w-8 h-8 text-slate-300 mx-auto mb-3" />
-                  <p className="text-sm text-muted-foreground">Select an exam and subject to start entering grades.</p>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-    </div>
-  )
+  redirect('/dashboard')
 }

@@ -1,65 +1,67 @@
-# Fee Management & Payments
+# Fee Management & Financial Analytics
 
-**Goal:** Configure school fees, generate invoices, and collect payments using the Blind Verification system.
+**Goal:** Build multi-component fee structures, generate bulk invoices for a term, monitor financial health via analytics, and collect payments using the Blind Verification system.
 
-*This guide is for Bursars and Principals.*
+*This guide is for Bursars, Principals, and Administrators.*
 
-EduTrack uses a **Blind Verification** matching engine. It automatically generates the invoices based on Fee Structures, and then uses a two-independent-witness model to automatically reconcile school fees without the Bursar needing to match student names manually.
+EduTrack uses a template-based invoicing system paired with a **Blind Verification** matching engine for collections. You build termly fee structures, generate bulk invoices from them, and monitor collections in real-time through the Financial Analytics dashboard.
 
 ---
 
-## 1. Setting Up Fee Structures
+## 1. Building Fee Templates
 
-Before you can bill students, you must define what you are charging them for.
+Before billing students, you define the fee components for the term using a Fee Template.
 
-1. Navigate to **Finances → Fee Structures**. [Link: /bursar/fees]
-2. Click **Create Structure**.
-3. Name the structure (e.g., "Grade 1-3 Tuition").
-4. Add line items:
-   - "Tuition": KES 15,000
+1. Navigate to **Finances → Fee Structures**. [Link: /bursar/fee-structures]
+2. Click **New Template**.
+3. Name the template (e.g., "Grade 1-3 Term 1 Fees").
+4. Select the Academic Year and Term.
+5. *(Optional)* Select a specific Class, or leave blank to apply to the whole school.
+6. Add your **Fee Components** (line items):
+   - "Tuition Fee": KES 15,000
+   - "Lunch Program": KES 5,000
    - "Activity Fee": KES 2,000
-5. You can set this structure to apply globally to the whole school, or restrict it to specific classes.
+7. The system calculates the Total per Student automatically. Click **Create Template**.
 
 ---
 
-## 2. Defining Your Receiving Accounts
+## 2. Generating Bulk Invoices
 
-Before collecting fees, you must define where the money should go.
-1. Navigate to **Settings** → **Payment Rails**.
-2. Add your receiving accounts (e.g., School M-Pesa Paybill, KCB Bank Account).
-3. These details are securely displayed to parents in their portal.
+Once a template is built, you can generate invoices for all enrolled students in one click.
 
----
-
-## 3. Generating Invoices (Obligations)
-
-Invoices are generated automatically by the system.
-
-- On the 1st of every month (or the start of a Term, depending on your school's configuration), the automated invoice generator runs.
-- It looks at the Fee Structures assigned to a student's class and creates a personalized invoice (an "Obligation").
-- The invoice starts as **Open** and parents are instantly notified in their portal.
-
-If a student joins mid-term, you can generate an invoice manually:
-1. Go to the student's profile.
-2. Click **Generate Invoice**.
-
-[SCREENSHOT: /bursar/invoices — showing a list of unpaid and partially paid invoices]
+1. On the **Fee Structures** page, locate your newly created template.
+2. Click **Generate Invoices**.
+3. Review the preview summary of the charges and the target classes.
+4. Click **Generate**. EduTrack will automatically create an unpaid invoice for every student in the assigned classes. 
+   *(Note: The system is smart enough to skip students who already have an invoice from this specific template, preventing accidental double-billing).*
 
 ---
 
-## 4. The Blind Verification Flow (How Parents Pay)
+## 3. Financial Analytics Dashboard
+
+The Financial Analytics dashboard provides a high-level view of fee collections and cash flow.
+
+1. Navigate to **Finances → Analytics**. [Link: /dashboard/finance]
+2. **Term Selector:** Use the dropdown in the top right to filter data by academic term.
+3. **KPI Cards:** Instantly view Total Expected, Total Collected, Outstanding Arrears, and your Collection Rate.
+4. **Collection by Class:** A breakdown comparing expected vs. collected fees per class to identify which classes are lagging.
+5. **Payment Trend:** An 8-week sparkline showing payment volumes to help forecast cash flow.
+6. **Defaulter Aging:** Students with outstanding balances are grouped into time buckets (0-30 days, 31-60 days, 60+ days) so you can prioritize follow-ups on critical defaulters.
+
+---
+
+## 4. The Blind Verification Flow (Collections)
 
 When a parent pays school fees, EduTrack handles the reconciliation automatically using two independent submissions:
 
 ### Step A: The Parent's Submission
 1. The parent pays the fees directly to the school's bank account or mobile wallet (off-platform).
-2. The parent logs into their portal, clicks **Submit Payment**, and simply pastes the transaction confirmation message they received (e.g., M-Pesa SMS or Bank SMS).
-3. The system automatically extracts the reference code, amount, currency, transaction fee, and date. The parent can verify these extracted details in real-time before clicking Submit.
-   *(Note: If a parent has no active fee invoice generated yet, the system provides a fallback option to check back later or make an advance payment).*
+2. The parent logs into their portal, clicks **Submit Payment**, and pastes the transaction confirmation message they received (e.g., M-Pesa SMS or Bank SMS).
+3. The system automatically extracts the reference code, amount, currency, transaction fee, and date. The parent verifies these extracted details before clicking Submit.
 
 ### Step B: The Bursar's Receipt
 1. The Bursar looks at the school's actual bank or M-Pesa statement.
-2. The Bursar logs into EduTrack, navigates to **Finances** → **Record Bulk Receipts**.
+2. The Bursar logs into EduTrack, navigates to **Finances → Record Bulk Receipts**.
 3. The Bursar inputs the reference codes and amounts exactly as they appear on the bank statement.
 
 ### The Match
@@ -68,15 +70,4 @@ The EduTrack Engine continuously runs in the background. When it sees that the P
 - If the balance hits 0, the invoice status changes to **Settled**.
 - A digital receipt is generated and instantly available in the parent's portal.
 
-[SCREENSHOT: /bursar/payments/match-ledger — showing successful auto-matches]
-
----
-
-## 5. Handling Fee Balances & Arrears
-
-If a student has not paid in full by the due date:
-- Their invoice status changes to **Partial** or **Open**.
-- You can apply a manual penalty charge by opening the invoice and clicking **Add Charge**.
-- You can use the **Communications** tab to send bulk SMS reminders to all parents with overdue balances.
-
-[Link: /bursar/dashboard]
+[Link: /dashboard/finance]
