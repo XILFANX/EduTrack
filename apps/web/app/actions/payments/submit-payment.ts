@@ -56,7 +56,7 @@ export async function submitPayerPayment(input: PayerSubmissionInput) {
     .single()
 
   if (oblErr || !obligation) return { error: 'Obligation not found.' }
-  if (obligation.status === 'settled') return { error: 'This obligation is already fully settled.' }
+  // Note: we allow payments on 'settled' obligations to support advance payments (credits)
   if (obligation.status === 'cancelled') return { error: 'This obligation has been cancelled.' }
 
   // EduTrack payer validation:

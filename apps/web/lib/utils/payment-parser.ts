@@ -54,6 +54,7 @@ export function formatParsedTimestamp(isoStr: string | null | undefined): string
 // Matches:  KES 42,000   Ksh453.81   KES453.81   USD 1,234.56   UGX45000   GHS 200.00
 // The key fix: currency prefix is immediately followed (optional space) by the amount.
 // Uses non-capturing optional space so: `KES42000` and `KES 42,000` both work.
+const CURRENCY_PREFIX = /(?:KES|Ksh|USD|UGX|TZS|NGN|GBP|ZAR|EUR|CAD|AUD|GHS|XOF|ETB|RWF|ZMW)\s*/i
 
 function extractAmount(text: string): { amount: number | null; currency: string | null } {
   // Priority 1: currency-prefixed amount (handles glued and spaced variants)
@@ -177,7 +178,7 @@ function extractTimestamp(text: string): { ts: string; isDeviceSourced: boolean 
     } catch { /* ignore */ }
   }
   // Fallback to device time
-  return { ts: new Date().toISOString(), isDeviceSourced: true }
+  return { ts: null as unknown as string, isDeviceSourced: false }
 }
 
 // ─────────────────────────────────────────────────────────────────────────────

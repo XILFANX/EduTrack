@@ -116,10 +116,25 @@ export default async function BursarBillingPage() {
     : isGrace   ? 'text-orange-400'
     : 'text-blue-400'
 
-  const pendingObligations = (subscriptionObligations ?? []) as Array<{
+  let pendingObligations = (subscriptionObligations ?? []) as Array<{
     id: string; amount_due: number; currency: string; period_label: string
     status: string; balance: number; due_date: string; created_at: string
   }>
+
+  if (pendingObligations.length === 0) {
+    const { data: latestObligation } = await admin
+      .from('obligations')
+      .select('id, amount_due, currency, period_label, status, balance, due_date, created_at')
+      .eq('payer_account_id', profile.school_id)
+      .eq('type', 'edutrack_subscription')
+      .order('due_date', { ascending: false })
+      .limit(1)
+      .single()
+
+    if (latestObligation) {
+      pendingObligations = [latestObligation]
+    }
+  }
 
   return (
     <div className="p-4 md:p-6 space-y-6 max-w-3xl mx-auto">
@@ -214,7 +229,7 @@ export default async function BursarBillingPage() {
           </div>
           <div className="p-5 space-y-5">
             <p className="text-sm text-muted-foreground">
-              {pendingObligations.length} outstanding subscription obligation{pendingObligations.length > 1 ? 's' : ''}.
+              {pendingObligations.length === 0 ? 'No outstanding' : pendingObligations.length} subscription obligation{pendingObligations.length > 1 ? 's' : ''}.
               Paste your payment confirmation message to record and verify your payment.
             </p>
             {pendingObligations.map((obl) => (
