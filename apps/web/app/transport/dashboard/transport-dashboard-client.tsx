@@ -31,9 +31,8 @@ export function TransportDashboardClient({
   return (
     <div className="space-y-6 pb-24">
       {/* Hero */}
-      <div className="relative bg-gradient-to-br from-blue-700 via-blue-700 to-blue-900 rounded-3xl p-6 overflow-hidden text-white shadow-xl">
-        <div className="absolute -top-12 -right-12 w-48 h-48 rounded-full bg-blue-400/20 blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-32 h-32 rounded-full bg-blue-300/10 blur-2xl pointer-events-none" />
+      <div className="relative bg-gradient-to-br from-blue-600 via-blue-500 to-blue-500 rounded-[2rem] p-6 overflow-hidden text-white shadow-xl">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-[50px] rounded-full pointer-events-none" />
 
         <div className="relative z-10">
           <div className="flex items-center gap-3 mb-5">
@@ -62,24 +61,33 @@ export function TransportDashboardClient({
       </div>
 
       {/* Quick Actions */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        {[
-          { label: 'Manage Routes', href: '/transport/routes', icon: MapPin, color: 'text-blue-600', bg: 'bg-blue-50 dark:bg-blue-900/20', border: 'border-blue-100 dark:border-blue-800/30' },
-          { label: 'Log Boarding', href: '/transport/logs', icon: CheckCircle2, color: 'text-blue-600', bg: 'bg-blue-50 dark:bg-blue-900/20', border: 'border-blue-100 dark:border-blue-800/30' },
-          { label: 'Fleet', href: '/transport/fleet', icon: Bus, color: 'text-blue-600', bg: 'bg-blue-50 dark:bg-blue-900/20', border: 'border-blue-100 dark:border-blue-800/30' },
-          { label: 'Assigned Students', href: '/transport/routes', icon: Users, color: 'text-purple-600', bg: 'bg-purple-50 dark:bg-purple-900/20', border: 'border-purple-100 dark:border-purple-800/30' },
-        ].map((a, i) => {
-          const Icon = a.icon
-          return (
-            <Link key={i} href={a.href}
-              className={`flex flex-col items-center gap-2 p-4 ${a.bg} border ${a.border} rounded-2xl hover:scale-[1.02] transition-all text-center`}>
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-white dark:bg-slate-900 shadow-sm">
-                <Icon className={`w-5 h-5 ${a.color}`} />
-              </div>
-              <span className="text-xs font-semibold text-foreground">{a.label}</span>
-            </Link>
-          )
-        })}
+      <div>
+        <h2 className="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-3 mt-2">QUICK ACTIONS</h2>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          {[
+            { label: 'Manage Routes', sublabel: 'View all routes', href: '/transport/routes', icon: MapPin },
+            { label: 'Log Boarding', sublabel: 'Record activity', href: '/transport/logs', icon: CheckCircle2 },
+            { label: 'Fleet', sublabel: 'Vehicles', href: '/transport/fleet', icon: Bus },
+            { label: 'Students', sublabel: 'Assignments', href: '/transport/routes', icon: Users },
+          ].map((a, i) => {
+            const Icon = a.icon
+            return (
+              <Link
+                key={i}
+                href={a.href}
+                className="flex flex-col items-center gap-2 p-4 bg-card hover:bg-slate-50 dark:hover:bg-slate-900/50 border border-border hover:border-blue-500/50 rounded-2xl hover:scale-[1.02] transition-all text-center shadow-sm group"
+              >
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800/30 group-hover:bg-blue-100 dark:group-hover:bg-blue-800/40 transition-colors">
+                  <Icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                </div>
+                <div className="text-center min-w-0 w-full mt-1">
+                  <p className="font-bold text-xs text-foreground truncate">{a.label}</p>
+                  <p className="text-[10px] text-muted-foreground truncate hidden sm:block mt-0.5">{a.sublabel}</p>
+                </div>
+              </Link>
+            )
+          })}
+        </div>
       </div>
 
       {/* Routes overview */}
@@ -95,7 +103,7 @@ export function TransportDashboardClient({
             </Link>
           </div>
           <div className="divide-y divide-border">
-            {routes.slice(0, 5).map((route: any, i: number) => {
+            {routes.slice(0, 3).map((route: any, i: number) => {
               const assigned = studentRoutes.filter(sr => sr.route_id === route.id).length
               const pct = route.capacity > 0 ? Math.min(100, (assigned / route.capacity) * 100) : 0
               return (
@@ -145,7 +153,7 @@ export function TransportDashboardClient({
           </div>
         ) : (
           <div className="divide-y divide-border">
-            {todayLogs.slice(0, 8).map((log: any, i: number) => {
+            {todayLogs.slice(0, 3).map((log: any, i: number) => {
               const cfg = LOG_STATUS[log.status] || LOG_STATUS.boarded
               const Icon = cfg.icon
               return (

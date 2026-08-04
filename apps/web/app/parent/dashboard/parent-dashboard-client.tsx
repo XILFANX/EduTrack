@@ -27,7 +27,7 @@ export function ParentDashboardClient({ childrenList, recentPayments }: { childr
     <div className="space-y-6">
       {/* Hero */}
       <div className="bg-gradient-to-br from-blue-600 via-blue-500 to-blue-500 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 blur-[40px] rounded-full pointer-events-none" />
+        <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-[50px] rounded-full pointer-events-none" />
         <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center">
@@ -73,30 +73,49 @@ export function ParentDashboardClient({ childrenList, recentPayments }: { childr
         </div>
       </div>
 
+      {/* Quick Actions */}
+      <div>
+        <h2 className="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-3 mt-2">QUICK ACTIONS</h2>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          {[
+            { href: '/parent/payments', label: 'Pay Fees', sublabel: 'Clear balances', icon: Wallet },
+            { href: '/parent/academics', label: 'Academics', sublabel: 'View reports', icon: GraduationCap },
+            { href: '/parent/messages', label: 'Messages', sublabel: 'School comms', icon: Bell },
+            { href: '/parent/attendance', label: 'Attendance', sublabel: 'Daily logs', icon: CheckCircle2 },
+          ].map(({ href, label, sublabel, icon: Icon }) => (
+            <div
+              key={href}
+              onClick={() => window.location.href = href}
+              className="flex flex-col items-center gap-2 p-4 bg-card hover:bg-slate-50 dark:hover:bg-slate-900/50 border border-border hover:border-blue-500/50 rounded-2xl hover:scale-[1.02] transition-all text-center shadow-sm cursor-pointer group"
+            >
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800/30 group-hover:bg-blue-100 dark:group-hover:bg-blue-800/40 transition-colors">
+                <Icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+              </div>
+              <div className="text-center min-w-0 w-full mt-1">
+                <p className="font-bold text-xs text-foreground truncate">{label}</p>
+                <p className="text-[10px] text-muted-foreground truncate hidden sm:block mt-0.5">{sublabel}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Fees Widget */}
-        <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-3xl p-6 text-white shadow-md relative overflow-hidden">
-          <div className="absolute right-0 top-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -mr-10 -mt-10" />
-          <div className="flex items-center justify-between mb-4 relative z-10">
-            <div className="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
-              <Wallet className="w-6 h-6 text-white" />
+        <div className="bg-card border border-border rounded-3xl p-6 shadow-sm">
+          <div className="flex items-center justify-between mb-4">
+            <div className="w-12 h-12 rounded-2xl bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800/30 flex items-center justify-center">
+              <Wallet className="w-6 h-6 text-blue-600 dark:text-blue-400" />
             </div>
           </div>
-          <p className="text-blue-50 font-medium mb-1 relative z-10">Current Fee Balance</p>
-          <h3 className="text-3xl font-bold text-white relative z-10">KES 12,500</h3>
-          
-          <Button 
-            className="w-full mt-6 bg-white hover:bg-slate-50 text-blue-700 font-bold rounded-xl shadow-sm relative z-10"
-            onClick={() => window.location.href = '/parent/payments'}
-          >
-            Pay Fees
-          </Button>
+          <p className="text-sm text-muted-foreground font-medium mb-1">Current Fee Balance</p>
+          <h3 className="text-3xl font-bold text-foreground">KES 12,500</h3>
         </div>
 
         {/* Academics Widget */}
-        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm">
+        <div className="bg-card border border-border rounded-3xl p-6 shadow-sm">
           <div className="flex items-center justify-between mb-4">
-            <div className="w-12 h-12 rounded-2xl bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center">
+            <div className="w-12 h-12 rounded-2xl bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800/30 flex items-center justify-center">
               <GraduationCap className="w-6 h-6 text-blue-600 dark:text-blue-400" />
             </div>
           </div>
@@ -105,10 +124,6 @@ export function ParentDashboardClient({ childrenList, recentPayments }: { childr
             <h3 className="text-3xl font-bold text-foreground">A-</h3>
             <span className="text-sm font-semibold text-blue-600">Top 15%</span>
           </div>
-          
-          <Button variant="outline" className="w-full mt-6 font-semibold rounded-xl border-slate-200 dark:border-slate-800">
-            View Full Report Card
-          </Button>
         </div>
       </div>
 
@@ -121,7 +136,7 @@ export function ParentDashboardClient({ childrenList, recentPayments }: { childr
           <p className="text-sm text-muted-foreground py-4 text-center">No payment history found.</p>
         ) : (
           <div className="space-y-4">
-            {recentPayments.map((p, i) => (
+            {recentPayments.slice(0, 3).map((p, i) => (
               <div key={i} className="border-l-2 border-blue-500 pl-4 py-1">
                 <p className="text-sm font-medium text-foreground">KES {Number(p.amount).toLocaleString()} Received</p>
                 <p className="text-xs text-muted-foreground mt-0.5">

@@ -93,7 +93,7 @@ export default async function TeacherDashboard() {
       <div className="space-y-6 pb-4">
         {/* Class Hero */}
         <div className="bg-gradient-to-br from-blue-600 via-blue-500 to-blue-500 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 blur-[40px] rounded-full pointer-events-none" />
+          <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-[50px] rounded-full pointer-events-none" />
           <div className="relative z-10">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center text-white font-black text-lg">
@@ -158,20 +158,30 @@ export default async function TeacherDashboard() {
         )}
 
         {/* Quick Actions */}
-        <div className="grid grid-cols-2 gap-3">
-          {[
-            { href: '/teacher/attendance', label: 'Take Attendance', icon: ClipboardList, color: 'text-blue-500', bg: 'bg-blue-50 dark:bg-blue-900/20' },
-            { href: '/teacher/grades', label: 'Enter Grades', icon: TrendingUp, color: 'text-blue-500', bg: 'bg-blue-50 dark:bg-blue-900/20' },
-            { href: '/teacher/students', label: 'My Students', icon: Users, color: 'text-blue-500', bg: 'bg-blue-50 dark:bg-blue-900/20' },
-            { href: '/teacher/discipline', label: 'Discipline Log', icon: GraduationCap, color: 'text-orange-500', bg: 'bg-orange-50 dark:bg-orange-900/20' },
-          ].map(({ href, label, icon: Icon, color, bg }) => (
-            <Link key={href} href={href} className={`flex items-center gap-3 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors shadow-sm`}>
-              <div className={`w-9 h-9 rounded-xl ${bg} flex items-center justify-center shrink-0`}>
-                <Icon className={`w-5 h-5 ${color}`} />
-              </div>
-              <span className="font-semibold text-sm text-foreground">{label}</span>
-            </Link>
-          ))}
+        <div>
+          <h2 className="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-3 mt-2">QUICK ACTIONS</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            {[
+              { href: '/teacher/attendance', label: 'Attendance', sublabel: 'Daily log', icon: ClipboardList },
+              { href: '/teacher/grades', label: 'Grades', sublabel: 'Academics', icon: TrendingUp },
+              { href: '/teacher/students', label: 'Students', sublabel: 'Class roster', icon: Users },
+              { href: '/teacher/discipline', label: 'Discipline', sublabel: 'Behavior', icon: GraduationCap },
+            ].map(({ href, label, sublabel, icon: Icon }) => (
+              <Link
+                key={href}
+                href={href}
+                className="flex flex-col items-center gap-2 p-4 bg-card hover:bg-slate-50 dark:hover:bg-slate-900/50 border border-border hover:border-blue-500/50 rounded-2xl hover:scale-[1.02] transition-all text-center shadow-sm group"
+              >
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800/30 group-hover:bg-blue-100 dark:group-hover:bg-blue-800/40 transition-colors">
+                  <Icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                </div>
+                <div className="text-center min-w-0 w-full mt-1">
+                  <p className="font-bold text-xs text-foreground truncate">{label}</p>
+                  <p className="text-[10px] text-muted-foreground truncate hidden sm:block mt-0.5">{sublabel}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
     )
@@ -205,7 +215,7 @@ export default async function TeacherDashboard() {
     <div className="space-y-6 pb-4">
       {/* Hero */}
       <div className="bg-gradient-to-br from-blue-600 via-blue-500 to-blue-500 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 blur-[40px] rounded-full pointer-events-none" />
+        <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-[50px] rounded-full pointer-events-none" />
         <div className="relative z-10">
           <div className="flex items-center gap-3 mb-5">
             <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center">

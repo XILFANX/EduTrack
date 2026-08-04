@@ -29,9 +29,8 @@ export function LibraryDashboardClient({ stats, borrowedBooks }: {
   return (
     <div className="space-y-6 pb-24">
       {/* Hero */}
-      <div className="relative bg-gradient-to-br from-blue-700 via-purple-700 to-blue-900 rounded-3xl p-6 overflow-hidden text-white shadow-xl">
-        <div className="absolute -top-12 -right-12 w-48 h-48 rounded-full bg-purple-500/20 blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-32 h-32 rounded-full bg-blue-400/10 blur-2xl pointer-events-none" />
+      <div className="relative bg-gradient-to-br from-blue-600 via-blue-500 to-blue-500 rounded-[2rem] p-6 overflow-hidden text-white shadow-xl">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-[50px] rounded-full pointer-events-none" />
 
         <div className="relative z-10">
           <div className="flex items-center gap-3 mb-5">
@@ -75,24 +74,33 @@ export function LibraryDashboardClient({ stats, borrowedBooks }: {
       </div>
 
       {/* Quick actions */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        {[
-          { label: 'Issue Book', href: '/library/issues', icon: BookMarked, color: 'text-blue-600', bg: 'bg-blue-50 dark:bg-blue-900/20', border: 'border-blue-100 dark:border-blue-800/30' },
-          { label: 'Return Book', href: '/library/issues', icon: CheckCircle2, color: 'text-blue-600', bg: 'bg-blue-50 dark:bg-blue-900/20', border: 'border-blue-100 dark:border-blue-800/30' },
-          { label: 'All Books', href: '/library/books', icon: BookOpen, color: 'text-purple-600', bg: 'bg-purple-50 dark:bg-purple-900/20', border: 'border-purple-100 dark:border-purple-800/30' },
-          { label: 'Overdue', href: '/library/issues', icon: AlertOctagon, color: 'text-orange-600', bg: 'bg-orange-50 dark:bg-orange-900/20', border: 'border-orange-100 dark:border-orange-800/30' },
-        ].map((a, i) => {
-          const Icon = a.icon
-          return (
-            <Link key={i} href={a.href}
-              className={`flex flex-col items-center gap-2 p-4 ${a.bg} border ${a.border} rounded-2xl hover:scale-[1.02] transition-all text-center group`}>
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-white dark:bg-slate-900 shadow-sm">
-                <Icon className={`w-5 h-5 ${a.color}`} />
-              </div>
-              <span className="text-xs font-semibold text-foreground">{a.label}</span>
-            </Link>
-          )
-        })}
+      <div>
+        <h2 className="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-3 mt-2">QUICK ACTIONS</h2>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          {[
+            { label: 'Issue Book', sublabel: 'Lend out', href: '/library/issues', icon: BookMarked },
+            { label: 'Return Book', sublabel: 'Check in', href: '/library/issues', icon: CheckCircle2 },
+            { label: 'All Books', sublabel: 'Inventory', href: '/library/books', icon: BookOpen },
+            { label: 'Overdue', sublabel: 'Follow ups', href: '/library/issues', icon: AlertOctagon },
+          ].map((a, i) => {
+            const Icon = a.icon
+            return (
+              <Link
+                key={i}
+                href={a.href}
+                className="flex flex-col items-center gap-2 p-4 bg-card hover:bg-slate-50 dark:hover:bg-slate-900/50 border border-border hover:border-blue-500/50 rounded-2xl hover:scale-[1.02] transition-all text-center shadow-sm group"
+              >
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800/30 group-hover:bg-blue-100 dark:group-hover:bg-blue-800/40 transition-colors">
+                  <Icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                </div>
+                <div className="text-center min-w-0 w-full mt-1">
+                  <p className="font-bold text-xs text-foreground truncate">{a.label}</p>
+                  <p className="text-[10px] text-muted-foreground truncate hidden sm:block mt-0.5">{a.sublabel}</p>
+                </div>
+              </Link>
+            )
+          })}
+        </div>
       </div>
 
       {/* Currently Borrowed */}
@@ -114,7 +122,7 @@ export function LibraryDashboardClient({ stats, borrowedBooks }: {
           </div>
         ) : (
           <div className="divide-y divide-border">
-            {borrowedBooks.slice(0, 8).map((issue, i) => {
+            {borrowedBooks.slice(0, 3).map((issue, i) => {
               const days = daysSince(issue.issued_at)
               const isOverdue = issue.due_date && new Date(issue.due_date) < new Date()
               return (

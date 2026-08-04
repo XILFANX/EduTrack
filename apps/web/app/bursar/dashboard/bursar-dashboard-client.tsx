@@ -23,10 +23,8 @@ export function BursarDashboardClient({ stats, recentPayments }: { stats: any; r
   return (
     <div className="space-y-6 pb-24">
       {/* Premium hero banner */}
-      <div className="relative bg-gradient-to-br from-blue-700 via-teal-700 to-blue-900 rounded-3xl p-6 overflow-hidden text-white shadow-xl">
-        {/* decorative blobs */}
-        <div className="absolute -top-12 -right-12 w-48 h-48 rounded-full bg-blue-500/20 blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-32 h-32 rounded-full bg-blue-400/10 blur-2xl pointer-events-none" />
+      <div className="bg-gradient-to-br from-blue-600 via-blue-500 to-blue-500 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-[50px] rounded-full pointer-events-none" />
 
         <div className="relative z-10 flex flex-col sm:flex-row sm:items-center gap-6">
           <div className="flex-1">
@@ -78,23 +76,25 @@ export function BursarDashboardClient({ stats, recentPayments }: { stats: any; r
       {/* Quick Actions */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {[
-          { label: 'Verify Fees', href: '/bursar/payments', icon: CheckCircle2, color: 'text-blue-600', bg: 'bg-blue-50 dark:bg-blue-900/20', border: 'border-blue-100 dark:border-blue-800/30' },
-          { label: 'Defaulters List', href: '/bursar/invoices', icon: AlertTriangle, color: 'text-blue-600', bg: 'bg-blue-50 dark:bg-blue-900/20', border: 'border-blue-100 dark:border-blue-800/30' },
-          { label: 'Fee Structures', href: '/bursar/fee-structures', icon: BarChart3, color: 'text-blue-600', bg: 'bg-blue-50 dark:bg-blue-900/20', border: 'border-blue-100 dark:border-blue-800/30' },
-          { label: 'Ledger', href: '/bursar/ledger', icon: Banknote, color: 'text-blue-600', bg: 'bg-blue-50 dark:bg-blue-900/20', border: 'border-blue-100 dark:border-blue-800/30' },
+          { label: 'Verify Fees', sublabel: 'Record payments', href: '/bursar/payments', icon: CheckCircle2 },
+          { label: 'Defaulters List', sublabel: 'View unpaid', href: '/bursar/invoices', icon: AlertTriangle },
+          { label: 'Fee Structures', sublabel: 'Manage terms', href: '/bursar/fee-structures', icon: BarChart3 },
+          { label: 'Ledger', sublabel: 'Transaction log', href: '/bursar/ledger', icon: Banknote },
         ].map((action, i) => {
           const Icon = action.icon
           return (
             <Link
               key={i}
               href={action.href}
-              className={`flex flex-col items-center gap-2 p-4 ${action.bg} border ${action.border} rounded-2xl hover:scale-[1.02] transition-all text-center group`}
+              className="flex flex-col items-center gap-2 p-4 bg-card hover:bg-slate-50 dark:hover:bg-slate-900/50 border border-border hover:border-blue-500/50 rounded-2xl hover:scale-[1.02] transition-all text-center shadow-sm group"
             >
-              <div className={`w-10 h-10 rounded-xl flex items-center justify-center bg-white dark:bg-slate-900 shadow-sm`}>
-                <Icon className={`w-5 h-5 ${action.color}`} />
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800/30 group-hover:bg-blue-100 dark:group-hover:bg-blue-800/40 transition-colors">
+                <Icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
               </div>
-              <span className="text-xs font-semibold text-foreground">{action.label}</span>
-              <ChevronRight className={`w-3.5 h-3.5 ${action.color} opacity-0 group-hover:opacity-100 transition-opacity`} />
+              <div className="text-center min-w-0 w-full mt-1">
+                <p className="font-bold text-xs text-foreground truncate">{action.label}</p>
+                <p className="text-[10px] text-muted-foreground truncate hidden sm:block mt-0.5">{action.sublabel}</p>
+              </div>
             </Link>
           )
         })}
@@ -116,7 +116,7 @@ export function BursarDashboardClient({ stats, recentPayments }: { stats: any; r
           </div>
         ) : (
           <div className="divide-y divide-border">
-            {recentPayments.slice(0, 8).map((p: any, i: number) => {
+            {recentPayments.slice(0, 3).map((p: any, i: number) => {
               const cfg = STATUS_CONFIG[p.status] || STATUS_CONFIG.unpaid
               return (
                 <div key={i} className="flex items-center gap-4 px-5 py-3.5 hover:bg-slate-50/60 dark:hover:bg-slate-900/30 transition-colors">
@@ -143,18 +143,18 @@ export function BursarDashboardClient({ stats, recentPayments }: { stats: any; r
       {/* Debt analysis chart-like cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {[
-          { label: 'Fully Paid', icon: CheckCircle2, value: `—`, sub: 'students cleared', color: 'cyan' },
-          { label: 'Partial Payers', icon: AlertTriangle, value: `—`, sub: 'still outstanding', color: 'amber' },
-          { label: 'Not Paid', icon: TrendingDown, value: `—`, sub: 'zero payment', color: 'red' },
+          { label: 'Fully Paid', icon: CheckCircle2, value: `—`, sub: 'students cleared' },
+          { label: 'Partial Payers', icon: AlertTriangle, value: `—`, sub: 'still outstanding' },
+          { label: 'Not Paid', icon: TrendingDown, value: `—`, sub: 'zero payment' },
         ].map((card, i) => {
           const Icon = card.icon
           return (
-            <div key={i} className={`bg-${card.color}-50 dark:bg-${card.color}-900/10 border border-${card.color}-100 dark:border-${card.color}-800/30 rounded-2xl p-4 flex items-center gap-4`}>
-              <div className={`w-10 h-10 rounded-xl bg-${card.color}-100 dark:bg-${card.color}-900/40 flex items-center justify-center shrink-0`}>
-                <Icon className={`w-5 h-5 text-${card.color}-600 dark:text-${card.color}-400`} />
+            <div key={i} className="bg-card border border-border rounded-2xl p-4 flex items-center gap-4">
+              <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800/30 flex items-center justify-center shrink-0">
+                <Icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
               </div>
               <div>
-                <p className={`text-xl font-extrabold text-${card.color}-700 dark:text-${card.color}-400`}>{card.value}</p>
+                <p className="text-xl font-extrabold text-foreground">{card.value}</p>
                 <p className="text-xs text-muted-foreground">{card.label}</p>
               </div>
             </div>

@@ -24,9 +24,8 @@ export function StoreDashboardClient({
   return (
     <div className="space-y-6 pb-24">
       {/* Hero */}
-      <div className="relative bg-gradient-to-br from-orange-600 via-orange-600 to-orange-900 rounded-3xl p-6 overflow-hidden text-white shadow-xl">
-        <div className="absolute -top-12 -right-12 w-48 h-48 rounded-full bg-orange-400/20 blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-32 h-32 rounded-full bg-orange-300/10 blur-2xl pointer-events-none" />
+      <div className="relative bg-gradient-to-br from-blue-600 via-blue-500 to-blue-500 rounded-[2rem] p-6 overflow-hidden text-white shadow-xl">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-[50px] rounded-full pointer-events-none" />
 
         <div className="relative z-10">
           <div className="flex items-center gap-3 mb-5">
@@ -35,7 +34,7 @@ export function StoreDashboardClient({
             </div>
             <div>
               <h1 className="text-2xl font-black tracking-tight">Store Inventory</h1>
-              <p className="text-orange-200 text-sm">Track school supplies and disbursements</p>
+              <p className="text-blue-200 text-sm">Track school supplies and disbursements</p>
             </div>
           </div>
 
@@ -48,7 +47,7 @@ export function StoreDashboardClient({
             ].map((s, i) => (
               <div key={i} className="bg-white/10 backdrop-blur-sm rounded-2xl px-3 py-3 text-center">
                 <p className="text-2xl font-extrabold text-white">{s.value}</p>
-                <p className="text-[10px] text-orange-200 font-semibold uppercase tracking-wide mt-0.5">{s.label}</p>
+                <p className="text-[10px] text-blue-200 font-semibold uppercase tracking-wide mt-0.5">{s.label}</p>
               </div>
             ))}
           </div>
@@ -56,24 +55,33 @@ export function StoreDashboardClient({
       </div>
 
       {/* Quick Actions */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        {[
-          { label: 'Log Stock In', href: '/store/ledger', icon: ArrowDownToLine, color: 'text-blue-600', bg: 'bg-blue-50 dark:bg-blue-900/20', border: 'border-blue-100 dark:border-blue-800/30' },
-          { label: 'Disburse Items', href: '/store/ledger', icon: ArrowUpFromLine, color: 'text-orange-600', bg: 'bg-orange-50 dark:bg-orange-900/20', border: 'border-orange-100 dark:border-orange-800/30' },
-          { label: 'View All Stock', href: '/store/stock', icon: Boxes, color: 'text-orange-600', bg: 'bg-orange-50 dark:bg-orange-900/20', border: 'border-orange-100 dark:border-orange-800/30' },
-          { label: 'New Item', href: '/store/stock', icon: Plus, color: 'text-blue-600', bg: 'bg-blue-50 dark:bg-blue-900/20', border: 'border-blue-100 dark:border-blue-800/30' },
-        ].map((a, i) => {
-          const Icon = a.icon
-          return (
-            <Link key={i} href={a.href}
-              className={`flex flex-col items-center gap-2 p-4 ${a.bg} border ${a.border} rounded-2xl hover:scale-[1.02] transition-all text-center`}>
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-white dark:bg-slate-900 shadow-sm">
-                <Icon className={`w-5 h-5 ${a.color}`} />
-              </div>
-              <span className="text-xs font-semibold text-foreground">{a.label}</span>
-            </Link>
-          )
-        })}
+      <div>
+        <h2 className="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-3 mt-2">QUICK ACTIONS</h2>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          {[
+            { label: 'Log Stock In', sublabel: 'Receive items', href: '/store/ledger', icon: ArrowDownToLine },
+            { label: 'Disburse Items', sublabel: 'Give out', href: '/store/ledger', icon: ArrowUpFromLine },
+            { label: 'View All Stock', sublabel: 'Inventory', href: '/store/stock', icon: Boxes },
+            { label: 'New Item', sublabel: 'Add to catalog', href: '/store/stock', icon: Plus },
+          ].map((a, i) => {
+            const Icon = a.icon
+            return (
+              <Link
+                key={i}
+                href={a.href}
+                className="flex flex-col items-center gap-2 p-4 bg-card hover:bg-slate-50 dark:hover:bg-slate-900/50 border border-border hover:border-blue-500/50 rounded-2xl hover:scale-[1.02] transition-all text-center shadow-sm group"
+              >
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800/30 group-hover:bg-blue-100 dark:group-hover:bg-blue-800/40 transition-colors">
+                  <Icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                </div>
+                <div className="text-center min-w-0 w-full mt-1">
+                  <p className="font-bold text-xs text-foreground truncate">{a.label}</p>
+                  <p className="text-[10px] text-muted-foreground truncate hidden sm:block mt-0.5">{a.sublabel}</p>
+                </div>
+              </Link>
+            )
+          })}
+        </div>
       </div>
 
       {/* Low stock warnings */}
@@ -113,7 +121,7 @@ export function StoreDashboardClient({
             </div>
           ) : (
             <div className="divide-y divide-border">
-              {recentTransactions.filter(t => t.transaction_type === 'in').slice(0, 5).map((tx: any, i: number) => (
+              {recentTransactions.filter(t => t.transaction_type === 'in').slice(0, 3).map((tx: any, i: number) => (
                 <div key={i} className="flex items-center gap-3 px-5 py-3 hover:bg-slate-50/60 dark:hover:bg-slate-900/20 transition-colors">
                   <div className="w-8 h-8 rounded-xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center shrink-0">
                     <ArrowDownToLine className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
@@ -142,7 +150,7 @@ export function StoreDashboardClient({
             </div>
           ) : (
             <div className="divide-y divide-border">
-              {recentTransactions.filter(t => t.transaction_type === 'out').slice(0, 5).map((tx: any, i: number) => (
+              {recentTransactions.filter(t => t.transaction_type === 'out').slice(0, 3).map((tx: any, i: number) => (
                 <div key={i} className="flex items-center gap-3 px-5 py-3 hover:bg-slate-50/60 dark:hover:bg-slate-900/20 transition-colors">
                   <div className="w-8 h-8 rounded-xl bg-orange-50 dark:bg-orange-900/20 flex items-center justify-center shrink-0">
                     <ArrowUpFromLine className="w-3.5 h-3.5 text-orange-600 dark:text-orange-400" />
