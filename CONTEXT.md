@@ -347,6 +347,7 @@ Hold on every documentation edit, not just first-draft generation:
 
 | Date | Mission | Outcome |
 |---|---|---|
+| 2026-08-04 | Tenant & Caretaker Portals Redesign — Redesigned Tenant and Caretaker dashboards from scratch to match the Landlord portal's premium UI (purple theme, floating nav, quick action grids, unified cards). | Shipped, pushed to `main` (EstateTrack `6569c80`) |
 | 2026-08-02 | Payment UX v5, Engine Flows, Nav Fixes, and Subscription Gating — Engine-driven validation phases, dynamic parsed currency and date formatting, portal navigation UX fixes, zero-obligation fallback CTAs, and generic subscription payment posting. | Shipped, pending push |
 | 2026-08-02 | UI Consistency, Navigation Overlaps, and Robust Parsing Enforcement — Standardized theme colors, fixed Nav overlap (hints vs quick access), unified PaymentRails to `mobile_money`, replaced M-Pesa till/paybill hardcoding, added missing Bursar/Landlord endpoints. | Shipped, pushed to `main` (EduTrack `abaa99a`, EstateTrack `9552e03`) |
 | 2026-08-01 | Payment Parsing & UI Consistency Enforcement — Rebuilt payment parser (M-Pesa/Bank detection, glued amounts KES453.81). Fixed portal navigation and Quick Actions (Verify Payments vs Record Payment). Ensured "Post Payment" form is accessible on zero balance. | Shipped, pushed to `main` |
