@@ -32,8 +32,43 @@ TASKS:
 | | Tier 1 — Per-task | Tier 2 — Mission gate |
 |---|---|---|
 | **When** | After implementing each task, before its docs or commit | Once, after every task is checked off |
-| **Scope** | `tsc --noEmit` + build + tests touching changed files | Full build + full lint + full test suite + doc re-sync |
-| **On fail** | Fix and re-run. Task stays uncommitted and undocumented. | Fix as tagged commit (e.g. `1.3-fix`). Reopen the task line. Re-run Tier 2. |
+| **Scope** | `npm run build` + lint + tests touching changed files | Full build + full lint + full test suite + doc re-sync |
+| **On fail** | Fix and re-run. Task stays uncommitted and undocumented. | Fix as tagged commit (e.g. `1.3-fix`). Reopen the task line. Re-run Tier 2 in full. |
+
+**Tier 1 — extra checks per task type:**
+- **External input / auth / tenant boundary** — validate input; no secrets hardcoded or logged; confirm Tenant A cannot read Tenant B's data.
+- **Schema migration** — confirm it is reversible; run against realistic data shape, not an empty dev DB.
+- **API shape change** — something must catch the contract break before a dependent service breaks in production.
+
+**Tier 2 — what "doc re-sync" means:**
+Every "Docs affected" path across the whole plan still matches current behavior. A fix made during Tier 2 can invalidate a doc that was already correct at Tier 1 — re-check all of them, not just the tasks that changed.
+
+---
+
+## Documentation Bootstrap
+
+Runs once per doc set when `docs/internal-devsguide/` and/or `docs/public-userguide/` don't exist. Treat as Milestone 1 of a normal `PLAN.md`/`TASKS.md`.
+
+1. **Discovery** — read any PRD/spec plus actual code; map modules, repo structure, dependency graph, APIs, data model, auth/tenant mechanism, config/env. Flag anything inferred rather than read directly.
+2. **Outline** — propose headings-only outlines for both doc sets using the Documentation Map as the file list. Get user sign-off before writing content — this is a separate gate from PLAN.md approval.
+3. **Populate, staged** — write `00-mission-and-overview.md` and `00-getting-started.md` first; pause and show the user before continuing. Catches wrong tone or depth early. Files under `04-legal-and-policies/` get factual inventory only + `DRAFT — requires legal review` marker.
+4. **Self-review** — Diátaxis boundaries hold per page; every internal "best practice" claim cites a real file reference; no user-guide page leaks jargon or internal names; every page is linked from its set's index.
+5. **Wire in** — add `CONTRIBUTING-TO-DOCS.md` to both doc roots pointing back to this file's Documentation Map, so future missions maintain instead of re-bootstrapping.
+
+---
+
+## Handling Drift
+
+Plans and docs are written on the best context available at the time — both are allowed to be wrong. When implementation contradicts `PLAN.md` or an existing doc:
+
+1. Stop. Fix the source of truth before continuing — update `PLAN.md` and add a doc-correction task to this plan.
+2. If drift is large enough to be its own mission (e.g. a whole architecture doc out of date), propose it as a separate follow-up rather than silently expanding scope.
+
+**When Tier 2 fails** (same procedure):
+1. Fix the code.
+2. Re-run Tier 2 in full until all four checks are clean.
+3. Land the fix as its own commit tagged to the originating task ID — e.g. `1.3-fix: correct null-handling exposed by integration gate`. Never amend or rebase the original; the fix-commit is the traceable evidence that Tier 2 did its job.
+4. Reopen that task's TASKS.md line; re-check it only after the fix's Tier 1 pass is clean and any newly invalidated doc is corrected in the same commit.
 
 ---
 
@@ -77,16 +112,17 @@ The "Docs affected" field in every task cites a row from this table or `none: <r
 
 ## History Log
 
+<!-- One line per shipped session. Newest on top. Cap: 10 rows — drop oldest when adding the 11th. -->
+
 | Date | Mission | Outcome |
 |---|---|---|
-| 2026-08-06 | UI Design System Canonicalization — locked cyan-blue hero across all EduTrack portals (Admin, Principal, Teacher, Parent, Bursar, Transport, Library, Store), orange alerts globally, max-3 list truncation everywhere | Shipped `22c1213` |
-| 2026-08-06 | Agent Harness Rewrite — Binary AGENTS.md gates, MISSION.md session scratchpad, slimmed CONTEXT.md, applied to EduTrack + EstateTrack | Shipped |
-| 2026-08-04 | EduTrack Core Modules Rewrite (Timetable, Exams, Fees, Analytics) — school-wide timetable grid, 3-stage exam grading workflow, fee templates/bulk invoicing, financial analytics dashboard | Shipped `246b8c2` |
-| 2026-08-04 | EduTrack Portals UI Refinement — blue hero across all subportals, Quick Actions grids, 3-item list truncation | Shipped |
-| 2026-08-04 | UI Refinement: Minimalist Dashboards — minimalist profile cards, removed duplicate buttons, 3-item list truncation, bg-card themes | Shipped `2c3ed64` |
-| 2026-08-04 | Tenant & Caretaker Portals Redesign — premium purple theme, floating nav, quick action grids | Shipped `6569c80` |
+| 2026-08-06 | Harness upgrade — merged Anthropic-style protocol into binary gates; added Verification Tiers, Bootstrap, Drift, Sync-to-remote; History Log capped at 10 rows | Shipped |
+| 2026-08-06 | UI Design System Canonicalization — cyan-blue hero all EduTrack portals, orange alerts, max-3 lists | Shipped `22c1213` |
+| 2026-08-06 | Agent Harness Rewrite — Binary gates, MISSION.md scratchpad, slimmed CONTEXT.md | Shipped |
+| 2026-08-04 | EduTrack Core Modules Rewrite (Timetable, Exams, Fees, Analytics) | Shipped `246b8c2` |
+| 2026-08-04 | EduTrack Portals UI Refinement — blue hero all subportals, Quick Actions, 3-item truncation | Shipped |
+| 2026-08-04 | UI Refinement: Minimalist Dashboards — profile cards, 3-item truncation, bg-card themes | Shipped `2c3ed64` |
+| 2026-08-04 | Tenant & Caretaker Portals Redesign — purple theme, floating nav, quick action grids | Shipped `6569c80` |
 | 2026-08-02 | Payment UX v5, Engine Flows, Nav Fixes, Subscription Gating | Shipped |
 | 2026-08-02 | UI Consistency, Navigation Overlaps, Robust Parsing Enforcement | Shipped `abaa99a` |
 | 2026-08-01 | Payment Parsing & UI Consistency — rebuilt M-Pesa/Bank parser, portal nav fixes | Shipped |
-| 2026-08-01 | Payment Settlement Reconciliation Engine (v4) | Shipped `3a9402a` |
-| 2026-07-31 | Payment Settlement Reconciliation Engine — full replacement (two-witness model) | Shipped `195ac59` |
