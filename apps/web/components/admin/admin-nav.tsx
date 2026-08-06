@@ -47,7 +47,7 @@ export function AdminNav({ isRoot }: { isRoot: boolean }) {
               
               <div className="relative z-10 flex flex-col items-center gap-1">
                 <div className="relative">
-                  <Icon className={`w-6 h-6 stroke-[2.5] transition-colors duration-300 ${
+                  <Icon className={`w-5 h-5 stroke-[2.5] transition-colors duration-300 ${
                     active 
                       ? 'text-white' 
                       : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300'
@@ -56,7 +56,7 @@ export function AdminNav({ isRoot }: { isRoot: boolean }) {
                     <UnreadMessagesBadge />
                   )}
                 </div>
-                <span className={`text-[10px] font-extrabold uppercase tracking-wide transition-colors duration-300 ${
+                <span className={`text-[9px] font-extrabold uppercase tracking-tight transition-colors duration-300 ${
                   active 
                     ? 'text-white/90' 
                     : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300'

@@ -70,7 +70,7 @@ export function PrincipalNav() {
               <Link
                 key={t.href}
                 href={t.href}
-                className="relative py-2.5 px-2 sm:px-3 rounded-2xl transition-all duration-300 group flex flex-col items-center flex-1"
+                className="relative py-2.5 px-1 rounded-2xl transition-all duration-300 group flex flex-col items-center flex-1 min-w-0"
               >
                 {active && !menuOpen && (
                   <motion.div
@@ -80,9 +80,9 @@ export function PrincipalNav() {
                   />
                 )}
                 <div className="relative z-10 flex flex-col items-center gap-1">
-                  <Icon className={`w-6 h-6 stroke-[2.5] transition-colors duration-300 ${active && !menuOpen ? 'text-white' : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300'
+                  <Icon className={`w-5 h-5 stroke-[2.5] transition-colors duration-300 ${active && !menuOpen ? 'text-white' : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300'
                     }`} />
-                  <span className={`text-[10px] font-extrabold uppercase tracking-wide transition-colors duration-300 ${active && !menuOpen ? 'text-white/90' : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300'
+                  <span className={`text-[9px] font-extrabold uppercase tracking-tight transition-colors duration-300 ${active && !menuOpen ? 'text-white/90' : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300'
                     }`}>
                     {t.label}
                   </span>
@@ -93,7 +93,7 @@ export function PrincipalNav() {
 
           <button
             onClick={() => setMenuOpen(true)}
-            className="relative py-2.5 px-2 sm:px-3 rounded-2xl transition-all duration-300 group flex flex-col items-center flex-1"
+            className="relative py-2.5 px-1 rounded-2xl transition-all duration-300 group flex flex-col items-center flex-1 min-w-0"
           >
             {(isMenuActive || menuOpen) && (
               <motion.div
@@ -103,9 +103,9 @@ export function PrincipalNav() {
               />
             )}
             <div className="relative z-10 flex flex-col items-center gap-1">
-              <Menu className={`w-6 h-6 stroke-[2.5] transition-colors duration-300 ${isMenuActive || menuOpen ? 'text-white' : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300'
+              <Menu className={`w-5 h-5 stroke-[2.5] transition-colors duration-300 ${isMenuActive || menuOpen ? 'text-white' : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300'
                 }`} />
-              <span className={`text-[10px] font-extrabold uppercase tracking-wide transition-colors duration-300 ${isMenuActive || menuOpen ? 'text-white/90' : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300'
+              <span className={`text-[9px] font-extrabold uppercase tracking-tight transition-colors duration-300 ${isMenuActive || menuOpen ? 'text-white/90' : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300'
                 }`}>
                 More
               </span>
