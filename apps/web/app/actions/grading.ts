@@ -68,9 +68,3 @@ export async function deleteGradeScale(id: string) {
   return { success: true }
 }
 
-/** Compute grade from a score using the school's grade scale */
-export function computeGrade(score: number, scales: GradeScaleInput[]): { grade: string; points: number; remarks: string | null } | null {
-  const match = scales.find(s => score >= s.min_score && score <= s.max_score)
-  if (!match) return null
-  return { grade: match.grade, points: match.points, remarks: match.remarks || null }
-}
