@@ -79,6 +79,7 @@ The "Docs affected" field in every task cites a row from this table or `none: <r
 
 | Date | Mission | Outcome |
 |---|---|---|
+| 2026-08-06 | UI Design System Canonicalization — locked cyan-blue hero across all EduTrack portals (Admin, Principal, Teacher, Parent, Bursar, Transport, Library, Store), orange alerts globally, max-3 list truncation everywhere | Shipped `22c1213` |
 | 2026-08-06 | Agent Harness Rewrite — Binary AGENTS.md gates, MISSION.md session scratchpad, slimmed CONTEXT.md, applied to EduTrack + EstateTrack | Shipped |
 | 2026-08-04 | EduTrack Core Modules Rewrite (Timetable, Exams, Fees, Analytics) — school-wide timetable grid, 3-stage exam grading workflow, fee templates/bulk invoicing, financial analytics dashboard | Shipped `246b8c2` |
 | 2026-08-04 | EduTrack Portals UI Refinement — blue hero across all subportals, Quick Actions grids, 3-item list truncation | Shipped |
