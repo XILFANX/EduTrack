@@ -24,46 +24,37 @@ export default async function InvitePage({ params }: Props) {
       target_phone,
       used_at,
       school_id,
-      target_entity_id
+      target_entity_id,
+      schools ( name )
     `)
     .eq('token', token)
-    .single()
+    .maybeSingle()
 
   if (error || !invite) {
     notFound()
   }
 
   const isReturningUser = invite.used_at !== null
-  
-  // Fetch school name manually to bypass any foreign key relationship issues in the DB
-  const { data: schoolRow } = await admin
-    .from('schools')
-    .select('name')
-    .eq('id', invite.school_id)
-    .single()
-    
-  const schoolName = schoolRow?.name ?? 'Your School'
+  const schoolName = (invite.schools as any)?.name ?? 'Your School'
   const className = null // resolved separately if needed
 
-  // Access Revocation Check — if returning user, verify they still have an active account
+  // Access Revocation Check — if returning user, verify they still have an active profile
   if (isReturningUser) {
-    const syntheticEmail = `${token}@invite.edutrack.app`
-    const { data: usersData } = await admin.auth.admin.listUsers()
-    const existingUser = usersData?.users?.find(u => u.email === syntheticEmail)
-
-    if (!existingUser) {
-      return <RevokedAccessScreen message="Your account has been removed. Please contact your school administrator." />
-    }
-
-    // Check if their user profile still exists and is active
-    const { data: profile } = await admin
-      .from('users')
-      .select('id, role')
-      .eq('id', existingUser.id)
-      .single()
-
-    if (!profile) {
-      return <RevokedAccessScreen message="Your access has been revoked. Please contact your school administrator." />
+    // We skip the unreliable un-paginated listUsers() check here.
+    // Instead we check if the user profile exists in the `users` table via their phone number and role.
+    // (If the profile is gone, they are revoked).
+    if (invite.target_phone) {
+      const { data: profile } = await admin
+        .from('users')
+        .select('id, role')
+        .eq('phone_number', invite.target_phone)
+        .eq('role', invite.role)
+        .eq('school_id', invite.school_id)
+        .maybeSingle()
+        
+      if (!profile) {
+        return <RevokedAccessScreen message="Your access has been revoked. Please contact your school administrator." />
+      }
     }
   }
 
