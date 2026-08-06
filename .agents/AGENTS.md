@@ -1,67 +1,104 @@
-# Agent Operating Protocol Bridge
+# HARNESS BINARY — EduTrack
+# Loaded into system memory on every invocation. Zero rationale. Pure gates.
 
-This file is automatically loaded into agent system memory on every invocation. It is the executable entry point for every session in this repository. `CONTEXT.md` (workspace root) is the full canonical reference — this file enforces its most critical rules in condensed form so they are always in memory without a 370-line load penalty.
+## GATE 0 — INPUT NORMALIZATION (always first, before any tool call)
+
+Parse the user prompt into this block. Output it in your first response. Do not skip.
+
+```
+INTENT:      <one sentence — the real goal>
+TYPE:        bug-fix | new-feature | refactor | investigation | harness | doc-only
+FAST_PATH:   yes | no
+SCREENSHOT:  <portal — element — issue>  ← only if screenshot provided
+AMBIGUITY:   <question> [STOP — do not proceed until resolved]  ← only if impl-blocking
+```
+
+Rules:
+- Prompt > 200 words → summarize INTENT to one sentence.
+- Prompt contains screenshot → identify portal, element, and what is wrong.
+- Ambiguity that changes implementation → surface it. Do not guess. Do not proceed.
+- One-liner → classify and continue.
+
+## GATE 1 — MISSION FILE (before any code or file read)
+
+CHECK: Does `MISSION.md` exist at repo root?
+- NO → CREATE it now using the template in `CONTEXT.md § Mission Template`. Write verbatim REQUEST. Set STAGE: UNDERSTAND.
+- YES → READ it. Resume from current STAGE. Do not re-do completed stages.
+
+GATE: No tool call on source code until MISSION.md exists and REQUEST is logged.
+
+## GATE 2 — FAST PATH CHECK
+
+IF FAST_PATH = yes:
+  1. State the change in one sentence.
+  2. Make it.
+  3. Run: `tsc --noEmit` (or `npm run build` for build errors).
+  4. If any doc line is made wrong by the change → fix it in the same pass.
+  5. Commit. Report in chat. DONE.
+ELSE → continue to GATE 3.
+
+## GATE 3 — CONTEXT (before planning)
+
+READ: `CONTEXT.md` — Documentation Map + History Log only.
+READ: Relevant source files (the actual responsible code — never guess).
+DO NOT read the entire repo. Scope to what the mission touches.
+CHECK: History Log — is this already settled? If yes, surface it and stop.
+
+## GATE 4 — PLAN + TASKS
+
+WRITE `PLAN.md`. Required fields per task:
+- What exists today (file + function — never blank)
+- What changes
+- Docs affected (exact path from Documentation Map, or `none: <reason>`)
+- Tier 1 gate command
+
+WRITE `TASKS.md`. One checkbox per task. Format:
+`- [ ] <id> <name> — tier1: pending — commit: — docs: `
+
+Update MISSION.md STAGE → EXECUTE.
+
+## GATE 5 — PER-TASK EXECUTION LOOP
+
+For each unchecked task in TASKS.md:
+1. Implement.
+2. Run Tier 1: `tsc --noEmit` + build + relevant tests. FAIL → fix and re-run. Do NOT continue.
+3. Write/update the "Docs affected" file(s) — only after Tier 1 is clean.
+4. Commit code + docs together. One atomic commit.
+5. Check off TASKS.md: `- [x] <id> <name> — tier1: pass — commit: <hash> — docs: <path>`
+6. Update MISSION.md TASKS section.
+
+GATE: Never check off a task before Tier 1 is clean, the commit is made, and docs are updated.
+GATE: Never write docs before Tier 1 is clean for that task.
+
+## GATE 6 — MISSION GATE (Tier 2 — after all tasks checked)
+
+RUN: Full build. Full lint. Full test suite. Documentation re-sync.
+FAIL → Fix as a tagged fix-commit (e.g. `1.3-fix: ...`). Reopen the task line. Re-run Tier 2.
+PASS → continue.
+
+## GATE 7 — SYNC + CLOSE
+
+1. `git remote -v` — confirm remote URL matches this repo.
+2. Push. Confirm push succeeded.
+3. Append one line to History Log in `CONTEXT.md`.
+4. Clear MISSION.md (set STAGE: DONE, blank REQUEST).
+5. Deliver walkthrough in chat: what changed, Tier 1/2 results, docs updated, push status.
 
 ---
 
-## On Every Invocation — Run This Sequence
+## NON-NEGOTIABLE RULES (always active, no exceptions)
 
-### 0. Capture the Request
-If the user gives a task in chat, your **very first action** — before reading any file or writing any code — is to open `CONTEXT.md` and paste the exact request verbatim into the `## Request` block. If a request is already there, read it immediately. Never begin work without the request logged.
+- MISSION.md must exist before any source file is touched.
+- Docs are never written before Tier 1 is clean.
+- Never check off a task batch. One at a time.
+- Never push without verifying the remote URL.
+- Never guess at "what exists today" — read the file.
+- A task touching API shape, data model, auth, or user-facing flow is NOT done without a doc update.
+- Build failure in production = stale deployment. Always verify with `npm run build` before pushing.
 
-### 1. Understand
-Before touching any file:
-- Restate the request in your own words. If your restatement doesn't match what was asked, reread — do not proceed on a guess.
-- Explicitly separate what was stated from what you are assuming.
-- Classify the mission: bug fix / new feature / refactor / migration / documentation / investigation.
-- Decide if it qualifies for the **Step 0 Fast Path** (single file, low-risk, one build cycle to verify). If unsure, do not take the fast path.
+## POINTERS
 
-### 2. Build Context
-Read the actual code and docs before proposing anything:
-- Find the specific files responsible. Read the relevant slice, not the whole repo.
-- Check the **History Log** in `CONTEXT.md` so this doesn't re-litigate something already settled.
-- Check `docs/internal-devsguide/` and `docs/public-userguide/`. If neither exists, the first milestone of this mission is the **Documentation Bootstrap** (see `CONTEXT.md`).
-- Identify every doc page this mission touches using the **Documentation Map** in `CONTEXT.md`. Do this now — not after the code is written.
-
-### 3. Write PLAN.md
-Draft or update `PLAN.md` in the workspace root. For every task, you must fill in:
-- What exists today (the actual responsible code/function — never guess).
-- Exactly what will change.
-- **Docs affected** — the exact path(s) from the Documentation Map, or `none: <one-line reason>`. This field is **never blank**. A task that touches a module, feature, data model, API, auth boundary, or user-facing flow always has a doc path.
-- Tier 1 gate: build + lint + relevant tests (must be clean **before** docs are written and the commit is made).
-- One atomic commit per task (code + docs together).
-
-### 4. Execute → Track in TASKS.md
-Mirror every task as a checkbox in `TASKS.md`. **Check a task off only after all three are true:**
-1. Tier 1 (build + lint + relevant tests) is clean.
-2. The task's `Docs affected` files are updated and committed in the same commit as the code.
-3. The task line in `TASKS.md` is updated with commit hash and docs path.
-
-**Never batch-check tasks at the end. Never check off a task whose docs field is still blank.**
-
-After every task is checked, run the **Tier 2 Mission Gate** (full build, full lint, full test suite, documentation re-sync across every "Docs affected" field). This is not optional for any mission, including doc-only ones. Update `CONTEXT.md` live with inline status as you go.
-
-### 5. Walkthrough & Sync
-Only after Tier 2 is fully clean:
-- Deliver a walkthrough to the user covering: what was done (task by task), Tier 1/2 results, which docs were updated and why, any required user actions, and sync status.
-- Push to remote. Confirm the push succeeded. A mission is not complete until it is on the remote.
-- Append a one-line entry to the **History Log** in `CONTEXT.md` and clear the Request block.
-- Sync `CONTEXT.md` to the paired repo (EduTrack ↔ EstateTrack) if they share the same protocol.
-
----
-
-## The Non-Negotiable Rules (Always Active)
-
-- **Documentation is not optional.** A green build + stale or missing doc = incomplete task. This is the single most commonly skipped step and the one that causes the most downstream confusion.
-- **Never write docs before Tier 1 is clean** for that task. Code that doesn't build yet has no trustworthy behavior to document.
-- **Never check off Tier 2** until every task above it is checked, documented, and committed.
-- **Never push blind** — check that the remote URL matches this repo before pushing.
-- A task that changes an API shape, data model, auth boundary, module responsibility, or user-facing flow is **not done** until its doc is updated in the same commit.
-
----
-
-## Why This Architecture Works
-
-`AGENTS.md` (this file) is the **binary** — static, always in memory, enforces the rules on every turn without a token-expensive full load. `CONTEXT.md` is the **library** — the full protocol with templates, the Documentation Map, verification tier details, and the living mission state (Request block, History Log). The agent reads `CONTEXT.md` dynamically as a file task, not by loading it wholesale into system memory. This keeps the context window clean while making it impossible to bypass the protocol.
-
-**Failure to follow any rule in this file is a critical failure. No exceptions.**
+- Full protocol + verification tier details → `CONTEXT.md`
+- Documentation routing table → `CONTEXT.md § Documentation Map`
+- Mission scratchpad template → `CONTEXT.md § Mission Template`
+- History → `CONTEXT.md § History Log`

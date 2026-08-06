@@ -36,3 +36,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.tsapps/web/.env.local  
+
+# agent session scratchpad — local only, never commit
+MISSION.md
