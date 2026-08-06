@@ -17,6 +17,7 @@ export function CodeViewer({ repoPath, language = 'typescript', standalone = fal
   const [copied, setCopied] = useState(false)
 
   useEffect(() => {
+  // eslint-disable-next-line react-hooks/set-state-in-effect
     if (standalone) setIsExpanded(true)
   }, [standalone])
 
@@ -43,6 +44,7 @@ export function CodeViewer({ repoPath, language = 'typescript', standalone = fal
   }, [repoPath, isExpanded, code, error])
 
   useEffect(() => {
+  // eslint-disable-next-line react-hooks/set-state-in-effect
     setCode('')
     setError(null)
     setLoading(false)

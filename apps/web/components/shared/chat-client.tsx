@@ -132,6 +132,7 @@ export function ChatClient({
   useEffect(() => {
     if (initialContactId) {
       const contact = contacts.find(c => c.id === initialContactId)
+  // eslint-disable-next-line react-hooks/set-state-in-effect
       if (contact) handleSelectContact(maskAdminContact(contact))
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps

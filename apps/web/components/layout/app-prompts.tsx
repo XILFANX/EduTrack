@@ -27,6 +27,7 @@ export function AppPrompts() {
     // 3. Detect iOS
     const userAgent = window.navigator.userAgent.toLowerCase()
     const isIOSDevice = /iphone|ipad|ipod/.test(userAgent)
+  // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsIOS(isIOSDevice)
 
     // 4. Capture Android/Chrome Install Prompt
@@ -56,7 +57,7 @@ export function AppPrompts() {
     }
   }, [deferredPrompt])
 
-  const checkNotificationStatus = async () => {
+  async function checkNotificationStatus() {
     if (!('Notification' in window) || !('serviceWorker' in navigator)) {
       setStep('hidden')
       return
