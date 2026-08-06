@@ -96,6 +96,7 @@ Two doc roots. Never blend them. Never leak internal names into user-guide.
 | New common user failure mode | `docs/public-userguide/02-faq-and-troubleshooting.md` |
 | Billing or account behavior change | `docs/public-userguide/03-account-and-billing.md` |
 | Data collected, cookies, or third-party data change | `docs/public-userguide/04-legal-and-policies/` — flag for legal review |
+| Harness rules, agent workflow, or verification tier change | `docs/internal-devsguide/10-agent-harness.md` |
 
 The "Docs affected" field in every task cites a row from this table or `none: <reason>`. Never blank.
 

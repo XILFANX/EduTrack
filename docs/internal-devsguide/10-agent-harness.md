@@ -18,7 +18,7 @@ Layer 2  CONTEXT.md            — library; read on demand, not loaded wholesale
 
 **Layer 1 (`MISSION.md`)** is created automatically at the start of every session. It is local-only (`.gitignore`d) and acts as the session journal. It replaces the old pattern of pasting requests into `CONTEXT.md`.
 
-**Layer 2 (`CONTEXT.md`)** is the reference library. The agent reads it as a tool call — only the sections it needs (Documentation Map, History Log). It is not dumped into system memory on every turn.
+**Layer 2 (`CONTEXT.md`)** is the reference library. The agent reads it as a tool call — only the sections it needs (Documentation Map, History Log, Verification Tiers). It is not dumped into system memory on every turn.
 
 ---
 
@@ -27,14 +27,13 @@ Layer 2  CONTEXT.md            — library; read on demand, not loaded wholesale
 Every agent turn flows through these gates in order. A gate that fails does not advance.
 
 ### GATE 0 — Input Normalization
-The raw user prompt — regardless of length — is parsed into a 5-field structured block before any reasoning starts:
+The raw user prompt — regardless of length — is parsed into a 4-field structured block before any reasoning starts:
 
 ```
-INTENT:      <one sentence — the real goal>
-TYPE:        bug-fix | new-feature | refactor | investigation | harness | doc-only
-FAST_PATH:   yes | no
-SCREENSHOT:  <portal — element — issue>  ← only when a screenshot is present
-AMBIGUITY:   <question> [STOP]           ← only when impl-blocking
+INTENT:     <one sentence — the real goal>
+TYPE:       bug-fix | new-feature | refactor | investigation | doc-only | harness
+FAST_PATH:  yes | no
+AMBIGUITY:  <question> [STOP]           ← only when impl-blocking
 ```
 
 This is the input formatter. A 500-word prompt and a one-liner produce the same structured output. The agent never acts on raw unstructured input.
@@ -48,12 +47,12 @@ Before any source file is opened, the agent checks for `MISSION.md` at the repo 
 This gate makes sessions resumable across context resets and conversation truncations.
 
 ### GATE 2 — Fast Path
-If `FAST_PATH: yes` (single file, no design decisions, verifiable in one build cycle):
+If `FAST_PATH: yes` (confined to ≤ 2 files, zero design decisions, verifiable in a single build cycle, no doc line made wrong):
 1. State the change in one sentence.
 2. Make it.
-3. Run `tsc --noEmit` (or `npm run build` for build errors).
-4. Fix any doc line the change invalidates.
-5. Commit and report. Done.
+3. Run `npm run build` (or `tsc --noEmit` if build is not applicable).
+4. Fix any doc line the change invalidates in the same pass.
+5. Confirm remote URL, commit, and push. Report in chat. Done.
 
 Any ambiguity, multi-file scope, or design decision disqualifies fast-path. When unsure, the agent does not take it.
 
@@ -62,19 +61,19 @@ The agent reads only the sections of `CONTEXT.md` it needs:
 - **Documentation Map** — to identify which doc files this mission touches
 - **History Log** — to catch anything already settled, preventing duplicate or contradictory work
 
-It then reads the specific source files responsible for the change. It does not scan the whole repo.
+It then reads the specific source files responsible for the change. It does not scan the whole repo. It also runs a documentation bootstrap if the docs directories are missing.
 
 ### GATE 4 — Plan + Tasks
 The agent writes or updates two files:
 - **`PLAN.md`** — one task block per change, with: what exists today (file + function), what changes, docs affected (exact path from Documentation Map or `none: <reason>`), and the Tier 1 gate command.
-- **`TASKS.md`** — one checkbox per task. Format: `- [ ] <id> <name> — tier1: pending — commit: — docs:`
+- **`TASKS.md`** — one checkbox per task. Format: `- [ ] <id> <name> — tier1: pending — commit: — docs:` and a section for Tier 2 Mission Gate checks.
 
 `MISSION.md` is updated to `STAGE: EXECUTE`.
 
 ### GATE 5 — Per-Task Execution Loop
 For each unchecked task, in order:
 1. Implement the change.
-2. Run Tier 1: `tsc --noEmit` + build + relevant tests. **If it fails → fix and re-run. Do not advance.**
+2. Run Tier 1: `npm run build` + lint + relevant tests. **If it fails → fix and re-run. Do not advance.** Tasks touching auth or tenant boundaries get extra security checks here.
 3. Write or update the docs listed in "Docs affected" — only after Tier 1 is clean.
 4. Commit code + docs together in one atomic commit.
 5. Update the task checkbox: `- [x] <id> <name> — tier1: pass — commit: <hash> — docs: <path>`
@@ -84,17 +83,22 @@ Tasks are never batch-checked. Docs are never written before the code compiles.
 
 ### GATE 6 — Mission Gate (Tier 2)
 After every task is checked off:
-- Full build
+- Full build (not just touched packages)
 - Full lint
 - Full existing test suite
 - Documentation re-sync (every "Docs affected" path still matches real behavior)
 
-A failure here is treated as drift: fixed in a tagged commit (e.g. `1.3-fix: ...`), the affected task line is reopened, and Tier 2 is re-run in full.
+A failure here is treated as drift, not a fresh bug:
+1. Fix the code.
+2. Re-run Tier 2 in full.
+3. Land the fix as its own commit tagged to the originating task ID (e.g. `1.3-fix: ...`). Never amend or rebase.
+4. Reopen the task line and re-check it after the fix's Tier 1 pass is clean.
 
 ### GATE 7 — Sync + Close
+This happens **immediately** after Tier 2 passes:
 1. `git remote -v` — confirm the remote URL matches this repo before pushing.
-2. Push. Confirm it succeeded.
-3. Append one line to `CONTEXT.md § History Log`.
+2. Push. Confirm it succeeded by showing the ref line.
+3. Append one line to `CONTEXT.md § History Log`. **History Log stays at ≤ 10 rows.**
 4. Clear `MISSION.md` (`STAGE: DONE`, blank `REQUEST:`).
 5. Deliver a walkthrough in chat covering: what changed, Tier 1/2 results, docs updated, push status.
 
@@ -145,6 +149,6 @@ TASKS:
 The previous harness (`AGENTS.md` v1) was 68 lines of prose. Under long-context pressure, the model treated it as "guidance" and paraphrased it — leading to missed gates and incomplete documentation. The binary redesign borrows from two established techniques:
 
 1. **Constitutional AI (Anthropic):** the system layer contains binary rules, not explanations. Explanations live in a separate, on-demand library.
-2. **Structured prompting:** raw input is normalized before reasoning. The model never acts on ambiguous natural language directly — it always works from the 5-field normalized block.
+2. **Structured prompting:** raw input is normalized before reasoning. The model never acts on ambiguous natural language directly — it always works from the 4-field normalized block.
 
 Context budget impact: the old `CONTEXT.md` cost ~680 tokens on every read. The new `CONTEXT.md` costs ~160 tokens. `AGENTS.md` itself dropped from ~520 tokens to ~380 — but more importantly, those 380 tokens are now commands, not suggestions.
