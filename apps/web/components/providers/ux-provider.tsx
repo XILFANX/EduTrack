@@ -131,7 +131,7 @@ export function UXProvider({ children }: { children: ReactNode }) {
               onClick={handleConfirm}
               className={`flex-1 font-semibold rounded-xl h-11 ${
                 confirmOpts.variant === 'destructive' 
-                  ? 'bg-[#FF0000] hover:bg-[#CC0000] text-white shadow-lg shadow-orange-900/20 border-none' 
+                  ? 'bg-orange-600 hover:bg-orange-700 text-white shadow-lg shadow-orange-900/20 border-none' 
                   : 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-900/20'
               }`}
             >
@@ -192,7 +192,7 @@ export function UXProvider({ children }: { children: ReactNode }) {
 
       {/* ERROR MODAL */}
       <AlertDialog open={isErrorOpen} onOpenChange={setIsErrorOpen}>
-        <AlertDialogContent className="bg-slate-900 border-t-[3px] border-t-[#FF0000] border-x-slate-800 border-b-slate-800 text-white p-6 max-w-sm rounded-2xl outline-none shadow-2xl backdrop-blur-md relative overflow-hidden">
+        <AlertDialogContent className="bg-slate-900 border-t-[3px] border-t-orange-500 border-x-slate-800 border-b-slate-800 text-white p-6 max-w-sm rounded-2xl outline-none shadow-2xl backdrop-blur-md relative overflow-hidden">
           <button 
             onClick={() => setIsErrorOpen(false)} 
             className="absolute right-4 top-4 text-slate-400 hover:text-white transition-colors"
@@ -201,7 +201,7 @@ export function UXProvider({ children }: { children: ReactNode }) {
           </button>
           
           <AlertDialogHeader className="flex flex-col items-center text-center space-y-4 pt-2">
-            <div className="w-14 h-14 rounded-full bg-[#FF0000]/10 flex items-center justify-center text-[#FF0000] border border-[#FF0000]/20 shadow-inner">
+            <div className="w-14 h-14 rounded-full bg-orange-500/10 flex items-center justify-center text-orange-500 border border-orange-500/20 shadow-inner">
               <AlertCircle className="w-7 h-7" />
             </div>
             <div className="space-y-1.5">
@@ -219,7 +219,7 @@ export function UXProvider({ children }: { children: ReactNode }) {
           <AlertDialogFooter className="flex sm:flex-row gap-3 sm:justify-center mt-6 w-full">
             <Button 
               onClick={() => setIsErrorOpen(false)}
-              className="w-full bg-[#FF0000] hover:bg-[#CC0000] text-white font-semibold rounded-xl"
+              className="w-full bg-orange-600 hover:bg-orange-700 text-white font-semibold rounded-xl"
             >
               Got it
             </Button>

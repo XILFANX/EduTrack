@@ -42,7 +42,7 @@ export default async function AdminDashboardPage() {
   const { count: totalSchools } = await admin.from('schools').select('id', { count: 'exact', head: true })
   const { count: totalStudents } = await admin.from('students').select('id', { count: 'exact', head: true }).is('deleted_at', null)
   
-  const { data: recentSchoolsData } = await admin.from('schools').select('*').order('created_at', { ascending: false }).limit(6)
+  const { data: recentSchoolsData } = await admin.from('schools').select('*').order('created_at', { ascending: false }).limit(3)
   const recentSchools = recentSchoolsData as any[]
 
   const { data: adminUsers } = await admin.from('users').select('id, full_name, email, created_at').eq('role', 'admin').order('created_at')
@@ -87,27 +87,28 @@ export default async function AdminDashboardPage() {
         </p>
       </header>
 
-      {/* ── Stats Grid ── */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-        {[
-          { label: 'Active Schools', value: totalSchools ?? 0, icon: Building2, color: 'from-blue-500 to-blue-600', shadow: 'shadow-blue-500/20' },
-          { label: 'Total Students', value: totalStudents ?? 0, icon: Users, color: 'from-blue-400 to-blue-600', shadow: 'shadow-blue-500/20' },
-          { label: 'Platform Revenue', value: `KSh ${(totalCollected/1000000).toFixed(1)}M`, icon: Receipt, color: 'from-blue-400 to-blue-600', shadow: 'shadow-blue-500/20' },
-          { label: 'Platform Admins', value: totalAdmins ?? 0, icon: Shield, color: 'from-blue-400 to-blue-600', shadow: 'shadow-blue-500/20' },
-        ].map(({ label, value, icon: Icon, color, shadow }) => (
-          <div key={label} className="relative group overflow-hidden rounded-[24px] bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800/60 p-5 md:p-6 backdrop-blur-xl transition-all hover:shadow-xl dark:hover:border-slate-700">
-            <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${color} opacity-[0.08] dark:opacity-[0.15] blur-2xl rounded-full -mr-10 -mt-10 transition-transform group-hover:scale-150 duration-700`} />
-            <div className="relative z-10 flex flex-col gap-4 md:gap-5">
-              <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${color} text-white flex items-center justify-center shadow-lg ${shadow}`}>
-                <Icon className="w-6 h-6" />
-              </div>
-              <div>
-                <p className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white tracking-tight">{value}</p>
-                <p className="text-xs md:text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mt-1">{label}</p>
-              </div>
-            </div>
+      {/* ── Stats Grid (Hero Layout) ── */}
+      <div className="bg-gradient-to-br from-blue-600 via-cyan-500 to-blue-600 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-[50px] rounded-full pointer-events-none" />
+        <div className="flex items-center gap-2 mb-5 relative z-10">
+          <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+            <BarChart3 className="w-4 h-4 text-white" />
           </div>
-        ))}
+          <h2 className="text-lg font-bold text-white">Platform Stats</h2>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 relative z-10">
+          {[
+            { label: 'Active Schools', value: totalSchools ?? 0 },
+            { label: 'Total Students', value: totalStudents ?? 0 },
+            { label: 'Platform Revenue', value: `KSh ${(totalCollected/1000000).toFixed(1)}M` },
+            { label: 'Platform Admins', value: totalAdmins ?? 0 },
+          ].map((stat, i) => (
+            <div key={i} className="bg-white/10 border border-white/20 rounded-2xl p-4 flex flex-col justify-center shadow-inner hover:bg-white/20 transition-colors">
+              <p className="text-2xl font-bold text-white drop-shadow-sm">{stat.value}</p>
+              <p className="text-xs font-semibold text-blue-50 mt-1">{stat.label}</p>
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
@@ -181,8 +182,8 @@ export default async function AdminDashboardPage() {
                 const Icon = a.icon
                 return (
                   <Link key={a.href} href={a.href}
-                    className="bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/50 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:border-blue-200 dark:hover:border-blue-800 rounded-2xl p-4 flex items-center gap-3 transition-all text-sm font-bold text-slate-700 dark:text-slate-200 group">
-                    <Icon className="w-5 h-5 text-slate-400 group-hover:text-blue-500 transition-colors" />
+                    className="bg-card border border-border rounded-2xl p-4 flex items-center gap-3 hover:bg-accent hover:border-accent-foreground/20 transition-all text-sm text-foreground font-medium shadow-sm group">
+                    <Icon className="w-5 h-5 text-blue-500 group-hover:text-blue-600 transition-colors" />
                     {a.label}
                   </Link>
                 )
@@ -210,7 +211,7 @@ export default async function AdminDashboardPage() {
                   </p>
                 </div>
               </div>
-              {adminUsers?.map((a) => (
+              {adminUsers?.slice(0, 3).map((a) => (
                 <div key={a.id} className="flex items-center gap-4 px-6 py-4">
                   <div className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-sm font-bold flex items-center justify-center shrink-0 border border-slate-200 dark:border-slate-700">
                     {a.full_name?.[0]?.toUpperCase()}

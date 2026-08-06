@@ -24,7 +24,7 @@ export function StoreDashboardClient({
   return (
     <div className="space-y-6 pb-24">
       {/* Hero */}
-      <div className="relative bg-gradient-to-br from-blue-600 via-blue-500 to-blue-500 rounded-[2rem] p-6 overflow-hidden text-white shadow-xl">
+      <div className="relative bg-gradient-to-br from-blue-600 via-cyan-500 to-blue-600 rounded-[2rem] p-6 overflow-hidden text-white shadow-xl">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-[50px] rounded-full pointer-events-none" />
 
         <div className="relative z-10">
@@ -177,7 +177,7 @@ export function StoreDashboardClient({
             </Link>
           </div>
           <div className="p-4 grid grid-cols-2 sm:grid-cols-3 gap-2">
-            {currentStock.slice(0, 9).map((item, i) => {
+            {currentStock.slice(0, 3).map((item, i) => {
               const isLow = item.qty <= 5
               const isOut = item.qty <= 0
               return (

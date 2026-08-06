@@ -100,7 +100,7 @@ export default async function DashboardPage() {
       />
 
       {/* Academic Overview */}
-      <div className="bg-gradient-to-br from-blue-600 via-blue-500 to-blue-500 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
+      <div className="bg-gradient-to-br from-blue-600 via-cyan-500 to-blue-600 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-[50px] rounded-full pointer-events-none" />
         <div className="flex items-center gap-2 mb-5 relative z-10">
           <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
@@ -131,14 +131,14 @@ export default async function DashboardPage() {
             <Link
               key={href}
               href={href}
-              className="flex flex-col items-center gap-2 p-4 bg-card hover:bg-slate-50 dark:hover:bg-slate-900/50 border border-border hover:border-blue-500/50 rounded-2xl hover:scale-[1.02] transition-all text-center shadow-sm group"
+              className="flex flex-col items-center gap-2 p-3 hover:scale-[1.05] transition-all text-center group"
             >
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800/30 group-hover:bg-blue-100 dark:group-hover:bg-blue-800/40 transition-colors">
-                <Icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+              <div className="w-14 h-14 rounded-[1.25rem] flex items-center justify-center bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/40 dark:to-cyan-900/20 border border-blue-100/50 dark:border-blue-800/50 group-hover:shadow-lg group-hover:shadow-blue-500/20 group-hover:-translate-y-1 transition-all duration-300">
+                <Icon className="w-7 h-7 text-blue-600 dark:text-cyan-400" />
               </div>
               <div className="text-center min-w-0 w-full mt-1">
-                <p className="font-bold text-xs text-foreground truncate">{label}</p>
-                <p className="text-[10px] text-muted-foreground truncate hidden sm:block mt-0.5">{sublabel}</p>
+                <p className="font-bold text-sm text-foreground truncate group-hover:text-blue-600 transition-colors">{label}</p>
+                <p className="text-[10px] font-medium text-muted-foreground truncate hidden sm:block mt-0.5">{sublabel}</p>
               </div>
             </Link>
           ))}

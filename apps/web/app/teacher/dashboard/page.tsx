@@ -92,7 +92,7 @@ export default async function TeacherDashboard() {
     return (
       <div className="space-y-6 pb-4">
         {/* Class Hero */}
-        <div className="bg-gradient-to-br from-blue-600 via-blue-500 to-blue-500 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
+        <div className="bg-gradient-to-br from-blue-600 via-cyan-500 to-blue-600 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
           <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-[50px] rounded-full pointer-events-none" />
           <div className="relative z-10">
             <div className="flex items-center gap-3 mb-4">
@@ -214,7 +214,7 @@ export default async function TeacherDashboard() {
   return (
     <div className="space-y-6 pb-4">
       {/* Hero */}
-      <div className="bg-gradient-to-br from-blue-600 via-blue-500 to-blue-500 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
+      <div className="bg-gradient-to-br from-blue-600 via-cyan-500 to-blue-600 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-[50px] rounded-full pointer-events-none" />
         <div className="relative z-10">
           <div className="flex items-center gap-3 mb-5">
@@ -250,7 +250,7 @@ export default async function TeacherDashboard() {
           </div>
         ) : (
           <div className="space-y-3">
-            {assignmentStats.map((a) => (
+            {assignmentStats.slice(0, 3).map((a) => (
               <Link
                 key={a.id}
                 href={`/teacher/grades?class=${a.class_id}&subject=${a.subject_id}`}

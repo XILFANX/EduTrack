@@ -29,7 +29,7 @@ export function LibraryDashboardClient({ stats, borrowedBooks }: {
   return (
     <div className="space-y-6 pb-24">
       {/* Hero */}
-      <div className="relative bg-gradient-to-br from-blue-600 via-blue-500 to-blue-500 rounded-[2rem] p-6 overflow-hidden text-white shadow-xl">
+      <div className="relative bg-gradient-to-br from-blue-600 via-cyan-500 to-blue-600 rounded-[2rem] p-6 overflow-hidden text-white shadow-xl">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-[50px] rounded-full pointer-events-none" />
 
         <div className="relative z-10">
