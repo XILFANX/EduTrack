@@ -137,7 +137,7 @@ export default function OnboardingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-slate-100 dark:from-slate-950 dark:to-slate-900 flex items-center justify-center px-4 py-10">
+    <div className="min-h-screen bg-gradient-to-br from-cyan-50 to-slate-100 dark:from-slate-950 dark:to-slate-900 flex items-center justify-center px-4 py-10">
       <div className="w-full max-w-lg space-y-6">
 
         {/* Header */}
@@ -145,7 +145,7 @@ export default function OnboardingPage() {
           <div className="w-12 h-12 relative mx-auto rounded-full overflow-hidden shadow-sm border border-slate-200 dark:border-slate-800 bg-white">
             <Image src="/logo.png" alt="EduTrack" fill className="object-cover " />
           </div>
-          <p className="text-blue-600 dark:text-blue-400 font-bold text-xl">EduTrack</p>
+          <p className="text-cyan-600 dark:text-cyan-400 font-bold text-xl">EduTrack</p>
           <h1 className="text-2xl font-bold text-foreground">Set up your school</h1>
           <p className="text-muted-foreground text-sm">
             Step {step} of {STEPS.length} — {STEPS[step - 1].title}
@@ -155,7 +155,7 @@ export default function OnboardingPage() {
         {/* Progress bar */}
         <div className="w-full bg-muted rounded-full h-2">
           <div
-            className="bg-blue-600 dark:bg-blue-500 h-2 rounded-full transition-all duration-500"
+            className="bg-cyan-600 dark:bg-cyan-500 h-2 rounded-full transition-all duration-500"
             style={{ width: `${progress}%` }}
           />
         </div>
@@ -163,7 +163,7 @@ export default function OnboardingPage() {
         <Card className="shadow-lg border border-border bg-card">
           <CardHeader className="pb-4">
             <CardTitle className="text-lg text-card-foreground flex items-center gap-2">
-              <School className="w-5 h-5 text-blue-600" />
+              <School className="w-5 h-5 text-cyan-600" />
               {STEPS[step - 1].title}
             </CardTitle>
             <CardDescription>{STEPS[step - 1].desc}</CardDescription>
@@ -178,12 +178,12 @@ export default function OnboardingPage() {
                     <button
                       type="button"
                       onClick={() => fileInputRef.current?.click()}
-                      className="w-16 h-16 rounded-2xl border-2 border-dashed border-slate-300 dark:border-slate-600 hover:border-blue-400 flex items-center justify-center bg-slate-50 dark:bg-slate-800/50 transition-colors shrink-0 overflow-hidden group relative"
+                      className="w-16 h-16 rounded-2xl border-2 border-dashed border-slate-300 dark:border-slate-600 hover:border-cyan-400 flex items-center justify-center bg-slate-50 dark:bg-slate-800/50 transition-colors shrink-0 overflow-hidden group relative"
                     >
                       {logoPreview ? (
                         <img src={logoPreview} alt="preview" className="w-full h-full object-cover" />
                       ) : (
-                        <Camera className="w-6 h-6 text-slate-400 group-hover:text-blue-500 transition-colors" />
+                        <Camera className="w-6 h-6 text-slate-400 group-hover:text-cyan-500 transition-colors" />
                       )}
                     </button>
                     <div className="flex-1 min-w-0">
@@ -192,7 +192,7 @@ export default function OnboardingPage() {
                       <button
                         type="button"
                         onClick={() => fileInputRef.current?.click()}
-                        className="mt-1.5 text-xs text-blue-600 dark:text-blue-400 hover:underline font-medium"
+                        className="mt-1.5 text-xs text-cyan-600 dark:text-cyan-400 hover:underline font-medium"
                       >
                         {logoPreview ? 'Change logo' : 'Upload logo'}
                       </button>
@@ -254,7 +254,7 @@ export default function OnboardingPage() {
                         value="principal" 
                         checked={adminTitle === 'principal'} 
                         onChange={() => setAdminTitle('principal')}
-                        className="text-blue-600 focus:ring-blue-500"
+                        className="text-cyan-600 focus:ring-cyan-500"
                       />
                       Principal
                     </label>
@@ -265,7 +265,7 @@ export default function OnboardingPage() {
                         value="headteacher" 
                         checked={adminTitle === 'headteacher'} 
                         onChange={() => setAdminTitle('headteacher')}
-                        className="text-blue-600 focus:ring-blue-500"
+                        className="text-cyan-600 focus:ring-cyan-500"
                       />
                       Headteacher
                     </label>
@@ -284,8 +284,8 @@ export default function OnboardingPage() {
                     onClick={() => setCurriculumType(opt.id as OnboardingData['curriculumType'])}
                     className={`text-left p-4 rounded-xl border transition-all ${
                       curriculumType === opt.id
-                        ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/20 ring-1 ring-blue-600'
-                        : 'border-border hover:border-blue-300'
+                        ? 'border-cyan-600 bg-cyan-50 dark:bg-cyan-900/20 ring-1 ring-cyan-600'
+                        : 'border-border hover:border-cyan-300'
                     }`}
                   >
                     <div className="flex items-center gap-3">
@@ -295,7 +295,7 @@ export default function OnboardingPage() {
                         <p className="text-xs text-muted-foreground mt-0.5">{opt.desc}</p>
                       </div>
                       {curriculumType === opt.id && (
-                        <CheckCircle2 className="w-5 h-5 text-blue-600 ml-auto shrink-0" />
+                        <CheckCircle2 className="w-5 h-5 text-cyan-600 ml-auto shrink-0" />
                       )}
                     </div>
                   </button>
@@ -321,8 +321,8 @@ export default function OnboardingPage() {
                         onClick={() => setCountryCode(c.code)}
                         className={`text-left p-2 rounded-lg border transition-all flex items-center gap-3 ${
                           countryCode === c.code
-                            ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/20 ring-1 ring-blue-600'
-                            : 'border-transparent hover:border-blue-200 bg-muted/30'
+                            ? 'border-cyan-600 bg-cyan-50 dark:bg-cyan-900/20 ring-1 ring-cyan-600'
+                            : 'border-transparent hover:border-cyan-200 bg-muted/30'
                         }`}
                       >
                         <span className="text-lg">{c.flag}</span>
@@ -344,8 +344,8 @@ export default function OnboardingPage() {
                         onClick={() => setFeeDueDay(day)}
                         className={`py-2 rounded-lg border text-sm font-semibold transition-colors ${
                           feeDueDay === day
-                            ? 'border-blue-600 bg-blue-600 text-white'
-                            : 'border-border text-foreground hover:border-blue-400 hover:bg-muted'
+                            ? 'border-cyan-600 bg-cyan-600 text-white'
+                            : 'border-border text-foreground hover:border-cyan-400 hover:bg-muted'
                         }`}
                       >
                         {day}
@@ -357,7 +357,7 @@ export default function OnboardingPage() {
                 {/* Summary */}
                 <div className="border-t border-border pt-4 mt-4 space-y-2">
                   <p className="text-sm font-semibold text-foreground flex items-center gap-2">
-                    <GraduationCap className="w-4 h-4 text-blue-600" /> Summary
+                    <GraduationCap className="w-4 h-4 text-cyan-600" /> Summary
                   </p>
                   <div className="text-sm text-muted-foreground space-y-1.5 bg-muted/50 rounded-xl p-4">
                     {[
@@ -399,7 +399,7 @@ export default function OnboardingPage() {
           )}
           {step < STEPS.length ? (
             <Button
-              className="flex-1 bg-blue-600 hover:bg-blue-700"
+              className="flex-1 bg-cyan-600 hover:bg-cyan-700"
               onClick={handleNext}
               disabled={loading}
             >
@@ -407,7 +407,7 @@ export default function OnboardingPage() {
             </Button>
           ) : (
             <Button
-              className="flex-1 bg-blue-600 hover:bg-blue-700"
+              className="flex-1 bg-cyan-600 hover:bg-cyan-700"
               onClick={handleComplete}
               disabled={loading || uploadingLogo}
             >

@@ -30,16 +30,16 @@ interface Props {
 
 function gradeColor(grade: string | null) {
   if (!grade) return 'text-slate-400'
-  if (grade.startsWith('A')) return 'text-blue-600'
-  if (grade.startsWith('B')) return 'text-blue-600'
+  if (grade.startsWith('A')) return 'text-cyan-600'
+  if (grade.startsWith('B')) return 'text-cyan-600'
   if (grade.startsWith('C')) return 'text-orange-600'
   return 'text-orange-500'
 }
 
 function gradeBg(grade: string | null) {
   if (!grade) return 'bg-slate-100 text-slate-500'
-  if (grade.startsWith('A')) return 'bg-blue-50 text-blue-700 border border-blue-200'
-  if (grade.startsWith('B')) return 'bg-blue-50 text-blue-700 border border-blue-200'
+  if (grade.startsWith('A')) return 'bg-cyan-50 text-cyan-700 border border-cyan-200'
+  if (grade.startsWith('B')) return 'bg-cyan-50 text-cyan-700 border border-cyan-200'
   if (grade.startsWith('C')) return 'bg-orange-50 text-orange-700 border border-orange-200'
   return 'bg-orange-50 text-orange-700 border border-orange-200'
 }
@@ -105,7 +105,7 @@ export function ReportCardClient({ school, student, activeTerm, activeYear, allT
       <div id="report-card" className="bg-white text-black rounded-3xl shadow-lg border border-slate-200 overflow-hidden print:shadow-none print:rounded-none print:border-0">
         
         {/* Header Band */}
-        <div className="bg-gradient-to-r from-blue-700 to-blue-900 p-8 text-white print:p-6">
+        <div className="bg-gradient-to-r from-cyan-700 to-cyan-900 p-8 text-white print:p-6">
           <div className="flex items-center gap-6">
             {/* School Logo */}
             <div className="w-20 h-20 rounded-2xl bg-white/20 overflow-hidden flex items-center justify-center shrink-0 border-2 border-white/30">
@@ -117,15 +117,15 @@ export function ReportCardClient({ school, student, activeTerm, activeYear, allT
             </div>
             <div className="flex-1">
               <h1 className="text-2xl font-extrabold tracking-tight">{school?.name || 'School Name'}</h1>
-              <p className="text-blue-200 text-sm mt-1 font-medium tracking-wide uppercase">Student Academic Report Card</p>
+              <p className="text-cyan-200 text-sm mt-1 font-medium tracking-wide uppercase">Student Academic Report Card</p>
               {activeTerm && (
-                <p className="text-blue-100 text-sm mt-1">
+                <p className="text-cyan-100 text-sm mt-1">
                   {activeYear?.name || (activeTerm as any)?.academic_years?.name} &mdash; {activeTerm.name}
                 </p>
               )}
             </div>
             {/* EduTrack watermark */}
-            <div className="text-right text-xs text-blue-300 shrink-0">
+            <div className="text-right text-xs text-cyan-300 shrink-0">
               <p className="font-semibold">EduTrack</p>
               <p className="opacity-60">Generated {new Date().toLocaleDateString()}</p>
             </div>
@@ -211,9 +211,9 @@ export function ReportCardClient({ school, student, activeTerm, activeYear, allT
 
               {/* Summary Row */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4 pt-6 border-t-2 border-slate-200">
-                <div className="text-center bg-blue-50 border border-blue-100 rounded-2xl p-4">
-                  <p className="text-2xl font-extrabold text-blue-700">{totalScore}</p>
-                  <p className="text-xs text-blue-500 mt-1 font-medium">Total Score</p>
+                <div className="text-center bg-cyan-50 border border-cyan-100 rounded-2xl p-4">
+                  <p className="text-2xl font-extrabold text-cyan-700">{totalScore}</p>
+                  <p className="text-xs text-cyan-500 mt-1 font-medium">Total Score</p>
                   <p className="text-xs text-slate-400">out of {totalMax}</p>
                 </div>
                 <div className="text-center bg-purple-50 border border-purple-100 rounded-2xl p-4">
@@ -226,7 +226,7 @@ export function ReportCardClient({ school, student, activeTerm, activeYear, allT
                 </div>
                 <div className="text-center bg-slate-50 border border-slate-200 rounded-2xl p-4">
                   <div className="flex justify-between text-xs font-medium mb-1">
-                    <span className="text-blue-600">P: {attendanceSummary.present}</span>
+                    <span className="text-cyan-600">P: {attendanceSummary.present}</span>
                     <span className="text-orange-500">A: {attendanceSummary.absent}</span>
                     <span className="text-orange-500">L: {attendanceSummary.late}</span>
                   </div>

@@ -68,7 +68,7 @@ export function LogStockModal({ schoolId, userId, onClose }: Props) {
               type="button"
               onClick={() => setType('in')}
               className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-sm font-semibold transition-all ${
-                type === 'in' ? 'bg-blue-600 text-white' : 'text-slate-500 hover:text-foreground'
+                type === 'in' ? 'bg-cyan-600 text-white' : 'text-slate-500 hover:text-foreground'
               }`}
             >
               <ArrowUpRight className="w-4 h-4" />
@@ -127,7 +127,7 @@ export function LogStockModal({ schoolId, userId, onClose }: Props) {
           <Button
             type="submit"
             disabled={loading}
-            className={`w-full gap-2 ${type === 'in' ? 'bg-blue-600 hover:bg-blue-700' : 'bg-orange-500 hover:bg-orange-600'}`}
+            className={`w-full gap-2 ${type === 'in' ? 'bg-cyan-600 hover:bg-cyan-700' : 'bg-orange-500 hover:bg-orange-600'}`}
           >
             {loading && <Loader2 className="w-4 h-4 animate-spin" />}
             {type === 'in' ? 'Confirm Stock In' : 'Confirm Stock Out'}

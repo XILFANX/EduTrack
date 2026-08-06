@@ -90,7 +90,7 @@ export default async function ParentTimetablePage() {
   return (
     <div className="space-y-6 pb-24">
       {/* Hero */}
-      <div className="bg-gradient-to-br from-blue-600 via-blue-500 to-blue-500 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
+      <div className="bg-gradient-to-br from-cyan-600 via-cyan-500 to-cyan-500 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-[50px] rounded-full pointer-events-none" />
         <div className="relative z-10 flex items-center gap-4">
           <div className="w-12 h-12 rounded-2xl bg-white/15 flex items-center justify-center">
@@ -98,7 +98,7 @@ export default async function ParentTimetablePage() {
           </div>
           <div>
             <h1 className="text-2xl font-black tracking-tight">Class Timetable</h1>
-            <p className="text-blue-100 text-sm mt-0.5">
+            <p className="text-cyan-100 text-sm mt-0.5">
               Weekly schedule{activeTerm ? ` · ${(activeTerm as any).name}` : ''}
             </p>
           </div>
@@ -133,8 +133,8 @@ export default async function ParentTimetablePage() {
           return (
             <div key={child.id} className="space-y-3">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-2xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center shrink-0">
-                  <span className="text-sm font-black text-blue-600 dark:text-blue-400">
+                <div className="w-10 h-10 rounded-2xl bg-cyan-100 dark:bg-cyan-900/30 flex items-center justify-center shrink-0">
+                  <span className="text-sm font-black text-cyan-600 dark:text-cyan-400">
                     {child.first_name?.[0]}{child.last_name?.[0]}
                   </span>
                 </div>
@@ -153,7 +153,7 @@ export default async function ParentTimetablePage() {
                       </th>
                       {DAYS.map(d => (
                         <th key={d.num} className="border-b border-r border-border last:border-r-0 px-2 py-3 text-center">
-                          <span className="text-xs font-bold text-blue-600 dark:text-blue-400">{d.label}</span>
+                          <span className="text-xs font-bold text-cyan-600 dark:text-cyan-400">{d.label}</span>
                         </th>
                       ))}
                     </tr>
@@ -183,12 +183,12 @@ export default async function ParentTimetablePage() {
                           return (
                             <td key={day.num} className="border-b border-r border-border last:border-r-0 p-1.5">
                               {slot?.subjects?.name ? (
-                                <div className="rounded-xl bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800/40 px-1.5 py-2">
-                                  <p className="text-[10px] font-bold text-blue-800 dark:text-blue-200 text-center leading-tight">
+                                <div className="rounded-xl bg-cyan-50 dark:bg-cyan-950/30 border border-cyan-200 dark:border-cyan-800/40 px-1.5 py-2">
+                                  <p className="text-[10px] font-bold text-cyan-800 dark:text-cyan-200 text-center leading-tight">
                                     {slot.subjects.name}
                                   </p>
                                   {slot.users?.full_name && (
-                                    <p className="text-[9px] text-blue-400 text-center mt-0.5 truncate">
+                                    <p className="text-[9px] text-cyan-400 text-center mt-0.5 truncate">
                                       {slot.users.full_name}
                                     </p>
                                   )}

@@ -54,7 +54,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
             </div>
             <div>
               <span className="font-semibold text-foreground text-sm dark:text-slate-100 block leading-tight">EduTrack</span>
-              <span className="text-[10px] font-semibold text-blue-600 uppercase tracking-wider">{roleLabel}</span>
+              <span className="text-[10px] font-semibold text-cyan-600 uppercase tracking-wider">{roleLabel}</span>
             </div>
           </div>
 

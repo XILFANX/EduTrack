@@ -35,7 +35,7 @@ export function SchoolsTable({ initialData }: { initialData: SchoolData[] }) {
             placeholder="Search schools..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all font-medium"
+            className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 transition-all font-medium"
           />
         </div>
         <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0 hide-scrollbar">
@@ -46,7 +46,7 @@ export function SchoolsTable({ initialData }: { initialData: SchoolData[] }) {
               onClick={() => setTierFilter(tier)}
               className={`px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider whitespace-nowrap transition-all ${
                 tierFilter === tier 
-                  ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400' 
+                  ? 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/40 dark:text-cyan-400' 
                   : 'bg-white dark:bg-slate-800 text-slate-500 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800/80'
               }`}
             >
@@ -84,12 +84,12 @@ export function SchoolsTable({ initialData }: { initialData: SchoolData[] }) {
               className="grid grid-cols-1 md:grid-cols-12 gap-4 p-5 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group items-center cursor-pointer"
             >
               <div className="md:col-span-5 flex items-center gap-4 min-w-0">
-                <div className="w-12 h-12 rounded-2xl bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 text-lg font-black flex items-center justify-center shrink-0 shadow-inner group-hover:scale-105 transition-transform">
+                <div className="w-12 h-12 rounded-2xl bg-cyan-100 dark:bg-cyan-900/40 text-cyan-700 dark:text-cyan-300 text-lg font-black flex items-center justify-center shrink-0 shadow-inner group-hover:scale-105 transition-transform">
                   {s.name[0]?.toUpperCase()}
                 </div>
                 <div className="min-w-0">
                   <div className="flex items-center gap-2">
-                    <p className="text-sm font-bold text-foreground truncate transition-colors group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                    <p className="text-sm font-bold text-foreground truncate transition-colors group-hover:text-cyan-600 dark:group-hover:text-cyan-400">
                       {s.name}
                     </p>
                   </div>
@@ -108,8 +108,8 @@ export function SchoolsTable({ initialData }: { initialData: SchoolData[] }) {
               <div className="md:col-span-3 flex items-center justify-between md:justify-center">
                 <span className="text-xs font-bold text-slate-500 uppercase tracking-widest md:hidden">Tier</span>
                 <span className={`text-[10px] px-3 py-1.5 rounded-full font-black uppercase tracking-wider shadow-sm ${
-                  s.subscription_tier === 'premium' ? 'bg-blue-50 text-blue-600 border border-blue-200 dark:bg-blue-900/20 dark:border-blue-800/50' :
-                  s.subscription_tier === 'standard' ? 'bg-blue-50 text-blue-600 border border-blue-200 dark:bg-blue-900/20 dark:border-blue-800/50' :
+                  s.subscription_tier === 'premium' ? 'bg-cyan-50 text-cyan-600 border border-cyan-200 dark:bg-cyan-900/20 dark:border-cyan-800/50' :
+                  s.subscription_tier === 'standard' ? 'bg-cyan-50 text-cyan-600 border border-cyan-200 dark:bg-cyan-900/20 dark:border-cyan-800/50' :
                   'bg-slate-100 text-slate-600 border border-slate-200 dark:bg-slate-800 dark:border-slate-700'
                 }`}>
                   {s.subscription_tier}
@@ -119,7 +119,7 @@ export function SchoolsTable({ initialData }: { initialData: SchoolData[] }) {
               <div className="md:col-span-2 flex items-center justify-between md:justify-end">
                 <span className="text-xs font-bold text-slate-500 uppercase tracking-widest md:hidden">Joined</span>
                 <div className="flex flex-col items-end">
-                  <span className="text-sm font-bold text-foreground group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                  <span className="text-sm font-bold text-foreground group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
                     {s.created_at ? new Date(s.created_at).toLocaleDateString('en-KE', { day: 'numeric', month: 'short' }) : '—'}
                   </span>
                   <span className="text-xs font-semibold text-slate-500">

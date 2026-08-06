@@ -83,8 +83,8 @@ export function InviteParentModal({ open, onClose, studentId, studentName, schoo
           <>
             <DialogHeader className="mb-4">
               <DialogTitle className="flex items-center gap-2 text-lg font-bold text-foreground">
-                <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center">
-                  <UserPlus className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                <div className="w-8 h-8 rounded-lg bg-cyan-100 dark:bg-cyan-900/40 flex items-center justify-center">
+                  <UserPlus className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
                 </div>
                 Invite Parent
               </DialogTitle>
@@ -101,7 +101,7 @@ export function InviteParentModal({ open, onClose, studentId, studentName, schoo
                   <select 
                     value={salutation} 
                     onChange={e => setSalutation(e.target.value)}
-                    className="w-full bg-background border border-input text-foreground rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                    className="w-full bg-background border border-input text-foreground rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 transition"
                   >
                     <option value="">Select</option>
                     {SALUTATIONS.map(s => <option key={s} value={s}>{s}</option>)}
@@ -138,7 +138,7 @@ export function InviteParentModal({ open, onClose, studentId, studentName, schoo
                 <Button variant="outline" className="flex-1" onClick={handleClose} disabled={loading}>
                   Cancel
                 </Button>
-                <Button className="flex-1 bg-blue-600 hover:bg-blue-700" onClick={handleGenerateInvite} disabled={loading}>
+                <Button className="flex-1 bg-cyan-600 hover:bg-cyan-700" onClick={handleGenerateInvite} disabled={loading}>
                   {loading ? 'Generating...' : 'Generate Invite'}
                 </Button>
               </div>
@@ -146,8 +146,8 @@ export function InviteParentModal({ open, onClose, studentId, studentName, schoo
           </>
         ) : (
           <div className="text-center py-4 space-y-6">
-            <div className="w-16 h-16 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mx-auto mb-2">
-              <CheckCircle2 className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+            <div className="w-16 h-16 rounded-full bg-cyan-100 dark:bg-cyan-900/30 flex items-center justify-center mx-auto mb-2">
+              <CheckCircle2 className="w-8 h-8 text-cyan-600 dark:text-cyan-400" />
             </div>
             
             <div className="space-y-1">
@@ -165,7 +165,7 @@ export function InviteParentModal({ open, onClose, studentId, studentName, schoo
 
             <div className="flex gap-2 max-w-sm mx-auto">
               <Button variant="outline" onClick={handleCopy} className="flex-1 gap-1.5 h-10">
-                {copied ? <CheckCircle2 className="w-4 h-4 text-blue-500" /> : <Copy className="w-4 h-4" />}
+                {copied ? <CheckCircle2 className="w-4 h-4 text-cyan-500" /> : <Copy className="w-4 h-4" />}
                 {copied ? 'Copied' : 'Copy Link'}
               </Button>
               <a

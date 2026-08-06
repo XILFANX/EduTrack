@@ -24,14 +24,14 @@ export default function ForgotPasswordPage() {
                 id="email"
                 type="email"
                 placeholder="you@example.com"
-                className="w-full px-3 py-2 border border-slate-300 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100"
+                className="w-full px-3 py-2 border border-slate-300 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100"
                 required
               />
             </div>
 
             <button
               type="submit"
-              className="w-full bg-blue-600 dark:bg-blue-700 text-white font-medium py-2.5 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors"
+              className="w-full bg-cyan-600 dark:bg-cyan-700 text-white font-medium py-2.5 rounded-lg hover:bg-cyan-700 dark:hover:bg-cyan-600 transition-colors"
             >
               Send Reset Link
             </button>
@@ -40,7 +40,7 @@ export default function ForgotPasswordPage() {
           <div className="text-center">
             <Link
               href="/login"
-              className="inline-flex items-center text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-500 transition-colors"
+              className="inline-flex items-center text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-cyan-600 dark:hover:text-cyan-500 transition-colors"
             >
               <ArrowLeft className="w-4 h-4 mr-1.5" />
               Back to login

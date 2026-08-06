@@ -44,7 +44,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   const initials = fullName.split(' ').map((n: string) => n[0]).join('').slice(0, 2).toUpperCase()
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#0A0A0F] flex flex-col selection:bg-blue-500/30">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#0A0A0F] flex flex-col selection:bg-cyan-500/30">
       {/* Header */}
       <header className="sticky top-0 z-40 bg-white/70 dark:bg-[#0A0A0F]/70 backdrop-blur-2xl border-b border-slate-200/50 dark:border-slate-800/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
@@ -55,8 +55,8 @@ export default async function AdminLayout({ children }: { children: React.ReactN
             <div>
               <span className="font-extrabold text-slate-900 dark:text-white block leading-tight tracking-tight text-[15px]">EduTrack</span>
               <div className="flex items-center gap-1.5 mt-0.5">
-                <span className={`w-1.5 h-1.5 rounded-full ${isRoot ? 'bg-blue-500 animate-pulse' : 'bg-slate-400'}`}></span>
-                <span className={`text-[10px] font-bold uppercase tracking-widest ${isRoot ? 'text-blue-600 dark:text-blue-400' : 'text-slate-500'}`}>
+                <span className={`w-1.5 h-1.5 rounded-full ${isRoot ? 'bg-cyan-500 animate-pulse' : 'bg-slate-400'}`}></span>
+                <span className={`text-[10px] font-bold uppercase tracking-widest ${isRoot ? 'text-cyan-600 dark:text-cyan-400' : 'text-slate-500'}`}>
                   {isRoot ? 'Root Administrator' : 'Platform Admin'}
                 </span>
               </div>
@@ -72,7 +72,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
                 <p className="text-sm font-bold text-foreground">{fullName}</p>
                 <p className="text-[10px] uppercase tracking-widest text-slate-500 font-semibold">{isRoot ? 'Root' : 'Admin'}</p>
               </div>
-              <div className="w-9 h-9 rounded-xl bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 flex items-center justify-center font-bold text-sm shrink-0">
+              <div className="w-9 h-9 rounded-xl bg-cyan-100 dark:bg-cyan-900/40 text-cyan-700 dark:text-cyan-300 flex items-center justify-center font-bold text-sm shrink-0">
                 {initials}
               </div>
               <form action="/api/auth/signout" method="post" className="ml-1">

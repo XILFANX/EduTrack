@@ -45,7 +45,7 @@ export function SharePortalLink({ link, label = "Share Portal", className = "", 
     <div className="relative inline-block" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`flex items-center gap-1.5 text-xs font-medium transition-colors text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 ${className}`}
+        className={`flex items-center gap-1.5 text-xs font-medium transition-colors text-cyan-600 dark:text-cyan-400 hover:text-cyan-700 dark:hover:text-cyan-300 ${className}`}
       >
         <Share2 className="w-3.5 h-3.5" />
         {label}
@@ -58,7 +58,7 @@ export function SharePortalLink({ link, label = "Share Portal", className = "", 
               onClick={handleCopy}
               className="flex items-center gap-2 px-4 py-2.5 text-xs text-foreground hover:bg-muted transition-colors text-left"
             >
-              {copied ? <Check className="w-4 h-4 text-blue-500" /> : <Copy className="w-4 h-4 text-muted-foreground" />}
+              {copied ? <Check className="w-4 h-4 text-cyan-500" /> : <Copy className="w-4 h-4 text-muted-foreground" />}
               {copied ? 'Copied!' : 'Copy Link'}
             </button>
             <a
@@ -68,7 +68,7 @@ export function SharePortalLink({ link, label = "Share Portal", className = "", 
               onClick={() => setIsOpen(false)}
               className="flex items-center gap-2 px-4 py-2.5 text-xs text-foreground hover:bg-muted transition-colors text-left"
             >
-              <MessageCircle className="w-4 h-4 text-blue-500" />
+              <MessageCircle className="w-4 h-4 text-cyan-500" />
               Share via WhatsApp
             </a>
           </div>

@@ -81,7 +81,7 @@ export default async function ParentResultsPage({ searchParams }: Props) {
   return (
     <div className="space-y-6 pb-24">
       {/* Hero */}
-      <div className="bg-gradient-to-br from-blue-600 via-blue-500 to-blue-500 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
+      <div className="bg-gradient-to-br from-cyan-600 via-cyan-500 to-cyan-500 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-[50px] rounded-full pointer-events-none" />
         <div className="relative z-10 flex items-center gap-4">
           <div className="w-12 h-12 rounded-2xl bg-white/15 flex items-center justify-center">
@@ -89,7 +89,7 @@ export default async function ParentResultsPage({ searchParams }: Props) {
           </div>
           <div>
             <h1 className="text-2xl font-black tracking-tight">Report Cards</h1>
-            <p className="text-blue-100 text-sm mt-0.5">Published academic results for your child</p>
+            <p className="text-cyan-100 text-sm mt-0.5">Published academic results for your child</p>
           </div>
         </div>
       </div>
@@ -113,12 +113,12 @@ export default async function ParentResultsPage({ searchParams }: Props) {
                     href={`/parent/results?childId=${child.id}`}
                     className={`flex items-center gap-3 px-4 py-3 rounded-2xl border-2 transition-all ${
                       selectedChildId === child.id
-                        ? 'border-blue-500 bg-blue-50 dark:bg-blue-950/30'
-                        : 'border-border bg-card hover:border-blue-300'
+                        ? 'border-cyan-500 bg-cyan-50 dark:bg-cyan-950/30'
+                        : 'border-border bg-card hover:border-cyan-300'
                     }`}
                   >
-                    <div className="w-9 h-9 rounded-xl bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center shrink-0">
-                      <span className="text-sm font-black text-blue-600 dark:text-blue-400">
+                    <div className="w-9 h-9 rounded-xl bg-cyan-100 dark:bg-cyan-900/40 flex items-center justify-center shrink-0">
+                      <span className="text-sm font-black text-cyan-600 dark:text-cyan-400">
                         {child.first_name?.[0]}{child.last_name?.[0]}
                       </span>
                     </div>
@@ -145,11 +145,11 @@ export default async function ParentResultsPage({ searchParams }: Props) {
                   href={`/parent/results?childId=${selectedChildId}&eventId=${rc.exam_event_id}`}
                   className={`block px-4 py-3 rounded-2xl border-2 transition-all ${
                     selectedEventId === rc.exam_event_id
-                      ? 'border-blue-500 bg-blue-50 dark:bg-blue-950/30'
-                      : 'border-border bg-card hover:border-blue-300'
+                      ? 'border-cyan-500 bg-cyan-50 dark:bg-cyan-950/30'
+                      : 'border-border bg-card hover:border-cyan-300'
                   }`}
                 >
-                  <p className={`text-sm font-bold ${selectedEventId === rc.exam_event_id ? 'text-blue-700 dark:text-blue-200' : 'text-foreground'}`}>
+                  <p className={`text-sm font-bold ${selectedEventId === rc.exam_event_id ? 'text-cyan-700 dark:text-cyan-200' : 'text-foreground'}`}>
                     {rc.exam_events?.name}
                   </p>
                   <p className="text-xs text-muted-foreground mt-0.5">
@@ -184,8 +184,8 @@ export default async function ParentResultsPage({ searchParams }: Props) {
                       </p>
                     </div>
                     {selectedCard.position_in_class && (
-                      <div className="text-center bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800/40 rounded-2xl px-5 py-3">
-                        <p className="text-2xl font-black text-blue-600 dark:text-blue-400">{medalIcon(selectedCard.position_in_class)}</p>
+                      <div className="text-center bg-cyan-50 dark:bg-cyan-950/30 border border-cyan-200 dark:border-cyan-800/40 rounded-2xl px-5 py-3">
+                        <p className="text-2xl font-black text-cyan-600 dark:text-cyan-400">{medalIcon(selectedCard.position_in_class)}</p>
                         <p className="text-[10px] font-bold uppercase tracking-wide text-muted-foreground mt-0.5">
                           of {selectedCard.class_size}
                         </p>
@@ -200,7 +200,7 @@ export default async function ParentResultsPage({ searchParams }: Props) {
                       <p className="text-[10px] font-bold uppercase tracking-wide text-muted-foreground">Total</p>
                     </div>
                     <div className="text-center">
-                      <p className="text-2xl font-black text-blue-600 dark:text-blue-400">{selectedCard.average_score?.toFixed(1)}%</p>
+                      <p className="text-2xl font-black text-cyan-600 dark:text-cyan-400">{selectedCard.average_score?.toFixed(1)}%</p>
                       <p className="text-[10px] font-bold uppercase tracking-wide text-muted-foreground">Average</p>
                     </div>
                     <div className="text-center">
@@ -234,7 +234,7 @@ export default async function ParentResultsPage({ searchParams }: Props) {
                               <td className="px-5 py-3 text-center font-bold text-foreground">{result.score ?? '—'}</td>
                               <td className="px-5 py-3 text-center">
                                 {result.grade ? (
-                                  <span className="px-2.5 py-1 rounded-full text-xs font-black bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300">
+                                  <span className="px-2.5 py-1 rounded-full text-xs font-black bg-cyan-100 dark:bg-cyan-900/40 text-cyan-700 dark:text-cyan-300">
                                     {result.grade}
                                   </span>
                                 ) : <span className="text-slate-300 text-xs">—</span>}

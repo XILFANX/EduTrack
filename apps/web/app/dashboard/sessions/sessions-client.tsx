@@ -183,24 +183,24 @@ export function SessionsClient({ initialYears, initialTerms }: { initialYears: A
   return (
     <div className="space-y-6">
       {error && (
-        <div className="p-4 bg-blue-500/10 border border-blue-500/20 rounded-2xl flex items-center gap-3 text-blue-600 dark:text-blue-400">
+        <div className="p-4 bg-cyan-500/10 border border-cyan-500/20 rounded-2xl flex items-center gap-3 text-cyan-600 dark:text-cyan-400">
           <ShieldAlert className="w-5 h-5 shrink-0" />
           <p className="text-sm font-medium">{error}</p>
         </div>
       )}
 
       {/* Active Session Status */}
-      <div className="bg-gradient-to-r from-blue-600 to-blue-600 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
+      <div className="bg-gradient-to-r from-cyan-600 to-cyan-600 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-[50px] rounded-full pointer-events-none" />
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
             <div className="flex items-center gap-2 mb-2">
-              <CheckCircle2 className="w-5 h-5 text-blue-200" />
+              <CheckCircle2 className="w-5 h-5 text-cyan-200" />
               <h2 className="text-lg font-bold">Currently Active Session</h2>
             </div>
             <div className="flex items-baseline gap-3">
               <span className="text-3xl font-black tracking-tight">{activeYear ? activeYear.name : 'No Active Year'}</span>
-              <span className="text-blue-200 font-medium">— {activeTerm ? activeTerm.name : 'No Active Term'}</span>
+              <span className="text-cyan-200 font-medium">— {activeTerm ? activeTerm.name : 'No Active Term'}</span>
             </div>
           </div>
           <button 
@@ -220,13 +220,13 @@ export function SessionsClient({ initialYears, initialTerms }: { initialYears: A
           const yearTerms = terms.filter(t => t.year_id === year.id)
           
           return (
-            <div key={year.id} className={`bg-white dark:bg-slate-900/50 border ${year.is_active ? 'border-blue-500/50 shadow-md ring-1 ring-blue-500/20' : 'border-slate-200 dark:border-slate-800 shadow-sm'} rounded-3xl overflow-hidden transition-all`}>
-              <div className={`p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b ${year.is_active ? 'border-blue-500/20 bg-blue-50/50 dark:bg-blue-500/5' : 'border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/20'}`}>
+            <div key={year.id} className={`bg-white dark:bg-slate-900/50 border ${year.is_active ? 'border-cyan-500/50 shadow-md ring-1 ring-cyan-500/20' : 'border-slate-200 dark:border-slate-800 shadow-sm'} rounded-3xl overflow-hidden transition-all`}>
+              <div className={`p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b ${year.is_active ? 'border-cyan-500/20 bg-cyan-50/50 dark:bg-cyan-500/5' : 'border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/20'}`}>
                 <div>
                   <div className="flex items-center gap-3">
                     <h3 className="text-xl font-bold text-foreground">{year.name}</h3>
                     {year.is_active && (
-                      <span className="px-2.5 py-1 rounded-lg bg-blue-600 text-white text-[10px] font-bold uppercase tracking-widest">
+                      <span className="px-2.5 py-1 rounded-lg bg-cyan-600 text-white text-[10px] font-bold uppercase tracking-widest">
                         Active Year
                       </span>
                     )}
@@ -251,8 +251,8 @@ export function SessionsClient({ initialYears, initialTerms }: { initialYears: A
                     disabled={loadingId === year.id}
                     className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors border ${
                       year.is_active 
-                        ? 'bg-blue-50 dark:bg-blue-500/10 text-blue-600 border-blue-200 dark:border-blue-500/20 hover:bg-blue-100 dark:hover:bg-blue-500/20' 
-                        : 'bg-blue-50 dark:bg-blue-500/10 text-blue-600 border-blue-200 dark:border-blue-500/20 hover:bg-blue-100 dark:hover:bg-blue-500/20'
+                        ? 'bg-cyan-50 dark:bg-cyan-500/10 text-cyan-600 border-cyan-200 dark:border-cyan-500/20 hover:bg-cyan-100 dark:hover:bg-cyan-500/20' 
+                        : 'bg-cyan-50 dark:bg-cyan-500/10 text-cyan-600 border-cyan-200 dark:border-cyan-500/20 hover:bg-cyan-100 dark:hover:bg-cyan-500/20'
                     } disabled:opacity-50`}
                     title={year.is_active ? "Deactivate Year" : "Activate Year"}
                   >
@@ -266,12 +266,12 @@ export function SessionsClient({ initialYears, initialTerms }: { initialYears: A
                   {yearTerms.map(term => (
                     <div key={term.id} className="p-5 flex items-center justify-between gap-4 hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
                       <div className="flex items-center gap-4">
-                        <div className={`w-1.5 h-12 rounded-full ${term.is_active ? 'bg-blue-500' : 'bg-slate-200 dark:bg-slate-700'}`} />
+                        <div className={`w-1.5 h-12 rounded-full ${term.is_active ? 'bg-cyan-500' : 'bg-slate-200 dark:bg-slate-700'}`} />
                         <div>
                           <div className="flex items-center gap-2">
                             <h4 className="font-semibold text-foreground">{term.name}</h4>
                             {term.is_active && (
-                              <span className="px-2 py-0.5 rounded-md bg-blue-100 dark:bg-blue-500/20 text-blue-700 dark:text-blue-400 text-[10px] font-bold uppercase tracking-widest">
+                              <span className="px-2 py-0.5 rounded-md bg-cyan-100 dark:bg-cyan-500/20 text-cyan-700 dark:text-cyan-400 text-[10px] font-bold uppercase tracking-widest">
                                 Active
                               </span>
                             )}
@@ -287,8 +287,8 @@ export function SessionsClient({ initialYears, initialTerms }: { initialYears: A
                         disabled={loadingId === term.id}
                         className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wide transition-colors border ${
                           term.is_active 
-                            ? 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-slate-500 hover:text-blue-500 hover:border-blue-200 dark:hover:border-blue-800 hover:bg-blue-50 dark:hover:bg-blue-900/20' 
-                            : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-slate-500 hover:text-blue-600 hover:border-blue-200 dark:hover:border-blue-800 hover:bg-blue-50 dark:hover:bg-blue-900/20'
+                            ? 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-slate-500 hover:text-cyan-500 hover:border-cyan-200 dark:hover:border-cyan-800 hover:bg-cyan-50 dark:hover:bg-cyan-900/20' 
+                            : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-slate-500 hover:text-cyan-600 hover:border-cyan-200 dark:hover:border-cyan-800 hover:bg-cyan-50 dark:hover:bg-cyan-900/20'
                         } disabled:opacity-50`}
                       >
                         {loadingId === term.id ? 'Updating...' : term.is_active ? 'Deactivate' : 'Activate'}
@@ -306,8 +306,8 @@ export function SessionsClient({ initialYears, initialTerms }: { initialYears: A
         })}
         {years.length === 0 && (
           <div className="text-center py-20 bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-3xl">
-            <div className="w-16 h-16 rounded-2xl bg-blue-50 dark:bg-blue-900/20 mx-auto flex items-center justify-center mb-4">
-              <CalendarRange className="w-8 h-8 text-blue-500" />
+            <div className="w-16 h-16 rounded-2xl bg-cyan-50 dark:bg-cyan-900/20 mx-auto flex items-center justify-center mb-4">
+              <CalendarRange className="w-8 h-8 text-cyan-500" />
             </div>
             <h2 className="text-lg font-semibold text-foreground">No Academic Years</h2>
             <p className="text-sm text-muted-foreground max-w-sm mx-auto mt-2">
@@ -340,7 +340,7 @@ export function SessionsClient({ initialYears, initialTerms }: { initialYears: A
                   value={name}
                   onChange={e => setName(e.target.value)}
                   placeholder={showYearModal ? "e.g., 2024/2025" : "e.g., Term 1"}
-                  className="w-full bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-2.5 text-sm text-foreground focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all shadow-sm"
+                  className="w-full bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-2.5 text-sm text-foreground focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all shadow-sm"
                 />
                 {showYearModal ? (
                   <div className="flex gap-2 mt-2 overflow-x-auto pb-1">
@@ -352,7 +352,7 @@ export function SessionsClient({ initialYears, initialTerms }: { initialYears: A
                           key={label}
                           type="button"
                           onClick={() => selectYearPreset(label)}
-                          className={`px-3 py-1.5 text-xs font-medium rounded-lg whitespace-nowrap transition-colors border ${name === label ? 'bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-200 dark:border-blue-500/30 shadow-sm' : 'bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700'}`}
+                          className={`px-3 py-1.5 text-xs font-medium rounded-lg whitespace-nowrap transition-colors border ${name === label ? 'bg-cyan-50 dark:bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border-cyan-200 dark:border-cyan-500/30 shadow-sm' : 'bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700'}`}
                         >
                           {label}
                         </button>
@@ -366,7 +366,7 @@ export function SessionsClient({ initialYears, initialTerms }: { initialYears: A
                         key={label}
                         type="button"
                         onClick={() => selectTermPreset(label)}
-                        className={`px-3 py-1.5 text-xs font-medium rounded-lg whitespace-nowrap transition-colors border ${name === label ? 'bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-200 dark:border-blue-500/30 shadow-sm' : 'bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700'}`}
+                        className={`px-3 py-1.5 text-xs font-medium rounded-lg whitespace-nowrap transition-colors border ${name === label ? 'bg-cyan-50 dark:bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border-cyan-200 dark:border-cyan-500/30 shadow-sm' : 'bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700'}`}
                       >
                         {label}
                       </button>
@@ -384,7 +384,7 @@ export function SessionsClient({ initialYears, initialTerms }: { initialYears: A
                     required
                     value={startDate}
                     onChange={e => setStartDate(e.target.value)}
-                    className="w-full bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-2.5 text-sm text-foreground focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all shadow-sm"
+                    className="w-full bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-2.5 text-sm text-foreground focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all shadow-sm"
                   />
                 </div>
                 <div>
@@ -396,7 +396,7 @@ export function SessionsClient({ initialYears, initialTerms }: { initialYears: A
                     required
                     value={endDate}
                     onChange={e => setEndDate(e.target.value)}
-                    className="w-full bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-2.5 text-sm text-foreground focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all shadow-sm"
+                    className="w-full bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-2.5 text-sm text-foreground focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all shadow-sm"
                   />
                 </div>
               </div>
@@ -404,7 +404,7 @@ export function SessionsClient({ initialYears, initialTerms }: { initialYears: A
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-xl py-3 text-sm font-bold flex items-center justify-center transition-colors disabled:opacity-50 shadow-sm"
+                  className="w-full bg-cyan-600 hover:bg-cyan-700 text-white rounded-xl py-3 text-sm font-bold flex items-center justify-center transition-colors disabled:opacity-50 shadow-sm"
                 >
                   {submitting ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Create'}
                 </button>
@@ -419,8 +419,8 @@ export function SessionsClient({ initialYears, initialTerms }: { initialYears: A
         <div className="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl w-full max-w-sm overflow-hidden shadow-2xl">
             <div className="px-6 pt-6 pb-4">
-              <div className="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center mb-4">
-                <Power className="w-6 h-6 text-blue-500" />
+              <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 flex items-center justify-center mb-4">
+                <Power className="w-6 h-6 text-cyan-500" />
               </div>
               <h2 className="text-lg font-bold text-foreground mb-2">{confirmDialog.title}</h2>
               <p className="text-sm text-muted-foreground leading-relaxed">{confirmDialog.message}</p>
@@ -434,7 +434,7 @@ export function SessionsClient({ initialYears, initialTerms }: { initialYears: A
               </button>
               <button
                 onClick={confirmDialog.onConfirm}
-                className="flex-1 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold transition-colors shadow-sm"
+                className="flex-1 py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white text-sm font-bold transition-colors shadow-sm"
               >
                 {confirmDialog.confirmLabel}
               </button>

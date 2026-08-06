@@ -64,16 +64,16 @@ function calculateGrade(score: number, maxScore: number, scales: GradeScale[]): 
 
 function gradeColorClass(grade: string | null) {
   if (!grade) return 'text-slate-400'
-  if (grade.startsWith('A')) return 'text-blue-600 dark:text-blue-400'
-  if (grade.startsWith('B')) return 'text-blue-600 dark:text-blue-400'
+  if (grade.startsWith('A')) return 'text-cyan-600 dark:text-cyan-400'
+  if (grade.startsWith('B')) return 'text-cyan-600 dark:text-cyan-400'
   if (grade.startsWith('C')) return 'text-orange-600 dark:text-orange-400'
   return 'text-orange-500 dark:text-orange-400'
 }
 
 function gradeBgClass(grade: string | null) {
   if (!grade) return 'bg-slate-50 text-slate-400 border-transparent'
-  if (grade.startsWith('A')) return 'bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-900/20 dark:text-blue-300 dark:border-blue-800/30'
-  if (grade.startsWith('B')) return 'bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-900/20 dark:text-blue-300 dark:border-blue-800/30'
+  if (grade.startsWith('A')) return 'bg-cyan-50 text-cyan-700 border-cyan-200 dark:bg-cyan-900/20 dark:text-cyan-300 dark:border-cyan-800/30'
+  if (grade.startsWith('B')) return 'bg-cyan-50 text-cyan-700 border-cyan-200 dark:bg-cyan-900/20 dark:text-cyan-300 dark:border-cyan-800/30'
   if (grade.startsWith('C')) return 'bg-orange-50 text-orange-700 border-orange-200 dark:bg-orange-900/20 dark:text-orange-300 dark:border-orange-800/30'
   return 'bg-orange-50 text-orange-700 border-orange-200 dark:bg-orange-900/20 dark:text-orange-300 dark:border-orange-800/30'
 }
@@ -221,7 +221,7 @@ export function ResultsEntryTable({
         </div>
         <div className="flex flex-wrap items-center gap-2">
           {isFinalized ? (
-            <span className="flex items-center gap-1.5 text-xs font-semibold text-blue-700 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800/30 rounded-full px-3 py-1.5">
+            <span className="flex items-center gap-1.5 text-xs font-semibold text-cyan-700 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-900/20 border border-cyan-200 dark:border-cyan-800/30 rounded-full px-3 py-1.5">
               <CheckCircle2 className="w-3.5 h-3.5" /> Results Finalized
             </span>
           ) : submitted ? (
@@ -235,10 +235,10 @@ export function ResultsEntryTable({
       {/* Live Stats */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {[
-          { label: 'Students', value: totalCount, color: 'text-blue-600 dark:text-blue-400' },
-          { label: 'Entered', value: `${enteredCount}/${totalCount}`, color: enteredCount === totalCount ? 'text-blue-600 dark:text-blue-400' : 'text-orange-600 dark:text-orange-400' },
+          { label: 'Students', value: totalCount, color: 'text-cyan-600 dark:text-cyan-400' },
+          { label: 'Entered', value: `${enteredCount}/${totalCount}`, color: enteredCount === totalCount ? 'text-cyan-600 dark:text-cyan-400' : 'text-orange-600 dark:text-orange-400' },
           { label: 'Class Avg', value: avgScore ? `${avgScore}%` : '—', color: 'text-purple-600 dark:text-purple-400' },
-          { label: 'Passing', value: avgScore ? `${passCount}/${enteredCount}` : '—', color: 'text-blue-600 dark:text-blue-400' },
+          { label: 'Passing', value: avgScore ? `${passCount}/${enteredCount}` : '—', color: 'text-cyan-600 dark:text-cyan-400' },
         ].map((stat, i) => (
           <div key={i} className="bg-card border border-border rounded-2xl p-3 text-center">
             <p className={`text-xl font-extrabold ${stat.color}`}>{stat.value}</p>
@@ -249,7 +249,7 @@ export function ResultsEntryTable({
 
       {!isLocked && (
         <div className="flex items-start gap-2 text-xs text-muted-foreground bg-slate-50 dark:bg-slate-900/30 border border-border rounded-xl px-3 py-2">
-          <Info className="w-3.5 h-3.5 shrink-0 mt-0.5 text-blue-500" />
+          <Info className="w-3.5 h-3.5 shrink-0 mt-0.5 text-cyan-500" />
           <span>Use <kbd className="px-1.5 py-0.5 text-[10px] bg-white dark:bg-slate-800 border border-border rounded font-mono">↑</kbd> <kbd className="px-1.5 py-0.5 text-[10px] bg-white dark:bg-slate-800 border border-border rounded font-mono">↓</kbd> or <kbd className="px-1.5 py-0.5 text-[10px] bg-white dark:bg-slate-800 border border-border rounded font-mono">Enter</kbd> to navigate between students. Grade and remarks are calculated automatically.</span>
         </div>
       )}
@@ -295,7 +295,7 @@ export function ResultsEntryTable({
                   <td className="px-4 py-2.5 text-xs text-muted-foreground">{idx + 1}</td>
                   <td className="px-4 py-2.5">
                     <div className="flex items-center gap-2.5">
-                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-400 to-blue-500 flex items-center justify-center text-white text-xs font-bold shrink-0">
+                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-400 to-cyan-500 flex items-center justify-center text-white text-xs font-bold shrink-0">
                         {student.photo_url
                           ? <img src={student.photo_url} className="w-full h-full object-cover rounded-full" alt="" />
                           : `${student.first_name[0]}${student.last_name[0]}`
@@ -337,8 +337,8 @@ export function ResultsEntryTable({
                   </td>
                   <td className="px-4 py-2.5 text-xs text-muted-foreground italic">{remarks || '—'}</td>
                   <td className="px-4 py-2.5">
-                    {status === 'saving' && <Loader2 className="w-3.5 h-3.5 animate-spin text-blue-500" />}
-                    {status === 'saved' && <CheckCircle2 className="w-3.5 h-3.5 text-blue-500" />}
+                    {status === 'saving' && <Loader2 className="w-3.5 h-3.5 animate-spin text-cyan-500" />}
+                    {status === 'saved' && <CheckCircle2 className="w-3.5 h-3.5 text-cyan-500" />}
                     {status === 'error' && <AlertCircle className="w-3.5 h-3.5 text-orange-500" />}
                   </td>
                 </tr>
@@ -366,7 +366,7 @@ export function ResultsEntryTable({
               onClick={handleSubmit}
               disabled={submitting || enteredCount < totalCount}
               title={enteredCount < totalCount ? `${totalCount - enteredCount} students still missing scores` : ''}
-              className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white rounded-xl text-sm font-semibold transition-colors disabled:opacity-60"
+              className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-700 hover:to-cyan-700 text-white rounded-xl text-sm font-semibold transition-colors disabled:opacity-60"
             >
               {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
               Submit to Class Teacher

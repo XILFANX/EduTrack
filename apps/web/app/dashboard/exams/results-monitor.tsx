@@ -14,7 +14,7 @@ type ResultStatus = 'pending' | 'submitted' | 'approved' | 'rejected'
 
 const STATUS_CONFIG: Record<ResultStatus, { label: string; color: string; icon: any }> = {
   pending:   { label: 'Pending',   color: 'text-slate-500 bg-slate-100 dark:bg-slate-800',              icon: Clock },
-  submitted: { label: 'Submitted', color: 'text-blue-700 dark:text-blue-300 bg-blue-100 dark:bg-blue-900/40',   icon: Send },
+  submitted: { label: 'Submitted', color: 'text-cyan-700 dark:text-cyan-300 bg-cyan-100 dark:bg-cyan-900/40',   icon: Send },
   approved:  { label: 'Approved',  color: 'text-emerald-700 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-900/40', icon: CheckCircle2 },
   rejected:  { label: 'Rejected',  color: 'text-red-700 dark:text-red-300 bg-red-100 dark:bg-red-900/40',       icon: XCircle },
 }
@@ -69,25 +69,25 @@ export function ResultsMonitor({ event, eventSlots, gradingStatus, classes, subj
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-gradient-to-br from-blue-600 via-blue-500 to-blue-500 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
+      <div className="bg-gradient-to-br from-cyan-600 via-cyan-500 to-cyan-500 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-[50px] rounded-full pointer-events-none" />
         <div className="relative z-10">
           <button
             onClick={() => router.push('/dashboard/exams')}
-            className="flex items-center gap-2 text-sm text-blue-100 hover:text-white mb-4 transition-colors"
+            className="flex items-center gap-2 text-sm text-cyan-100 hover:text-white mb-4 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" /> All Exam Events
           </button>
           <div className="flex items-start justify-between gap-4">
             <div>
               <h1 className="text-2xl font-black tracking-tight">{event.name}</h1>
-              <p className="text-blue-100 text-sm mt-1">Results Monitor — track submission status per class & subject</p>
+              <p className="text-cyan-100 text-sm mt-1">Results Monitor — track submission status per class & subject</p>
             </div>
             {readyToPublish && (
               <Button
                 onClick={handlePublish}
                 disabled={publishing}
-                className="bg-white text-blue-700 hover:bg-blue-50 font-bold rounded-xl gap-2 shrink-0"
+                className="bg-white text-cyan-700 hover:bg-cyan-50 font-bold rounded-xl gap-2 shrink-0"
               >
                 {publishing ? <Loader2 className="w-4 h-4 animate-spin" /> : <FileText className="w-4 h-4" />}
                 Generate Report Cards
@@ -102,7 +102,7 @@ export function ResultsMonitor({ event, eventSlots, gradingStatus, classes, subj
         {[
           { label: 'Total Slots', value: totalSlots, color: 'text-slate-700 dark:text-slate-200' },
           { label: 'Pending', value: pending, color: 'text-slate-500' },
-          { label: 'Submitted', value: submitted, color: 'text-blue-600 dark:text-blue-400' },
+          { label: 'Submitted', value: submitted, color: 'text-cyan-600 dark:text-cyan-400' },
           { label: 'Approved', value: approved, color: 'text-emerald-600 dark:text-emerald-400' },
         ].map(stat => (
           <div key={stat.label} className="bg-card border border-border rounded-2xl px-4 py-3 text-center">
@@ -121,12 +121,12 @@ export function ResultsMonitor({ event, eventSlots, gradingStatus, classes, subj
           </div>
           <div className="h-2.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden flex gap-0.5">
             <div className="bg-emerald-500 rounded-full transition-all" style={{ width: `${(approved / totalSlots) * 100}%` }} />
-            <div className="bg-blue-500 rounded-full transition-all" style={{ width: `${(submitted / totalSlots) * 100}%` }} />
+            <div className="bg-cyan-500 rounded-full transition-all" style={{ width: `${(submitted / totalSlots) * 100}%` }} />
             {rejected > 0 && <div className="bg-red-400 rounded-full transition-all" style={{ width: `${(rejected / totalSlots) * 100}%` }} />}
           </div>
           <div className="flex gap-4 text-xs text-muted-foreground flex-wrap">
             <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-emerald-500" />Approved</span>
-            <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-blue-500" />Submitted</span>
+            <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-cyan-500" />Submitted</span>
             {rejected > 0 && <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-red-400" />Rejected</span>}
           </div>
         </div>
@@ -165,8 +165,8 @@ export function ResultsMonitor({ event, eventSlots, gradingStatus, classes, subj
 
                       return (
                         <div key={slot.id} className="flex items-center gap-4 px-4 py-3">
-                          <div className="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-950/30 flex items-center justify-center shrink-0">
-                            <BookOpen className="w-4 h-4 text-blue-500" />
+                          <div className="w-8 h-8 rounded-lg bg-cyan-50 dark:bg-cyan-950/30 flex items-center justify-center shrink-0">
+                            <BookOpen className="w-4 h-4 text-cyan-500" />
                           </div>
                           <div className="flex-1 min-w-0">
                             <p className="text-sm font-semibold text-foreground">{slot.subjects?.name}</p>

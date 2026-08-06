@@ -24,8 +24,7 @@ export default async function InvitePage({ params }: Props) {
       target_phone,
       used_at,
       school_id,
-      target_entity_id,
-      schools ( name )
+      target_entity_id
     `)
     .eq('token', token)
     .single()
@@ -35,7 +34,15 @@ export default async function InvitePage({ params }: Props) {
   }
 
   const isReturningUser = invite.used_at !== null
-  const schoolName = (invite.schools as any)?.name ?? 'Your School'
+  
+  // Fetch school name manually to bypass any foreign key relationship issues in the DB
+  const { data: schoolRow } = await admin
+    .from('schools')
+    .select('name')
+    .eq('id', invite.school_id)
+    .single()
+    
+  const schoolName = schoolRow?.name ?? 'Your School'
   const className = null // resolved separately if needed
 
   // Access Revocation Check — if returning user, verify they still have an active account

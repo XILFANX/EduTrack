@@ -66,7 +66,7 @@ export default async function SettingsPage() {
           >
             <span className="text-2xl">{section.icon}</span>
             <div>
-              <p className="font-medium text-foreground group-hover:text-blue-700 dark:group-hover:text-blue-400 transition-colors">{section.label}</p>
+              <p className="font-medium text-foreground group-hover:text-cyan-700 dark:group-hover:text-cyan-400 transition-colors">{section.label}</p>
               <p className="text-xs text-slate-500 mt-0.5">{section.desc}</p>
             </div>
           </Link>

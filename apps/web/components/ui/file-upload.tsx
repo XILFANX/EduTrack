@@ -101,7 +101,7 @@ export function FileUpload({
       <div
         className={`relative border-2 border-dashed rounded-xl p-6 transition-colors ${
           isDragging 
-            ? 'border-blue-500 bg-blue-500/10' 
+            ? 'border-cyan-500 bg-cyan-500/10' 
             : 'border-slate-700 bg-slate-800/50 hover:bg-slate-800'
         }`}
         onDragEnter={handleDrag}
@@ -121,7 +121,7 @@ export function FileUpload({
         
         <div className="flex flex-col items-center justify-center text-center space-y-2 pointer-events-none">
           {isUploading ? (
-            <Loader2 className="w-8 h-8 text-blue-500 animate-spin" />
+            <Loader2 className="w-8 h-8 text-cyan-500 animate-spin" />
           ) : (
             <UploadCloud className="w-8 h-8 text-slate-400" />
           )}

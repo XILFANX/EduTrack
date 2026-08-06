@@ -59,7 +59,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-slate-100 dark:from-slate-950 dark:to-slate-900 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-gradient-to-br from-cyan-50 to-slate-100 dark:from-slate-950 dark:to-slate-900 flex items-center justify-center px-4">
       <div className="w-full max-w-sm space-y-6">
 
         {/* Logo */}
@@ -67,7 +67,7 @@ export default function LoginPage() {
           <div className="w-12 h-12 relative mx-auto rounded-full overflow-hidden shadow-sm border border-slate-200 dark:border-slate-800 bg-white">
             <Image src="/logo.png" alt="EduTrack Logo" fill className="object-cover " />
           </div>
-          <p className="text-blue-600 dark:text-blue-400 font-bold text-xl">EduTrack</p>
+          <p className="text-cyan-600 dark:text-cyan-400 font-bold text-xl">EduTrack</p>
           <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-100">Welcome back</h1>
           <p className="text-slate-500 dark:text-slate-400 text-sm">Sign in to your EduTrack account</p>
         </div>
@@ -85,14 +85,14 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@school.ac.ke"
-                className="w-full border border-slate-200 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full border border-slate-200 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
               />
             </div>
 
             <div className="space-y-1.5">
               <div className="flex justify-between">
                 <label htmlFor="password" className="text-sm font-medium text-slate-700 dark:text-slate-300">Password</label>
-                <Link href="/forgot-password" className="text-xs text-blue-600 dark:text-blue-500 hover:underline">Forgot password?</Link>
+                <Link href="/forgot-password" className="text-xs text-cyan-600 dark:text-cyan-500 hover:underline">Forgot password?</Link>
               </div>
               <div className="relative">
                 <input
@@ -103,7 +103,7 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full border border-slate-200 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent pr-10"
+                  className="w-full border border-slate-200 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent pr-10"
                 />
                 <button
                   type="button"
@@ -125,7 +125,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-4 rounded-lg transition-colors text-sm disabled:opacity-60"
+              className="w-full bg-cyan-600 hover:bg-cyan-700 text-white font-medium py-2.5 px-4 rounded-lg transition-colors text-sm disabled:opacity-60"
             >
               {loading ? 'Signing in…' : 'Sign in'}
             </button>
@@ -157,7 +157,7 @@ export default function LoginPage() {
 
         <p className="text-center text-sm text-slate-500 dark:text-slate-400">
           No account?{' '}
-          <Link href="/signup" className="text-blue-600 dark:text-blue-500 font-medium hover:underline">
+          <Link href="/signup" className="text-cyan-600 dark:text-cyan-500 font-medium hover:underline">
             Register your school
           </Link>
         </p>
@@ -177,11 +177,11 @@ export default function LoginPage() {
               value={inviteLink}
               onChange={(e) => setInviteLink(e.target.value)}
               placeholder="https://…/invite/your-token or just the token"
-              className="flex-1 min-w-0 border border-slate-200 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-slate-400"
+              className="flex-1 min-w-0 border border-slate-200 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-cyan-500 placeholder-slate-400"
             />
             <button
               type="submit"
-              className="shrink-0 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors"
+              className="shrink-0 bg-cyan-600 hover:bg-cyan-700 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors"
             >
               Go →
             </button>

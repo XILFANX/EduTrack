@@ -171,10 +171,10 @@ export function ClassGroupsClient({
             <button
               key={group.id}
               onClick={() => setSelectedGroup(group)}
-              className="flex items-center gap-4 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-blue-400/50 bg-white dark:bg-slate-900 hover:bg-blue-50/30 dark:hover:bg-blue-900/10 transition-all group text-left"
+              className="flex items-center gap-4 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-cyan-400/50 bg-white dark:bg-slate-900 hover:bg-cyan-50/30 dark:hover:bg-cyan-900/10 transition-all group text-left"
             >
-              <div className="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center shrink-0">
-                <Users2 className="w-6 h-6 text-blue-500" />
+              <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 flex items-center justify-center shrink-0">
+                <Users2 className="w-6 h-6 text-cyan-500" />
               </div>
               <div>
                 <p className="font-bold text-foreground text-sm">{group.title}</p>
@@ -202,12 +202,12 @@ export function ClassGroupsClient({
               <MessageSquare className="w-5 h-5" />
             </button>
           )}
-          <div className="w-9 h-9 rounded-xl bg-blue-500/10 flex items-center justify-center shrink-0">
-            <Users2 className="w-5 h-5 text-blue-500" />
+          <div className="w-9 h-9 rounded-xl bg-cyan-500/10 flex items-center justify-center shrink-0">
+            <Users2 className="w-5 h-5 text-cyan-500" />
           </div>
           <div className="min-w-0">
             <p className="font-bold text-foreground text-sm truncate">{selectedGroup.title}</p>
-            <p className="text-[11px] text-blue-500 font-medium">{participantCount} members</p>
+            <p className="text-[11px] text-cyan-500 font-medium">{participantCount} members</p>
           </div>
         </div>
 
@@ -215,7 +215,7 @@ export function ClassGroupsClient({
         <div className="flex-1 overflow-y-auto p-4 space-y-2">
           {loading ? (
             <div className="h-full flex items-center justify-center">
-              <Loader2 className="w-6 h-6 animate-spin text-blue-500" />
+              <Loader2 className="w-6 h-6 animate-spin text-cyan-500" />
             </div>
           ) : messages.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-center gap-3 text-muted-foreground">
@@ -238,26 +238,26 @@ export function ClassGroupsClient({
                     </span>
                   )}
                   {!isMe && !sameSender && (
-                    <span className="text-[10px] font-bold text-blue-600 dark:text-blue-400 ml-1 mb-0.5">
+                    <span className="text-[10px] font-bold text-cyan-600 dark:text-cyan-400 ml-1 mb-0.5">
                       {getSenderName(msg)}
                     </span>
                   )}
                   <div className={`px-4 py-2.5 rounded-2xl max-w-[80%] shadow-sm mb-1 ${
                     isMe
-                      ? 'bg-blue-600 text-white rounded-br-sm'
+                      ? 'bg-cyan-600 text-white rounded-br-sm'
                       : 'bg-slate-100 dark:bg-slate-800 text-foreground rounded-bl-sm border border-slate-200 dark:border-slate-700'
                   }`}>
                     <p className="text-sm leading-relaxed">{msg.content}</p>
                     <div className="flex items-end justify-between gap-3 mt-1">
-                      <span className={`text-[10px] font-medium ${isMe ? 'text-blue-200' : 'text-slate-400'}`}>
+                      <span className={`text-[10px] font-medium ${isMe ? 'text-cyan-200' : 'text-slate-400'}`}>
                         {formatTime(msg.created_at)}
                       </span>
                       {isMe && (
                         <span className="shrink-0">
                           {(msg as any).is_pending ? (
-                            <Check className="w-3.5 h-3.5 text-blue-200/70" />
+                            <Check className="w-3.5 h-3.5 text-cyan-200/70" />
                           ) : (
-                            <CheckCheck className="w-3.5 h-3.5 text-blue-200" />
+                            <CheckCheck className="w-3.5 h-3.5 text-cyan-200" />
                           )}
                         </span>
                       )}
@@ -279,12 +279,12 @@ export function ClassGroupsClient({
               onChange={e => setInput(e.target.value)}
               placeholder={`Message ${selectedGroup.title}…`}
               disabled={sending}
-              className="flex-1 h-10 px-4 rounded-full border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm"
+              className="flex-1 h-10 px-4 rounded-full border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-1 focus:ring-cyan-500 text-sm"
             />
             <button
               type="submit"
               disabled={!input.trim() || sending}
-              className="w-10 h-10 flex items-center justify-center rounded-full bg-blue-600 text-white disabled:opacity-50 hover:bg-blue-700 transition-colors shrink-0"
+              className="w-10 h-10 flex items-center justify-center rounded-full bg-cyan-600 text-white disabled:opacity-50 hover:bg-cyan-700 transition-colors shrink-0"
             >
               {sending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
             </button>

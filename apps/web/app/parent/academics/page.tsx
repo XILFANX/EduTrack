@@ -75,14 +75,14 @@ export default async function ParentAcademics() {
 
   const gradeColor = (grade: string) => {
     if (!grade || grade === '--') return 'text-slate-400'
-    if (grade.startsWith('A')) return 'text-blue-600 dark:text-blue-400'
-    if (grade.startsWith('B')) return 'text-blue-600 dark:text-blue-400'
+    if (grade.startsWith('A')) return 'text-cyan-600 dark:text-cyan-400'
+    if (grade.startsWith('B')) return 'text-cyan-600 dark:text-cyan-400'
     if (grade.startsWith('C')) return 'text-orange-600 dark:text-orange-400'
     return 'text-orange-500 dark:text-orange-400'
   }
 
   const statusIcon = (status: string) => {
-    if (status === 'Present') return <CheckCircle2 className="w-4 h-4 text-blue-500" />
+    if (status === 'Present') return <CheckCircle2 className="w-4 h-4 text-cyan-500" />
     if (status === 'Absent') return <XCircle className="w-4 h-4 text-orange-500" />
     return <Clock className="w-4 h-4 text-orange-500" />
   }
@@ -106,13 +106,13 @@ export default async function ParentAcademics() {
       {studentData.map(({ student, attendance, results, presentDays, absentDays, lateDays }) => (
         <div key={student.id} className="space-y-4">
           {/* Student header */}
-          <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl p-4 text-white flex items-center gap-3">
+          <div className="bg-gradient-to-r from-cyan-600 to-cyan-700 rounded-2xl p-4 text-white flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center font-bold text-lg">
               {student.first_name[0]}
             </div>
             <div className="flex-1">
               <p className="font-bold">{student.first_name} {student.last_name}</p>
-              <p className="text-xs text-blue-100">{student.classes?.name ?? '—'} · {student.admission_number}</p>
+              <p className="text-xs text-cyan-100">{student.classes?.name ?? '—'} · {student.admission_number}</p>
             </div>
             <Link
               href={`/parent/results/${student.id}`}
@@ -135,7 +135,7 @@ export default async function ParentAcademics() {
             </div>
             <div className="grid grid-cols-3 gap-px bg-slate-100 dark:bg-slate-800">
               <div className="bg-white dark:bg-slate-900 p-4 text-center">
-                <p className="text-2xl font-bold text-blue-600">{presentDays}</p>
+                <p className="text-2xl font-bold text-cyan-600">{presentDays}</p>
                 <p className="text-xs text-muted-foreground mt-1">Present</p>
               </div>
               <div className="bg-white dark:bg-slate-900 p-4 text-center">

@@ -47,7 +47,7 @@ export function ClassesPageClient({ classes, studentCountMap, schoolId, curricul
           <h1 className="text-2xl font-bold text-foreground">Classes</h1>
           <p className="text-sm text-muted-foreground mt-1">Manage class rosters and assign teachers.</p>
         </div>
-        <Button className="bg-blue-600 hover:bg-blue-700 gap-2" onClick={() => setIsModalOpen(true)}>
+        <Button className="bg-cyan-600 hover:bg-cyan-700 gap-2" onClick={() => setIsModalOpen(true)}>
           <Plus className="w-4 h-4" />
           <span className="hidden sm:inline">Add Class</span>
           <span className="sm:hidden">Add</span>
@@ -56,14 +56,14 @@ export function ClassesPageClient({ classes, studentCountMap, schoolId, curricul
 
       {!classes || classes.length === 0 ? (
         <div className="text-center py-20 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl">
-          <div className="w-16 h-16 rounded-2xl bg-blue-100 dark:bg-blue-900/40 mx-auto flex items-center justify-center mb-4">
-            <Users className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+          <div className="w-16 h-16 rounded-2xl bg-cyan-100 dark:bg-cyan-900/40 mx-auto flex items-center justify-center mb-4">
+            <Users className="w-8 h-8 text-cyan-600 dark:text-cyan-400" />
           </div>
           <h2 className="text-lg font-semibold text-foreground">No classes created</h2>
           <p className="text-sm text-muted-foreground max-w-sm mx-auto mt-2">
             Add your first class to start enrolling students and assigning teachers.
           </p>
-      <Button className="mt-6 bg-blue-600 hover:bg-blue-700 gap-2" onClick={() => setIsModalOpen(true)}>
+      <Button className="mt-6 bg-cyan-600 hover:bg-cyan-700 gap-2" onClick={() => setIsModalOpen(true)}>
             <Plus className="w-4 h-4" /> Add First Class
           </Button>
         </div>
@@ -86,15 +86,15 @@ export function ClassesPageClient({ classes, studentCountMap, schoolId, curricul
                     className="flex-1 flex items-center gap-4 px-4 py-3.5"
                   >
                     {/* Avatar */}
-                    <div className="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center shrink-0 group-hover:bg-blue-200 dark:group-hover:bg-blue-800/40 transition-colors">
-                      <span className="text-sm font-bold text-blue-700 dark:text-blue-300">
+                    <div className="w-10 h-10 rounded-xl bg-cyan-100 dark:bg-cyan-900/30 flex items-center justify-center shrink-0 group-hover:bg-cyan-200 dark:group-hover:bg-cyan-800/40 transition-colors">
+                      <span className="text-sm font-bold text-cyan-700 dark:text-cyan-300">
                         {cls.name.substring(0, 2).toUpperCase()}
                       </span>
                     </div>
 
                     {/* Info */}
                     <div className="flex-1 min-w-0">
-                      <p className="font-semibold text-foreground text-sm truncate group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                      <p className="font-semibold text-foreground text-sm truncate group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
                         {cls.name}
                       </p>
                       <p className="text-xs text-muted-foreground mt-0.5 flex items-center gap-1 truncate">
@@ -112,7 +112,7 @@ export function ClassesPageClient({ classes, studentCountMap, schoolId, curricul
                       <span className="sm:hidden text-xs font-medium text-slate-500 dark:text-slate-400">
                         {studentCount}
                       </span>
-                      <ChevronRight className="w-4 h-4 text-slate-300 dark:text-slate-600 group-hover:text-blue-500 transition-colors" />
+                      <ChevronRight className="w-4 h-4 text-slate-300 dark:text-slate-600 group-hover:text-cyan-500 transition-colors" />
                     </div>
                   </Link>
 

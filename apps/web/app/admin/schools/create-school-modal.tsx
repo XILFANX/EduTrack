@@ -61,7 +61,7 @@ export function CreateSchoolModal({ onClose }: { onClose: () => void }) {
               value={name}
               onChange={e => setName(e.target.value)}
               placeholder="e.g. St. Patrick's Academy"
-              className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
+              className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 outline-none"
             />
           </div>
 
@@ -72,7 +72,7 @@ export function CreateSchoolModal({ onClose }: { onClose: () => void }) {
               value={domain}
               onChange={e => setDomain(e.target.value)}
               placeholder="e.g. stpatricks.ac.ke"
-              className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
+              className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 outline-none"
             />
           </div>
 
@@ -82,7 +82,7 @@ export function CreateSchoolModal({ onClose }: { onClose: () => void }) {
               <select
                 value={curriculum}
                 onChange={e => setCurriculum(e.target.value)}
-                className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
+                className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 outline-none"
               >
                 <option value="8-4-4">8-4-4 (Numeric)</option>
                 <option value="CBC">CBC (Competency)</option>
@@ -94,7 +94,7 @@ export function CreateSchoolModal({ onClose }: { onClose: () => void }) {
               <select
                 value={tier}
                 onChange={e => setTier(e.target.value)}
-                className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
+                className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 outline-none"
               >
                 <option value="Trial">Trial (50)</option>
                 <option value="Basic">Basic (300)</option>
@@ -106,7 +106,7 @@ export function CreateSchoolModal({ onClose }: { onClose: () => void }) {
 
           {error && <p className="text-sm text-orange-500">{error}</p>}
 
-          <Button disabled={loading} className="w-full bg-blue-600 hover:bg-blue-700 gap-2 mt-2">
+          <Button disabled={loading} className="w-full bg-cyan-600 hover:bg-cyan-700 gap-2 mt-2">
             {loading && <Loader2 className="w-4 h-4 animate-spin" />}
             Register School
           </Button>

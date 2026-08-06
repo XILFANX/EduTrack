@@ -11,11 +11,11 @@ const DAYS = [
 ]
 
 const DAY_COLORS: Record<number, string> = {
-  1: 'from-blue-500 to-blue-600',
-  2: 'from-blue-500 to-blue-600',
-  3: 'from-blue-500 to-blue-600',
+  1: 'from-cyan-500 to-cyan-600',
+  2: 'from-cyan-500 to-cyan-600',
+  3: 'from-cyan-500 to-cyan-600',
   4: 'from-purple-500 to-purple-600',
-  5: 'from-blue-500 to-blue-600',
+  5: 'from-cyan-500 to-cyan-600',
 }
 
 function fmt12(time24: string) {
@@ -77,7 +77,7 @@ export function TeacherScheduleView({ periods, slots, roleName }: Props) {
     <div className="space-y-6">
       {/* Today's Schedule Card */}
       {todayNum >= 1 && todayNum <= 5 && (
-        <div className="bg-gradient-to-br from-blue-600 to-purple-700 rounded-3xl p-5 text-white shadow-lg">
+        <div className="bg-gradient-to-br from-cyan-600 to-purple-700 rounded-3xl p-5 text-white shadow-lg">
           <div className="flex items-center gap-2 mb-4">
             <Clock className="w-4 h-4 opacity-80" />
             <p className="text-sm font-semibold opacity-90">Today's Schedule · {DAYS.find(d => d.num === todayNum)?.label}</p>
@@ -127,7 +127,7 @@ export function TeacherScheduleView({ periods, slots, roleName }: Props) {
                 <tr key={period.id} className={idx % 2 === 0 ? '' : 'bg-slate-50/40 dark:bg-slate-900/20'}>
                   <td className="sticky left-0 z-10 bg-white dark:bg-slate-950 border-b border-r border-border px-4 py-3">
                     <div className="flex items-center gap-2">
-                      {period.is_break ? <Coffee className="w-3.5 h-3.5 text-orange-500 shrink-0" /> : <Clock className="w-3.5 h-3.5 text-blue-400 shrink-0" />}
+                      {period.is_break ? <Coffee className="w-3.5 h-3.5 text-orange-500 shrink-0" /> : <Clock className="w-3.5 h-3.5 text-cyan-400 shrink-0" />}
                       <div>
                         <p className="font-semibold text-xs text-foreground">{period.name}</p>
                         <p className="text-[10px] text-muted-foreground">{fmt12(period.start_time)}–{fmt12(period.end_time)}</p>
@@ -146,7 +146,7 @@ export function TeacherScheduleView({ periods, slots, roleName }: Props) {
                         ) : daySlots.length > 0 ? (
                           <div className="space-y-1">
                             {daySlots.map((slot, si) => (
-                              <div key={si} className={`rounded-xl px-2 py-2 text-center text-xs font-semibold border ${isToday(day.num) ? 'ring-1 ring-blue-400' : ''} bg-blue-50 border-blue-200 text-blue-800 dark:bg-blue-950/40 dark:border-blue-800/50 dark:text-blue-300`}>
+                              <div key={si} className={`rounded-xl px-2 py-2 text-center text-xs font-semibold border ${isToday(day.num) ? 'ring-1 ring-cyan-400' : ''} bg-cyan-50 border-cyan-200 text-cyan-800 dark:bg-cyan-950/40 dark:border-cyan-800/50 dark:text-cyan-300`}>
                                 <p>{slot.subjects?.name || '—'}</p>
                                 {slot.classes?.name && <p className="text-[10px] opacity-70 mt-0.5">{slot.classes.name}</p>}
                               </div>

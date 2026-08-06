@@ -28,12 +28,12 @@ export function ParentNav() {
               href={item.href}
               className={`relative flex flex-col items-center justify-center w-16 h-14 rounded-xl transition-all duration-300 ${
                 isActive 
-                  ? 'text-blue-600 dark:text-blue-400' 
+                  ? 'text-cyan-600 dark:text-cyan-400' 
                   : 'text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300'
               }`}
             >
               {isActive && (
-                <div className="absolute inset-0 bg-blue-100 dark:bg-blue-900/40 rounded-xl transition-all duration-300 -z-10" />
+                <div className="absolute inset-0 bg-cyan-100 dark:bg-cyan-900/40 rounded-xl transition-all duration-300 -z-10" />
               )}
               <div className="relative">
                 <Icon 

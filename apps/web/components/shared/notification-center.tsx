@@ -102,7 +102,7 @@ export function NotificationCenter() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
-            <Bell className="w-6 h-6 text-blue-600" />
+            <Bell className="w-6 h-6 text-cyan-600" />
             Notification Center
           </h1>
           <p className="text-sm text-muted-foreground mt-1">Manage your alerts and system messages.</p>
@@ -138,10 +138,10 @@ export function NotificationCenter() {
           {notifications.map(n => (
             <div 
               key={n.id} 
-              className={`p-5 transition-colors sm:flex sm:items-start gap-4 cursor-pointer ${n.is_read ? 'bg-transparent' : 'bg-blue-50/50 dark:bg-blue-950/20'}`}
+              className={`p-5 transition-colors sm:flex sm:items-start gap-4 cursor-pointer ${n.is_read ? 'bg-transparent' : 'bg-cyan-50/50 dark:bg-cyan-950/20'}`}
               onClick={() => openNotification(n)}
             >
-              <div className={`mt-1.5 w-2.5 h-2.5 rounded-full shrink-0 hidden sm:block ${n.is_read ? 'bg-transparent' : 'bg-blue-600'}`} />
+              <div className={`mt-1.5 w-2.5 h-2.5 rounded-full shrink-0 hidden sm:block ${n.is_read ? 'bg-transparent' : 'bg-cyan-600'}`} />
               
               <div className="flex-1 min-w-0">
                 <div className="flex items-start justify-between gap-4">
@@ -166,7 +166,7 @@ export function NotificationCenter() {
                   <div className="mt-4">
                     <Link 
                       href={getAdjustedLink(n.action_href || n.link)!}
-                      className="inline-flex px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-xl transition-colors"
+                      className="inline-flex px-4 py-2 bg-cyan-600 hover:bg-cyan-700 text-white text-sm font-semibold rounded-xl transition-colors"
                       onClick={(e) => e.stopPropagation()}
                     >
                       View Details

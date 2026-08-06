@@ -44,7 +44,7 @@ export default async function StoreOverviewPage() {
         </div>
         <Link
           href="/store/dashboard"
-          className="text-sm font-semibold text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
+          className="text-sm font-semibold text-cyan-600 hover:text-cyan-700 dark:text-cyan-400 dark:hover:text-cyan-300 transition-colors"
         >
           Full Portal →
         </Link>
@@ -53,8 +53,8 @@ export default async function StoreOverviewPage() {
       {/* Stats */}
       <div className="grid grid-cols-3 gap-4">
         {[
-          { label: 'Total Items', value: totalItems, icon: Package, color: 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400' },
-          { label: 'Low Stock', value: lowStockItems, icon: TrendingDown, color: lowStockItems > 0 ? 'bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400' : 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400' },
+          { label: 'Total Items', value: totalItems, icon: Package, color: 'bg-cyan-100 dark:bg-cyan-900/30 text-cyan-600 dark:text-cyan-400' },
+          { label: 'Low Stock', value: lowStockItems, icon: TrendingDown, color: lowStockItems > 0 ? 'bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400' : 'bg-cyan-100 dark:bg-cyan-900/30 text-cyan-600 dark:text-cyan-400' },
           { label: 'Transactions', value: transactions?.length ?? 0, icon: ArrowRightLeft, color: 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400' },
         ].map(stat => {
           const Icon = stat.icon
@@ -74,7 +74,7 @@ export default async function StoreOverviewPage() {
       <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm">
         <div className="px-6 py-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
           <h2 className="font-semibold text-foreground flex items-center gap-2"><Package className="w-4 h-4 text-slate-500" /> Inventory</h2>
-          <Link href="/store/inventory" className="flex items-center gap-1.5 text-xs font-semibold text-blue-600 hover:text-blue-700 transition-colors">
+          <Link href="/store/inventory" className="flex items-center gap-1.5 text-xs font-semibold text-cyan-600 hover:text-cyan-700 transition-colors">
             <Plus className="w-3.5 h-3.5" /> Add Item
           </Link>
         </div>
@@ -106,7 +106,7 @@ export default async function StoreOverviewPage() {
                         {item.quantity_on_hand} {item.unit || 'units'}
                       </td>
                       <td className="px-6 py-3">
-                        <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${isLow ? 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400' : 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'}`}>
+                        <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${isLow ? 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400' : 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-400'}`}>
                           {isLow ? 'Low Stock' : 'Adequate'}
                         </span>
                       </td>
@@ -148,7 +148,7 @@ export default async function StoreOverviewPage() {
                       <td className="px-6 py-3 text-muted-foreground">{new Date(t.created_at).toLocaleDateString()}</td>
                       <td className="px-6 py-3 font-medium text-foreground">{storeItem?.name || '—'}</td>
                       <td className="px-6 py-3">
-                        <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${t.type === 'restock' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400' : 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400'}`}>
+                        <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${t.type === 'restock' ? 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-400' : 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400'}`}>
                           {t.type === 'restock' ? '▲ Restock' : '▼ Issue'}
                         </span>
                       </td>

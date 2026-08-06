@@ -61,21 +61,21 @@ export default function SignupPage() {
 
   if (emailSent) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-slate-100 dark:from-slate-950 dark:to-slate-900 flex items-center justify-center px-4">
+      <div className="min-h-screen bg-gradient-to-br from-cyan-50 to-slate-100 dark:from-slate-950 dark:to-slate-900 flex items-center justify-center px-4">
         <div className="w-full max-w-sm text-center space-y-4">
           <div className="text-5xl">📧</div>
           <h2 className="text-xl font-bold text-slate-800 dark:text-slate-100">Check your email</h2>
           <p className="text-slate-500 dark:text-slate-400 text-sm">
             We sent a confirmation link to <strong className="text-slate-700 dark:text-slate-200">{email}</strong>. Click it to activate your account.
           </p>
-          <Link href="/login" className="text-blue-600 dark:text-blue-500 text-sm hover:underline">Back to login</Link>
+          <Link href="/login" className="text-cyan-600 dark:text-cyan-500 text-sm hover:underline">Back to login</Link>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-slate-100 dark:from-slate-950 dark:to-slate-900 flex items-center justify-center px-4 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-cyan-50 to-slate-100 dark:from-slate-950 dark:to-slate-900 flex items-center justify-center px-4 py-8">
       <div className="w-full max-w-sm space-y-6">
 
         {/* Logo */}
@@ -88,7 +88,7 @@ export default function SignupPage() {
         </div>
 
         {/* Trial callout */}
-        <div className="bg-blue-600 text-white rounded-xl px-4 py-3 text-sm text-center shadow-sm">
+        <div className="bg-cyan-600 text-white rounded-xl px-4 py-3 text-sm text-center shadow-sm">
           <p className="font-semibold">🎓 Welcome to EduTrack</p>
           <p className="opacity-90 text-xs mt-0.5">Full access to all portals. Set up in minutes.</p>
         </div>
@@ -107,7 +107,7 @@ export default function SignupPage() {
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 placeholder="Jane Kamau"
-                className="w-full border border-slate-200 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full border border-slate-200 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
               />
             </div>
 
@@ -121,7 +121,7 @@ export default function SignupPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="jane@example.com"
-                className="w-full border border-slate-200 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full border border-slate-200 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
               />
             </div>
 
@@ -137,7 +137,7 @@ export default function SignupPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="At least 8 characters"
-                  className="w-full border border-slate-200 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent pr-10"
+                  className="w-full border border-slate-200 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent pr-10"
                 />
                 <button
                   type="button"
@@ -159,7 +159,7 @@ export default function SignupPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-4 rounded-lg transition-colors text-sm disabled:opacity-60"
+              className="w-full bg-cyan-600 hover:bg-cyan-700 text-white font-medium py-2.5 px-4 rounded-lg transition-colors text-sm disabled:opacity-60"
             >
               {loading ? 'Creating account…' : 'Create free account'}
             </button>
@@ -195,7 +195,7 @@ export default function SignupPage() {
 
         <p className="text-center text-sm text-slate-500 dark:text-slate-400">
           Already have an account?{' '}
-          <Link href="/login" className="text-blue-600 dark:text-blue-500 font-medium hover:underline">Sign in</Link>
+          <Link href="/login" className="text-cyan-600 dark:text-cyan-500 font-medium hover:underline">Sign in</Link>
         </p>
       </div>
     </div>

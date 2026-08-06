@@ -27,14 +27,14 @@ export function parseMarkdown(
 
   const generateId = (text: string) => text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
 
-  const accentNoteIcon = accent === 'violet' ? 'text-blue-600 dark:text-blue-400' : 'text-blue-600 dark:text-blue-400'
-  const accentNoteText = accent === 'violet' ? 'text-blue-700 dark:text-blue-300' : 'text-blue-700 dark:text-blue-300'
+  const accentNoteIcon = accent === 'violet' ? 'text-cyan-600 dark:text-cyan-400' : 'text-cyan-600 dark:text-cyan-400'
+  const accentNoteText = accent === 'violet' ? 'text-cyan-700 dark:text-cyan-300' : 'text-cyan-700 dark:text-cyan-300'
   const accentLink = accent === 'violet'
-    ? 'text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 bg-blue-50 dark:bg-blue-500/10'
-    : 'text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 bg-blue-50 dark:bg-blue-500/10'
+    ? 'text-cyan-600 dark:text-cyan-400 hover:text-cyan-700 dark:hover:text-cyan-300 bg-cyan-50 dark:bg-cyan-500/10'
+    : 'text-cyan-600 dark:text-cyan-400 hover:text-cyan-700 dark:hover:text-cyan-300 bg-cyan-50 dark:bg-cyan-500/10'
   const accentNum = accent === 'violet'
-    ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400'
-    : 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400'
+    ? 'bg-cyan-100 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-400'
+    : 'bg-cyan-100 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-400'
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i]
@@ -113,7 +113,7 @@ export function parseMarkdown(
             </div>
           </div>
           <div className="h-48 flex flex-col items-center justify-center text-slate-400 dark:text-slate-600 bg-slate-50/50 dark:bg-slate-900/50 p-6 text-center">
-            <Monitor className={`w-10 h-10 mb-3 opacity-50 ${accent === 'violet' ? 'text-blue-500' : 'text-blue-500'}`} />
+            <Monitor className={`w-10 h-10 mb-3 opacity-50 ${accent === 'violet' ? 'text-cyan-500' : 'text-cyan-500'}`} />
             <span className="text-sm font-medium">{desc}</span>
           </div>
         </div>

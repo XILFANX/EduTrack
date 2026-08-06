@@ -170,7 +170,7 @@ export function SubjectClient({ globalSubjects, classSubjects, classes, schoolId
             </div>
           </div>
           <button 
-            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-all shadow-sm"
+            className="flex items-center gap-2 bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-all shadow-sm"
             onClick={() => setIsModalOpen(true)}
           >
             <Plus className="w-4 h-4" /> Add Subject
@@ -179,14 +179,14 @@ export function SubjectClient({ globalSubjects, classSubjects, classes, schoolId
 
         {listToRender.length === 0 ? (
           <div className="text-center py-20 bg-[#121827] border border-slate-800 rounded-3xl">
-            <div className="w-16 h-16 rounded-2xl bg-blue-500/10 mx-auto flex items-center justify-center mb-4">
-              <BookMarked className="w-8 h-8 text-blue-400" />
+            <div className="w-16 h-16 rounded-2xl bg-cyan-500/10 mx-auto flex items-center justify-center mb-4">
+              <BookMarked className="w-8 h-8 text-cyan-400" />
             </div>
             <h2 className="text-lg font-semibold text-slate-200">No subjects found</h2>
             <p className="text-sm text-slate-400 mt-2 mb-6 max-w-xs mx-auto">
               Add a subject {selectedClass && `to ${selectedClass.name}`} to get started.
             </p>
-            <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl text-sm font-semibold transition-colors" onClick={() => setIsModalOpen(true)}>
+            <button className="bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2 rounded-xl text-sm font-semibold transition-colors" onClick={() => setIsModalOpen(true)}>
               Assign Subjects
             </button>
           </div>
@@ -204,8 +204,8 @@ export function SubjectClient({ globalSubjects, classSubjects, classes, schoolId
                   className="w-full flex items-center justify-between p-4 hover:bg-[#1a2133] transition-colors group text-left"
                 >
                   <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center group-hover:bg-blue-500/20 transition-colors">
-                      <BookMarked className="w-4 h-4 text-blue-400" />
+                    <div className="w-10 h-10 rounded-xl bg-cyan-500/10 flex items-center justify-center group-hover:bg-cyan-500/20 transition-colors">
+                      <BookMarked className="w-4 h-4 text-cyan-400" />
                     </div>
                     <div>
                       <p className="font-semibold text-slate-200 text-sm">{globalSub.name}</p>
@@ -217,10 +217,10 @@ export function SubjectClient({ globalSubjects, classSubjects, classes, schoolId
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="hidden sm:inline-block text-xs font-semibold px-2 py-1 bg-slate-800 text-slate-300 rounded-lg group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                    <span className="hidden sm:inline-block text-xs font-semibold px-2 py-1 bg-slate-800 text-slate-300 rounded-lg group-hover:bg-cyan-600 group-hover:text-white transition-colors">
                       Manage
                     </span>
-                    <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-blue-400 transition-colors shrink-0" />
+                    <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-cyan-400 transition-colors shrink-0" />
                   </div>
                 </button>
               )
@@ -239,7 +239,7 @@ export function SubjectClient({ globalSubjects, classSubjects, classes, schoolId
                     <p className="font-semibold text-slate-200 text-sm">{g.name}</p>
                     <p className="text-xs text-slate-500 mt-0.5">{mappings.filter(m => m.subject_id === g.id).length} classes mapped</p>
                   </div>
-                  <button onClick={() => handleSelectGlobal(g)} className="p-1.5 text-slate-400 hover:text-blue-400 bg-[#121827] rounded-lg transition-colors">
+                  <button onClick={() => handleSelectGlobal(g)} className="p-1.5 text-slate-400 hover:text-cyan-400 bg-[#121827] rounded-lg transition-colors">
                     <ChevronRight className="w-4 h-4" />
                   </button>
                 </div>
@@ -265,11 +265,11 @@ export function SubjectClient({ globalSubjects, classSubjects, classes, schoolId
         </button>
 
         <div className="bg-[#121827] border border-slate-800 rounded-3xl p-6 md:p-8 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 blur-3xl pointer-events-none" />
+          <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 blur-3xl pointer-events-none" />
           <div className="flex items-start justify-between gap-6 flex-wrap relative z-10">
             <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center shrink-0">
-                <BookMarked className="w-6 h-6 text-blue-400" />
+              <div className="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center shrink-0">
+                <BookMarked className="w-6 h-6 text-cyan-400" />
               </div>
               <div>
                 <h2 className="text-2xl font-bold text-slate-100">{selectedGlobal?.name}</h2>
@@ -296,13 +296,13 @@ export function SubjectClient({ globalSubjects, classSubjects, classes, schoolId
                 <div>
                   <h3 className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-3">Subject Teacher</h3>
                   <div className="bg-[#0b0f19] rounded-2xl border border-slate-800 p-4 relative overflow-hidden">
-                    <div className="absolute inset-y-0 left-0 w-1 bg-blue-500" />
+                    <div className="absolute inset-y-0 left-0 w-1 bg-cyan-500" />
                     {assignMode ? (
                       <div className="space-y-4">
                         <select
                           value={selectedTeacherId}
                           onChange={e => setSelectedTeacherId(e.target.value)}
-                          className="w-full bg-[#121827] border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-slate-200 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                          className="w-full bg-[#121827] border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-slate-200 outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500"
                         >
                           <option value="">No teacher (unassign)</option>
                           {teachers.map(t => (
@@ -311,7 +311,7 @@ export function SubjectClient({ globalSubjects, classSubjects, classes, schoolId
                         </select>
                         {assignError && <p className="text-xs text-orange-400">{assignError}</p>}
                         <div className="flex gap-2">
-                          <button onClick={handleAssignTeacher} disabled={assigning} className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl text-sm font-semibold transition-colors disabled:opacity-50 min-w-[100px]">
+                          <button onClick={handleAssignTeacher} disabled={assigning} className="flex items-center justify-center gap-2 bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2 rounded-xl text-sm font-semibold transition-colors disabled:opacity-50 min-w-[100px]">
                             {assigning ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Save'}
                           </button>
                           <button onClick={() => setAssignMode(false)} className="px-4 py-2 bg-[#1a2133] hover:bg-[#232b40] text-slate-300 text-sm font-semibold rounded-xl transition-colors">
@@ -322,7 +322,7 @@ export function SubjectClient({ globalSubjects, classSubjects, classes, schoolId
                     ) : (
                       <div className="flex items-center justify-between ml-2">
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-full bg-blue-500/20 border border-blue-500/30 text-blue-400 flex items-center justify-center font-bold text-sm">
+                          <div className="w-10 h-10 rounded-full bg-cyan-500/20 border border-cyan-500/30 text-cyan-400 flex items-center justify-center font-bold text-sm">
                             {selectedMapping.users ? selectedMapping.users.full_name.substring(0, 2).toUpperCase() : '—'}
                           </div>
                           <p className="font-semibold text-slate-200 text-sm">{selectedMapping.users?.full_name || 'No teacher assigned'}</p>
@@ -350,7 +350,7 @@ export function SubjectClient({ globalSubjects, classSubjects, classes, schoolId
                   return (
                     <div key={cls.id} className="flex items-center justify-between p-3 bg-[#0b0f19] border border-slate-800 rounded-xl">
                       <span className="font-medium text-slate-200 text-sm">{cls.name}</span>
-                      <button className="px-2.5 py-1 bg-[#1a2133] hover:bg-blue-600 hover:text-white border border-slate-700 hover:border-blue-500 text-slate-300 text-xs font-semibold rounded-lg transition-all" onClick={() => {
+                      <button className="px-2.5 py-1 bg-[#1a2133] hover:bg-cyan-600 hover:text-white border border-slate-700 hover:border-cyan-500 text-slate-300 text-xs font-semibold rounded-lg transition-all" onClick={() => {
                         setSelectedClass(cls)
                         setIsModalOpen(true)
                       }}>

@@ -161,7 +161,7 @@ export function DisciplineClient({ schoolId, teacherId, cls, students, logs }: P
                     {log.students?.photo_url ? (
                       <img src={log.students.photo_url} alt="" className="w-10 h-10 rounded-full object-cover shrink-0 mt-0.5" />
                     ) : (
-                      <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
+                      <div className="w-10 h-10 rounded-full bg-cyan-100 dark:bg-cyan-900/30 text-cyan-700 text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
                         {initials}
                       </div>
                     )}

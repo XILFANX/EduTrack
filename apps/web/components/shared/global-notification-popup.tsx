@@ -118,11 +118,11 @@ export function GlobalNotificationPopup() {
 
         {/* Header */}
         <div className="flex items-center gap-3 px-5 pt-5 pb-4">
-          <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900/40 rounded-2xl flex items-center justify-center shrink-0">
-            <Bell className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+          <div className="w-10 h-10 bg-cyan-100 dark:bg-cyan-900/40 rounded-2xl flex items-center justify-center shrink-0">
+            <Bell className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-xs font-bold uppercase tracking-widest text-blue-600 dark:text-blue-400">
+            <p className="text-xs font-bold uppercase tracking-widest text-cyan-600 dark:text-cyan-400">
               {pending.type === 'message' ? 'Message' : 'Notification'}
             </p>
             <h3 className="font-bold text-slate-900 dark:text-white text-sm leading-tight truncate">{pending.title}</h3>
@@ -152,7 +152,7 @@ export function GlobalNotificationPopup() {
                 <Link
                   href={(pending.action_href || pending.link)!}
                   onClick={handleDismiss}
-                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold py-2.5 rounded-xl text-center transition-colors flex items-center justify-center gap-2"
+                  className="flex-1 bg-cyan-600 hover:bg-cyan-700 text-white text-sm font-bold py-2.5 rounded-xl text-center transition-colors flex items-center justify-center gap-2"
                 >
                   {pending.action_label || 'Open'} <ArrowRight className="w-4 h-4" />
                 </Link>
@@ -168,7 +168,7 @@ export function GlobalNotificationPopup() {
             <div className="flex gap-2">
               <button
                 onClick={handleRead}
-                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold py-2.5 rounded-xl transition-colors flex items-center justify-center gap-1"
+                className="flex-1 bg-cyan-600 hover:bg-cyan-700 text-white text-sm font-bold py-2.5 rounded-xl transition-colors flex items-center justify-center gap-1"
               >
                 <ChevronDown className="w-3.5 h-3.5" /> Read
               </button>

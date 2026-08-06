@@ -72,16 +72,16 @@ export function AnnouncementsFeed({ announcements, currentUserId }: { announceme
         const isAuthor = currentUserId && ann.author_id === currentUserId
 
         return (
-          <div key={ann.id} className="relative bg-white dark:bg-slate-900/50 border border-blue-500/20 rounded-2xl p-5 overflow-hidden group hover:border-blue-500/40 transition-colors shadow-sm">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 blur-3xl rounded-full pointer-events-none group-hover:bg-blue-500/10 transition-colors" />
+          <div key={ann.id} className="relative bg-white dark:bg-slate-900/50 border border-cyan-500/20 rounded-2xl p-5 overflow-hidden group hover:border-cyan-500/40 transition-colors shadow-sm">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 blur-3xl rounded-full pointer-events-none group-hover:bg-cyan-500/10 transition-colors" />
             
             <div className="relative z-10 flex flex-col md:flex-row md:items-start justify-between gap-3 mb-3">
               <div>
-                <h3 className="font-bold text-blue-600 dark:text-blue-400 text-lg group-hover:text-blue-500 dark:group-hover:text-blue-300 transition-colors">
+                <h3 className="font-bold text-cyan-600 dark:text-cyan-400 text-lg group-hover:text-cyan-500 dark:group-hover:text-cyan-300 transition-colors">
                   {ann.title}
                 </h3>
-                <div className="flex items-center gap-3 text-xs font-semibold text-blue-900/60 dark:text-blue-200/60 mt-1">
-                  <span className="bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 px-2.5 py-1 rounded-lg">
+                <div className="flex items-center gap-3 text-xs font-semibold text-cyan-900/60 dark:text-cyan-200/60 mt-1">
+                  <span className="bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/20 px-2.5 py-1 rounded-lg">
                     From: {ann.users?.salutation ? `${ann.users.salutation} ${ann.users.full_name}` : (ann.users?.full_name || 'School Admin')}
                   </span>
                   <span className="text-slate-500">{date}</span>

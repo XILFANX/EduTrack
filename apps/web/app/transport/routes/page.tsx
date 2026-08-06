@@ -49,8 +49,8 @@ export default async function TransportRoutes() {
 
       {allRoutes.length === 0 ? (
         <div className="text-center py-20 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl">
-          <div className="w-16 h-16 rounded-2xl bg-blue-100 dark:bg-blue-900/40 mx-auto flex items-center justify-center mb-4">
-            <Map className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+          <div className="w-16 h-16 rounded-2xl bg-cyan-100 dark:bg-cyan-900/40 mx-auto flex items-center justify-center mb-4">
+            <Map className="w-8 h-8 text-cyan-600 dark:text-cyan-400" />
           </div>
           <h2 className="text-lg font-semibold text-foreground">No routes defined</h2>
           <p className="text-sm text-muted-foreground max-w-sm mx-auto mt-2">
@@ -66,10 +66,10 @@ export default async function TransportRoutes() {
             
             return (
               <div key={route.id} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none" />
+                <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none" />
                 
                 <div className="flex items-start justify-between mb-4 relative z-10">
-                  <div className="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-xl bg-cyan-50 dark:bg-cyan-900/20 text-cyan-600 dark:text-cyan-400 flex items-center justify-center">
                     <Map className="w-6 h-6" />
                   </div>
                   {isFull && (
@@ -105,7 +105,7 @@ export default async function TransportRoutes() {
                   {capacity > 0 && (
                     <div className="mt-3 h-1.5 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
                       <div 
-                        className={`h-full rounded-full ${isFull ? 'bg-orange-500' : 'bg-blue-500'}`} 
+                        className={`h-full rounded-full ${isFull ? 'bg-orange-500' : 'bg-cyan-500'}`} 
                         style={{ width: `${Math.min((assigned / capacity) * 100, 100)}%` }}
                       />
                     </div>

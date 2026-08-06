@@ -20,13 +20,13 @@ interface Props {
 }
 
 const ROLE_COLORS: Record<string, { badge: string; btn: string; glow: string }> = {
-  class_teacher:    { badge: 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300',   btn: 'bg-blue-600 hover:bg-blue-700',   glow: 'from-blue-500/20 to-slate-900' },
-  subject_teacher:  { badge: 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300',           btn: 'bg-blue-600 hover:bg-blue-700',       glow: 'from-blue-500/20 to-slate-900' },
-  bursar:           { badge: 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300', btn: 'bg-blue-600 hover:bg-blue-700', glow: 'from-blue-500/20 to-slate-900' },
+  class_teacher:    { badge: 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/40 dark:text-cyan-300',   btn: 'bg-cyan-600 hover:bg-cyan-700',   glow: 'from-cyan-500/20 to-slate-900' },
+  subject_teacher:  { badge: 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/40 dark:text-cyan-300',           btn: 'bg-cyan-600 hover:bg-cyan-700',       glow: 'from-cyan-500/20 to-slate-900' },
+  bursar:           { badge: 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/40 dark:text-cyan-300', btn: 'bg-cyan-600 hover:bg-cyan-700', glow: 'from-cyan-500/20 to-slate-900' },
   librarian:        { badge: 'bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-300',       btn: 'bg-orange-500 hover:bg-orange-600',     glow: 'from-orange-500/20 to-slate-900' },
   storekeeper:      { badge: 'bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-300',   btn: 'bg-orange-600 hover:bg-orange-700',   glow: 'from-orange-500/20 to-slate-900' },
   transport_matron: { badge: 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300',          btn: 'bg-slate-700 hover:bg-slate-800',     glow: 'from-slate-500/20 to-slate-900' },
-  parent:           { badge: 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300',           btn: 'bg-blue-600 hover:bg-blue-700',       glow: 'from-blue-500/20 to-slate-900' },
+  parent:           { badge: 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/40 dark:text-cyan-300',           btn: 'bg-cyan-600 hover:bg-cyan-700',       glow: 'from-cyan-500/20 to-slate-900' },
 }
 
 export default function InviteClient({
@@ -193,7 +193,7 @@ export default function InviteClient({
                   id="inv-otp" required value={otp} onChange={(e) => setOtp(e.target.value)}
                   placeholder="123456"
                   maxLength={6}
-                  className="w-full bg-muted border border-border text-foreground placeholder-muted-foreground rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                  className="w-full bg-muted border border-border text-foreground placeholder-muted-foreground rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition"
                 />
               </div>
             )}
@@ -207,7 +207,7 @@ export default function InviteClient({
                     id="inv-name" required value={name} onChange={(e) => setName(e.target.value)}
                     placeholder="Your full name"
                     readOnly={viewState === 'login'}
-                    className={`w-full bg-muted border border-border text-foreground placeholder-muted-foreground rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition ${viewState === 'login' ? 'opacity-70 cursor-not-allowed' : ''}`}
+                    className={`w-full bg-muted border border-border text-foreground placeholder-muted-foreground rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition ${viewState === 'login' ? 'opacity-70 cursor-not-allowed' : ''}`}
                   />
                 </div>
 
@@ -223,7 +223,7 @@ export default function InviteClient({
                     id="inv-phone" type="tel" required={!!registeredPhone} value={phone} onChange={(e) => setPhone(e.target.value)}
                     placeholder="0712 345 678"
                     readOnly={viewState === 'login'}
-                    className={`w-full bg-muted border border-border text-foreground placeholder-muted-foreground rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition ${viewState === 'login' ? 'opacity-70 cursor-not-allowed' : ''}`}
+                    className={`w-full bg-muted border border-border text-foreground placeholder-muted-foreground rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition ${viewState === 'login' ? 'opacity-70 cursor-not-allowed' : ''}`}
                   />
                 </div>
 
@@ -239,7 +239,7 @@ export default function InviteClient({
                       value={admissionNumber}
                       onChange={(e) => setAdmissionNumber(e.target.value)}
                       placeholder="e.g. 2024/001"
-                      className="w-full bg-muted border border-border text-foreground placeholder-muted-foreground rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                      className="w-full bg-muted border border-border text-foreground placeholder-muted-foreground rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition"
                     />
                     <p className="text-[11px] text-muted-foreground leading-relaxed">
                       Enter your child&apos;s admission number exactly as provided by the school. This links your account to their academic records.
@@ -258,7 +258,7 @@ export default function InviteClient({
                 <input
                   id="inv-password" type={showPassword ? 'text' : 'password'} required value={password} onChange={(e) => setPassword(e.target.value)}
                   placeholder={viewState === 'login' ? 'Enter your password' : 'At least 8 characters'}
-                  className="w-full bg-muted border border-border text-foreground placeholder-muted-foreground rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition pr-10"
+                  className="w-full bg-muted border border-border text-foreground placeholder-muted-foreground rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition pr-10"
                 />
                 <button
                   type="button"
@@ -278,7 +278,7 @@ export default function InviteClient({
                   <input
                     id="inv-confirm" type={showConfirmPassword ? 'text' : 'password'} required value={confirmPass} onChange={(e) => setConfirmPass(e.target.value)}
                     placeholder="Repeat your password"
-                    className="w-full bg-muted border border-border text-foreground placeholder-muted-foreground rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition pr-10"
+                    className="w-full bg-muted border border-border text-foreground placeholder-muted-foreground rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition pr-10"
                   />
                   <button
                     type="button"
@@ -298,7 +298,7 @@ export default function InviteClient({
             )}
 
             {successMsg && (
-              <div className="bg-blue-950/50 border border-blue-800/50 text-blue-300 text-sm px-4 py-3 rounded-xl leading-snug">
+              <div className="bg-cyan-950/50 border border-cyan-800/50 text-cyan-300 text-sm px-4 py-3 rounded-xl leading-snug">
                 {successMsg}
               </div>
             )}

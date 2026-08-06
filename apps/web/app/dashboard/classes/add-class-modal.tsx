@@ -142,8 +142,8 @@ export function AddClassModal({ open, onClose, schoolId, curriculumType }: AddCl
       <DialogContent className="max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6">
         <DialogHeader className="mb-4">
           <DialogTitle className="flex items-center gap-2 text-lg font-bold">
-            <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center">
-              <BookOpen className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+            <div className="w-8 h-8 rounded-lg bg-cyan-100 dark:bg-cyan-900/40 flex items-center justify-center">
+              <BookOpen className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
             </div>
             Add Class
           </DialogTitle>
@@ -191,7 +191,7 @@ export function AddClassModal({ open, onClose, schoolId, curriculumType }: AddCl
                   onChange={(e) => setStream(e.target.value)}
                 />
                 {name.trim() && (
-                  <p className="text-xs text-blue-600 dark:text-blue-400 flex items-center gap-1">
+                  <p className="text-xs text-cyan-600 dark:text-cyan-400 flex items-center gap-1">
                     <Info className="w-3 h-3" />
                     Will be saved as: <strong>{stream.trim() ? `${name.trim()} ${stream.trim()}` : name.trim()}</strong>
                   </p>
@@ -204,7 +204,7 @@ export function AddClassModal({ open, onClose, schoolId, curriculumType }: AddCl
                   id="classTeacher"
                   value={teacherId}
                   onChange={(e) => setTeacherId(e.target.value)}
-                  className="w-full bg-background border border-input text-foreground rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                  className="w-full bg-background border border-input text-foreground rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 transition"
                 >
                   <option value="">None</option>
                   {teachers.map(t => (
@@ -224,7 +224,7 @@ export function AddClassModal({ open, onClose, schoolId, curriculumType }: AddCl
                     <label key={opt} className="flex items-center gap-2 p-2 border border-slate-200 dark:border-slate-800 rounded-xl cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
                       <input
                         type="checkbox"
-                        className="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+                        className="w-4 h-4 rounded border-slate-300 text-cyan-600 focus:ring-cyan-500"
                         checked={selectedBulk.includes(opt)}
                         onChange={() => toggleBulkOption(opt)}
                       />
@@ -252,13 +252,13 @@ export function AddClassModal({ open, onClose, schoolId, curriculumType }: AddCl
 
               {/* Preview */}
               {bulkPreview.length > 0 && (
-                <div className="bg-blue-50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-500/20 rounded-xl px-3 py-2.5">
-                  <p className="text-xs font-semibold text-blue-700 dark:text-blue-300 mb-1.5">
+                <div className="bg-cyan-50 dark:bg-cyan-900/10 border border-cyan-100 dark:border-cyan-500/20 rounded-xl px-3 py-2.5">
+                  <p className="text-xs font-semibold text-cyan-700 dark:text-cyan-300 mb-1.5">
                     Will create {bulkPreview.length} class{bulkPreview.length !== 1 ? 'es' : ''}:
                   </p>
                   <div className="flex flex-wrap gap-1.5">
                     {bulkPreview.slice(0, 8).map(n => (
-                      <span key={n} className="text-xs bg-white dark:bg-slate-800 border border-blue-200 dark:border-blue-700/50 text-foreground px-2 py-0.5 rounded-lg">
+                      <span key={n} className="text-xs bg-white dark:bg-slate-800 border border-cyan-200 dark:border-cyan-700/50 text-foreground px-2 py-0.5 rounded-lg">
                         {n}
                       </span>
                     ))}
@@ -282,7 +282,7 @@ export function AddClassModal({ open, onClose, schoolId, curriculumType }: AddCl
               Cancel
             </Button>
             <Button
-              className="flex-1 bg-blue-600 hover:bg-blue-700"
+              className="flex-1 bg-cyan-600 hover:bg-cyan-700"
               onClick={handleSave}
               disabled={loading}
             >

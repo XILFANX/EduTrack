@@ -40,14 +40,14 @@ export function AdminNav({ isRoot }: { isRoot: boolean }) {
               {active && (
                 <motion.div
                   layoutId="admin-active-tab"
-                  className="absolute inset-0 bg-blue-600 dark:bg-blue-500 rounded-2xl shadow-md shadow-blue-500/20"
+                  className="absolute inset-0 bg-cyan-600 dark:bg-cyan-500 rounded-2xl shadow-md shadow-cyan-500/20"
                   transition={{ type: "spring", stiffness: 350, damping: 25 }}
                 />
               )}
               
               <div className="relative z-10 flex flex-col items-center gap-1">
                 <div className="relative">
-                  <Icon className={`w-[1.125rem] h-[1.125rem] transition-colors duration-300 ${
+                  <Icon className={`w-6 h-6 stroke-[2.5] transition-colors duration-300 ${
                     active 
                       ? 'text-white' 
                       : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300'
@@ -56,7 +56,7 @@ export function AdminNav({ isRoot }: { isRoot: boolean }) {
                     <UnreadMessagesBadge />
                   )}
                 </div>
-                <span className={`text-[9px] font-bold tracking-wide transition-colors duration-300 ${
+                <span className={`text-[10px] font-extrabold uppercase tracking-wide transition-colors duration-300 ${
                   active 
                     ? 'text-white/90' 
                     : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300'

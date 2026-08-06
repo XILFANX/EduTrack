@@ -19,16 +19,16 @@ export function DocsWrapper({ elements, headings, repoPaths, accent = 'blue' }: 
 
   const accentActive =
     accent === 'violet'
-      ? 'bg-blue-600 text-white shadow-blue-500/30'
-      : 'bg-blue-600 text-white shadow-blue-500/30'
+      ? 'bg-cyan-600 text-white shadow-cyan-500/30'
+      : 'bg-cyan-600 text-white shadow-cyan-500/30'
 
   const accentHover =
     accent === 'violet'
-      ? 'hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20'
-      : 'hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20'
+      ? 'hover:text-cyan-600 dark:hover:text-cyan-400 hover:bg-cyan-50 dark:hover:bg-cyan-900/20'
+      : 'hover:text-cyan-600 dark:hover:text-cyan-400 hover:bg-cyan-50 dark:hover:bg-cyan-900/20'
 
   const accentIndicator =
-    accent === 'violet' ? 'bg-blue-500' : 'bg-blue-500'
+    accent === 'violet' ? 'bg-cyan-500' : 'bg-cyan-500'
 
   const displayRepoPath = activeRepoPath ?? repoPaths[0] ?? null
 
@@ -92,7 +92,7 @@ export function DocsWrapper({ elements, headings, repoPaths, accent = 'blue' }: 
                       <li key={heading.id}>
                         <a
                           href={`#${heading.id}`}
-                          className="text-xs text-zinc-500 hover:text-blue-400 transition-colors line-clamp-2"
+                          className="text-xs text-zinc-500 hover:text-cyan-400 transition-colors line-clamp-2"
                         >
                           &gt; {heading.title}
                         </a>
@@ -145,7 +145,7 @@ export function DocsWrapper({ elements, headings, repoPaths, accent = 'blue' }: 
                       onClick={() => openRepo(rp)}
                       className={`flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg font-mono border transition-all ${
                         isActive
-                          ? 'border-blue-500 bg-blue-500/10 text-blue-400'
+                          ? 'border-cyan-500 bg-cyan-500/10 text-cyan-400'
                           : 'border-slate-700 text-slate-400 hover:border-slate-500 hover:text-slate-200'
                       }`}
                     >

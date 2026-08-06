@@ -39,8 +39,8 @@ export default async function SessionsPage() {
   return (
     <div className="space-y-8 max-w-5xl mx-auto pb-24">
       <div className="flex items-center gap-3">
-        <div className="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center shrink-0">
-          <CalendarRange className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+        <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center shrink-0">
+          <CalendarRange className="w-6 h-6 text-cyan-600 dark:text-cyan-400" />
         </div>
         <div>
           <h1 className="text-2xl font-bold text-foreground">Academic Sessions Engine</h1>

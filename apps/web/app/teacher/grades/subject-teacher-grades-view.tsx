@@ -89,7 +89,7 @@ export function SubjectTeacherGradesView({
   return (
     <div className="space-y-6 pb-24">
       {/* Hero */}
-      <div className="bg-gradient-to-br from-blue-600 via-blue-500 to-blue-500 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
+      <div className="bg-gradient-to-br from-cyan-600 via-cyan-500 to-cyan-500 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-[50px] rounded-full pointer-events-none" />
         <div className="relative z-10 flex items-center gap-4">
           <div className="w-12 h-12 rounded-2xl bg-white/15 flex items-center justify-center">
@@ -97,7 +97,7 @@ export function SubjectTeacherGradesView({
           </div>
           <div>
             <h1 className="text-2xl font-black tracking-tight">Results Entry</h1>
-            <p className="text-blue-100 text-sm mt-0.5">Enter scores — grades auto-assign from your school's scale</p>
+            <p className="text-cyan-100 text-sm mt-0.5">Enter scores — grades auto-assign from your school's scale</p>
           </div>
         </div>
       </div>
@@ -147,7 +147,7 @@ export function SubjectTeacherGradesView({
         <div className="space-y-1.5">
           <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Status</label>
           <div className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border text-sm font-semibold ${
-            isLocked ? 'bg-blue-50 dark:bg-blue-950/30 border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-300' :
+            isLocked ? 'bg-cyan-50 dark:bg-cyan-950/30 border-cyan-200 dark:border-cyan-800 text-cyan-700 dark:text-cyan-300' :
             isRejected ? 'bg-red-50 dark:bg-red-950/30 border-red-200 dark:border-red-800 text-red-700 dark:text-red-300' :
             'bg-slate-50 dark:bg-slate-900 border-border text-muted-foreground'
           }`}>
@@ -192,7 +192,7 @@ export function SubjectTeacherGradesView({
               <Button
                 onClick={handleSubmit}
                 disabled={isLocked || submitting || !selectedSlot}
-                className="rounded-xl bg-blue-600 hover:bg-blue-700 text-white gap-2"
+                className="rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white gap-2"
               >
                 {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
                 Submit for Review
@@ -221,7 +221,7 @@ export function SubjectTeacherGradesView({
                   const isSaved = !isNaN(numScore) && !saving[student.id]
 
                   return (
-                    <tr key={student.id} className={`${idx % 2 !== 0 ? 'bg-slate-50/40 dark:bg-slate-900/20' : ''} hover:bg-blue-50/30 dark:hover:bg-blue-950/10 transition-colors`}>
+                    <tr key={student.id} className={`${idx % 2 !== 0 ? 'bg-slate-50/40 dark:bg-slate-900/20' : ''} hover:bg-cyan-50/30 dark:hover:bg-cyan-950/10 transition-colors`}>
                       <td className="px-5 py-3 text-muted-foreground font-medium text-xs">{idx + 1}</td>
                       <td className="px-5 py-3">
                         <p className="font-semibold text-foreground">{student.last_name}, {student.first_name}</p>
@@ -243,7 +243,7 @@ export function SubjectTeacherGradesView({
                       </td>
                       <td className="px-5 py-3 text-center">
                         {grade ? (
-                          <span className="inline-block px-2.5 py-1 rounded-full text-xs font-black bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300">
+                          <span className="inline-block px-2.5 py-1 rounded-full text-xs font-black bg-cyan-100 dark:bg-cyan-900/40 text-cyan-700 dark:text-cyan-300">
                             {grade.grade}
                           </span>
                         ) : (
@@ -252,7 +252,7 @@ export function SubjectTeacherGradesView({
                       </td>
                       <td className="px-5 py-3 text-center">
                         {saving[student.id] ? (
-                          <Loader2 className="w-3.5 h-3.5 animate-spin text-blue-400 mx-auto" />
+                          <Loader2 className="w-3.5 h-3.5 animate-spin text-cyan-400 mx-auto" />
                         ) : isSaved && scoreVal !== '' ? (
                           <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 mx-auto" />
                         ) : (

@@ -59,7 +59,7 @@ export function MobileDocsSidebar() {
                           <Link 
                             href={`/admin/docs/${guide.slug}`} 
                             onClick={() => setIsOpen(false)}
-                            className="flex items-center gap-3 px-3 py-2 text-sm rounded border border-transparent hover:bg-zinc-900 hover:border-zinc-800 hover:text-blue-400 transition-all text-zinc-400 group"
+                            className="flex items-center gap-3 px-3 py-2 text-sm rounded border border-transparent hover:bg-zinc-900 hover:border-zinc-800 hover:text-cyan-400 transition-all text-zinc-400 group"
                           >
                             <Icon className="w-4 h-4 opacity-50 group-hover:opacity-100" />
                             <span className="truncate">{guide.title}</span>

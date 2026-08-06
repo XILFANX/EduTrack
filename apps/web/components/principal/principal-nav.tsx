@@ -75,14 +75,14 @@ export function PrincipalNav() {
                 {active && !menuOpen && (
                   <motion.div
                     layoutId="principal-active-tab"
-                    className="absolute inset-0 bg-blue-600 dark:bg-blue-500 rounded-2xl shadow-md shadow-blue-500/20"
+                    className="absolute inset-0 bg-cyan-600 dark:bg-cyan-500 rounded-2xl shadow-md shadow-cyan-500/20"
                     transition={{ type: 'spring', stiffness: 350, damping: 25 }}
                   />
                 )}
                 <div className="relative z-10 flex flex-col items-center gap-1">
-                  <Icon className={`w-[1.125rem] h-[1.125rem] transition-colors duration-300 ${active && !menuOpen ? 'text-white' : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300'
+                  <Icon className={`w-6 h-6 stroke-[2.5] transition-colors duration-300 ${active && !menuOpen ? 'text-white' : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300'
                     }`} />
-                  <span className={`text-[9px] font-bold tracking-wide transition-colors duration-300 ${active && !menuOpen ? 'text-white/90' : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300'
+                  <span className={`text-[10px] font-extrabold uppercase tracking-wide transition-colors duration-300 ${active && !menuOpen ? 'text-white/90' : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300'
                     }`}>
                     {t.label}
                   </span>
@@ -98,14 +98,14 @@ export function PrincipalNav() {
             {(isMenuActive || menuOpen) && (
               <motion.div
                 layoutId="principal-active-tab"
-                className="absolute inset-0 bg-blue-600 dark:bg-blue-500 rounded-2xl shadow-md shadow-blue-500/20"
+                className="absolute inset-0 bg-cyan-600 dark:bg-cyan-500 rounded-2xl shadow-md shadow-cyan-500/20"
                 transition={{ type: 'spring', stiffness: 350, damping: 25 }}
               />
             )}
             <div className="relative z-10 flex flex-col items-center gap-1">
-              <Menu className={`w-[1.125rem] h-[1.125rem] transition-colors duration-300 ${isMenuActive || menuOpen ? 'text-white' : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300'
+              <Menu className={`w-6 h-6 stroke-[2.5] transition-colors duration-300 ${isMenuActive || menuOpen ? 'text-white' : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300'
                 }`} />
-              <span className={`text-[9px] font-bold tracking-wide transition-colors duration-300 ${isMenuActive || menuOpen ? 'text-white/90' : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300'
+              <span className={`text-[10px] font-extrabold uppercase tracking-wide transition-colors duration-300 ${isMenuActive || menuOpen ? 'text-white/90' : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300'
                 }`}>
                 More
               </span>
@@ -136,13 +136,13 @@ export function PrincipalNav() {
                           onClick={() => setMenuOpen(false)}
                           className="flex flex-col items-center gap-2 group"
                         >
-                          <div className={`relative w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 ${active
-                              ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30'
-                              : 'bg-muted text-foreground group-hover:bg-blue-100 group-hover:text-blue-600 dark:group-hover:bg-blue-900/30 dark:group-hover:text-blue-400'
+                          <div className={`relative w-14 h-14 rounded-[1.25rem] flex items-center justify-center transition-all duration-300 ${active
+                              ? 'bg-gradient-to-br from-cyan-600 to-blue-600 text-white shadow-lg shadow-cyan-500/30 -translate-y-1'
+                              : 'bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/40 dark:to-cyan-900/20 border border-blue-100/50 dark:border-blue-800/50 text-cyan-600 dark:text-cyan-400 group-hover:shadow-lg group-hover:shadow-cyan-500/20 group-hover:-translate-y-1'
                             }`}>
-                            <Icon className="w-5 h-5" />
+                            <Icon className="w-7 h-7" strokeWidth={2.5} />
                           </div>
-                          <span className={`text-[10px] font-semibold text-center ${active ? 'text-blue-600 dark:text-blue-400' : 'text-muted-foreground'}`}>
+                          <span className={`text-xs font-bold text-center mt-1 transition-colors ${active ? 'text-cyan-600 dark:text-cyan-400' : 'text-foreground group-hover:text-cyan-600'}`}>
                             {item.label}
                           </span>
                         </Link>

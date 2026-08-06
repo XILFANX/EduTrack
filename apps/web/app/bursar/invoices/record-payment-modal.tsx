@@ -124,8 +124,8 @@ export function VerifyPaymentModal({ open, onClose }: Props) {
       <DialogContent className="max-w-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-0 overflow-hidden">
         <DialogHeader className="px-6 pt-5 pb-4 border-b border-slate-100 dark:border-slate-800">
           <DialogTitle className="flex items-center gap-2 text-base font-bold">
-            <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center">
-              <ShieldCheck className="w-4 h-4 text-blue-600" />
+            <div className="w-8 h-8 rounded-lg bg-cyan-100 dark:bg-cyan-900/40 flex items-center justify-center">
+              <ShieldCheck className="w-4 h-4 text-cyan-600" />
             </div>
             Verify Payment Received
           </DialogTitle>
@@ -133,8 +133,8 @@ export function VerifyPaymentModal({ open, onClose }: Props) {
 
         {result ? (
           <div className="p-6 text-center space-y-4">
-            <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto ${result.matched > 0 ? 'bg-blue-100 dark:bg-blue-900/30' : 'bg-orange-100 dark:bg-orange-900/30'}`}>
-              <CheckCircle2 className={`w-8 h-8 ${result.matched > 0 ? 'text-blue-600' : 'text-orange-600'}`} />
+            <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto ${result.matched > 0 ? 'bg-cyan-100 dark:bg-cyan-900/30' : 'bg-orange-100 dark:bg-orange-900/30'}`}>
+              <CheckCircle2 className={`w-8 h-8 ${result.matched > 0 ? 'text-cyan-600' : 'text-orange-600'}`} />
             </div>
             <p className="font-bold text-lg text-foreground">
               {result.submitted} submitted · {result.matched} matched
@@ -149,15 +149,15 @@ export function VerifyPaymentModal({ open, onClose }: Props) {
             ))}
             <div className="flex gap-3 pt-2">
               <Button variant="outline" className="flex-1" onClick={reset}>Verify more</Button>
-              <Button className="flex-1 bg-blue-600 hover:bg-blue-700" onClick={handleClose}>Done</Button>
+              <Button className="flex-1 bg-cyan-600 hover:bg-cyan-700" onClick={handleClose}>Done</Button>
             </div>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="p-6 space-y-4 max-h-[70vh] overflow-y-auto">
             {/* Blindness notice */}
-            <div className="flex gap-2 items-start bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-3">
-              <EyeOff className="w-4 h-4 text-blue-600 mt-0.5 shrink-0" />
-              <p className="text-xs text-blue-700 dark:text-blue-300">
+            <div className="flex gap-2 items-start bg-cyan-50 dark:bg-cyan-900/20 border border-cyan-200 dark:border-cyan-800 rounded-xl p-3">
+              <EyeOff className="w-4 h-4 text-cyan-600 mt-0.5 shrink-0" />
+              <p className="text-xs text-cyan-700 dark:text-cyan-300">
                 <strong>Blind verification:</strong> Paste what the school received. Do not search for students or invoices — the system matches independently.
               </p>
             </div>
@@ -179,7 +179,7 @@ export function VerifyPaymentModal({ open, onClose }: Props) {
                   <textarea
                     id={`raw-${row.id}`}
                     rows={2}
-                    className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs resize-none focus:outline-none focus:ring-2 focus:ring-blue-500/40 font-mono"
+                    className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs resize-none focus:outline-none focus:ring-2 focus:ring-cyan-500/40 font-mono"
                     placeholder="Paste M-Pesa or bank notification here…"
                     value={row.rawMessage}
                     onChange={(e) => parseMessage(e.target.value, row.id)}
@@ -226,7 +226,7 @@ export function VerifyPaymentModal({ open, onClose }: Props) {
                       onClick={() => updateRow(row.id, { paymentRail: r.value })}
                       className={`px-2.5 py-1 rounded-lg border text-xs font-medium transition-all ${
                         row.paymentRail === r.value
-                          ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300'
+                          ? 'border-cyan-600 bg-cyan-50 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-300'
                           : 'border-slate-200 dark:border-slate-700 text-muted-foreground'
                       }`}
                     >
@@ -249,7 +249,7 @@ export function VerifyPaymentModal({ open, onClose }: Props) {
             <button
               type="button"
               onClick={addRow}
-              className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl border-2 border-dashed border-slate-200 dark:border-slate-700 text-xs text-muted-foreground hover:border-blue-400 hover:text-blue-600 transition-all"
+              className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl border-2 border-dashed border-slate-200 dark:border-slate-700 text-xs text-muted-foreground hover:border-cyan-400 hover:text-cyan-600 transition-all"
             >
               <Plus className="w-3.5 h-3.5" /> Add another
             </button>
@@ -258,7 +258,7 @@ export function VerifyPaymentModal({ open, onClose }: Props) {
               <Button type="button" variant="outline" className="flex-1" onClick={handleClose} disabled={loading}>
                 Cancel
               </Button>
-              <Button type="submit" className="flex-1 bg-blue-600 hover:bg-blue-700" disabled={loading}>
+              <Button type="submit" className="flex-1 bg-cyan-600 hover:bg-cyan-700" disabled={loading}>
                 {loading ? <><Loader2 className="w-4 h-4 animate-spin mr-2" />Submitting…</> : <><ShieldCheck className="w-4 h-4 mr-2" />Verify{rows.length > 1 ? ` (${rows.length})` : ''}</>}
               </Button>
             </div>

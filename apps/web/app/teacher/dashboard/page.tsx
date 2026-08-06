@@ -101,27 +101,27 @@ export default async function TeacherDashboard() {
               </div>
               <div>
                 <h1 className="text-xl font-black">{classData?.name || 'No Class Assigned'}</h1>
-                <p className="text-sm text-blue-100">{totalStudents} students enrolled</p>
+                <p className="text-sm text-cyan-100">{totalStudents} students enrolled</p>
               </div>
             </div>
             <div className="grid grid-cols-3 gap-3">
               <div className="bg-white/10 border border-white/20 rounded-2xl p-3 text-center">
                 <p className="text-2xl font-bold">{presentToday}</p>
-                <p className="text-xs text-blue-100 mt-0.5">Present</p>
+                <p className="text-xs text-cyan-100 mt-0.5">Present</p>
               </div>
               <div className="bg-white/10 border border-white/20 rounded-2xl p-3 text-center">
                 <p className="text-2xl font-bold">{absentToday}</p>
-                <p className="text-xs text-blue-100 mt-0.5">Absent</p>
+                <p className="text-xs text-cyan-100 mt-0.5">Absent</p>
               </div>
               <div className="bg-white/10 border border-white/20 rounded-2xl p-3 text-center">
                 <p className="text-2xl font-bold">{lateToday}</p>
-                <p className="text-xs text-blue-100 mt-0.5">Late</p>
+                <p className="text-xs text-cyan-100 mt-0.5">Late</p>
               </div>
             </div>
             {attendanceRate !== null && (
               <div className="mt-4">
                 <div className="flex justify-between items-center mb-1.5">
-                  <p className="text-xs font-semibold text-blue-100">Today's Rate</p>
+                  <p className="text-xs font-semibold text-cyan-100">Today's Rate</p>
                   <p className="text-xs font-bold text-white">{attendanceRate}%</p>
                 </div>
                 <div className="h-2 bg-white/20 rounded-full overflow-hidden">
@@ -136,13 +136,13 @@ export default async function TeacherDashboard() {
         {weekHistory.length > 0 && (
           <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5">
             <h2 className="text-sm font-bold text-foreground mb-4 flex items-center gap-2">
-              <TrendingUp className="w-4 h-4 text-blue-500" />
+              <TrendingUp className="w-4 h-4 text-cyan-500" />
               7-Day Attendance
             </h2>
             <div className="flex items-end gap-1.5 h-16">
               {weekHistory.map((day) => {
                 const pct = day.total > 0 ? (day.present / day.total) * 100 : 0
-                const color = pct >= 90 ? 'bg-blue-500' : pct >= 70 ? 'bg-orange-400' : 'bg-orange-400'
+                const color = pct >= 90 ? 'bg-cyan-500' : pct >= 70 ? 'bg-orange-400' : 'bg-orange-400'
                 const label = new Date(day.date).toLocaleDateString('en', { weekday: 'short' }).slice(0, 2)
                 return (
                   <div key={day.date} className="flex-1 flex flex-col items-center gap-1">
@@ -170,10 +170,10 @@ export default async function TeacherDashboard() {
               <Link
                 key={href}
                 href={href}
-                className="flex flex-col items-center gap-2 p-4 bg-card hover:bg-slate-50 dark:hover:bg-slate-900/50 border border-border hover:border-blue-500/50 rounded-2xl hover:scale-[1.02] transition-all text-center shadow-sm group"
+                className="flex flex-col items-center gap-2 p-4 bg-card hover:bg-slate-50 dark:hover:bg-slate-900/50 border border-border hover:border-cyan-500/50 rounded-2xl hover:scale-[1.02] transition-all text-center shadow-sm group"
               >
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800/30 group-hover:bg-blue-100 dark:group-hover:bg-blue-800/40 transition-colors">
-                  <Icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-cyan-50 dark:bg-cyan-900/20 border border-cyan-100 dark:border-cyan-800/30 group-hover:bg-cyan-100 dark:group-hover:bg-cyan-800/40 transition-colors">
+                  <Icon className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
                 </div>
                 <div className="text-center min-w-0 w-full mt-1">
                   <p className="font-bold text-xs text-foreground truncate">{label}</p>
@@ -223,17 +223,17 @@ export default async function TeacherDashboard() {
             </div>
             <div>
               <h1 className="text-xl font-black">Subject Teacher</h1>
-              <p className="text-sm text-blue-100">{uniqueSubjects.join(', ') || 'No subjects yet'}</p>
+              <p className="text-sm text-cyan-100">{uniqueSubjects.join(', ') || 'No subjects yet'}</p>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div className="bg-white/10 border border-white/20 rounded-2xl p-3 text-center">
               <p className="text-2xl font-bold">{uniqueSubjects.length}</p>
-              <p className="text-xs text-blue-100 mt-0.5">Subjects</p>
+              <p className="text-xs text-cyan-100 mt-0.5">Subjects</p>
             </div>
             <div className="bg-white/10 border border-white/20 rounded-2xl p-3 text-center">
               <p className="text-2xl font-bold">{uniqueClasses.length}</p>
-              <p className="text-xs text-blue-100 mt-0.5">Classes</p>
+              <p className="text-xs text-cyan-100 mt-0.5">Classes</p>
             </div>
           </div>
         </div>
@@ -257,8 +257,8 @@ export default async function TeacherDashboard() {
                 className="flex items-center justify-between p-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors shadow-sm"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center shrink-0">
-                    <BookOpen className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                  <div className="w-10 h-10 rounded-xl bg-cyan-100 dark:bg-cyan-900/30 flex items-center justify-center shrink-0">
+                    <BookOpen className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
                   </div>
                   <div>
                     <p className="font-semibold text-sm text-foreground">{a.subjects?.name}</p>

@@ -116,15 +116,15 @@ function SlotModal({
           {/* Subject picker */}
           <div className="space-y-2">
             <label className="flex items-center gap-2 text-sm font-semibold text-foreground">
-              <BookOpen className="w-4 h-4 text-blue-500" /> Subject
+              <BookOpen className="w-4 h-4 text-cyan-500" /> Subject
             </label>
             <div className="grid grid-cols-2 gap-1.5 max-h-44 overflow-y-auto pr-1">
               <button
                 onClick={() => setSubjectId(null)}
                 className={`text-left px-3 py-2 rounded-xl border-2 text-xs font-medium transition-all ${
                   subjectId === null
-                    ? 'border-blue-500 bg-blue-50 dark:bg-blue-950/30 text-blue-700 dark:text-blue-300'
-                    : 'border-border text-muted-foreground hover:border-blue-300'
+                    ? 'border-cyan-500 bg-cyan-50 dark:bg-cyan-950/30 text-cyan-700 dark:text-cyan-300'
+                    : 'border-border text-muted-foreground hover:border-cyan-300'
                 }`}
               >
                 — None —
@@ -135,8 +135,8 @@ function SlotModal({
                   onClick={() => setSubjectId(s.id)}
                   className={`text-left px-3 py-2 rounded-xl border-2 text-xs font-semibold transition-all ${
                     subjectId === s.id
-                      ? 'border-blue-500 bg-blue-50 dark:bg-blue-950/30 text-blue-700 dark:text-blue-300'
-                      : 'border-border text-foreground hover:border-blue-300'
+                      ? 'border-cyan-500 bg-cyan-50 dark:bg-cyan-950/30 text-cyan-700 dark:text-cyan-300'
+                      : 'border-border text-foreground hover:border-cyan-300'
                   }`}
                 >
                   {s.name}
@@ -148,15 +148,15 @@ function SlotModal({
           {/* Teacher picker */}
           <div className="space-y-2">
             <label className="flex items-center gap-2 text-sm font-semibold text-foreground">
-              <User className="w-4 h-4 text-blue-500" /> Teacher
+              <User className="w-4 h-4 text-cyan-500" /> Teacher
             </label>
             <div className="grid grid-cols-1 gap-1 max-h-36 overflow-y-auto pr-1">
               <button
                 onClick={() => setTeacherId(null)}
                 className={`text-left px-3 py-2 rounded-xl border-2 text-xs font-medium transition-all ${
                   teacherId === null
-                    ? 'border-blue-500 bg-blue-50 dark:bg-blue-950/30 text-blue-700 dark:text-blue-300'
-                    : 'border-border text-muted-foreground hover:border-blue-300'
+                    ? 'border-cyan-500 bg-cyan-50 dark:bg-cyan-950/30 text-cyan-700 dark:text-cyan-300'
+                    : 'border-border text-muted-foreground hover:border-cyan-300'
                 }`}
               >
                 — Unassigned —
@@ -167,8 +167,8 @@ function SlotModal({
                   onClick={() => setTeacherId(t.id)}
                   className={`text-left px-3 py-2 rounded-xl border-2 text-xs font-semibold transition-all flex items-center justify-between ${
                     teacherId === t.id
-                      ? 'border-blue-500 bg-blue-50 dark:bg-blue-950/30 text-blue-700 dark:text-blue-300'
-                      : 'border-border text-foreground hover:border-blue-300'
+                      ? 'border-cyan-500 bg-cyan-50 dark:bg-cyan-950/30 text-cyan-700 dark:text-cyan-300'
+                      : 'border-border text-foreground hover:border-cyan-300'
                   }`}
                 >
                   <span>{t.full_name}</span>
@@ -189,7 +189,7 @@ function SlotModal({
           )}
           <div className="flex gap-3 ml-auto">
             <Button variant="outline" onClick={onClose} className="rounded-xl">Cancel</Button>
-            <Button onClick={handleSave} disabled={saving} className="rounded-xl bg-blue-600 hover:bg-blue-700 text-white">
+            <Button onClick={handleSave} disabled={saving} className="rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white">
               {saving ? <Loader2 className="w-4 h-4 animate-spin mr-1.5" /> : <Save className="w-4 h-4 mr-1.5" />}
               Save
             </Button>
@@ -245,7 +245,7 @@ export function TimetableGrid({
         <h3 className="font-semibold text-foreground">No Bell Schedule Yet</h3>
         <p className="text-sm text-muted-foreground mt-1 mb-4">Set up your school day periods before building the timetable.</p>
         <Link href="/dashboard/timetable?view=setup">
-          <Button className="rounded-xl bg-blue-600 hover:bg-blue-700 text-white gap-2">
+          <Button className="rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white gap-2">
             <Settings className="w-4 h-4" /> Configure Bell Schedule
           </Button>
         </Link>
@@ -263,7 +263,7 @@ export function TimetableGrid({
             <select
               value={selectedTermId}
               onChange={e => router.push(`/dashboard/timetable?term=${e.target.value}`)}
-              className="appearance-none pl-4 pr-9 py-2 text-sm font-semibold bg-card border border-border rounded-xl text-foreground cursor-pointer hover:border-blue-500/50 transition-colors"
+              className="appearance-none pl-4 pr-9 py-2 text-sm font-semibold bg-card border border-border rounded-xl text-foreground cursor-pointer hover:border-cyan-500/50 transition-colors"
             >
               {terms.map(t => (
                 <option key={t.id} value={t.id}>{t.name}</option>
@@ -285,7 +285,7 @@ export function TimetableGrid({
           disabled={publishing || !selectedTermId}
           className={`rounded-xl gap-2 ${isPublished
             ? 'bg-slate-700 hover:bg-slate-600 text-white'
-            : 'bg-blue-600 hover:bg-blue-700 text-white'
+            : 'bg-cyan-600 hover:bg-cyan-700 text-white'
           }`}
         >
           {publishing ? <Loader2 className="w-4 h-4 animate-spin" /> : isPublished ? <X className="w-4 h-4" /> : <CheckCircle2 className="w-4 h-4" />}
@@ -320,7 +320,7 @@ export function TimetableGrid({
                     key={`${day.num}-${period.id}`}
                     className={`border-b border-r border-border px-2 py-2 text-center min-w-[90px] last:border-r-0 ${period.is_break ? 'bg-orange-50/50 dark:bg-orange-950/10' : ''}`}
                   >
-                    <div className="text-[10px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">{day.short}</div>
+                    <div className="text-[10px] font-bold text-cyan-600 dark:text-cyan-400 uppercase tracking-wider">{day.short}</div>
                     <div className="text-[10px] text-muted-foreground font-medium mt-0.5">{period.name}</div>
                     {!period.is_break && (
                       <div className="text-[9px] text-slate-400">{fmt12(period.start_time)}</div>
@@ -359,13 +359,13 @@ export function TimetableGrid({
                           <div className={`rounded-lg border px-1.5 py-1.5 cursor-pointer transition-all hover:opacity-80 ${
                             isConflict
                               ? 'bg-red-50 dark:bg-red-950/30 border-red-300 dark:border-red-700'
-                              : 'bg-blue-50 dark:bg-blue-950/30 border-blue-200 dark:border-blue-800/40'
+                              : 'bg-cyan-50 dark:bg-cyan-950/30 border-cyan-200 dark:border-cyan-800/40'
                           }`}>
-                            <p className={`text-[10px] font-bold leading-tight text-center ${isConflict ? 'text-red-700 dark:text-red-300' : 'text-blue-800 dark:text-blue-200'}`}>
+                            <p className={`text-[10px] font-bold leading-tight text-center ${isConflict ? 'text-red-700 dark:text-red-300' : 'text-cyan-800 dark:text-cyan-200'}`}>
                               {slot.subjects?.name}
                             </p>
                             {slot.users?.full_name && (
-                              <p className={`text-[9px] text-center mt-0.5 truncate ${isConflict ? 'text-red-500' : 'text-blue-500'}`}>
+                              <p className={`text-[9px] text-center mt-0.5 truncate ${isConflict ? 'text-red-500' : 'text-cyan-500'}`}>
                                 {slot.users.full_name}
                               </p>
                             )}
@@ -374,8 +374,8 @@ export function TimetableGrid({
                             )}
                           </div>
                         ) : (
-                          <div className="rounded-lg border-2 border-dashed border-slate-200 dark:border-slate-700 px-1 py-3 text-center cursor-pointer hover:border-blue-400 hover:bg-blue-50/50 dark:hover:bg-blue-950/20 transition-all group/cell">
-                            <span className="text-[10px] text-slate-300 group-hover/cell:text-blue-400 transition-colors">+</span>
+                          <div className="rounded-lg border-2 border-dashed border-slate-200 dark:border-slate-700 px-1 py-3 text-center cursor-pointer hover:border-cyan-400 hover:bg-cyan-50/50 dark:hover:bg-cyan-950/20 transition-all group/cell">
+                            <span className="text-[10px] text-slate-300 group-hover/cell:text-cyan-400 transition-colors">+</span>
                           </div>
                         )}
                       </td>
@@ -391,7 +391,7 @@ export function TimetableGrid({
       {/* Legend */}
       <div className="flex flex-wrap items-center gap-4 text-xs text-muted-foreground">
         <div className="flex items-center gap-1.5">
-          <div className="w-3 h-3 rounded bg-blue-100 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800" />
+          <div className="w-3 h-3 rounded bg-cyan-100 dark:bg-cyan-950/40 border border-cyan-200 dark:border-cyan-800" />
           <span>Subject assigned</span>
         </div>
         <div className="flex items-center gap-1.5">

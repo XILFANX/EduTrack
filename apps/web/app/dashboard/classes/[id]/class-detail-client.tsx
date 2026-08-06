@@ -147,7 +147,7 @@ export function ClassDetailClient({
             onClick={() => setActiveTab(t.id)}
             className={`flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium border-b-2 transition-all -mb-px ${
               activeTab === t.id
-                ? 'border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400'
+                ? 'border-cyan-600 text-cyan-600 dark:border-cyan-400 dark:text-cyan-400'
                 : 'border-transparent text-muted-foreground hover:text-foreground hover:border-slate-300 dark:hover:border-slate-600'
             }`}
           >
@@ -181,7 +181,7 @@ export function ClassDetailClient({
                 <Button
                   variant={currentTeacherId ? 'outline' : 'default'}
                   size="sm"
-                  className={currentTeacherId ? 'gap-1.5' : 'bg-blue-600 hover:bg-blue-700 gap-1.5'}
+                  className={currentTeacherId ? 'gap-1.5' : 'bg-cyan-600 hover:bg-cyan-700 gap-1.5'}
                   onClick={() => { setSelectedTeacherId(currentTeacherId ?? ''); setAssignMode(true) }}
                 >
                   <UserCheck className="w-3.5 h-3.5" />
@@ -192,14 +192,14 @@ export function ClassDetailClient({
                   <select
                     value={selectedTeacherId}
                     onChange={e => setSelectedTeacherId(e.target.value)}
-                    className="flex-1 sm:w-52 bg-background border border-input text-foreground rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                    className="flex-1 sm:w-52 bg-background border border-input text-foreground rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 transition"
                   >
                     <option value="">— None —</option>
                     {teachers.map(t => <option key={t.id} value={t.id}>{t.full_name}</option>)}
                   </select>
                   <div className="flex gap-1.5">
                     <button onClick={handleAssignTeacher} disabled={assigning}
-                      className="w-8 h-8 rounded-lg bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center transition-colors disabled:opacity-50">
+                      className="w-8 h-8 rounded-lg bg-cyan-600 hover:bg-cyan-700 text-white flex items-center justify-center transition-colors disabled:opacity-50">
                       <Check className="w-4 h-4" />
                     </button>
                     <button onClick={() => { setAssignMode(false); setAssignError(null) }}
@@ -236,15 +236,15 @@ export function ClassDetailClient({
             className="w-full flex items-center justify-between px-4 py-3.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group"
           >
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center">
-                <Users className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+              <div className="w-9 h-9 rounded-xl bg-cyan-50 dark:bg-cyan-900/20 flex items-center justify-center">
+                <Users className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
               </div>
               <div className="text-left">
                 <p className="font-semibold text-foreground text-sm">See all students</p>
                 <p className="text-xs text-muted-foreground">{students.length} enrolled in {cls.name}</p>
               </div>
             </div>
-            <ArrowLeft className="w-4 h-4 text-slate-400 rotate-180 group-hover:text-blue-500 transition-colors" />
+            <ArrowLeft className="w-4 h-4 text-slate-400 rotate-180 group-hover:text-cyan-500 transition-colors" />
           </button>
 
           <button
@@ -252,15 +252,15 @@ export function ClassDetailClient({
             className="w-full flex items-center justify-between px-4 py-3.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group"
           >
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center">
-                <BarChart3 className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+              <div className="w-9 h-9 rounded-xl bg-cyan-50 dark:bg-cyan-900/20 flex items-center justify-center">
+                <BarChart3 className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
               </div>
               <div className="text-left">
                 <p className="font-semibold text-foreground text-sm">See performance</p>
                 <p className="text-xs text-muted-foreground">Ranked student results, term by term</p>
               </div>
             </div>
-            <ArrowLeft className="w-4 h-4 text-slate-400 rotate-180 group-hover:text-blue-500 transition-colors" />
+            <ArrowLeft className="w-4 h-4 text-slate-400 rotate-180 group-hover:text-cyan-500 transition-colors" />
           </button>
         </div>
       )}
@@ -274,10 +274,10 @@ export function ClassDetailClient({
               <input
                 type="text" value={search} onChange={e => setSearch(e.target.value)}
                 placeholder="Search students…"
-                className="w-full h-10 pl-10 pr-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                className="w-full h-10 pl-10 pr-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 transition-all"
               />
             </div>
-            <Button className="bg-blue-600 hover:bg-blue-700 gap-2 shrink-0" onClick={() => setIsModalOpen(true)}>
+            <Button className="bg-cyan-600 hover:bg-cyan-700 gap-2 shrink-0" onClick={() => setIsModalOpen(true)}>
               <UserPlus className="w-4 h-4" />
               <span className="hidden sm:inline">Enroll Student</span>
             </Button>
@@ -285,8 +285,8 @@ export function ClassDetailClient({
 
           {filteredStudents.length === 0 ? (
             <div className="text-center py-16 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl">
-              <div className="w-16 h-16 rounded-2xl bg-blue-100 dark:bg-blue-900/40 mx-auto flex items-center justify-center mb-4">
-                <GraduationCap className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+              <div className="w-16 h-16 rounded-2xl bg-cyan-100 dark:bg-cyan-900/40 mx-auto flex items-center justify-center mb-4">
+                <GraduationCap className="w-8 h-8 text-cyan-600 dark:text-cyan-400" />
               </div>
               <h2 className="text-lg font-semibold text-foreground">
                 {search ? 'No students match your search' : 'No students enrolled'}
@@ -296,7 +296,7 @@ export function ClassDetailClient({
                   <p className="text-sm text-muted-foreground max-w-sm mx-auto mt-2 mb-6">
                     Enroll your first student to build the class roster.
                   </p>
-                  <Button className="bg-blue-600 hover:bg-blue-700 gap-2" onClick={() => setIsModalOpen(true)}>
+                  <Button className="bg-cyan-600 hover:bg-cyan-700 gap-2" onClick={() => setIsModalOpen(true)}>
                     <UserPlus className="w-4 h-4" /> Enroll First Student
                   </Button>
                 </>
@@ -311,10 +311,10 @@ export function ClassDetailClient({
                     className="flex items-center gap-3 px-4 py-3 hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors cursor-pointer"
                     onClick={() => setQuickViewStudent(student)}
                   >
-                    <div className="w-8 h-8 rounded-full overflow-hidden bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center shrink-0">
+                    <div className="w-8 h-8 rounded-full overflow-hidden bg-cyan-100 dark:bg-cyan-900/30 flex items-center justify-center shrink-0">
                       {student.photo_url
                         ? <img src={student.photo_url} alt="" className="w-full h-full object-cover" />
-                        : <span className="text-xs font-bold text-blue-600 dark:text-blue-400">{student.first_name?.[0]}{student.last_name?.[0]}</span>
+                        : <span className="text-xs font-bold text-cyan-600 dark:text-cyan-400">{student.first_name?.[0]}{student.last_name?.[0]}</span>
                       }
                     </div>
                     <div className="flex-1 min-w-0">
@@ -324,7 +324,7 @@ export function ClassDetailClient({
                       <p className="text-xs text-muted-foreground font-mono">{student.admission_number}</p>
                     </div>
                     <div className="flex items-center gap-2 shrink-0" onClick={e => e.stopPropagation()}>
-                      <span className="hidden sm:inline-flex px-2 py-0.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 text-xs font-medium">
+                      <span className="hidden sm:inline-flex px-2 py-0.5 rounded-full bg-cyan-100 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-400 text-xs font-medium">
                         Active
                       </span>
                       <DropdownMenu>
@@ -366,8 +366,8 @@ export function ClassDetailClient({
       {activeTab === 'performance' && (
         <div className="space-y-4">
           <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 text-center">
-            <div className="w-16 h-16 rounded-2xl bg-blue-100 dark:bg-blue-900/30 mx-auto flex items-center justify-center mb-4">
-              <TrendingUp className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+            <div className="w-16 h-16 rounded-2xl bg-cyan-100 dark:bg-cyan-900/30 mx-auto flex items-center justify-center mb-4">
+              <TrendingUp className="w-8 h-8 text-cyan-600 dark:text-cyan-400" />
             </div>
             <h2 className="text-lg font-semibold text-foreground">Performance Analytics</h2>
             <p className="text-sm text-muted-foreground max-w-sm mx-auto mt-2">
@@ -416,7 +416,7 @@ export function ClassDetailClient({
             </button>
 
             {/* Hero Header */}
-            <div className="h-32 bg-gradient-to-r from-blue-600 to-blue-600 shrink-0 relative">
+            <div className="h-32 bg-gradient-to-r from-cyan-600 to-cyan-600 shrink-0 relative">
               {/* Overlapping Avatar */}
               <div className="absolute -bottom-10 left-6">
                 {(quickViewStudent as any).photo_url ? (
@@ -437,10 +437,10 @@ export function ClassDetailClient({
                   {quickViewStudent.first_name} {(quickViewStudent as any).last_name}
                 </h2>
                 <div className="flex items-center gap-2 mt-2">
-                  <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">
+                  <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-300">
                     Student
                   </span>
-                  <span className="text-sm font-medium px-2.5 py-1 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400">
+                  <span className="text-sm font-medium px-2.5 py-1 rounded-full bg-cyan-100 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-400">
                     Active
                   </span>
                 </div>
@@ -475,7 +475,7 @@ export function ClassDetailClient({
               <div className="space-y-3 pt-2">
                 <Link
                   href={`/dashboard/students/${quickViewStudent.id}`}
-                  className="w-full flex items-center justify-center gap-2 h-11 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold transition-colors shadow-sm"
+                  className="w-full flex items-center justify-center gap-2 h-11 rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white text-sm font-semibold transition-colors shadow-sm"
                 >
                   <Pencil className="w-4 h-4" /> Full Profile
                 </Link>

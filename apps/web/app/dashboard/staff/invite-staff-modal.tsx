@@ -127,8 +127,8 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
       <DialogContent className="max-w-md max-h-[92vh] flex flex-col bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-0 overflow-hidden">
         <DialogHeader className="px-6 pt-6 pb-0 shrink-0">
           <DialogTitle className="flex items-center gap-2 text-lg font-bold">
-            <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center">
-              <UserPlus className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+            <div className="w-8 h-8 rounded-lg bg-cyan-100 dark:bg-cyan-900/40 flex items-center justify-center">
+              <UserPlus className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
             </div>
             Invite Staff Member
           </DialogTitle>
@@ -149,8 +149,8 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
                     onClick={() => { setRole(opt.value); setClassId('') }}
                     className={`text-left px-3 py-2 rounded-xl border transition-all text-sm ${
                       role === opt.value
-                        ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/20 ring-1 ring-blue-600'
-                        : 'border-slate-200 dark:border-slate-800 hover:border-blue-300'
+                        ? 'border-cyan-600 bg-cyan-50 dark:bg-cyan-900/20 ring-1 ring-cyan-600'
+                        : 'border-slate-200 dark:border-slate-800 hover:border-cyan-300'
                     }`}
                   >
                     <p className="font-semibold text-foreground">{opt.label}</p>
@@ -173,7 +173,7 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
                     id="staffClass"
                     value={classId}
                     onChange={(e) => setClassId(e.target.value)}
-                    className="w-full bg-background border border-input text-foreground rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                    className="w-full bg-background border border-input text-foreground rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition"
                   >
                     <option value="">Select a class…</option>
                     {classes.map((cls) => (
@@ -197,7 +197,7 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
                     id="staffSubject"
                     value={classSubjectId}
                     onChange={(e) => setClassSubjectId(e.target.value)}
-                    className="w-full bg-background border border-input text-foreground rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                    className="w-full bg-background border border-input text-foreground rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition"
                   >
                     <option value="">Select an unoccupied subject…</option>
                     {unoccupiedSubjects.map((sub) => (
@@ -215,7 +215,7 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
                 <select
                   value={salutation}
                   onChange={e => setSalutation(e.target.value)}
-                  className="w-24 bg-background border border-input text-foreground rounded-xl px-2 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition shrink-0"
+                  className="w-24 bg-background border border-input text-foreground rounded-xl px-2 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 transition shrink-0"
                 >
                   {SALUTATIONS.map(s => (
                     <option key={s} value={s}>{s}</option>
@@ -230,7 +230,7 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
                 />
               </div>
               {salutation && fullName && (
-                <p className="text-xs text-blue-600 dark:text-blue-400">
+                <p className="text-xs text-cyan-600 dark:text-cyan-400">
                   Will be addressed as: <strong>{salutation} {fullName}</strong>
                 </p>
               )}
@@ -286,7 +286,7 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
                 Cancel
               </Button>
               <Button
-                className="flex-1 bg-blue-600 hover:bg-blue-700"
+                className="flex-1 bg-cyan-600 hover:bg-cyan-700"
                 onClick={handleInvite}
                 disabled={loading}
               >
@@ -298,8 +298,8 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
           /* ── Success: Invite link created ── */
           <div className="space-y-5 pt-1">
             <div className="text-center space-y-2">
-              <div className="w-16 h-16 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mx-auto mb-3">
-                <Check className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+              <div className="w-16 h-16 rounded-full bg-cyan-100 dark:bg-cyan-900/30 flex items-center justify-center mx-auto mb-3">
+                <Check className="w-8 h-8 text-cyan-600 dark:text-cyan-400" />
               </div>
               <p className="font-bold text-xl text-foreground">Invite link created!</p>
               <p className="text-sm text-muted-foreground">
@@ -317,7 +317,7 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
             <div className="space-y-2.5">
               <button
                 onClick={handleCopy}
-                className="w-full h-11 flex items-center justify-center gap-2 rounded-xl bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-semibold text-sm transition-colors"
+                className="w-full h-11 flex items-center justify-center gap-2 rounded-xl bg-cyan-600 hover:bg-cyan-700 active:bg-cyan-800 text-white font-semibold text-sm transition-colors"
               >
                 {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
                 {copied ? 'Copied!' : 'Copy Link'}

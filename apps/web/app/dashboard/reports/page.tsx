@@ -62,7 +62,7 @@ export default async function AdminReportsPage({ searchParams }: { searchParams:
         </a>
         <div>
           <h1 className="text-2xl font-bold text-slate-100 flex items-center gap-2">
-            Reports <span className="text-slate-600">/</span> <span className="text-blue-400">{selectedClass?.name}</span>
+            Reports <span className="text-slate-600">/</span> <span className="text-cyan-400">{selectedClass?.name}</span>
           </h1>
           <p className="text-sm text-slate-400 mt-1">
             {activeTerm ? `Active session: ${(activeTerm as any).academic_years?.name} — ${activeTerm.name}` : 'No active term set.'}
@@ -78,7 +78,7 @@ export default async function AdminReportsPage({ searchParams }: { searchParams:
           </div>
           <h2 className="text-lg font-semibold text-slate-200">No students enrolled</h2>
           <p className="text-sm text-slate-400 mt-2 mb-6 max-w-xs mx-auto">Enroll students in this class to generate report cards.</p>
-          <a href="/dashboard/students" className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition-colors">
+          <a href="/dashboard/students" className="inline-flex items-center gap-2 bg-cyan-600 hover:bg-cyan-700 text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition-colors">
             Enroll Students
           </a>
         </div>
@@ -91,7 +91,7 @@ export default async function AdminReportsPage({ searchParams }: { searchParams:
                 className="flex items-center justify-between p-4 hover:bg-[#1a2133] transition-colors group"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-blue-500/10 flex items-center justify-center overflow-hidden shrink-0 border border-slate-700">
+                  <div className="w-10 h-10 rounded-full bg-cyan-500/10 flex items-center justify-center overflow-hidden shrink-0 border border-slate-700">
                     {student.photo_url ? (
                       <img src={student.photo_url} alt="Profile" className="w-full h-full object-cover" />
                     ) : (
@@ -104,10 +104,10 @@ export default async function AdminReportsPage({ searchParams }: { searchParams:
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="hidden sm:inline-block text-xs font-semibold px-2 py-1 bg-slate-800 text-slate-300 rounded-lg group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                  <span className="hidden sm:inline-block text-xs font-semibold px-2 py-1 bg-slate-800 text-slate-300 rounded-lg group-hover:bg-cyan-600 group-hover:text-white transition-colors">
                     View Report
                   </span>
-                  <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                  <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 group-hover:bg-cyan-600 group-hover:text-white transition-colors">
                     <FileText className="w-4 h-4" />
                   </div>
                 </div>

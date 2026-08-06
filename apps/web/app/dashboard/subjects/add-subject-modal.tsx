@@ -65,8 +65,8 @@ export function AddSubjectModal({ open, onClose, schoolId, onSuccess, preSelecte
       <DialogContent className="max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6">
         <DialogHeader className="mb-4">
           <DialogTitle className="flex items-center gap-2 text-lg font-bold">
-            <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center">
-              <BookMarked className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+            <div className="w-8 h-8 rounded-lg bg-cyan-100 dark:bg-cyan-900/40 flex items-center justify-center">
+              <BookMarked className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
             </div>
             Add Subject
           </DialogTitle>
@@ -102,7 +102,7 @@ export function AddSubjectModal({ open, onClose, schoolId, onSuccess, preSelecte
                       type="checkbox"
                       checked={selectedClassIds.includes(c.id)}
                       onChange={() => toggleClass(c.id)}
-                      className="rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+                      className="rounded border-slate-300 text-cyan-600 focus:ring-cyan-500"
                     />
                     <span className="truncate">{c.name}</span>
                   </label>
@@ -116,7 +116,7 @@ export function AddSubjectModal({ open, onClose, schoolId, onSuccess, preSelecte
 
         <div className="flex items-center justify-end gap-3 mt-6">
           <Button variant="ghost" onClick={handleClose} disabled={loading} className="rounded-xl">Cancel</Button>
-          <Button onClick={handleSave} disabled={loading} className="bg-blue-600 hover:bg-blue-700 rounded-xl min-w-[100px]">
+          <Button onClick={handleSave} disabled={loading} className="bg-cyan-600 hover:bg-cyan-700 rounded-xl min-w-[100px]">
             {loading ? 'Saving...' : 'Save Subject'}
           </Button>
         </div>

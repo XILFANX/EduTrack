@@ -9,9 +9,9 @@ const fmt = (n: number, currency = 'KES') =>
 
 const STATUS_STYLES: Record<string, string> = {
   open:      'bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-400',
-  partial:   'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400',
-  settled:   'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400',
-  overpaid:  'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400',
+  partial:   'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/40 dark:text-cyan-400',
+  settled:   'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/40 dark:text-cyan-400',
+  overpaid:  'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/40 dark:text-cyan-400',
   cancelled: 'bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400',
 }
 
@@ -63,10 +63,10 @@ export default async function BursarLedgerPage() {
           <p className="text-2xl font-bold mt-1">{fmt(totalOutstanding)}</p>
           <p className="text-xs text-orange-100 mt-1">{obls.filter((o) => ['open','partial'].includes(o.status)).length} obligations</p>
         </div>
-        <div className="bg-gradient-to-br from-blue-600 to-blue-600 rounded-2xl p-4 text-white">
-          <p className="text-xs font-medium text-blue-100">Collected (this view)</p>
+        <div className="bg-gradient-to-br from-cyan-600 to-cyan-600 rounded-2xl p-4 text-white">
+          <p className="text-xs font-medium text-cyan-100">Collected (this view)</p>
           <p className="text-2xl font-bold mt-1">{fmt(totalCollected)}</p>
-          <p className="text-xs text-blue-100 mt-1">{obls.filter((o) => ['settled','overpaid'].includes(o.status)).length} settled</p>
+          <p className="text-xs text-cyan-100 mt-1">{obls.filter((o) => ['settled','overpaid'].includes(o.status)).length} settled</p>
         </div>
       </div>
 
@@ -83,7 +83,7 @@ export default async function BursarLedgerPage() {
               <details key={obl.id} className="bg-card border border-border rounded-2xl overflow-hidden">
                 <summary className="flex items-center justify-between px-4 py-3 cursor-pointer hover:bg-muted/30 transition-colors list-none">
                   <div className="flex items-center gap-3 min-w-0">
-                    <div className={`w-2 h-2 rounded-full shrink-0 ${obl.status === 'settled' ? 'bg-blue-500' : obl.status === 'partial' ? 'bg-blue-500' : obl.status === 'overpaid' ? 'bg-blue-500' : 'bg-orange-500'}`} />
+                    <div className={`w-2 h-2 rounded-full shrink-0 ${obl.status === 'settled' ? 'bg-cyan-500' : obl.status === 'partial' ? 'bg-cyan-500' : obl.status === 'overpaid' ? 'bg-cyan-500' : 'bg-orange-500'}`} />
                     <div className="min-w-0">
                       <p className="text-sm font-semibold text-foreground truncate">{obl.payer_display_ref}</p>
                       <p className="text-xs text-muted-foreground">{obl.period_label}</p>
@@ -102,7 +102,7 @@ export default async function BursarLedgerPage() {
                     {entries.map((le: any) => (
                       <div key={le.id} className="flex items-center justify-between px-4 py-2.5">
                         <div className="flex items-center gap-2">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-blue-500 shrink-0" />
+                          <CheckCircle2 className="w-3.5 h-3.5 text-cyan-500 shrink-0" />
                           <div>
                             <p className="text-xs font-medium">{ENTRY_TYPE_LABEL[le.entry_type] ?? le.entry_type}</p>
                             <p className="text-[10px] text-muted-foreground">
@@ -111,7 +111,7 @@ export default async function BursarLedgerPage() {
                             </p>
                           </div>
                         </div>
-                        <span className="text-sm font-bold text-blue-600">+{fmt(le.amount, obl.currency)}</span>
+                        <span className="text-sm font-bold text-cyan-600">+{fmt(le.amount, obl.currency)}</span>
                       </div>
                     ))}
                   </div>

@@ -47,7 +47,7 @@ export default async function LibraryOverviewPage() {
         </div>
         <Link
           href="/library/dashboard"
-          className="text-sm font-semibold text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
+          className="text-sm font-semibold text-cyan-600 hover:text-cyan-700 dark:text-cyan-400 dark:hover:text-cyan-300 transition-colors"
         >
           Full Portal →
         </Link>
@@ -56,9 +56,9 @@ export default async function LibraryOverviewPage() {
       {/* Stats */}
       <div className="grid grid-cols-3 gap-4">
         {[
-          { label: 'Total Books', value: totalBooks, icon: BookOpen, color: 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400' },
+          { label: 'Total Books', value: totalBooks, icon: BookOpen, color: 'bg-cyan-100 dark:bg-cyan-900/30 text-cyan-600 dark:text-cyan-400' },
           { label: 'Checked Out', value: checkedOut, icon: BookMarked, color: 'bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400' },
-          { label: 'Overdue', value: overdue, icon: AlertCircle, color: overdue > 0 ? 'bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400' : 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400' },
+          { label: 'Overdue', value: overdue, icon: AlertCircle, color: overdue > 0 ? 'bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400' : 'bg-cyan-100 dark:bg-cyan-900/30 text-cyan-600 dark:text-cyan-400' },
         ].map(stat => {
           const Icon = stat.icon
           return (
@@ -79,7 +79,7 @@ export default async function LibraryOverviewPage() {
           <h2 className="font-semibold text-foreground flex items-center gap-2">
             <BookOpen className="w-4 h-4 text-slate-500" /> Book Inventory
           </h2>
-          <Link href="/library/books" className="flex items-center gap-1.5 text-xs font-semibold text-blue-600 hover:text-blue-700 transition-colors">
+          <Link href="/library/books" className="flex items-center gap-1.5 text-xs font-semibold text-cyan-600 hover:text-cyan-700 transition-colors">
             <Plus className="w-3.5 h-3.5" /> Add Book
           </Link>
         </div>
@@ -109,7 +109,7 @@ export default async function LibraryOverviewPage() {
                     <td className="px-6 py-3">
                       <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${
                         b.status === 'available'
-                          ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'
+                          ? 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-400'
                           : b.status === 'issued'
                           ? 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400'
                           : 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400'

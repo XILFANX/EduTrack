@@ -34,8 +34,8 @@ export default async function LibraryBooks() {
 
       {allBooks.length === 0 ? (
         <div className="text-center py-20 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl">
-          <div className="w-16 h-16 rounded-2xl bg-blue-100 dark:bg-blue-900/40 mx-auto flex items-center justify-center mb-4">
-            <BookOpen className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+          <div className="w-16 h-16 rounded-2xl bg-cyan-100 dark:bg-cyan-900/40 mx-auto flex items-center justify-center mb-4">
+            <BookOpen className="w-8 h-8 text-cyan-600 dark:text-cyan-400" />
           </div>
           <h2 className="text-lg font-semibold text-foreground">No books catalogued yet</h2>
           <p className="text-sm text-muted-foreground max-w-sm mx-auto mt-2">
@@ -64,9 +64,9 @@ export default async function LibraryBooks() {
                     <td className="px-6 py-4 text-right">
                       <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${
                         book.status === 'available'
-                          ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'
+                          ? 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-400'
                           : book.status === 'issued'
-                          ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'
+                          ? 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-400'
                           : 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400'
                       }`}>
                         {book.status === 'available' ? 'Available' : book.status === 'issued' ? 'Issued' : 'Lost'}

@@ -49,8 +49,8 @@ function calculateGrade(scoreStr: string, gradeScales?: { grade: string; min_sco
 }
 
 function gradeColor(grade: string): string {
-  if (['A', 'A-'].includes(grade)) return 'text-blue-600 dark:text-blue-400'
-  if (['B+', 'B', 'B-'].includes(grade)) return 'text-blue-600 dark:text-blue-400'
+  if (['A', 'A-'].includes(grade)) return 'text-cyan-600 dark:text-cyan-400'
+  if (['B+', 'B', 'B-'].includes(grade)) return 'text-cyan-600 dark:text-cyan-400'
   if (['C+', 'C', 'C-'].includes(grade)) return 'text-orange-600 dark:text-orange-400'
   if (grade === '--') return 'text-slate-300 dark:text-slate-600'
   return 'text-orange-600 dark:text-orange-400'
@@ -138,8 +138,8 @@ export function GradesClient({ schoolId, teacherId, cls, students, exams, subjec
   if (!cls) {
     return (
       <div className="text-center py-20 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl">
-        <div className="w-16 h-16 rounded-2xl bg-blue-100 dark:bg-blue-900/40 mx-auto flex items-center justify-center mb-4">
-          <PenTool className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+        <div className="w-16 h-16 rounded-2xl bg-cyan-100 dark:bg-cyan-900/40 mx-auto flex items-center justify-center mb-4">
+          <PenTool className="w-8 h-8 text-cyan-600 dark:text-cyan-400" />
         </div>
         <h2 className="text-lg font-semibold text-foreground">No Class Assigned</h2>
         <p className="text-sm text-muted-foreground max-w-sm mx-auto mt-2">
@@ -156,7 +156,7 @@ export function GradesClient({ schoolId, teacherId, cls, students, exams, subjec
           <h1 className="text-2xl font-bold text-foreground">Exam Grades</h1>
           <p className="text-sm text-muted-foreground mt-0.5">{cls.name}</p>
         </div>
-        <Button onClick={handleSave} disabled={loading || Object.keys(dirtyScores).length === 0} className="bg-blue-600 hover:bg-blue-700 gap-2">
+        <Button onClick={handleSave} disabled={loading || Object.keys(dirtyScores).length === 0} className="bg-cyan-600 hover:bg-cyan-700 gap-2">
           {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
           Save Grades
         </Button>
@@ -171,7 +171,7 @@ export function GradesClient({ schoolId, teacherId, cls, students, exams, subjec
             <select
               value={cls.id}
               onChange={(e) => router.push(`/teacher/grades?class=${e.target.value}`)}
-              className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-sm outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+              className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-sm outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500"
             >
               {availableClasses.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
             </select>
@@ -182,7 +182,7 @@ export function GradesClient({ schoolId, teacherId, cls, students, exams, subjec
           <select
             value={selectedExamId}
             onChange={(e) => handleExamChange(e.target.value)}
-            className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-sm outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+            className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-sm outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500"
           >
             {exams.length === 0 ? <option value="">No exams found</option> : null}
             {exams.map((e) => <option key={e.id} value={e.id}>{e.name}</option>)}
@@ -193,7 +193,7 @@ export function GradesClient({ schoolId, teacherId, cls, students, exams, subjec
           <select
             value={selectedSubjectId}
             onChange={(e) => handleSubjectChange(e.target.value)}
-            className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-sm outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+            className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-sm outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500"
           >
             {subjects.length === 0 ? <option value="">No subjects found</option> : null}
             {subjects.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
@@ -209,12 +209,12 @@ export function GradesClient({ schoolId, teacherId, cls, students, exams, subjec
             <span className="text-xs font-bold text-foreground">{filledCount}/{students.length} entered</span>
           </div>
           <div className="h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-            <div className="h-full bg-blue-500 rounded-full transition-all" style={{ width: `${completionPct}%` }} />
+            <div className="h-full bg-cyan-500 rounded-full transition-all" style={{ width: `${completionPct}%` }} />
           </div>
           {avg !== null && (
             <div className="flex gap-4 mt-3 text-xs">
               <span className="text-muted-foreground">Avg: <strong className="text-foreground">{avg}</strong></span>
-              <span className="text-muted-foreground">Highest: <strong className="text-blue-600">{highest}</strong></span>
+              <span className="text-muted-foreground">Highest: <strong className="text-cyan-600">{highest}</strong></span>
               <span className="text-muted-foreground">Lowest: <strong className="text-orange-500">{lowest}</strong></span>
             </div>
           )}
@@ -250,7 +250,7 @@ export function GradesClient({ schoolId, teacherId, cls, students, exams, subjec
                           {student.photo_url ? (
                             <img src={student.photo_url} alt="" className="w-7 h-7 rounded-full object-cover shrink-0" />
                           ) : (
-                            <div className="w-7 h-7 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 text-[10px] font-bold flex items-center justify-center shrink-0">{initials}</div>
+                            <div className="w-7 h-7 rounded-full bg-cyan-100 dark:bg-cyan-900/30 text-cyan-600 text-[10px] font-bold flex items-center justify-center shrink-0">{initials}</div>
                           )}
                           <div>
                             <p className="font-medium text-foreground text-sm">{student.first_name} {student.last_name}</p>
@@ -268,8 +268,8 @@ export function GradesClient({ schoolId, teacherId, cls, students, exams, subjec
                           onChange={(e) => handleScoreChange(student.id, e.target.value)}
                           className={`w-20 h-9 px-3 rounded-lg border bg-transparent text-sm focus:ring-2 outline-none transition-colors ${
                             isDirty
-                              ? 'border-blue-400 focus:border-blue-500 focus:ring-blue-500/20 text-blue-700 dark:text-blue-400 font-bold'
-                              : 'border-slate-200 dark:border-slate-800 focus:border-blue-500 focus:ring-blue-500/20'
+                              ? 'border-cyan-400 focus:border-cyan-500 focus:ring-cyan-500/20 text-cyan-700 dark:text-cyan-400 font-bold'
+                              : 'border-slate-200 dark:border-slate-800 focus:border-cyan-500 focus:ring-cyan-500/20'
                           }`}
                         />
                       </td>

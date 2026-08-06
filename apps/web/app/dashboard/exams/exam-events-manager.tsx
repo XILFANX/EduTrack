@@ -16,7 +16,7 @@ import { createExamEvent, deleteExamEvent, publishExamEvent } from '@/app/action
 
 const STATUS_CONFIG: Record<string, { label: string; color: string; icon: any }> = {
   draft:     { label: 'Draft',     color: 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400', icon: Clock },
-  published: { label: 'Published', color: 'bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300', icon: CheckCircle2 },
+  published: { label: 'Published', color: 'bg-cyan-100 dark:bg-cyan-900/40 text-cyan-700 dark:text-cyan-300', icon: CheckCircle2 },
   closed:    { label: 'Closed',    color: 'bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300', icon: CheckCircle2 },
 }
 
@@ -106,8 +106,8 @@ function CreateEventModal({ open, onClose, schoolId, years, terms, classes }: {
                   onClick={() => toggleClass(c.id)}
                   className={`px-3 py-2 rounded-xl text-xs font-semibold border-2 transition-all ${
                     selectedClassIds.includes(c.id)
-                      ? 'border-blue-500 bg-blue-50 dark:bg-blue-950/30 text-blue-700 dark:text-blue-300'
-                      : 'border-border text-foreground hover:border-blue-300'
+                      ? 'border-cyan-500 bg-cyan-50 dark:bg-cyan-950/30 text-cyan-700 dark:text-cyan-300'
+                      : 'border-border text-foreground hover:border-cyan-300'
                   }`}
                 >
                   {c.name}
@@ -123,7 +123,7 @@ function CreateEventModal({ open, onClose, schoolId, years, terms, classes }: {
 
           <div className="flex justify-end gap-3 pt-2 border-t border-border">
             <Button type="button" variant="outline" onClick={onClose} className="rounded-xl">Cancel</Button>
-            <Button type="submit" disabled={saving} className="rounded-xl bg-blue-600 hover:bg-blue-700 text-white">
+            <Button type="submit" disabled={saving} className="rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white">
               {saving ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Plus className="w-4 h-4 mr-2" />}
               Create Event
             </Button>
@@ -166,7 +166,7 @@ export function ExamEventsManager({ schoolId, events, years, terms, classes, sub
   return (
     <div className="space-y-6">
       {/* Hero */}
-      <div className="bg-gradient-to-br from-blue-600 via-blue-500 to-blue-500 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
+      <div className="bg-gradient-to-br from-cyan-600 via-cyan-500 to-cyan-500 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-[50px] rounded-full pointer-events-none" />
         <div className="relative z-10 flex items-center justify-between gap-4">
           <div className="flex items-center gap-4">
@@ -175,10 +175,10 @@ export function ExamEventsManager({ schoolId, events, years, terms, classes, sub
             </div>
             <div>
               <h1 className="text-2xl font-black tracking-tight">Examinations</h1>
-              <p className="text-blue-100 text-sm mt-0.5">School-wide exam events — create, schedule and publish results</p>
+              <p className="text-cyan-100 text-sm mt-0.5">School-wide exam events — create, schedule and publish results</p>
             </div>
           </div>
-          <Button onClick={() => setModal(true)} className="bg-white text-blue-700 hover:bg-blue-50 font-bold rounded-xl gap-2 shrink-0">
+          <Button onClick={() => setModal(true)} className="bg-white text-cyan-700 hover:bg-cyan-50 font-bold rounded-xl gap-2 shrink-0">
             <Plus className="w-4 h-4" /> New Exam Event
           </Button>
         </div>
@@ -191,7 +191,7 @@ export function ExamEventsManager({ schoolId, events, years, terms, classes, sub
           <p className="text-sm text-muted-foreground mt-1 mb-4 max-w-sm mx-auto">
             Create a school-wide exam event. It will span multiple classes and subjects.
           </p>
-          <Button onClick={() => setModal(true)} className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl gap-2">
+          <Button onClick={() => setModal(true)} className="bg-cyan-600 hover:bg-cyan-700 text-white rounded-xl gap-2">
             <Plus className="w-4 h-4" /> Create First Exam Event
           </Button>
         </div>
@@ -206,8 +206,8 @@ export function ExamEventsManager({ schoolId, events, years, terms, classes, sub
               <div key={event.id} className="bg-card border border-border rounded-2xl p-4 hover:shadow-sm transition-shadow group">
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex items-start gap-4 flex-1 min-w-0">
-                    <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/30 flex items-center justify-center shrink-0">
-                      <ClipboardList className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                    <div className="w-10 h-10 rounded-xl bg-cyan-50 dark:bg-cyan-950/30 flex items-center justify-center shrink-0">
+                      <ClipboardList className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-3 flex-wrap">
@@ -248,7 +248,7 @@ export function ExamEventsManager({ schoolId, events, years, terms, classes, sub
                         size="sm"
                         onClick={() => handlePublish(event)}
                         disabled={publishing}
-                        className="rounded-xl gap-1.5 text-xs bg-blue-600 hover:bg-blue-700 text-white"
+                        className="rounded-xl gap-1.5 text-xs bg-cyan-600 hover:bg-cyan-700 text-white"
                       >
                         <Send className="w-3.5 h-3.5" /> Publish
                       </Button>

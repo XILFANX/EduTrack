@@ -145,19 +145,19 @@ export default async function DisputeQueue({ schoolId }: { schoolId: string }) {
 
               <div className="flex flex-wrap gap-2">
                 <span className={`text-xs px-2 py-0.5 rounded-full border font-medium ${
-                  codeMatch ? 'bg-blue-500/10 border-blue-500/20 text-blue-400' : 'bg-blue-500/10 border-blue-500/20 text-blue-400'
+                  codeMatch ? 'bg-cyan-500/10 border-cyan-500/20 text-cyan-400' : 'bg-cyan-500/10 border-cyan-500/20 text-cyan-400'
                 }`}>
                   Code: {codeMatch ? '✓' : '✗'}
                 </span>
                 <span className={`text-xs px-2 py-0.5 rounded-full border font-medium ${
-                  amountMatch ? 'bg-blue-500/10 border-blue-500/20 text-blue-400' : 'bg-orange-500/10 border-orange-500/20 text-orange-400'
+                  amountMatch ? 'bg-cyan-500/10 border-cyan-500/20 text-cyan-400' : 'bg-orange-500/10 border-orange-500/20 text-orange-400'
                 }`}>
                   Amount: {amountMatch ? '✓' : `${formatCurrency(payerAmount, currency)} vs ${formatCurrency(payeeAmount, currency)}`}
                 </span>
               </div>
 
-              <div className="bg-blue-500/5 border border-blue-500/15 rounded-xl p-3 flex items-start gap-2">
-                <Info className="w-3.5 h-3.5 text-blue-400 shrink-0 mt-0.5" />
+              <div className="bg-cyan-500/5 border border-cyan-500/15 rounded-xl p-3 flex items-start gap-2">
+                <Info className="w-3.5 h-3.5 text-cyan-400 shrink-0 mt-0.5" />
                 <p className="text-xs text-muted-foreground">
                   <strong className="text-foreground">Confirm Match</strong> if these describe the same transaction.
                   This updates the payment corridor model. <strong className="text-foreground">Dismiss</strong> to keep unresolved for follow-up.
@@ -168,7 +168,7 @@ export default async function DisputeQueue({ schoolId }: { schoolId: string }) {
                 <form action={async () => { 'use server'; await dismissDispute(d.id) }}>
                   <button
                     type="submit"
-                    className="text-sm border border-border text-muted-foreground hover:text-foreground hover:border-blue-400 py-2 px-4 rounded-xl font-medium transition-colors"
+                    className="text-sm border border-border text-muted-foreground hover:text-foreground hover:border-cyan-400 py-2 px-4 rounded-xl font-medium transition-colors"
                   >
                     Dismiss
                   </button>
@@ -177,7 +177,7 @@ export default async function DisputeQueue({ schoolId }: { schoolId: string }) {
                   <button
                     id={`confirm-dispute-${d.id}`}
                     type="submit"
-                    className="w-full text-sm bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-xl font-semibold transition-colors flex items-center justify-center gap-2"
+                    className="w-full text-sm bg-cyan-600 hover:bg-cyan-700 text-white py-2 px-4 rounded-xl font-semibold transition-colors flex items-center justify-center gap-2"
                   >
                     <CheckCircle2 className="w-4 h-4" />
                     Confirm Match

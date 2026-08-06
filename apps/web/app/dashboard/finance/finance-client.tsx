@@ -102,7 +102,7 @@ export function FinanceAnalytics({ stats, collectionByClass, paymentTrend, aging
   return (
     <div className="space-y-6 pb-24">
       {/* Hero */}
-      <div className="bg-gradient-to-br from-blue-600 via-blue-500 to-blue-500 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
+      <div className="bg-gradient-to-br from-cyan-600 via-cyan-500 to-cyan-500 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-[50px] rounded-full pointer-events-none" />
         <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-4">
@@ -111,7 +111,7 @@ export function FinanceAnalytics({ stats, collectionByClass, paymentTrend, aging
             </div>
             <div>
               <h1 className="text-2xl font-black tracking-tight">Financial Analytics</h1>
-              <p className="text-blue-100 text-sm mt-0.5">
+              <p className="text-cyan-100 text-sm mt-0.5">
                 {selectedTerm?.name} — School fee collection overview
               </p>
             </div>
@@ -135,8 +135,8 @@ export function FinanceAnalytics({ stats, collectionByClass, paymentTrend, aging
         {[
           {
             label: 'Total Expected', value: formatKES(stats.totalExpected), sub: 'Total invoiced',
-            icon: Banknote, color: 'bg-blue-50 dark:bg-blue-950/30 border-blue-200 dark:border-blue-800/40',
-            iconColor: 'text-blue-600 dark:text-blue-400',
+            icon: Banknote, color: 'bg-cyan-50 dark:bg-cyan-950/30 border-cyan-200 dark:border-cyan-800/40',
+            iconColor: 'text-cyan-600 dark:text-cyan-400',
           },
           {
             label: 'Total Collected', value: formatKES(stats.totalCollected), sub: `${stats.collectionRate.toFixed(1)}% collection rate`,
@@ -240,7 +240,7 @@ export function FinanceAnalytics({ stats, collectionByClass, paymentTrend, aging
               <tbody className="divide-y divide-border">
                 {Object.entries(agingBuckets).map(([bucket, list]) =>
                   list.sort((a, b) => b.daysOverdue - a.daysOverdue).map((d, idx) => (
-                    <tr key={d.id} className={`${idx % 2 !== 0 ? 'bg-slate-50/40 dark:bg-slate-900/20' : ''} hover:bg-blue-50/30 dark:hover:bg-blue-950/10 transition-colors`}>
+                    <tr key={d.id} className={`${idx % 2 !== 0 ? 'bg-slate-50/40 dark:bg-slate-900/20' : ''} hover:bg-cyan-50/30 dark:hover:bg-cyan-950/10 transition-colors`}>
                       <td className="px-5 py-3 font-semibold text-foreground">{d.className}</td>
                       <td className="px-5 py-3 text-right font-bold text-orange-600 dark:text-orange-400">{formatKES(d.outstanding)}</td>
                       <td className="px-5 py-3 text-center text-muted-foreground">{d.daysOverdue}d</td>

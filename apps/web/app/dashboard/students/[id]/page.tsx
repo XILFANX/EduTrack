@@ -42,7 +42,7 @@ export default async function StudentProfilePage({ params }: { params: Promise<{
 
   return (
     <div className="space-y-6">
-      <Link href="/dashboard/students" className="inline-flex items-center gap-1.5 text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors">
+      <Link href="/dashboard/students" className="inline-flex items-center gap-1.5 text-sm font-medium text-cyan-600 hover:text-cyan-700 transition-colors">
         <ArrowLeft className="w-4 h-4" />
         Back to Directory
       </Link>

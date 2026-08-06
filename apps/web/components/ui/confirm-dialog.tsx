@@ -28,8 +28,8 @@ const VARIANT_STYLES = {
   },
   default: {
     icon: "❓",
-    iconBg: "bg-blue-100 dark:bg-blue-900/30",
-    confirmBtn: "bg-blue-600 hover:bg-blue-700 focus:ring-blue-500",
+    iconBg: "bg-cyan-100 dark:bg-cyan-900/30",
+    confirmBtn: "bg-cyan-600 hover:bg-cyan-700 focus:ring-cyan-500",
   },
 }
 

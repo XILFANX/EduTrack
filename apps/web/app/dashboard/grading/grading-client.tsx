@@ -28,7 +28,7 @@ interface Props {
 // Color coding by grade band
 function gradeColor(min: number) {
   if (min >= 70) return { bg: 'bg-emerald-50 dark:bg-emerald-950/30', border: 'border-emerald-200 dark:border-emerald-800/40', text: 'text-emerald-700 dark:text-emerald-300', badge: 'bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300' }
-  if (min >= 50) return { bg: 'bg-blue-50 dark:bg-blue-950/30', border: 'border-blue-200 dark:border-blue-800/40', text: 'text-blue-700 dark:text-blue-300', badge: 'bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300' }
+  if (min >= 50) return { bg: 'bg-cyan-50 dark:bg-cyan-950/30', border: 'border-cyan-200 dark:border-cyan-800/40', text: 'text-cyan-700 dark:text-cyan-300', badge: 'bg-cyan-100 dark:bg-cyan-900/40 text-cyan-700 dark:text-cyan-300' }
   if (min >= 30) return { bg: 'bg-orange-50 dark:bg-orange-950/30', border: 'border-orange-200 dark:border-orange-800/40', text: 'text-orange-700 dark:text-orange-300', badge: 'bg-orange-100 dark:bg-orange-900/40 text-orange-700 dark:text-orange-300' }
   return { bg: 'bg-red-50 dark:bg-red-950/30', border: 'border-red-200 dark:border-red-800/40', text: 'text-red-700 dark:text-red-300', badge: 'bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300' }
 }
@@ -124,7 +124,7 @@ function ScaleModal({
 
           <div className="flex justify-end gap-3 pt-2 border-t border-border">
             <Button type="button" variant="outline" onClick={() => onClose()} className="rounded-xl">Cancel</Button>
-            <Button type="submit" disabled={saving} className="rounded-xl bg-blue-600 hover:bg-blue-700 text-white">
+            <Button type="submit" disabled={saving} className="rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white">
               {saving ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
               {existing ? 'Save Changes' : 'Add Grade'}
             </Button>
@@ -170,7 +170,7 @@ export function GradingClient({ schoolId, initialScales }: Props) {
   return (
     <div className="space-y-6 pb-24">
       {/* Hero */}
-      <div className="bg-gradient-to-br from-blue-600 via-blue-500 to-blue-500 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
+      <div className="bg-gradient-to-br from-cyan-600 via-cyan-500 to-cyan-500 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-[50px] rounded-full pointer-events-none" />
         <div className="relative z-10 flex items-center justify-between gap-4">
           <div className="flex items-center gap-4">
@@ -179,12 +179,12 @@ export function GradingClient({ schoolId, initialScales }: Props) {
             </div>
             <div>
               <h1 className="text-2xl font-black tracking-tight">Grading Engine</h1>
-              <p className="text-blue-100 text-sm mt-0.5">Define your school-wide grade boundaries and GPA points</p>
+              <p className="text-cyan-100 text-sm mt-0.5">Define your school-wide grade boundaries and GPA points</p>
             </div>
           </div>
           <Button
             onClick={() => setModal({ open: true, existing: null })}
-            className="bg-white text-blue-700 hover:bg-blue-50 font-bold rounded-xl gap-2 shrink-0"
+            className="bg-white text-cyan-700 hover:bg-cyan-50 font-bold rounded-xl gap-2 shrink-0"
           >
             <Plus className="w-4 h-4" /> Add Grade
           </Button>
@@ -208,7 +208,7 @@ export function GradingClient({ schoolId, initialScales }: Props) {
           <p className="text-sm text-muted-foreground mt-1 mb-4 max-w-sm mx-auto">
             Define your school&apos;s grading system — A, B, C grades with score ranges and GPA points.
           </p>
-          <Button onClick={() => setModal({ open: true, existing: null })} className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl gap-2">
+          <Button onClick={() => setModal({ open: true, existing: null })} className="bg-cyan-600 hover:bg-cyan-700 text-white rounded-xl gap-2">
             <Plus className="w-4 h-4" /> Add First Grade
           </Button>
         </div>
@@ -268,7 +268,7 @@ export function GradingClient({ schoolId, initialScales }: Props) {
 
           {/* Coverage summary */}
           <div className="flex items-center gap-2 text-xs text-muted-foreground">
-            <CheckCircle2 className="w-4 h-4 text-blue-500" />
+            <CheckCircle2 className="w-4 h-4 text-cyan-500" />
             <span>{scales.length} grade{scales.length !== 1 ? 's' : ''} defined · Scores covered: {sorted.reduce((a, s) => a + (s.max_score - s.min_score + 1), 0)} of 100 points</span>
           </div>
         </div>

@@ -10,9 +10,9 @@ import { useConfirmDialog, ConfirmDialog } from '@/components/ui/confirm-dialog'
 import { deleteInviteAndAccount } from './actions'
 
 const ROLE_LABELS: Record<string, { label: string; color: string }> = {
-  class_teacher: { label: 'Class Teacher', color: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' },
-  subject_teacher: { label: 'Subject Teacher', color: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' },
-  bursar: { label: 'Bursar', color: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' },
+  class_teacher: { label: 'Class Teacher', color: 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-300' },
+  subject_teacher: { label: 'Subject Teacher', color: 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-300' },
+  bursar: { label: 'Bursar', color: 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-300' },
   librarian: { label: 'Librarian', color: 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300' },
   storekeeper: { label: 'Storekeeper', color: 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300' },
   transport_matron: { label: 'Transport Matron', color: 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300' },
@@ -91,7 +91,7 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
             {staff.length} active · {pendingInvitations.length} pending invite{pendingInvitations.length !== 1 ? 's' : ''}
           </p>
         </div>
-        <Button className="bg-blue-600 hover:bg-blue-700 gap-2" onClick={() => setModalOpen(true)}>
+        <Button className="bg-cyan-600 hover:bg-cyan-700 gap-2" onClick={() => setModalOpen(true)}>
           <UserPlus className="w-4 h-4" /><span className="hidden sm:inline">Invite Staff</span>
         </Button>
       </div>
@@ -101,7 +101,7 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
         <input type="text" placeholder="Search by name or phone…" value={search}
           onChange={e => setSearch(e.target.value)}
-          className="w-full pl-9 pr-4 py-2.5 text-sm border border-border rounded-xl bg-background focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          className="w-full pl-9 pr-4 py-2.5 text-sm border border-border rounded-xl bg-background focus:outline-none focus:ring-2 focus:ring-cyan-500" />
       </div>
 
       {/* Active Members */}
@@ -123,7 +123,7 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
                   onClick={() => setDetailMember(member)}
                 >
                   {/* Avatar */}
-                  <div className="w-9 h-9 rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 flex items-center justify-center text-sm font-bold shrink-0 mt-0.5 overflow-hidden">
+                  <div className="w-9 h-9 rounded-full bg-cyan-100 dark:bg-cyan-900/40 text-cyan-700 dark:text-cyan-300 flex items-center justify-center text-sm font-bold shrink-0 mt-0.5 overflow-hidden">
                     {member.photo_url ? (
                       <img src={member.photo_url} alt="" className="w-full h-full object-cover" />
                     ) : (
@@ -139,7 +139,7 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
                       <div className="relative mt-1.5 inline-block" onClick={e => e.stopPropagation()}>
                         <button
                           onClick={() => setShareOpen(shareOpen === member.id ? null : member.id)}
-                          className="inline-flex items-center gap-1 text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 font-medium transition-colors"
+                          className="inline-flex items-center gap-1 text-xs text-cyan-600 dark:text-cyan-400 hover:text-cyan-700 font-medium transition-colors"
                         >
                           <Share2 className="w-3 h-3" /> Share Portal
                         </button>
@@ -150,7 +150,7 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
                               onClick={() => handleCopyLink(inv.token)}
                               className="w-full flex items-center gap-2.5 px-4 py-3 text-sm text-foreground hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
                             >
-                              {copiedToken === inv.token ? <Check className="w-4 h-4 text-blue-500" /> : <Copy className="w-4 h-4 text-muted-foreground" />}
+                              {copiedToken === inv.token ? <Check className="w-4 h-4 text-cyan-500" /> : <Copy className="w-4 h-4 text-muted-foreground" />}
                               Copy Link
                             </button>
                             <a
@@ -187,7 +187,7 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
             <p className="font-semibold text-foreground">No staff yet</p>
             <p className="text-sm text-muted-foreground max-w-xs mx-auto mt-1">Invite your first staff member using the button above.</p>
           </div>
-          <Button className="bg-blue-600 hover:bg-blue-700 gap-2" onClick={() => setModalOpen(true)}>
+          <Button className="bg-cyan-600 hover:bg-cyan-700 gap-2" onClick={() => setModalOpen(true)}>
             <UserPlus className="w-4 h-4" /> Invite First Staff Member
           </Button>
         </div>
@@ -225,7 +225,7 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
                       className="w-7 h-7 rounded-full bg-[#25D366] flex items-center justify-center text-white hover:bg-[#20bd5a] transition-colors shrink-0"
                       title="Share via WhatsApp">{WA_ICON}</a>
                     <a href={portalLink} target="_blank" rel="noopener noreferrer"
-                      className="text-xs text-blue-600 dark:text-blue-400 hover:underline font-medium shrink-0">Open ↗</a>
+                      className="text-xs text-cyan-600 dark:text-cyan-400 hover:underline font-medium shrink-0">Open ↗</a>
                   </div>
                 </div>
               )
@@ -245,7 +245,7 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
             </button>
 
             {/* Hero Header */}
-            <div className="h-32 bg-gradient-to-r from-blue-600 to-blue-600 shrink-0 relative">
+            <div className="h-32 bg-gradient-to-r from-cyan-600 to-cyan-600 shrink-0 relative">
               {/* Overlapping Avatar */}
               <div className="absolute -bottom-10 left-6">
                 {(detailMember as any).photo_url ? (
@@ -267,7 +267,7 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
                   <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${ROLE_LABELS[detailMember.role]?.color ?? 'bg-slate-200 text-slate-700'}`}>
                     {ROLE_LABELS[detailMember.role]?.label ?? detailMember.role}
                   </span>
-                  <span className="text-sm font-medium px-2.5 py-1 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400">
+                  <span className="text-sm font-medium px-2.5 py-1 rounded-full bg-cyan-100 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-400">
                     Active
                   </span>
                 </div>
@@ -302,7 +302,7 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
                   <div className="flex gap-2">
                     <button onClick={() => handleCopyLink(detailInvite.token)}
                       className="flex-1 flex items-center justify-center gap-2 h-11 rounded-xl border border-slate-200 dark:border-slate-700 text-sm font-semibold text-foreground hover:bg-white dark:hover:bg-slate-800 transition-colors shadow-sm bg-slate-50 dark:bg-slate-900">
-                      {copiedToken === detailInvite.token ? <Check className="w-4 h-4 text-blue-500" /> : <LinkIcon className="w-4 h-4" />}
+                      {copiedToken === detailInvite.token ? <Check className="w-4 h-4 text-cyan-500" /> : <LinkIcon className="w-4 h-4" />}
                       {copiedToken === detailInvite.token ? 'Copied!' : 'Copy Link'}
                     </button>
                     <a href={buildWA(detailMember.full_name, detailInvite.token)} target="_blank" rel="noopener noreferrer"

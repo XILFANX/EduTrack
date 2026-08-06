@@ -70,8 +70,8 @@ export function AttendanceClient({ schoolId, teacherId, cls, students, existingR
   if (!cls) {
     return (
       <div className="text-center py-20 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl">
-        <div className="w-16 h-16 rounded-2xl bg-blue-100 dark:bg-blue-900/40 mx-auto flex items-center justify-center mb-4">
-          <ClipboardList className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+        <div className="w-16 h-16 rounded-2xl bg-cyan-100 dark:bg-cyan-900/40 mx-auto flex items-center justify-center mb-4">
+          <ClipboardList className="w-8 h-8 text-cyan-600 dark:text-cyan-400" />
         </div>
         <h2 className="text-lg font-semibold text-foreground">No Class Assigned</h2>
         <p className="text-sm text-muted-foreground max-w-sm mx-auto mt-2">
@@ -114,7 +114,7 @@ export function AttendanceClient({ schoolId, teacherId, cls, students, existingR
         <Button 
           onClick={handleSave} 
           disabled={loading || Object.keys(records).length === 0}
-          className="bg-blue-600 hover:bg-blue-700 gap-2"
+          className="bg-cyan-600 hover:bg-cyan-700 gap-2"
         >
           {loading && <Loader2 className="w-4 h-4 animate-spin" />}
           Save
@@ -124,9 +124,9 @@ export function AttendanceClient({ schoolId, teacherId, cls, students, existingR
       {/* Stats bar */}
       {Object.keys(records).length > 0 && (
         <div className="grid grid-cols-3 gap-2">
-          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-3 text-center">
-            <p className="text-xl font-bold text-blue-700 dark:text-blue-400">{presentCount}</p>
-            <p className="text-xs text-blue-600 dark:text-blue-500 font-medium">Present</p>
+          <div className="bg-cyan-50 dark:bg-cyan-900/20 border border-cyan-200 dark:border-cyan-800 rounded-xl p-3 text-center">
+            <p className="text-xl font-bold text-cyan-700 dark:text-cyan-400">{presentCount}</p>
+            <p className="text-xs text-cyan-600 dark:text-cyan-500 font-medium">Present</p>
           </div>
           <div className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-xl p-3 text-center">
             <p className="text-xl font-bold text-orange-700 dark:text-orange-400">{absentCount}</p>
@@ -182,7 +182,7 @@ export function AttendanceClient({ schoolId, teacherId, cls, students, existingR
                       {student.photo_url ? (
                         <img src={student.photo_url} alt="" className="w-9 h-9 rounded-full object-cover border border-slate-200 dark:border-slate-700 shrink-0" />
                       ) : (
-                        <div className="w-9 h-9 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-bold flex items-center justify-center shrink-0">
+                        <div className="w-9 h-9 rounded-full bg-cyan-100 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-300 text-xs font-bold flex items-center justify-center shrink-0">
                           {initials}
                         </div>
                       )}
@@ -195,7 +195,7 @@ export function AttendanceClient({ schoolId, teacherId, cls, students, existingR
                     <div className="flex items-center gap-1.5">
                       <button
                         onClick={() => handleStatusChange(student.id, 'Present')}
-                        className={`w-9 h-9 rounded-full border-2 flex items-center justify-center transition-colors ${status === 'Present' ? 'bg-blue-100 border-blue-500 text-blue-700 dark:bg-blue-900/40 dark:border-blue-500 dark:text-blue-400' : 'border-slate-200 dark:border-slate-700 text-slate-400 hover:border-blue-400 hover:text-blue-600'}`}
+                        className={`w-9 h-9 rounded-full border-2 flex items-center justify-center transition-colors ${status === 'Present' ? 'bg-cyan-100 border-cyan-500 text-cyan-700 dark:bg-cyan-900/40 dark:border-cyan-500 dark:text-cyan-400' : 'border-slate-200 dark:border-slate-700 text-slate-400 hover:border-cyan-400 hover:text-cyan-600'}`}
                         title="Present"
                       >
                         <CheckCircle2 className="w-4 h-4" />
@@ -231,7 +231,7 @@ export function AttendanceClient({ schoolId, teacherId, cls, students, existingR
               let bg = 'bg-slate-100 dark:bg-slate-800'
               let title = `${day.date}: No data`
               if (day.pct !== null) {
-                bg = day.pct >= 90 ? 'bg-blue-400' : day.pct >= 70 ? 'bg-orange-400' : 'bg-orange-400'
+                bg = day.pct >= 90 ? 'bg-cyan-400' : day.pct >= 70 ? 'bg-orange-400' : 'bg-orange-400'
                 title = `${day.date}: ${day.pct}% present`
               }
               return (
@@ -243,7 +243,7 @@ export function AttendanceClient({ schoolId, teacherId, cls, students, existingR
             })}
           </div>
           <div className="flex items-center gap-4 mt-4 text-xs text-muted-foreground">
-            <div className="flex items-center gap-1.5"><div className="w-3 h-3 rounded bg-blue-400" />≥ 90%</div>
+            <div className="flex items-center gap-1.5"><div className="w-3 h-3 rounded bg-cyan-400" />≥ 90%</div>
             <div className="flex items-center gap-1.5"><div className="w-3 h-3 rounded bg-orange-400" />70–90%</div>
             <div className="flex items-center gap-1.5"><div className="w-3 h-3 rounded bg-orange-400" />{'< 70%'}</div>
             <div className="flex items-center gap-1.5"><div className="w-3 h-3 rounded bg-slate-200 dark:bg-slate-700" />No data</div>

@@ -44,8 +44,8 @@ export default async function AdminAdminsPage() {
           {/* Add admin */}
           <div className="bg-white dark:bg-slate-900/50 border border-border rounded-3xl p-6 shadow-sm">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
-                <UserPlus className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+              <div className="w-10 h-10 rounded-xl bg-cyan-100 dark:bg-cyan-900/30 flex items-center justify-center">
+                <UserPlus className="h-5 w-5 text-cyan-600 dark:text-cyan-400" />
               </div>
               <h2 className="text-lg font-extrabold text-foreground tracking-tight">Add Admin</h2>
             </div>
@@ -59,8 +59,8 @@ export default async function AdminAdminsPage() {
           <div className="bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 relative overflow-hidden">
             <div className="absolute top-0 right-0 p-16 bg-[radial-gradient(ellipse_at_center,_rgba(59,130,246,0.1)_0%,_transparent_70%)] pointer-events-none opacity-50" />
             <div className="flex items-start gap-4 relative z-10">
-              <div className="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center shrink-0">
-                <Crown className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+              <div className="w-10 h-10 rounded-xl bg-cyan-100 dark:bg-cyan-900/30 flex items-center justify-center shrink-0">
+                <Crown className="h-5 w-5 text-cyan-600 dark:text-cyan-400" />
               </div>
               <div>
                 <p className="font-extrabold text-foreground mb-1">Root Privileges</p>
@@ -77,7 +77,7 @@ export default async function AdminAdminsPage() {
           <div className="bg-white dark:bg-slate-900/50 border border-border rounded-3xl overflow-hidden shadow-sm flex flex-col h-full">
             <div className="px-6 py-5 border-b border-border bg-slate-50/50 dark:bg-slate-800/20 flex items-center justify-between">
               <h2 className="text-base font-extrabold text-foreground flex items-center gap-2">
-                <Shield className="w-5 h-5 text-blue-500" />
+                <Shield className="w-5 h-5 text-cyan-500" />
                 Active Administrators ({filteredAdmins.length + 1})
               </h2>
             </div>
@@ -86,8 +86,8 @@ export default async function AdminAdminsPage() {
               {/* Root Admin Hardcoded (You) */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between p-6 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors gap-4">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-inner shrink-0 bg-blue-100 dark:bg-blue-900/40">
-                    <Crown className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+                  <div className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-inner shrink-0 bg-cyan-100 dark:bg-cyan-900/40">
+                    <Crown className="h-6 w-6 text-cyan-600 dark:text-cyan-400" />
                   </div>
                   <div>
                     <p className="text-base font-bold text-foreground truncate">{SUPA_ADMIN_EMAIL}</p>
@@ -97,7 +97,7 @@ export default async function AdminAdminsPage() {
                   </div>
                 </div>
                 <div className="flex items-center gap-3 self-end sm:self-auto pl-16 sm:pl-0">
-                  <span className="text-xs bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400 px-3 py-1.5 rounded-full font-black uppercase tracking-wider flex items-center gap-1.5">
+                  <span className="text-xs bg-cyan-100 text-cyan-700 dark:bg-cyan-900/40 dark:text-cyan-400 px-3 py-1.5 rounded-full font-black uppercase tracking-wider flex items-center gap-1.5">
                     <Crown className="h-3.5 w-3.5" /> Root Access
                   </span>
                 </div>

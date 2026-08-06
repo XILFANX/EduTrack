@@ -151,14 +151,14 @@ export function AppPrompts() {
   if (step === 'hidden') return null
 
   return (
-    <div className="fixed top-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-md bg-slate-900 border border-blue-500/30 rounded-2xl shadow-2xl p-4 z-50 animate-in slide-in-from-top-5 fade-in duration-300">
+    <div className="fixed top-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-md bg-slate-900 border border-cyan-500/30 rounded-2xl shadow-2xl p-4 z-50 animate-in slide-in-from-top-5 fade-in duration-300">
       <button onClick={dismissAll} className="absolute top-2 right-2 p-1 text-slate-400 hover:text-white transition-colors">
         <X className="w-4 h-4" />
       </button>
       
       {step === 'install' && (
         <div className="flex gap-3 items-start">
-          <div className="bg-blue-500/20 p-2 rounded-xl text-blue-400 shrink-0 mt-1">
+          <div className="bg-cyan-500/20 p-2 rounded-xl text-cyan-400 shrink-0 mt-1">
             <Download className="w-6 h-6" />
           </div>
           <div className="flex-1 pr-4">
@@ -178,7 +178,7 @@ export function AppPrompts() {
               {!isIOS && (
                 <button 
                   onClick={handleInstallClick} 
-                  className="text-xs bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1.5 px-4 rounded-lg transition-colors"
+                  className="text-xs bg-cyan-600 hover:bg-cyan-700 text-white font-semibold py-1.5 px-4 rounded-lg transition-colors"
                 >
                   Install Now
                 </button>
@@ -196,7 +196,7 @@ export function AppPrompts() {
 
       {step === 'notification' && (
         <div className="flex gap-3 items-start">
-          <div className="bg-blue-500/20 p-2 rounded-xl text-blue-400 shrink-0 mt-1">
+          <div className="bg-cyan-500/20 p-2 rounded-xl text-cyan-400 shrink-0 mt-1">
             <Bell className="w-6 h-6" />
           </div>
           <div className="flex-1 pr-4">
@@ -208,7 +208,7 @@ export function AppPrompts() {
               <button 
                 onClick={handleEnablePush} 
                 disabled={pushLoading}
-                className="text-xs bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-semibold py-1.5 px-4 rounded-lg transition-colors"
+                className="text-xs bg-cyan-600 hover:bg-cyan-700 disabled:opacity-50 text-white font-semibold py-1.5 px-4 rounded-lg transition-colors"
               >
                 {pushLoading ? 'Enabling...' : 'Enable Now'}
               </button>

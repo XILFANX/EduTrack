@@ -132,7 +132,7 @@ export function UXProvider({ children }: { children: ReactNode }) {
               className={`flex-1 font-semibold rounded-xl h-11 ${
                 confirmOpts.variant === 'destructive' 
                   ? 'bg-orange-600 hover:bg-orange-700 text-white shadow-lg shadow-orange-900/20 border-none' 
-                  : 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-900/20'
+                  : 'bg-cyan-600 hover:bg-cyan-700 text-white shadow-lg shadow-cyan-900/20'
               }`}
             >
               {confirmOpts.confirmText}
@@ -152,7 +152,7 @@ export function UXProvider({ children }: { children: ReactNode }) {
           </button>
           
           <AlertDialogHeader className="flex flex-col items-center text-center space-y-4 pt-2">
-            <div className="w-14 h-14 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-500 border border-blue-500/20 shadow-inner">
+            <div className="w-14 h-14 rounded-full bg-cyan-500/10 flex items-center justify-center text-cyan-500 border border-cyan-500/20 shadow-inner">
               <CheckCircle2 className="w-7 h-7" />
             </div>
             <div className="space-y-1.5">
@@ -181,7 +181,7 @@ export function UXProvider({ children }: { children: ReactNode }) {
                   successOpts.action?.onClick()
                   setIsSuccessOpen(false)
                 }}
-                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl"
+                className="flex-1 bg-cyan-600 hover:bg-cyan-700 text-white font-semibold rounded-xl"
               >
                 {successOpts.action.label}
               </Button>
@@ -234,7 +234,7 @@ export function UXProvider({ children }: { children: ReactNode }) {
         `}
       >
         <div className="bg-slate-800/95 backdrop-blur shadow-xl border border-slate-700/50 text-white px-5 py-3 rounded-full text-sm font-medium flex items-center gap-2">
-          <CheckCircle2 className="w-4 h-4 text-blue-400" />
+          <CheckCircle2 className="w-4 h-4 text-cyan-400" />
           {toastMsg}
         </div>
       </div>

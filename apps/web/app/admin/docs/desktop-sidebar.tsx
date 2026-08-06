@@ -33,8 +33,8 @@ export function DesktopDocsSidebar() {
                       href={href}
                       className={`flex items-center gap-3 px-3 py-2 text-sm rounded border transition-all group ${
                         isActive 
-                          ? 'bg-slate-100 border-slate-200 dark:bg-slate-800/80 dark:border-slate-700 text-blue-600 dark:text-blue-400'
-                          : 'border-transparent hover:bg-slate-100 hover:border-slate-200 dark:hover:bg-slate-800/50 dark:hover:border-slate-700 hover:text-blue-600 dark:hover:text-blue-400 text-slate-600 dark:text-slate-400'
+                          ? 'bg-slate-100 border-slate-200 dark:bg-slate-800/80 dark:border-slate-700 text-cyan-600 dark:text-cyan-400'
+                          : 'border-transparent hover:bg-slate-100 hover:border-slate-200 dark:hover:bg-slate-800/50 dark:hover:border-slate-700 hover:text-cyan-600 dark:hover:text-cyan-400 text-slate-600 dark:text-slate-400'
                       }`}
                     >
                       <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'opacity-100' : 'opacity-50 group-hover:opacity-100'}`} />

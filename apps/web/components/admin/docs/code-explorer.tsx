@@ -42,16 +42,16 @@ type OpenTab = {
 function fileIcon(name: string) {
   const ext = name.split('.').pop()?.toLowerCase() ?? ''
   const map: Record<string, { icon: React.ElementType; color: string }> = {
-    ts:   { icon: FileCode,  color: 'text-blue-400' },
-    tsx:  { icon: FileCode,  color: 'text-blue-400' },
+    ts:   { icon: FileCode,  color: 'text-cyan-400' },
+    tsx:  { icon: FileCode,  color: 'text-cyan-400' },
     js:   { icon: FileCode,  color: 'text-orange-400' },
     jsx:  { icon: FileCode,  color: 'text-orange-400' },
     json: { icon: FileJson,  color: 'text-orange-400' },
     md:   { icon: FileText,  color: 'text-slate-400' },
     mdx:  { icon: FileText,  color: 'text-slate-400' },
-    css:  { icon: FileType,  color: 'text-blue-400' },
-    env:  { icon: FileCog,   color: 'text-blue-400' },
-    sql:  { icon: FileCog,   color: 'text-blue-400' },
+    css:  { icon: FileType,  color: 'text-cyan-400' },
+    env:  { icon: FileCog,   color: 'text-cyan-400' },
+    sql:  { icon: FileCog,   color: 'text-cyan-400' },
   }
   return map[ext] ?? { icon: FileCode, color: 'text-slate-400' }
 }
@@ -110,7 +110,7 @@ export function CodeExplorer({ repo, branch = 'main', accent = 'blue' }: CodeExp
   const [copied, setCopied]           = useState(false)
 
   const accentColor = accent === 'violet' ? '#7c3aed' : '#2563eb'
-  const accentText  = accent === 'violet' ? 'text-blue-400' : 'text-blue-400'
+  const accentText  = accent === 'violet' ? 'text-cyan-400' : 'text-cyan-400'
 
   // ── Load tree ──────────────────────────────────────────────────────────────
   const loadTree = useCallback(async () => {
@@ -355,7 +355,7 @@ export function CodeExplorer({ repo, branch = 'main', accent = 'blue' }: CodeExp
                 </a>
                 {activeCode && !activeErr && (
                   <button onClick={handleCopy} className="flex items-center gap-1 hover:text-slate-200 transition-colors">
-                    {copied ? <Check className="w-3 h-3 text-blue-400" /> : <Copy className="w-3 h-3" />}
+                    {copied ? <Check className="w-3 h-3 text-cyan-400" /> : <Copy className="w-3 h-3" />}
                     <span>{copied ? 'Copied!' : 'Copy'}</span>
                   </button>
                 )}

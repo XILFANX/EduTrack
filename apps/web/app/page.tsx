@@ -11,15 +11,15 @@ import { PricingSection } from '@/components/landing/pricing-section'
 
 // ─── Theme tokens (blue / cyan — EduTrack only) ─────────────────────────────
 const T = {
-  accent:       'text-blue-600 dark:text-blue-400',
-  accentHover:  'hover:text-blue-600 dark:hover:text-blue-400',
-  bg:           'bg-blue-600 hover:bg-blue-700',
-  bgLight:      'bg-blue-50 dark:bg-blue-500/10',
-  border:       'border-blue-200 dark:border-blue-500/20',
-  grad:         'from-blue-600 to-blue-400',
-  selBg:        'bg-blue-50 dark:bg-blue-900/30',
-  selText:      'text-blue-700 dark:text-blue-400',
-  selBorder:    'border-blue-200 dark:border-blue-800/50',
+  accent:       'text-cyan-600 dark:text-cyan-400',
+  accentHover:  'hover:text-cyan-600 dark:hover:text-cyan-400',
+  bg:           'bg-cyan-600 hover:bg-cyan-700',
+  bgLight:      'bg-cyan-50 dark:bg-cyan-500/10',
+  border:       'border-cyan-200 dark:border-cyan-500/20',
+  grad:         'from-cyan-600 to-cyan-400',
+  selBg:        'bg-cyan-50 dark:bg-cyan-900/30',
+  selText:      'text-cyan-700 dark:text-cyan-400',
+  selBorder:    'border-cyan-200 dark:border-cyan-800/50',
 }
 
 // ─── Compact Feature Row ──────────────────────────────────────────────────────
@@ -27,7 +27,7 @@ function FeatureRow({ icon: Icon, title, description }: {
   icon: React.ElementType; title: string; description: string
 }) {
   return (
-    <div className="flex items-start gap-4 p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 hover:border-blue-200 dark:hover:border-blue-800/50 hover:shadow-sm transition-all group">
+    <div className="flex items-start gap-4 p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 hover:border-cyan-200 dark:hover:border-cyan-800/50 hover:shadow-sm transition-all group">
       <div className={`shrink-0 w-9 h-9 rounded-lg ${T.bgLight} flex items-center justify-center ${T.accent}`}>
         <Icon className="w-4 h-4" />
       </div>
@@ -122,7 +122,7 @@ function NavBar() {
           {navLinks.map((l) => (
             <a key={l.label} href={l.href} className={`text-xs font-medium whitespace-nowrap text-slate-500 dark:text-slate-400 ${T.accentHover} transition-colors shrink-0`}>{l.label}</a>
           ))}
-          <Link href="/login" className={`text-xs font-bold whitespace-nowrap text-blue-600 dark:text-blue-400 ${T.accentHover} transition-colors shrink-0`}>Log in</Link>
+          <Link href="/login" className={`text-xs font-bold whitespace-nowrap text-cyan-600 dark:text-cyan-400 ${T.accentHover} transition-colors shrink-0`}>Log in</Link>
         </div>
       </div>
     </nav>
@@ -134,7 +134,7 @@ function HeroSection() {
   return (
     <section id="hero" className="relative pt-20 md:pt-24 pb-12 md:pb-20 overflow-hidden">
       <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-500/10 dark:bg-blue-500/5 blur-3xl rounded-full" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/10 dark:bg-cyan-500/5 blur-3xl rounded-full" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
@@ -205,28 +205,28 @@ function PortalSection() {
   const portals = [
     {
       emoji: '🏛️', role: 'Principal / Admin', tagline: 'I manage the entire school',
-      color: 'from-blue-600 to-blue-500',
-      bg: 'bg-blue-50 border-blue-200 dark:bg-blue-950/30 dark:border-blue-800/50',
-      textAccent: 'text-blue-700 dark:text-blue-400',
+      color: 'from-cyan-600 to-blue-500',
+      bg: 'bg-cyan-50 border-cyan-200 dark:bg-cyan-950/30 dark:border-cyan-800/50',
+      textAccent: 'text-cyan-700 dark:text-cyan-400',
       benefits: ['Global overview of operations', 'Staff and class management', 'Send school-wide announcements'],
-      cta: 'Create free account', href: '/signup', ctaStyle: 'bg-blue-600 hover:bg-blue-700 text-white', secondary: null,
+      cta: 'Create free account', href: '/signup', ctaStyle: 'bg-cyan-600 hover:bg-cyan-700 text-white', secondary: null,
     },
     {
       emoji: '👨‍🏫', role: 'Teachers & Staff', tagline: 'I educate and operate',
-      color: 'from-blue-600 to-blue-500',
-      bg: 'bg-blue-50 border-blue-200 dark:bg-blue-950/30 dark:border-blue-800/50',
-      textAccent: 'text-blue-700 dark:text-blue-400',
+      color: 'from-cyan-600 to-blue-500',
+      bg: 'bg-cyan-50 border-cyan-200 dark:bg-cyan-950/30 dark:border-cyan-800/50',
+      textAccent: 'text-cyan-700 dark:text-cyan-400',
       benefits: ['Take lightning-fast attendance', 'Enter exam grades effortlessly', 'Communicate safely with parents'],
-      cta: 'Use invite link', href: '/login', ctaStyle: 'bg-blue-600 hover:bg-blue-700 text-white',
+      cta: 'Use invite link', href: '/login', ctaStyle: 'bg-cyan-600 hover:bg-cyan-700 text-white',
       secondary: { label: 'Learn how invites work', href: '/help' },
     },
     {
       emoji: '👨‍👩‍👧', role: 'Parents', tagline: 'I have children enrolled',
-      color: 'from-blue-500 to-blue-500',
-      bg: 'bg-blue-50 border-blue-200 dark:bg-blue-950/30 dark:border-blue-800/50',
-      textAccent: 'text-blue-700 dark:text-blue-400',
+      color: 'from-cyan-500 to-cyan-500',
+      bg: 'bg-cyan-50 border-cyan-200 dark:bg-cyan-950/30 dark:border-cyan-800/50',
+      textAccent: 'text-cyan-700 dark:text-cyan-400',
       benefits: ['Pay fees securely via M-Pesa', 'Track academic performance', 'Receive direct updates from teachers'],
-      cta: 'Sign in to your portal', href: '/login', ctaStyle: 'bg-blue-600 hover:bg-blue-700 text-white',
+      cta: 'Sign in to your portal', href: '/login', ctaStyle: 'bg-cyan-600 hover:bg-cyan-700 text-white',
       secondary: { label: 'Contact your school for access', href: '/help' },
     },
   ]
@@ -375,7 +375,7 @@ export default async function RootPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-slate-950 selection:bg-blue-200 dark:selection:bg-blue-900">
+    <div className="min-h-screen bg-white dark:bg-slate-950 selection:bg-cyan-200 dark:selection:bg-cyan-900">
       <NavBar />
       <main className="pt-14">
         <HeroSection />
