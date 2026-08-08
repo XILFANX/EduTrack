@@ -117,6 +117,7 @@ The "Docs affected" field in every task cites a row from this table or `none: <r
 
 | Date | Mission | Outcome |
 |---|---|---|
+| 2026-08-08 | Full UI re-theme — electric blue/cyan gradient, navy dark mode, danger red, title-case navs, new logos as PWA icons | Shipped `bb55d3b` |
 | 2026-08-06 | Harness upgrade — merged Anthropic-style protocol into binary gates; added Verification Tiers, Bootstrap, Drift, Sync-to-remote; History Log capped at 10 rows | Shipped |
 | 2026-08-06 | UI Design System Canonicalization — cyan-blue hero all EduTrack portals, orange alerts, max-3 lists | Shipped `22c1213` |
 | 2026-08-06 | Agent Harness Rewrite — Binary gates, MISSION.md scratchpad, slimmed CONTEXT.md | Shipped |
@@ -126,5 +127,3 @@ The "Docs affected" field in every task cites a row from this table or `none: <r
 | 2026-08-06 | Updated harness logic to reflect the new agent workflow (gates, tier 1/2, and history log limit). | Shipped `64b35f7` |
 | 2026-08-06 | Fix invite links and sweep legacy blue themes codebase-wide, applying bold Quick Access navigation styling. | Shipped `62b2736` |
 | 2026-08-02 | Payment UX v5, Engine Flows, Nav Fixes, Subscription Gating | Shipped |
-| 2026-08-02 | UI Consistency, Navigation Overlaps, Robust Parsing Enforcement | Shipped `abaa99a` |
-| 2026-08-01 | Payment Parsing & UI Consistency — rebuilt M-Pesa/Bank parser, portal nav fixes | Shipped |
