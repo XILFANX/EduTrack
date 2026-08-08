@@ -77,9 +77,9 @@ export default async function DashboardPage() {
       <div className="flex flex-col items-center justify-center pt-8 pb-4 text-center">
         <div className="w-20 h-20 rounded-full bg-[#0d1b2e] border-4 border-blue-600/30 shadow-lg flex items-center justify-center overflow-hidden mb-4">
           {school?.logo_url ? (
-            <img src={school.logo_url} alt={`${school.name} Logo`} className="w-full h-full object-contain p-1.5" />
+            <img src={school.logo_url} alt={`${school.name} Logo`} className="w-full h-full object-cover" />
           ) : (
-            <Image src="/logo.png" alt="EduTrack" width={80} height={80} className="w-full h-full object-contain p-1.5" />
+            <Image src="/logo.png" alt="EduTrack" width={80} height={80} className="w-full h-full object-cover" />
           )}
         </div>
         <h1 className="text-2xl md:text-3xl font-black text-foreground tracking-tight uppercase">

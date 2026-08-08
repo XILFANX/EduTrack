@@ -126,7 +126,7 @@ export function LibraryDashboardClient({ stats, borrowedBooks }: {
               const days = daysSince(issue.issued_at)
               const isOverdue = issue.due_date && new Date(issue.due_date) < new Date()
               return (
-                <div key={i} className="flex items-center gap-4 px-5 py-3.5 hover:bg-slate-50/60 dark:hover:bg-slate-900/30 transition-colors">
+                <div key={i} className="flex items-center gap-4 px-5 py-3.5 hover:bg-slate-50/60 dark:hover:bg-[#0d1b2e]/30 transition-colors">
                   <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${isOverdue ? 'bg-blue-50 dark:bg-blue-900/20' : 'bg-blue-50 dark:bg-blue-900/20'}`}>
                     <BookMarked className={`w-4 h-4 ${isOverdue ? 'text-red-500' : 'text-blue-600'}`} />
                   </div>

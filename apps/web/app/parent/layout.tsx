@@ -28,7 +28,7 @@ export default async function ParentLayout({ children }: { children: React.React
   const school = schoolResult as any
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 pb-20">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#060d1a] pb-20">
       {/* Header */}
       <header className="sticky top-0 z-40 bg-white/80 dark:bg-[#060d1a]/80 backdrop-blur-xl border-b border-slate-200 dark:border-[#1a2744]">
         <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">

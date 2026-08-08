@@ -125,7 +125,7 @@ export function TeacherScheduleView({ periods, slots, roleName }: Props) {
             <tbody>
               {periods.map((period, idx) => (
                 <tr key={period.id} className={idx % 2 === 0 ? '' : 'bg-slate-50/40 dark:bg-[#060d1a]/20'}>
-                  <td className="sticky left-0 z-10 bg-white dark:bg-slate-950 border-b border-r border-border px-4 py-3">
+                  <td className="sticky left-0 z-10 bg-white dark:bg-[#060d1a] border-b border-r border-border px-4 py-3">
                     <div className="flex items-center gap-2">
                       {period.is_break ? <Coffee className="w-3.5 h-3.5 text-red-500 shrink-0" /> : <Clock className="w-3.5 h-3.5 text-blue-500 shrink-0" />}
                       <div>

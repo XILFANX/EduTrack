@@ -89,7 +89,7 @@ function NavBar() {
   ]
 
   return (
-    <nav className="fixed top-0 left-0 right-0 bg-white/90 dark:bg-slate-950/90 backdrop-blur-md border-b border-slate-200 dark:border-[#1a2744] z-50">
+    <nav className="fixed top-0 left-0 right-0 bg-white/90 dark:bg-[#060d1a]/90 backdrop-blur-md border-b border-slate-200 dark:border-[#1a2744] z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14">
           {/* Brand */}
@@ -157,7 +157,7 @@ function HeroSection() {
 
         {/* Role CTAs — all three always visible, wrap on small screens */}
         <div className="flex flex-wrap items-center justify-center gap-3">
-          <Link href="/signup" className="px-5 py-2 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-semibold text-sm transition-all shadow-sm hover:shadow-md active:scale-95 flex items-center gap-2">
+          <Link href="/signup" className="px-5 py-2 rounded-full bg-[#0d1b2e] dark:bg-white text-white dark:text-slate-900 font-semibold text-sm transition-all shadow-sm hover:shadow-md active:scale-95 flex items-center gap-2">
             Start your school <ArrowRight className="w-3.5 h-3.5" />
           </Link>
           <Link href="/login" className="px-5 py-2 rounded-full bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] text-slate-700 dark:text-white font-medium text-sm hover:bg-slate-50 dark:hover:bg-[#0d1b2e] transition-all active:scale-95">
@@ -184,7 +184,7 @@ function FeaturesSection() {
   ]
 
   return (
-    <section id="features" className="py-14 bg-slate-50 dark:bg-slate-950/50">
+    <section id="features" className="py-14 bg-slate-50 dark:bg-[#060d1a]/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-xl mx-auto mb-10">
           <h2 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mb-3">Everything you need to run your school</h2>
@@ -232,7 +232,7 @@ function PortalSection() {
   ]
 
   return (
-    <section id="portals" className="py-14 bg-white dark:bg-slate-950">
+    <section id="portals" className="py-14 bg-white dark:bg-[#060d1a]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-xl mx-auto mb-10">
           <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full ${T.bgLight} ${T.accent} text-xs font-medium mb-4 border ${T.border}`}>
@@ -254,7 +254,7 @@ function PortalSection() {
 // ─── Docs CTA ─────────────────────────────────────────────────────────────────
 function DocsSection() {
   return (
-    <section className="py-14 bg-slate-50 dark:bg-slate-950/50 border-t border-slate-200 dark:border-[#1a2744]">
+    <section className="py-14 bg-slate-50 dark:bg-[#060d1a]/50 border-t border-slate-200 dark:border-[#1a2744]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-white dark:bg-[#060d1a] rounded-2xl p-6 md:p-8 border border-slate-200 dark:border-[#1a2744] shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
           <div className="flex items-start gap-4">
@@ -285,7 +285,7 @@ function DocsSection() {
 // ─── Footer ───────────────────────────────────────────────────────────────────
 function Footer() {
   return (
-    <footer className="bg-slate-50 dark:bg-slate-950 py-12 border-t border-slate-200 dark:border-[#1a2744]">
+    <footer className="bg-slate-50 dark:bg-[#060d1a] py-12 border-t border-slate-200 dark:border-[#1a2744]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
           <div className="col-span-2 md:col-span-1">
@@ -375,7 +375,7 @@ export default async function RootPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-slate-950 selection:bg-cyan-200 dark:selection:bg-cyan-900">
+    <div className="min-h-screen bg-white dark:bg-[#060d1a] selection:bg-cyan-200 dark:selection:bg-cyan-900">
       <NavBar />
       <main className="pt-14">
         <HeroSection />

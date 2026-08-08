@@ -3,7 +3,7 @@ import { ArrowLeft } from 'lucide-react'
 
 export default function ForgotPasswordPage() {
   return (
-    <div className="flex h-screen items-center justify-center bg-slate-50 dark:bg-slate-950 p-4">
+    <div className="flex h-screen items-center justify-center bg-slate-50 dark:bg-[#060d1a] p-4">
       <div className="w-full max-w-md bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-2xl shadow-xl overflow-hidden">
         <div className="p-6 md:p-8 space-y-6">
           <div className="text-center space-y-2">
@@ -24,7 +24,7 @@ export default function ForgotPasswordPage() {
                 id="email"
                 type="email"
                 placeholder="you@example.com"
-                className="w-full px-3 py-2 border border-slate-300 dark:border-[#1a2744] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100"
+                className="w-full px-3 py-2 border border-slate-300 dark:border-[#1a2744] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-[#060d1a] text-slate-900 dark:text-slate-100"
                 required
               />
             </div>

@@ -152,7 +152,7 @@ export function AppPrompts() {
   if (step === 'hidden') return null
 
   return (
-    <div className="fixed top-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-md bg-slate-900 border border-blue-500/30 rounded-2xl shadow-2xl p-4 z-50 animate-in slide-in-from-top-5 fade-in duration-300">
+    <div className="fixed top-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-md bg-[#0d1b2e] border border-blue-500/30 rounded-2xl shadow-2xl p-4 z-50 animate-in slide-in-from-top-5 fade-in duration-300">
       <button onClick={dismissAll} className="absolute top-2 right-2 p-1 text-slate-400 hover:text-white transition-colors">
         <X className="w-4 h-4" />
       </button>

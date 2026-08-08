@@ -157,7 +157,7 @@ export function SubjectClient({ globalSubjects, classSubjects, classes, schoolId
       <div className="space-y-6 max-w-5xl mx-auto pb-24">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <button onClick={() => router.push('/dashboard/subjects')} className="flex items-center justify-center w-10 h-10 rounded-xl bg-[#121827] border border-slate-800 text-slate-400 hover:text-slate-200 transition-colors">
+            <button onClick={() => router.push('/dashboard/subjects')} className="flex items-center justify-center w-10 h-10 rounded-xl bg-[#121827] border border-[#1a2744] text-slate-400 hover:text-slate-200 transition-colors">
               <ArrowLeft className="w-5 h-5" />
             </button>
             <div>
@@ -178,7 +178,7 @@ export function SubjectClient({ globalSubjects, classSubjects, classes, schoolId
         </div>
 
         {listToRender.length === 0 ? (
-          <div className="text-center py-20 bg-[#121827] border border-slate-800 rounded-3xl">
+          <div className="text-center py-20 bg-[#121827] border border-[#1a2744] rounded-3xl">
             <div className="w-16 h-16 rounded-2xl bg-blue-500/10 mx-auto flex items-center justify-center mb-4">
               <BookMarked className="w-8 h-8 text-blue-500" />
             </div>
@@ -191,7 +191,7 @@ export function SubjectClient({ globalSubjects, classSubjects, classes, schoolId
             </button>
           </div>
         ) : (
-          <div className="bg-[#121827] border border-slate-800 rounded-2xl overflow-hidden divide-y divide-slate-800/50 shadow-sm">
+          <div className="bg-[#121827] border border-[#1a2744] rounded-2xl overflow-hidden divide-y divide-slate-800/50 shadow-sm">
             {listToRender.map((item: any) => {
               const globalSub = selectedClass ? globalList.find(g => g.id === item.subject_id) : item
               if (!globalSub) return null
@@ -234,7 +234,7 @@ export function SubjectClient({ globalSubjects, classSubjects, classes, schoolId
             <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wide mb-4 px-1">All Mapped Subjects</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
               {globalList.filter(g => mappings.some(m => m.subject_id === g.id)).map(g => (
-                <div key={g.id} className="p-4 rounded-xl border border-slate-800 bg-[#0b0f19] flex items-center justify-between">
+                <div key={g.id} className="p-4 rounded-xl border border-[#1a2744] bg-[#0b0f19] flex items-center justify-between">
                   <div>
                     <p className="font-semibold text-slate-200 text-sm">{g.name}</p>
                     <p className="text-xs text-slate-500 mt-0.5">{mappings.filter(m => m.subject_id === g.id).length} classes mapped</p>
@@ -258,13 +258,13 @@ export function SubjectClient({ globalSubjects, classSubjects, classes, schoolId
     return (
       <div className="space-y-6 max-w-4xl mx-auto pb-24">
         <button onClick={() => setView('subjects')} className="flex items-center gap-2 text-sm font-semibold text-slate-400 hover:text-slate-200 transition-colors w-fit">
-          <div className="w-8 h-8 rounded-lg bg-[#121827] border border-slate-800 flex items-center justify-center">
+          <div className="w-8 h-8 rounded-lg bg-[#121827] border border-[#1a2744] flex items-center justify-center">
             <ArrowLeft className="w-4 h-4" />
           </div>
           Back to list
         </button>
 
-        <div className="bg-[#121827] border border-slate-800 rounded-3xl p-6 md:p-8 relative overflow-hidden">
+        <div className="bg-[#121827] border border-[#1a2744] rounded-3xl p-6 md:p-8 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 blur-3xl pointer-events-none" />
           <div className="flex items-start justify-between gap-6 flex-wrap relative z-10">
             <div className="flex items-start gap-4">
@@ -291,11 +291,11 @@ export function SubjectClient({ globalSubjects, classSubjects, classes, schoolId
 
           {selectedMapping && (
             <>
-              <hr className="my-6 border-slate-800/50" />
+              <hr className="my-6 border-[#1a2744]/50" />
               <div className="grid grid-cols-1 gap-6">
                 <div>
                   <h3 className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-3">Subject Teacher</h3>
-                  <div className="bg-[#0b0f19] rounded-2xl border border-slate-800 p-4 relative overflow-hidden">
+                  <div className="bg-[#0b0f19] rounded-2xl border border-[#1a2744] p-4 relative overflow-hidden">
                     <div className="absolute inset-y-0 left-0 w-1 bg-blue-500" />
                     {assignMode ? (
                       <div className="space-y-4">
@@ -340,7 +340,7 @@ export function SubjectClient({ globalSubjects, classSubjects, classes, schoolId
 
           {!selectedMapping && selectedGlobal && (
             <>
-              <hr className="my-6 border-slate-800/50" />
+              <hr className="my-6 border-[#1a2744]/50" />
               <h3 className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-3">Quick Map to Classes</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 max-h-64 overflow-y-auto pr-2">
                 {classes.map(cls => {
@@ -348,7 +348,7 @@ export function SubjectClient({ globalSubjects, classSubjects, classes, schoolId
                   if (isAssigned) return null
                   
                   return (
-                    <div key={cls.id} className="flex items-center justify-between p-3 bg-[#0b0f19] border border-slate-800 rounded-xl">
+                    <div key={cls.id} className="flex items-center justify-between p-3 bg-[#0b0f19] border border-[#1a2744] rounded-xl">
                       <span className="font-medium text-slate-200 text-sm">{cls.name}</span>
                       <button className="px-2.5 py-1 bg-[#1a2133] hover:bg-blue-600 hover:text-white border border-slate-700 hover:border-blue-500 text-slate-300 text-xs font-semibold rounded-lg transition-all" onClick={() => {
                         setSelectedClass(cls)

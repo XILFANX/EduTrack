@@ -57,7 +57,7 @@ export default async function AdminReportsPage({ searchParams }: { searchParams:
   return (
     <div className="space-y-6 max-w-5xl mx-auto pb-24">
       <div className="flex items-center gap-4">
-        <a href="/dashboard/reports" className="p-2 rounded-xl bg-[#121827] border border-slate-800 text-slate-400 hover:text-slate-200 transition-colors">
+        <a href="/dashboard/reports" className="p-2 rounded-xl bg-[#121827] border border-[#1a2744] text-slate-400 hover:text-slate-200 transition-colors">
           <ChevronLeft className="w-5 h-5" />
         </a>
         <div>
@@ -72,7 +72,7 @@ export default async function AdminReportsPage({ searchParams }: { searchParams:
 
       {/* Students Grid */}
       {students.length === 0 ? (
-        <div className="text-center py-20 bg-[#121827] border border-slate-800 rounded-3xl">
+        <div className="text-center py-20 bg-[#121827] border border-[#1a2744] rounded-3xl">
           <div className="w-16 h-16 rounded-2xl bg-[#0d1b2e]/80 mx-auto flex items-center justify-center mb-4">
             <GraduationCap className="w-8 h-8 text-slate-500" />
           </div>
@@ -83,7 +83,7 @@ export default async function AdminReportsPage({ searchParams }: { searchParams:
           </a>
         </div>
       ) : (
-          <div className="bg-[#121827] border border-slate-800 rounded-2xl overflow-hidden shadow-sm divide-y divide-slate-800/50">
+          <div className="bg-[#121827] border border-[#1a2744] rounded-2xl overflow-hidden shadow-sm divide-y divide-slate-800/50">
             {students.map(student => (
               <a 
                 key={student.id} 

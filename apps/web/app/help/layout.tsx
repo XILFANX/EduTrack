@@ -19,10 +19,10 @@ export default function HelpLayout({ children }: { children: React.ReactNode }) 
   const pathname = usePathname()
 
   return (
-    <div className="min-h-screen bg-white dark:bg-slate-950 flex flex-col selection:bg-cyan-200 dark:selection:bg-cyan-900">
+    <div className="min-h-screen bg-white dark:bg-[#060d1a] flex flex-col selection:bg-cyan-200 dark:selection:bg-cyan-900">
       
       {/* Premium Docs Header */}
-      <header className="sticky top-0 z-40 w-full border-b border-slate-200 dark:border-[#1a2744] bg-white/80 dark:bg-slate-950/80 backdrop-blur flex-none">
+      <header className="sticky top-0 z-40 w-full border-b border-slate-200 dark:border-[#1a2744] bg-white/80 dark:bg-[#060d1a]/80 backdrop-blur flex-none">
         <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
             <div className="flex items-center gap-4">
@@ -41,7 +41,7 @@ export default function HelpLayout({ children }: { children: React.ReactNode }) 
               <Link href="/login" className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hidden sm:block">
                 Sign In
               </Link>
-              <Link href="/signup" className="text-sm font-medium px-4 py-2 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 transition-all hover:bg-[#0d1b2e] dark:hover:bg-slate-200">
+              <Link href="/signup" className="text-sm font-medium px-4 py-2 rounded-full bg-[#0d1b2e] dark:bg-white text-white dark:text-slate-900 transition-all hover:bg-[#0d1b2e] dark:hover:bg-slate-200">
                 Create Account
               </Link>
             </div>
@@ -50,7 +50,7 @@ export default function HelpLayout({ children }: { children: React.ReactNode }) 
       </header>
 
       {/* Mobile Navigation (Scrollable Tabs) */}
-      <div className="lg:hidden w-full border-b border-slate-200 dark:border-[#1a2744] bg-slate-50/50 dark:bg-slate-950/50 sticky top-16 z-30 overflow-x-auto no-scrollbar">
+      <div className="lg:hidden w-full border-b border-slate-200 dark:border-[#1a2744] bg-slate-50/50 dark:bg-[#060d1a]/50 sticky top-16 z-30 overflow-x-auto no-scrollbar">
         <nav className="flex px-4 py-3 gap-2 min-w-max">
           <Link href="/help" className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-full border shadow-sm whitespace-nowrap active:scale-95 transition-all ${pathname === '/help' ? 'bg-blue-600 text-white border-blue-600' : 'bg-white dark:bg-[#060d1a] border-slate-200 dark:border-[#1a2744] text-slate-700 dark:text-slate-300'}`}>
             <Home className="w-4 h-4" />
@@ -83,7 +83,7 @@ export default function HelpLayout({ children }: { children: React.ReactNode }) 
               <h3 className="font-semibold text-slate-900 dark:text-white mb-4 px-3 text-sm tracking-wide uppercase">User Guide</h3>
               <ul className="space-y-1">
                 <li>
-                  <Link href="/help" className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-colors ${pathname === '/help' ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900 hover:text-slate-900 dark:hover:text-white'}`}>
+                  <Link href="/help" className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-colors ${pathname === '/help' ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-[#0d1b2e] hover:text-slate-900 dark:hover:text-white'}`}>
                     <Home className="w-4 h-4" />
                     Help Center Home
                   </Link>
@@ -95,7 +95,7 @@ export default function HelpLayout({ children }: { children: React.ReactNode }) 
                     <li key={guide.slug}>
                       <Link 
                         href={`/help/${guide.slug}`} 
-                        className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-colors ${isActive ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900 hover:text-blue-600 dark:hover:text-blue-400'}`}
+                        className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-colors ${isActive ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-[#0d1b2e] hover:text-blue-600 dark:hover:text-blue-400'}`}
                       >
                         <Icon className="w-4 h-4" />
                         {guide.title}
@@ -110,12 +110,12 @@ export default function HelpLayout({ children }: { children: React.ReactNode }) 
               <h3 className="font-semibold text-slate-900 dark:text-white mb-4 px-3 text-sm tracking-wide uppercase">Legal</h3>
               <ul className="space-y-1">
                 <li>
-                  <Link href="/terms" className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900 hover:text-slate-900 dark:hover:text-white transition-colors">
+                  <Link href="/terms" className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-[#0d1b2e] hover:text-slate-900 dark:hover:text-white transition-colors">
                     Terms of Service
                   </Link>
                 </li>
                 <li>
-                  <Link href="/privacy" className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900 hover:text-slate-900 dark:hover:text-white transition-colors">
+                  <Link href="/privacy" className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-[#0d1b2e] hover:text-slate-900 dark:hover:text-white transition-colors">
                     Privacy Policy
                   </Link>
                 </li>

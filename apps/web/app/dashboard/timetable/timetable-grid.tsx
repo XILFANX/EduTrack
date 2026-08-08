@@ -274,7 +274,7 @@ export function TimetableGrid({
 
           <Link
             href="/dashboard/timetable?view=setup"
-            className="flex items-center gap-2 px-4 py-2 text-sm font-semibold border border-border rounded-xl text-foreground hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors"
+            className="flex items-center gap-2 px-4 py-2 text-sm font-semibold border border-border rounded-xl text-foreground hover:bg-slate-50 dark:hover:bg-[#0d1b2e] transition-colors"
           >
             <Settings className="w-4 h-4" /> Bell Schedule
           </Link>

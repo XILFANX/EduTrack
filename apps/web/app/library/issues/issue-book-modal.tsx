@@ -78,7 +78,7 @@ export function IssueBookModal({
               value={studentId}
               onChange={(e) => setStudentId(e.target.value)}
               required
-              className="w-full h-10 px-3 rounded-xl border border-slate-200 dark:border-[#1a2744] bg-white dark:bg-slate-950 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+              className="w-full h-10 px-3 rounded-xl border border-slate-200 dark:border-[#1a2744] bg-white dark:bg-[#060d1a] text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
             >
               <option value="" disabled>Select a student...</option>
               {availableStudents.map(s => (
@@ -95,7 +95,7 @@ export function IssueBookModal({
               value={bookId}
               onChange={(e) => setBookId(e.target.value)}
               required
-              className="w-full h-10 px-3 rounded-xl border border-slate-200 dark:border-[#1a2744] bg-white dark:bg-slate-950 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+              className="w-full h-10 px-3 rounded-xl border border-slate-200 dark:border-[#1a2744] bg-white dark:bg-[#060d1a] text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
             >
               <option value="" disabled>Select available book...</option>
               {availableBooks.map(b => (
@@ -111,7 +111,7 @@ export function IssueBookModal({
             <select
               value={dueDays}
               onChange={(e) => setDueDays(e.target.value)}
-              className="w-full h-10 px-3 rounded-xl border border-slate-200 dark:border-[#1a2744] bg-white dark:bg-slate-950 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+              className="w-full h-10 px-3 rounded-xl border border-slate-200 dark:border-[#1a2744] bg-white dark:bg-[#060d1a] text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
             >
               <option value="7">7 days</option>
               <option value="14">14 days</option>

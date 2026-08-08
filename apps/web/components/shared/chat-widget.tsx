@@ -45,7 +45,7 @@ export function ChatWidget({ currentUserId, recipientName, initialMessages = [],
 
   return (
     <div className="flex flex-col h-[600px] bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-3xl overflow-hidden shadow-sm">
-      <div className="p-4 border-b border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-slate-950 flex items-center gap-3">
+      <div className="p-4 border-b border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-[#060d1a] flex items-center gap-3">
         <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 flex items-center justify-center">
           <User className="w-5 h-5" />
         </div>
@@ -55,7 +55,7 @@ export function ChatWidget({ currentUserId, recipientName, initialMessages = [],
         </div>
       </div>
 
-      <div className="flex-1 p-4 overflow-y-auto space-y-4 bg-slate-50/50 dark:bg-slate-950/50">
+      <div className="flex-1 p-4 overflow-y-auto space-y-4 bg-slate-50/50 dark:bg-[#060d1a]/50">
         {messages.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center text-slate-400">
             <p>No messages yet. Say hello!</p>
@@ -85,7 +85,7 @@ export function ChatWidget({ currentUserId, recipientName, initialMessages = [],
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Type a message..."
-            className="w-full h-12 pl-4 pr-12 rounded-full border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-slate-950 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-sm text-foreground"
+            className="w-full h-12 pl-4 pr-12 rounded-full border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-[#060d1a] focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-sm text-foreground"
           />
           <button
             type="submit"

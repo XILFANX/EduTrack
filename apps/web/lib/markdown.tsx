@@ -105,7 +105,7 @@ export function parseMarkdown(
       const desc = line.replace('[SCREENSHOT: ', '').replace(']', '')
       elements.push(
         <div key={i} className="w-full rounded-2xl border border-slate-200 dark:border-[#1a2744] bg-white dark:bg-[#060d1a] shadow-sm overflow-hidden mb-10 mt-6">
-          <div className="h-10 bg-slate-50 dark:bg-slate-950/50 border-b border-slate-200 dark:border-[#1a2744] flex items-center px-4 gap-2">
+          <div className="h-10 bg-slate-50 dark:bg-[#060d1a]/50 border-b border-slate-200 dark:border-[#1a2744] flex items-center px-4 gap-2">
             <div className="flex gap-1.5">
               <div className="w-3 h-3 rounded-full bg-blue-400 dark:bg-red-500/50"></div>
               <div className="w-3 h-3 rounded-full bg-blue-400 dark:bg-red-500/50"></div>

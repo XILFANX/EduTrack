@@ -88,7 +88,7 @@ export function DisciplineClient({ schoolId, teacherId, cls, students, logs }: P
                 required
                 value={formData.studentId}
                 onChange={e => setFormData(p => ({ ...p, studentId: e.target.value }))}
-                className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-red-500/20 focus:border-red-500 outline-none"
+                className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-[#060d1a] text-sm focus:ring-2 focus:ring-red-500/20 focus:border-red-500 outline-none"
               >
                 <option value="">Select a student...</option>
                 {students.map(s => <option key={s.id} value={s.id}>{s.first_name} {s.last_name}</option>)}
@@ -102,7 +102,7 @@ export function DisciplineClient({ schoolId, teacherId, cls, students, logs }: P
                 type="text"
                 value={formData.title}
                 onChange={e => setFormData(p => ({ ...p, title: e.target.value }))}
-                className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-red-500/20 focus:border-red-500 outline-none"
+                className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-[#060d1a] text-sm focus:ring-2 focus:ring-red-500/20 focus:border-red-500 outline-none"
                 placeholder="Brief title of the incident"
               />
             </div>
@@ -113,7 +113,7 @@ export function DisciplineClient({ schoolId, teacherId, cls, students, logs }: P
                 required
                 value={formData.description}
                 onChange={e => setFormData(p => ({ ...p, description: e.target.value }))}
-                className="w-full p-3 rounded-lg border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-red-500/20 focus:border-red-500 outline-none min-h-[100px]"
+                className="w-full p-3 rounded-lg border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-[#060d1a] text-sm focus:ring-2 focus:ring-red-500/20 focus:border-red-500 outline-none min-h-[100px]"
                 placeholder="What happened?"
               />
             </div>
@@ -124,7 +124,7 @@ export function DisciplineClient({ schoolId, teacherId, cls, students, logs }: P
                 type="text"
                 value={formData.actionTaken}
                 onChange={e => setFormData(p => ({ ...p, actionTaken: e.target.value }))}
-                className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-red-500/20 focus:border-red-500 outline-none"
+                className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-[#060d1a] text-sm focus:ring-2 focus:ring-red-500/20 focus:border-red-500 outline-none"
                 placeholder="e.g. Warning, Sent to principal"
               />
             </div>

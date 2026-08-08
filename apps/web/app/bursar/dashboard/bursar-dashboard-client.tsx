@@ -119,7 +119,7 @@ export function BursarDashboardClient({ stats, recentPayments }: { stats: any; r
             {recentPayments.slice(0, 3).map((p: any, i: number) => {
               const cfg = STATUS_CONFIG[p.status] || STATUS_CONFIG.unpaid
               return (
-                <div key={i} className="flex items-center gap-4 px-5 py-3.5 hover:bg-slate-50/60 dark:hover:bg-slate-900/30 transition-colors">
+                <div key={i} className="flex items-center gap-4 px-5 py-3.5 hover:bg-slate-50/60 dark:hover:bg-[#0d1b2e]/30 transition-colors">
                   <div className={`w-2 h-2 rounded-full shrink-0 ${cfg.dot}`} />
                   <div className="flex-1 min-w-0">
                     <p className="font-semibold text-sm text-foreground truncate">

@@ -275,7 +275,7 @@ export function StudentsPageClient({
         <div className="bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-2xl overflow-hidden shadow-sm">
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left">
-              <thead className="bg-slate-50 dark:bg-slate-950 border-b border-slate-200 dark:border-[#1a2744] text-muted-foreground uppercase tracking-wider text-xs font-semibold">
+              <thead className="bg-slate-50 dark:bg-[#060d1a] border-b border-slate-200 dark:border-[#1a2744] text-muted-foreground uppercase tracking-wider text-xs font-semibold">
                 <tr>
                   <th className="px-6 py-4">Admission #</th>
                   <th className="px-6 py-4">Name</th>
@@ -369,7 +369,7 @@ export function StudentsPageClient({
       {quickViewStudent && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setQuickViewStudent(null)} />
-          <div className="relative w-full max-w-md bg-slate-50 dark:bg-slate-950 rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+          <div className="relative w-full max-w-md bg-slate-50 dark:bg-[#060d1a] rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
             {/* Close button */}
             <button onClick={() => setQuickViewStudent(null)} className="absolute top-4 right-4 z-20 w-8 h-8 flex items-center justify-center rounded-full bg-black/20 text-white hover:bg-black/40 backdrop-blur-md transition-colors">
               <X className="w-4 h-4" />
@@ -382,7 +382,7 @@ export function StudentsPageClient({
                 {quickViewStudent.photo_url ? (
                   <img src={quickViewStudent.photo_url} alt="" className="w-20 h-20 rounded-2xl object-cover border-4 border-slate-50 dark:border-slate-950 shadow-sm" />
                 ) : (
-                  <div className="w-20 h-20 rounded-2xl bg-slate-900 border-4 border-slate-50 dark:border-slate-950 shadow-sm text-white flex items-center justify-center text-2xl font-bold">
+                  <div className="w-20 h-20 rounded-2xl bg-[#0d1b2e] border-4 border-slate-50 dark:border-slate-950 shadow-sm text-white flex items-center justify-center text-2xl font-bold">
                     {quickViewStudent.first_name?.[0]}{quickViewStudent.last_name?.[0]}
                   </div>
                 )}

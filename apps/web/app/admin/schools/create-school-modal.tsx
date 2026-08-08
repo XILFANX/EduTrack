@@ -61,7 +61,7 @@ export function CreateSchoolModal({ onClose }: { onClose: () => void }) {
               value={name}
               onChange={e => setName(e.target.value)}
               placeholder="e.g. St. Patrick's Academy"
-              className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
+              className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-[#060d1a] text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
             />
           </div>
 
@@ -72,7 +72,7 @@ export function CreateSchoolModal({ onClose }: { onClose: () => void }) {
               value={domain}
               onChange={e => setDomain(e.target.value)}
               placeholder="e.g. stpatricks.ac.ke"
-              className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
+              className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-[#060d1a] text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
             />
           </div>
 
@@ -82,7 +82,7 @@ export function CreateSchoolModal({ onClose }: { onClose: () => void }) {
               <select
                 value={curriculum}
                 onChange={e => setCurriculum(e.target.value)}
-                className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
+                className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-[#060d1a] text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
               >
                 <option value="8-4-4">8-4-4 (Numeric)</option>
                 <option value="CBC">CBC (Competency)</option>
@@ -94,7 +94,7 @@ export function CreateSchoolModal({ onClose }: { onClose: () => void }) {
               <select
                 value={tier}
                 onChange={e => setTier(e.target.value)}
-                className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
+                className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-[#060d1a] text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
               >
                 <option value="Trial">Trial (50)</option>
                 <option value="Basic">Basic (300)</option>

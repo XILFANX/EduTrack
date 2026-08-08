@@ -107,7 +107,7 @@ export function TransportDashboardClient({
               const assigned = studentRoutes.filter(sr => sr.route_id === route.id).length
               const pct = route.capacity > 0 ? Math.min(100, (assigned / route.capacity) * 100) : 0
               return (
-                <div key={i} className="flex items-center gap-4 px-5 py-4 hover:bg-slate-50/60 dark:hover:bg-slate-900/20 transition-colors">
+                <div key={i} className="flex items-center gap-4 px-5 py-4 hover:bg-slate-50/60 dark:hover:bg-[#0d1b2e]/20 transition-colors">
                   <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center shrink-0">
                     <Bus className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                   </div>
@@ -157,7 +157,7 @@ export function TransportDashboardClient({
               const cfg = LOG_STATUS[log.status] || LOG_STATUS.boarded
               const Icon = cfg.icon
               return (
-                <div key={i} className="flex items-center gap-3 px-5 py-3.5 hover:bg-slate-50/60 dark:hover:bg-slate-900/20 transition-colors">
+                <div key={i} className="flex items-center gap-3 px-5 py-3.5 hover:bg-slate-50/60 dark:hover:bg-[#0d1b2e]/20 transition-colors">
                   <div className={`w-8 h-8 rounded-xl ${cfg.bg} flex items-center justify-center shrink-0`}>
                     <Icon className={`w-4 h-4 ${cfg.color}`} />
                   </div>

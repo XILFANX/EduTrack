@@ -63,7 +63,7 @@ export function CodeViewer({ repoPath, language = 'typescript', standalone = fal
     return (
       <button
         onClick={() => setIsExpanded(true)}
-        className="my-8 w-full flex items-center justify-between p-4 rounded-xl border border-slate-200 dark:border-[#1a2744] bg-white dark:bg-[#060d1a]/80 hover:bg-slate-50 dark:hover:bg-slate-900 transition-all text-slate-700 dark:text-slate-300 font-mono text-sm group shadow-sm hover:shadow"
+        className="my-8 w-full flex items-center justify-between p-4 rounded-xl border border-slate-200 dark:border-[#1a2744] bg-white dark:bg-[#060d1a]/80 hover:bg-slate-50 dark:hover:bg-[#0d1b2e] transition-all text-slate-700 dark:text-slate-300 font-mono text-sm group shadow-sm hover:shadow"
       >
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-lg bg-blue-50 dark:bg-blue-500/10 flex items-center justify-center text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform">

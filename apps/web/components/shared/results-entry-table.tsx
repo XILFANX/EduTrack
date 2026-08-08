@@ -291,7 +291,7 @@ export function ResultsEntryTable({
               const status = saveStatus[student.id] || 'idle'
 
               return (
-                <tr key={student.id} className="hover:bg-slate-50/60 dark:hover:bg-slate-900/30 transition-colors group">
+                <tr key={student.id} className="hover:bg-slate-50/60 dark:hover:bg-[#0d1b2e]/30 transition-colors group">
                   <td className="px-4 py-2.5 text-xs text-muted-foreground">{idx + 1}</td>
                   <td className="px-4 py-2.5">
                     <div className="flex items-center gap-2.5">

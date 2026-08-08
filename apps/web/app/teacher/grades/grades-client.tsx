@@ -171,7 +171,7 @@ export function GradesClient({ schoolId, teacherId, cls, students, exams, subjec
             <select
               value={cls.id}
               onChange={(e) => router.push(`/teacher/grades?class=${e.target.value}`)}
-              className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-slate-950 text-sm outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+              className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-[#060d1a] text-sm outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
             >
               {availableClasses.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
             </select>
@@ -182,7 +182,7 @@ export function GradesClient({ schoolId, teacherId, cls, students, exams, subjec
           <select
             value={selectedExamId}
             onChange={(e) => handleExamChange(e.target.value)}
-            className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-slate-950 text-sm outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+            className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-[#060d1a] text-sm outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
           >
             {exams.length === 0 ? <option value="">No exams found</option> : null}
             {exams.map((e) => <option key={e.id} value={e.id}>{e.name}</option>)}
@@ -193,7 +193,7 @@ export function GradesClient({ schoolId, teacherId, cls, students, exams, subjec
           <select
             value={selectedSubjectId}
             onChange={(e) => handleSubjectChange(e.target.value)}
-            className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-slate-950 text-sm outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+            className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-[#060d1a] text-sm outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
           >
             {subjects.length === 0 ? <option value="">No subjects found</option> : null}
             {subjects.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
@@ -229,7 +229,7 @@ export function GradesClient({ schoolId, teacherId, cls, students, exams, subjec
         <div className="bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-2xl overflow-hidden pb-20">
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left">
-              <thead className="bg-slate-50 dark:bg-slate-950 border-b border-slate-200 dark:border-[#1a2744] text-muted-foreground uppercase tracking-wider text-xs font-semibold">
+              <thead className="bg-slate-50 dark:bg-[#060d1a] border-b border-slate-200 dark:border-[#1a2744] text-muted-foreground uppercase tracking-wider text-xs font-semibold">
                 <tr>
                   <th className="px-4 py-4">Student</th>
                   <th className="px-4 py-4 w-32">Score /100</th>

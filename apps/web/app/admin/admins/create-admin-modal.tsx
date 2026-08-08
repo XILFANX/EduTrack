@@ -59,7 +59,7 @@ export function CreateAdminModal({ onClose }: { onClose: () => void }) {
               value={fullName}
               onChange={e => setFullName(e.target.value)}
               placeholder="e.g. Jane Doe"
-              className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
+              className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-[#060d1a] text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
             />
           </div>
 
@@ -70,7 +70,7 @@ export function CreateAdminModal({ onClose }: { onClose: () => void }) {
               value={email}
               onChange={e => setEmail(e.target.value)}
               placeholder="e.g. jane@edutrack.com"
-              className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
+              className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-[#060d1a] text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
             />
           </div>
 
@@ -81,7 +81,7 @@ export function CreateAdminModal({ onClose }: { onClose: () => void }) {
               value={phoneNumber}
               onChange={e => setPhoneNumber(e.target.value)}
               placeholder="e.g. 0712345678"
-              className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
+              className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-[#060d1a] text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
             />
           </div>
 

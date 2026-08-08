@@ -178,7 +178,7 @@ export function InviteParentModal({ open, onClose, studentId, studentName, schoo
               </a>
             </div>
 
-            <Button className="w-full bg-slate-900 hover:bg-[#0d1b2e] text-white dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-white" onClick={handleClose}>
+            <Button className="w-full bg-[#0d1b2e] hover:bg-[#0d1b2e] text-white dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-white" onClick={handleClose}>
               Done
             </Button>
           </div>

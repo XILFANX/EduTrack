@@ -85,7 +85,7 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@school.ac.ke"
-                className="w-full border border-slate-200 dark:border-[#1a2744] dark:bg-slate-950 dark:text-slate-100 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full border border-slate-200 dark:border-[#1a2744] dark:bg-[#060d1a] dark:text-slate-100 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
 
@@ -103,7 +103,7 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full border border-slate-200 dark:border-[#1a2744] dark:bg-slate-950 dark:text-slate-100 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent pr-10"
+                  className="w-full border border-slate-200 dark:border-[#1a2744] dark:bg-[#060d1a] dark:text-slate-100 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent pr-10"
                 />
                 <button
                   type="button"
@@ -177,7 +177,7 @@ export default function LoginPage() {
               value={inviteLink}
               onChange={(e) => setInviteLink(e.target.value)}
               placeholder="https://…/invite/your-token or just the token"
-              className="flex-1 min-w-0 border border-slate-200 dark:border-[#1a2744] dark:bg-slate-950 dark:text-slate-100 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-slate-400"
+              className="flex-1 min-w-0 border border-slate-200 dark:border-[#1a2744] dark:bg-[#060d1a] dark:text-slate-100 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-slate-400"
             />
             <button
               type="submit"

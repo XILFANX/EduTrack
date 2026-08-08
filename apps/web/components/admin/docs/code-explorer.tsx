@@ -244,13 +244,13 @@ export function CodeExplorer({ repo, branch = 'main', accent = 'blue' }: CodeExp
   const lineCount     = activeCode ? activeCode.split('\n').length : 0
 
   return (
-    <div className="flex flex-col h-full min-h-[600px] rounded-xl overflow-hidden border border-slate-800 bg-[#0A0A0F] shadow-2xl font-mono">
+    <div className="flex flex-col h-full min-h-[600px] rounded-xl overflow-hidden border border-[#1a2744] bg-[#0A0A0F] shadow-2xl font-mono">
       <div className="flex flex-1 min-h-0">
 
         {/* ── Sidebar ── */}
         {sidebarOpen && (
-          <div className="flex flex-col w-60 shrink-0 border-r border-slate-800 bg-[#050508]">
-            <div className="flex items-center justify-between px-3 py-2 border-b border-slate-800">
+          <div className="flex flex-col w-60 shrink-0 border-r border-[#1a2744] bg-[#050508]">
+            <div className="flex items-center justify-between px-3 py-2 border-b border-[#1a2744]">
               <span className="text-[10px] font-bold tracking-widest uppercase text-slate-500">Explorer</span>
               <button
                 onClick={() => setSidebarOpen(false)}
@@ -260,7 +260,7 @@ export function CodeExplorer({ repo, branch = 'main', accent = 'blue' }: CodeExp
                 <PanelLeftClose className="w-3.5 h-3.5" />
               </button>
             </div>
-            <div className="px-3 py-2 border-b border-slate-800/50">
+            <div className="px-3 py-2 border-b border-[#1a2744]/50">
               <span className={`text-[10px] font-bold tracking-widest uppercase ${accentText}`}>
                 {repo.split('/')[1]}
               </span>
@@ -292,11 +292,11 @@ export function CodeExplorer({ repo, branch = 'main', accent = 'blue' }: CodeExp
         {/* ── Editor pane ── */}
         <div className="flex-1 flex flex-col min-w-0">
           {/* Tab bar */}
-          <div className="flex items-center bg-[#050508] border-b border-slate-800 overflow-x-auto scrollbar-none shrink-0 min-h-[36px]">
+          <div className="flex items-center bg-[#050508] border-b border-[#1a2744] overflow-x-auto scrollbar-none shrink-0 min-h-[36px]">
             {!sidebarOpen && (
               <button
                 onClick={() => setSidebarOpen(true)}
-                className="shrink-0 px-3 py-2 text-slate-500 hover:text-slate-300 transition-colors border-r border-slate-800"
+                className="shrink-0 px-3 py-2 text-slate-500 hover:text-slate-300 transition-colors border-r border-[#1a2744]"
                 title="Open sidebar"
               >
                 <PanelLeftOpen className="w-3.5 h-3.5" />
@@ -314,7 +314,7 @@ export function CodeExplorer({ repo, branch = 'main', accent = 'blue' }: CodeExp
                 <button
                   key={tab.path}
                   onClick={() => setActiveTab(tab.path)}
-                  className={`flex items-center gap-1.5 px-3 py-2 text-[11px] border-r border-slate-800 transition-colors shrink-0 group/tab max-w-[160px] ${
+                  className={`flex items-center gap-1.5 px-3 py-2 text-[11px] border-r border-[#1a2744] transition-colors shrink-0 group/tab max-w-[160px] ${
                     isActive
                       ? 'bg-[#0A0A0F] text-white border-t-2 border-t-[var(--accent)]'
                       : 'text-slate-500 hover:bg-[#0A0A0F]/50 hover:text-slate-300 border-t-2 border-t-transparent'
@@ -338,7 +338,7 @@ export function CodeExplorer({ repo, branch = 'main', accent = 'blue' }: CodeExp
 
           {/* Breadcrumb / toolbar */}
           {activeTab && activeTabInfo && (
-            <div className="flex items-center justify-between px-4 py-1.5 bg-[#0A0A0F] border-b border-slate-800/50 text-[11px] text-slate-500 shrink-0">
+            <div className="flex items-center justify-between px-4 py-1.5 bg-[#0A0A0F] border-b border-[#1a2744]/50 text-[11px] text-slate-500 shrink-0">
               <div className="flex items-center gap-1 overflow-hidden">
                 {activeTab.split('/').map((seg, i, arr) => (
                   <React.Fragment key={i}>

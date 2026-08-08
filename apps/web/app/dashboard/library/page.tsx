@@ -92,7 +92,7 @@ export default async function LibraryOverviewPage() {
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left">
-              <thead className="bg-slate-50 dark:bg-slate-950 text-xs font-semibold text-muted-foreground uppercase tracking-wider border-b border-slate-200 dark:border-[#1a2744]">
+              <thead className="bg-slate-50 dark:bg-[#060d1a] text-xs font-semibold text-muted-foreground uppercase tracking-wider border-b border-slate-200 dark:border-[#1a2744]">
                 <tr>
                   <th className="px-6 py-3">Title</th>
                   <th className="px-6 py-3">Author</th>
@@ -140,7 +140,7 @@ export default async function LibraryOverviewPage() {
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left">
-              <thead className="bg-slate-50 dark:bg-slate-950 text-xs font-semibold text-muted-foreground uppercase tracking-wider border-b border-slate-200 dark:border-[#1a2744]">
+              <thead className="bg-slate-50 dark:bg-[#060d1a] text-xs font-semibold text-muted-foreground uppercase tracking-wider border-b border-slate-200 dark:border-[#1a2744]">
                 <tr>
                   <th className="px-6 py-3">Student</th>
                   <th className="px-6 py-3">Book</th>

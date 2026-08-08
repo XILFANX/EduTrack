@@ -460,7 +460,7 @@ export function ChatClient({
                   <button
                     key={category.id}
                     onClick={() => setSelectedCategory(category.id)}
-                    className="w-full flex items-center justify-between p-3.5 rounded-2xl hover:bg-white dark:hover:bg-slate-900/60 transition-all group border border-transparent hover:border-slate-200 dark:hover:border-slate-700"
+                    className="w-full flex items-center justify-between p-3.5 rounded-2xl hover:bg-white dark:hover:bg-[#0d1b2e]/60 transition-all group border border-transparent hover:border-slate-200 dark:hover:border-slate-700"
                   >
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center shrink-0 group-hover:bg-blue-500/20 transition-colors">
@@ -486,7 +486,7 @@ export function ChatClient({
                   <button
                     key={cls.id}
                     onClick={() => setSelectedClassId(cls.id)}
-                    className="w-full flex items-center justify-between p-3.5 rounded-2xl hover:bg-white dark:hover:bg-slate-900/60 transition-all group border border-transparent hover:border-slate-200 dark:hover:border-slate-700"
+                    className="w-full flex items-center justify-between p-3.5 rounded-2xl hover:bg-white dark:hover:bg-[#0d1b2e]/60 transition-all group border border-transparent hover:border-slate-200 dark:hover:border-slate-700"
                   >
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center shrink-0 group-hover:bg-blue-500/20 transition-colors">
@@ -557,7 +557,7 @@ export function ChatClient({
       </div>
 
       {/* ======================= RIGHT PANE: CHAT ======================= */}
-      <div className={`${chatOpen ? 'flex' : 'hidden md:flex'} flex-1 flex-col bg-white dark:bg-slate-950 relative overflow-hidden`}>
+      <div className={`${chatOpen ? 'flex' : 'hidden md:flex'} flex-1 flex-col bg-white dark:bg-[#060d1a] relative overflow-hidden`}>
         {selectedContact ? (
           <>
             {/* Chat Header */}
@@ -728,7 +728,7 @@ function ContactRow({
       className={`w-full flex items-center gap-3 p-3 rounded-2xl transition-all border text-left ${
         selected
           ? 'bg-blue-50 dark:bg-blue-500/10 border-blue-200 dark:border-blue-500/30'
-          : 'border-transparent hover:bg-white dark:hover:bg-slate-900/60 hover:border-slate-200 dark:hover:border-slate-700'
+          : 'border-transparent hover:bg-white dark:hover:bg-[#0d1b2e]/60 hover:border-slate-200 dark:hover:border-slate-700'
       }`}
     >
       <div className="relative shrink-0">

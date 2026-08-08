@@ -93,7 +93,7 @@ export function LogStockModal({ schoolId, userId, onClose }: Props) {
               value={itemName}
               onChange={e => setItemName(e.target.value)}
               placeholder="e.g. Maize Flour, Pencils"
-              className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-red-500/20 focus:border-red-500 outline-none"
+              className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-[#060d1a] text-sm focus:ring-2 focus:ring-red-500/20 focus:border-red-500 outline-none"
               required
             />
           </div>
@@ -106,7 +106,7 @@ export function LogStockModal({ schoolId, userId, onClose }: Props) {
               value={quantity}
               onChange={e => setQuantity(e.target.value)}
               placeholder="0"
-              className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-red-500/20 focus:border-red-500 outline-none"
+              className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-[#060d1a] text-sm focus:ring-2 focus:ring-red-500/20 focus:border-red-500 outline-none"
               required
             />
           </div>
@@ -118,7 +118,7 @@ export function LogStockModal({ schoolId, userId, onClose }: Props) {
               onChange={e => setNotes(e.target.value)}
               placeholder="e.g. Received from supplier, Issued to kitchen"
               rows={2}
-              className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-red-500/20 focus:border-red-500 outline-none resize-none"
+              className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-[#060d1a] text-sm focus:ring-2 focus:ring-red-500/20 focus:border-red-500 outline-none resize-none"
             />
           </div>
 

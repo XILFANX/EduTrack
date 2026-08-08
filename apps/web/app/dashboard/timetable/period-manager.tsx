@@ -87,7 +87,7 @@ function PeriodModal({
               <Input type="time" value={end} onChange={e => setEnd(e.target.value)} />
             </div>
           </div>
-          <label className="flex items-center gap-3 cursor-pointer p-3 rounded-xl border border-border hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors">
+          <label className="flex items-center gap-3 cursor-pointer p-3 rounded-xl border border-border hover:bg-slate-50 dark:hover:bg-[#0d1b2e] transition-colors">
             <input
               type="checkbox"
               checked={isBreak}
@@ -152,7 +152,7 @@ export function PeriodManager({ schoolId, initialPeriods }: Props) {
         <div className="flex gap-2">
           <Link
             href="/dashboard/timetable"
-            className="px-4 py-2 text-sm font-semibold border border-border rounded-xl text-foreground hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors"
+            className="px-4 py-2 text-sm font-semibold border border-border rounded-xl text-foreground hover:bg-slate-50 dark:hover:bg-[#0d1b2e] transition-colors"
           >
             ← Back to Grid
           </Link>
@@ -179,7 +179,7 @@ export function PeriodManager({ schoolId, initialPeriods }: Props) {
           {periods.map((period, idx) => (
             <div
               key={period.id}
-              className={`flex items-center gap-4 px-5 py-3.5 ${idx < periods.length - 1 ? 'border-b border-border' : ''} hover:bg-slate-50/50 dark:hover:bg-slate-900/20 transition-colors group`}
+              className={`flex items-center gap-4 px-5 py-3.5 ${idx < periods.length - 1 ? 'border-b border-border' : ''} hover:bg-slate-50/50 dark:hover:bg-[#0d1b2e]/20 transition-colors group`}
             >
               <GripVertical className="w-4 h-4 text-slate-300 shrink-0" />
               {period.is_break ? (

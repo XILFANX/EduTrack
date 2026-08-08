@@ -21,7 +21,7 @@ export const metadata = {
 
 export default function Page() {
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col items-center justify-center p-4 selection:bg-cyan-200 dark:selection:bg-cyan-900">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#060d1a] flex flex-col items-center justify-center p-4 selection:bg-cyan-200 dark:selection:bg-cyan-900">
       <div className="w-full max-w-2xl bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-2xl shadow-xl overflow-hidden">
         <div className="p-8 md:p-12 text-center space-y-6">
           <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">

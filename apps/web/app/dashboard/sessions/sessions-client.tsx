@@ -319,7 +319,7 @@ export function SessionsClient({ initialYears, initialTerms }: { initialYears: A
 
       {/* Creation Modal */}
       {(showYearModal || showTermModalFor) && (
-        <div className="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-[#0d1b2e]/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-3xl w-full max-w-md overflow-hidden shadow-2xl">
             <div className="px-6 py-4 border-b border-slate-200 dark:border-[#1a2744] flex items-center justify-between">
               <h2 className="font-bold text-lg text-foreground">
@@ -416,7 +416,7 @@ export function SessionsClient({ initialYears, initialTerms }: { initialYears: A
 
       {/* Custom Confirm Dialog */}
       {confirmDialog?.open && (
-        <div className="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-[#0d1b2e]/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-3xl w-full max-w-sm overflow-hidden shadow-2xl">
             <div className="px-6 pt-6 pb-4">
               <div className="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center mb-4">
