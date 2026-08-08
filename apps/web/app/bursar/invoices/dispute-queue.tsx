@@ -145,19 +145,19 @@ export default async function DisputeQueue({ schoolId }: { schoolId: string }) {
 
               <div className="flex flex-wrap gap-2">
                 <span className={`text-xs px-2 py-0.5 rounded-full border font-medium ${
-                  codeMatch ? 'bg-blue-500/10 border-blue-500/20 text-cyan-400' : 'bg-blue-500/10 border-blue-500/20 text-cyan-400'
+                  codeMatch ? 'bg-blue-500/10 border-blue-500/20 text-blue-500' : 'bg-blue-500/10 border-blue-500/20 text-blue-500'
                 }`}>
                   Code: {codeMatch ? '✓' : '✗'}
                 </span>
                 <span className={`text-xs px-2 py-0.5 rounded-full border font-medium ${
-                  amountMatch ? 'bg-blue-500/10 border-blue-500/20 text-cyan-400' : 'bg-red-500/10 border-red-500/20 text-red-400'
+                  amountMatch ? 'bg-blue-500/10 border-blue-500/20 text-blue-500' : 'bg-red-500/10 border-red-500/20 text-red-400'
                 }`}>
                   Amount: {amountMatch ? '✓' : `${formatCurrency(payerAmount, currency)} vs ${formatCurrency(payeeAmount, currency)}`}
                 </span>
               </div>
 
               <div className="bg-blue-500/5 border border-blue-500/15 rounded-xl p-3 flex items-start gap-2">
-                <Info className="w-3.5 h-3.5 text-cyan-400 shrink-0 mt-0.5" />
+                <Info className="w-3.5 h-3.5 text-blue-500 shrink-0 mt-0.5" />
                 <p className="text-xs text-muted-foreground">
                   <strong className="text-foreground">Confirm Match</strong> if these describe the same transaction.
                   This updates the payment corridor model. <strong className="text-foreground">Dismiss</strong> to keep unresolved for follow-up.

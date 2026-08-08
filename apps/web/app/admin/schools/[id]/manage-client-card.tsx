@@ -54,7 +54,7 @@ export function ManageClientCard({ schoolId, currentStatus }: Props) {
           disabled={isPending}
           className="flex items-center gap-2 bg-muted/50 hover:bg-muted text-foreground px-4 py-2.5 rounded-lg text-sm font-medium transition-colors disabled:opacity-50"
         >
-          <CalendarPlus className="w-4 h-4 text-cyan-500" />
+          <CalendarPlus className="w-4 h-4 text-blue-600" />
           Extend Trial by 14 Days
         </button>
         

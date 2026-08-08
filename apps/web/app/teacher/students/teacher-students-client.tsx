@@ -112,7 +112,7 @@ export function TeacherStudentsClient({ students, invitations, parentLinks, scho
         </div>
 
         {filteredStudents.length === 0 ? (
-          <div className="text-center py-20 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl">
+          <div className="text-center py-20 bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-3xl">
             <div className="w-16 h-16 rounded-2xl bg-blue-100 dark:bg-blue-900/40 mx-auto flex items-center justify-center mb-4">
               <GraduationCap className="w-8 h-8 text-blue-600 dark:text-blue-400" />
             </div>
@@ -122,7 +122,7 @@ export function TeacherStudentsClient({ students, invitations, parentLinks, scho
             </p>
           </div>
         ) : (
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm">
+          <div className="bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-2xl overflow-hidden shadow-sm">
             <div className="divide-y divide-slate-100 dark:divide-slate-800/50">
               {filteredStudents.map(student => {
                 const parentLink = parentLinks.find(pl => pl.student_id === student.id)
@@ -132,7 +132,7 @@ export function TeacherStudentsClient({ students, invitations, parentLinks, scho
                 const isSuspended = student.status?.toLowerCase() === 'suspended'
 
                 return (
-                  <div key={student.id} className={`p-4 transition-colors ${quickViewStudent?.id === student.id ? 'bg-blue-50/50 dark:bg-blue-900/10' : 'hover:bg-slate-50/50 dark:hover:bg-slate-800/20'}`}>
+                  <div key={student.id} className={`p-4 transition-colors ${quickViewStudent?.id === student.id ? 'bg-blue-50/50 dark:bg-blue-900/10' : 'hover:bg-slate-50/50 dark:hover:bg-[#0d1b2e]/20'}`}>
                     <div className="flex items-center justify-between">
                       <div 
                         className="flex items-center gap-3 cursor-pointer group flex-1"
@@ -141,7 +141,7 @@ export function TeacherStudentsClient({ students, invitations, parentLinks, scho
                         {student.photo_url ? (
                           <img src={student.photo_url} alt="" className={`w-10 h-10 rounded-full object-cover shrink-0 ${isSuspended ? 'opacity-50 grayscale' : ''}`} />
                         ) : (
-                          <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${isSuspended ? 'bg-slate-100 text-slate-400 dark:bg-slate-800' : 'bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400'}`}>
+                          <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${isSuspended ? 'bg-slate-100 text-slate-400 dark:bg-[#0d1b2e]' : 'bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400'}`}>
                             <span className="text-xs font-bold">{initials}</span>
                           </div>
                         )}
@@ -167,7 +167,7 @@ export function TeacherStudentsClient({ students, invitations, parentLinks, scho
                               <Button 
                                 variant="ghost" 
                                 size="icon" 
-                                className="h-8 w-8 text-slate-400 hover:text-red-600 hover:bg-orange-50 dark:hover:bg-orange-900/20"
+                                className="h-8 w-8 text-slate-400 hover:text-red-600 hover:bg-blue-50 dark:hover:bg-blue-900/20"
                                 onClick={() => handleDeleteInvite(usedInvite.id, true)}
                                 title="Revoke Access"
                               >
@@ -188,7 +188,7 @@ export function TeacherStudentsClient({ students, invitations, parentLinks, scho
                                 className="gap-1.5 h-8 text-xs"
                                 onClick={() => handleCopyLink(pendingInvite.token)}
                               >
-                                {copiedToken === pendingInvite.token ? <Check className="w-3.5 h-3.5 text-cyan-500" /> : <LinkIcon className="w-3.5 h-3.5" />}
+                                {copiedToken === pendingInvite.token ? <Check className="w-3.5 h-3.5 text-blue-600" /> : <LinkIcon className="w-3.5 h-3.5" />}
                                 <span className="hidden sm:inline">{copiedToken === pendingInvite.token ? 'Copied' : 'Link'}</span>
                               </Button>
                               <a
@@ -202,7 +202,7 @@ export function TeacherStudentsClient({ students, invitations, parentLinks, scho
                               <Button 
                                 variant="ghost" 
                                 size="icon" 
-                                className="h-8 w-8 text-slate-400 hover:text-red-600 hover:bg-orange-50 dark:hover:bg-orange-900/20"
+                                className="h-8 w-8 text-slate-400 hover:text-red-600 hover:bg-blue-50 dark:hover:bg-blue-900/20"
                                 onClick={() => handleDeleteInvite(pendingInvite.id, false)}
                                 title="Delete Invite"
                               >
@@ -237,7 +237,7 @@ export function TeacherStudentsClient({ students, invitations, parentLinks, scho
 
       {/* Quick View Panel */}
       {quickViewStudent && (
-        <div className="w-full lg:w-80 shrink-0 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm sticky top-6 h-fit">
+        <div className="w-full lg:w-80 shrink-0 bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-2xl p-5 shadow-sm sticky top-6 h-fit">
           <div className="flex items-center justify-between mb-6">
             <h3 className="font-bold text-foreground">Quick View</h3>
             <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-slate-600" onClick={() => setQuickViewStudent(null)}>
@@ -247,7 +247,7 @@ export function TeacherStudentsClient({ students, invitations, parentLinks, scho
 
           <div className="text-center mb-6">
             {quickViewStudent.photo_url ? (
-              <img src={quickViewStudent.photo_url} alt="" className="w-24 h-24 rounded-full object-cover mx-auto mb-3 shadow-sm border-2 border-white dark:border-slate-800" />
+              <img src={quickViewStudent.photo_url} alt="" className="w-24 h-24 rounded-full object-cover mx-auto mb-3 shadow-sm border-2 border-white dark:border-[#1a2744]" />
             ) : (
               <div className="w-24 h-24 rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 text-2xl font-bold flex items-center justify-center mx-auto mb-3">
                 {quickViewStudent.first_name[0]}{quickViewStudent.last_name[0]}
@@ -266,7 +266,7 @@ export function TeacherStudentsClient({ students, invitations, parentLinks, scho
           </div>
 
           <div className="space-y-4">
-            <div className="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-3">
+            <div className="bg-slate-50 dark:bg-[#0d1b2e]/80 rounded-xl p-3">
               <p className="text-xs text-muted-foreground font-medium mb-1">Class</p>
               <p className="text-sm font-semibold">{className}</p>
             </div>
@@ -278,7 +278,7 @@ export function TeacherStudentsClient({ students, invitations, parentLinks, scho
               
               if (pl) {
                 return (
-                  <div className="bg-blue-50 dark:bg-blue-900/10 rounded-xl p-3 border border-cyan-100 dark:border-cyan-900/30">
+                  <div className="bg-blue-50 dark:bg-blue-900/10 rounded-xl p-3 border border-blue-100 dark:border-cyan-900/30">
                     <p className="text-xs text-blue-600 dark:text-blue-400 font-medium mb-1">Linked Parent</p>
                     <p className="text-sm font-semibold">{pl.users.full_name}</p>
                     <p className="text-xs text-muted-foreground">{pl.users.phone_number}</p>
@@ -286,14 +286,14 @@ export function TeacherStudentsClient({ students, invitations, parentLinks, scho
                 )
               } else if (pending) {
                 return (
-                  <div className="bg-orange-50 dark:bg-orange-900/10 rounded-xl p-3 border border-red-100 dark:border-red-900/30">
+                  <div className="bg-blue-50 dark:bg-blue-900/10 rounded-xl p-3 border border-red-100 dark:border-red-900/30">
                     <p className="text-xs text-red-600 dark:text-red-400 font-medium mb-1">Pending Invite</p>
                     <p className="text-sm font-semibold">{pending.target_name}</p>
                   </div>
                 )
               } else {
                 return (
-                  <div className="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-3 flex flex-col items-center text-center gap-2">
+                  <div className="bg-slate-50 dark:bg-[#0d1b2e]/80 rounded-xl p-3 flex flex-col items-center text-center gap-2">
                     <p className="text-xs text-muted-foreground">No parent linked</p>
                     <Button 
                       size="sm" 

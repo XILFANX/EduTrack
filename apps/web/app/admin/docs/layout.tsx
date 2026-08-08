@@ -50,9 +50,9 @@ export default async function AdminDocsLayout({ children }: { children: React.Re
   if (!hasPinSetup) {
     return (
       <div className="min-h-[calc(100vh-theme(spacing.16))] flex items-center justify-center p-4">
-        <div className="max-w-md w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 shadow-2xl">
+        <div className="max-w-md w-full bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-2xl p-8 shadow-2xl">
           <div className="flex flex-col items-center text-center mb-8">
-            <div className="w-16 h-16 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-blue-600 dark:text-blue-400 mb-6 border border-slate-200 dark:border-slate-700">
+            <div className="w-16 h-16 rounded-full bg-slate-100 dark:bg-[#0d1b2e] flex items-center justify-center text-blue-600 dark:text-blue-400 mb-6 border border-slate-200 dark:border-[#1a2744]">
               <KeyRound className="w-8 h-8" />
             </div>
             <h1 className="text-2xl font-mono font-bold text-slate-900 dark:text-white mb-2 tracking-tight">
@@ -73,9 +73,9 @@ export default async function AdminDocsLayout({ children }: { children: React.Re
   if (!isSessionUnlocked) {
     return (
       <div className="min-h-[calc(100vh-theme(spacing.16))] flex items-center justify-center p-4">
-        <div className="max-w-md w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 shadow-2xl">
+        <div className="max-w-md w-full bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-2xl p-8 shadow-2xl">
           <div className="flex flex-col items-center text-center mb-8">
-            <div className="w-16 h-16 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 dark:text-slate-400 mb-6 border border-slate-200 dark:border-slate-700">
+            <div className="w-16 h-16 rounded-full bg-slate-100 dark:bg-[#0d1b2e] flex items-center justify-center text-slate-500 dark:text-slate-400 mb-6 border border-slate-200 dark:border-[#1a2744]">
               <Lock className="w-8 h-8" />
             </div>
             <h1 className="text-2xl font-mono font-bold text-slate-900 dark:text-white mb-2 tracking-tight">
@@ -93,9 +93,9 @@ export default async function AdminDocsLayout({ children }: { children: React.Re
 
   // 7. Render docs layout
   return (
-    <div className="flex flex-col font-mono min-h-[calc(100vh-theme(spacing.32))] bg-white dark:bg-[#0A0A0F] rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+    <div className="flex flex-col font-mono min-h-[calc(100vh-theme(spacing.32))] bg-white dark:bg-[#0A0A0F] rounded-xl border border-slate-200 dark:border-[#1a2744] shadow-sm overflow-hidden">
       {/* Header */}
-      <header className="w-full border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 flex-none px-4 sm:px-6 lg:px-8">
+      <header className="w-full border-b border-slate-200 dark:border-[#1a2744] bg-slate-50/50 dark:bg-[#060d1a]/80 flex-none px-4 sm:px-6 lg:px-8">
         <div className="flex h-14 items-center gap-4">
           <MobileDocsSidebar />
           <Link

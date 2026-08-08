@@ -14,7 +14,7 @@ export function LogStockButton({ schoolId, userId }: Props) {
   const [open, setOpen] = useState(false)
   return (
     <>
-      <Button onClick={() => setOpen(true)} className="bg-orange-600 hover:bg-orange-700 gap-2">
+      <Button onClick={() => setOpen(true)} className="bg-blue-600 hover:bg-blue-700 gap-2">
         <Plus className="w-4 h-4" />
         Log Stock
       </Button>

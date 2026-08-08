@@ -130,12 +130,12 @@ export function StudentsPageClient({
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
             placeholder="Search by name, admission number..."
-            className="w-full h-11 pl-10 pr-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-sm"
+            className="w-full h-11 pl-10 pr-4 rounded-xl border border-slate-200 dark:border-[#1a2744] bg-white dark:bg-[#060d1a] focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-sm"
           />
         </div>
 
         {classes.length === 0 ? (
-          <div className="text-center py-20 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl">
+          <div className="text-center py-20 bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-3xl">
             <div className="w-16 h-16 rounded-2xl bg-blue-100 dark:bg-blue-900/40 mx-auto flex items-center justify-center mb-4">
               <GraduationCap className="w-8 h-8 text-blue-600 dark:text-blue-400" />
             </div>
@@ -145,7 +145,7 @@ export function StudentsPageClient({
             </p>
           </div>
         ) : (
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden">
+          <div className="bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-2xl overflow-hidden">
             <div className="divide-y divide-slate-100 dark:divide-slate-800">
               {classes.map(cls => {
                 const count = students.filter(s => s.class_id === cls.id).length
@@ -153,7 +153,7 @@ export function StudentsPageClient({
                   <button
                     key={cls.id}
                     onClick={() => setSelectedClass(cls)}
-                    className="w-full flex items-center gap-4 px-4 py-3.5 hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors group text-left"
+                    className="w-full flex items-center gap-4 px-4 py-3.5 hover:bg-slate-50 dark:hover:bg-[#0d1b2e]/40 transition-colors group text-left"
                   >
                     <div className="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center shrink-0 group-hover:bg-cyan-200 transition-colors">
                       <span className="text-sm font-bold text-blue-700 dark:text-blue-300">
@@ -166,7 +166,7 @@ export function StudentsPageClient({
                         {count > 0 ? `${count} student${count !== 1 ? 's' : ''}` : 'No students yet'}
                       </p>
                     </div>
-                    <ChevronRight className="w-4 h-4 text-slate-300 dark:text-slate-600 group-hover:text-cyan-500 transition-colors shrink-0" />
+                    <ChevronRight className="w-4 h-4 text-slate-300 dark:text-slate-600 group-hover:text-blue-600 transition-colors shrink-0" />
                   </button>
                 )
               })}
@@ -175,7 +175,7 @@ export function StudentsPageClient({
             {unassignedCount > 0 && (
               <button
                 onClick={() => setSelectedClass({ id: 'unassigned', name: 'Unassigned Students' })}
-                className="w-full flex items-center gap-4 px-4 py-3.5 border-t border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors group text-left"
+                className="w-full flex items-center gap-4 px-4 py-3.5 border-t border-slate-100 dark:border-[#1a2744] hover:bg-slate-50 dark:hover:bg-[#0d1b2e]/40 transition-colors group text-left"
               >
                 <div className="w-10 h-10 rounded-xl bg-red-100 dark:bg-red-900/30 flex items-center justify-center shrink-0">
                   <Users className="w-4 h-4 text-red-600 dark:text-red-400" />
@@ -190,7 +190,7 @@ export function StudentsPageClient({
 
             <button
               onClick={() => setSelectedClass('all')}
-              className="w-full flex items-center justify-center px-4 py-3 border-t border-slate-100 dark:border-slate-800 text-sm font-medium text-blue-600 hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors"
+              className="w-full flex items-center justify-center px-4 py-3 border-t border-slate-100 dark:border-[#1a2744] text-sm font-medium text-blue-600 hover:bg-slate-50 dark:hover:bg-[#0d1b2e]/40 transition-colors"
             >
               View all {students.length} students directory
             </button>
@@ -226,7 +226,7 @@ export function StudentsPageClient({
       <div className="flex items-center gap-3">
         {!isGlobalSearchActive && (
           <button onClick={() => setSelectedClass(null)}
-            className="w-10 h-10 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center hover:bg-slate-50 transition-colors shrink-0">
+            className="w-10 h-10 rounded-full bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] flex items-center justify-center hover:bg-slate-50 transition-colors shrink-0">
             <ArrowLeft className="w-5 h-5 text-slate-500" />
           </button>
         )}
@@ -247,12 +247,12 @@ export function StudentsPageClient({
           value={searchQuery}
           onChange={e => setSearchQuery(e.target.value)}
           placeholder="Search by name, admission number, or class..."
-          className="w-full h-11 pl-10 pr-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-sm"
+          className="w-full h-11 pl-10 pr-4 rounded-xl border border-slate-200 dark:border-[#1a2744] bg-white dark:bg-[#060d1a] focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-sm"
         />
       </div>
 
       {!students || students.length === 0 ? (
-        <div className="text-center py-20 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl">
+        <div className="text-center py-20 bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-3xl">
           <div className="w-16 h-16 rounded-2xl bg-blue-100 dark:bg-blue-900/40 mx-auto flex items-center justify-center mb-4">
             <GraduationCap className="w-8 h-8 text-blue-600 dark:text-blue-400" />
           </div>
@@ -268,14 +268,14 @@ export function StudentsPageClient({
           </Button>
         </div>
       ) : filteredStudents.length === 0 ? (
-        <div className="text-center py-20 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl">
+        <div className="text-center py-20 bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-3xl">
           <p className="text-muted-foreground">No students match your criteria.</p>
         </div>
       ) : (
-        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm">
+        <div className="bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-2xl overflow-hidden shadow-sm">
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left">
-              <thead className="bg-slate-50 dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 text-muted-foreground uppercase tracking-wider text-xs font-semibold">
+              <thead className="bg-slate-50 dark:bg-slate-950 border-b border-slate-200 dark:border-[#1a2744] text-muted-foreground uppercase tracking-wider text-xs font-semibold">
                 <tr>
                   <th className="px-6 py-4">Admission #</th>
                   <th className="px-6 py-4">Name</th>
@@ -288,14 +288,14 @@ export function StudentsPageClient({
                 {filteredStudents.map((student) => (
                   <tr
                     key={student.id}
-                    className="hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors cursor-pointer"
+                    className="hover:bg-slate-50/50 dark:hover:bg-[#0d1b2e]/20 transition-colors cursor-pointer"
                     onClick={() => setQuickViewStudent(student)}
                   >
                     <td className="px-6 py-4 font-mono text-slate-500 dark:text-slate-400">{student.admission_number}</td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
                         {student.photo_url ? (
-                          <img src={student.photo_url} alt="" className="w-7 h-7 rounded-full object-cover border border-slate-200 dark:border-slate-700 shrink-0" />
+                          <img src={student.photo_url} alt="" className="w-7 h-7 rounded-full object-cover border border-slate-200 dark:border-[#1a2744] shrink-0" />
                         ) : (
                           <div className="w-7 h-7 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-bold flex items-center justify-center shrink-0">
                             {student.first_name?.[0]}{student.last_name?.[0]}
@@ -333,13 +333,13 @@ export function StudentsPageClient({
                             </Link>
                           </DropdownMenuItem>
                           <DropdownMenuItem
-                            className="text-red-600 focus:bg-orange-50 dark:focus:bg-orange-900/20 gap-2 cursor-pointer"
+                            className="text-red-600 focus:bg-blue-50 dark:focus:bg-orange-900/20 gap-2 cursor-pointer"
                             onClick={() => handleDelete(student.id)}
                           >
                             <Trash2 className="w-4 h-4" /> Remove
                           </DropdownMenuItem>
                           <DropdownMenuItem
-                            className="text-red-600 focus:bg-orange-50 dark:focus:bg-orange-900/20 gap-2 cursor-pointer"
+                            className="text-red-600 focus:bg-blue-50 dark:focus:bg-orange-900/20 gap-2 cursor-pointer"
                             onClick={() => handlePermanentDelete(student.id, `${student.first_name} ${student.last_name}`)}
                           >
                             <Trash2 className="w-4 h-4" /> Permanently Delete
@@ -411,28 +411,28 @@ export function StudentsPageClient({
 
               {/* Details Cards */}
               <div className="space-y-3">
-                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4">
+                <div className="bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-2xl p-4">
                   <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3">Class Assignment</p>
                   <div className="flex items-center gap-3 text-sm">
-                    <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 shrink-0">
+                    <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-[#0d1b2e] flex items-center justify-center text-slate-500 shrink-0">
                       <GraduationCap className="w-4 h-4" />
                     </div>
                     <span className="font-medium text-foreground">{(quickViewStudent.classes as any)?.name || 'Unassigned'}</span>
                   </div>
                 </div>
 
-                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4">
+                <div className="bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-2xl p-4">
                   <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3">Identifiers</p>
                   <div className="space-y-3">
                     <div className="flex items-center gap-3 text-sm">
-                      <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 shrink-0">
+                      <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-[#0d1b2e] flex items-center justify-center text-slate-500 shrink-0">
                         <Hash className="w-4 h-4" />
                       </div>
                       <span className="font-medium text-foreground font-mono">{quickViewStudent.admission_number}</span>
                     </div>
                     {quickViewStudent.dob && (
                       <div className="flex items-center gap-3 text-sm">
-                        <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 shrink-0">
+                        <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-[#0d1b2e] flex items-center justify-center text-slate-500 shrink-0">
                           <Calendar className="w-4 h-4" />
                         </div>
                         <span className="font-medium text-foreground">Born {new Date(quickViewStudent.dob).toLocaleDateString('en-KE', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
@@ -452,7 +452,7 @@ export function StudentsPageClient({
                 </Link>
                 <button
                   onClick={() => { setQuickViewStudent(null); handleDelete(quickViewStudent.id) }}
-                  className="w-full flex items-center justify-center gap-2 h-11 rounded-xl border border-red-200 dark:border-red-900/50 text-red-600 hover:bg-orange-50 dark:hover:bg-orange-900/20 text-sm font-semibold transition-colors bg-white dark:bg-slate-900 shadow-sm"
+                  className="w-full flex items-center justify-center gap-2 h-11 rounded-xl border border-red-200 dark:border-red-900/50 text-red-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 text-sm font-semibold transition-colors bg-white dark:bg-[#060d1a] shadow-sm"
                 >
                   <Trash2 className="w-4 h-4" />
                   Remove Student

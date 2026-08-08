@@ -20,8 +20,8 @@ export function DocsHeaderNav({ accent = 'blue' }: { accent?: 'violet' | 'blue' 
       : 'text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-cyan-900/20'
 
   return (
-    <div className="flex flex-1 items-center gap-1 border-l border-slate-200 dark:border-slate-700 pl-4 ml-2">
-      <div className="flex items-center gap-1 p-1 bg-slate-100 dark:bg-slate-900/60 rounded-xl border border-slate-200 dark:border-slate-800">
+    <div className="flex flex-1 items-center gap-1 border-l border-slate-200 dark:border-[#1a2744] pl-4 ml-2">
+      <div className="flex items-center gap-1 p-1 bg-slate-100 dark:bg-[#060d1a]/60 rounded-xl border border-slate-200 dark:border-[#1a2744]">
         <Link
           href="/admin/docs"
           className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 ${

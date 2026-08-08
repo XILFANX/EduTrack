@@ -47,7 +47,7 @@ export function FeeStructuresClient({ schoolId, structures: initial, terms, clas
       </div>
 
       {structures.length === 0 ? (
-        <div className="text-center py-20 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl">
+        <div className="text-center py-20 bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-3xl">
           <div className="w-16 h-16 rounded-2xl bg-blue-100 dark:bg-blue-900/40 mx-auto flex items-center justify-center mb-4">
             <BookOpen className="w-8 h-8 text-blue-600 dark:text-blue-400" />
           </div>
@@ -63,7 +63,7 @@ export function FeeStructuresClient({ schoolId, structures: initial, terms, clas
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {structures.map((s) => (
-            <Card key={s.id} className="border-slate-200 dark:border-slate-800 group hover:shadow-md transition-shadow">
+            <Card key={s.id} className="border-slate-200 dark:border-[#1a2744] group hover:shadow-md transition-shadow">
               <CardHeader className="pb-2">
                 <CardTitle className="text-base font-semibold flex justify-between items-start">
                   <span>{s.description || 'General Fee'}</span>

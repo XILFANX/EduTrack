@@ -180,7 +180,7 @@ export function SubjectClient({ globalSubjects, classSubjects, classes, schoolId
         {listToRender.length === 0 ? (
           <div className="text-center py-20 bg-[#121827] border border-slate-800 rounded-3xl">
             <div className="w-16 h-16 rounded-2xl bg-blue-500/10 mx-auto flex items-center justify-center mb-4">
-              <BookMarked className="w-8 h-8 text-cyan-400" />
+              <BookMarked className="w-8 h-8 text-blue-500" />
             </div>
             <h2 className="text-lg font-semibold text-slate-200">No subjects found</h2>
             <p className="text-sm text-slate-400 mt-2 mb-6 max-w-xs mx-auto">
@@ -205,7 +205,7 @@ export function SubjectClient({ globalSubjects, classSubjects, classes, schoolId
                 >
                   <div className="flex items-center gap-4">
                     <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center group-hover:bg-blue-500/20 transition-colors">
-                      <BookMarked className="w-4 h-4 text-cyan-400" />
+                      <BookMarked className="w-4 h-4 text-blue-500" />
                     </div>
                     <div>
                       <p className="font-semibold text-slate-200 text-sm">{globalSub.name}</p>
@@ -217,10 +217,10 @@ export function SubjectClient({ globalSubjects, classSubjects, classes, schoolId
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="hidden sm:inline-block text-xs font-semibold px-2 py-1 bg-slate-800 text-slate-300 rounded-lg group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                    <span className="hidden sm:inline-block text-xs font-semibold px-2 py-1 bg-[#0d1b2e] text-slate-300 rounded-lg group-hover:bg-blue-600 group-hover:text-white transition-colors">
                       Manage
                     </span>
-                    <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-cyan-400 transition-colors shrink-0" />
+                    <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-blue-500 transition-colors shrink-0" />
                   </div>
                 </button>
               )
@@ -239,7 +239,7 @@ export function SubjectClient({ globalSubjects, classSubjects, classes, schoolId
                     <p className="font-semibold text-slate-200 text-sm">{g.name}</p>
                     <p className="text-xs text-slate-500 mt-0.5">{mappings.filter(m => m.subject_id === g.id).length} classes mapped</p>
                   </div>
-                  <button onClick={() => handleSelectGlobal(g)} className="p-1.5 text-slate-400 hover:text-cyan-400 bg-[#121827] rounded-lg transition-colors">
+                  <button onClick={() => handleSelectGlobal(g)} className="p-1.5 text-slate-400 hover:text-blue-500 bg-[#121827] rounded-lg transition-colors">
                     <ChevronRight className="w-4 h-4" />
                   </button>
                 </div>
@@ -269,7 +269,7 @@ export function SubjectClient({ globalSubjects, classSubjects, classes, schoolId
           <div className="flex items-start justify-between gap-6 flex-wrap relative z-10">
             <div className="flex items-start gap-4">
               <div className="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center shrink-0">
-                <BookMarked className="w-6 h-6 text-cyan-400" />
+                <BookMarked className="w-6 h-6 text-blue-500" />
               </div>
               <div>
                 <h2 className="text-2xl font-bold text-slate-100">{selectedGlobal?.name}</h2>
@@ -322,7 +322,7 @@ export function SubjectClient({ globalSubjects, classSubjects, classes, schoolId
                     ) : (
                       <div className="flex items-center justify-between ml-2">
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-full bg-blue-500/20 border border-blue-500/30 text-cyan-400 flex items-center justify-center font-bold text-sm">
+                          <div className="w-10 h-10 rounded-full bg-blue-500/20 border border-blue-500/30 text-blue-500 flex items-center justify-center font-bold text-sm">
                             {selectedMapping.users ? selectedMapping.users.full_name.substring(0, 2).toUpperCase() : '—'}
                           </div>
                           <p className="font-semibold text-slate-200 text-sm">{selectedMapping.users?.full_name || 'No teacher assigned'}</p>

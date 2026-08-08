@@ -14,7 +14,7 @@ const NAV_ITEMS = [
 export function LibraryNav() {
   const pathname = usePathname()
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl border-t border-slate-200 dark:border-slate-800 z-50 pb-safe">
+    <div className="fixed bottom-0 left-0 right-0 bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl border-t border-slate-200 dark:border-[#1a2744] z-50 pb-safe">
       <div className="max-w-md mx-auto flex items-center justify-around p-2">
         {NAV_ITEMS.map((item) => {
           const isActive = pathname === item.href || pathname.startsWith(item.href + '/')

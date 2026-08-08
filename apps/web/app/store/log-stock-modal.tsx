@@ -53,17 +53,17 @@ export function LogStockModal({ schoolId, userId, onClose }: Props) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-      <div className="bg-white dark:bg-slate-900 rounded-3xl w-full max-w-md shadow-2xl overflow-hidden">
-        <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-slate-100 dark:border-slate-800">
+      <div className="bg-white dark:bg-[#060d1a] rounded-3xl w-full max-w-md shadow-2xl overflow-hidden">
+        <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-slate-100 dark:border-[#1a2744]">
           <h2 className="text-lg font-bold text-foreground">Log Stock</h2>
-          <button onClick={onClose} className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 hover:text-foreground transition-colors">
+          <button onClick={onClose} className="w-8 h-8 rounded-full bg-slate-100 dark:bg-[#0d1b2e] flex items-center justify-center text-slate-500 hover:text-foreground transition-colors">
             <X className="w-4 h-4" />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           {/* Stock In / Out toggle */}
-          <div className="flex rounded-xl border border-slate-200 dark:border-slate-700 p-1 gap-1">
+          <div className="flex rounded-xl border border-slate-200 dark:border-[#1a2744] p-1 gap-1">
             <button
               type="button"
               onClick={() => setType('in')}
@@ -93,7 +93,7 @@ export function LogStockModal({ schoolId, userId, onClose }: Props) {
               value={itemName}
               onChange={e => setItemName(e.target.value)}
               placeholder="e.g. Maize Flour, Pencils"
-              className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-red-500/20 focus:border-red-500 outline-none"
+              className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-red-500/20 focus:border-red-500 outline-none"
               required
             />
           </div>
@@ -106,7 +106,7 @@ export function LogStockModal({ schoolId, userId, onClose }: Props) {
               value={quantity}
               onChange={e => setQuantity(e.target.value)}
               placeholder="0"
-              className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-red-500/20 focus:border-red-500 outline-none"
+              className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-red-500/20 focus:border-red-500 outline-none"
               required
             />
           </div>
@@ -118,7 +118,7 @@ export function LogStockModal({ schoolId, userId, onClose }: Props) {
               onChange={e => setNotes(e.target.value)}
               placeholder="e.g. Received from supplier, Issued to kitchen"
               rows={2}
-              className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-red-500/20 focus:border-red-500 outline-none resize-none"
+              className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-red-500/20 focus:border-red-500 outline-none resize-none"
             />
           </div>
 
@@ -127,7 +127,7 @@ export function LogStockModal({ schoolId, userId, onClose }: Props) {
           <Button
             type="submit"
             disabled={loading}
-            className={`w-full gap-2 ${type === 'in' ? 'bg-[#1D6FEB] hover:bg-[#1558C8]' : 'bg-red-500 hover:bg-orange-600'}`}
+            className={`w-full gap-2 ${type === 'in' ? 'bg-[#1D6FEB] hover:bg-[#1558C8]' : 'bg-red-500 hover:bg-blue-600'}`}
           >
             {loading && <Loader2 className="w-4 h-4 animate-spin" />}
             {type === 'in' ? 'Confirm Stock In' : 'Confirm Stock Out'}

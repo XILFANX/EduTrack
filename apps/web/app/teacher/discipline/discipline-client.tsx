@@ -52,8 +52,8 @@ export function DisciplineClient({ schoolId, teacherId, cls, students, logs }: P
 
   if (!cls) {
     return (
-      <div className="text-center py-20 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl">
-        <div className="w-16 h-16 rounded-2xl bg-red-100 dark:bg-orange-900/40 mx-auto flex items-center justify-center mb-4">
+      <div className="text-center py-20 bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-3xl">
+        <div className="w-16 h-16 rounded-2xl bg-red-100 dark:bg-blue-900/40 mx-auto flex items-center justify-center mb-4">
           <GraduationCap className="w-8 h-8 text-red-600 dark:text-red-400" />
         </div>
         <h2 className="text-lg font-semibold text-foreground">No Class Assigned</h2>
@@ -72,14 +72,14 @@ export function DisciplineClient({ schoolId, teacherId, cls, students, logs }: P
           <p className="text-sm text-muted-foreground mt-0.5">{cls.name}</p>
         </div>
         {!isAdding && (
-          <Button onClick={() => setIsAdding(true)} className="bg-orange-600 hover:bg-orange-700 text-white gap-2">
+          <Button onClick={() => setIsAdding(true)} className="bg-blue-600 hover:bg-blue-700 text-white gap-2">
             <Plus className="w-4 h-4" /> Add Record
           </Button>
         )}
       </div>
 
       {isAdding && (
-        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm">
+        <div className="bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-2xl p-5 shadow-sm">
           <h2 className="text-sm font-bold text-foreground mb-4">New Discipline Record</h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
@@ -88,7 +88,7 @@ export function DisciplineClient({ schoolId, teacherId, cls, students, logs }: P
                 required
                 value={formData.studentId}
                 onChange={e => setFormData(p => ({ ...p, studentId: e.target.value }))}
-                className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-red-500/20 focus:border-red-500 outline-none"
+                className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-red-500/20 focus:border-red-500 outline-none"
               >
                 <option value="">Select a student...</option>
                 {students.map(s => <option key={s.id} value={s.id}>{s.first_name} {s.last_name}</option>)}
@@ -102,7 +102,7 @@ export function DisciplineClient({ schoolId, teacherId, cls, students, logs }: P
                 type="text"
                 value={formData.title}
                 onChange={e => setFormData(p => ({ ...p, title: e.target.value }))}
-                className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-red-500/20 focus:border-red-500 outline-none"
+                className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-red-500/20 focus:border-red-500 outline-none"
                 placeholder="Brief title of the incident"
               />
             </div>
@@ -113,7 +113,7 @@ export function DisciplineClient({ schoolId, teacherId, cls, students, logs }: P
                 required
                 value={formData.description}
                 onChange={e => setFormData(p => ({ ...p, description: e.target.value }))}
-                className="w-full p-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-red-500/20 focus:border-red-500 outline-none min-h-[100px]"
+                className="w-full p-3 rounded-lg border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-red-500/20 focus:border-red-500 outline-none min-h-[100px]"
                 placeholder="What happened?"
               />
             </div>
@@ -124,14 +124,14 @@ export function DisciplineClient({ schoolId, teacherId, cls, students, logs }: P
                 type="text"
                 value={formData.actionTaken}
                 onChange={e => setFormData(p => ({ ...p, actionTaken: e.target.value }))}
-                className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-red-500/20 focus:border-red-500 outline-none"
+                className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-red-500/20 focus:border-red-500 outline-none"
                 placeholder="e.g. Warning, Sent to principal"
               />
             </div>
 
             <div className="flex items-center gap-3 pt-2">
               <Button type="button" variant="outline" onClick={() => setIsAdding(false)}>Cancel</Button>
-              <Button type="submit" disabled={loading} className="bg-orange-600 hover:bg-orange-700">
+              <Button type="submit" disabled={loading} className="bg-blue-600 hover:bg-blue-700">
                 {loading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
                 Save Record
               </Button>
@@ -141,8 +141,8 @@ export function DisciplineClient({ schoolId, teacherId, cls, students, logs }: P
       )}
 
       {!isAdding && logs.length === 0 ? (
-        <div className="text-center py-20 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl">
-          <div className="w-16 h-16 rounded-2xl bg-red-100 dark:bg-orange-900/40 mx-auto flex items-center justify-center mb-4">
+        <div className="text-center py-20 bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-3xl">
+          <div className="w-16 h-16 rounded-2xl bg-red-100 dark:bg-blue-900/40 mx-auto flex items-center justify-center mb-4">
             <GraduationCap className="w-8 h-8 text-red-600 dark:text-red-400" />
           </div>
           <h2 className="text-lg font-semibold text-foreground">No Records</h2>
@@ -155,7 +155,7 @@ export function DisciplineClient({ schoolId, teacherId, cls, students, logs }: P
           {logs.map((log) => {
             const initials = `${log.students?.first_name?.[0] || ''}${log.students?.last_name?.[0] || ''}`
             return (
-              <div key={log.id} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/50">
+              <div key={log.id} className="bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-2xl p-4 shadow-sm transition-colors hover:bg-slate-50 dark:hover:bg-[#0d1b2e]/80">
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex items-start gap-3">
                     {log.students?.photo_url ? (
@@ -168,7 +168,7 @@ export function DisciplineClient({ schoolId, teacherId, cls, students, logs }: P
                     <div>
                       <h3 className="font-semibold text-foreground flex items-center gap-2">
                         {log.title}
-                        <span className="text-xs font-medium bg-red-100 text-orange-800 dark:bg-orange-900/40 dark:text-red-400 px-2 py-0.5 rounded-full">
+                        <span className="text-xs font-medium bg-red-100 text-blue-800 dark:bg-blue-900/40 dark:text-red-400 px-2 py-0.5 rounded-full">
                           {log.students?.first_name} {log.students?.last_name}
                         </span>
                       </h3>
@@ -178,7 +178,7 @@ export function DisciplineClient({ schoolId, teacherId, cls, students, logs }: P
                       <p className="text-sm text-foreground/80 leading-relaxed">{log.description}</p>
                       
                       {log.action_taken && (
-                        <div className="mt-3 inline-flex items-center gap-1.5 text-xs font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-md">
+                        <div className="mt-3 inline-flex items-center gap-1.5 text-xs font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-[#0d1b2e] px-2.5 py-1 rounded-md">
                           <span className="uppercase tracking-wider text-[10px]">Action:</span> {log.action_taken}
                         </div>
                       )}

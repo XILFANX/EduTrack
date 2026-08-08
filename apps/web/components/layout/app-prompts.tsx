@@ -159,14 +159,14 @@ export function AppPrompts() {
       
       {step === 'install' && (
         <div className="flex gap-3 items-start">
-          <div className="bg-blue-500/20 p-2 rounded-xl text-cyan-400 shrink-0 mt-1">
+          <div className="bg-blue-500/20 p-2 rounded-xl text-blue-500 shrink-0 mt-1">
             <Download className="w-6 h-6" />
           </div>
           <div className="flex-1 pr-4">
             <h3 className="text-sm font-bold text-white">Install EduTrack App</h3>
             
             {isIOS ? (
-              <div className="mt-2 text-xs text-slate-300 leading-relaxed bg-slate-800/50 p-2.5 rounded-lg border border-slate-700/50">
+              <div className="mt-2 text-xs text-slate-300 leading-relaxed bg-[#0d1b2e]/80 p-2.5 rounded-lg border border-slate-700/50">
                 To install on iOS: tap the <Share className="w-3 h-3 inline mx-1" /> <strong>Share</strong> button below, then select <PlusSquare className="w-3 h-3 inline mx-1" /> <strong>Add to Home Screen</strong>.
               </div>
             ) : (
@@ -186,7 +186,7 @@ export function AppPrompts() {
               )}
               <button 
                 onClick={handleInstallDismiss}
-                className="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium py-1.5 px-4 rounded-lg transition-colors"
+                className="text-xs bg-[#0d1b2e] hover:bg-slate-700 text-slate-300 font-medium py-1.5 px-4 rounded-lg transition-colors"
               >
                 Not Now
               </button>
@@ -197,7 +197,7 @@ export function AppPrompts() {
 
       {step === 'notification' && (
         <div className="flex gap-3 items-start">
-          <div className="bg-blue-500/20 p-2 rounded-xl text-cyan-400 shrink-0 mt-1">
+          <div className="bg-blue-500/20 p-2 rounded-xl text-blue-500 shrink-0 mt-1">
             <Bell className="w-6 h-6" />
           </div>
           <div className="flex-1 pr-4">
@@ -215,7 +215,7 @@ export function AppPrompts() {
               </button>
               <button 
                 onClick={dismissAll}
-                className="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium py-1.5 px-4 rounded-lg transition-colors"
+                className="text-xs bg-[#0d1b2e] hover:bg-slate-700 text-slate-300 font-medium py-1.5 px-4 rounded-lg transition-colors"
               >
                 Not Now
               </button>

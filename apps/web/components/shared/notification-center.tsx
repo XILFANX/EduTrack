@@ -110,14 +110,14 @@ export function NotificationCenter() {
         <div className="flex gap-3">
           <button 
             onClick={markAllAsRead}
-            className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-sm font-medium rounded-xl transition-colors text-slate-700 dark:text-slate-300"
+            className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-[#0d1b2e] hover:bg-slate-200 dark:hover:bg-slate-700 text-sm font-medium rounded-xl transition-colors text-slate-700 dark:text-slate-300"
           >
             <CheckCircle2 className="w-4 h-4" />
             Mark all read
           </button>
           <button 
             onClick={deleteAll}
-            className="flex items-center gap-2 px-4 py-2 bg-orange-50 dark:bg-orange-900/20 hover:bg-red-100 dark:hover:bg-orange-900/40 text-red-600 dark:text-red-400 text-sm font-medium rounded-xl transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-blue-50 dark:bg-blue-900/20 hover:bg-red-100 dark:hover:bg-blue-900/40 text-red-600 dark:text-red-400 text-sm font-medium rounded-xl transition-colors"
           >
             <Trash2 className="w-4 h-4" />
             Delete all

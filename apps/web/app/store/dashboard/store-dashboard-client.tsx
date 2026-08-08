@@ -24,7 +24,7 @@ export function StoreDashboardClient({
   return (
     <div className="space-y-6 pb-24">
       {/* Hero */}
-      <div className="relative bg-gradient-to-br from-blue-600 via-cyan-500 to-blue-600 rounded-[2rem] p-6 overflow-hidden text-white shadow-xl">
+      <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-blue-600 via-blue-500 to-blue-600 p-6 shadow-xl">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-[50px] rounded-full pointer-events-none" />
 
         <div className="relative z-10">
@@ -34,7 +34,7 @@ export function StoreDashboardClient({
             </div>
             <div>
               <h1 className="text-2xl font-black tracking-tight">Store Inventory</h1>
-              <p className="text-cyan-200 text-sm">Track school supplies and disbursements</p>
+              <p className="text-blue-100 text-sm">Track school supplies and disbursements</p>
             </div>
           </div>
 
@@ -47,7 +47,7 @@ export function StoreDashboardClient({
             ].map((s, i) => (
               <div key={i} className="bg-white/10 backdrop-blur-sm rounded-2xl px-3 py-3 text-center">
                 <p className="text-2xl font-extrabold text-white">{s.value}</p>
-                <p className="text-[10px] text-cyan-200 font-semibold uppercase tracking-wide mt-0.5">{s.label}</p>
+                <p className="text-[10px] text-blue-100 font-semibold uppercase tracking-wide mt-0.5">{s.label}</p>
               </div>
             ))}
           </div>
@@ -69,9 +69,9 @@ export function StoreDashboardClient({
               <Link
                 key={i}
                 href={a.href}
-                className="flex flex-col items-center gap-2 p-4 bg-card hover:bg-slate-50 dark:hover:bg-slate-900/50 border border-border hover:border-blue-500/50 rounded-2xl hover:scale-[1.02] transition-all text-center shadow-sm group"
+                className="flex flex-col items-center gap-2 p-4 bg-card hover:bg-slate-50 dark:hover:bg-[#060d1a]/80 border border-border hover:border-blue-500/50 rounded-2xl hover:scale-[1.02] transition-all text-center shadow-sm group"
               >
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-blue-50 dark:bg-blue-900/20 border border-cyan-100 dark:border-blue-800/30 group-hover:bg-blue-100 dark:group-hover:bg-cyan-800/40 transition-colors">
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800/30 group-hover:bg-blue-100 dark:group-hover:bg-cyan-800/40 transition-colors">
                   <Icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                 </div>
                 <div className="text-center min-w-0 w-full mt-1">
@@ -86,17 +86,17 @@ export function StoreDashboardClient({
 
       {/* Low stock warnings */}
       {lowStockItems.length > 0 && (
-        <div className="bg-orange-50 dark:bg-orange-900/10 border border-red-200 dark:border-red-800/30 rounded-2xl p-4">
+        <div className="bg-blue-50 dark:bg-blue-900/10 border border-red-200 dark:border-red-800/30 rounded-2xl p-4">
           <div className="flex items-center gap-2 mb-3">
             <AlertTriangle className="w-4 h-4 text-red-600" />
-            <h3 className="font-bold text-orange-800 dark:text-red-400 text-sm">Low Stock Alerts ({lowStockItems.length})</h3>
+            <h3 className="font-bold text-blue-800 dark:text-red-400 text-sm">Low Stock Alerts ({lowStockItems.length})</h3>
           </div>
           <div className="flex flex-wrap gap-2">
             {lowStockItems.map((item, i) => (
               <div key={i} className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border ${
                 item.qty <= 0
-                  ? 'bg-orange-50 text-red-700 border-red-200 dark:bg-orange-900/20 dark:text-red-400 dark:border-red-800/30'
-                  : 'bg-red-100 text-orange-800 border-red-200 dark:bg-orange-900/20 dark:text-red-300 dark:border-red-800/30'
+                  ? 'bg-blue-50 text-red-700 border-red-200 dark:bg-blue-900/20 dark:text-red-400 dark:border-red-800/30'
+                  : 'bg-red-100 text-blue-800 border-red-200 dark:bg-blue-900/20 dark:text-red-300 dark:border-red-800/30'
               }`}>
                 <span>{item.name}</span>
                 <span className="font-extrabold">{item.qty <= 0 ? 'OUT' : `×${item.qty}`}</span>
@@ -140,7 +140,7 @@ export function StoreDashboardClient({
         {/* Check-outs */}
         <div className="bg-card border border-border rounded-3xl overflow-hidden shadow-sm">
           <div className="px-5 py-4 border-b border-border flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-orange-400" />
+            <div className="w-2 h-2 rounded-full bg-blue-400" />
             <h2 className="font-bold text-foreground text-sm">Recent Disbursements</h2>
           </div>
           {recentTransactions.filter(t => t.transaction_type === 'out').length === 0 ? (
@@ -152,7 +152,7 @@ export function StoreDashboardClient({
             <div className="divide-y divide-border">
               {recentTransactions.filter(t => t.transaction_type === 'out').slice(0, 3).map((tx: any, i: number) => (
                 <div key={i} className="flex items-center gap-3 px-5 py-3 hover:bg-slate-50/60 dark:hover:bg-slate-900/20 transition-colors">
-                  <div className="w-8 h-8 rounded-xl bg-orange-50 dark:bg-orange-900/20 flex items-center justify-center shrink-0">
+                  <div className="w-8 h-8 rounded-xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center shrink-0">
                     <ArrowUpFromLine className="w-3.5 h-3.5 text-red-600 dark:text-red-400" />
                   </div>
                   <div className="flex-1 min-w-0">
@@ -182,9 +182,9 @@ export function StoreDashboardClient({
               const isOut = item.qty <= 0
               return (
                 <div key={i} className={`rounded-xl px-3 py-2.5 border ${
-                  isOut ? 'bg-orange-50 dark:bg-orange-900/10 border-red-200 dark:border-red-800/30'
-                        : isLow ? 'bg-orange-50 dark:bg-orange-900/10 border-red-200 dark:border-red-800/30'
-                        : 'bg-slate-50 dark:bg-slate-900/30 border-border'
+                  isOut ? 'bg-blue-50 dark:bg-blue-900/10 border-red-200 dark:border-red-800/30'
+                        : isLow ? 'bg-blue-50 dark:bg-blue-900/10 border-red-200 dark:border-red-800/30'
+                        : 'bg-slate-50 dark:bg-[#060d1a]/30 border-border'
                 }`}>
                   <p className={`text-lg font-extrabold ${isOut ? 'text-red-600 dark:text-red-400' : isLow ? 'text-red-700 dark:text-red-400' : 'text-foreground'}`}>{item.qty}</p>
                   <p className="text-xs text-muted-foreground truncate mt-0.5">{item.name}</p>

@@ -128,7 +128,7 @@ export function ParentPostPaymentClient({ obligationId, obligationBalance, perio
     <div className="bg-card border border-border rounded-2xl overflow-hidden">
       <div className="px-4 pt-4 pb-3 border-b border-border">
         <p className="font-semibold text-foreground text-sm flex items-center gap-2">
-          <Send className="w-4 h-4 text-cyan-500" />
+          <Send className="w-4 h-4 text-blue-600" />
           Post Fees Payment — {periodLabel}
         </p>
         <p className="text-xs text-muted-foreground mt-0.5">Balance: {fmt(obligationBalance)}</p>
@@ -209,7 +209,7 @@ export function ParentPostPaymentClient({ obligationId, obligationBalance, perio
               </div>
             </div>
 
-            {error && <p className="text-sm text-red-600 bg-orange-50 dark:bg-orange-950/30 px-3 py-2 rounded-xl border border-red-200">{error}</p>}
+            {error && <p className="text-sm text-red-600 bg-blue-50 dark:bg-blue-950/30 px-3 py-2 rounded-xl border border-red-200">{error}</p>}
 
             <button type="submit" disabled={phase === 'submitting'}
               className="w-full bg-[#1D6FEB] hover:bg-[#1558C8] disabled:opacity-50 text-white font-bold py-2.5 rounded-xl transition-all flex items-center justify-center gap-2">
@@ -219,7 +219,7 @@ export function ParentPostPaymentClient({ obligationId, obligationBalance, perio
           </form>
         ) : (
           <form onSubmit={handleCashSubmit} className="space-y-4">
-            <div className="flex gap-2 items-start bg-orange-50 dark:bg-orange-900/20 rounded-xl p-3 border border-red-200 dark:border-red-800">
+            <div className="flex gap-2 items-start bg-blue-50 dark:bg-blue-900/20 rounded-xl p-3 border border-red-200 dark:border-red-800">
               <CreditCard className="w-4 h-4 text-red-600 mt-0.5 shrink-0" />
               <p className="text-[11px] text-red-700 dark:text-red-300">
                 Cash and cheque payments require the school to confirm on their side. You'll be notified once confirmed.
@@ -240,7 +240,7 @@ export function ParentPostPaymentClient({ obligationId, obligationBalance, perio
                 onChange={(e) => setCashNotes(e.target.value)} />
             </div>
 
-            {error && <p className="text-sm text-red-600 bg-orange-50 dark:bg-orange-950/30 px-3 py-2 rounded-xl border border-red-200">{error}</p>}
+            {error && <p className="text-sm text-red-600 bg-blue-50 dark:bg-blue-950/30 px-3 py-2 rounded-xl border border-red-200">{error}</p>}
 
             <button type="submit" disabled={phase === 'submitting'}
               className="w-full bg-[#1D6FEB] hover:bg-[#1558C8] disabled:opacity-50 text-white font-bold py-2.5 rounded-xl flex items-center justify-center gap-2">

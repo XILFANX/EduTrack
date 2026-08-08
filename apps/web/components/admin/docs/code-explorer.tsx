@@ -42,16 +42,16 @@ type OpenTab = {
 function fileIcon(name: string) {
   const ext = name.split('.').pop()?.toLowerCase() ?? ''
   const map: Record<string, { icon: React.ElementType; color: string }> = {
-    ts:   { icon: FileCode,  color: 'text-cyan-400' },
-    tsx:  { icon: FileCode,  color: 'text-cyan-400' },
+    ts:   { icon: FileCode,  color: 'text-blue-500' },
+    tsx:  { icon: FileCode,  color: 'text-blue-500' },
     js:   { icon: FileCode,  color: 'text-red-400' },
     jsx:  { icon: FileCode,  color: 'text-red-400' },
     json: { icon: FileJson,  color: 'text-red-400' },
     md:   { icon: FileText,  color: 'text-slate-400' },
     mdx:  { icon: FileText,  color: 'text-slate-400' },
-    css:  { icon: FileType,  color: 'text-cyan-400' },
-    env:  { icon: FileCog,   color: 'text-cyan-400' },
-    sql:  { icon: FileCog,   color: 'text-cyan-400' },
+    css:  { icon: FileType,  color: 'text-blue-500' },
+    env:  { icon: FileCog,   color: 'text-blue-500' },
+    sql:  { icon: FileCog,   color: 'text-blue-500' },
   }
   return map[ext] ?? { icon: FileCode, color: 'text-slate-400' }
 }
@@ -110,7 +110,7 @@ export function CodeExplorer({ repo, branch = 'main', accent = 'blue' }: CodeExp
   const [copied, setCopied]           = useState(false)
 
   const accentColor = accent === 'violet' ? '#7c3aed' : '#2563eb'
-  const accentText  = accent === 'violet' ? 'text-cyan-400' : 'text-cyan-400'
+  const accentText  = accent === 'violet' ? 'text-blue-500' : 'text-blue-500'
 
   // ── Load tree ──────────────────────────────────────────────────────────────
   const loadTree = useCallback(async () => {
@@ -207,7 +207,7 @@ export function CodeExplorer({ repo, branch = 'main', accent = 'blue' }: CodeExp
             <span className="text-slate-500 group-hover:text-slate-300 shrink-0 transition-colors">
               {isOpen ? <ChevronDown className="w-3 h-3" /> : <ChevronRight className="w-3 h-3" />}
             </span>
-            <span className="text-slate-500 shrink-0 transition-colors group-hover:text-orange-300">
+            <span className="text-slate-500 shrink-0 transition-colors group-hover:text-blue-600">
               {isOpen ? <FolderOpen className="w-3.5 h-3.5" /> : <Folder className="w-3.5 h-3.5" />}
             </span>
             <span className="text-[12px] text-slate-300 group-hover:text-white truncate select-none">
@@ -355,7 +355,7 @@ export function CodeExplorer({ repo, branch = 'main', accent = 'blue' }: CodeExp
                 </a>
                 {activeCode && !activeErr && (
                   <button onClick={handleCopy} className="flex items-center gap-1 hover:text-slate-200 transition-colors">
-                    {copied ? <Check className="w-3 h-3 text-cyan-400" /> : <Copy className="w-3 h-3" />}
+                    {copied ? <Check className="w-3 h-3 text-blue-500" /> : <Copy className="w-3 h-3" />}
                     <span>{copied ? 'Copied!' : 'Copy'}</span>
                   </button>
                 )}

@@ -87,7 +87,7 @@ export function ClassTeacherReviewPanel({ examId, classId, subjects }: Props) {
       </div>
 
       {error && (
-        <div className="flex items-center gap-2 bg-orange-50 dark:bg-orange-900/20 text-red-700 dark:text-red-400 rounded-xl px-3 py-2 text-xs">
+        <div className="flex items-center gap-2 bg-blue-50 dark:bg-blue-900/20 text-red-700 dark:text-red-400 rounded-xl px-3 py-2 text-xs">
           <AlertCircle className="w-3.5 h-3.5 shrink-0" /> {error}
         </div>
       )}
@@ -97,7 +97,7 @@ export function ClassTeacherReviewPanel({ examId, classId, subjects }: Props) {
           <div key={subject.subject_id} className="flex items-center gap-3 px-4 py-3">
             <div className={`w-2 h-2 rounded-full shrink-0 ${
               subject.status === 'finalized' ? 'bg-cyan-400' :
-              subject.status === 'submitted' ? 'bg-orange-400' :
+              subject.status === 'submitted' ? 'bg-blue-400' :
               'bg-slate-300'
             }`} />
             <div className="flex-1 min-w-0">

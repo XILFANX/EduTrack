@@ -78,7 +78,7 @@ export function InviteParentModal({ open, onClose, studentId, studentName, schoo
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent className="max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-xl">
+      <DialogContent className="max-w-md bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-2xl p-6 shadow-xl">
         {step === 1 ? (
           <>
             <DialogHeader className="mb-4">
@@ -129,12 +129,12 @@ export function InviteParentModal({ open, onClose, studentId, studentName, schoo
               </div>
 
               {error && (
-                <div className="p-3 bg-orange-50 dark:bg-orange-900/20 border border-red-100 dark:border-red-900/50 rounded-xl">
+                <div className="p-3 bg-blue-50 dark:bg-blue-900/20 border border-red-100 dark:border-red-900/50 rounded-xl">
                   <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
                 </div>
               )}
 
-              <div className="flex gap-3 pt-4 border-t border-slate-100 dark:border-slate-800">
+              <div className="flex gap-3 pt-4 border-t border-slate-100 dark:border-[#1a2744]">
                 <Button variant="outline" className="flex-1" onClick={handleClose} disabled={loading}>
                   Cancel
                 </Button>
@@ -158,14 +158,14 @@ export function InviteParentModal({ open, onClose, studentId, studentName, schoo
             </div>
 
             <div className="flex items-center gap-2 max-w-sm mx-auto">
-              <div className="flex-1 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-sm text-slate-500 font-mono truncate">
+              <div className="flex-1 bg-slate-50 dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-xl px-3 py-2 text-sm text-slate-500 font-mono truncate">
                 {typeof window !== 'undefined' ? window.location.origin : ''}/invite/{inviteToken}
               </div>
             </div>
 
             <div className="flex gap-2 max-w-sm mx-auto">
               <Button variant="outline" onClick={handleCopy} className="flex-1 gap-1.5 h-10">
-                {copied ? <CheckCircle2 className="w-4 h-4 text-cyan-500" /> : <Copy className="w-4 h-4" />}
+                {copied ? <CheckCircle2 className="w-4 h-4 text-blue-600" /> : <Copy className="w-4 h-4" />}
                 {copied ? 'Copied' : 'Copy Link'}
               </Button>
               <a
@@ -178,7 +178,7 @@ export function InviteParentModal({ open, onClose, studentId, studentName, schoo
               </a>
             </div>
 
-            <Button className="w-full bg-slate-900 hover:bg-slate-800 text-white dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-white" onClick={handleClose}>
+            <Button className="w-full bg-slate-900 hover:bg-[#0d1b2e] text-white dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-white" onClick={handleClose}>
               Done
             </Button>
           </div>

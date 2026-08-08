@@ -65,14 +65,14 @@ export function MessagingPoliciesClient({ initialPolicy }: { initialPolicy: Poli
           className={`flex items-start justify-between gap-6 p-5 rounded-2xl border transition-colors ${
             policy[rule.key]
               ? 'bg-blue-50/50 dark:bg-blue-900/10 border-blue-200 dark:border-blue-800'
-              : 'bg-slate-50 dark:bg-slate-900/50 border-slate-200 dark:border-slate-800'
+              : 'bg-slate-50 dark:bg-[#060d1a]/80 border-slate-200 dark:border-[#1a2744]'
           }`}
         >
           <div className="min-w-0">
             <div className="flex items-center gap-2">
               <p className="font-semibold text-foreground text-sm">{rule.label}</p>
               {rule.warn && (
-                <span className="text-[10px] font-bold text-red-500 bg-orange-50 dark:bg-orange-900/20 border border-red-200 dark:border-red-700 px-2 py-0.5 rounded-full">
+                <span className="text-[10px] font-bold text-red-500 bg-blue-50 dark:bg-blue-900/20 border border-red-200 dark:border-red-700 px-2 py-0.5 rounded-full">
                   Privacy Risk
                 </span>
               )}
@@ -100,7 +100,7 @@ export function MessagingPoliciesClient({ initialPolicy }: { initialPolicy: Poli
         <div className="flex items-center gap-2 text-sm">
           {status === 'success' && (
             <>
-              <CheckCircle2 className="w-4 h-4 text-cyan-500" />
+              <CheckCircle2 className="w-4 h-4 text-blue-600" />
               <span className="text-blue-600 font-medium">Policies saved successfully</span>
             </>
           )}

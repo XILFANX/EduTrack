@@ -35,10 +35,10 @@ export function DeleteAccountDialog() {
   }
 
   return (
-    <div className="mt-12 rounded-xl border border-red-200 bg-orange-50 p-5 dark:bg-orange-950/20 dark:border-red-900/50">
+    <div className="mt-12 rounded-xl border border-red-200 bg-blue-50 p-5 dark:bg-blue-950/20 dark:border-red-900/50">
       <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
         <div>
-          <h3 className="text-orange-800 dark:text-red-400 font-semibold flex items-center gap-1.5">
+          <h3 className="text-blue-800 dark:text-red-400 font-semibold flex items-center gap-1.5">
             <AlertCircle className="w-4 h-4" />
             Danger Zone
           </h3>
@@ -49,7 +49,7 @@ export function DeleteAccountDialog() {
 
         <AlertDialog>
           <AlertDialogTrigger asChild>
-            <button className="flex items-center gap-2 px-4 py-2 bg-red-100 hover:bg-orange-200 text-red-700 dark:bg-orange-900/50 dark:hover:bg-orange-900/80 dark:text-red-300 rounded-lg font-medium text-sm transition-colors shrink-0">
+            <button className="flex items-center gap-2 px-4 py-2 bg-red-100 hover:bg-blue-100 text-red-700 dark:bg-blue-900/50 dark:hover:bg-blue-900/80 dark:text-red-300 rounded-lg font-medium text-sm transition-colors shrink-0">
               <Trash2 className="w-4 h-4" />
               Delete Account
             </button>
@@ -68,7 +68,7 @@ export function DeleteAccountDialog() {
               <button 
                 onClick={handleDelete}
                 disabled={isDeleting}
-                className="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-md font-medium text-sm transition-colors disabled:opacity-50 inline-flex items-center justify-center"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium text-sm transition-colors disabled:opacity-50 inline-flex items-center justify-center"
               >
                 {isDeleting ? 'Deleting...' : 'Yes, delete my account'}
               </button>

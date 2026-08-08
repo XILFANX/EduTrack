@@ -138,7 +138,7 @@ export function PrincipalNav() {
                         >
                           <div className={`relative w-14 h-14 rounded-[1.25rem] flex items-center justify-center transition-all duration-300 ${active
                               ? 'bg-gradient-to-br from-cyan-600 to-blue-600 text-white shadow-lg shadow-blue-500/30 -translate-y-1'
-                              : 'bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/40 dark:to-cyan-900/20 border border-blue-100/50 dark:border-blue-800/50 text-blue-600 dark:text-blue-400 group-hover:shadow-lg group-hover:shadow-blue-500/20 group-hover:-translate-y-1'
+                              : 'bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/40 dark:to-blue-900/20 border border-blue-100/50 dark:border-blue-800/50 text-blue-600 dark:text-blue-400 group-hover:shadow-lg group-hover:shadow-blue-500/20 group-hover:-translate-y-1'
                             }`}>
                             <Icon className="w-7 h-7" strokeWidth={2.5} />
                           </div>

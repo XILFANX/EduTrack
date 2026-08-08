@@ -108,7 +108,7 @@ export function TeacherScheduleView({ periods, slots, roleName }: Props) {
           <table className="w-full min-w-[600px] text-sm border-collapse">
             <thead>
               <tr>
-                <th className="sticky left-0 z-10 bg-slate-50 dark:bg-slate-900 border-b border-r border-border px-4 py-3 text-left font-semibold text-muted-foreground text-xs uppercase tracking-wider min-w-[140px]">
+                <th className="sticky left-0 z-10 bg-slate-50 dark:bg-[#060d1a] border-b border-r border-border px-4 py-3 text-left font-semibold text-muted-foreground text-xs uppercase tracking-wider min-w-[140px]">
                   Period
                 </th>
                 {DAYS.map(day => (
@@ -124,10 +124,10 @@ export function TeacherScheduleView({ periods, slots, roleName }: Props) {
             </thead>
             <tbody>
               {periods.map((period, idx) => (
-                <tr key={period.id} className={idx % 2 === 0 ? '' : 'bg-slate-50/40 dark:bg-slate-900/20'}>
+                <tr key={period.id} className={idx % 2 === 0 ? '' : 'bg-slate-50/40 dark:bg-[#060d1a]/20'}>
                   <td className="sticky left-0 z-10 bg-white dark:bg-slate-950 border-b border-r border-border px-4 py-3">
                     <div className="flex items-center gap-2">
-                      {period.is_break ? <Coffee className="w-3.5 h-3.5 text-red-500 shrink-0" /> : <Clock className="w-3.5 h-3.5 text-cyan-400 shrink-0" />}
+                      {period.is_break ? <Coffee className="w-3.5 h-3.5 text-red-500 shrink-0" /> : <Clock className="w-3.5 h-3.5 text-blue-500 shrink-0" />}
                       <div>
                         <p className="font-semibold text-xs text-foreground">{period.name}</p>
                         <p className="text-[10px] text-muted-foreground">{fmt12(period.start_time)}–{fmt12(period.end_time)}</p>
@@ -140,7 +140,7 @@ export function TeacherScheduleView({ periods, slots, roleName }: Props) {
                     return (
                       <td key={day.num} className="border-b border-r border-border last:border-r-0 p-1.5">
                         {period.is_break ? (
-                          <div className="rounded-xl bg-orange-50 dark:bg-orange-950/20 border border-red-200/60 dark:border-red-800/30 px-2 py-3 text-center">
+                          <div className="rounded-xl bg-blue-50 dark:bg-blue-950/20 border border-red-200/60 dark:border-red-800/30 px-2 py-3 text-center">
                             <Coffee className="w-3.5 h-3.5 text-red-400 mx-auto" />
                           </div>
                         ) : daySlots.length > 0 ? (
@@ -153,7 +153,7 @@ export function TeacherScheduleView({ periods, slots, roleName }: Props) {
                             ))}
                           </div>
                         ) : (
-                          <div className="rounded-xl border border-dashed border-slate-200 dark:border-slate-800 px-2 py-3 text-center">
+                          <div className="rounded-xl border border-dashed border-slate-200 dark:border-[#1a2744] px-2 py-3 text-center">
                             <span className="text-[10px] text-muted-foreground">—</span>
                           </div>
                         )}

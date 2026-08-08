@@ -27,7 +27,7 @@ function FeatureRow({ icon: Icon, title, description }: {
   icon: React.ElementType; title: string; description: string
 }) {
   return (
-    <div className="flex items-start gap-4 p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 hover:border-blue-200 dark:hover:border-cyan-800/50 hover:shadow-sm transition-all group">
+    <div className="flex items-start gap-4 p-4 rounded-xl bg-white dark:bg-[#060d1a] border border-slate-100 dark:border-[#1a2744] hover:border-blue-200 dark:hover:border-cyan-800/50 hover:shadow-sm transition-all group">
       <div className={`shrink-0 w-9 h-9 rounded-lg ${T.bgLight} flex items-center justify-center ${T.accent}`}>
         <Icon className="w-4 h-4" />
       </div>
@@ -89,12 +89,12 @@ function NavBar() {
   ]
 
   return (
-    <nav className="fixed top-0 left-0 right-0 bg-white/90 dark:bg-slate-950/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 z-50">
+    <nav className="fixed top-0 left-0 right-0 bg-white/90 dark:bg-slate-950/90 backdrop-blur-md border-b border-slate-200 dark:border-[#1a2744] z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14">
           {/* Brand */}
           <div className="flex items-center gap-2.5 shrink-0">
-            <div className="w-7 h-7 relative rounded-full overflow-hidden border border-slate-200 dark:border-slate-700 bg-white shadow-sm shrink-0">
+            <div className="w-7 h-7 relative rounded-full overflow-hidden border border-slate-200 dark:border-[#1a2744] bg-white shadow-sm shrink-0">
               <Image src="/logo.png" alt="EduTrack" fill className="object-cover" />
             </div>
             <span className="font-bold text-lg text-slate-900 dark:text-white tracking-tight">EduTrack</span>
@@ -160,10 +160,10 @@ function HeroSection() {
           <Link href="/signup" className="px-5 py-2 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-semibold text-sm transition-all shadow-sm hover:shadow-md active:scale-95 flex items-center gap-2">
             Start your school <ArrowRight className="w-3.5 h-3.5" />
           </Link>
-          <Link href="/login" className="px-5 py-2 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-white font-medium text-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-all active:scale-95">
+          <Link href="/login" className="px-5 py-2 rounded-full bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] text-slate-700 dark:text-white font-medium text-sm hover:bg-slate-50 dark:hover:bg-[#0d1b2e] transition-all active:scale-95">
             I am a Teacher
           </Link>
-          <Link href="/login" className="px-5 py-2 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-white font-medium text-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-all active:scale-95">
+          <Link href="/login" className="px-5 py-2 rounded-full bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] text-slate-700 dark:text-white font-medium text-sm hover:bg-slate-50 dark:hover:bg-[#0d1b2e] transition-all active:scale-95">
             I am a Parent
           </Link>
         </div>
@@ -254,9 +254,9 @@ function PortalSection() {
 // ─── Docs CTA ─────────────────────────────────────────────────────────────────
 function DocsSection() {
   return (
-    <section className="py-14 bg-slate-50 dark:bg-slate-950/50 border-t border-slate-200 dark:border-slate-800">
+    <section className="py-14 bg-slate-50 dark:bg-slate-950/50 border-t border-slate-200 dark:border-[#1a2744]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 md:p-8 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+        <div className="bg-white dark:bg-[#060d1a] rounded-2xl p-6 md:p-8 border border-slate-200 dark:border-[#1a2744] shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
           <div className="flex items-start gap-4">
             <div className={`shrink-0 w-10 h-10 rounded-xl ${T.bgLight} ${T.accent} flex items-center justify-center`}>
               <HelpCircle className="w-5 h-5" />
@@ -272,7 +272,7 @@ function DocsSection() {
             <Link href="/help/00-getting-started" className={`flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg ${T.bg} text-white font-medium text-sm transition-all shadow-sm active:scale-95`}>
               Getting Started <ArrowRight className="w-3.5 h-3.5" />
             </Link>
-            <Link href="/help" className="flex-1 sm:flex-none inline-flex items-center justify-center px-4 py-2 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-medium text-sm hover:bg-slate-50 dark:hover:bg-slate-700 transition-all active:scale-95">
+            <Link href="/help" className="flex-1 sm:flex-none inline-flex items-center justify-center px-4 py-2 rounded-lg bg-white dark:bg-[#0d1b2e] border border-slate-200 dark:border-[#1a2744] text-slate-600 dark:text-slate-300 font-medium text-sm hover:bg-slate-50 dark:hover:bg-slate-700 transition-all active:scale-95">
               All Docs
             </Link>
           </div>
@@ -285,12 +285,12 @@ function DocsSection() {
 // ─── Footer ───────────────────────────────────────────────────────────────────
 function Footer() {
   return (
-    <footer className="bg-slate-50 dark:bg-slate-950 py-12 border-t border-slate-200 dark:border-slate-800">
+    <footer className="bg-slate-50 dark:bg-slate-950 py-12 border-t border-slate-200 dark:border-[#1a2744]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
           <div className="col-span-2 md:col-span-1">
             <div className="flex items-center gap-2.5 mb-4">
-              <div className="w-7 h-7 relative rounded-full overflow-hidden border border-slate-200 dark:border-slate-700 bg-white">
+              <div className="w-7 h-7 relative rounded-full overflow-hidden border border-slate-200 dark:border-[#1a2744] bg-white">
                 <Image src="/logo.png" alt="EduTrack" fill className="object-cover" />
               </div>
               <span className="font-bold text-base text-slate-900 dark:text-white">EduTrack</span>
@@ -325,7 +325,7 @@ function Footer() {
           </div>
         </div>
 
-        <div className="pt-6 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-3">
+        <div className="pt-6 border-t border-slate-200 dark:border-[#1a2744] flex flex-col sm:flex-row justify-between items-center gap-3">
           <p className="text-slate-400 dark:text-slate-500 text-xs">&copy; {new Date().getFullYear()} EduTrack Inc. All rights reserved.</p>
           <div className="flex flex-wrap gap-3 justify-center">
             {[['Terms', '/terms'], ['Privacy', '/privacy'], ['Security', '/security'], ['Cookies', '/cookies']].map(([l, h]) => (

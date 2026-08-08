@@ -74,8 +74,8 @@ function gradeBgClass(grade: string | null) {
   if (!grade) return 'bg-slate-50 text-slate-400 border-transparent'
   if (grade.startsWith('A')) return 'bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-900/20 dark:text-blue-300 dark:border-blue-800/30'
   if (grade.startsWith('B')) return 'bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-900/20 dark:text-blue-300 dark:border-blue-800/30'
-  if (grade.startsWith('C')) return 'bg-orange-50 text-red-700 border-red-200 dark:bg-orange-900/20 dark:text-red-300 dark:border-red-800/30'
-  return 'bg-orange-50 text-red-700 border-red-200 dark:bg-orange-900/20 dark:text-red-300 dark:border-red-800/30'
+  if (grade.startsWith('C')) return 'bg-blue-50 text-red-700 border-red-200 dark:bg-blue-900/20 dark:text-red-300 dark:border-red-800/30'
+  return 'bg-blue-50 text-red-700 border-red-200 dark:bg-blue-900/20 dark:text-red-300 dark:border-red-800/30'
 }
 
 export function ResultsEntryTable({
@@ -225,7 +225,7 @@ export function ResultsEntryTable({
               <CheckCircle2 className="w-3.5 h-3.5" /> Results Finalized
             </span>
           ) : submitted ? (
-            <span className="flex items-center gap-1.5 text-xs font-semibold text-red-700 dark:text-red-400 bg-orange-50 dark:bg-orange-900/20 border border-red-200 dark:border-red-800/30 rounded-full px-3 py-1.5">
+            <span className="flex items-center gap-1.5 text-xs font-semibold text-red-700 dark:text-red-400 bg-blue-50 dark:bg-blue-900/20 border border-red-200 dark:border-red-800/30 rounded-full px-3 py-1.5">
               <Send className="w-3.5 h-3.5" /> Submitted for Review
             </span>
           ) : null}
@@ -248,14 +248,14 @@ export function ResultsEntryTable({
       </div>
 
       {!isLocked && (
-        <div className="flex items-start gap-2 text-xs text-muted-foreground bg-slate-50 dark:bg-slate-900/30 border border-border rounded-xl px-3 py-2">
-          <Info className="w-3.5 h-3.5 shrink-0 mt-0.5 text-cyan-500" />
-          <span>Use <kbd className="px-1.5 py-0.5 text-[10px] bg-white dark:bg-slate-800 border border-border rounded font-mono">↑</kbd> <kbd className="px-1.5 py-0.5 text-[10px] bg-white dark:bg-slate-800 border border-border rounded font-mono">↓</kbd> or <kbd className="px-1.5 py-0.5 text-[10px] bg-white dark:bg-slate-800 border border-border rounded font-mono">Enter</kbd> to navigate between students. Grade and remarks are calculated automatically.</span>
+        <div className="flex items-start gap-2 text-xs text-muted-foreground bg-slate-50 dark:bg-[#060d1a]/30 border border-border rounded-xl px-3 py-2">
+          <Info className="w-3.5 h-3.5 shrink-0 mt-0.5 text-blue-600" />
+          <span>Use <kbd className="px-1.5 py-0.5 text-[10px] bg-white dark:bg-[#0d1b2e] border border-border rounded font-mono">↑</kbd> <kbd className="px-1.5 py-0.5 text-[10px] bg-white dark:bg-[#0d1b2e] border border-border rounded font-mono">↓</kbd> or <kbd className="px-1.5 py-0.5 text-[10px] bg-white dark:bg-[#0d1b2e] border border-border rounded font-mono">Enter</kbd> to navigate between students. Grade and remarks are calculated automatically.</span>
         </div>
       )}
 
       {globalError && (
-        <div className="flex items-center gap-2 bg-orange-50 dark:bg-orange-900/20 border border-red-200 dark:border-red-800/30 text-red-700 dark:text-red-400 rounded-2xl px-4 py-3 text-sm">
+        <div className="flex items-center gap-2 bg-blue-50 dark:bg-blue-900/20 border border-red-200 dark:border-red-800/30 text-red-700 dark:text-red-400 rounded-2xl px-4 py-3 text-sm">
           <AlertCircle className="w-4 h-4 shrink-0" /> {globalError}
         </div>
       )}
@@ -264,7 +264,7 @@ export function ResultsEntryTable({
       <div className="rounded-2xl border border-border overflow-hidden shadow-sm">
         <table className="w-full text-sm">
           <thead>
-            <tr className="bg-slate-50 dark:bg-slate-900">
+            <tr className="bg-slate-50 dark:bg-[#060d1a]">
               <th className="text-left px-4 py-3 text-xs font-bold text-muted-foreground uppercase tracking-wide w-8">#</th>
               <th className="text-left px-4 py-3 text-xs font-bold text-muted-foreground uppercase tracking-wide">
                 <button onClick={() => setSortAsc(!sortAsc)} className="flex items-center gap-1 hover:text-foreground transition-colors">
@@ -320,7 +320,7 @@ export function ResultsEntryTable({
                       placeholder="—"
                       className={`w-20 text-center px-2 py-1.5 rounded-xl border font-bold text-sm outline-none transition-all ${
                         isLocked
-                          ? 'bg-slate-50 dark:bg-slate-900 border-transparent text-foreground cursor-not-allowed'
+                          ? 'bg-slate-50 dark:bg-[#060d1a] border-transparent text-foreground cursor-not-allowed'
                           : 'bg-background border-border focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 text-foreground'
                       }`}
                     />
@@ -337,8 +337,8 @@ export function ResultsEntryTable({
                   </td>
                   <td className="px-4 py-2.5 text-xs text-muted-foreground italic">{remarks || '—'}</td>
                   <td className="px-4 py-2.5">
-                    {status === 'saving' && <Loader2 className="w-3.5 h-3.5 animate-spin text-cyan-500" />}
-                    {status === 'saved' && <CheckCircle2 className="w-3.5 h-3.5 text-cyan-500" />}
+                    {status === 'saving' && <Loader2 className="w-3.5 h-3.5 animate-spin text-blue-600" />}
+                    {status === 'saved' && <CheckCircle2 className="w-3.5 h-3.5 text-blue-600" />}
                     {status === 'error' && <AlertCircle className="w-3.5 h-3.5 text-red-500" />}
                   </td>
                 </tr>
@@ -355,7 +355,7 @@ export function ResultsEntryTable({
             <button
               onClick={handleSaveAll}
               disabled={saving}
-              className="flex items-center gap-2 px-5 py-2.5 bg-slate-700 hover:bg-slate-800 dark:bg-slate-700 dark:hover:bg-slate-600 text-white rounded-xl text-sm font-semibold transition-colors disabled:opacity-60"
+              className="flex items-center gap-2 px-5 py-2.5 bg-slate-700 hover:bg-[#0d1b2e] dark:bg-slate-700 dark:hover:bg-slate-600 text-white rounded-xl text-sm font-semibold transition-colors disabled:opacity-60"
             >
               {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
               Save All

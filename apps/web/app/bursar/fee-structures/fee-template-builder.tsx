@@ -257,7 +257,7 @@ export function FeeTemplateBuilder({ schoolId, initialTemplates, terms, years, c
   return (
     <div className="space-y-6 pb-24">
       {/* Hero */}
-      <div className="bg-gradient-to-br from-cyan-600 via-cyan-500 to-cyan-500 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
+      <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-blue-600 via-blue-500 to-blue-600 p-6 shadow-xl">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-[50px] rounded-full pointer-events-none" />
         <div className="relative z-10 flex items-center justify-between gap-4">
           <div className="flex items-center gap-4">
@@ -266,7 +266,7 @@ export function FeeTemplateBuilder({ schoolId, initialTemplates, terms, years, c
             </div>
             <div>
               <h1 className="text-2xl font-black tracking-tight">Fee Templates</h1>
-              <p className="text-cyan-100 text-sm mt-0.5">Build multi-component fee structures and generate bulk invoices</p>
+              <p className="text-blue-100 text-sm mt-0.5">Build multi-component fee structures and generate bulk invoices</p>
             </div>
           </div>
           <Button onClick={() => setCreateModal(true)} className="bg-white text-blue-700 hover:bg-blue-50 font-bold rounded-xl gap-2 shrink-0">

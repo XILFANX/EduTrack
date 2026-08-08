@@ -53,7 +53,7 @@ export function MessagesLayout({
       </div>
 
       {/* Tab Navigation */}
-      <div className="flex bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-2xl p-1 w-full md:w-fit mb-6 shadow-sm">
+      <div className="flex bg-slate-50 dark:bg-[#060d1a]/80 border border-slate-200 dark:border-[#1a2744] rounded-2xl p-1 w-full md:w-fit mb-6 shadow-sm">
         {tabs.map(({ id, label, icon: Icon }) => (
           <button
             key={id}
@@ -61,7 +61,7 @@ export function MessagesLayout({
             className={`flex-1 md:flex-none flex items-center justify-center gap-2.5 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all ${
               activeTab === id
                 ? 'bg-[#1D6FEB] text-white shadow-md'
-                : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-white dark:hover:bg-slate-800'
+                : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-white dark:hover:bg-[#0d1b2e]'
             }`}
           >
             <Icon className="w-4 h-4" />
@@ -97,10 +97,10 @@ export function MessagesLayout({
           {/* Compose */}
           {audienceOptions.length > 0 && (
             <div className="xl:col-span-2 space-y-4">
-              <section className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm">
-                <div className="p-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/20 flex items-center gap-2">
+              <section className="bg-white dark:bg-[#060d1a]/80 border border-slate-200 dark:border-[#1a2744] rounded-3xl overflow-hidden shadow-sm">
+                <div className="p-4 border-b border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-[#060d1a]/20 flex items-center gap-2">
                   <div className="w-8 h-8 rounded-xl bg-blue-500/10 flex items-center justify-center">
-                    <Megaphone className="w-4 h-4 text-cyan-400" />
+                    <Megaphone className="w-4 h-4 text-blue-500" />
                   </div>
                   <div>
                     <h2 className="font-semibold text-foreground text-sm">New Broadcast</h2>

@@ -53,12 +53,12 @@ export function IssuesClient({
           value={searchQuery}
           onChange={e => setSearchQuery(e.target.value)}
           placeholder="Search by student, admission number, or book title..." 
-          className="w-full h-11 pl-10 pr-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-sm"
+          className="w-full h-11 pl-10 pr-4 rounded-xl border border-slate-200 dark:border-[#1a2744] bg-white dark:bg-[#060d1a] focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-sm"
         />
       </div>
 
       {filteredIssues.length === 0 ? (
-        <div className="text-center py-20 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl">
+        <div className="text-center py-20 bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-3xl">
           <div className="w-16 h-16 rounded-2xl bg-blue-100 dark:bg-blue-900/40 mx-auto flex items-center justify-center mb-4">
             <BookOpen className="w-8 h-8 text-blue-600 dark:text-blue-400" />
           </div>
@@ -68,10 +68,10 @@ export function IssuesClient({
           </p>
         </div>
       ) : (
-        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm">
+        <div className="bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-2xl overflow-hidden shadow-sm">
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left">
-              <thead className="bg-slate-50 dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 text-muted-foreground uppercase tracking-wider text-xs font-semibold">
+              <thead className="bg-slate-50 dark:bg-slate-950 border-b border-slate-200 dark:border-[#1a2744] text-muted-foreground uppercase tracking-wider text-xs font-semibold">
                 <tr>
                   <th className="px-6 py-4">Book</th>
                   <th className="px-6 py-4">Borrower</th>
@@ -85,7 +85,7 @@ export function IssuesClient({
                 {filteredIssues.map((issue) => {
                   const isOverdue = new Date(issue.due_date) < new Date() && issue.status === 'borrowed'
                   return (
-                    <tr key={issue.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors">
+                    <tr key={issue.id} className="hover:bg-slate-50/50 dark:hover:bg-[#0d1b2e]/20 transition-colors">
                       <td className="px-6 py-4">
                         <p className="font-medium text-foreground">{issue.library_books?.title}</p>
                         <p className="text-xs text-muted-foreground font-mono">{issue.library_books?.isbn || 'No ISBN'}</p>

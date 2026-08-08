@@ -46,10 +46,10 @@ export default async function DashboardLayout({ children }: { children: React.Re
   return (
     <div className="min-h-screen bg-muted/40 dark:bg-slate-950 flex flex-col">
       {/* Header */}
-      <header className="bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl sticky top-0 z-40 border-b border-slate-200/50 dark:border-slate-800/50">
+      <header className="bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl sticky top-0 z-40 border-b border-slate-200/50 dark:border-[#1a2744]/50">
         <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 relative rounded-full overflow-hidden shrink-0 border border-slate-200 dark:border-slate-700 bg-white">
+            <div className="w-8 h-8 relative rounded-full overflow-hidden shrink-0 border border-slate-200 dark:border-[#1a2744] bg-white">
               <Image src="/logo.png" alt="EduTrack" fill className="object-cover " />
             </div>
             <div>

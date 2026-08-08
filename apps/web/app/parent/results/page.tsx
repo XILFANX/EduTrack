@@ -81,7 +81,7 @@ export default async function ParentResultsPage({ searchParams }: Props) {
   return (
     <div className="space-y-6 pb-24">
       {/* Hero */}
-      <div className="bg-gradient-to-br from-cyan-600 via-cyan-500 to-cyan-500 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
+      <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-blue-600 via-blue-500 to-blue-600 p-6 shadow-xl">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-[50px] rounded-full pointer-events-none" />
         <div className="relative z-10 flex items-center gap-4">
           <div className="w-12 h-12 rounded-2xl bg-white/15 flex items-center justify-center">
@@ -89,7 +89,7 @@ export default async function ParentResultsPage({ searchParams }: Props) {
           </div>
           <div>
             <h1 className="text-2xl font-black tracking-tight">Report Cards</h1>
-            <p className="text-cyan-100 text-sm mt-0.5">Published academic results for your child</p>
+            <p className="text-blue-100 text-sm mt-0.5">Published academic results for your child</p>
           </div>
         </div>
       </div>
@@ -149,7 +149,7 @@ export default async function ParentResultsPage({ searchParams }: Props) {
                       : 'border-border bg-card hover:border-cyan-300'
                   }`}
                 >
-                  <p className={`text-sm font-bold ${selectedEventId === rc.exam_event_id ? 'text-blue-700 dark:text-cyan-200' : 'text-foreground'}`}>
+                  <p className={`text-sm font-bold ${selectedEventId === rc.exam_event_id ? 'text-blue-700 dark:text-blue-100' : 'text-foreground'}`}>
                     {rc.exam_events?.name}
                   </p>
                   <p className="text-xs text-muted-foreground mt-0.5">
@@ -213,7 +213,7 @@ export default async function ParentResultsPage({ searchParams }: Props) {
                 {/* Subject breakdown */}
                 {subjectResults.length > 0 && (
                   <div className="bg-card border border-border rounded-3xl overflow-hidden">
-                    <div className="px-5 py-3 border-b border-border bg-slate-50/60 dark:bg-slate-900/40">
+                    <div className="px-5 py-3 border-b border-border bg-slate-50/60 dark:bg-[#060d1a]/40">
                       <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Subject Results</p>
                     </div>
                     <table className="w-full text-sm">
@@ -229,7 +229,7 @@ export default async function ParentResultsPage({ searchParams }: Props) {
                         {subjectResults
                           .sort((a, b) => (b.score ?? 0) - (a.score ?? 0))
                           .map((result: any, idx: number) => (
-                            <tr key={idx} className={idx % 2 !== 0 ? 'bg-slate-50/40 dark:bg-slate-900/20' : ''}>
+                            <tr key={idx} className={idx % 2 !== 0 ? 'bg-slate-50/40 dark:bg-[#060d1a]/20' : ''}>
                               <td className="px-5 py-3 font-semibold text-foreground">{result.subjects?.name}</td>
                               <td className="px-5 py-3 text-center font-bold text-foreground">{result.score ?? '—'}</td>
                               <td className="px-5 py-3 text-center">

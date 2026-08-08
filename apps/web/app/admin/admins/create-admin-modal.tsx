@@ -43,10 +43,10 @@ export function CreateAdminModal({ onClose }: { onClose: () => void }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-      <div className="bg-white dark:bg-slate-900 rounded-3xl w-full max-w-md shadow-2xl overflow-hidden">
-        <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-slate-100 dark:border-slate-800">
+      <div className="bg-white dark:bg-[#060d1a] rounded-3xl w-full max-w-md shadow-2xl overflow-hidden">
+        <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-slate-100 dark:border-[#1a2744]">
           <h2 className="text-lg font-bold text-foreground">Add Platform Admin</h2>
-          <button onClick={onClose} className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 hover:text-foreground transition-colors">
+          <button onClick={onClose} className="w-8 h-8 rounded-full bg-slate-100 dark:bg-[#0d1b2e] flex items-center justify-center text-slate-500 hover:text-foreground transition-colors">
             <X className="w-4 h-4" />
           </button>
         </div>
@@ -59,7 +59,7 @@ export function CreateAdminModal({ onClose }: { onClose: () => void }) {
               value={fullName}
               onChange={e => setFullName(e.target.value)}
               placeholder="e.g. Jane Doe"
-              className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
+              className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
             />
           </div>
 
@@ -70,7 +70,7 @@ export function CreateAdminModal({ onClose }: { onClose: () => void }) {
               value={email}
               onChange={e => setEmail(e.target.value)}
               placeholder="e.g. jane@edutrack.com"
-              className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
+              className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
             />
           </div>
 
@@ -81,7 +81,7 @@ export function CreateAdminModal({ onClose }: { onClose: () => void }) {
               value={phoneNumber}
               onChange={e => setPhoneNumber(e.target.value)}
               placeholder="e.g. 0712345678"
-              className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
+              className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
             />
           </div>
 

@@ -124,7 +124,7 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent className="max-w-md max-h-[92vh] flex flex-col bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-0 overflow-hidden">
+      <DialogContent className="max-w-md max-h-[92vh] flex flex-col bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-2xl p-0 overflow-hidden">
         <DialogHeader className="px-6 pt-6 pb-0 shrink-0">
           <DialogTitle className="flex items-center gap-2 text-lg font-bold">
             <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center">
@@ -150,7 +150,7 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
                     className={`text-left px-3 py-2 rounded-xl border transition-all text-sm ${
                       role === opt.value
                         ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/20 ring-1 ring-blue-600'
-                        : 'border-slate-200 dark:border-slate-800 hover:border-cyan-300'
+                        : 'border-slate-200 dark:border-[#1a2744] hover:border-cyan-300'
                     }`}
                   >
                     <p className="font-semibold text-foreground">{opt.label}</p>
@@ -165,7 +165,7 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
               <div className="space-y-2">
                 <Label htmlFor="staffClass">Assign to class <span className="text-muted-foreground font-normal">(Optional)</span></Label>
                 {classes.length === 0 ? (
-                  <p className="text-xs text-red-600 dark:text-red-400 bg-orange-50 dark:bg-orange-900/20 border border-red-200 dark:border-red-800/50 rounded-lg px-3 py-2">
+                  <p className="text-xs text-red-600 dark:text-red-400 bg-blue-50 dark:bg-blue-900/20 border border-red-200 dark:border-red-800/50 rounded-lg px-3 py-2">
                     No classes found. You can invite the teacher now and assign a class later.
                   </p>
                 ) : (
@@ -189,7 +189,7 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
               <div className="space-y-2">
                 <Label htmlFor="staffSubject">Assign Subject <span className="text-muted-foreground font-normal">(Optional)</span></Label>
                 {unoccupiedSubjects.length === 0 ? (
-                  <p className="text-xs text-red-600 dark:text-red-400 bg-orange-50 dark:bg-orange-900/20 border border-red-200 dark:border-red-800/50 rounded-lg px-3 py-2">
+                  <p className="text-xs text-red-600 dark:text-red-400 bg-blue-50 dark:bg-blue-900/20 border border-red-200 dark:border-red-800/50 rounded-lg px-3 py-2">
                     No unoccupied subjects found. You can invite the teacher now and assign them subjects later.
                   </p>
                 ) : (
@@ -255,7 +255,7 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
             <div className="space-y-2">
               <Label>Profile Photo <span className="text-muted-foreground font-normal">(Optional)</span></Label>
               {photoUrl ? (
-                <div className="flex items-center gap-4 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700">
+                <div className="flex items-center gap-4 p-3 bg-slate-50 dark:bg-[#0d1b2e]/80 rounded-xl border border-slate-200 dark:border-[#1a2744]">
                   <img src={photoUrl} alt="Preview" className="w-16 h-16 rounded-full object-cover border-2 border-slate-200 dark:border-slate-600" />
                   <div className="flex-1">
                     <p className="text-sm font-semibold text-foreground">Photo uploaded</p>
@@ -276,7 +276,7 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
             </div>
 
             {error && (
-              <p className="text-sm text-red-600 bg-orange-50 dark:bg-orange-950/30 px-3 py-2 rounded-lg border border-red-200 dark:border-red-900/50">
+              <p className="text-sm text-red-600 bg-blue-50 dark:bg-blue-950/30 px-3 py-2 rounded-lg border border-red-200 dark:border-red-900/50">
                 {error}
               </p>
             )}
@@ -308,7 +308,7 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
             </div>
 
             {/* Link display box */}
-            <div className="bg-slate-50 dark:bg-slate-800/60 rounded-xl p-3.5 border border-slate-200 dark:border-slate-700">
+            <div className="bg-slate-50 dark:bg-[#0d1b2e]/60 rounded-xl p-3.5 border border-slate-200 dark:border-[#1a2744]">
               <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-2">Permanent Invite Link</p>
               <p className="text-xs font-mono break-all text-foreground select-all leading-relaxed">{result.url}</p>
             </div>

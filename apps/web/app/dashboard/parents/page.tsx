@@ -114,12 +114,12 @@ export default async function ParentsDirectoryPage({ searchParams }: { searchPar
   return (
     <div className="space-y-6 max-w-5xl mx-auto pb-24">
       <div className="flex items-center gap-4">
-        <Link href="/dashboard/parents" className="p-2.5 rounded-xl bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200 transition-colors shrink-0 shadow-sm">
+        <Link href="/dashboard/parents" className="p-2.5 rounded-xl bg-white dark:bg-[#060d1a]/80 border border-slate-200 dark:border-[#1a2744] text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200 transition-colors shrink-0 shadow-sm">
           <ChevronLeft className="w-5 h-5" />
         </Link>
         <div className="flex items-center gap-3 min-w-0">
           <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center shrink-0">
-            <Users className="w-5 h-5 text-cyan-400" />
+            <Users className="w-5 h-5 text-blue-500" />
           </div>
           <div className="min-w-0">
             <h1 className="text-xl font-bold text-foreground">

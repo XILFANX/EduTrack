@@ -15,7 +15,7 @@ const ROLE_LABELS: Record<string, { label: string; color: string }> = {
   bursar: { label: 'Bursar', color: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' },
   librarian: { label: 'Librarian', color: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300' },
   storekeeper: { label: 'Storekeeper', color: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300' },
-  transport_matron: { label: 'Transport Matron', color: 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300' },
+  transport_matron: { label: 'Transport Matron', color: 'bg-slate-100 text-slate-700 dark:bg-[#0d1b2e] dark:text-slate-300' },
 }
 
 const WA_ICON = (
@@ -106,8 +106,8 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
 
       {/* Active Members */}
       {filteredStaff.length > 0 && (
-        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-visible">
-          <div className="px-4 py-3 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between rounded-t-2xl">
+        <div className="bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-2xl overflow-visible">
+          <div className="px-4 py-3 border-b border-slate-100 dark:border-[#1a2744] flex items-center justify-between rounded-t-2xl">
             <h2 className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Active Members</h2>
             <span className="text-xs text-muted-foreground">{filteredStaff.length} total</span>
           </div>
@@ -119,7 +119,7 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
               return (
                 <div
                   key={member.id}
-                  className="flex items-start gap-3.5 px-4 py-3.5 hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors cursor-pointer relative"
+                  className="flex items-start gap-3.5 px-4 py-3.5 hover:bg-slate-50 dark:hover:bg-[#0d1b2e]/30 transition-colors cursor-pointer relative"
                   onClick={() => setDetailMember(member)}
                 >
                   {/* Avatar */}
@@ -145,18 +145,18 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
                         </button>
                         {/* Dropdown — z-50, fixed width, no overflow clip */}
                         {shareOpen === member.id && (
-                          <div className="absolute left-0 top-7 z-50 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl shadow-2xl w-52 py-1 overflow-hidden">
+                          <div className="absolute left-0 top-7 z-50 bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-xl shadow-2xl w-52 py-1 overflow-hidden">
                             <button
                               onClick={() => handleCopyLink(inv.token)}
-                              className="w-full flex items-center gap-2.5 px-4 py-3 text-sm text-foreground hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                              className="w-full flex items-center gap-2.5 px-4 py-3 text-sm text-foreground hover:bg-slate-50 dark:hover:bg-[#0d1b2e] transition-colors"
                             >
-                              {copiedToken === inv.token ? <Check className="w-4 h-4 text-cyan-500" /> : <Copy className="w-4 h-4 text-muted-foreground" />}
+                              {copiedToken === inv.token ? <Check className="w-4 h-4 text-blue-600" /> : <Copy className="w-4 h-4 text-muted-foreground" />}
                               Copy Link
                             </button>
                             <a
                               href={buildWA(member.full_name, inv.token)}
                               target="_blank" rel="noopener noreferrer"
-                              className="w-full flex items-center gap-2.5 px-4 py-3 text-sm text-[#25D366] hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                              className="w-full flex items-center gap-2.5 px-4 py-3 text-sm text-[#25D366] hover:bg-slate-50 dark:hover:bg-[#0d1b2e] transition-colors"
                               onClick={() => setShareOpen(null)}
                             >
                               {WA_ICON} Share via WhatsApp
@@ -195,8 +195,8 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
 
       {/* Pending Invite Links */}
       {pendingInvitations.length > 0 && (
-        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden">
-          <div className="px-4 py-3 border-b border-slate-100 dark:border-slate-800">
+        <div className="bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-2xl overflow-hidden">
+          <div className="px-4 py-3 border-b border-slate-100 dark:border-[#1a2744]">
             <h2 className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Pending Invite Links</h2>
           </div>
           <div className="divide-y divide-slate-100 dark:divide-slate-800/50">
@@ -275,20 +275,20 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
 
               {/* Details Cards */}
               <div className="space-y-3">
-                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4">
+                <div className="bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-2xl p-4">
                   <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3">Contact Details</p>
                   <div className="flex items-center gap-3 text-sm">
-                    <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 shrink-0">
+                    <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-[#0d1b2e] flex items-center justify-center text-slate-500 shrink-0">
                       <Phone className="w-4 h-4" />
                     </div>
                     <span className="font-medium text-foreground">{detailMember.phone_number}</span>
                   </div>
                 </div>
 
-                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4">
+                <div className="bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-2xl p-4">
                   <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3">Date Joined</p>
                   <div className="flex items-center gap-3 text-sm">
-                    <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 shrink-0">
+                    <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-[#0d1b2e] flex items-center justify-center text-slate-500 shrink-0">
                       <Calendar className="w-4 h-4" />
                     </div>
                     <span className="font-medium text-foreground">Joined {new Date(detailMember.created_at).toLocaleDateString('en-KE', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
@@ -301,8 +301,8 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
                 <div className="space-y-3 pt-2">
                   <div className="flex gap-2">
                     <button onClick={() => handleCopyLink(detailInvite.token)}
-                      className="flex-1 flex items-center justify-center gap-2 h-11 rounded-xl border border-slate-200 dark:border-slate-700 text-sm font-semibold text-foreground hover:bg-white dark:hover:bg-slate-800 transition-colors shadow-sm bg-slate-50 dark:bg-slate-900">
-                      {copiedToken === detailInvite.token ? <Check className="w-4 h-4 text-cyan-500" /> : <LinkIcon className="w-4 h-4" />}
+                      className="flex-1 flex items-center justify-center gap-2 h-11 rounded-xl border border-slate-200 dark:border-[#1a2744] text-sm font-semibold text-foreground hover:bg-white dark:hover:bg-[#0d1b2e] transition-colors shadow-sm bg-slate-50 dark:bg-[#060d1a]">
+                      {copiedToken === detailInvite.token ? <Check className="w-4 h-4 text-blue-600" /> : <LinkIcon className="w-4 h-4" />}
                       {copiedToken === detailInvite.token ? 'Copied!' : 'Copy Link'}
                     </button>
                     <a href={buildWA(detailMember.full_name, detailInvite.token)} target="_blank" rel="noopener noreferrer"
@@ -311,7 +311,7 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
                     </a>
                   </div>
                   <button onClick={() => handleDelete(detailInvite.id, true, detailMember.full_name)}
-                    className="w-full flex items-center justify-center gap-2 h-11 rounded-xl border border-red-200 dark:border-red-900/50 text-red-600 hover:bg-orange-50 dark:hover:bg-orange-900/20 text-sm font-semibold transition-colors bg-white dark:bg-slate-900 shadow-sm">
+                    className="w-full flex items-center justify-center gap-2 h-11 rounded-xl border border-red-200 dark:border-red-900/50 text-red-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 text-sm font-semibold transition-colors bg-white dark:bg-[#060d1a] shadow-sm">
                     <Trash2 className="w-4 h-4" />
                     Permanently Remove Staff
                   </button>

@@ -51,8 +51,8 @@ export function AnnouncementsFeed({ announcements, currentUserId }: { announceme
 
   if (items.length === 0) {
     return (
-      <div className="text-center py-12 bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-2xl">
-        <div className="w-16 h-16 rounded-2xl bg-slate-100 dark:bg-slate-800/50 mx-auto flex items-center justify-center mb-4">
+      <div className="text-center py-12 bg-white dark:bg-[#060d1a]/80 border border-slate-200 dark:border-[#1a2744] rounded-2xl">
+        <div className="w-16 h-16 rounded-2xl bg-slate-100 dark:bg-[#0d1b2e]/80 mx-auto flex items-center justify-center mb-4">
           <Megaphone className="w-8 h-8 text-slate-500" />
         </div>
         <h3 className="font-semibold text-foreground">No Announcements</h3>
@@ -72,15 +72,15 @@ export function AnnouncementsFeed({ announcements, currentUserId }: { announceme
         const isAuthor = currentUserId && ann.author_id === currentUserId
 
         return (
-          <div key={ann.id} className="relative bg-white dark:bg-slate-900/50 border border-blue-500/20 rounded-2xl p-5 overflow-hidden group hover:border-blue-500/40 transition-colors shadow-sm">
+          <div key={ann.id} className="relative bg-white dark:bg-[#060d1a]/80 border border-blue-500/20 rounded-2xl p-5 overflow-hidden group hover:border-blue-500/40 transition-colors shadow-sm">
             <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 blur-3xl rounded-full pointer-events-none group-hover:bg-blue-500/10 transition-colors" />
             
             <div className="relative z-10 flex flex-col md:flex-row md:items-start justify-between gap-3 mb-3">
               <div>
-                <h3 className="font-bold text-blue-600 dark:text-blue-400 text-lg group-hover:text-cyan-500 dark:group-hover:text-cyan-300 transition-colors">
+                <h3 className="font-bold text-blue-600 dark:text-blue-400 text-lg group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                   {ann.title}
                 </h3>
-                <div className="flex items-center gap-3 text-xs font-semibold text-cyan-900/60 dark:text-cyan-200/60 mt-1">
+                <div className="flex items-center gap-3 text-xs font-semibold text-cyan-900/60 dark:text-blue-100/60 mt-1">
                   <span className="bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 px-2.5 py-1 rounded-lg">
                     From: {ann.users?.salutation ? `${ann.users.salutation} ${ann.users.full_name}` : (ann.users?.full_name || 'School Admin')}
                   </span>
@@ -92,7 +92,7 @@ export function AnnouncementsFeed({ announcements, currentUserId }: { announceme
                 <button
                   onClick={() => handleDelete(ann.id)}
                   disabled={deletingId === ann.id}
-                  className="p-2 text-slate-400 hover:text-red-500 hover:bg-orange-50 dark:hover:bg-red-500/10 rounded-full transition-colors disabled:opacity-50"
+                  className="p-2 text-slate-400 hover:text-red-500 hover:bg-blue-50 dark:hover:bg-red-500/10 rounded-full transition-colors disabled:opacity-50"
                   title="Delete Announcement"
                 >
                   {deletingId === ann.id ? (

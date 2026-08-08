@@ -89,8 +89,8 @@ export function ParentsDirectoryClient({ classes, selectedClassId, studentsWithP
 
   if (studentsWithParents.length === 0) {
     return (
-      <div className="text-center py-20 bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-sm">
-        <div className="w-16 h-16 rounded-2xl bg-slate-100 dark:bg-slate-800/50 mx-auto flex items-center justify-center mb-4">
+      <div className="text-center py-20 bg-white dark:bg-[#060d1a]/80 border border-slate-200 dark:border-[#1a2744] rounded-3xl shadow-sm">
+        <div className="w-16 h-16 rounded-2xl bg-slate-100 dark:bg-[#0d1b2e]/80 mx-auto flex items-center justify-center mb-4">
           <Baby className="w-8 h-8 text-slate-500" />
         </div>
         <h2 className="text-lg font-semibold text-foreground">No students in this class</h2>
@@ -111,10 +111,10 @@ export function ParentsDirectoryClient({ classes, selectedClassId, studentsWithP
   return (
     <div className="space-y-6">
       {/* Directory List */}
-      <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm">
-        <div className="px-5 py-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/20 flex items-center justify-between">
+      <div className="bg-white dark:bg-[#060d1a]/80 border border-slate-200 dark:border-[#1a2744] rounded-3xl overflow-hidden shadow-sm">
+        <div className="px-5 py-4 border-b border-slate-200 dark:border-[#1a2744] bg-slate-50/50 dark:bg-[#060d1a]/20 flex items-center justify-between">
           <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
-            <Users className="w-4 h-4 text-cyan-500" />
+            <Users className="w-4 h-4 text-blue-600" />
             Linked Parents ({uniqueParents.length})
           </div>
         </div>
@@ -126,11 +126,11 @@ export function ParentsDirectoryClient({ classes, selectedClassId, studentsWithP
         ) : (
           <div className="divide-y divide-slate-100 dark:divide-slate-800/50">
             {uniqueParents.map(parent => (
-              <div key={parent.id} className="flex items-center justify-between gap-3 px-4 sm:px-5 py-3 hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+              <div key={parent.id} className="flex items-center justify-between gap-3 px-4 sm:px-5 py-3 hover:bg-slate-50 dark:hover:bg-[#0d1b2e]/30 transition-colors group">
 
                 {/* Left: Avatar + Name + Phone (inline) */}
                 <div className="flex items-center gap-3 min-w-0 flex-1">
-                  <div className="w-9 h-9 rounded-full overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-xs font-bold text-slate-500 dark:text-slate-300 shrink-0 shadow-sm">
+                  <div className="w-9 h-9 rounded-full overflow-hidden bg-slate-100 dark:bg-[#0d1b2e] border border-slate-200 dark:border-[#1a2744] flex items-center justify-center text-xs font-bold text-slate-500 dark:text-slate-300 shrink-0 shadow-sm">
                     {parent.photo_url
                       ? <img src={parent.photo_url} alt="" className="w-full h-full object-cover" />
                       : getInitials(parent.full_name || '')}
@@ -145,7 +145,7 @@ export function ParentsDirectoryClient({ classes, selectedClassId, studentsWithP
                         <a
                           href={`tel:${parent.phone_number}`}
                           onClick={e => e.stopPropagation()}
-                          className="flex items-center gap-1 text-[11px] text-muted-foreground hover:text-cyan-500 dark:hover:text-blue-400 transition-colors shrink-0"
+                          className="flex items-center gap-1 text-[11px] text-muted-foreground hover:text-blue-600 dark:hover:text-blue-400 transition-colors shrink-0"
                           title={`Call ${parent.phone_number}`}
                         >
                           <Phone className="w-3 h-3" />
@@ -157,8 +157,8 @@ export function ParentsDirectoryClient({ classes, selectedClassId, studentsWithP
                     {/* Student badges row */}
                     <div className="flex flex-wrap gap-1 mt-1">
                       {parent.students.map(student => (
-                        <div key={student.id} className="flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-blue-50 dark:bg-blue-500/10 border border-cyan-100 dark:border-blue-500/20">
-                          <Baby className="w-3 h-3 text-cyan-500 shrink-0" />
+                        <div key={student.id} className="flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-blue-50 dark:bg-blue-500/10 border border-blue-100 dark:border-blue-500/20">
+                          <Baby className="w-3 h-3 text-blue-600 shrink-0" />
                           <span className="text-[10px] font-semibold text-blue-700 dark:text-blue-400 truncate max-w-[100px]">
                             {student.first_name} {student.last_name}
                           </span>
@@ -178,7 +178,7 @@ export function ParentsDirectoryClient({ classes, selectedClassId, studentsWithP
                   {parent.phone_number && (
                     <a
                       href={`tel:${parent.phone_number}`}
-                      className="sm:hidden w-8 h-8 flex items-center justify-center rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:text-cyan-500 hover:border-cyan-300 dark:hover:border-blue-600 transition-all shadow-sm"
+                      className="sm:hidden w-8 h-8 flex items-center justify-center rounded-xl border border-slate-200 dark:border-[#1a2744] bg-white dark:bg-[#060d1a] text-slate-500 dark:text-slate-400 hover:text-blue-600 hover:border-cyan-300 dark:hover:border-blue-600 transition-all shadow-sm"
                       title={`Call ${parent.phone_number}`}
                     >
                       <Phone className="w-3.5 h-3.5" />
@@ -188,7 +188,7 @@ export function ParentsDirectoryClient({ classes, selectedClassId, studentsWithP
                     onClick={() => handleMessage(parent.id)}
                     disabled={messagingId === parent.id}
                     title="Send message"
-                    className="w-8 h-8 sm:w-auto sm:h-auto sm:px-3 sm:py-2 flex items-center justify-center gap-1.5 rounded-xl bg-white dark:bg-slate-900 hover:bg-blue-600 dark:hover:bg-blue-600 border border-slate-200 dark:border-slate-700 hover:border-blue-600 dark:hover:border-blue-500 text-slate-500 dark:text-slate-400 hover:text-white text-xs font-semibold transition-all disabled:opacity-60 shadow-sm"
+                    className="w-8 h-8 sm:w-auto sm:h-auto sm:px-3 sm:py-2 flex items-center justify-center gap-1.5 rounded-xl bg-white dark:bg-[#060d1a] hover:bg-blue-600 dark:hover:bg-blue-600 border border-slate-200 dark:border-[#1a2744] hover:border-blue-600 dark:hover:border-blue-500 text-slate-500 dark:text-slate-400 hover:text-white text-xs font-semibold transition-all disabled:opacity-60 shadow-sm"
                   >
                     <MessageSquare className="w-3.5 h-3.5" />
                     <span className="hidden sm:inline">{messagingId === parent.id ? 'Opening…' : 'Message'}</span>
@@ -203,9 +203,9 @@ export function ParentsDirectoryClient({ classes, selectedClassId, studentsWithP
 
       {/* Unlinked Students Section */}
       {unlinkedStudents.length > 0 && (
-        <div className="bg-orange-50 dark:bg-red-500/5 border border-red-200 dark:border-red-500/20 rounded-3xl overflow-hidden">
+        <div className="bg-blue-50 dark:bg-red-500/5 border border-red-200 dark:border-red-500/20 rounded-3xl overflow-hidden">
           <div className="px-5 py-3 border-b border-red-200/50 dark:border-red-500/10 flex items-center justify-between bg-red-100/50 dark:bg-red-500/10">
-            <h3 className="text-sm font-bold text-orange-800 dark:text-red-400">
+            <h3 className="text-sm font-bold text-blue-800 dark:text-red-400">
               Action Needed: {unlinkedStudents.length} Student{unlinkedStudents.length !== 1 ? 's' : ''} Missing Parent Links
             </h3>
             <Link href="/dashboard/students" className="text-xs font-bold text-red-600 hover:text-red-700 dark:text-red-500 dark:hover:text-red-400 transition-colors">
@@ -214,7 +214,7 @@ export function ParentsDirectoryClient({ classes, selectedClassId, studentsWithP
           </div>
           <div className="px-5 py-4 flex flex-wrap gap-2">
             {unlinkedStudents.map(student => (
-              <div key={student.id} className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white dark:bg-slate-900 border border-red-100 dark:border-red-500/20 shadow-sm">
+              <div key={student.id} className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white dark:bg-[#060d1a] border border-red-100 dark:border-red-500/20 shadow-sm">
                 <span className="text-xs font-semibold text-foreground">{student.first_name} {student.last_name}</span>
                 <span className="text-[10px] text-muted-foreground font-mono">{student.admission_number}</span>
               </div>

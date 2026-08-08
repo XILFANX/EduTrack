@@ -85,10 +85,10 @@ export function StudentProfileClient({ student, classes }: { student: any, class
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
       {/* ── Left Column: Main Profile Card ── */}
       <div className="md:col-span-1">
-        <Card className="border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden relative">
+        <Card className="border-slate-200 dark:border-[#1a2744] shadow-sm overflow-hidden relative">
           <div className="h-24 bg-gradient-to-r from-[#1D6FEB] to-[#22D3EE]" />
           <CardContent className="px-6 pb-6 pt-0 relative">
-            <div className="w-20 h-20 rounded-2xl bg-white dark:bg-slate-900 border-4 border-white dark:border-slate-950 shadow-sm mx-auto -mt-10 flex items-center justify-center relative z-10 overflow-hidden group">
+            <div className="w-20 h-20 rounded-2xl bg-white dark:bg-[#060d1a] border-4 border-white dark:border-slate-950 shadow-sm mx-auto -mt-10 flex items-center justify-center relative z-10 overflow-hidden group">
               {photoUrl ? (
                 <img src={photoUrl} alt={`${student.first_name}'s photo`} className="w-full h-full object-cover" />
               ) : (
@@ -114,13 +114,13 @@ export function StudentProfileClient({ student, classes }: { student: any, class
             
             <div className="text-center mt-3 mb-6">
               <h2 className="text-xl font-bold text-foreground">{student.first_name} {student.middle_name ? student.middle_name + ' ' : ''}{student.last_name}</h2>
-              <p className="text-sm font-mono text-muted-foreground mt-1 bg-slate-100 dark:bg-slate-800/50 inline-block px-2 py-0.5 rounded-md">
+              <p className="text-sm font-mono text-muted-foreground mt-1 bg-slate-100 dark:bg-[#0d1b2e]/80 inline-block px-2 py-0.5 rounded-md">
                 {student.admission_number}
               </p>
             </div>
 
             <div className="space-y-4">
-              <div className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50">
+              <div className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-[#0d1b2e]/80">
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center shrink-0">
                     <User className="w-4 h-4 text-blue-600 dark:text-blue-400" />
@@ -140,7 +140,7 @@ export function StudentProfileClient({ student, classes }: { student: any, class
                     {['Active', 'Suspended', 'Transferred', 'Alumni'].map(s => (
                       <DropdownMenuItem 
                         key={s} 
-                        className={`gap-2 ${status === s ? 'bg-slate-100 dark:bg-slate-800' : ''}`}
+                        className={`gap-2 ${status === s ? 'bg-slate-100 dark:bg-[#0d1b2e]' : ''}`}
                         onClick={() => handleStatusChange(s)}
                       >
                         {status === s && <Check className="w-4 h-4 text-blue-600" />} 
@@ -151,7 +151,7 @@ export function StudentProfileClient({ student, classes }: { student: any, class
                 </DropdownMenu>
               </div>
 
-              <div className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50">
+              <div className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-[#0d1b2e]/80">
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center shrink-0">
                     <GraduationCap className="w-4 h-4 text-blue-600 dark:text-blue-400" />
@@ -169,7 +169,7 @@ export function StudentProfileClient({ student, classes }: { student: any, class
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="w-48 rounded-xl">
                     <DropdownMenuItem 
-                      className={`gap-2 ${currentClassId === null ? 'bg-slate-100 dark:bg-slate-800' : ''}`}
+                      className={`gap-2 ${currentClassId === null ? 'bg-slate-100 dark:bg-[#0d1b2e]' : ''}`}
                       onClick={() => handleAssignClass(null)}
                     >
                       {currentClassId === null && <Check className="w-4 h-4 text-blue-600" />} 
@@ -178,7 +178,7 @@ export function StudentProfileClient({ student, classes }: { student: any, class
                     {classes.map(c => (
                       <DropdownMenuItem 
                         key={c.id} 
-                        className={`gap-2 ${currentClassId === c.id ? 'bg-slate-100 dark:bg-slate-800' : ''}`}
+                        className={`gap-2 ${currentClassId === c.id ? 'bg-slate-100 dark:bg-[#0d1b2e]' : ''}`}
                         onClick={() => handleAssignClass(c.id)}
                       >
                         {currentClassId === c.id && <Check className="w-4 h-4 text-blue-600" />} 
@@ -195,7 +195,7 @@ export function StudentProfileClient({ student, classes }: { student: any, class
 
       {/* ── Right Column: Details & Tabs ── */}
       <div className="md:col-span-2 space-y-4">
-        <Card className="border-slate-200 dark:border-slate-800 shadow-sm">
+        <Card className="border-slate-200 dark:border-[#1a2744] shadow-sm">
           <CardContent className="p-6">
             <h3 className="font-bold text-lg mb-4">Personal Details</h3>
             <div className="grid grid-cols-2 gap-y-6">
@@ -215,9 +215,9 @@ export function StudentProfileClient({ student, classes }: { student: any, class
           </CardContent>
         </Card>
 
-        <Card className="border-slate-200 dark:border-slate-800 shadow-sm">
+        <Card className="border-slate-200 dark:border-[#1a2744] shadow-sm">
           <CardContent className="p-6 text-center py-12">
-            <div className="w-12 h-12 rounded-full bg-slate-100 dark:bg-slate-800 mx-auto flex items-center justify-center mb-3">
+            <div className="w-12 h-12 rounded-full bg-slate-100 dark:bg-[#0d1b2e] mx-auto flex items-center justify-center mb-3">
               <User className="w-5 h-5 text-slate-400" />
             </div>
             <h3 className="font-semibold text-lg">No Parents Linked</h3>

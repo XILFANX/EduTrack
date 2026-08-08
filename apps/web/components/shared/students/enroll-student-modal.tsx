@@ -127,9 +127,9 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
 
   return (
     <Dialog open={open} onOpenChange={(o) => { if (!o) handleClose() }}>
-      <DialogContent className="max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-0 overflow-hidden">
+      <DialogContent className="max-w-md bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-2xl shadow-2xl p-0 overflow-hidden">
         {/* Progress bar */}
-        <div className="h-1 bg-slate-100 dark:bg-slate-800">
+        <div className="h-1 bg-slate-100 dark:bg-[#0d1b2e]">
           <div
             className="h-1 bg-gradient-to-r from-cyan-500 to-cyan-400 transition-all duration-500"
             style={{ width: `${done ? 100 : ((step - 1) / STEPS.length) * 100}%` }}
@@ -181,12 +181,12 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
                     <button
                       type="button"
                       onClick={() => photoInputRef.current?.click()}
-                      className="w-16 h-16 rounded-full border-2 border-dashed border-slate-300 dark:border-slate-600 hover:border-cyan-400 flex items-center justify-center bg-slate-50 dark:bg-slate-800/50 transition-colors shrink-0 overflow-hidden group relative"
+                      className="w-16 h-16 rounded-full border-2 border-dashed border-slate-300 dark:border-slate-600 hover:border-cyan-400 flex items-center justify-center bg-slate-50 dark:bg-[#0d1b2e]/80 transition-colors shrink-0 overflow-hidden group relative"
                     >
                       {photoPreview ? (
                         <img src={photoPreview} alt="preview" className="w-full h-full object-cover" />
                       ) : (
-                        <Camera className="w-6 h-6 text-slate-400 group-hover:text-cyan-500 transition-colors" />
+                        <Camera className="w-6 h-6 text-slate-400 group-hover:text-blue-600 transition-colors" />
                       )}
                     </button>
                     <div className="flex-1 min-w-0">
@@ -221,7 +221,7 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
                   {/* Admission Number — prominent */}
                   <div className="space-y-1.5">
                     <Label htmlFor="enroll-adm" className="flex items-center gap-1.5">
-                      <Hash className="w-3.5 h-3.5 text-cyan-500" />
+                      <Hash className="w-3.5 h-3.5 text-blue-600" />
                       Admission Number *
                     </Label>
                     <Input
@@ -234,7 +234,7 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
                     <p className="text-[11px] text-muted-foreground">This is the key identifier used throughout the system. Must be unique per student.</p>
                   </div>
 
-                  <div className="border-t border-slate-100 dark:border-slate-800 pt-4 space-y-4">
+                  <div className="border-t border-slate-100 dark:border-[#1a2744] pt-4 space-y-4">
                     <div className="grid grid-cols-2 gap-3">
                       <div className="space-y-1.5">
                         <Label>First Name *</Label>
@@ -285,7 +285,7 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
                             className={`flex-1 py-2 rounded-xl border text-sm font-semibold transition-all ${
                               gender === g
                                 ? 'border-[#1D6FEB] bg-[#1D6FEB] text-white'
-                                : 'border-slate-200 dark:border-slate-700 text-muted-foreground hover:border-cyan-300'
+                                : 'border-slate-200 dark:border-[#1a2744] text-muted-foreground hover:border-cyan-300'
                             }`}
                           >
                             {g}
@@ -296,7 +296,7 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
                   </div>
 
                   {/* Class Assignment — inline in step 1 */}
-                  <div className="border-t border-slate-100 dark:border-slate-800 pt-4 space-y-2">
+                  <div className="border-t border-slate-100 dark:border-[#1a2744] pt-4 space-y-2">
                     <Label>Assign to Class <span className="text-muted-foreground font-normal">(Optional)</span></Label>
                     <div className="grid grid-cols-2 gap-2 max-h-40 overflow-y-auto pr-1">
                       <button
@@ -305,7 +305,7 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
                         className={`text-left px-4 py-2.5 rounded-xl border text-sm transition-all ${
                           classId === null
                             ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/20 ring-1 ring-blue-600 text-blue-700 dark:text-blue-300 font-semibold'
-                            : 'border-slate-200 dark:border-slate-700 text-muted-foreground hover:border-cyan-300'
+                            : 'border-slate-200 dark:border-[#1a2744] text-muted-foreground hover:border-cyan-300'
                         }`}
                       >
                         Unassigned
@@ -318,7 +318,7 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
                           className={`text-left px-4 py-2.5 rounded-xl border text-sm font-medium transition-all ${
                             classId === cls.id
                               ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/20 ring-1 ring-blue-600 text-blue-700 dark:text-blue-300'
-                              : 'border-slate-200 dark:border-slate-700 text-foreground hover:border-cyan-300'
+                              : 'border-slate-200 dark:border-[#1a2744] text-foreground hover:border-cyan-300'
                           }`}
                         >
                           {cls.name}
@@ -332,9 +332,9 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
               {/* ── Step 2: Confirm ── */}
               {step === 2 && (
                 <div className="space-y-3">
-                  <div className="flex items-center gap-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl p-3">
+                  <div className="flex items-center gap-3 bg-slate-50 dark:bg-[#0d1b2e]/80 rounded-xl p-3">
                     {photoPreview ? (
-                      <img src={photoPreview} alt="" className="w-12 h-12 rounded-full object-cover shrink-0 border border-slate-200 dark:border-slate-700" />
+                      <img src={photoPreview} alt="" className="w-12 h-12 rounded-full object-cover shrink-0 border border-slate-200 dark:border-[#1a2744]" />
                     ) : (
                       <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center shrink-0">
                         <span className="text-base font-bold text-blue-700 dark:text-blue-300">{firstName[0]}{lastName[0]}</span>
@@ -345,7 +345,7 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
                       <p className="text-xs font-mono text-muted-foreground">{admissionNumber}</p>
                     </div>
                   </div>
-                  <div className="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-4 space-y-2 text-sm">
+                  <div className="bg-slate-50 dark:bg-[#0d1b2e]/80 rounded-xl p-4 space-y-2 text-sm">
                     {[
                       { label: 'Date of Birth', value: dob || 'Not provided' },
                       { label: 'Gender', value: gender || 'Not provided' },
@@ -365,7 +365,7 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
               )}
 
               {error && (
-                <p className="text-sm text-red-600 bg-orange-50 dark:bg-orange-900/20 px-3 py-2 rounded-lg border border-red-200 dark:border-red-800/40">
+                <p className="text-sm text-red-600 bg-blue-50 dark:bg-blue-900/20 px-3 py-2 rounded-lg border border-red-200 dark:border-red-800/40">
                   {error}
                 </p>
               )}

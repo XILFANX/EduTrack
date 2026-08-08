@@ -44,7 +44,7 @@ export default async function StoreOverviewPage() {
         </div>
         <Link
           href="/store/dashboard"
-          className="text-sm font-semibold text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-cyan-300 transition-colors"
+          className="text-sm font-semibold text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-400 transition-colors"
         >
           Full Portal →
         </Link>
@@ -55,11 +55,11 @@ export default async function StoreOverviewPage() {
         {[
           { label: 'Total Items', value: totalItems, icon: Package, color: 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400' },
           { label: 'Low Stock', value: lowStockItems, icon: TrendingDown, color: lowStockItems > 0 ? 'bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400' : 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400' },
-          { label: 'Transactions', value: transactions?.length ?? 0, icon: ArrowRightLeft, color: 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400' },
+          { label: 'Transactions', value: transactions?.length ?? 0, icon: ArrowRightLeft, color: 'bg-slate-100 dark:bg-[#0d1b2e] text-slate-600 dark:text-slate-400' },
         ].map(stat => {
           const Icon = stat.icon
           return (
-            <div key={stat.label} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm">
+            <div key={stat.label} className="bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-2xl p-4 shadow-sm">
               <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-3 ${stat.color}`}>
                 <Icon className="w-5 h-5" />
               </div>
@@ -71,8 +71,8 @@ export default async function StoreOverviewPage() {
       </div>
 
       {/* Inventory Table */}
-      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm">
-        <div className="px-6 py-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+      <div className="bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-2xl overflow-hidden shadow-sm">
+        <div className="px-6 py-4 border-b border-slate-200 dark:border-[#1a2744] flex items-center justify-between">
           <h2 className="font-semibold text-foreground flex items-center gap-2"><Package className="w-4 h-4 text-slate-500" /> Inventory</h2>
           <Link href="/store/inventory" className="flex items-center gap-1.5 text-xs font-semibold text-blue-600 hover:text-blue-700 transition-colors">
             <Plus className="w-3.5 h-3.5" /> Add Item
@@ -87,7 +87,7 @@ export default async function StoreOverviewPage() {
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left">
-              <thead className="bg-slate-50 dark:bg-slate-950 text-xs font-semibold text-muted-foreground uppercase tracking-wider border-b border-slate-200 dark:border-slate-800">
+              <thead className="bg-slate-50 dark:bg-slate-950 text-xs font-semibold text-muted-foreground uppercase tracking-wider border-b border-slate-200 dark:border-[#1a2744]">
                 <tr>
                   <th className="px-6 py-3">Item</th>
                   <th className="px-6 py-3">Category</th>
@@ -99,7 +99,7 @@ export default async function StoreOverviewPage() {
                 {items.map(item => {
                   const isLow = item.quantity_on_hand <= (item.reorder_level ?? 5)
                   return (
-                    <tr key={item.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors">
+                    <tr key={item.id} className="hover:bg-slate-50/50 dark:hover:bg-[#0d1b2e]/20 transition-colors">
                       <td className="px-6 py-3 font-medium text-foreground">{item.name}</td>
                       <td className="px-6 py-3 text-muted-foreground">{item.category || '—'}</td>
                       <td className="px-6 py-3 font-semibold text-foreground">
@@ -120,8 +120,8 @@ export default async function StoreOverviewPage() {
       </div>
 
       {/* Recent Transactions */}
-      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm">
-        <div className="px-6 py-4 border-b border-slate-200 dark:border-slate-800">
+      <div className="bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-2xl overflow-hidden shadow-sm">
+        <div className="px-6 py-4 border-b border-slate-200 dark:border-[#1a2744]">
           <h2 className="font-semibold text-foreground flex items-center gap-2"><ArrowRightLeft className="w-4 h-4 text-slate-500" /> Recent Transactions</h2>
         </div>
         {!transactions || transactions.length === 0 ? (
@@ -132,7 +132,7 @@ export default async function StoreOverviewPage() {
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left">
-              <thead className="bg-slate-50 dark:bg-slate-950 text-xs font-semibold text-muted-foreground uppercase tracking-wider border-b border-slate-200 dark:border-slate-800">
+              <thead className="bg-slate-50 dark:bg-slate-950 text-xs font-semibold text-muted-foreground uppercase tracking-wider border-b border-slate-200 dark:border-[#1a2744]">
                 <tr>
                   <th className="px-6 py-3">Date</th>
                   <th className="px-6 py-3">Item</th>
@@ -144,7 +144,7 @@ export default async function StoreOverviewPage() {
                 {transactions.map(t => {
                   const storeItem = t.store_items as any
                   return (
-                    <tr key={t.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors">
+                    <tr key={t.id} className="hover:bg-slate-50/50 dark:hover:bg-[#0d1b2e]/20 transition-colors">
                       <td className="px-6 py-3 text-muted-foreground">{new Date(t.created_at).toLocaleDateString()}</td>
                       <td className="px-6 py-3 font-medium text-foreground">{storeItem?.name || '—'}</td>
                       <td className="px-6 py-3">

@@ -142,7 +142,7 @@ export default function OnboardingPage() {
 
         {/* Header */}
         <div className="text-center space-y-2">
-          <div className="w-12 h-12 relative mx-auto rounded-full overflow-hidden shadow-sm border border-slate-200 dark:border-slate-800 bg-white">
+          <div className="w-12 h-12 relative mx-auto rounded-full overflow-hidden shadow-sm border border-slate-200 dark:border-[#1a2744] bg-white">
             <Image src="/logo.png" alt="EduTrack" fill className="object-cover " />
           </div>
           <p className="text-blue-600 dark:text-blue-400 font-bold text-xl">EduTrack</p>
@@ -178,12 +178,12 @@ export default function OnboardingPage() {
                     <button
                       type="button"
                       onClick={() => fileInputRef.current?.click()}
-                      className="w-16 h-16 rounded-2xl border-2 border-dashed border-slate-300 dark:border-slate-600 hover:border-cyan-400 flex items-center justify-center bg-slate-50 dark:bg-slate-800/50 transition-colors shrink-0 overflow-hidden group relative"
+                      className="w-16 h-16 rounded-2xl border-2 border-dashed border-slate-300 dark:border-slate-600 hover:border-cyan-400 flex items-center justify-center bg-slate-50 dark:bg-[#0d1b2e]/80 transition-colors shrink-0 overflow-hidden group relative"
                     >
                       {logoPreview ? (
                         <img src={logoPreview} alt="preview" className="w-full h-full object-cover" />
                       ) : (
-                        <Camera className="w-6 h-6 text-slate-400 group-hover:text-cyan-500 transition-colors" />
+                        <Camera className="w-6 h-6 text-slate-400 group-hover:text-blue-600 transition-colors" />
                       )}
                     </button>
                     <div className="flex-1 min-w-0">
@@ -378,7 +378,7 @@ export default function OnboardingPage() {
             )}
 
             {error && (
-              <p className="text-sm text-red-600 bg-orange-50 dark:bg-orange-900/20 px-3 py-2 rounded-md border border-red-200 dark:border-red-800/40">
+              <p className="text-sm text-red-600 bg-blue-50 dark:bg-blue-900/20 px-3 py-2 rounded-md border border-red-200 dark:border-red-800/40">
                 {error}
               </p>
             )}

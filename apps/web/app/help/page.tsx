@@ -35,14 +35,14 @@ export default function HelpCenterPage() {
             <Link 
               key={guide.slug} 
               href={`/help/${guide.slug}`}
-              className="group p-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-sm hover:shadow-md transition-all hover:border-cyan-300 dark:hover:border-cyan-700 block"
+              className="group p-6 bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-3xl shadow-sm hover:shadow-md transition-all hover:border-cyan-300 dark:hover:border-cyan-700 block"
             >
               <div className="flex flex-col h-full justify-between">
                 <div>
-                  <div className="w-12 h-12 rounded-xl bg-blue-50 dark:bg-slate-800 text-blue-600 dark:text-blue-400 flex items-center justify-center mb-6 group-hover:bg-blue-100 dark:group-hover:bg-cyan-900/50 transition-colors">
+                  <div className="w-12 h-12 rounded-xl bg-blue-50 dark:bg-[#0d1b2e] text-blue-600 dark:text-blue-400 flex items-center justify-center mb-6 group-hover:bg-blue-100 dark:group-hover:bg-cyan-900/50 transition-colors">
                     <Icon className="w-6 h-6" />
                   </div>
-                  <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-colors">{guide.title}</h3>
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-500 transition-colors">{guide.title}</h3>
                   <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-6">{guide.desc}</p>
                 </div>
                 <div className="flex items-center text-sm font-medium text-blue-600 dark:text-blue-400">

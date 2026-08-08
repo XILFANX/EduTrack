@@ -120,7 +120,7 @@ export function ClassDetailClient({
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center gap-3">
-        <Link href="/dashboard/classes" className="w-10 h-10 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors shrink-0">
+        <Link href="/dashboard/classes" className="w-10 h-10 rounded-full bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] flex items-center justify-center hover:bg-slate-50 dark:hover:bg-[#0d1b2e] transition-colors shrink-0">
           <ArrowLeft className="w-5 h-5 text-slate-500" />
         </Link>
         <div className="flex-1 min-w-0">
@@ -130,7 +130,7 @@ export function ClassDetailClient({
         {students.length === 0 && (
           <button
             onClick={handleDeleteClass}
-            className="shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-xl text-red-600 hover:bg-orange-50 dark:hover:bg-orange-900/20 border border-red-200 dark:border-red-900/50 text-sm font-medium transition-colors"
+            className="shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-xl text-red-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 border border-red-200 dark:border-red-900/50 text-sm font-medium transition-colors"
             title="Delete class"
           >
             <Trash2 className="w-4 h-4" />
@@ -140,7 +140,7 @@ export function ClassDetailClient({
       </div>
 
       {/* Tab Bar — full text, blue underline active indicator */}
-      <div className="flex border-b border-slate-200 dark:border-slate-800">
+      <div className="flex border-b border-slate-200 dark:border-[#1a2744]">
         {tabs.map(t => (
           <button
             key={t.id}
@@ -161,11 +161,11 @@ export function ClassDetailClient({
       {activeTab === 'overview' && (
         <div className="space-y-4">
           {/* Class info card */}
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5">
+          <div className="bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-2xl p-5">
             <h2 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-4">Class Details</h2>
             <div className="flex items-start justify-between gap-4 flex-wrap">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-[#0d1b2e] flex items-center justify-center shrink-0">
                   <GraduationCap className="w-5 h-5 text-slate-500" />
                 </div>
                 <div>
@@ -203,7 +203,7 @@ export function ClassDetailClient({
                       <Check className="w-4 h-4" />
                     </button>
                     <button onClick={() => { setAssignMode(false); setAssignError(null) }}
-                      className="w-8 h-8 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 flex items-center justify-center transition-colors">
+                      className="w-8 h-8 rounded-lg border border-slate-200 dark:border-[#1a2744] hover:bg-slate-100 dark:hover:bg-[#0d1b2e] text-slate-500 flex items-center justify-center transition-colors">
                       <X className="w-4 h-4" />
                     </button>
                   </div>
@@ -220,7 +220,7 @@ export function ClassDetailClient({
               { label: 'Subjects', value: '—', icon: BookOpen, color: 'indigo' },
               { label: 'Avg. Score', value: '—', icon: TrendingUp, color: 'cyan' },
             ].map(({ label, value, icon: Icon, color }) => (
-              <div key={label} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4">
+              <div key={label} className="bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-2xl p-4">
                 <div className={`w-9 h-9 rounded-xl bg-${color}-100 dark:bg-${color}-900/30 flex items-center justify-center mb-3`}>
                   <Icon className={`w-4.5 h-4.5 text-${color}-600 dark:text-${color}-400`} />
                 </div>
@@ -233,7 +233,7 @@ export function ClassDetailClient({
           {/* Quick action to see students */}
           <button
             onClick={() => setActiveTab('students')}
-            className="w-full flex items-center justify-between px-4 py-3.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group"
+            className="w-full flex items-center justify-between px-4 py-3.5 bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-2xl hover:bg-slate-50 dark:hover:bg-[#0d1b2e]/80 transition-colors group"
           >
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center">
@@ -244,12 +244,12 @@ export function ClassDetailClient({
                 <p className="text-xs text-muted-foreground">{students.length} enrolled in {cls.name}</p>
               </div>
             </div>
-            <ArrowLeft className="w-4 h-4 text-slate-400 rotate-180 group-hover:text-cyan-500 transition-colors" />
+            <ArrowLeft className="w-4 h-4 text-slate-400 rotate-180 group-hover:text-blue-600 transition-colors" />
           </button>
 
           <button
             onClick={() => setActiveTab('performance')}
-            className="w-full flex items-center justify-between px-4 py-3.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group"
+            className="w-full flex items-center justify-between px-4 py-3.5 bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-2xl hover:bg-slate-50 dark:hover:bg-[#0d1b2e]/80 transition-colors group"
           >
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center">
@@ -260,7 +260,7 @@ export function ClassDetailClient({
                 <p className="text-xs text-muted-foreground">Ranked student results, term by term</p>
               </div>
             </div>
-            <ArrowLeft className="w-4 h-4 text-slate-400 rotate-180 group-hover:text-cyan-500 transition-colors" />
+            <ArrowLeft className="w-4 h-4 text-slate-400 rotate-180 group-hover:text-blue-600 transition-colors" />
           </button>
         </div>
       )}
@@ -274,7 +274,7 @@ export function ClassDetailClient({
               <input
                 type="text" value={search} onChange={e => setSearch(e.target.value)}
                 placeholder="Search students…"
-                className="w-full h-10 pl-10 pr-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                className="w-full h-10 pl-10 pr-4 rounded-xl border border-slate-200 dark:border-[#1a2744] bg-white dark:bg-[#060d1a] text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
               />
             </div>
             <Button className="bg-[#1D6FEB] hover:bg-[#1558C8] gap-2 shrink-0" onClick={() => setIsModalOpen(true)}>
@@ -284,7 +284,7 @@ export function ClassDetailClient({
           </div>
 
           {filteredStudents.length === 0 ? (
-            <div className="text-center py-16 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl">
+            <div className="text-center py-16 bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-3xl">
               <div className="w-16 h-16 rounded-2xl bg-blue-100 dark:bg-blue-900/40 mx-auto flex items-center justify-center mb-4">
                 <GraduationCap className="w-8 h-8 text-blue-600 dark:text-blue-400" />
               </div>
@@ -303,12 +303,12 @@ export function ClassDetailClient({
               )}
             </div>
           ) : (
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden">
+            <div className="bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-2xl overflow-hidden">
               <div className="divide-y divide-slate-100 dark:divide-slate-800/50">
                 {filteredStudents.map(student => (
                   <div
                     key={student.id}
-                    className="flex items-center gap-3 px-4 py-3 hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors cursor-pointer"
+                    className="flex items-center gap-3 px-4 py-3 hover:bg-slate-50/50 dark:hover:bg-[#0d1b2e]/20 transition-colors cursor-pointer"
                     onClick={() => setQuickViewStudent(student)}
                   >
                     <div className="w-8 h-8 rounded-full overflow-hidden bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center shrink-0">
@@ -343,7 +343,7 @@ export function ClassDetailClient({
                             </Link>
                           </DropdownMenuItem>
                           <DropdownMenuItem
-                            className="text-red-600 focus:bg-orange-50 dark:focus:bg-orange-900/20 gap-2 cursor-pointer"
+                            className="text-red-600 focus:bg-blue-50 dark:focus:bg-orange-900/20 gap-2 cursor-pointer"
                             onClick={() => handleDeleteStudent(student.id)}
                           >
                             <Trash2 className="w-4 h-4" /> Remove
@@ -354,7 +354,7 @@ export function ClassDetailClient({
                   </div>
                 ))}
               </div>
-              <div className="px-4 py-2.5 bg-slate-50 dark:bg-slate-800/30 border-t border-slate-100 dark:border-slate-800">
+              <div className="px-4 py-2.5 bg-slate-50 dark:bg-[#0d1b2e]/30 border-t border-slate-100 dark:border-[#1a2744]">
                 <p className="text-xs text-muted-foreground">{filteredStudents.length} of {students.length} students</p>
               </div>
             </div>
@@ -365,7 +365,7 @@ export function ClassDetailClient({
       {/* ── PERFORMANCE TAB ── */}
       {activeTab === 'performance' && (
         <div className="space-y-4">
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 text-center">
+          <div className="bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-2xl p-6 text-center">
             <div className="w-16 h-16 rounded-2xl bg-blue-100 dark:bg-blue-900/30 mx-auto flex items-center justify-center mb-4">
               <TrendingUp className="w-8 h-8 text-blue-600 dark:text-blue-400" />
             </div>
@@ -374,13 +374,13 @@ export function ClassDetailClient({
               Ranked student performance, broken down term by term, will appear here once exam results are entered.
             </p>
             {students.length === 0 ? (
-              <p className="mt-4 text-xs text-red-600 dark:text-red-400 bg-orange-50 dark:bg-orange-900/20 border border-red-200 dark:border-red-800/50 rounded-lg px-3 py-2 inline-block">
+              <p className="mt-4 text-xs text-red-600 dark:text-red-400 bg-blue-50 dark:bg-blue-900/20 border border-red-200 dark:border-red-800/50 rounded-lg px-3 py-2 inline-block">
                 Enroll students first to see their performance.
               </p>
             ) : (
               <div className="mt-6 space-y-2">
                 {students.slice().sort(() => Math.random() - 0.5).map((s, i) => (
-                  <div key={s.id} className="flex items-center gap-3 px-4 py-2.5 bg-slate-50 dark:bg-slate-800/30 rounded-xl">
+                  <div key={s.id} className="flex items-center gap-3 px-4 py-2.5 bg-slate-50 dark:bg-[#0d1b2e]/30 rounded-xl">
                     <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${i === 0 ? 'bg-red-100 text-red-700' : i === 1 ? 'bg-slate-100 text-slate-600' : i === 2 ? 'bg-red-100 text-red-700' : 'bg-slate-100 dark:bg-slate-700 text-muted-foreground'}`}>
                       {i + 1}
                     </span>
@@ -448,21 +448,21 @@ export function ClassDetailClient({
 
               {/* Details Cards */}
               <div className="space-y-3">
-                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4">
+                <div className="bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-2xl p-4">
                   <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3">Class Assignment</p>
                   <div className="flex items-center gap-3 text-sm">
-                    <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 shrink-0">
+                    <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-[#0d1b2e] flex items-center justify-center text-slate-500 shrink-0">
                       <GraduationCap className="w-4 h-4" />
                     </div>
                     <span className="font-medium text-foreground">{cls.name}</span>
                   </div>
                 </div>
 
-                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4">
+                <div className="bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-2xl p-4">
                   <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3">Identifiers</p>
                   <div className="space-y-3">
                     <div className="flex items-center gap-3 text-sm">
-                      <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 shrink-0">
+                      <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-[#0d1b2e] flex items-center justify-center text-slate-500 shrink-0">
                         <Hash className="w-4 h-4" />
                       </div>
                       <span className="font-medium text-foreground font-mono">{quickViewStudent.admission_number}</span>
@@ -481,7 +481,7 @@ export function ClassDetailClient({
                 </Link>
                 <button
                   onClick={() => { setQuickViewStudent(null); handleDeleteStudent(quickViewStudent.id) }}
-                  className="w-full flex items-center justify-center gap-2 h-11 rounded-xl border border-red-200 dark:border-red-900/50 text-red-600 hover:bg-orange-50 dark:hover:bg-orange-900/20 text-sm font-semibold transition-colors bg-white dark:bg-slate-900 shadow-sm"
+                  className="w-full flex items-center justify-center gap-2 h-11 rounded-xl border border-red-200 dark:border-red-900/50 text-red-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 text-sm font-semibold transition-colors bg-white dark:bg-[#060d1a] shadow-sm"
                 >
                   <Trash2 className="w-4 h-4" />
                   Remove Student

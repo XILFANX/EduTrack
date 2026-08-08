@@ -93,12 +93,12 @@ export default async function AdminAnalyticsPage() {
       {/* KPI row */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {[
-          { label: 'Total Schools', value: allSchools?.length ?? 0, Icon: Building2, color: 'text-cyan-500', bg: 'bg-blue-50 dark:bg-blue-900/20' },
-          { label: 'Total Students', value: totalStudents, Icon: Users, color: 'text-cyan-500', bg: 'bg-blue-50 dark:bg-blue-900/20' },
-          { label: 'Platform Billed', value: `KSh ${(totalBilled/1000000).toFixed(1)}M`, Icon: Receipt, color: 'text-red-500', bg: 'bg-orange-50 dark:bg-orange-900/20' },
-          { label: 'Platform Collected', value: `KSh ${(totalCollected/1000000).toFixed(1)}M`, Icon: TrendingUp, color: 'text-cyan-500', bg: 'bg-blue-50 dark:bg-blue-900/20' },
+          { label: 'Total Schools', value: allSchools?.length ?? 0, Icon: Building2, color: 'text-blue-600', bg: 'bg-blue-50 dark:bg-blue-900/20' },
+          { label: 'Total Students', value: totalStudents, Icon: Users, color: 'text-blue-600', bg: 'bg-blue-50 dark:bg-blue-900/20' },
+          { label: 'Platform Billed', value: `KSh ${(totalBilled/1000000).toFixed(1)}M`, Icon: Receipt, color: 'text-red-500', bg: 'bg-blue-50 dark:bg-blue-900/20' },
+          { label: 'Platform Collected', value: `KSh ${(totalCollected/1000000).toFixed(1)}M`, Icon: TrendingUp, color: 'text-blue-600', bg: 'bg-blue-50 dark:bg-blue-900/20' },
         ].map(({ label, value, Icon, color, bg }) => (
-          <div key={label} className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800/60 rounded-3xl p-5 hover:shadow-lg transition-all duration-300">
+          <div key={label} className="bg-white dark:bg-[#060d1a]/80 border border-slate-200 dark:border-[#1a2744]/60 rounded-3xl p-5 hover:shadow-lg transition-all duration-300">
             <div className={`w-10 h-10 rounded-2xl ${bg} flex items-center justify-center mb-4`}>
               <Icon className={`h-5 w-5 ${color}`} />
             </div>
@@ -111,7 +111,7 @@ export default async function AdminAnalyticsPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
         {/* Subscription Mix */}
-        <div className="bg-white dark:bg-slate-900/50 border border-border rounded-3xl p-6 shadow-sm">
+        <div className="bg-white dark:bg-[#060d1a]/80 border border-border rounded-3xl p-6 shadow-sm">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
               <PieChart className="h-5 w-5 text-blue-600 dark:text-blue-400" />
@@ -132,7 +132,7 @@ export default async function AdminAnalyticsPage() {
                     <span className="font-bold text-muted-foreground uppercase tracking-wider text-xs">{label}</span>
                     <span className={`font-black ${textColor}`}>{count} <span className="opacity-60 text-xs">({pct}%)</span></span>
                   </div>
-                  <div className="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-3 overflow-hidden">
+                  <div className="w-full bg-slate-100 dark:bg-[#0d1b2e] rounded-full h-3 overflow-hidden">
                     <div className={`${color} h-3 rounded-full transition-all duration-1000 ease-out`} style={{ width: `${pct}%` }} />
                   </div>
                 </div>
@@ -142,7 +142,7 @@ export default async function AdminAnalyticsPage() {
         </div>
 
         {/* Top Schools */}
-        <div className="bg-white dark:bg-slate-900/50 border border-border rounded-3xl p-6 shadow-sm flex flex-col">
+        <div className="bg-white dark:bg-[#060d1a]/80 border border-border rounded-3xl p-6 shadow-sm flex flex-col">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center shrink-0">
               <Building2 className="h-5 w-5 text-blue-600 dark:text-blue-400" />
@@ -163,7 +163,7 @@ export default async function AdminAnalyticsPage() {
                       <span className="font-bold text-foreground text-sm truncate pr-4">{s.name}</span>
                       <span className="font-black text-slate-700 dark:text-slate-300 shrink-0">{s.count} <span className="opacity-60 text-xs">({pct}%)</span></span>
                     </div>
-                    <div className="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-3 overflow-hidden">
+                    <div className="w-full bg-slate-100 dark:bg-[#0d1b2e] rounded-full h-3 overflow-hidden">
                       <div className="bg-blue-500 h-3 rounded-full transition-all duration-1000 ease-out" style={{ width: `${pct}%` }} />
                     </div>
                   </div>
@@ -177,7 +177,7 @@ export default async function AdminAnalyticsPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
         {/* School growth chart */}
-        <div className="lg:col-span-2 bg-white dark:bg-slate-900/50 border border-border rounded-3xl p-6 shadow-sm relative overflow-hidden flex flex-col">
+        <div className="lg:col-span-2 bg-white dark:bg-[#060d1a]/80 border border-border rounded-3xl p-6 shadow-sm relative overflow-hidden flex flex-col">
           <div className="absolute top-0 right-0 p-32 bg-[radial-gradient(ellipse_at_center,_rgba(59,130,246,0.1)_0%,_transparent_70%)] pointer-events-none opacity-50" />
           <div className="flex items-center gap-3 mb-8 relative z-10">
             <div className="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
@@ -189,7 +189,7 @@ export default async function AdminAnalyticsPage() {
             {Object.entries(monthBuckets).map(([month, count]) => (
               <div key={month} className="flex flex-col items-center gap-3 w-12 group">
                 <span className={`text-sm font-black transition-opacity ${count > 0 ? 'text-foreground opacity-100' : 'opacity-0 group-hover:opacity-100 text-muted-foreground'}`}>{count}</span>
-                <div className="w-full bg-slate-100 dark:bg-slate-800 rounded-t-xl h-full flex items-end overflow-hidden relative">
+                <div className="w-full bg-slate-100 dark:bg-[#0d1b2e] rounded-t-xl h-full flex items-end overflow-hidden relative">
                   <div
                     className="w-full bg-gradient-to-t from-cyan-600 to-cyan-400 rounded-t-xl transition-all duration-700 ease-out"
                     style={{ height: `${count > 0 ? Math.max((count / maxBucket) * 100, 5) : 0}%` }}
@@ -203,7 +203,7 @@ export default async function AdminAnalyticsPage() {
 
         <div className="flex flex-col gap-6">
           {/* Collection summary */}
-          <div className="bg-white dark:bg-slate-900/50 border border-border rounded-3xl p-6 shadow-sm flex-1">
+          <div className="bg-white dark:bg-[#060d1a]/80 border border-border rounded-3xl p-6 shadow-sm flex-1">
             <div className="flex items-center gap-3 mb-6">
               <div className="w-10 h-10 rounded-xl bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
                 <Activity className="h-5 w-5 text-red-600 dark:text-red-400" />
@@ -218,7 +218,7 @@ export default async function AdminAnalyticsPage() {
                     <circle 
                       cx="50" cy="50" r="40" 
                       stroke="currentColor" strokeWidth="8" fill="none" 
-                      className="text-cyan-500 transition-all duration-1000 ease-out"
+                      className="text-blue-600 transition-all duration-1000 ease-out"
                       strokeDasharray="251.2"
                       strokeDashoffset={251.2 - (251.2 * collectionRate) / 100}
                     />

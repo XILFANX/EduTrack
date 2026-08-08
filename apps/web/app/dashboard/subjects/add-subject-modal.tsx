@@ -62,7 +62,7 @@ export function AddSubjectModal({ open, onClose, schoolId, onSuccess, preSelecte
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent className="max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6">
+      <DialogContent className="max-w-md bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-2xl p-6">
         <DialogHeader className="mb-4">
           <DialogTitle className="flex items-center gap-2 text-lg font-bold">
             <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center">
@@ -90,14 +90,14 @@ export function AddSubjectModal({ open, onClose, schoolId, onSuccess, preSelecte
               Assign to Classes <span className="text-muted-foreground font-normal">(Select multiple)</span>
             </Label>
             {classes.length === 0 ? (
-              <p className="text-xs text-red-600 dark:text-red-400 bg-orange-50 dark:bg-orange-900/20 border border-red-200 dark:border-red-800/50 rounded-lg px-3 py-2 flex items-center gap-1.5">
+              <p className="text-xs text-red-600 dark:text-red-400 bg-blue-50 dark:bg-blue-900/20 border border-red-200 dark:border-red-800/50 rounded-lg px-3 py-2 flex items-center gap-1.5">
                 <Info className="w-3.5 h-3.5 shrink-0" />
                 No classes yet. Create classes first before assigning subjects.
               </p>
             ) : (
-              <div className="grid grid-cols-2 gap-2 max-h-48 overflow-y-auto p-2 bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl">
+              <div className="grid grid-cols-2 gap-2 max-h-48 overflow-y-auto p-2 bg-slate-50 dark:bg-[#060d1a]/80 border border-slate-200 dark:border-[#1a2744] rounded-xl">
                 {classes.map(c => (
-                  <label key={c.id} className="flex items-center gap-2 text-sm cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 p-2 rounded-lg transition">
+                  <label key={c.id} className="flex items-center gap-2 text-sm cursor-pointer hover:bg-slate-100 dark:hover:bg-[#0d1b2e] p-2 rounded-lg transition">
                     <input
                       type="checkbox"
                       checked={selectedClassIds.includes(c.id)}
@@ -111,7 +111,7 @@ export function AddSubjectModal({ open, onClose, schoolId, onSuccess, preSelecte
             )}
           </div>
 
-          {error && <p className="text-xs text-red-500 bg-orange-50 dark:bg-orange-900/10 border border-red-200 dark:border-red-800/30 p-3 rounded-lg">{error}</p>}
+          {error && <p className="text-xs text-red-500 bg-blue-50 dark:bg-blue-900/10 border border-red-200 dark:border-red-800/30 p-3 rounded-lg">{error}</p>}
         </div>
 
         <div className="flex items-center justify-end gap-3 mt-6">

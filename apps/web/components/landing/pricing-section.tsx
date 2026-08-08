@@ -8,7 +8,7 @@ function PricingCard({ tier, price, description, features, highlighted = false, 
   tier: string; price: string; description: string; features: string[]; highlighted?: boolean; isAnnual?: boolean
 }) {
   return (
-    <div className={`relative p-6 rounded-2xl flex flex-col ${highlighted ? 'bg-blue-600 border border-blue-500 shadow-xl z-10 text-white ring-2 ring-blue-500 ring-offset-2 dark:ring-offset-slate-950' : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white'}`}>
+    <div className={`relative p-6 rounded-2xl flex flex-col ${highlighted ? 'bg-blue-600 border border-blue-500 shadow-xl z-10 text-white ring-2 ring-blue-500 ring-offset-2 dark:ring-offset-slate-950' : 'bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] text-slate-900 dark:text-white'}`}>
       {highlighted && (
         <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-cyan-300 to-cyan-400 text-cyan-950 text-sm font-bold rounded-full shadow-sm whitespace-nowrap">
           Most Popular
@@ -16,12 +16,12 @@ function PricingCard({ tier, price, description, features, highlighted = false, 
       )}
       <div className="mb-6 mt-1">
         <h3 className={`text-lg font-bold mb-1 ${highlighted ? 'text-white' : ''}`}>{tier}</h3>
-        <p className={`text-xs ${highlighted ? 'text-cyan-100' : 'text-slate-500 dark:text-slate-400'}`}>{description}</p>
+        <p className={`text-xs ${highlighted ? 'text-blue-100' : 'text-slate-500 dark:text-slate-400'}`}>{description}</p>
       </div>
       <div className="mb-6">
         <span className="text-3xl font-extrabold">{price}</span>
         {price !== 'Custom' && (
-           <span className={`text-sm ${highlighted ? 'text-cyan-100' : 'text-slate-500 dark:text-slate-400'}`}>
+           <span className={`text-sm ${highlighted ? 'text-blue-100' : 'text-slate-500 dark:text-slate-400'}`}>
              /{isAnnual ? 'year' : 'month'}
            </span>
         )}
@@ -29,7 +29,7 @@ function PricingCard({ tier, price, description, features, highlighted = false, 
       <ul className="space-y-3 mb-6 flex-1">
         {features.map((feature, i) => (
           <li key={i} className="flex items-start gap-2">
-            <CheckCircle2 className={`w-4 h-4 mt-0.5 shrink-0 ${highlighted ? 'text-cyan-200' : 'text-cyan-500'}`} />
+            <CheckCircle2 className={`w-4 h-4 mt-0.5 shrink-0 ${highlighted ? 'text-blue-100' : 'text-blue-600'}`} />
             <span className={`text-xs leading-snug ${highlighted ? 'text-white' : 'text-slate-600 dark:text-slate-300'}`}>{feature}</span>
           </li>
         ))}
@@ -39,7 +39,7 @@ function PricingCard({ tier, price, description, features, highlighted = false, 
         className={`w-full py-2.5 rounded-xl font-semibold text-sm text-center transition-all ${
           highlighted 
             ? 'bg-white text-blue-600 hover:bg-blue-50' 
-            : 'bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700'
+            : 'bg-slate-100 dark:bg-[#0d1b2e] hover:bg-slate-200 dark:hover:bg-slate-700'
         }`}
       >
         Get Started
@@ -112,8 +112,8 @@ export function PricingSection() {
             </span>
           </div>
 
-          <div className="mt-6 p-3 bg-blue-50 dark:bg-blue-900/20 border border-cyan-100 dark:border-blue-500/20 rounded-xl inline-block">
-            <p className="text-xs font-medium text-cyan-800 dark:text-cyan-200">
+          <div className="mt-6 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-500/20 rounded-xl inline-block">
+            <p className="text-xs font-medium text-cyan-800 dark:text-blue-100">
               ✨ <span className="font-bold">All plans include:</span> Automated Fee Engine, Academics & Grades, Attendance Tracking, and Unified Communications.
             </p>
           </div>

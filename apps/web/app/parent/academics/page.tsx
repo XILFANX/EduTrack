@@ -82,7 +82,7 @@ export default async function ParentAcademics() {
   }
 
   const statusIcon = (status: string) => {
-    if (status === 'Present') return <CheckCircle2 className="w-4 h-4 text-cyan-500" />
+    if (status === 'Present') return <CheckCircle2 className="w-4 h-4 text-blue-600" />
     if (status === 'Absent') return <XCircle className="w-4 h-4 text-red-500" />
     return <Clock className="w-4 h-4 text-red-500" />
   }
@@ -97,7 +97,7 @@ export default async function ParentAcademics() {
       </div>
 
       {students.length === 0 && (
-        <div className="text-center py-16 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl">
+        <div className="text-center py-16 bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-2xl">
           <BookOpen className="w-8 h-8 text-slate-300 mx-auto mb-3" />
           <p className="text-sm text-muted-foreground">No students linked to your account yet.</p>
         </div>
@@ -112,7 +112,7 @@ export default async function ParentAcademics() {
             </div>
             <div className="flex-1">
               <p className="font-bold">{student.first_name} {student.last_name}</p>
-              <p className="text-xs text-cyan-100">{student.classes?.name ?? '—'} · {student.admission_number}</p>
+              <p className="text-xs text-blue-100">{student.classes?.name ?? '—'} · {student.admission_number}</p>
             </div>
             <Link
               href={`/parent/results/${student.id}`}
@@ -129,20 +129,20 @@ export default async function ParentAcademics() {
           </div>
 
           {/* Attendance summary */}
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden">
+          <div className="bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-2xl overflow-hidden">
             <div className="px-4 pt-4 pb-2">
               <h2 className="text-sm font-semibold text-foreground">Attendance (Last 30 Days)</h2>
             </div>
-            <div className="grid grid-cols-3 gap-px bg-slate-100 dark:bg-slate-800">
-              <div className="bg-white dark:bg-slate-900 p-4 text-center">
+            <div className="grid grid-cols-3 gap-px bg-slate-100 dark:bg-[#0d1b2e]">
+              <div className="bg-white dark:bg-[#060d1a] p-4 text-center">
                 <p className="text-2xl font-bold text-blue-600">{presentDays}</p>
                 <p className="text-xs text-muted-foreground mt-1">Present</p>
               </div>
-              <div className="bg-white dark:bg-slate-900 p-4 text-center">
+              <div className="bg-white dark:bg-[#060d1a] p-4 text-center">
                 <p className="text-2xl font-bold text-red-500">{absentDays}</p>
                 <p className="text-xs text-muted-foreground mt-1">Absent</p>
               </div>
-              <div className="bg-white dark:bg-slate-900 p-4 text-center">
+              <div className="bg-white dark:bg-[#060d1a] p-4 text-center">
                 <p className="text-2xl font-bold text-red-500">{lateDays}</p>
                 <p className="text-xs text-muted-foreground mt-1">Late</p>
               </div>
@@ -173,7 +173,7 @@ export default async function ParentAcademics() {
           </div>
 
           {/* Exam results */}
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden">
+          <div className="bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-2xl overflow-hidden">
             <div className="px-4 py-4 flex items-center gap-2">
               <GraduationCap className="w-4 h-4 text-muted-foreground" />
               <h2 className="text-sm font-semibold text-foreground">

@@ -114,12 +114,12 @@ export default async function AdminTimetablePage({ searchParams }: Props) {
   return (
     <div className="space-y-6 max-w-full mx-auto pb-24">
       {/* Hero */}
-      <div className="bg-gradient-to-br from-cyan-600 via-cyan-500 to-cyan-500 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
+      <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-blue-600 via-blue-500 to-blue-600 p-6 shadow-xl">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-[50px] rounded-full pointer-events-none" />
         <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <h1 className="text-2xl font-black tracking-tight">School Timetable</h1>
-            <p className="text-cyan-100 text-sm mt-1">
+            <p className="text-blue-100 text-sm mt-1">
               {selectedTerm ? `${selectedTerm.name} — ` : ''}School-wide schedule builder with conflict detection
             </p>
           </div>
@@ -129,7 +129,7 @@ export default async function AdminTimetablePage({ searchParams }: Props) {
                 ✓ Published
               </span>
             ) : (
-              <span className="text-xs font-bold px-3 py-1.5 rounded-full bg-orange-400/30 border border-red-300/40">
+              <span className="text-xs font-bold px-3 py-1.5 rounded-full bg-blue-400/30 border border-red-300/40">
                 Draft
               </span>
             )}

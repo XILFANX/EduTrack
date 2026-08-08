@@ -163,7 +163,7 @@ export default function VerifyPaymentPage({ title = 'Verify Fees Payment', ledge
             : 'Your submission is in the pool. It will auto-match when the parent submits their transaction.'}
         </p>
         {result.errors.length > 0 && (
-          <div className="bg-orange-50 dark:bg-orange-950/30 border border-red-200 rounded-xl p-3 text-left space-y-1">
+          <div className="bg-blue-50 dark:bg-blue-950/30 border border-red-200 rounded-xl p-3 text-left space-y-1">
             {result.errors.map((e, i) => (
               <p key={i} className="text-sm text-red-600">{e}</p>
             ))}

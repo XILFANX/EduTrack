@@ -62,7 +62,7 @@ export default async function AdminReportsPage({ searchParams }: { searchParams:
         </a>
         <div>
           <h1 className="text-2xl font-bold text-slate-100 flex items-center gap-2">
-            Reports <span className="text-slate-600">/</span> <span className="text-cyan-400">{selectedClass?.name}</span>
+            Reports <span className="text-slate-600">/</span> <span className="text-blue-500">{selectedClass?.name}</span>
           </h1>
           <p className="text-sm text-slate-400 mt-1">
             {activeTerm ? `Active session: ${(activeTerm as any).academic_years?.name} — ${activeTerm.name}` : 'No active term set.'}
@@ -73,7 +73,7 @@ export default async function AdminReportsPage({ searchParams }: { searchParams:
       {/* Students Grid */}
       {students.length === 0 ? (
         <div className="text-center py-20 bg-[#121827] border border-slate-800 rounded-3xl">
-          <div className="w-16 h-16 rounded-2xl bg-slate-800/50 mx-auto flex items-center justify-center mb-4">
+          <div className="w-16 h-16 rounded-2xl bg-[#0d1b2e]/80 mx-auto flex items-center justify-center mb-4">
             <GraduationCap className="w-8 h-8 text-slate-500" />
           </div>
           <h2 className="text-lg font-semibold text-slate-200">No students enrolled</h2>
@@ -104,10 +104,10 @@ export default async function AdminReportsPage({ searchParams }: { searchParams:
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="hidden sm:inline-block text-xs font-semibold px-2 py-1 bg-slate-800 text-slate-300 rounded-lg group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                  <span className="hidden sm:inline-block text-xs font-semibold px-2 py-1 bg-[#0d1b2e] text-slate-300 rounded-lg group-hover:bg-blue-600 group-hover:text-white transition-colors">
                     View Report
                   </span>
-                  <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                  <div className="w-8 h-8 rounded-full bg-[#0d1b2e] flex items-center justify-center text-slate-400 group-hover:bg-blue-600 group-hover:text-white transition-colors">
                     <FileText className="w-4 h-4" />
                   </div>
                 </div>

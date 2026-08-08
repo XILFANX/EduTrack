@@ -28,11 +28,11 @@ export default async function TransportLayout({ children }: { children: React.Re
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 pb-20">
-      <header className="sticky top-0 z-40 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800">
+      <header className="sticky top-0 z-40 bg-white/80 dark:bg-[#060d1a]/80 backdrop-blur-xl border-b border-slate-200 dark:border-[#1a2744]">
         <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
           {/* School branding */}
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-center overflow-hidden shrink-0">
+            <div className="w-10 h-10 rounded-full bg-white dark:bg-[#0d1b2e] border border-slate-200 dark:border-[#1a2744] shadow-sm flex items-center justify-center overflow-hidden shrink-0">
               {school?.logo_url ? (
                 <img src={school.logo_url} alt={school.name} className="w-full h-full object-cover" />
               ) : (
@@ -45,7 +45,7 @@ export default async function TransportLayout({ children }: { children: React.Re
             </div>
           </div>
           <form action="/api/auth/signout" method="post">
-            <button className="w-10 h-10 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+            <button className="w-10 h-10 rounded-xl border border-slate-200 dark:border-[#1a2744] flex items-center justify-center text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-[#0d1b2e] transition-colors">
               <LogOut className="w-4 h-4" />
             </button>
           </form>

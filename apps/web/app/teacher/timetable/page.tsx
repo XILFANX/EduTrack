@@ -125,7 +125,7 @@ export default async function TeacherTimetablePage() {
   return (
     <div className="space-y-6 pb-24">
       {/* Hero */}
-      <div className="bg-gradient-to-br from-cyan-600 via-cyan-500 to-cyan-500 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
+      <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-blue-600 via-blue-500 to-blue-600 p-6 shadow-xl">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-[50px] rounded-full pointer-events-none" />
         <div className="relative z-10 flex items-center gap-4">
           <div className="w-12 h-12 rounded-2xl bg-white/15 flex items-center justify-center">
@@ -133,7 +133,7 @@ export default async function TeacherTimetablePage() {
           </div>
           <div>
             <h1 className="text-2xl font-black tracking-tight">My Timetable</h1>
-            <p className="text-cyan-100 text-sm mt-0.5">
+            <p className="text-blue-100 text-sm mt-0.5">
               {contextLabel}{activeTerm ? ` · ${(activeTerm as any).name}` : ''}
             </p>
           </div>
@@ -167,10 +167,10 @@ export default async function TeacherTimetablePage() {
               </thead>
               <tbody>
                 {periods.map((period: any, idx: number) => (
-                  <tr key={period.id} className={idx % 2 === 0 ? '' : 'bg-slate-50/40 dark:bg-slate-900/20'}>
+                  <tr key={period.id} className={idx % 2 === 0 ? '' : 'bg-slate-50/40 dark:bg-[#060d1a]/20'}>
                     {/* Period label */}
                     <td className="sticky left-0 z-10 bg-card border-b border-r border-border px-4 py-3">
-                      {idx % 2 !== 0 && <div className="absolute inset-0 bg-slate-50/40 dark:bg-slate-900/20" />}
+                      {idx % 2 !== 0 && <div className="absolute inset-0 bg-slate-50/40 dark:bg-[#060d1a]/20" />}
                       <div className="relative">
                         <p className="font-semibold text-foreground text-xs">{period.name}</p>
                         <p className="text-[10px] text-muted-foreground mt-0.5">
@@ -186,7 +186,7 @@ export default async function TeacherTimetablePage() {
                       if (period.is_break) {
                         return (
                           <td key={day.num} className="border-b border-r border-border last:border-r-0 p-1.5">
-                            <div className="rounded-xl bg-orange-50 dark:bg-orange-950/20 border border-red-100 dark:border-red-900/30 px-2 py-3 text-center">
+                            <div className="rounded-xl bg-blue-50 dark:bg-blue-950/20 border border-red-100 dark:border-red-900/30 px-2 py-3 text-center">
                               <span className="text-[10px] text-red-400 font-semibold">Break</span>
                             </div>
                           </td>
@@ -197,18 +197,18 @@ export default async function TeacherTimetablePage() {
                         <td key={day.num} className="border-b border-r border-border last:border-r-0 p-1.5">
                           {slot ? (
                             <div className="rounded-xl bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800/40 px-2 py-2">
-                              <p className="text-[11px] font-bold text-cyan-800 dark:text-cyan-200 text-center leading-tight">
+                              <p className="text-[11px] font-bold text-cyan-800 dark:text-blue-100 text-center leading-tight">
                                 {slot.subjects?.name}
                               </p>
                               {/* Subject teacher also sees the class they're teaching */}
                               {isSubjectTeacher && slot.classes?.name && (
-                                <p className="text-[9px] text-cyan-500 text-center mt-0.5 font-semibold">
+                                <p className="text-[9px] text-blue-600 text-center mt-0.5 font-semibold">
                                   {slot.classes.name}
                                 </p>
                               )}
                             </div>
                           ) : (
-                            <div className="rounded-xl border border-dashed border-slate-200 dark:border-slate-700 px-2 py-3 text-center">
+                            <div className="rounded-xl border border-dashed border-slate-200 dark:border-[#1a2744] px-2 py-3 text-center">
                               <span className="text-[10px] text-slate-300">—</span>
                             </div>
                           )}

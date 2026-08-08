@@ -66,7 +66,7 @@ export default async function SubjectTeacherSubjects() {
       </div>
 
       {groups.length === 0 ? (
-        <div className="text-center py-20 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl">
+        <div className="text-center py-20 bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-3xl">
           <div className="w-16 h-16 rounded-2xl bg-blue-100 dark:bg-blue-900/40 mx-auto flex items-center justify-center mb-4">
             <BookOpen className="w-8 h-8 text-blue-600 dark:text-blue-400" />
           </div>
@@ -78,9 +78,9 @@ export default async function SubjectTeacherSubjects() {
       ) : (
         <div className="space-y-5">
           {groups.map(({ subject, classes }) => (
-            <div key={subject.id} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm">
+            <div key={subject.id} className="bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-2xl overflow-hidden shadow-sm">
               {/* Subject header */}
-              <div className="flex items-center gap-3 px-4 py-3 bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800">
+              <div className="flex items-center gap-3 px-4 py-3 bg-slate-50 dark:bg-[#0d1b2e]/80 border-b border-slate-200 dark:border-[#1a2744]">
                 <div className="w-9 h-9 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center shrink-0">
                   <BookOpen className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                 </div>
@@ -99,7 +99,7 @@ export default async function SubjectTeacherSubjects() {
                   <Link
                     key={a.id}
                     href={`/teacher/grades?class=${a.class_id}&subject=${a.subject_id}`}
-                    className="flex items-center justify-between px-4 py-3.5 hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors"
+                    className="flex items-center justify-between px-4 py-3.5 hover:bg-slate-50/50 dark:hover:bg-[#0d1b2e]/20 transition-colors"
                   >
                     <div className="flex items-center gap-3">
                       <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center shrink-0">

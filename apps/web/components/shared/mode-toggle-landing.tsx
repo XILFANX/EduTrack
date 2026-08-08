@@ -14,13 +14,13 @@ export function ModeToggleLanding() {
   }, [])
 
   if (!mounted) {
-    return <div className="w-10 h-10 rounded-full border border-slate-200 dark:border-slate-800" />
+    return <div className="w-10 h-10 rounded-full border border-slate-200 dark:border-[#1a2744]" />
   }
 
   return (
     <button
       onClick={() => setTheme(theme === "dark" || theme === 'system' ? "light" : "dark")}
-      className="relative flex items-center justify-center w-10 h-10 rounded-full border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-cyan-500 hover:border-blue-200 dark:hover:border-cyan-800 transition-colors shadow-sm"
+      className="relative flex items-center justify-center w-10 h-10 rounded-full border border-slate-200 dark:border-[#1a2744] bg-white dark:bg-[#060d1a] text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-600 hover:border-blue-200 dark:hover:border-cyan-800 transition-colors shadow-sm"
       aria-label="Toggle theme"
     >
       <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />

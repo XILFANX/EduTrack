@@ -60,7 +60,7 @@ export function BulkUnitGenerator({ propertyId, landlordId, onCreated }: Props) 
         onClick={() => setOpen(true)}
         className="flex items-center gap-2 text-sm border border-border bg-card hover:bg-muted text-foreground px-3 py-2 rounded-lg transition-colors font-medium"
       >
-        <Layers className="w-4 h-4 text-cyan-500" />
+        <Layers className="w-4 h-4 text-blue-600" />
         Bulk generate units
       </button>
     )
@@ -146,7 +146,7 @@ export function BulkUnitGenerator({ propertyId, landlordId, onCreated }: Props) 
         </div>
       </div>
 
-      {error && <p className="text-xs text-red-600 bg-orange-50 dark:bg-orange-900/20 px-3 py-2 rounded-lg border border-red-200 dark:border-red-800/40">{error}</p>}
+      {error && <p className="text-xs text-red-600 bg-blue-50 dark:bg-blue-900/20 px-3 py-2 rounded-lg border border-red-200 dark:border-red-800/40">{error}</p>}
 
       <button
         onClick={handleGenerate}

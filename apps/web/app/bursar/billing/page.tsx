@@ -111,10 +111,10 @@ export default async function BursarBillingPage() {
   const isSuspended = school?.subscription_status === 'suspended'
 
   const StatusIcon = isActive ? CheckCircle2 : isTrial ? Clock : isGrace ? AlertTriangle : XCircle
-  const statusColor = isActive    ? 'text-cyan-400'
+  const statusColor = isActive    ? 'text-blue-500'
     : isTrial   ? 'text-red-400'
     : isGrace   ? 'text-red-400'
-    : 'text-cyan-400'
+    : 'text-blue-500'
 
   let pendingObligations = (subscriptionObligations ?? []) as Array<{
     id: string; amount_due: number; currency: string; period_label: string
@@ -150,9 +150,9 @@ export default async function BursarBillingPage() {
         <div className={`rounded-2xl border p-4 flex items-start gap-3 ${
           isSuspended ? 'bg-blue-500/5 border-blue-500/20' : 'bg-red-500/5 border-red-500/20'
         }`}>
-          <AlertTriangle className={`w-5 h-5 shrink-0 mt-0.5 ${isSuspended ? 'text-cyan-400' : 'text-red-400'}`} />
+          <AlertTriangle className={`w-5 h-5 shrink-0 mt-0.5 ${isSuspended ? 'text-blue-500' : 'text-red-400'}`} />
           <div>
-            <p className={`font-semibold text-sm ${isSuspended ? 'text-cyan-400' : 'text-red-400'}`}>
+            <p className={`font-semibold text-sm ${isSuspended ? 'text-blue-500' : 'text-red-400'}`}>
               {isSuspended ? 'Account Suspended' : 'Grace Period Active'}
             </p>
             <p className="text-sm text-muted-foreground mt-0.5">
@@ -178,11 +178,11 @@ export default async function BursarBillingPage() {
       <div className={`relative overflow-hidden rounded-3xl p-6 border ${
         isActive  ? 'bg-gradient-to-br from-cyan-500/10 to-cyan-600/5 border-blue-500/20'
         : isTrial ? 'bg-gradient-to-br from-cyan-500/10 to-cyan-600/5 border-blue-500/20'
-        : isGrace ? 'bg-gradient-to-br from-orange-500/10 to-orange-600/5 border-red-500/20'
-        : 'bg-gradient-to-br from-cyan-500/10 to-orange-600/5 border-blue-500/20'
+        : isGrace ? 'bg-gradient-to-br from-blue-600/10 to-blue-700/5 border-red-500/20'
+        : 'bg-gradient-to-br from-cyan-500/10 to-blue-700/5 border-blue-500/20'
       }`}>
         <div className={`absolute -top-10 -right-10 w-40 h-40 rounded-full opacity-20 blur-3xl ${
-          isActive ? 'bg-cyan-400' : isTrial ? 'bg-cyan-400' : isGrace ? 'bg-orange-400' : 'bg-cyan-400'
+          isActive ? 'bg-cyan-400' : isTrial ? 'bg-cyan-400' : isGrace ? 'bg-blue-400' : 'bg-cyan-400'
         }`} />
         <div className="relative flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-start gap-4">
@@ -248,7 +248,7 @@ export default async function BursarBillingPage() {
                     <span className={`text-xs px-2 py-0.5 rounded-full font-semibold border ${
                       obl.status === 'partial'
                         ? 'bg-red-500/10 border-red-500/20 text-red-400'
-                        : 'bg-blue-500/10 border-blue-500/20 text-cyan-400'
+                        : 'bg-blue-500/10 border-blue-500/20 text-blue-500'
                     }`}>
                       {obl.status === 'partial' ? 'Partial' : 'Unpaid'}
                     </span>
@@ -299,10 +299,10 @@ export default async function BursarBillingPage() {
                 </div>
                 <span className={`text-xs px-2.5 py-1 rounded-full font-semibold border capitalize ${
                   entry.entry_type === 'payment'
-                    ? 'bg-blue-500/10 border-blue-500/20 text-cyan-400'
+                    ? 'bg-blue-500/10 border-blue-500/20 text-blue-500'
                     : entry.entry_type === 'partial'
                     ? 'bg-red-500/10 border-red-500/20 text-red-400'
-                    : 'bg-blue-500/10 border-blue-500/20 text-cyan-400'
+                    : 'bg-blue-500/10 border-blue-500/20 text-blue-500'
                 }`}>
                   {entry.entry_type === 'payment' ? 'Verified' : entry.entry_type}
                 </span>

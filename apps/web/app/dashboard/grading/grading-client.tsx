@@ -29,7 +29,7 @@ interface Props {
 function gradeColor(min: number) {
   if (min >= 70) return { bg: 'bg-emerald-50 dark:bg-emerald-950/30', border: 'border-emerald-200 dark:border-emerald-800/40', text: 'text-emerald-700 dark:text-emerald-300', badge: 'bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300' }
   if (min >= 50) return { bg: 'bg-blue-50 dark:bg-blue-950/30', border: 'border-blue-200 dark:border-blue-800/40', text: 'text-blue-700 dark:text-blue-300', badge: 'bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300' }
-  if (min >= 30) return { bg: 'bg-orange-50 dark:bg-orange-950/30', border: 'border-red-200 dark:border-red-800/40', text: 'text-red-700 dark:text-red-300', badge: 'bg-red-100 dark:bg-orange-900/40 text-red-700 dark:text-red-300' }
+  if (min >= 30) return { bg: 'bg-blue-50 dark:bg-blue-950/30', border: 'border-red-200 dark:border-red-800/40', text: 'text-red-700 dark:text-red-300', badge: 'bg-red-100 dark:bg-blue-900/40 text-red-700 dark:text-red-300' }
   return { bg: 'bg-red-50 dark:bg-red-950/30', border: 'border-red-200 dark:border-red-800/40', text: 'text-red-700 dark:text-red-300', badge: 'bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300' }
 }
 
@@ -170,7 +170,7 @@ export function GradingClient({ schoolId, initialScales }: Props) {
   return (
     <div className="space-y-6 pb-24">
       {/* Hero */}
-      <div className="bg-gradient-to-br from-cyan-600 via-cyan-500 to-cyan-500 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
+      <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-blue-600 via-blue-500 to-blue-600 p-6 shadow-xl">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-[50px] rounded-full pointer-events-none" />
         <div className="relative z-10 flex items-center justify-between gap-4">
           <div className="flex items-center gap-4">
@@ -179,7 +179,7 @@ export function GradingClient({ schoolId, initialScales }: Props) {
             </div>
             <div>
               <h1 className="text-2xl font-black tracking-tight">Grading Engine</h1>
-              <p className="text-cyan-100 text-sm mt-0.5">Define your school-wide grade boundaries and GPA points</p>
+              <p className="text-blue-100 text-sm mt-0.5">Define your school-wide grade boundaries and GPA points</p>
             </div>
           </div>
           <Button
@@ -193,7 +193,7 @@ export function GradingClient({ schoolId, initialScales }: Props) {
 
       {/* Coverage warning */}
       {hasGap && (
-        <div className="flex items-center gap-3 px-4 py-3 bg-orange-50 dark:bg-orange-950/30 border border-red-200 dark:border-red-800/50 rounded-2xl">
+        <div className="flex items-center gap-3 px-4 py-3 bg-blue-50 dark:bg-blue-950/30 border border-red-200 dark:border-red-800/50 rounded-2xl">
           <Info className="w-5 h-5 text-red-500 shrink-0" />
           <p className="text-sm text-red-700 dark:text-red-400">
             <strong>Gap detected</strong> — some score ranges are not covered by any grade. Students with scores in those ranges will have no grade assigned.
@@ -217,7 +217,7 @@ export function GradingClient({ schoolId, initialScales }: Props) {
           {/* Visual scale bar */}
           <div className="bg-card border border-border rounded-2xl p-4 space-y-3">
             <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Scale Coverage (0–100)</p>
-            <div className="flex h-6 rounded-full overflow-hidden gap-0.5 bg-slate-100 dark:bg-slate-800">
+            <div className="flex h-6 rounded-full overflow-hidden gap-0.5 bg-slate-100 dark:bg-[#0d1b2e]">
               {sorted.map(s => {
                 const width = ((s.max_score - s.min_score + 1) / 100) * 100
                 const colors = gradeColor(s.min_score)
@@ -268,7 +268,7 @@ export function GradingClient({ schoolId, initialScales }: Props) {
 
           {/* Coverage summary */}
           <div className="flex items-center gap-2 text-xs text-muted-foreground">
-            <CheckCircle2 className="w-4 h-4 text-cyan-500" />
+            <CheckCircle2 className="w-4 h-4 text-blue-600" />
             <span>{scales.length} grade{scales.length !== 1 ? 's' : ''} defined · Scores covered: {sorted.reduce((a, s) => a + (s.max_score - s.min_score + 1), 0)} of 100 points</span>
           </div>
         </div>

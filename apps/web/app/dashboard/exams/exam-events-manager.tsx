@@ -15,7 +15,7 @@ import { UX } from '@/lib/ux'
 import { createExamEvent, deleteExamEvent, publishExamEvent } from '@/app/actions/exams'
 
 const STATUS_CONFIG: Record<string, { label: string; color: string; icon: any }> = {
-  draft:     { label: 'Draft',     color: 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400', icon: Clock },
+  draft:     { label: 'Draft',     color: 'bg-slate-100 dark:bg-[#0d1b2e] text-slate-600 dark:text-slate-400', icon: Clock },
   published: { label: 'Published', color: 'bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300', icon: CheckCircle2 },
   closed:    { label: 'Closed',    color: 'bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300', icon: CheckCircle2 },
 }
@@ -166,7 +166,7 @@ export function ExamEventsManager({ schoolId, events, years, terms, classes, sub
   return (
     <div className="space-y-6">
       {/* Hero */}
-      <div className="bg-gradient-to-br from-cyan-600 via-cyan-500 to-cyan-500 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
+      <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-blue-600 via-blue-500 to-blue-600 p-6 shadow-xl">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-[50px] rounded-full pointer-events-none" />
         <div className="relative z-10 flex items-center justify-between gap-4">
           <div className="flex items-center gap-4">
@@ -175,7 +175,7 @@ export function ExamEventsManager({ schoolId, events, years, terms, classes, sub
             </div>
             <div>
               <h1 className="text-2xl font-black tracking-tight">Examinations</h1>
-              <p className="text-cyan-100 text-sm mt-0.5">School-wide exam events — create, schedule and publish results</p>
+              <p className="text-blue-100 text-sm mt-0.5">School-wide exam events — create, schedule and publish results</p>
             </div>
           </div>
           <Button onClick={() => setModal(true)} className="bg-white text-blue-700 hover:bg-blue-50 font-bold rounded-xl gap-2 shrink-0">
@@ -221,7 +221,7 @@ export function ExamEventsManager({ schoolId, events, years, terms, classes, sub
                         <div className="flex items-center gap-1.5 mt-1.5 flex-wrap">
                           <Users className="w-3.5 h-3.5 text-muted-foreground" />
                           {participatingClasses.slice(0, 5).map((name: string, i: number) => (
-                            <span key={i} className="text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-2 py-0.5 rounded-full font-medium">{name}</span>
+                            <span key={i} className="text-xs bg-slate-100 dark:bg-[#0d1b2e] text-slate-600 dark:text-slate-400 px-2 py-0.5 rounded-full font-medium">{name}</span>
                           ))}
                           {participatingClasses.length > 5 && (
                             <span className="text-xs text-muted-foreground">+{participatingClasses.length - 5} more</span>

@@ -49,9 +49,9 @@ export function SchoolSettingsClient({ school }: { school: any }) {
     : 'SC'
 
   return (
-    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 shadow-sm space-y-6">
-      <div className="flex items-center gap-6 pb-6 border-b border-slate-100 dark:border-slate-800">
-        <div className="w-24 h-24 rounded-2xl bg-slate-100 dark:bg-slate-800 border-4 border-white dark:border-slate-900 shadow-sm flex items-center justify-center relative overflow-hidden group">
+    <div className="bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-xl p-6 shadow-sm space-y-6">
+      <div className="flex items-center gap-6 pb-6 border-b border-slate-100 dark:border-[#1a2744]">
+        <div className="w-24 h-24 rounded-2xl bg-slate-100 dark:bg-[#0d1b2e] border-4 border-white dark:border-slate-900 shadow-sm flex items-center justify-center relative overflow-hidden group">
           {logoUrl ? (
             <img src={logoUrl} alt={`${school.name} logo`} className="w-full h-full object-cover" />
           ) : (
@@ -91,14 +91,14 @@ export function SchoolSettingsClient({ school }: { school: any }) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div className="space-y-1.5 md:col-span-2">
             <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide">School Name</label>
-            <div className="bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-2.5 text-sm font-medium text-foreground">
+            <div className="bg-slate-50 dark:bg-[#0d1b2e]/80 border border-slate-200 dark:border-[#1a2744] rounded-xl px-4 py-2.5 text-sm font-medium text-foreground">
               {school?.name || '—'}
             </div>
           </div>
           {school?.address && (
             <div className="space-y-1.5 md:col-span-2">
               <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Address</label>
-              <div className="bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-2.5 text-sm font-medium text-foreground">
+              <div className="bg-slate-50 dark:bg-[#0d1b2e]/80 border border-slate-200 dark:border-[#1a2744] rounded-xl px-4 py-2.5 text-sm font-medium text-foreground">
                 {school.address}
               </div>
             </div>

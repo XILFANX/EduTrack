@@ -75,11 +75,11 @@ export default async function DashboardPage() {
     <div className="space-y-6 max-w-4xl mx-auto pb-24">
       {/* School Header */}
       <div className="flex flex-col items-center justify-center pt-8 pb-4 text-center">
-        <div className="w-20 h-20 rounded-full bg-white dark:bg-slate-900 border-4 border-slate-50 dark:border-slate-800 shadow-md flex items-center justify-center overflow-hidden mb-4">
+        <div className="w-20 h-20 rounded-full bg-[#0d1b2e] border-4 border-blue-600/30 shadow-lg flex items-center justify-center overflow-hidden mb-4">
           {school?.logo_url ? (
-            <img src={school.logo_url} alt={`${school.name} Logo`} className="w-full h-full object-cover" />
+            <img src={school.logo_url} alt={`${school.name} Logo`} className="w-full h-full object-contain p-1.5" />
           ) : (
-            <Image src="/logo.png" alt="EduTrack" width={56} height={56} className="object-cover" />
+            <Image src="/logo.png" alt="EduTrack" width={80} height={80} className="w-full h-full object-contain p-1.5" />
           )}
         </div>
         <h1 className="text-2xl md:text-3xl font-black text-foreground tracking-tight uppercase">
@@ -99,11 +99,11 @@ export default async function DashboardPage() {
         totalStudents={totalStudents ?? 0}
       />
 
-      {/* Academic Overview */}
-      <div className="bg-gradient-to-br from-blue-600 via-cyan-500 to-blue-600 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
+      {/* Academic Overview — Blue Gradient Hero */}
+      <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-blue-600 via-blue-500 to-blue-600 p-6 shadow-xl">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-[50px] rounded-full pointer-events-none" />
         <div className="flex items-center gap-2 mb-5 relative z-10">
-          <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+          <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-md border border-white/10">
             <GraduationCap className="w-4 h-4 text-white" />
           </div>
           <h2 className="text-lg font-bold text-white">Academic Overview</h2>
@@ -117,7 +117,7 @@ export default async function DashboardPage() {
           ].map((stat, i) => (
             <div key={i} className="bg-white/10 border border-white/20 rounded-2xl p-4 flex flex-col justify-center shadow-inner hover:bg-white/20 transition-colors">
               <p className="text-2xl font-bold text-white drop-shadow-sm">{stat.value}</p>
-              <p className="text-xs font-semibold text-cyan-50 mt-1">{stat.label}</p>
+              <p className="text-xs font-semibold text-blue-50 mt-1">{stat.label}</p>
             </div>
           ))}
         </div>
@@ -133,7 +133,7 @@ export default async function DashboardPage() {
               href={href}
               className="flex flex-col items-center gap-2 p-3 hover:scale-[1.05] transition-all text-center group"
             >
-              <div className="w-14 h-14 rounded-[1.25rem] flex items-center justify-center bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-cyan-900/40 dark:to-cyan-900/20 border border-cyan-100/50 dark:border-blue-800/50 group-hover:shadow-lg group-hover:shadow-blue-500/20 group-hover:-translate-y-1 transition-all duration-300">
+              <div className="w-14 h-14 rounded-[1.25rem] flex items-center justify-center bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/40 dark:to-blue-900/20 border border-blue-100/50 dark:border-blue-800/50 group-hover:shadow-lg group-hover:shadow-blue-500/20 group-hover:-translate-y-1 transition-all duration-300">
                 <Icon className="w-7 h-7 text-blue-600 dark:text-blue-400" />
               </div>
               <div className="text-center min-w-0 w-full mt-1">
@@ -149,15 +149,15 @@ export default async function DashboardPage() {
       <div>
         <SectionHeader title="FINANCE SUMMARY" />
         <div className="grid grid-cols-2 gap-3">
-          <Link href="/bursar/dashboard" className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col gap-3 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-            <Banknote className="w-5 h-5 text-cyan-500" />
+          <Link href="/bursar/dashboard" className="bg-white dark:bg-card border border-slate-200 dark:border-[#1a2744] rounded-2xl p-4 flex flex-col gap-3 shadow-sm hover:bg-slate-50 dark:hover:bg-[#1a2744] transition-colors">
+            <Banknote className="w-5 h-5 text-blue-600 dark:text-blue-400" />
             <div>
               <p className="text-xl font-bold text-foreground">{formatKES(totalCollected)}</p>
               <p className="text-xs font-medium text-slate-500">Term Fees Collected</p>
             </div>
           </Link>
-          <Link href="/bursar/invoices" className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col gap-3 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-            <Clock className="w-5 h-5 text-cyan-500" />
+          <Link href="/bursar/invoices" className="bg-white dark:bg-card border border-slate-200 dark:border-[#1a2744] rounded-2xl p-4 flex flex-col gap-3 shadow-sm hover:bg-slate-50 dark:hover:bg-[#1a2744] transition-colors">
+            <Clock className="w-5 h-5 text-blue-600 dark:text-blue-400" />
             <div>
               <p className="text-xl font-bold text-foreground">{formatKES(totalArrears)}</p>
               <p className="text-xs font-medium text-slate-500">Outstanding Arrears</p>

@@ -5,13 +5,13 @@ export default function BillingPage() {
   return (
     <div className="p-4 md:p-6 space-y-6 max-w-3xl mx-auto pb-32">
       <div className="flex items-center gap-3 mb-2">
-        <Link href="/dashboard/settings" className="w-9 h-9 rounded-full border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+        <Link href="/dashboard/settings" className="w-9 h-9 rounded-full border border-slate-200 dark:border-[#1a2744] flex items-center justify-center text-slate-500 hover:bg-slate-50 dark:hover:bg-[#0d1b2e] transition-colors">
           <ArrowLeft className="w-4 h-4" />
         </Link>
         <h1 className="text-xl font-bold text-foreground">Subscription & Billing</h1>
       </div>
 
-      <div className="text-center py-20 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl">
+      <div className="text-center py-20 bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-3xl">
         <div className="w-16 h-16 rounded-2xl bg-blue-100 dark:bg-blue-900/40 mx-auto flex items-center justify-center mb-4">
           <CreditCard className="w-8 h-8 text-blue-600 dark:text-blue-400" />
         </div>

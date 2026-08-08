@@ -67,12 +67,12 @@ export default async function ParentPaymentsPage() {
 
       {/* Balance card */}
       <div className={`p-6 rounded-3xl shadow-lg ${totalDue > 0
-        ? 'bg-gradient-to-br from-cyan-500/10 to-orange-600/10 border border-red-400/20'
+        ? 'bg-gradient-to-br from-cyan-500/10 to-blue-700/10 border border-red-400/20'
         : 'bg-gradient-to-br from-cyan-500/10 to-cyan-600/10 border border-blue-500/20'}`}>
         <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">
           {totalDue > 0 ? 'Total Outstanding' : 'All Caught Up!'}
         </p>
-        <h2 className={`text-4xl font-extrabold tabular-nums ${totalDue > 0 ? 'text-cyan-400' : 'text-cyan-400'}`}>
+        <h2 className={`text-4xl font-extrabold tabular-nums ${totalDue > 0 ? 'text-blue-500' : 'text-blue-500'}`}>
           {fmt(totalDue, currency)}
         </h2>
       </div>
@@ -93,7 +93,7 @@ export default async function ParentPaymentsPage() {
                 <div className="text-right shrink-0 ml-2">
                   <p className="font-bold text-foreground">{fmt(obl.amount_due, obl.currency)}</p>
                   {obl.balance < obl.amount_due && (
-                    <p className="text-xs text-cyan-500">{fmt(obl.balance, obl.currency)} remaining</p>
+                    <p className="text-xs text-blue-600">{fmt(obl.balance, obl.currency)} remaining</p>
                   )}
                 </div>
               </div>
@@ -113,7 +113,7 @@ export default async function ParentPaymentsPage() {
       {openList.length === 0 && historyList.length === 0 && (
         <div className="text-center py-16 border border-dashed border-border rounded-2xl bg-card">
           <div className="w-12 h-12 rounded-full bg-blue-500/10 flex items-center justify-center mx-auto mb-3">
-            <AlertCircle className="w-6 h-6 text-cyan-500" />
+            <AlertCircle className="w-6 h-6 text-blue-600" />
           </div>
           <p className="text-sm font-semibold text-foreground">No fee obligations found</p>
           <p className="text-xs text-muted-foreground mt-1">Check back when your school generates the next term's fees, or contact the bursar if you need to make an advance payment.</p>
@@ -125,7 +125,7 @@ export default async function ParentPaymentsPage() {
         <div className="bg-card border border-border rounded-2xl overflow-hidden mb-6">
           <div className="px-4 py-3 bg-muted/20 border-b border-border">
             <h3 className="font-semibold text-sm text-foreground flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-cyan-500" />
+              <CheckCircle2 className="w-4 h-4 text-blue-600" />
               Pre-pay Next Term / Advance Payment
             </h3>
             <p className="text-xs text-muted-foreground mt-1">

@@ -163,7 +163,7 @@ export function ClassGroupsClient({
   // GROUP LIST VIEW
   if (!selectedGroup) {
     return (
-      <div className="flex h-full bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-xl"
+      <div className="flex h-full bg-white dark:bg-[#060d1a]/80 border border-slate-200 dark:border-[#1a2744] rounded-3xl overflow-hidden shadow-xl"
            style={{ minHeight: '520px', maxHeight: 'calc(100vh - 200px)' }}>
         <div className="flex flex-col w-full p-4 gap-3">
           <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-2">Your Class Groups</p>
@@ -171,10 +171,10 @@ export function ClassGroupsClient({
             <button
               key={group.id}
               onClick={() => setSelectedGroup(group)}
-              className="flex items-center gap-4 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-cyan-400/50 bg-white dark:bg-slate-900 hover:bg-blue-50/30 dark:hover:bg-cyan-900/10 transition-all group text-left"
+              className="flex items-center gap-4 p-4 rounded-2xl border border-slate-200 dark:border-[#1a2744] hover:border-cyan-400/50 bg-white dark:bg-[#060d1a] hover:bg-blue-50/30 dark:hover:bg-cyan-900/10 transition-all group text-left"
             >
               <div className="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center shrink-0">
-                <Users2 className="w-6 h-6 text-cyan-500" />
+                <Users2 className="w-6 h-6 text-blue-600" />
               </div>
               <div>
                 <p className="font-bold text-foreground text-sm">{group.title}</p>
@@ -189,25 +189,25 @@ export function ClassGroupsClient({
 
   // GROUP CHAT VIEW
   return (
-    <div className="flex h-full bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-xl"
+    <div className="flex h-full bg-white dark:bg-[#060d1a]/80 border border-slate-200 dark:border-[#1a2744] rounded-3xl overflow-hidden shadow-xl"
          style={{ minHeight: '520px', maxHeight: 'calc(100vh - 200px)' }}>
       <div className="flex flex-col w-full">
         {/* Header */}
-        <div className="h-16 px-5 flex items-center gap-3 border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shrink-0">
+        <div className="h-16 px-5 flex items-center gap-3 border-b border-slate-200 dark:border-[#1a2744] bg-white/80 dark:bg-[#060d1a]/80 backdrop-blur-md shrink-0">
           {classGroups.length > 1 && (
             <button
               onClick={() => setSelectedGroup(null)}
-              className="p-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 transition-colors"
+              className="p-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-[#0d1b2e] text-slate-500 transition-colors"
             >
               <MessageSquare className="w-5 h-5" />
             </button>
           )}
           <div className="w-9 h-9 rounded-xl bg-blue-500/10 flex items-center justify-center shrink-0">
-            <Users2 className="w-5 h-5 text-cyan-500" />
+            <Users2 className="w-5 h-5 text-blue-600" />
           </div>
           <div className="min-w-0">
             <p className="font-bold text-foreground text-sm truncate">{selectedGroup.title}</p>
-            <p className="text-[11px] text-cyan-500 font-medium">{participantCount} members</p>
+            <p className="text-[11px] text-blue-600 font-medium">{participantCount} members</p>
           </div>
         </div>
 
@@ -215,7 +215,7 @@ export function ClassGroupsClient({
         <div className="flex-1 overflow-y-auto p-4 space-y-2">
           {loading ? (
             <div className="h-full flex items-center justify-center">
-              <Loader2 className="w-6 h-6 animate-spin text-cyan-500" />
+              <Loader2 className="w-6 h-6 animate-spin text-blue-600" />
             </div>
           ) : messages.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-center gap-3 text-muted-foreground">
@@ -245,19 +245,19 @@ export function ClassGroupsClient({
                   <div className={`px-4 py-2.5 rounded-2xl max-w-[80%] shadow-sm mb-1 ${
                     isMe
                       ? 'bg-[#1D6FEB] text-white rounded-br-sm'
-                      : 'bg-slate-100 dark:bg-slate-800 text-foreground rounded-bl-sm border border-slate-200 dark:border-slate-700'
+                      : 'bg-slate-100 dark:bg-[#0d1b2e] text-foreground rounded-bl-sm border border-slate-200 dark:border-[#1a2744]'
                   }`}>
                     <p className="text-sm leading-relaxed">{msg.content}</p>
                     <div className="flex items-end justify-between gap-3 mt-1">
-                      <span className={`text-[10px] font-medium ${isMe ? 'text-cyan-200' : 'text-slate-400'}`}>
+                      <span className={`text-[10px] font-medium ${isMe ? 'text-blue-100' : 'text-slate-400'}`}>
                         {formatTime(msg.created_at)}
                       </span>
                       {isMe && (
                         <span className="shrink-0">
                           {(msg as any).is_pending ? (
-                            <Check className="w-3.5 h-3.5 text-cyan-200/70" />
+                            <Check className="w-3.5 h-3.5 text-blue-100/70" />
                           ) : (
-                            <CheckCheck className="w-3.5 h-3.5 text-cyan-200" />
+                            <CheckCheck className="w-3.5 h-3.5 text-blue-100" />
                           )}
                         </span>
                       )}
@@ -271,7 +271,7 @@ export function ClassGroupsClient({
         </div>
 
         {/* Input */}
-        <div className="p-3 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
+        <div className="p-3 bg-white dark:bg-[#060d1a] border-t border-slate-200 dark:border-[#1a2744]">
           <form onSubmit={handleSend} className="flex items-center gap-2">
             <input
               type="text"
@@ -279,7 +279,7 @@ export function ClassGroupsClient({
               onChange={e => setInput(e.target.value)}
               placeholder={`Message ${selectedGroup.title}…`}
               disabled={sending}
-              className="flex-1 h-10 px-4 rounded-full border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm"
+              className="flex-1 h-10 px-4 rounded-full border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-[#0d1b2e] focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm"
             />
             <button
               type="submit"

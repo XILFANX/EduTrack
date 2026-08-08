@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? 'https://edutrack.co.ke'),
   appleWebApp: {
     capable: true,
-    statusBarStyle: 'default',
+    statusBarStyle: 'black-translucent',
     title: 'EduTrack',
   },
   openGraph: {
@@ -56,6 +56,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <meta name="theme-color" content="#2563eb" />
       </head>
       <body suppressHydrationWarning className={`${inter.variable} font-sans antialiased bg-background text-foreground`}>
         <ThemeProvider

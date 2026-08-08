@@ -42,7 +42,7 @@ export default async function AdminAdminsPage() {
         {/* Left Column: Form & Info */}
         <div className="flex flex-col gap-6">
           {/* Add admin */}
-          <div className="bg-white dark:bg-slate-900/50 border border-border rounded-3xl p-6 shadow-sm">
+          <div className="bg-white dark:bg-[#060d1a]/80 border border-border rounded-3xl p-6 shadow-sm">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
                 <UserPlus className="h-5 w-5 text-blue-600 dark:text-blue-400" />
@@ -56,7 +56,7 @@ export default async function AdminAdminsPage() {
           </div>
 
           {/* Root admin notice */}
-          <div className="bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 relative overflow-hidden">
+          <div className="bg-slate-50 dark:bg-[#060d1a]/80 border border-slate-200 dark:border-[#1a2744] rounded-3xl p-6 relative overflow-hidden">
             <div className="absolute top-0 right-0 p-16 bg-[radial-gradient(ellipse_at_center,_rgba(59,130,246,0.1)_0%,_transparent_70%)] pointer-events-none opacity-50" />
             <div className="flex items-start gap-4 relative z-10">
               <div className="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center shrink-0">
@@ -74,17 +74,17 @@ export default async function AdminAdminsPage() {
 
         {/* Right Column: Admins list */}
         <div className="lg:col-span-2">
-          <div className="bg-white dark:bg-slate-900/50 border border-border rounded-3xl overflow-hidden shadow-sm flex flex-col h-full">
-            <div className="px-6 py-5 border-b border-border bg-slate-50/50 dark:bg-slate-800/20 flex items-center justify-between">
+          <div className="bg-white dark:bg-[#060d1a]/80 border border-border rounded-3xl overflow-hidden shadow-sm flex flex-col h-full">
+            <div className="px-6 py-5 border-b border-border bg-slate-50/50 dark:bg-[#0d1b2e]/20 flex items-center justify-between">
               <h2 className="text-base font-extrabold text-foreground flex items-center gap-2">
-                <Shield className="w-5 h-5 text-cyan-500" />
+                <Shield className="w-5 h-5 text-blue-600" />
                 Active Administrators ({filteredAdmins.length + 1})
               </h2>
             </div>
 
             <div className="divide-y divide-border/50">
               {/* Root Admin Hardcoded (You) */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between p-6 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors gap-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between p-6 hover:bg-slate-50 dark:hover:bg-[#0d1b2e]/80 transition-colors gap-4">
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-inner shrink-0 bg-blue-100 dark:bg-blue-900/40">
                     <Crown className="h-6 w-6 text-blue-600 dark:text-blue-400" />
@@ -105,9 +105,9 @@ export default async function AdminAdminsPage() {
 
               {/* Sub-admins */}
               {filteredAdmins.map((adminObj) => (
-                <div key={adminObj.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-6 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors gap-4">
+                <div key={adminObj.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-6 hover:bg-slate-50 dark:hover:bg-[#0d1b2e]/80 transition-colors gap-4">
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-inner shrink-0 bg-slate-100 dark:bg-slate-800">
+                    <div className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-inner shrink-0 bg-slate-100 dark:bg-[#0d1b2e]">
                       <Shield className="h-6 w-6 text-slate-500 dark:text-slate-400" />
                     </div>
                     <div>
@@ -120,7 +120,7 @@ export default async function AdminAdminsPage() {
                   </div>
 
                   <div className="flex items-center gap-3 self-end sm:self-auto pl-16 sm:pl-0">
-                    <span className="text-xs bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400 px-3 py-1.5 rounded-full font-black uppercase tracking-wider flex items-center gap-1.5">
+                    <span className="text-xs bg-slate-100 text-slate-600 dark:bg-[#0d1b2e] dark:text-slate-400 px-3 py-1.5 rounded-full font-black uppercase tracking-wider flex items-center gap-1.5">
                       <ShieldCheck className="h-3.5 w-3.5" /> Sub-Admin
                     </span>
                     <RemoveAdminById id={adminObj.id} />

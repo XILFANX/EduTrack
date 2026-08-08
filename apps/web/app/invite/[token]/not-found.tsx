@@ -5,7 +5,7 @@ export default function InviteNotFound() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-cyan-50 to-slate-100 dark:from-slate-950 dark:to-slate-900 flex items-center justify-center p-4">
       <div className="w-full max-w-md text-center space-y-6">
-        <div className="w-16 h-16 relative mx-auto rounded-2xl overflow-hidden shadow-sm border border-slate-200 dark:border-slate-800 bg-white">
+        <div className="w-16 h-16 relative mx-auto rounded-2xl overflow-hidden shadow-sm border border-slate-200 dark:border-[#1a2744] bg-white">
           <Image src="/logo.png" alt="EduTrack" fill className="object-cover" />
         </div>
         <div className="space-y-3">

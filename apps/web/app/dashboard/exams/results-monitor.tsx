@@ -13,7 +13,7 @@ import { publishReportCards } from '@/app/actions/exams'
 type ResultStatus = 'pending' | 'submitted' | 'approved' | 'rejected'
 
 const STATUS_CONFIG: Record<ResultStatus, { label: string; color: string; icon: any }> = {
-  pending:   { label: 'Pending',   color: 'text-slate-500 bg-slate-100 dark:bg-slate-800',              icon: Clock },
+  pending:   { label: 'Pending',   color: 'text-slate-500 bg-slate-100 dark:bg-[#0d1b2e]',              icon: Clock },
   submitted: { label: 'Submitted', color: 'text-blue-700 dark:text-blue-300 bg-blue-100 dark:bg-blue-900/40',   icon: Send },
   approved:  { label: 'Approved',  color: 'text-emerald-700 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-900/40', icon: CheckCircle2 },
   rejected:  { label: 'Rejected',  color: 'text-red-700 dark:text-red-300 bg-red-100 dark:bg-red-900/40',       icon: XCircle },
@@ -69,19 +69,19 @@ export function ResultsMonitor({ event, eventSlots, gradingStatus, classes, subj
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-gradient-to-br from-cyan-600 via-cyan-500 to-cyan-500 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
+      <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-blue-600 via-blue-500 to-blue-600 p-6 shadow-xl">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-[50px] rounded-full pointer-events-none" />
         <div className="relative z-10">
           <button
             onClick={() => router.push('/dashboard/exams')}
-            className="flex items-center gap-2 text-sm text-cyan-100 hover:text-white mb-4 transition-colors"
+            className="flex items-center gap-2 text-sm text-blue-100 hover:text-white mb-4 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" /> All Exam Events
           </button>
           <div className="flex items-start justify-between gap-4">
             <div>
               <h1 className="text-2xl font-black tracking-tight">{event.name}</h1>
-              <p className="text-cyan-100 text-sm mt-1">Results Monitor — track submission status per class & subject</p>
+              <p className="text-blue-100 text-sm mt-1">Results Monitor — track submission status per class & subject</p>
             </div>
             {readyToPublish && (
               <Button
@@ -119,7 +119,7 @@ export function ResultsMonitor({ event, eventSlots, gradingStatus, classes, subj
             <span>Overall Progress</span>
             <span>{Math.round(((submitted + approved) / totalSlots) * 100)}% submitted</span>
           </div>
-          <div className="h-2.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden flex gap-0.5">
+          <div className="h-2.5 bg-slate-100 dark:bg-[#0d1b2e] rounded-full overflow-hidden flex gap-0.5">
             <div className="bg-emerald-500 rounded-full transition-all" style={{ width: `${(approved / totalSlots) * 100}%` }} />
             <div className="bg-blue-500 rounded-full transition-all" style={{ width: `${(submitted / totalSlots) * 100}%` }} />
             {rejected > 0 && <div className="bg-red-400 rounded-full transition-all" style={{ width: `${(rejected / totalSlots) * 100}%` }} />}
@@ -145,7 +145,7 @@ export function ResultsMonitor({ event, eventSlots, gradingStatus, classes, subj
 
             return (
               <div key={cls.id} className="bg-card border border-border rounded-2xl overflow-hidden">
-                <div className="px-4 py-3 bg-slate-50/60 dark:bg-slate-900/40 border-b border-border flex items-center gap-3">
+                <div className="px-4 py-3 bg-slate-50/60 dark:bg-[#060d1a]/40 border-b border-border flex items-center gap-3">
                   <Users className="w-4 h-4 text-muted-foreground" />
                   <p className="font-bold text-sm text-foreground">{cls.name}</p>
                   <span className="text-xs text-muted-foreground">{classSlots.length} subject{classSlots.length !== 1 ? 's' : ''} scheduled</span>
@@ -166,7 +166,7 @@ export function ResultsMonitor({ event, eventSlots, gradingStatus, classes, subj
                       return (
                         <div key={slot.id} className="flex items-center gap-4 px-4 py-3">
                           <div className="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-950/30 flex items-center justify-center shrink-0">
-                            <BookOpen className="w-4 h-4 text-cyan-500" />
+                            <BookOpen className="w-4 h-4 text-blue-600" />
                           </div>
                           <div className="flex-1 min-w-0">
                             <p className="text-sm font-semibold text-foreground">{slot.subjects?.name}</p>

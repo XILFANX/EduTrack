@@ -103,9 +103,9 @@ export function UXProvider({ children }: { children: ReactNode }) {
 
       {/* CONFIRM DIALOG */}
       <AlertDialog open={isConfirmOpen} onOpenChange={(open) => { if (!open) handleCancel() }}>
-        <AlertDialogContent className="bg-slate-900 border-slate-800 text-white p-6 max-w-sm rounded-3xl sm:max-w-sm outline-none shadow-2xl backdrop-blur-md">
+        <AlertDialogContent className="bg-[#0d1b2e] border-[#1a2744] text-white p-6 max-w-sm rounded-3xl sm:max-w-sm outline-none shadow-2xl backdrop-blur-md">
           <AlertDialogHeader className="flex flex-col items-center text-center space-y-4 pt-4">
-            <div className="w-14 h-14 rounded-full bg-red-500/10 flex items-center justify-center text-red-500 border border-red-500/20 shadow-inner">
+            <div className="w-14 h-14 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-400 border border-blue-500/20 shadow-inner">
               <AlertTriangle className="w-7 h-7" />
             </div>
             <div className="space-y-1.5">
@@ -123,7 +123,7 @@ export function UXProvider({ children }: { children: ReactNode }) {
             <Button 
               variant="outline" 
               onClick={handleCancel}
-              className="flex-1 bg-slate-800 border-slate-700 hover:bg-slate-700 hover:text-white text-slate-300 font-semibold rounded-xl h-11"
+              className="flex-1 bg-[#0d1b2e] border-slate-700 hover:bg-slate-700 hover:text-white text-slate-300 font-semibold rounded-xl h-11"
             >
               {confirmOpts.cancelText}
             </Button>
@@ -131,7 +131,7 @@ export function UXProvider({ children }: { children: ReactNode }) {
               onClick={handleConfirm}
               className={`flex-1 font-semibold rounded-xl h-11 ${
                 confirmOpts.variant === 'destructive' 
-                  ? 'bg-red-600 hover:bg-red-700 text-white shadow-lg shadow-red-900/20 border-none' 
+                  ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-900/20 border-none' 
                   : 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-900/20'
               }`}
             >
@@ -143,7 +143,7 @@ export function UXProvider({ children }: { children: ReactNode }) {
 
       {/* SUCCESS MODAL (EDUTRACK THEME - CYAN/BLUE) */}
       <AlertDialog open={isSuccessOpen} onOpenChange={setIsSuccessOpen}>
-        <AlertDialogContent className="bg-slate-900 border-t-[3px] border-t-cyan-500 border-x-slate-800 border-b-slate-800 text-white p-6 max-w-sm rounded-2xl outline-none shadow-2xl backdrop-blur-md relative overflow-hidden">
+        <AlertDialogContent className="bg-[#0d1b2e] border-t-[3px] border-t-blue-500 border-x-[#1a2744] border-b-[#1a2744] text-white p-6 max-w-sm rounded-2xl outline-none shadow-2xl backdrop-blur-md relative overflow-hidden">
           <button 
             onClick={() => setIsSuccessOpen(false)} 
             className="absolute right-4 top-4 text-slate-400 hover:text-white transition-colors"
@@ -152,7 +152,7 @@ export function UXProvider({ children }: { children: ReactNode }) {
           </button>
           
           <AlertDialogHeader className="flex flex-col items-center text-center space-y-4 pt-2">
-            <div className="w-14 h-14 rounded-full bg-blue-500/10 flex items-center justify-center text-cyan-500 border border-blue-500/20 shadow-inner">
+            <div className="w-14 h-14 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-600 border border-blue-500/20 shadow-inner">
               <CheckCircle2 className="w-7 h-7" />
             </div>
             <div className="space-y-1.5">
@@ -171,7 +171,7 @@ export function UXProvider({ children }: { children: ReactNode }) {
             <Button 
               variant="outline" 
               onClick={() => setIsSuccessOpen(false)}
-              className="flex-1 bg-slate-800/50 border-slate-700 hover:bg-slate-800 text-slate-300 font-semibold rounded-xl"
+              className="flex-1 bg-[#0d1b2e]/80 border-slate-700 hover:bg-[#0d1b2e] text-slate-300 font-semibold rounded-xl"
             >
               Done
             </Button>
@@ -192,7 +192,7 @@ export function UXProvider({ children }: { children: ReactNode }) {
 
       {/* ERROR MODAL */}
       <AlertDialog open={isErrorOpen} onOpenChange={setIsErrorOpen}>
-        <AlertDialogContent className="bg-slate-900 border-t-[3px] border-t-red-500 border-x-slate-800 border-b-slate-800 text-white p-6 max-w-sm rounded-2xl outline-none shadow-2xl backdrop-blur-md relative overflow-hidden">
+        <AlertDialogContent className="bg-[#0d1b2e] border-t-[3px] border-t-blue-500 border-x-[#1a2744] border-b-[#1a2744] text-white p-6 max-w-sm rounded-2xl outline-none shadow-2xl backdrop-blur-md relative overflow-hidden">
           <button 
             onClick={() => setIsErrorOpen(false)} 
             className="absolute right-4 top-4 text-slate-400 hover:text-white transition-colors"
@@ -201,7 +201,7 @@ export function UXProvider({ children }: { children: ReactNode }) {
           </button>
           
           <AlertDialogHeader className="flex flex-col items-center text-center space-y-4 pt-2">
-            <div className="w-14 h-14 rounded-full bg-red-500/10 flex items-center justify-center text-red-500 border border-red-500/20 shadow-inner">
+            <div className="w-14 h-14 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-400 border border-blue-500/20 shadow-inner">
               <AlertCircle className="w-7 h-7" />
             </div>
             <div className="space-y-1.5">
@@ -219,7 +219,7 @@ export function UXProvider({ children }: { children: ReactNode }) {
           <AlertDialogFooter className="flex sm:flex-row gap-3 sm:justify-center mt-6 w-full">
             <Button 
               onClick={() => setIsErrorOpen(false)}
-              className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold rounded-xl"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl"
             >
               Got it
             </Button>
@@ -233,8 +233,8 @@ export function UXProvider({ children }: { children: ReactNode }) {
           ${toastMsg ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-4 scale-95'}
         `}
       >
-        <div className="bg-slate-800/95 backdrop-blur shadow-xl border border-slate-700/50 text-white px-5 py-3 rounded-full text-sm font-medium flex items-center gap-2">
-          <CheckCircle2 className="w-4 h-4 text-cyan-400" />
+        <div className="bg-[#0d1b2e]/95 backdrop-blur shadow-xl border border-slate-700/50 text-white px-5 py-3 rounded-full text-sm font-medium flex items-center gap-2">
+          <CheckCircle2 className="w-4 h-4 text-blue-500" />
           {toastMsg}
         </div>
       </div>

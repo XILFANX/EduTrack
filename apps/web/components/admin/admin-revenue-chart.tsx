@@ -5,7 +5,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 export function AdminRevenueChart({ data }: { data: { month: string, revenue: number }[] }) {
   if (!data || data.length === 0) {
     return (
-      <div className="bg-white dark:bg-slate-900/50 border border-border rounded-3xl p-6 h-80 flex flex-col items-center justify-center text-center shadow-sm">
+      <div className="bg-white dark:bg-[#060d1a]/80 border border-border rounded-3xl p-6 h-80 flex flex-col items-center justify-center text-center shadow-sm">
         <p className="text-muted-foreground font-semibold">No revenue data available.</p>
       </div>
     )
@@ -18,7 +18,7 @@ export function AdminRevenueChart({ data }: { data: { month: string, revenue: nu
   }
 
   return (
-    <div className="bg-white dark:bg-slate-900/50 border border-border rounded-3xl p-6 h-96 flex flex-col shadow-sm relative overflow-hidden">
+    <div className="bg-white dark:bg-[#060d1a]/80 border border-border rounded-3xl p-6 h-96 flex flex-col shadow-sm relative overflow-hidden">
       <div className="absolute top-0 right-0 p-24 bg-[radial-gradient(ellipse_at_center,_rgba(59,130,246,0.1)_0%,_transparent_70%)] pointer-events-none opacity-50" />
       <h2 className="text-base font-extrabold text-foreground mb-6 relative z-10">Platform Revenue (Last 6 Months)</h2>
       <div className="flex-1 min-h-0 relative z-10 w-full">

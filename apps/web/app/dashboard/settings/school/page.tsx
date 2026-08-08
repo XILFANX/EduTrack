@@ -28,7 +28,7 @@ export default async function SchoolProfileSettings() {
   return (
     <div className="p-4 md:p-6 space-y-6 max-w-3xl mx-auto pb-32">
       <div className="flex items-center gap-3 mb-2">
-        <Link href="/dashboard/settings" className="w-9 h-9 rounded-full border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+        <Link href="/dashboard/settings" className="w-9 h-9 rounded-full border border-slate-200 dark:border-[#1a2744] flex items-center justify-center text-slate-500 hover:bg-slate-50 dark:hover:bg-[#0d1b2e] transition-colors">
           <ArrowLeft className="w-4 h-4" />
         </Link>
         <h1 className="text-xl font-bold text-foreground">School Profile</h1>

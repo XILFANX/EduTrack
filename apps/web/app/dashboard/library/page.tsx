@@ -47,7 +47,7 @@ export default async function LibraryOverviewPage() {
         </div>
         <Link
           href="/library/dashboard"
-          className="text-sm font-semibold text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-cyan-300 transition-colors"
+          className="text-sm font-semibold text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-400 transition-colors"
         >
           Full Portal →
         </Link>
@@ -62,7 +62,7 @@ export default async function LibraryOverviewPage() {
         ].map(stat => {
           const Icon = stat.icon
           return (
-            <div key={stat.label} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm">
+            <div key={stat.label} className="bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-2xl p-4 shadow-sm">
               <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-3 ${stat.color}`}>
                 <Icon className="w-5 h-5" />
               </div>
@@ -74,8 +74,8 @@ export default async function LibraryOverviewPage() {
       </div>
 
       {/* Books Table */}
-      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm">
-        <div className="px-6 py-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+      <div className="bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-2xl overflow-hidden shadow-sm">
+        <div className="px-6 py-4 border-b border-slate-200 dark:border-[#1a2744] flex items-center justify-between">
           <h2 className="font-semibold text-foreground flex items-center gap-2">
             <BookOpen className="w-4 h-4 text-slate-500" /> Book Inventory
           </h2>
@@ -92,7 +92,7 @@ export default async function LibraryOverviewPage() {
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left">
-              <thead className="bg-slate-50 dark:bg-slate-950 text-xs font-semibold text-muted-foreground uppercase tracking-wider border-b border-slate-200 dark:border-slate-800">
+              <thead className="bg-slate-50 dark:bg-slate-950 text-xs font-semibold text-muted-foreground uppercase tracking-wider border-b border-slate-200 dark:border-[#1a2744]">
                 <tr>
                   <th className="px-6 py-3">Title</th>
                   <th className="px-6 py-3">Author</th>
@@ -102,7 +102,7 @@ export default async function LibraryOverviewPage() {
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-slate-800/50">
                 {books.map(b => (
-                  <tr key={b.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors">
+                  <tr key={b.id} className="hover:bg-slate-50/50 dark:hover:bg-[#0d1b2e]/20 transition-colors">
                     <td className="px-6 py-3 font-medium text-foreground">{b.title}</td>
                     <td className="px-6 py-3 text-muted-foreground">{b.author || '—'}</td>
                     <td className="px-6 py-3 text-muted-foreground font-mono text-xs">{b.isbn || '—'}</td>
@@ -126,8 +126,8 @@ export default async function LibraryOverviewPage() {
       </div>
 
       {/* Active Checkouts */}
-      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm">
-        <div className="px-6 py-4 border-b border-slate-200 dark:border-slate-800">
+      <div className="bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-2xl overflow-hidden shadow-sm">
+        <div className="px-6 py-4 border-b border-slate-200 dark:border-[#1a2744]">
           <h2 className="font-semibold text-foreground flex items-center gap-2">
             <BookMarked className="w-4 h-4 text-slate-500" /> Active Checkouts
           </h2>
@@ -140,7 +140,7 @@ export default async function LibraryOverviewPage() {
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left">
-              <thead className="bg-slate-50 dark:bg-slate-950 text-xs font-semibold text-muted-foreground uppercase tracking-wider border-b border-slate-200 dark:border-slate-800">
+              <thead className="bg-slate-50 dark:bg-slate-950 text-xs font-semibold text-muted-foreground uppercase tracking-wider border-b border-slate-200 dark:border-[#1a2744]">
                 <tr>
                   <th className="px-6 py-3">Student</th>
                   <th className="px-6 py-3">Book</th>
@@ -154,7 +154,7 @@ export default async function LibraryOverviewPage() {
                   const book = c.library_books as any
                   const isOverdue = new Date(c.due_date) < new Date()
                   return (
-                    <tr key={c.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors">
+                    <tr key={c.id} className="hover:bg-slate-50/50 dark:hover:bg-[#0d1b2e]/20 transition-colors">
                       <td className="px-6 py-3 font-medium text-foreground">
                         {student?.first_name} {student?.last_name}
                       </td>

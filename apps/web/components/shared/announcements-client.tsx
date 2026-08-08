@@ -42,7 +42,7 @@ export function AnnouncementsClient({ audienceOptions, defaultAudience, subjectP
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       {status && (
-        <div className={`p-3 rounded-xl text-sm font-medium ${status.type === 'success' ? 'bg-blue-500/10 text-cyan-500 dark:text-blue-400' : 'bg-red-500/10 text-red-500 dark:text-red-400'}`}>
+        <div className={`p-3 rounded-xl text-sm font-medium ${status.type === 'success' ? 'bg-blue-500/10 text-blue-600 dark:text-blue-400' : 'bg-red-500/10 text-red-500 dark:text-red-400'}`}>
           {status.text}
         </div>
       )}

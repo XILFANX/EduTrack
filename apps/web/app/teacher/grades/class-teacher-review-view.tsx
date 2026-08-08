@@ -15,7 +15,7 @@ import { approveResults, rejectResults } from '@/app/actions/exams'
 type GradingStatusType = 'pending' | 'submitted' | 'approved' | 'rejected'
 
 const STATUS_CONFIG: Record<GradingStatusType, { label: string; color: string; icon: any }> = {
-  pending:   { label: 'Awaiting',  color: 'text-slate-500 bg-slate-100 dark:bg-slate-800', icon: Clock },
+  pending:   { label: 'Awaiting',  color: 'text-slate-500 bg-slate-100 dark:bg-[#0d1b2e]', icon: Clock },
   submitted: { label: 'Submitted', color: 'text-blue-700 dark:text-blue-300 bg-blue-100 dark:bg-blue-900/40', icon: Send },
   approved:  { label: 'Approved',  color: 'text-emerald-700 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-900/40', icon: CheckCircle2 },
   rejected:  { label: 'Rejected',  color: 'text-red-700 dark:text-red-300 bg-red-100 dark:bg-red-900/40', icon: XCircle },
@@ -51,7 +51,7 @@ function RejectModal({ open, onClose, onConfirm }: { open: boolean; onClose: () 
           />
           <div className="flex justify-end gap-3 pt-2 border-t border-border">
             <Button variant="outline" onClick={onClose} className="rounded-xl">Cancel</Button>
-            <Button onClick={() => comment.trim() && onConfirm(comment.trim())} className="rounded-xl bg-red-600 hover:bg-red-700 text-white">
+            <Button onClick={() => comment.trim() && onConfirm(comment.trim())} className="rounded-xl bg-blue-600 hover:bg-blue-700 text-white">
               Send Back
             </Button>
           </div>
@@ -104,7 +104,7 @@ export function ClassTeacherReviewView({
   return (
     <div className="space-y-6 pb-24">
       {/* Hero */}
-      <div className="bg-gradient-to-br from-cyan-600 via-cyan-500 to-cyan-500 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
+      <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-blue-600 via-blue-500 to-blue-600 p-6 shadow-xl">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-[50px] rounded-full pointer-events-none" />
         <div className="relative z-10 flex items-center gap-4">
           <div className="w-12 h-12 rounded-2xl bg-white/15 flex items-center justify-center">
@@ -112,7 +112,7 @@ export function ClassTeacherReviewView({
           </div>
           <div>
             <h1 className="text-2xl font-black tracking-tight">Results Review</h1>
-            <p className="text-cyan-100 text-sm mt-0.5">{myClass.name} · Approve or send back subject results</p>
+            <p className="text-blue-100 text-sm mt-0.5">{myClass.name} · Approve or send back subject results</p>
           </div>
         </div>
       </div>
@@ -160,7 +160,7 @@ export function ClassTeacherReviewView({
                 }`}
               >
                 <div className="flex items-center justify-between gap-2">
-                  <p className={`text-sm font-bold ${isSelected ? 'text-blue-700 dark:text-cyan-200' : 'text-foreground'}`}>
+                  <p className={`text-sm font-bold ${isSelected ? 'text-blue-700 dark:text-blue-100' : 'text-foreground'}`}>
                     {slot.subjects?.name}
                   </p>
                   <span className={`inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full ${cfg.color}`}>
@@ -236,7 +236,7 @@ export function ClassTeacherReviewView({
               <div className="bg-card border border-border rounded-3xl overflow-hidden shadow-sm">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="border-b border-border bg-slate-50/60 dark:bg-slate-900/40">
+                    <tr className="border-b border-border bg-slate-50/60 dark:bg-[#060d1a]/40">
                       <th className="px-4 py-3 text-left text-xs font-bold text-muted-foreground uppercase tracking-wider">#</th>
                       <th className="px-4 py-3 text-left text-xs font-bold text-muted-foreground uppercase tracking-wider">Student</th>
                       <th className="px-4 py-3 text-center text-xs font-bold text-muted-foreground uppercase tracking-wider">Score</th>
@@ -250,7 +250,7 @@ export function ClassTeacherReviewView({
                       .map((student: any, idx: number) => {
                         const result = resultMap[student.id]
                         return (
-                          <tr key={student.id} className={`${idx % 2 !== 0 ? 'bg-slate-50/40 dark:bg-slate-900/20' : ''}`}>
+                          <tr key={student.id} className={`${idx % 2 !== 0 ? 'bg-slate-50/40 dark:bg-[#060d1a]/20' : ''}`}>
                             <td className="px-4 py-2.5 text-muted-foreground text-xs">{idx + 1}</td>
                             <td className="px-4 py-2.5 font-semibold text-foreground">{student.last_name}, {student.first_name}</td>
                             <td className="px-4 py-2.5 text-center font-bold text-foreground">{result?.score ?? '—'}</td>

@@ -36,7 +36,7 @@ export default async function MessagingPoliciesPage() {
       <div>
         <div className="flex items-center gap-3 mb-1">
           <div className="w-10 h-10 rounded-2xl bg-blue-500/10 flex items-center justify-center">
-            <ShieldCheck className="w-5 h-5 text-cyan-500" />
+            <ShieldCheck className="w-5 h-5 text-blue-600" />
           </div>
           <h1 className="text-xl font-bold text-foreground">Messaging Policies</h1>
         </div>
@@ -47,7 +47,7 @@ export default async function MessagingPoliciesPage() {
 
       {/* Info callout */}
       <div className="flex items-start gap-3 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-2xl">
-        <MessageSquare className="w-5 h-5 text-cyan-500 shrink-0 mt-0.5" />
+        <MessageSquare className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" />
         <div>
           <p className="text-sm font-semibold text-cyan-800 dark:text-blue-300">How policies work</p>
           <p className="text-xs text-blue-700 dark:text-blue-400 mt-1 leading-relaxed">
@@ -57,7 +57,7 @@ export default async function MessagingPoliciesPage() {
       </div>
 
       {/* Policy toggles */}
-      <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 shadow-sm">
+      <div className="bg-white dark:bg-[#060d1a]/80 border border-slate-200 dark:border-[#1a2744] rounded-3xl p-5 shadow-sm">
         <h2 className="text-sm font-bold text-foreground mb-4 uppercase tracking-widest text-slate-500">
           Communication Rules
         </h2>

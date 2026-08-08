@@ -48,7 +48,7 @@ export default async function TransportRoutes() {
       </div>
 
       {allRoutes.length === 0 ? (
-        <div className="text-center py-20 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl">
+        <div className="text-center py-20 bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-3xl">
           <div className="w-16 h-16 rounded-2xl bg-blue-100 dark:bg-blue-900/40 mx-auto flex items-center justify-center mb-4">
             <Map className="w-8 h-8 text-blue-600 dark:text-blue-400" />
           </div>
@@ -65,7 +65,7 @@ export default async function TransportRoutes() {
             const isFull = capacity > 0 && assigned >= capacity
             
             return (
-              <div key={route.id} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+              <div key={route.id} className="bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-3xl p-5 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none" />
                 
                 <div className="flex items-start justify-between mb-4 relative z-10">
@@ -92,7 +92,7 @@ export default async function TransportRoutes() {
                     </p>
                   </div>
 
-                  <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                  <div className="pt-4 border-t border-slate-100 dark:border-[#1a2744] flex items-center justify-between">
                     <div className="flex items-center gap-2 text-muted-foreground">
                       <Users className="w-4 h-4" />
                       <span className="text-sm font-medium">Assigned</span>
@@ -103,7 +103,7 @@ export default async function TransportRoutes() {
                   </div>
                   
                   {capacity > 0 && (
-                    <div className="mt-3 h-1.5 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                    <div className="mt-3 h-1.5 w-full bg-slate-100 dark:bg-[#0d1b2e] rounded-full overflow-hidden">
                       <div 
                         className={`h-full rounded-full ${isFull ? 'bg-red-500' : 'bg-blue-500'}`} 
                         style={{ width: `${Math.min((assigned / capacity) * 100, 100)}%` }}

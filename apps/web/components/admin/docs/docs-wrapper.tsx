@@ -35,7 +35,7 @@ export function DocsWrapper({ elements, headings, repoPaths, accent = 'blue' }: 
   return (
     <div className="flex flex-col h-full gap-0">
       {/* ── Tab bar ── */}
-      <div className="flex items-center gap-1 mb-6 p-1 bg-slate-100 dark:bg-slate-900/60 rounded-xl border border-slate-200 dark:border-slate-800 w-fit">
+      <div className="flex items-center gap-1 mb-6 p-1 bg-slate-100 dark:bg-[#060d1a]/60 rounded-xl border border-slate-200 dark:border-[#1a2744] w-fit">
         <button
           onClick={() => setTab('docs')}
           className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 ${
@@ -92,7 +92,7 @@ export function DocsWrapper({ elements, headings, repoPaths, accent = 'blue' }: 
                       <li key={heading.id}>
                         <a
                           href={`#${heading.id}`}
-                          className="text-xs text-zinc-500 hover:text-cyan-400 transition-colors line-clamp-2"
+                          className="text-xs text-zinc-500 hover:text-blue-500 transition-colors line-clamp-2"
                         >
                           &gt; {heading.title}
                         </a>
@@ -145,7 +145,7 @@ export function DocsWrapper({ elements, headings, repoPaths, accent = 'blue' }: 
                       onClick={() => openRepo(rp)}
                       className={`flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg font-mono border transition-all ${
                         isActive
-                          ? 'border-blue-500 bg-blue-500/10 text-cyan-400'
+                          ? 'border-blue-500 bg-blue-500/10 text-blue-500'
                           : 'border-slate-700 text-slate-400 hover:border-slate-500 hover:text-slate-200'
                       }`}
                     >

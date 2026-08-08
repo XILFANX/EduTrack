@@ -46,10 +46,10 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-[#0A0A0F] flex flex-col selection:bg-blue-500/30">
       {/* Header */}
-      <header className="sticky top-0 z-40 bg-white/70 dark:bg-[#0A0A0F]/70 backdrop-blur-2xl border-b border-slate-200/50 dark:border-slate-800/50">
+      <header className="sticky top-0 z-40 bg-white/70 dark:bg-[#0A0A0F]/70 backdrop-blur-2xl border-b border-slate-200/50 dark:border-[#1a2744]/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
           <Link href="/admin/dashboard" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 relative rounded-[14px] overflow-hidden shrink-0 border border-slate-200/50 dark:border-slate-800 shadow-sm group-hover:scale-105 transition-transform bg-white">
+            <div className="w-10 h-10 relative rounded-[14px] overflow-hidden shrink-0 border border-slate-200/50 dark:border-[#1a2744] shadow-sm group-hover:scale-105 transition-transform bg-white">
               <Image src="/logo.png" alt="EduTrack" fill className="object-cover" />
             </div>
             <div>
@@ -65,7 +65,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           
           <div className="flex items-center gap-4">
             <NotificationBell />
-            <div className="h-6 w-px bg-slate-200 dark:bg-slate-800" />
+            <div className="h-6 w-px bg-slate-200 dark:bg-[#0d1b2e]" />
             
             <div className="flex items-center gap-3">
               <div className="hidden md:block text-right">
@@ -76,7 +76,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
                 {initials}
               </div>
               <form action="/api/auth/signout" method="post" className="ml-1">
-                <button title="Sign out" className="w-9 h-9 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-500 hover:text-red-500 hover:bg-orange-50 dark:hover:bg-orange-900/20 hover:border-red-200 dark:hover:border-red-800 transition-colors">
+                <button title="Sign out" className="w-9 h-9 rounded-xl border border-slate-200 dark:border-[#1a2744] flex items-center justify-center text-slate-500 hover:text-red-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:border-red-200 dark:hover:border-red-800 transition-colors">
                   <LogOut className="w-4 h-4" />
                 </button>
               </form>

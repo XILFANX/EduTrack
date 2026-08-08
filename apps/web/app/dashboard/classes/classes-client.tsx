@@ -55,7 +55,7 @@ export function ClassesPageClient({ classes, studentCountMap, schoolId, curricul
       </div>
 
       {!classes || classes.length === 0 ? (
-        <div className="text-center py-20 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl">
+        <div className="text-center py-20 bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-3xl">
           <div className="w-16 h-16 rounded-2xl bg-blue-100 dark:bg-blue-900/40 mx-auto flex items-center justify-center mb-4">
             <Users className="w-8 h-8 text-blue-600 dark:text-blue-400" />
           </div>
@@ -68,7 +68,7 @@ export function ClassesPageClient({ classes, studentCountMap, schoolId, curricul
           </Button>
         </div>
       ) : (
-        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden">
+        <div className="bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-2xl overflow-hidden">
           <div className="divide-y divide-slate-100 dark:divide-slate-800">
             {classList.map((cls) => {
               const teacherObj = Array.isArray(cls.users) ? cls.users[0] : cls.users
@@ -80,7 +80,7 @@ export function ClassesPageClient({ classes, studentCountMap, schoolId, curricul
               const studentCount = studentCountMap[cls.id] || 0
 
               return (
-                <div key={cls.id} className="relative flex items-center bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors group">
+                <div key={cls.id} className="relative flex items-center bg-white dark:bg-[#060d1a] hover:bg-slate-50 dark:hover:bg-[#0d1b2e]/40 transition-colors group">
                   <Link
                     href={`/dashboard/classes/${cls.id}`}
                     className="flex-1 flex items-center gap-4 px-4 py-3.5"
@@ -94,7 +94,7 @@ export function ClassesPageClient({ classes, studentCountMap, schoolId, curricul
 
                     {/* Info */}
                     <div className="flex-1 min-w-0">
-                      <p className="font-semibold text-foreground text-sm truncate group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-colors">
+                      <p className="font-semibold text-foreground text-sm truncate group-hover:text-blue-600 dark:group-hover:text-blue-500 transition-colors">
                         {cls.name}
                       </p>
                       <p className="text-xs text-muted-foreground mt-0.5 flex items-center gap-1 truncate">
@@ -112,14 +112,14 @@ export function ClassesPageClient({ classes, studentCountMap, schoolId, curricul
                       <span className="sm:hidden text-xs font-medium text-slate-500 dark:text-slate-400">
                         {studentCount}
                       </span>
-                      <ChevronRight className="w-4 h-4 text-slate-300 dark:text-slate-600 group-hover:text-cyan-500 transition-colors" />
+                      <ChevronRight className="w-4 h-4 text-slate-300 dark:text-slate-600 group-hover:text-blue-600 transition-colors" />
                     </div>
                   </Link>
 
                   {/* Delete button — positioned absolute on the right edge */}
                   <button
                     onClick={e => { e.stopPropagation(); handleDeleteClass(cls.id, cls.name) }}
-                    className="absolute right-3 p-2 rounded-lg text-slate-300 hover:text-red-600 hover:bg-orange-50 dark:hover:bg-orange-900/20 transition-colors"
+                    className="absolute right-3 p-2 rounded-lg text-slate-300 hover:text-red-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
                     title="Delete class"
                   >
                     <Trash2 className="w-4 h-4" />
@@ -130,7 +130,7 @@ export function ClassesPageClient({ classes, studentCountMap, schoolId, curricul
           </div>
 
           {/* Footer summary */}
-          <div className="px-4 py-2.5 bg-slate-50 dark:bg-slate-800/30 border-t border-slate-100 dark:border-slate-800">
+          <div className="px-4 py-2.5 bg-slate-50 dark:bg-[#0d1b2e]/30 border-t border-slate-100 dark:border-[#1a2744]">
             <p className="text-xs text-muted-foreground">
               {classList.length} class{classList.length !== 1 ? 'es' : ''} · {Object.values(studentCountMap).reduce((a, b) => a + b, 0)} total students
             </p>

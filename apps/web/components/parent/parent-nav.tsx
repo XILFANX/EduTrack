@@ -16,7 +16,7 @@ export function ParentNav() {
   const pathname = usePathname()
 
   return (
-    <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-sm bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200/50 dark:border-slate-800/50 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] z-50">
+    <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-sm bg-white/80 dark:bg-[#060d1a]/80 backdrop-blur-xl border border-slate-200/50 dark:border-[#1a2744]/50 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] z-50">
       <div className="flex items-center justify-around p-2">
         {NAV_ITEMS.map((item) => {
           const isActive = pathname === item.href || pathname.startsWith(item.href + '/')

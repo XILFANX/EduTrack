@@ -24,7 +24,7 @@ export default async function HelpDocPage({ params }: Props) {
         <article className="flex-1 min-w-0 max-w-3xl">
           {/* Mobile TOC */}
           {headings.length > 0 && (
-            <div className="xl:hidden mb-10 p-6 rounded-2xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800">
+            <div className="xl:hidden mb-10 p-6 rounded-2xl bg-slate-50 dark:bg-[#060d1a]/80 border border-slate-200 dark:border-[#1a2744]">
               <h4 className="font-semibold text-slate-900 dark:text-white mb-4 text-sm tracking-wide uppercase">On this page</h4>
               <ul className="space-y-3">
                 {headings.map((heading) => (
@@ -43,7 +43,7 @@ export default async function HelpDocPage({ params }: Props) {
 
           {elements}
           
-          <div className="mt-20 pt-8 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-sm text-slate-500 dark:text-slate-400">
+          <div className="mt-20 pt-8 border-t border-slate-200 dark:border-[#1a2744] flex items-center justify-between text-sm text-slate-500 dark:text-slate-400">
             <p>Still need help? <Link href="/contact" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">Contact Support</Link></p>
             <p>Last updated: Today</p>
           </div>

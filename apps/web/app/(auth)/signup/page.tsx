@@ -68,7 +68,7 @@ export default function SignupPage() {
           <p className="text-slate-500 dark:text-slate-400 text-sm">
             We sent a confirmation link to <strong className="text-slate-700 dark:text-slate-200">{email}</strong>. Click it to activate your account.
           </p>
-          <Link href="/login" className="text-blue-600 dark:text-cyan-500 text-sm hover:underline">Back to login</Link>
+          <Link href="/login" className="text-blue-600 dark:text-blue-600 text-sm hover:underline">Back to login</Link>
         </div>
       </div>
     )
@@ -80,7 +80,7 @@ export default function SignupPage() {
 
         {/* Logo */}
         <div className="text-center space-y-2">
-          <div className="w-12 h-12 relative mx-auto rounded-full overflow-hidden shadow-sm border border-slate-200 dark:border-slate-800 bg-white">
+          <div className="w-12 h-12 relative mx-auto rounded-full overflow-hidden shadow-sm border border-slate-200 dark:border-[#1a2744] bg-white">
             <Image src="/logo.png" alt="EduTrack Logo" fill className="object-cover " />
           </div>
           <h1 className="text-2xl font-bold mt-4 text-slate-800 dark:text-slate-100">Set up your school</h1>
@@ -94,7 +94,7 @@ export default function SignupPage() {
         </div>
 
         {/* Card */}
-        <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 p-6 space-y-4 relative z-10">
+        <div className="bg-white dark:bg-[#060d1a] rounded-2xl shadow-sm border border-slate-100 dark:border-[#1a2744] p-6 space-y-4 relative z-10">
 
           <form onSubmit={handleSignup} className="space-y-4">
             <div className="space-y-1.5">
@@ -107,7 +107,7 @@ export default function SignupPage() {
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 placeholder="Jane Kamau"
-                className="w-full border border-slate-200 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full border border-slate-200 dark:border-[#1a2744] dark:bg-slate-950 dark:text-slate-100 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
 
@@ -121,7 +121,7 @@ export default function SignupPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="jane@example.com"
-                className="w-full border border-slate-200 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full border border-slate-200 dark:border-[#1a2744] dark:bg-slate-950 dark:text-slate-100 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
 
@@ -137,7 +137,7 @@ export default function SignupPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="At least 8 characters"
-                  className="w-full border border-slate-200 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent pr-10"
+                  className="w-full border border-slate-200 dark:border-[#1a2744] dark:bg-slate-950 dark:text-slate-100 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent pr-10"
                 />
                 <button
                   type="button"
@@ -151,7 +151,7 @@ export default function SignupPage() {
             </div>
 
             {error && (
-              <p className="text-sm text-red-600 dark:text-red-400 bg-orange-50 dark:bg-orange-950/50 border border-red-100 dark:border-red-900/50 px-3 py-2 rounded-lg leading-snug">
+              <p className="text-sm text-red-600 dark:text-red-400 bg-blue-50 dark:bg-blue-950/50 border border-red-100 dark:border-red-900/50 px-3 py-2 rounded-lg leading-snug">
                 {error}
               </p>
             )}
@@ -167,17 +167,17 @@ export default function SignupPage() {
 
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-slate-100 dark:border-slate-800" />
+              <div className="w-full border-t border-slate-100 dark:border-[#1a2744]" />
             </div>
             <div className="relative flex justify-center">
-              <span className="bg-white dark:bg-slate-900 px-3 text-xs text-slate-400">or</span>
+              <span className="bg-white dark:bg-[#060d1a] px-3 text-xs text-slate-400">or</span>
             </div>
           </div>
 
           <button
             type="button"
             onClick={handleGoogleSignup}
-            className="w-full flex items-center justify-center gap-2 border border-slate-200 dark:border-slate-700 dark:hover:bg-slate-800 dark:text-slate-200 rounded-lg px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 transition-colors"
+            className="w-full flex items-center justify-center gap-2 border border-slate-200 dark:border-[#1a2744] dark:hover:bg-[#0d1b2e] dark:text-slate-200 rounded-lg px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 transition-colors"
           >
             <svg viewBox="0 0 24 24" className="w-4 h-4" xmlns="http://www.w3.org/2000/svg">
               <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -195,7 +195,7 @@ export default function SignupPage() {
 
         <p className="text-center text-sm text-slate-500 dark:text-slate-400">
           Already have an account?{' '}
-          <Link href="/login" className="text-blue-600 dark:text-cyan-500 font-medium hover:underline">Sign in</Link>
+          <Link href="/login" className="text-blue-600 dark:text-blue-600 font-medium hover:underline">Sign in</Link>
         </p>
       </div>
     </div>

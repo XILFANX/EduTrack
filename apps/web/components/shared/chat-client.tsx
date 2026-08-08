@@ -373,19 +373,19 @@ export function ChatClient({
   const chatOpen = !!selectedContact
 
   return (
-    <div className="flex h-full bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-xl"
+    <div className="flex h-full bg-white dark:bg-[#060d1a]/80 border border-slate-200 dark:border-[#1a2744] rounded-3xl overflow-hidden shadow-xl"
          style={{ minHeight: '520px', maxHeight: 'calc(100vh - 200px)' }}>
 
       {/* ======================= LEFT SIDEBAR ======================= */}
-      <div className={`${chatOpen ? 'hidden md:flex' : 'flex'} w-full md:w-80 lg:w-96 flex-col border-r border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/20 shrink-0`}>
+      <div className={`${chatOpen ? 'hidden md:flex' : 'flex'} w-full md:w-80 lg:w-96 flex-col border-r border-slate-200 dark:border-[#1a2744] bg-slate-50/50 dark:bg-[#060d1a]/20 shrink-0`}>
 
         {/* Sidebar Header */}
-        <div className="h-16 px-5 flex items-center gap-3 border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shrink-0">
+        <div className="h-16 px-5 flex items-center gap-3 border-b border-slate-200 dark:border-[#1a2744] bg-white/80 dark:bg-[#060d1a]/80 backdrop-blur-md shrink-0">
           {selectedCategory ? (
             <>
               <button
                 onClick={handleBackToDirectory}
-                className="p-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 hover:text-slate-900 dark:hover:text-slate-200 transition-colors shrink-0"
+                className="p-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-[#0d1b2e] text-slate-500 hover:text-slate-900 dark:hover:text-slate-200 transition-colors shrink-0"
               >
                 <ArrowLeft className="w-5 h-5" />
               </button>
@@ -395,7 +395,7 @@ export function ChatClient({
                     ? classes?.find(c => c.id === selectedClassId)?.name
                     : activeCategory?.label}
                 </p>
-                <p className="text-[11px] text-cyan-500 font-medium">
+                <p className="text-[11px] text-blue-600 font-medium">
                   {selectedClassId
                     ? `${sortedVisibleContacts.filter(c => c.classIds?.includes(selectedClassId!)).length} parents`
                     : `${categoryContacts.length} contacts`}
@@ -417,7 +417,7 @@ export function ChatClient({
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
                 placeholder="Search all contacts..."
-                className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl py-2 pl-9 pr-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
+                className="w-full bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-xl py-2 pl-9 pr-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
               />
             </div>
           </div>
@@ -464,14 +464,14 @@ export function ChatClient({
                   >
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center shrink-0 group-hover:bg-blue-500/20 transition-colors">
-                        <Icon className="w-5 h-5 text-cyan-400" />
+                        <Icon className="w-5 h-5 text-blue-500" />
                       </div>
                       <div className="text-left">
                         <p className="font-semibold text-foreground text-sm">{category.label}</p>
                         <p className="text-xs text-muted-foreground">{count} member{count !== 1 ? 's' : ''}</p>
                       </div>
                     </div>
-                    <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-cyan-400 transition-colors" />
+                    <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-blue-500 transition-colors" />
                   </button>
                 )
               })}
@@ -490,14 +490,14 @@ export function ChatClient({
                   >
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center shrink-0 group-hover:bg-blue-500/20 transition-colors">
-                        <GraduationCap className="w-5 h-5 text-cyan-400" />
+                        <GraduationCap className="w-5 h-5 text-blue-500" />
                       </div>
                       <div className="text-left">
                         <p className="font-semibold text-foreground text-sm">{cls.name}</p>
                         <p className="text-xs text-muted-foreground">{count} parent{count !== 1 ? 's' : ''}</p>
                       </div>
                     </div>
-                    <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-cyan-400 transition-colors" />
+                    <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-blue-500 transition-colors" />
                   </button>
                 )
               })}
@@ -513,7 +513,7 @@ export function ChatClient({
                     value={searchQuery}
                     onChange={e => setSearchQuery(e.target.value)}
                     placeholder="Filter contacts..."
-                    className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl py-2 pl-9 pr-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
+                    className="w-full bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-xl py-2 pl-9 pr-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
                   />
                 </div>
               </div>
@@ -561,23 +561,23 @@ export function ChatClient({
         {selectedContact ? (
           <>
             {/* Chat Header */}
-            <div className="h-16 px-4 md:px-6 border-b border-slate-200 dark:border-slate-800 flex items-center gap-3 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md shrink-0 z-10">
+            <div className="h-16 px-4 md:px-6 border-b border-slate-200 dark:border-[#1a2744] flex items-center gap-3 bg-white/90 dark:bg-[#060d1a]/90 backdrop-blur-md shrink-0 z-10">
               <button
                 onClick={handleBackToContacts}
-                className="md:hidden p-1.5 -ml-1 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 hover:text-slate-900 dark:hover:text-slate-200 transition-colors shrink-0"
+                className="md:hidden p-1.5 -ml-1 rounded-full hover:bg-slate-100 dark:hover:bg-[#0d1b2e] text-slate-500 hover:text-slate-900 dark:hover:text-slate-200 transition-colors shrink-0"
               >
                 <ArrowLeft className="w-5 h-5" />
               </button>
               <div className="w-10 h-10 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center shrink-0">
-                <UserCircle2 className="w-6 h-6 text-cyan-400" />
+                <UserCircle2 className="w-6 h-6 text-blue-500" />
               </div>
               <div className="min-w-0 flex-1">
                 <h3 className="font-bold text-foreground text-sm truncate">{selectedContact.name}</h3>
                 <p className="text-xs font-medium">
                   {typingUsers.has(selectedContact.id) ? (
-                    <span className="text-cyan-500 animate-pulse">typing...</span>
+                    <span className="text-blue-600 animate-pulse">typing...</span>
                   ) : onlineUsers.has(selectedContact.id) ? (
-                    <span className="text-cyan-500">● Online</span>
+                    <span className="text-blue-600">● Online</span>
                   ) : (
                     <span className="text-slate-400">● {formatLastSeen(selectedContact.last_seen_at)}</span>
                   )}
@@ -588,15 +588,15 @@ export function ChatClient({
               <div className="relative">
                 <button 
                   onClick={() => setShowMenu(!showMenu)}
-                  className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 transition-colors"
+                  className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-[#0d1b2e] text-slate-500 transition-colors"
                 >
                   <MoreVertical className="w-5 h-5" />
                 </button>
                 {showMenu && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-lg overflow-hidden py-1 z-50">
+                  <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-xl shadow-lg overflow-hidden py-1 z-50">
                     <button 
                       onClick={handleClearChat}
-                      className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-orange-50 dark:hover:bg-red-500/10 flex items-center gap-2"
+                      className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-blue-50 dark:hover:bg-red-500/10 flex items-center gap-2"
                     >
                       <Trash2 className="w-4 h-4" /> Clear Chat
                     </button>
@@ -609,13 +609,13 @@ export function ChatClient({
             <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-1 relative z-0">
               {loading ? (
                 <div className="h-full flex flex-col items-center justify-center gap-3">
-                  <Loader2 className="w-8 h-8 animate-spin text-cyan-500" />
+                  <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
                   <p className="text-muted-foreground text-sm font-medium animate-pulse">Loading conversation...</p>
                 </div>
               ) : messages.length === 0 ? (
                 <div className="h-full flex flex-col items-center justify-center text-center gap-4 px-6">
                   <div className="w-16 h-16 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
-                    <MessageSquare className="w-8 h-8 text-cyan-400" />
+                    <MessageSquare className="w-8 h-8 text-blue-500" />
                   </div>
                   <div>
                     <h3 className="font-bold text-foreground mb-1">Start the conversation</h3>
@@ -632,18 +632,18 @@ export function ChatClient({
                     return (
                       <div key={msg.id} className={`flex flex-col ${isMe ? 'items-end' : 'items-start'}`}>
                         {showTime && (
-                          <span className="text-[10px] font-semibold text-slate-400 self-center bg-slate-100 dark:bg-slate-800/80 px-3 py-1 rounded-full my-3">
+                          <span className="text-[10px] font-semibold text-slate-400 self-center bg-slate-100 dark:bg-[#0d1b2e]/80 px-3 py-1 rounded-full my-3">
                             {new Date(msg.created_at).toLocaleDateString(undefined, { weekday: 'short', hour: '2-digit', minute: '2-digit' })}
                           </span>
                         )}
                         <div className={`px-4 py-2.5 rounded-2xl max-w-[80%] shadow-sm mb-1 ${
                           isMe
                             ? 'bg-[#1D6FEB] text-white rounded-br-sm'
-                            : 'bg-slate-100 dark:bg-slate-800 text-foreground rounded-bl-sm border border-slate-200 dark:border-slate-700'
+                            : 'bg-slate-100 dark:bg-[#0d1b2e] text-foreground rounded-bl-sm border border-slate-200 dark:border-[#1a2744]'
                         }`}>
                           <p className="text-[14px] leading-relaxed break-words">{msg.content}</p>
                           <div className="flex items-end justify-between gap-3 mt-0.5">
-                            <span className={`text-[10px] font-medium block ${isMe ? 'text-cyan-200/80 text-right' : 'text-slate-400'}`}>
+                            <span className={`text-[10px] font-medium block ${isMe ? 'text-blue-100/80 text-right' : 'text-slate-400'}`}>
                               {formatTime(msg.created_at)}
                             </span>
                             {isMe && (
@@ -651,11 +651,11 @@ export function ChatClient({
                                 {msg.is_failed ? (
                                   <AlertTriangle className="w-3.5 h-3.5 text-red-400" />
                                 ) : msg.is_pending ? (
-                                  <Check className="w-3.5 h-3.5 text-cyan-200/70" />
+                                  <Check className="w-3.5 h-3.5 text-blue-100/70" />
                                 ) : msg.is_read ? (
-                                  <CheckCheck className="w-3.5 h-3.5 text-cyan-300" />
+                                  <CheckCheck className="w-3.5 h-3.5 text-blue-400" />
                                 ) : (
-                                  <CheckCheck className="w-3.5 h-3.5 text-cyan-200" />
+                                  <CheckCheck className="w-3.5 h-3.5 text-blue-100" />
                                 )}
                               </span>
                             )}
@@ -670,7 +670,7 @@ export function ChatClient({
             </div>
 
             {/* Input */}
-            <div className="p-3 md:p-4 bg-white/90 dark:bg-slate-900/90 border-t border-slate-200 dark:border-slate-800 backdrop-blur-md shrink-0 z-10">
+            <div className="p-3 md:p-4 bg-white/90 dark:bg-[#060d1a]/90 border-t border-slate-200 dark:border-[#1a2744] backdrop-blur-md shrink-0 z-10">
               <form onSubmit={handleSend} className="flex items-center gap-2">
                 <input
                   type="text"
@@ -678,7 +678,7 @@ export function ChatClient({
                   onChange={handleInput}
                   placeholder="Type a message..."
                   disabled={sending || !conversationId}
-                  className="flex-1 h-12 px-5 rounded-full border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all text-sm text-foreground placeholder:text-muted-foreground disabled:opacity-50"
+                  className="flex-1 h-12 px-5 rounded-full border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-[#0d1b2e] focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all text-sm text-foreground placeholder:text-muted-foreground disabled:opacity-50"
                 />
                 <button
                   type="submit"
@@ -693,7 +693,7 @@ export function ChatClient({
         ) : (
           // Empty state — desktop only (sidebar is shown on mobile)
           <div className="flex-1 flex flex-col items-center justify-center text-center px-8 gap-4">
-            <div className="w-20 h-20 rounded-full bg-slate-100 dark:bg-slate-800/60 flex items-center justify-center border border-slate-200 dark:border-slate-700 shadow-sm">
+            <div className="w-20 h-20 rounded-full bg-slate-100 dark:bg-[#0d1b2e]/60 flex items-center justify-center border border-slate-200 dark:border-[#1a2744] shadow-sm">
               <MessageSquare className="w-10 h-10 text-slate-400" />
             </div>
             <div>
@@ -734,8 +734,8 @@ function ContactRow({
       <div className="relative shrink-0">
         <div className={`w-10 h-10 rounded-full flex items-center justify-center border ${
           selected
-            ? 'bg-blue-500/10 border-blue-500/20 text-cyan-400'
-            : 'bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-400'
+            ? 'bg-blue-500/10 border-blue-500/20 text-blue-500'
+            : 'bg-slate-100 dark:bg-[#0d1b2e] border-slate-200 dark:border-[#1a2744] text-slate-400'
         }`}>
           <UserCircle2 className="w-6 h-6" />
         </div>

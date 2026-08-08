@@ -63,7 +63,7 @@ export function CodeViewer({ repoPath, language = 'typescript', standalone = fal
     return (
       <button
         onClick={() => setIsExpanded(true)}
-        className="my-8 w-full flex items-center justify-between p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 hover:bg-slate-50 dark:hover:bg-slate-900 transition-all text-slate-700 dark:text-slate-300 font-mono text-sm group shadow-sm hover:shadow"
+        className="my-8 w-full flex items-center justify-between p-4 rounded-xl border border-slate-200 dark:border-[#1a2744] bg-white dark:bg-[#060d1a]/80 hover:bg-slate-50 dark:hover:bg-slate-900 transition-all text-slate-700 dark:text-slate-300 font-mono text-sm group shadow-sm hover:shadow"
       >
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-lg bg-blue-50 dark:bg-blue-500/10 flex items-center justify-center text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform">
@@ -75,18 +75,18 @@ export function CodeViewer({ repoPath, language = 'typescript', standalone = fal
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <span className="hidden sm:inline-block text-xs text-slate-500 uppercase tracking-widest px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">View Source</span>
-          <ChevronDown className="w-5 h-5 text-slate-400 group-hover:text-cyan-500 transition-colors" />
+          <span className="hidden sm:inline-block text-xs text-slate-500 uppercase tracking-widest px-2.5 py-1 rounded-md bg-slate-100 dark:bg-[#0d1b2e] border border-slate-200 dark:border-[#1a2744]">View Source</span>
+          <ChevronDown className="w-5 h-5 text-slate-400 group-hover:text-blue-600 transition-colors" />
         </div>
       </button>
     )
   }
 
   return (
-    <div className={`w-full rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-xl bg-[#1E1E1E] flex flex-col ${standalone ? 'flex-1 min-h-[500px]' : 'my-8'}`}>
+    <div className={`w-full rounded-xl overflow-hidden border border-slate-200 dark:border-[#1a2744] shadow-xl bg-[#1E1E1E] flex flex-col ${standalone ? 'flex-1 min-h-[500px]' : 'my-8'}`}>
       <div className="flex items-center justify-between px-4 py-3 border-b border-black/50 bg-[#252526] text-xs font-mono text-zinc-400 select-none shrink-0">
         <div className="flex items-center gap-3">
-          <FileCode className="w-4 h-4 text-cyan-400" />
+          <FileCode className="w-4 h-4 text-blue-500" />
           <span className="text-zinc-200 font-medium truncate max-w-[200px] sm:max-w-none">{fileName}</span>
           <span className="px-1.5 py-0.5 rounded bg-[#333333] text-zinc-400 text-[10px] uppercase tracking-wider hidden sm:inline-block">{language}</span>
         </div>
@@ -107,7 +107,7 @@ export function CodeViewer({ repoPath, language = 'typescript', standalone = fal
               className="flex items-center gap-1.5 px-3 py-1.5 rounded bg-[#333333] text-zinc-300 hover:text-white hover:bg-[#444444] transition-colors"
               title="Copy to clipboard"
             >
-              {copied ? <Check className="w-3.5 h-3.5 text-cyan-400" /> : <Copy className="w-3.5 h-3.5" />}
+              {copied ? <Check className="w-3.5 h-3.5 text-blue-500" /> : <Copy className="w-3.5 h-3.5" />}
               <span>{copied ? 'Copied' : 'Copy'}</span>
             </button>
           )}
@@ -124,7 +124,7 @@ export function CodeViewer({ repoPath, language = 'typescript', standalone = fal
 
       <div className={`relative w-full bg-[#1E1E1E] ${standalone ? 'flex-1 overflow-auto' : 'min-h-[12rem]'}`}>
         {loading && (
-          <div className="absolute inset-0 z-10 bg-[#1E1E1E]/90 backdrop-blur-sm flex flex-col items-center justify-center text-cyan-400 font-mono text-sm gap-3">
+          <div className="absolute inset-0 z-10 bg-[#1E1E1E]/90 backdrop-blur-sm flex flex-col items-center justify-center text-blue-500 font-mono text-sm gap-3">
             <Loader2 className="w-6 h-6 animate-spin" />
             <span>Fetching live source from GitHub...</span>
           </div>
@@ -132,7 +132,7 @@ export function CodeViewer({ repoPath, language = 'typescript', standalone = fal
         {error && (
           <div className="absolute inset-0 z-10 bg-[#1E1E1E] p-6 flex flex-col items-center justify-center text-red-400 font-mono text-sm gap-2">
             <AlertCircle className="w-8 h-8 opacity-60 mb-2" />
-            <p className="font-bold text-base text-orange-300">Unable to load source code</p>
+            <p className="font-bold text-base text-blue-600">Unable to load source code</p>
             <p className="text-xs opacity-70 bg-orange-950/30 px-3 py-1.5 rounded-md mt-2">{error}</p>
           </div>
         )}

@@ -22,16 +22,16 @@ interface Stats {
 
 const DATA_SECTIONS: { key: RetentionCategory, title: string, Icon: any, desc: string, color: string, bg: string }[] = [
   { key: 'communications', title: 'Chat Messages', Icon: MessageSquare, desc: 'Historical chat across all portals.', color: 'text-blue-600', bg: 'bg-blue-100 dark:bg-blue-900/20' },
-  { key: 'notifications', title: 'Notifications', Icon: Bell, desc: 'System & activity notifications.', color: 'text-red-600', bg: 'bg-red-100 dark:bg-orange-900/20' },
+  { key: 'notifications', title: 'Notifications', Icon: Bell, desc: 'System & activity notifications.', color: 'text-red-600', bg: 'bg-red-100 dark:bg-blue-900/20' },
   { key: 'audit_logs', title: 'Activity Logs', Icon: FileText, desc: 'Audit trail & compliance records.', color: 'text-blue-600', bg: 'bg-blue-100 dark:bg-blue-900/20' },
   { key: 'search_queries_log', title: 'Search Analytics', Icon: Search, desc: 'Portal search logs.', color: 'text-blue-600', bg: 'bg-blue-100 dark:bg-blue-900/20' },
   { key: 'invitations', title: 'Used Invitations', Icon: UserPlus, desc: 'Accepted or expired invitations.', color: 'text-blue-600', bg: 'bg-blue-100 dark:bg-blue-900/20' },
 ]
 
 const DORMANT_PHASES = [
-  { key: 'warning_phase' as const, label: 'Warning Phase', sublabel: '60–84 days inactive', Icon: Clock, color: 'text-red-600', bg: 'bg-orange-50 dark:bg-orange-900/10', border: 'border-red-200 dark:border-red-800/40' },
-  { key: 'final_phase' as const, label: 'Final Notice', sublabel: '85–89 days inactive', Icon: AlertTriangle, color: 'text-red-600', bg: 'bg-orange-50 dark:bg-orange-900/10', border: 'border-red-200 dark:border-red-800/40' },
-  { key: 'deletion_phase' as const, label: 'Pending Deletion', sublabel: '90+ days inactive', Icon: UserX, color: 'text-red-600', bg: 'bg-orange-50 dark:bg-orange-900/10', border: 'border-red-200 dark:border-red-800/40' },
+  { key: 'warning_phase' as const, label: 'Warning Phase', sublabel: '60–84 days inactive', Icon: Clock, color: 'text-red-600', bg: 'bg-blue-50 dark:bg-blue-900/10', border: 'border-red-200 dark:border-red-800/40' },
+  { key: 'final_phase' as const, label: 'Final Notice', sublabel: '85–89 days inactive', Icon: AlertTriangle, color: 'text-red-600', bg: 'bg-blue-50 dark:bg-blue-900/10', border: 'border-red-200 dark:border-red-800/40' },
+  { key: 'deletion_phase' as const, label: 'Pending Deletion', sublabel: '90+ days inactive', Icon: UserX, color: 'text-red-600', bg: 'bg-blue-50 dark:bg-blue-900/10', border: 'border-red-200 dark:border-red-800/40' },
 ]
 
 export function OptimizationClient({ initialStats }: { initialStats: Stats }) {
@@ -80,7 +80,7 @@ export function OptimizationClient({ initialStats }: { initialStats: Stats }) {
               <DatabaseZap className="w-7 h-7" />
             </div>
             <div>
-              <p className="text-cyan-200 text-sm font-medium">Total dormant records</p>
+              <p className="text-blue-100 text-sm font-medium">Total dormant records</p>
               <p className="text-5xl font-bold tracking-tight">{totalDormant.toLocaleString()}</p>
             </div>
           </div>
@@ -96,8 +96,8 @@ export function OptimizationClient({ initialStats }: { initialStats: Stats }) {
         </div>
         {totalDormant === 0 && (
           <div className="mt-4 flex items-center gap-2 text-sm">
-            <ShieldCheck className="w-4 h-4 text-cyan-300" />
-            <span className="text-cyan-300 font-medium">Database is fully optimized.</span>
+            <ShieldCheck className="w-4 h-4 text-blue-400" />
+            <span className="text-blue-400 font-medium">Database is fully optimized.</span>
           </div>
         )}
       </div>

@@ -54,9 +54,9 @@ export default async function AdminSchoolDetailPage({
 
   const subStatusColor: Record<string, string> = {
     active: 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400',
-    trial: 'bg-red-100 text-red-700 dark:bg-orange-900/40 dark:text-red-400',
-    expired: 'bg-red-100 text-red-700 dark:bg-orange-900/40 dark:text-red-400',
-    suspended: 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-400',
+    trial: 'bg-red-100 text-red-700 dark:bg-blue-900/40 dark:text-red-400',
+    expired: 'bg-red-100 text-red-700 dark:bg-blue-900/40 dark:text-red-400',
+    suspended: 'bg-slate-100 text-slate-700 dark:bg-[#0d1b2e] dark:text-slate-400',
   }
 
   const s = school as any
@@ -91,7 +91,7 @@ export default async function AdminSchoolDetailPage({
         ].map(({ label, value, Icon }) => (
           <div key={label} className="bg-card border border-border rounded-xl p-4">
             <div className="flex items-center gap-2 mb-1">
-              <Icon className="h-4 w-4 text-cyan-500" />
+              <Icon className="h-4 w-4 text-blue-600" />
               <span className="text-xs text-muted-foreground font-medium">{label}</span>
             </div>
             <p className="text-xl font-bold text-foreground">{value}</p>

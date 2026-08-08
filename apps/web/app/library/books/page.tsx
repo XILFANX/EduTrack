@@ -33,7 +33,7 @@ export default async function LibraryBooks() {
       </div>
 
       {allBooks.length === 0 ? (
-        <div className="text-center py-20 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl">
+        <div className="text-center py-20 bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-3xl">
           <div className="w-16 h-16 rounded-2xl bg-blue-100 dark:bg-blue-900/40 mx-auto flex items-center justify-center mb-4">
             <BookOpen className="w-8 h-8 text-blue-600 dark:text-blue-400" />
           </div>
@@ -43,10 +43,10 @@ export default async function LibraryBooks() {
           </p>
         </div>
       ) : (
-        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden">
+        <div className="bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-2xl overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left">
-              <thead className="bg-slate-50 dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 text-muted-foreground uppercase tracking-wider text-xs font-semibold">
+              <thead className="bg-slate-50 dark:bg-slate-950 border-b border-slate-200 dark:border-[#1a2744] text-muted-foreground uppercase tracking-wider text-xs font-semibold">
                 <tr>
                   <th className="px-6 py-4">Title</th>
                   <th className="px-6 py-4">Author</th>
@@ -55,7 +55,7 @@ export default async function LibraryBooks() {
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-slate-800/50">
                 {allBooks.map((book: any) => (
-                  <tr key={book.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors">
+                  <tr key={book.id} className="hover:bg-slate-50/50 dark:hover:bg-[#0d1b2e]/20 transition-colors">
                     <td className="px-6 py-4">
                       <p className="font-medium text-foreground">{book.title}</p>
                       {book.isbn && <p className="text-xs text-muted-foreground font-mono">{book.isbn}</p>}

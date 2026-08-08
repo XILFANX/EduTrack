@@ -8,11 +8,11 @@ const fmt = (n: number, currency = 'KES') =>
   new Intl.NumberFormat('en-KE', { style: 'currency', currency, maximumFractionDigits: 0 }).format(n)
 
 const STATUS_STYLES: Record<string, string> = {
-  open:      'bg-red-100 text-red-700 dark:bg-orange-900/40 dark:text-red-400',
+  open:      'bg-red-100 text-red-700 dark:bg-blue-900/40 dark:text-red-400',
   partial:   'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400',
   settled:   'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400',
   overpaid:  'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400',
-  cancelled: 'bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400',
+  cancelled: 'bg-slate-100 text-slate-500 dark:bg-[#0d1b2e] dark:text-slate-400',
 }
 
 const ENTRY_TYPE_LABEL: Record<string, string> = {
@@ -58,15 +58,15 @@ export default async function BursarLedgerPage() {
       </div>
 
       <div className="grid grid-cols-2 gap-3">
-        <div className="bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl p-4 text-white">
+        <div className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl p-4 text-white">
           <p className="text-xs font-medium text-orange-100">Outstanding Fees</p>
           <p className="text-2xl font-bold mt-1">{fmt(totalOutstanding)}</p>
           <p className="text-xs text-orange-100 mt-1">{obls.filter((o) => ['open','partial'].includes(o.status)).length} obligations</p>
         </div>
         <div className="bg-gradient-to-br from-[#1D6FEB] to-[#1558C8] rounded-2xl p-4 text-white">
-          <p className="text-xs font-medium text-cyan-100">Collected (this view)</p>
+          <p className="text-xs font-medium text-blue-100">Collected (this view)</p>
           <p className="text-2xl font-bold mt-1">{fmt(totalCollected)}</p>
-          <p className="text-xs text-cyan-100 mt-1">{obls.filter((o) => ['settled','overpaid'].includes(o.status)).length} settled</p>
+          <p className="text-xs text-blue-100 mt-1">{obls.filter((o) => ['settled','overpaid'].includes(o.status)).length} settled</p>
         </div>
       </div>
 
@@ -102,7 +102,7 @@ export default async function BursarLedgerPage() {
                     {entries.map((le: any) => (
                       <div key={le.id} className="flex items-center justify-between px-4 py-2.5">
                         <div className="flex items-center gap-2">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-cyan-500 shrink-0" />
+                          <CheckCircle2 className="w-3.5 h-3.5 text-blue-600 shrink-0" />
                           <div>
                             <p className="text-xs font-medium">{ENTRY_TYPE_LABEL[le.entry_type] ?? le.entry_type}</p>
                             <p className="text-[10px] text-muted-foreground">

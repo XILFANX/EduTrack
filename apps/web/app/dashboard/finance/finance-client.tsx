@@ -18,7 +18,7 @@ function BarChart({ data, color = '#3b82f6' }: { data: { label: string; value: n
       {data.map((d, i) => (
         <div key={i} className="flex items-center gap-3">
           <span className="text-xs font-semibold text-muted-foreground w-20 shrink-0 truncate text-right">{d.label}</span>
-          <div className="flex-1 h-6 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden relative">
+          <div className="flex-1 h-6 bg-slate-100 dark:bg-[#0d1b2e] rounded-full overflow-hidden relative">
             <div
               className="h-full rounded-full transition-all duration-700"
               style={{ width: `${(d.max / maxVal) * 100}%`, background: '#e2e8f0' }}
@@ -102,7 +102,7 @@ export function FinanceAnalytics({ stats, collectionByClass, paymentTrend, aging
   return (
     <div className="space-y-6 pb-24">
       {/* Hero */}
-      <div className="bg-gradient-to-br from-cyan-600 via-cyan-500 to-cyan-500 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
+      <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-blue-600 via-blue-500 to-blue-600 p-6 shadow-xl">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-[50px] rounded-full pointer-events-none" />
         <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-4">
@@ -111,7 +111,7 @@ export function FinanceAnalytics({ stats, collectionByClass, paymentTrend, aging
             </div>
             <div>
               <h1 className="text-2xl font-black tracking-tight">Financial Analytics</h1>
-              <p className="text-cyan-100 text-sm mt-0.5">
+              <p className="text-blue-100 text-sm mt-0.5">
                 {selectedTerm?.name} — School fee collection overview
               </p>
             </div>
@@ -145,14 +145,14 @@ export function FinanceAnalytics({ stats, collectionByClass, paymentTrend, aging
           },
           {
             label: 'Outstanding', value: formatKES(stats.totalArrears), sub: 'Fees in arrears',
-            icon: AlertTriangle, color: 'bg-orange-50 dark:bg-orange-950/30 border-red-200 dark:border-red-800/40',
+            icon: AlertTriangle, color: 'bg-blue-50 dark:bg-blue-950/30 border-red-200 dark:border-red-800/40',
             iconColor: 'text-red-600 dark:text-red-400',
           },
           {
             label: 'Defaulters', value: totalDefaulters.toString(), sub: criticalDefaulters > 0 ? `${criticalDefaulters} critical (60d+)` : 'No critical defaulters',
             icon: Users, color: criticalDefaulters > 0
               ? 'bg-red-50 dark:bg-red-950/30 border-red-200 dark:border-red-800/40'
-              : 'bg-slate-50 dark:bg-slate-900 border-border',
+              : 'bg-slate-50 dark:bg-[#060d1a] border-border',
             iconColor: criticalDefaulters > 0 ? 'text-red-600 dark:text-red-400' : 'text-slate-500',
           },
         ].map(card => (
@@ -212,8 +212,8 @@ export function FinanceAnalytics({ stats, collectionByClass, paymentTrend, aging
             {Object.entries(agingBuckets).map(([label, list]) => (
               <span key={label} className={`text-xs font-bold px-2.5 py-1 rounded-full ${
                 label === '60+ days' ? 'bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300' :
-                label === '31–60 days' ? 'bg-red-100 dark:bg-orange-900/40 text-red-700 dark:text-red-300' :
-                'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
+                label === '31–60 days' ? 'bg-red-100 dark:bg-blue-900/40 text-red-700 dark:text-red-300' :
+                'bg-slate-100 dark:bg-[#0d1b2e] text-slate-600 dark:text-slate-400'
               }`}>
                 {label}: {list.length}
               </span>
@@ -230,7 +230,7 @@ export function FinanceAnalytics({ stats, collectionByClass, paymentTrend, aging
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-border bg-slate-50/60 dark:bg-slate-900/40">
+                <tr className="border-b border-border bg-slate-50/60 dark:bg-[#060d1a]/40">
                   <th className="px-5 py-3 text-left text-xs font-bold text-muted-foreground uppercase tracking-wider">Class</th>
                   <th className="px-5 py-3 text-right text-xs font-bold text-muted-foreground uppercase tracking-wider">Outstanding</th>
                   <th className="px-5 py-3 text-center text-xs font-bold text-muted-foreground uppercase tracking-wider">Days Overdue</th>
@@ -240,15 +240,15 @@ export function FinanceAnalytics({ stats, collectionByClass, paymentTrend, aging
               <tbody className="divide-y divide-border">
                 {Object.entries(agingBuckets).map(([bucket, list]) =>
                   list.sort((a, b) => b.daysOverdue - a.daysOverdue).map((d, idx) => (
-                    <tr key={d.id} className={`${idx % 2 !== 0 ? 'bg-slate-50/40 dark:bg-slate-900/20' : ''} hover:bg-blue-50/30 dark:hover:bg-cyan-950/10 transition-colors`}>
+                    <tr key={d.id} className={`${idx % 2 !== 0 ? 'bg-slate-50/40 dark:bg-[#060d1a]/20' : ''} hover:bg-blue-50/30 dark:hover:bg-cyan-950/10 transition-colors`}>
                       <td className="px-5 py-3 font-semibold text-foreground">{d.className}</td>
                       <td className="px-5 py-3 text-right font-bold text-red-600 dark:text-red-400">{formatKES(d.outstanding)}</td>
                       <td className="px-5 py-3 text-center text-muted-foreground">{d.daysOverdue}d</td>
                       <td className="px-5 py-3 text-center">
                         <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${
                           bucket === '60+ days' ? 'bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300' :
-                          bucket === '31–60 days' ? 'bg-red-100 dark:bg-orange-900/40 text-red-700 dark:text-red-300' :
-                          'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
+                          bucket === '31–60 days' ? 'bg-red-100 dark:bg-blue-900/40 text-red-700 dark:text-red-300' :
+                          'bg-slate-100 dark:bg-[#0d1b2e] text-slate-600 dark:text-slate-400'
                         }`}>
                           {bucket}
                         </span>

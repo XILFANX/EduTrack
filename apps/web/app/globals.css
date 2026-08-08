@@ -64,7 +64,7 @@
   --muted-foreground: hsl(215, 16%, 47%); /* slate-500 */
   --accent: hsl(210, 40%, 96%);
   --accent-foreground: hsl(222, 47%, 11%);
-  --destructive: hsl(4, 86%, 58%);        /* danger red — red-600 */
+  --destructive: hsl(221, 83%, 53%);        /* electric blue — matches primary */
   --border: hsl(214, 32%, 91%);           /* slate-200 */
   --input: hsl(214, 32%, 91%);
   --ring: hsl(221, 83%, 53%);             /* electric blue */
@@ -104,7 +104,7 @@
   --muted-foreground: hsl(215, 20%, 65%); /* slate-400 */
   --accent: hsl(217, 33%, 17%);
   --accent-foreground: hsl(210, 40%, 98%);
-  --destructive: hsl(4, 86%, 65%);        /* danger red — brighter for dark bg */
+  --destructive: hsl(221, 83%, 60%);        /* electric blue — brighter for dark bg */
   --border: hsl(217, 33%, 17%);
   --input: hsl(217, 33%, 17%);
   --ring: hsl(221, 83%, 60%);             /* electric blue */

@@ -116,7 +116,7 @@ function SlotModal({
           {/* Subject picker */}
           <div className="space-y-2">
             <label className="flex items-center gap-2 text-sm font-semibold text-foreground">
-              <BookOpen className="w-4 h-4 text-cyan-500" /> Subject
+              <BookOpen className="w-4 h-4 text-blue-600" /> Subject
             </label>
             <div className="grid grid-cols-2 gap-1.5 max-h-44 overflow-y-auto pr-1">
               <button
@@ -148,7 +148,7 @@ function SlotModal({
           {/* Teacher picker */}
           <div className="space-y-2">
             <label className="flex items-center gap-2 text-sm font-semibold text-foreground">
-              <User className="w-4 h-4 text-cyan-500" /> Teacher
+              <User className="w-4 h-4 text-blue-600" /> Teacher
             </label>
             <div className="grid grid-cols-1 gap-1 max-h-36 overflow-y-auto pr-1">
               <button
@@ -318,7 +318,7 @@ export function TimetableGrid({
                 periods.map(period => (
                   <th
                     key={`${day.num}-${period.id}`}
-                    className={`border-b border-r border-border px-2 py-2 text-center min-w-[90px] last:border-r-0 ${period.is_break ? 'bg-orange-50/50 dark:bg-orange-950/10' : ''}`}
+                    className={`border-b border-r border-border px-2 py-2 text-center min-w-[90px] last:border-r-0 ${period.is_break ? 'bg-blue-50/50 dark:bg-blue-950/10' : ''}`}
                   >
                     <div className="text-[10px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">{day.short}</div>
                     <div className="text-[10px] text-muted-foreground font-medium mt-0.5">{period.name}</div>
@@ -332,10 +332,10 @@ export function TimetableGrid({
           </thead>
           <tbody>
             {classes.map((cls, clsIdx) => (
-              <tr key={cls.id} className={clsIdx % 2 === 0 ? '' : 'bg-slate-50/40 dark:bg-slate-900/20'}>
+              <tr key={cls.id} className={clsIdx % 2 === 0 ? '' : 'bg-slate-50/40 dark:bg-[#060d1a]/20'}>
                 {/* Class name */}
                 <td className="sticky left-0 z-10 bg-card border-b border-r border-border px-4 py-3">
-                  {clsIdx % 2 !== 0 && <div className="absolute inset-0 bg-slate-50/40 dark:bg-slate-900/20" />}
+                  {clsIdx % 2 !== 0 && <div className="absolute inset-0 bg-slate-50/40 dark:bg-[#060d1a]/20" />}
                   <span className="relative font-bold text-sm text-foreground">{cls.name}</span>
                 </td>
 
@@ -348,11 +348,11 @@ export function TimetableGrid({
                     return (
                       <td
                         key={`${day.num}-${period.id}`}
-                        className={`border-b border-r border-border last:border-r-0 p-1 ${period.is_break ? 'bg-orange-50/50 dark:bg-orange-950/10' : ''}`}
+                        className={`border-b border-r border-border last:border-r-0 p-1 ${period.is_break ? 'bg-blue-50/50 dark:bg-blue-950/10' : ''}`}
                         onClick={() => openCell(period, day, cls)}
                       >
                         {period.is_break ? (
-                          <div className="rounded-lg bg-red-100/60 dark:bg-orange-900/20 px-1 py-2 text-center cursor-default">
+                          <div className="rounded-lg bg-red-100/60 dark:bg-blue-900/20 px-1 py-2 text-center cursor-default">
                             <Coffee className="w-3 h-3 text-red-400 mx-auto" />
                           </div>
                         ) : slot?.subject_id ? (
@@ -361,11 +361,11 @@ export function TimetableGrid({
                               ? 'bg-red-50 dark:bg-red-950/30 border-red-300 dark:border-red-700'
                               : 'bg-blue-50 dark:bg-blue-950/30 border-blue-200 dark:border-blue-800/40'
                           }`}>
-                            <p className={`text-[10px] font-bold leading-tight text-center ${isConflict ? 'text-red-700 dark:text-red-300' : 'text-cyan-800 dark:text-cyan-200'}`}>
+                            <p className={`text-[10px] font-bold leading-tight text-center ${isConflict ? 'text-red-700 dark:text-red-300' : 'text-cyan-800 dark:text-blue-100'}`}>
                               {slot.subjects?.name}
                             </p>
                             {slot.users?.full_name && (
-                              <p className={`text-[9px] text-center mt-0.5 truncate ${isConflict ? 'text-red-500' : 'text-cyan-500'}`}>
+                              <p className={`text-[9px] text-center mt-0.5 truncate ${isConflict ? 'text-red-500' : 'text-blue-600'}`}>
                                 {slot.users.full_name}
                               </p>
                             )}
@@ -374,8 +374,8 @@ export function TimetableGrid({
                             )}
                           </div>
                         ) : (
-                          <div className="rounded-lg border-2 border-dashed border-slate-200 dark:border-slate-700 px-1 py-3 text-center cursor-pointer hover:border-cyan-400 hover:bg-blue-50/50 dark:hover:bg-cyan-950/20 transition-all group/cell">
-                            <span className="text-[10px] text-slate-300 group-hover/cell:text-cyan-400 transition-colors">+</span>
+                          <div className="rounded-lg border-2 border-dashed border-slate-200 dark:border-[#1a2744] px-1 py-3 text-center cursor-pointer hover:border-cyan-400 hover:bg-blue-50/50 dark:hover:bg-cyan-950/20 transition-all group/cell">
+                            <span className="text-[10px] text-slate-300 group-hover/cell:text-blue-500 transition-colors">+</span>
                           </div>
                         )}
                       </td>
@@ -403,7 +403,7 @@ export function TimetableGrid({
           <span>Teacher conflict</span>
         </div>
         <div className="flex items-center gap-1.5">
-          <div className="w-3 h-3 rounded bg-red-100/60 dark:bg-orange-900/20" />
+          <div className="w-3 h-3 rounded bg-red-100/60 dark:bg-blue-900/20" />
           <span>Break</span>
         </div>
       </div>

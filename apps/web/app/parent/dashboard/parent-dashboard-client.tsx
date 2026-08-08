@@ -15,7 +15,7 @@ export function ParentDashboardClient({ childrenList, recentPayments }: { childr
 
   if (!selectedChild) {
     return (
-      <div className="text-center py-20 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl">
+      <div className="text-center py-20 bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-3xl">
         <User className="w-12 h-12 text-slate-300 mx-auto mb-4" />
         <h2 className="text-xl font-bold text-foreground">No Children Linked</h2>
         <p className="text-sm text-muted-foreground mt-2">Please contact the school administrator to link your account.</p>
@@ -26,7 +26,7 @@ export function ParentDashboardClient({ childrenList, recentPayments }: { childr
   return (
     <div className="space-y-6">
       {/* Hero */}
-      <div className="bg-gradient-to-br from-blue-600 via-cyan-500 to-blue-600 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
+      <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-blue-600 via-blue-500 to-blue-600 p-6 shadow-xl">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-[50px] rounded-full pointer-events-none" />
         <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
@@ -35,7 +35,7 @@ export function ParentDashboardClient({ childrenList, recentPayments }: { childr
             </div>
             <div>
               <h1 className="text-xl font-black">Parent Dashboard</h1>
-              <p className="text-sm text-cyan-100">Monitor academic progress and fee balances</p>
+              <p className="text-sm text-blue-100">Monitor academic progress and fee balances</p>
             </div>
           </div>
           
@@ -57,7 +57,7 @@ export function ParentDashboardClient({ childrenList, recentPayments }: { childr
                     onClick={() => setSelectedChild(child)}
                     className="gap-3 cursor-pointer py-2.5"
                   >
-                    <div className="w-6 h-6 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 flex items-center justify-center text-xs font-bold">
+                    <div className="w-6 h-6 rounded-full bg-slate-100 dark:bg-[#0d1b2e] text-slate-600 dark:text-slate-400 flex items-center justify-center text-xs font-bold">
                       {child.first_name[0]}
                     </div>
                     <div className="flex flex-col">
@@ -86,9 +86,9 @@ export function ParentDashboardClient({ childrenList, recentPayments }: { childr
             <div
               key={href}
               onClick={() => window.location.href = href}
-              className="flex flex-col items-center gap-2 p-4 bg-card hover:bg-slate-50 dark:hover:bg-slate-900/50 border border-border hover:border-blue-500/50 rounded-2xl hover:scale-[1.02] transition-all text-center shadow-sm cursor-pointer group"
+              className="flex flex-col items-center gap-2 p-4 bg-card hover:bg-slate-50 dark:hover:bg-[#060d1a]/80 border border-border hover:border-blue-500/50 rounded-2xl hover:scale-[1.02] transition-all text-center shadow-sm cursor-pointer group"
             >
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-blue-50 dark:bg-blue-900/20 border border-cyan-100 dark:border-blue-800/30 group-hover:bg-blue-100 dark:group-hover:bg-cyan-800/40 transition-colors">
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800/30 group-hover:bg-blue-100 dark:group-hover:bg-cyan-800/40 transition-colors">
                 <Icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
               </div>
               <div className="text-center min-w-0 w-full mt-1">
@@ -104,7 +104,7 @@ export function ParentDashboardClient({ childrenList, recentPayments }: { childr
         {/* Fees Widget */}
         <div className="bg-card border border-border rounded-3xl p-6 shadow-sm">
           <div className="flex items-center justify-between mb-4">
-            <div className="w-12 h-12 rounded-2xl bg-blue-50 dark:bg-blue-900/20 border border-cyan-100 dark:border-blue-800/30 flex items-center justify-center">
+            <div className="w-12 h-12 rounded-2xl bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800/30 flex items-center justify-center">
               <Wallet className="w-6 h-6 text-blue-600 dark:text-blue-400" />
             </div>
           </div>
@@ -115,7 +115,7 @@ export function ParentDashboardClient({ childrenList, recentPayments }: { childr
         {/* Academics Widget */}
         <div className="bg-card border border-border rounded-3xl p-6 shadow-sm">
           <div className="flex items-center justify-between mb-4">
-            <div className="w-12 h-12 rounded-2xl bg-blue-50 dark:bg-blue-900/20 border border-cyan-100 dark:border-blue-800/30 flex items-center justify-center">
+            <div className="w-12 h-12 rounded-2xl bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800/30 flex items-center justify-center">
               <GraduationCap className="w-6 h-6 text-blue-600 dark:text-blue-400" />
             </div>
           </div>
@@ -127,7 +127,7 @@ export function ParentDashboardClient({ childrenList, recentPayments }: { childr
         </div>
       </div>
 
-      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm">
+      <div className="bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-3xl p-6 shadow-sm">
         <h2 className="text-lg font-bold text-foreground flex items-center gap-2 mb-4">
           <Bell className="w-5 h-5 text-red-500" />
           Recent Payments

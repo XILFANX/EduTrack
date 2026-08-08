@@ -113,8 +113,8 @@ export function GlobalNotificationPopup() {
   }
 
   return (
-    <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="bg-white dark:bg-slate-900 rounded-3xl w-full max-w-sm shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden animate-in zoom-in-95 duration-200">
+    <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-[#060d1a]/80 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="bg-white dark:bg-[#060d1a] rounded-3xl w-full max-w-sm shadow-2xl border border-slate-200 dark:border-[#1a2744] overflow-hidden animate-in zoom-in-95 duration-200">
 
         {/* Header */}
         <div className="flex items-center gap-3 px-5 pt-5 pb-4">
@@ -129,7 +129,7 @@ export function GlobalNotificationPopup() {
           </div>
           <button
             onClick={handleDismiss}
-            className="p-1.5 rounded-xl text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            className="p-1.5 rounded-xl text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#0d1b2e] transition-colors"
           >
             <X className="w-4 h-4" />
           </button>
@@ -145,7 +145,7 @@ export function GlobalNotificationPopup() {
         </div>
 
         {/* Actions */}
-        <div className="flex flex-col gap-2 px-5 py-4 border-t border-slate-100 dark:border-slate-800 mt-2">
+        <div className="flex flex-col gap-2 px-5 py-4 border-t border-slate-100 dark:border-[#1a2744] mt-2">
           {expanded ? (
             <div className="flex gap-2">
               {(pending.action_href || pending.link) && (
@@ -159,7 +159,7 @@ export function GlobalNotificationPopup() {
               )}
               <button
                 onClick={handleDismiss}
-                className="flex-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-sm font-medium py-2.5 rounded-xl transition-colors"
+                className="flex-1 bg-slate-100 dark:bg-[#0d1b2e] hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-sm font-medium py-2.5 rounded-xl transition-colors"
               >
                 Dismiss
               </button>
@@ -174,7 +174,7 @@ export function GlobalNotificationPopup() {
               </button>
               <button
                 onClick={handleLater}
-                className="flex-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-sm font-medium py-2.5 rounded-xl transition-colors"
+                className="flex-1 bg-slate-100 dark:bg-[#0d1b2e] hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-sm font-medium py-2.5 rounded-xl transition-colors"
               >
                 Later
               </button>

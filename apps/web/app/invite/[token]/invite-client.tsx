@@ -23,9 +23,9 @@ const ROLE_COLORS: Record<string, { badge: string; btn: string; glow: string }> 
   class_teacher:    { badge: 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300',   btn: 'bg-[#1D6FEB] hover:bg-[#1558C8]',   glow: 'from-cyan-500/20 to-slate-900' },
   subject_teacher:  { badge: 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300',           btn: 'bg-[#1D6FEB] hover:bg-[#1558C8]',       glow: 'from-cyan-500/20 to-slate-900' },
   bursar:           { badge: 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300', btn: 'bg-[#1D6FEB] hover:bg-[#1558C8]', glow: 'from-cyan-500/20 to-slate-900' },
-  librarian:        { badge: 'bg-red-100 text-red-700 dark:bg-orange-900/40 dark:text-red-300',       btn: 'bg-red-500 hover:bg-orange-600',     glow: 'from-orange-500/20 to-slate-900' },
-  storekeeper:      { badge: 'bg-red-100 text-red-700 dark:bg-orange-900/40 dark:text-red-300',   btn: 'bg-orange-600 hover:bg-orange-700',   glow: 'from-orange-500/20 to-slate-900' },
-  transport_matron: { badge: 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300',          btn: 'bg-slate-700 hover:bg-slate-800',     glow: 'from-slate-500/20 to-slate-900' },
+  librarian:        { badge: 'bg-red-100 text-red-700 dark:bg-blue-900/40 dark:text-red-300',       btn: 'bg-red-500 hover:bg-blue-600',     glow: 'from-blue-600/20 to-slate-900' },
+  storekeeper:      { badge: 'bg-red-100 text-red-700 dark:bg-blue-900/40 dark:text-red-300',   btn: 'bg-blue-600 hover:bg-blue-700',   glow: 'from-blue-600/20 to-slate-900' },
+  transport_matron: { badge: 'bg-slate-100 text-slate-700 dark:bg-[#0d1b2e] dark:text-slate-300',          btn: 'bg-slate-700 hover:bg-[#0d1b2e]',     glow: 'from-slate-500/20 to-slate-900' },
   parent:           { badge: 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300',           btn: 'bg-[#1D6FEB] hover:bg-[#1558C8]',       glow: 'from-cyan-500/20 to-slate-900' },
 }
 
@@ -292,13 +292,13 @@ export default function InviteClient({
             )}
 
             {error && (
-              <div className="bg-orange-950/50 border border-red-800/50 text-orange-300 text-sm px-4 py-3 rounded-xl leading-snug">
+              <div className="bg-orange-950/50 border border-red-800/50 text-blue-600 text-sm px-4 py-3 rounded-xl leading-snug">
                 {error}
               </div>
             )}
 
             {successMsg && (
-              <div className="bg-cyan-950/50 border border-cyan-800/50 text-cyan-300 text-sm px-4 py-3 rounded-xl leading-snug">
+              <div className="bg-cyan-950/50 border border-cyan-800/50 text-blue-400 text-sm px-4 py-3 rounded-xl leading-snug">
                 {successMsg}
               </div>
             )}

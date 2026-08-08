@@ -102,7 +102,7 @@ export function FileUpload({
         className={`relative border-2 border-dashed rounded-xl p-6 transition-colors ${
           isDragging 
             ? 'border-blue-500 bg-blue-500/10' 
-            : 'border-slate-700 bg-slate-800/50 hover:bg-slate-800'
+            : 'border-slate-700 bg-[#0d1b2e]/80 hover:bg-[#0d1b2e]'
         }`}
         onDragEnter={handleDrag}
         onDragLeave={handleDrag}
@@ -121,7 +121,7 @@ export function FileUpload({
         
         <div className="flex flex-col items-center justify-center text-center space-y-2 pointer-events-none">
           {isUploading ? (
-            <Loader2 className="w-8 h-8 text-cyan-500 animate-spin" />
+            <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
           ) : (
             <UploadCloud className="w-8 h-8 text-slate-400" />
           )}
@@ -139,7 +139,7 @@ export function FileUpload({
       {uploadedFiles.length > 0 && (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {uploadedFiles.map((file, i) => (
-            <div key={i} className="relative group rounded-lg overflow-hidden border border-slate-700 bg-slate-800 aspect-square flex items-center justify-center">
+            <div key={i} className="relative group rounded-lg overflow-hidden border border-slate-700 bg-[#0d1b2e] aspect-square flex items-center justify-center">
               {file.url.match(/\.(jpeg|jpg|gif|png)$/) != null ? (
                 <Image src={file.url} alt={file.name} fill className="object-cover" />
               ) : (

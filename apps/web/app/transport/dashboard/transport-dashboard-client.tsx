@@ -13,7 +13,7 @@ const LOG_STATUS: Record<string, { icon: any; color: string; bg: string }> = {
   boarded: { icon: CheckCircle2, color: 'text-blue-600 dark:text-blue-400', bg: 'bg-blue-50 dark:bg-blue-900/20' },
   departed: { icon: Navigation, color: 'text-blue-600 dark:text-blue-400', bg: 'bg-blue-50 dark:bg-blue-900/20' },
   arrived: { icon: Activity, color: 'text-purple-600 dark:text-purple-400', bg: 'bg-purple-50 dark:bg-purple-900/20' },
-  absent: { icon: AlertCircle, color: 'text-red-600 dark:text-red-400', bg: 'bg-orange-50 dark:bg-orange-900/20' },
+  absent: { icon: AlertCircle, color: 'text-red-600 dark:text-red-400', bg: 'bg-blue-50 dark:bg-blue-900/20' },
 }
 
 export function TransportDashboardClient({
@@ -31,7 +31,7 @@ export function TransportDashboardClient({
   return (
     <div className="space-y-6 pb-24">
       {/* Hero */}
-      <div className="relative bg-gradient-to-br from-blue-600 via-cyan-500 to-blue-600 rounded-[2rem] p-6 overflow-hidden text-white shadow-xl">
+      <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-blue-600 via-blue-500 to-blue-600 p-6 shadow-xl">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-[50px] rounded-full pointer-events-none" />
 
         <div className="relative z-10">
@@ -41,7 +41,7 @@ export function TransportDashboardClient({
             </div>
             <div>
               <h1 className="text-2xl font-black tracking-tight">Transport Control</h1>
-              <p className="text-cyan-200 text-sm">Fleet routes and student boarding</p>
+              <p className="text-blue-100 text-sm">Fleet routes and student boarding</p>
             </div>
           </div>
 
@@ -53,7 +53,7 @@ export function TransportDashboardClient({
             ].map((s, i) => (
               <div key={i} className="bg-white/10 backdrop-blur-sm rounded-2xl px-3 py-3 text-center">
                 <p className="text-2xl font-extrabold text-white">{s.value}</p>
-                <p className="text-[10px] text-cyan-200 font-semibold uppercase tracking-wide mt-0.5">{s.label}</p>
+                <p className="text-[10px] text-blue-100 font-semibold uppercase tracking-wide mt-0.5">{s.label}</p>
               </div>
             ))}
           </div>
@@ -75,9 +75,9 @@ export function TransportDashboardClient({
               <Link
                 key={i}
                 href={a.href}
-                className="flex flex-col items-center gap-2 p-4 bg-card hover:bg-slate-50 dark:hover:bg-slate-900/50 border border-border hover:border-blue-500/50 rounded-2xl hover:scale-[1.02] transition-all text-center shadow-sm group"
+                className="flex flex-col items-center gap-2 p-4 bg-card hover:bg-slate-50 dark:hover:bg-[#060d1a]/80 border border-border hover:border-blue-500/50 rounded-2xl hover:scale-[1.02] transition-all text-center shadow-sm group"
               >
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-blue-50 dark:bg-blue-900/20 border border-cyan-100 dark:border-blue-800/30 group-hover:bg-blue-100 dark:group-hover:bg-cyan-800/40 transition-colors">
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800/30 group-hover:bg-blue-100 dark:group-hover:bg-cyan-800/40 transition-colors">
                   <Icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                 </div>
                 <div className="text-center min-w-0 w-full mt-1">
@@ -95,7 +95,7 @@ export function TransportDashboardClient({
         <div className="bg-card border border-border rounded-3xl overflow-hidden shadow-sm">
           <div className="px-5 py-4 border-b border-border flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Bus className="w-4 h-4 text-cyan-500" />
+              <Bus className="w-4 h-4 text-blue-600" />
               <h2 className="font-bold text-foreground">Active Routes</h2>
             </div>
             <Link href="/transport/routes" className="text-xs font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1">
@@ -117,16 +117,16 @@ export function TransportDashboardClient({
                       <span className="text-xs text-muted-foreground">{assigned}/{route.capacity || '—'} students</span>
                     </div>
                     {route.capacity > 0 && (
-                      <div className="h-1.5 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
+                      <div className="h-1.5 rounded-full bg-slate-100 dark:bg-[#0d1b2e] overflow-hidden">
                         <div
-                          className={`h-full rounded-full transition-all duration-500 ${pct >= 90 ? 'bg-orange-400' : pct >= 70 ? 'bg-orange-400' : 'bg-cyan-400'}`}
+                          className={`h-full rounded-full transition-all duration-500 ${pct >= 90 ? 'bg-blue-400' : pct >= 70 ? 'bg-blue-400' : 'bg-cyan-400'}`}
                           style={{ width: `${pct}%` }}
                         />
                       </div>
                     )}
                     {route.vehicle_plate && (
                       <p className="text-[10px] text-muted-foreground mt-1 flex items-center gap-1">
-                        <span className="bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded font-mono">{route.vehicle_plate}</span>
+                        <span className="bg-slate-100 dark:bg-[#0d1b2e] px-1.5 py-0.5 rounded font-mono">{route.vehicle_plate}</span>
                         {route.driver_name && <span>· {route.driver_name}</span>}
                       </p>
                     )}
@@ -141,7 +141,7 @@ export function TransportDashboardClient({
       {/* Live Boarding Feed */}
       <div className="bg-card border border-border rounded-3xl overflow-hidden shadow-sm">
         <div className="px-5 py-4 border-b border-border flex items-center gap-2">
-          <Activity className="w-4 h-4 text-cyan-500" />
+          <Activity className="w-4 h-4 text-blue-600" />
           <h2 className="font-bold text-foreground">Today's Boarding Log</h2>
           <span className="ml-auto text-xs text-muted-foreground">{todayLogs.length} events</span>
         </div>

@@ -59,14 +59,14 @@ export function ClassDirectory({ title, description, classes, basePath, actionBu
           value={searchQuery}
           onChange={e => setSearchQuery(e.target.value)}
           placeholder="Search class by name..." 
-          className="w-full h-11 pl-10 pr-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/20 text-foreground focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all text-sm placeholder:text-muted-foreground"
+          className="w-full h-11 pl-10 pr-4 rounded-xl border border-slate-200 dark:border-[#1a2744] bg-white dark:bg-[#060d1a]/20 text-foreground focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all text-sm placeholder:text-muted-foreground"
         />
       </div>
 
       {classes.length === 0 ? (
-        <div className="text-center py-20 bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-3xl">
+        <div className="text-center py-20 bg-white dark:bg-[#060d1a]/80 border border-slate-200 dark:border-[#1a2744] rounded-3xl">
           <div className="w-16 h-16 rounded-2xl bg-blue-500/10 mx-auto flex items-center justify-center mb-4">
-            <GraduationCap className="w-8 h-8 text-cyan-400" />
+            <GraduationCap className="w-8 h-8 text-blue-500" />
           </div>
           <h2 className="text-lg font-semibold text-foreground">No classes found</h2>
           <p className="text-sm text-muted-foreground max-w-sm mx-auto mt-2">
@@ -74,7 +74,7 @@ export function ClassDirectory({ title, description, classes, basePath, actionBu
           </p>
         </div>
       ) : (
-        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm">
+        <div className="bg-white dark:bg-[#060d1a]/80 border border-slate-200 dark:border-[#1a2744] rounded-2xl overflow-hidden shadow-sm">
           {filtered.length === 0 ? (
             <div className="p-8 text-center text-slate-400 text-sm">No classes matched your search.</div>
           ) : (
@@ -83,24 +83,24 @@ export function ClassDirectory({ title, description, classes, basePath, actionBu
                 <button
                   key={cls.id}
                   onClick={() => handleClassClick(cls.id)}
-                  className="w-full flex items-center gap-4 px-5 py-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 active:bg-slate-100 dark:active:bg-slate-800 transition-colors group text-left"
+                  className="w-full flex items-center gap-4 px-5 py-4 hover:bg-slate-50 dark:hover:bg-[#0d1b2e]/80 active:bg-slate-100 dark:active:bg-[#0d1b2e] transition-colors group text-left"
                 >
                   <div className="w-11 h-11 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center shrink-0 group-hover:bg-blue-500/20 group-hover:border-blue-500/30 transition-colors">
-                    <span className="text-sm font-bold text-cyan-400">
+                    <span className="text-sm font-bold text-blue-500">
                       {cls.name.substring(0, 2).toUpperCase()}
                     </span>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="font-semibold text-foreground text-sm truncate group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-colors">{cls.name}</p>
+                    <p className="font-semibold text-foreground text-sm truncate group-hover:text-blue-600 dark:group-hover:text-blue-500 transition-colors">{cls.name}</p>
                     <p className="text-xs text-muted-foreground mt-0.5">
                       {cls.countLabel || 'Manage module'}
                     </p>
                   </div>
                   <div className="flex items-center gap-2 shrink-0">
-                    <span className="hidden sm:block text-xs font-semibold px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                    <span className="hidden sm:block text-xs font-semibold px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-[#0d1b2e] text-slate-500 dark:text-slate-400 group-hover:bg-blue-600 group-hover:text-white transition-colors">
                       Open
                     </span>
-                    <ChevronRight className="w-4 h-4 text-slate-400 dark:text-slate-600 group-hover:text-cyan-500 transition-colors" />
+                    <ChevronRight className="w-4 h-4 text-slate-400 dark:text-slate-600 group-hover:text-blue-600 transition-colors" />
                   </div>
                 </button>
               ))}

@@ -137,7 +137,7 @@ export function GradesClient({ schoolId, teacherId, cls, students, exams, subjec
 
   if (!cls) {
     return (
-      <div className="text-center py-20 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl">
+      <div className="text-center py-20 bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-3xl">
         <div className="w-16 h-16 rounded-2xl bg-blue-100 dark:bg-blue-900/40 mx-auto flex items-center justify-center mb-4">
           <PenTool className="w-8 h-8 text-blue-600 dark:text-blue-400" />
         </div>
@@ -163,7 +163,7 @@ export function GradesClient({ schoolId, teacherId, cls, students, exams, subjec
       </div>
 
       {/* Selectors */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 rounded-2xl">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] p-4 rounded-2xl">
         {/* Class selector for subject teachers */}
         {!isClassTeacher && availableClasses.length > 1 && (
           <div>
@@ -171,7 +171,7 @@ export function GradesClient({ schoolId, teacherId, cls, students, exams, subjec
             <select
               value={cls.id}
               onChange={(e) => router.push(`/teacher/grades?class=${e.target.value}`)}
-              className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-sm outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+              className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-slate-950 text-sm outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
             >
               {availableClasses.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
             </select>
@@ -182,7 +182,7 @@ export function GradesClient({ schoolId, teacherId, cls, students, exams, subjec
           <select
             value={selectedExamId}
             onChange={(e) => handleExamChange(e.target.value)}
-            className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-sm outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+            className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-slate-950 text-sm outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
           >
             {exams.length === 0 ? <option value="">No exams found</option> : null}
             {exams.map((e) => <option key={e.id} value={e.id}>{e.name}</option>)}
@@ -193,7 +193,7 @@ export function GradesClient({ schoolId, teacherId, cls, students, exams, subjec
           <select
             value={selectedSubjectId}
             onChange={(e) => handleSubjectChange(e.target.value)}
-            className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-sm outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+            className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-[#1a2744] bg-slate-50 dark:bg-slate-950 text-sm outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
           >
             {subjects.length === 0 ? <option value="">No subjects found</option> : null}
             {subjects.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
@@ -203,12 +203,12 @@ export function GradesClient({ schoolId, teacherId, cls, students, exams, subjec
 
       {/* Completion bar */}
       {students.length > 0 && (
-        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4">
+        <div className="bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-2xl p-4">
           <div className="flex justify-between items-center mb-2">
             <span className="text-xs font-semibold text-muted-foreground">Completion</span>
             <span className="text-xs font-bold text-foreground">{filledCount}/{students.length} entered</span>
           </div>
-          <div className="h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+          <div className="h-2 bg-slate-100 dark:bg-[#0d1b2e] rounded-full overflow-hidden">
             <div className="h-full bg-blue-500 rounded-full transition-all" style={{ width: `${completionPct}%` }} />
           </div>
           {avg !== null && (
@@ -226,10 +226,10 @@ export function GradesClient({ schoolId, teacherId, cls, students, exams, subjec
           <p className="text-sm text-muted-foreground">No students enrolled in this class yet.</p>
         </div>
       ) : (
-        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden pb-20">
+        <div className="bg-white dark:bg-[#060d1a] border border-slate-200 dark:border-[#1a2744] rounded-2xl overflow-hidden pb-20">
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left">
-              <thead className="bg-slate-50 dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 text-muted-foreground uppercase tracking-wider text-xs font-semibold">
+              <thead className="bg-slate-50 dark:bg-slate-950 border-b border-slate-200 dark:border-[#1a2744] text-muted-foreground uppercase tracking-wider text-xs font-semibold">
                 <tr>
                   <th className="px-4 py-4">Student</th>
                   <th className="px-4 py-4 w-32">Score /100</th>
@@ -244,7 +244,7 @@ export function GradesClient({ schoolId, teacherId, cls, students, exams, subjec
                   const initials = `${student.first_name?.[0] || ''}${student.last_name?.[0] || ''}`
 
                   return (
-                    <tr key={student.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors">
+                    <tr key={student.id} className="hover:bg-slate-50/50 dark:hover:bg-[#0d1b2e]/20 transition-colors">
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-2.5">
                           {student.photo_url ? (
@@ -269,7 +269,7 @@ export function GradesClient({ schoolId, teacherId, cls, students, exams, subjec
                           className={`w-20 h-9 px-3 rounded-lg border bg-transparent text-sm focus:ring-2 outline-none transition-colors ${
                             isDirty
                               ? 'border-cyan-400 focus:border-blue-500 focus:ring-blue-500/20 text-blue-700 dark:text-blue-400 font-bold'
-                              : 'border-slate-200 dark:border-slate-800 focus:border-blue-500 focus:ring-blue-500/20'
+                              : 'border-slate-200 dark:border-[#1a2744] focus:border-blue-500 focus:ring-blue-500/20'
                           }`}
                         />
                       </td>
