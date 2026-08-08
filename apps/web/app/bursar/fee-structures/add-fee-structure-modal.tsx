@@ -74,8 +74,8 @@ export function AddFeeStructureModal({ open, onClose, schoolId, terms, classes }
       <DialogContent className="max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-6">
         <DialogHeader className="mb-4">
           <DialogTitle className="flex items-center gap-2 text-lg font-bold">
-            <div className="w-8 h-8 rounded-lg bg-cyan-100 dark:bg-cyan-900/40 flex items-center justify-center">
-              <BookOpen className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
+            <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center">
+              <BookOpen className="w-4 h-4 text-blue-600 dark:text-blue-400" />
             </div>
             Add Fee Structure
           </DialogTitle>
@@ -136,7 +136,7 @@ export function AddFeeStructureModal({ open, onClose, schoolId, terms, classes }
           </div>
 
           {error && (
-            <p className="text-sm text-orange-600 bg-orange-50 dark:bg-orange-950/30 px-3 py-2 rounded-lg border border-orange-200 dark:border-orange-900/50">
+            <p className="text-sm text-red-600 bg-orange-50 dark:bg-orange-950/30 px-3 py-2 rounded-lg border border-red-200 dark:border-red-900/50">
               {error}
             </p>
           )}

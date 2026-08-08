@@ -62,8 +62,8 @@ export function IssueBookModal({
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] rounded-3xl">
         <DialogHeader>
-          <div className="w-12 h-12 rounded-full bg-cyan-100 dark:bg-cyan-900/40 flex items-center justify-center mb-4">
-            <BookOpen className="w-6 h-6 text-cyan-600 dark:text-cyan-400" />
+          <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center mb-4">
+            <BookOpen className="w-6 h-6 text-blue-600 dark:text-blue-400" />
           </div>
           <DialogTitle className="text-xl">Issue Book</DialogTitle>
           <DialogDescription>
@@ -78,7 +78,7 @@ export function IssueBookModal({
               value={studentId}
               onChange={(e) => setStudentId(e.target.value)}
               required
-              className="w-full h-10 px-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500"
+              className="w-full h-10 px-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
             >
               <option value="" disabled>Select a student...</option>
               {availableStudents.map(s => (
@@ -95,7 +95,7 @@ export function IssueBookModal({
               value={bookId}
               onChange={(e) => setBookId(e.target.value)}
               required
-              className="w-full h-10 px-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500"
+              className="w-full h-10 px-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
             >
               <option value="" disabled>Select available book...</option>
               {availableBooks.map(b => (
@@ -111,7 +111,7 @@ export function IssueBookModal({
             <select
               value={dueDays}
               onChange={(e) => setDueDays(e.target.value)}
-              className="w-full h-10 px-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500"
+              className="w-full h-10 px-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
             >
               <option value="7">7 days</option>
               <option value="14">14 days</option>

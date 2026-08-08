@@ -114,7 +114,7 @@ function CreateTemplateModal({ open, onClose, years, terms, classes, schoolId }:
             <div className="flex items-center justify-between">
               <Label>Fee Components *</Label>
               <button type="button" onClick={addItem}
-                className="flex items-center gap-1.5 text-xs font-semibold text-cyan-600 dark:text-cyan-400 hover:underline">
+                className="flex items-center gap-1.5 text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline">
                 <Plus className="w-3.5 h-3.5" /> Add Item
               </button>
             </div>
@@ -151,9 +151,9 @@ function CreateTemplateModal({ open, onClose, years, terms, classes, schoolId }:
             </div>
 
             {/* Total */}
-            <div className="flex items-center justify-between px-3 py-2.5 bg-cyan-50 dark:bg-cyan-950/30 border border-cyan-200 dark:border-cyan-800/40 rounded-xl">
-              <span className="text-sm font-bold text-cyan-700 dark:text-cyan-300">Total per Student</span>
-              <span className="text-base font-black text-cyan-700 dark:text-cyan-300">{formatKES(total)}</span>
+            <div className="flex items-center justify-between px-3 py-2.5 bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800/40 rounded-xl">
+              <span className="text-sm font-bold text-blue-700 dark:text-blue-300">Total per Student</span>
+              <span className="text-base font-black text-blue-700 dark:text-blue-300">{formatKES(total)}</span>
             </div>
           </div>
 
@@ -211,7 +211,7 @@ function InvoiceGeneratorModal({ open, onClose, template }: { open: boolean; onC
               ))}
               <div className="flex justify-between text-sm pt-2 border-t border-border font-black">
                 <span className="text-foreground">Total</span>
-                <span className="text-cyan-600 dark:text-cyan-400">{formatKES(total)}</span>
+                <span className="text-blue-600 dark:text-blue-400">{formatKES(total)}</span>
               </div>
             </div>
             <p className="text-xs text-muted-foreground">
@@ -269,7 +269,7 @@ export function FeeTemplateBuilder({ schoolId, initialTemplates, terms, years, c
               <p className="text-cyan-100 text-sm mt-0.5">Build multi-component fee structures and generate bulk invoices</p>
             </div>
           </div>
-          <Button onClick={() => setCreateModal(true)} className="bg-white text-cyan-700 hover:bg-cyan-50 font-bold rounded-xl gap-2 shrink-0">
+          <Button onClick={() => setCreateModal(true)} className="bg-white text-blue-700 hover:bg-blue-50 font-bold rounded-xl gap-2 shrink-0">
             <Plus className="w-4 h-4" /> New Template
           </Button>
         </div>
@@ -320,7 +320,7 @@ export function FeeTemplateBuilder({ schoolId, initialTemplates, terms, years, c
                 <div className="border-t border-border pt-3 space-y-3">
                   <div className="flex justify-between items-center">
                     <span className="text-sm font-bold text-foreground">Total</span>
-                    <span className="text-base font-black text-cyan-600 dark:text-cyan-400">{formatKES(total)}</span>
+                    <span className="text-base font-black text-blue-600 dark:text-blue-400">{formatKES(total)}</span>
                   </div>
                   <Button
                     className="w-full rounded-xl bg-[#1D6FEB] hover:bg-[#1558C8] text-white gap-2 text-sm"

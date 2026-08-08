@@ -78,7 +78,7 @@ export function SchoolSettingsClient({ school }: { school: any }) {
           <button 
             type="button"
             onClick={() => fileInputRef.current?.click()}
-            className="mt-2 text-sm font-semibold text-cyan-600 hover:text-cyan-700 dark:text-cyan-400"
+            className="mt-2 text-sm font-semibold text-blue-600 hover:text-blue-700 dark:text-blue-400"
           >
             Upload new logo
           </button>

@@ -44,7 +44,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   const initials = fullName.split(' ').map((n: string) => n[0]).join('').slice(0, 2).toUpperCase()
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#060E1C] flex flex-col selection:bg-blue-500/30">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#0A0A0F] flex flex-col selection:bg-blue-500/30">
       {/* Header */}
       <header className="sticky top-0 z-40 bg-white/70 dark:bg-[#0A0A0F]/70 backdrop-blur-2xl border-b border-slate-200/50 dark:border-slate-800/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
@@ -55,10 +55,8 @@ export default async function AdminLayout({ children }: { children: React.ReactN
             <div>
               <span className="font-extrabold text-slate-900 dark:text-white block leading-tight tracking-tight text-[15px]">EduTrack</span>
               <div className="flex items-center gap-1.5 mt-0.5">
-                <span className={`w-1.5 h-1.5 rounded-full ${isRoot ? 'animate-pulse' : 'bg-slate-400'}`}
-                  style={isRoot ? { background: '#22D3EE' } : {}} />
-                <span className={`text-[10px] font-bold uppercase tracking-widest ${isRoot ? '' : 'text-slate-500'}`}
-                  style={isRoot ? { color: '#22D3EE' } : {}}>
+                <span className={`w-1.5 h-1.5 rounded-full ${isRoot ? 'bg-blue-500 animate-pulse' : 'bg-slate-400'}`}></span>
+                <span className={`text-[10px] font-bold uppercase tracking-widest ${isRoot ? 'text-blue-600 dark:text-blue-400' : 'text-slate-500'}`}>
                   {isRoot ? 'Root Administrator' : 'Platform Admin'}
                 </span>
               </div>
@@ -74,12 +72,11 @@ export default async function AdminLayout({ children }: { children: React.ReactN
                 <p className="text-sm font-bold text-foreground">{fullName}</p>
                 <p className="text-[10px] uppercase tracking-widest text-slate-500 font-semibold">{isRoot ? 'Root' : 'Admin'}</p>
               </div>
-              <div className="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-sm shrink-0 text-white"
-                style={{ background: 'linear-gradient(135deg, #1D6FEB 0%, #22D3EE 100%)' }}>
+              <div className="w-9 h-9 rounded-xl bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 flex items-center justify-center font-bold text-sm shrink-0">
                 {initials}
               </div>
               <form action="/api/auth/signout" method="post" className="ml-1">
-                <button title="Sign out" className="w-9 h-9 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-500 hover:text-orange-500 hover:bg-orange-50 dark:hover:bg-orange-900/20 hover:border-orange-200 dark:hover:border-orange-800 transition-colors">
+                <button title="Sign out" className="w-9 h-9 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-500 hover:text-red-500 hover:bg-orange-50 dark:hover:bg-orange-900/20 hover:border-red-200 dark:hover:border-red-800 transition-colors">
                   <LogOut className="w-4 h-4" />
                 </button>
               </form>

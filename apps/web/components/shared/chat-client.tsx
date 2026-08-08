@@ -417,7 +417,7 @@ export function ChatClient({
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
                 placeholder="Search all contacts..."
-                className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl py-2 pl-9 pr-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all"
+                className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl py-2 pl-9 pr-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
               />
             </div>
           </div>
@@ -463,7 +463,7 @@ export function ChatClient({
                     className="w-full flex items-center justify-between p-3.5 rounded-2xl hover:bg-white dark:hover:bg-slate-900/60 transition-all group border border-transparent hover:border-slate-200 dark:hover:border-slate-700"
                   >
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-cyan-500/10 flex items-center justify-center shrink-0 group-hover:bg-cyan-500/20 transition-colors">
+                      <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center shrink-0 group-hover:bg-blue-500/20 transition-colors">
                         <Icon className="w-5 h-5 text-cyan-400" />
                       </div>
                       <div className="text-left">
@@ -489,7 +489,7 @@ export function ChatClient({
                     className="w-full flex items-center justify-between p-3.5 rounded-2xl hover:bg-white dark:hover:bg-slate-900/60 transition-all group border border-transparent hover:border-slate-200 dark:hover:border-slate-700"
                   >
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-cyan-500/10 flex items-center justify-center shrink-0 group-hover:bg-cyan-500/20 transition-colors">
+                      <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center shrink-0 group-hover:bg-blue-500/20 transition-colors">
                         <GraduationCap className="w-5 h-5 text-cyan-400" />
                       </div>
                       <div className="text-left">
@@ -513,7 +513,7 @@ export function ChatClient({
                     value={searchQuery}
                     onChange={e => setSearchQuery(e.target.value)}
                     placeholder="Filter contacts..."
-                    className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl py-2 pl-9 pr-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all"
+                    className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl py-2 pl-9 pr-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
                   />
                 </div>
               </div>
@@ -568,7 +568,7 @@ export function ChatClient({
               >
                 <ArrowLeft className="w-5 h-5" />
               </button>
-              <div className="w-10 h-10 rounded-full bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center shrink-0">
+              <div className="w-10 h-10 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center shrink-0">
                 <UserCircle2 className="w-6 h-6 text-cyan-400" />
               </div>
               <div className="min-w-0 flex-1">
@@ -596,7 +596,7 @@ export function ChatClient({
                   <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-lg overflow-hidden py-1 z-50">
                     <button 
                       onClick={handleClearChat}
-                      className="w-full text-left px-4 py-2 text-sm text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-500/10 flex items-center gap-2"
+                      className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-orange-50 dark:hover:bg-red-500/10 flex items-center gap-2"
                     >
                       <Trash2 className="w-4 h-4" /> Clear Chat
                     </button>
@@ -614,7 +614,7 @@ export function ChatClient({
                 </div>
               ) : messages.length === 0 ? (
                 <div className="h-full flex flex-col items-center justify-center text-center gap-4 px-6">
-                  <div className="w-16 h-16 rounded-full bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center">
+                  <div className="w-16 h-16 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
                     <MessageSquare className="w-8 h-8 text-cyan-400" />
                   </div>
                   <div>
@@ -649,7 +649,7 @@ export function ChatClient({
                             {isMe && (
                               <span className="shrink-0 mb-0.5">
                                 {msg.is_failed ? (
-                                  <AlertTriangle className="w-3.5 h-3.5 text-orange-400" />
+                                  <AlertTriangle className="w-3.5 h-3.5 text-red-400" />
                                 ) : msg.is_pending ? (
                                   <Check className="w-3.5 h-3.5 text-cyan-200/70" />
                                 ) : msg.is_read ? (
@@ -678,12 +678,12 @@ export function ChatClient({
                   onChange={handleInput}
                   placeholder="Type a message..."
                   disabled={sending || !conversationId}
-                  className="flex-1 h-12 px-5 rounded-full border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500 transition-all text-sm text-foreground placeholder:text-muted-foreground disabled:opacity-50"
+                  className="flex-1 h-12 px-5 rounded-full border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all text-sm text-foreground placeholder:text-muted-foreground disabled:opacity-50"
                 />
                 <button
                   type="submit"
                   disabled={!input.trim() || sending || !conversationId}
-                  className="w-12 h-12 flex items-center justify-center rounded-full bg-cyan-600 text-white disabled:opacity-40 hover:bg-cyan-700 hover:scale-105 active:scale-95 transition-all shadow-md shrink-0"
+                  className="w-12 h-12 flex items-center justify-center rounded-full bg-blue-600 text-white disabled:opacity-40 hover:bg-blue-700 hover:scale-105 active:scale-95 transition-all shadow-md shrink-0"
                 >
                   {sending ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-4 h-4 -ml-0.5" />}
                 </button>
@@ -727,25 +727,25 @@ function ContactRow({
       onClick={onClick}
       className={`w-full flex items-center gap-3 p-3 rounded-2xl transition-all border text-left ${
         selected
-          ? 'bg-cyan-50 dark:bg-cyan-500/10 border-cyan-200 dark:border-cyan-500/30'
+          ? 'bg-blue-50 dark:bg-blue-500/10 border-blue-200 dark:border-blue-500/30'
           : 'border-transparent hover:bg-white dark:hover:bg-slate-900/60 hover:border-slate-200 dark:hover:border-slate-700'
       }`}
     >
       <div className="relative shrink-0">
         <div className={`w-10 h-10 rounded-full flex items-center justify-center border ${
           selected
-            ? 'bg-cyan-500/10 border-cyan-500/20 text-cyan-400'
+            ? 'bg-blue-500/10 border-blue-500/20 text-cyan-400'
             : 'bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-400'
         }`}>
           <UserCircle2 className="w-6 h-6" />
         </div>
         {online && (
-          <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-cyan-500 border-2 border-white dark:border-slate-900 rounded-full" />
+          <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-blue-500 border-2 border-white dark:border-slate-900 rounded-full" />
         )}
       </div>
       <div className="flex-1 min-w-0 flex items-center justify-between gap-2">
         <div className="min-w-0">
-          <p className={`font-semibold text-sm truncate ${selected ? 'text-cyan-600 dark:text-cyan-400' : 'text-foreground'}`}>
+          <p className={`font-semibold text-sm truncate ${selected ? 'text-blue-600 dark:text-blue-400' : 'text-foreground'}`}>
             {contact.name}
           </p>
           <p className="text-xs text-muted-foreground truncate mt-0.5">{contact.role}</p>
@@ -754,7 +754,7 @@ function ContactRow({
           )}
         </div>
         {unreadCount > 0 && (
-          <div className="w-5 h-5 rounded-full bg-cyan-500 text-white text-[10px] font-bold flex items-center justify-center shrink-0 shadow-sm">
+          <div className="w-5 h-5 rounded-full bg-blue-500 text-white text-[10px] font-bold flex items-center justify-center shrink-0 shadow-sm">
             {unreadCount > 9 ? '9+' : unreadCount}
           </div>
         )}

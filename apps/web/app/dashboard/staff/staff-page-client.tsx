@@ -10,11 +10,11 @@ import { useConfirmDialog, ConfirmDialog } from '@/components/ui/confirm-dialog'
 import { deleteInviteAndAccount } from './actions'
 
 const ROLE_LABELS: Record<string, { label: string; color: string }> = {
-  class_teacher: { label: 'Class Teacher', color: 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-300' },
-  subject_teacher: { label: 'Subject Teacher', color: 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-300' },
-  bursar: { label: 'Bursar', color: 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-300' },
-  librarian: { label: 'Librarian', color: 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300' },
-  storekeeper: { label: 'Storekeeper', color: 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300' },
+  class_teacher: { label: 'Class Teacher', color: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' },
+  subject_teacher: { label: 'Subject Teacher', color: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' },
+  bursar: { label: 'Bursar', color: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' },
+  librarian: { label: 'Librarian', color: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300' },
+  storekeeper: { label: 'Storekeeper', color: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300' },
   transport_matron: { label: 'Transport Matron', color: 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300' },
 }
 
@@ -101,7 +101,7 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
         <input type="text" placeholder="Search by name or phone…" value={search}
           onChange={e => setSearch(e.target.value)}
-          className="w-full pl-9 pr-4 py-2.5 text-sm border border-border rounded-xl bg-background focus:outline-none focus:ring-2 focus:ring-cyan-500" />
+          className="w-full pl-9 pr-4 py-2.5 text-sm border border-border rounded-xl bg-background focus:outline-none focus:ring-2 focus:ring-blue-500" />
       </div>
 
       {/* Active Members */}
@@ -123,7 +123,7 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
                   onClick={() => setDetailMember(member)}
                 >
                   {/* Avatar */}
-                  <div className="w-9 h-9 rounded-full bg-cyan-100 dark:bg-cyan-900/40 text-cyan-700 dark:text-cyan-300 flex items-center justify-center text-sm font-bold shrink-0 mt-0.5 overflow-hidden">
+                  <div className="w-9 h-9 rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 flex items-center justify-center text-sm font-bold shrink-0 mt-0.5 overflow-hidden">
                     {member.photo_url ? (
                       <img src={member.photo_url} alt="" className="w-full h-full object-cover" />
                     ) : (
@@ -139,7 +139,7 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
                       <div className="relative mt-1.5 inline-block" onClick={e => e.stopPropagation()}>
                         <button
                           onClick={() => setShareOpen(shareOpen === member.id ? null : member.id)}
-                          className="inline-flex items-center gap-1 text-xs text-cyan-600 dark:text-cyan-400 hover:text-cyan-700 font-medium transition-colors"
+                          className="inline-flex items-center gap-1 text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 font-medium transition-colors"
                         >
                           <Share2 className="w-3 h-3" /> Share Portal
                         </button>
@@ -206,7 +206,7 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
               return (
                 <div key={inv.id} className="px-4 py-3.5 space-y-2.5">
                   <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-full bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 flex items-center justify-center text-sm font-bold shrink-0">
+                    <div className="w-9 h-9 rounded-full bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 flex items-center justify-center text-sm font-bold shrink-0">
                       {getInitials(inv.target_name || '??')}
                     </div>
                     <div className="flex-1 min-w-0">
@@ -216,7 +216,7 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
                     <div className="flex items-center gap-2 shrink-0">
                       <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${roleInfo.color}`}>{roleInfo.label}</span>
                       <button onClick={() => handleDelete(inv.id, false, inv.target_name ?? undefined)}
-                        className="text-xs text-orange-500 hover:text-orange-600 font-medium transition-colors">Revoke</button>
+                        className="text-xs text-red-500 hover:text-red-600 font-medium transition-colors">Revoke</button>
                     </div>
                   </div>
                   <div className="flex items-center gap-2 pl-12">
@@ -225,7 +225,7 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
                       className="w-7 h-7 rounded-full bg-[#25D366] flex items-center justify-center text-white hover:bg-[#20bd5a] transition-colors shrink-0"
                       title="Share via WhatsApp">{WA_ICON}</a>
                     <a href={portalLink} target="_blank" rel="noopener noreferrer"
-                      className="text-xs text-cyan-600 dark:text-cyan-400 hover:underline font-medium shrink-0">Open ↗</a>
+                      className="text-xs text-blue-600 dark:text-blue-400 hover:underline font-medium shrink-0">Open ↗</a>
                   </div>
                 </div>
               )
@@ -267,7 +267,7 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
                   <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${ROLE_LABELS[detailMember.role]?.color ?? 'bg-slate-200 text-slate-700'}`}>
                     {ROLE_LABELS[detailMember.role]?.label ?? detailMember.role}
                   </span>
-                  <span className="text-sm font-medium px-2.5 py-1 rounded-full bg-cyan-100 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-400">
+                  <span className="text-sm font-medium px-2.5 py-1 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400">
                     Active
                   </span>
                 </div>
@@ -311,7 +311,7 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
                     </a>
                   </div>
                   <button onClick={() => handleDelete(detailInvite.id, true, detailMember.full_name)}
-                    className="w-full flex items-center justify-center gap-2 h-11 rounded-xl border border-orange-200 dark:border-orange-900/50 text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-900/20 text-sm font-semibold transition-colors bg-white dark:bg-slate-900 shadow-sm">
+                    className="w-full flex items-center justify-center gap-2 h-11 rounded-xl border border-red-200 dark:border-red-900/50 text-red-600 hover:bg-orange-50 dark:hover:bg-orange-900/20 text-sm font-semibold transition-colors bg-white dark:bg-slate-900 shadow-sm">
                     <Trash2 className="w-4 h-4" />
                     Permanently Remove Staff
                   </button>

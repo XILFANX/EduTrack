@@ -10,10 +10,10 @@ const fmtTime = (ts: string) => new Date(ts).toLocaleTimeString('en-GB', { hour:
 const fmtDate = (ts: string) => new Date(ts).toLocaleDateString('en-GB', { day: '2-digit', month: 'short' })
 
 const LOG_STATUS: Record<string, { icon: any; color: string; bg: string }> = {
-  boarded: { icon: CheckCircle2, color: 'text-cyan-600 dark:text-cyan-400', bg: 'bg-cyan-50 dark:bg-cyan-900/20' },
-  departed: { icon: Navigation, color: 'text-cyan-600 dark:text-cyan-400', bg: 'bg-cyan-50 dark:bg-cyan-900/20' },
+  boarded: { icon: CheckCircle2, color: 'text-blue-600 dark:text-blue-400', bg: 'bg-blue-50 dark:bg-blue-900/20' },
+  departed: { icon: Navigation, color: 'text-blue-600 dark:text-blue-400', bg: 'bg-blue-50 dark:bg-blue-900/20' },
   arrived: { icon: Activity, color: 'text-purple-600 dark:text-purple-400', bg: 'bg-purple-50 dark:bg-purple-900/20' },
-  absent: { icon: AlertCircle, color: 'text-orange-600 dark:text-orange-400', bg: 'bg-orange-50 dark:bg-orange-900/20' },
+  absent: { icon: AlertCircle, color: 'text-red-600 dark:text-red-400', bg: 'bg-orange-50 dark:bg-orange-900/20' },
 }
 
 export function TransportDashboardClient({
@@ -75,10 +75,10 @@ export function TransportDashboardClient({
               <Link
                 key={i}
                 href={a.href}
-                className="flex flex-col items-center gap-2 p-4 bg-card hover:bg-slate-50 dark:hover:bg-slate-900/50 border border-border hover:border-cyan-500/50 rounded-2xl hover:scale-[1.02] transition-all text-center shadow-sm group"
+                className="flex flex-col items-center gap-2 p-4 bg-card hover:bg-slate-50 dark:hover:bg-slate-900/50 border border-border hover:border-blue-500/50 rounded-2xl hover:scale-[1.02] transition-all text-center shadow-sm group"
               >
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-cyan-50 dark:bg-cyan-900/20 border border-cyan-100 dark:border-cyan-800/30 group-hover:bg-cyan-100 dark:group-hover:bg-cyan-800/40 transition-colors">
-                  <Icon className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-blue-50 dark:bg-blue-900/20 border border-cyan-100 dark:border-blue-800/30 group-hover:bg-blue-100 dark:group-hover:bg-cyan-800/40 transition-colors">
+                  <Icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                 </div>
                 <div className="text-center min-w-0 w-full mt-1">
                   <p className="font-bold text-xs text-foreground truncate">{a.label}</p>
@@ -98,7 +98,7 @@ export function TransportDashboardClient({
               <Bus className="w-4 h-4 text-cyan-500" />
               <h2 className="font-bold text-foreground">Active Routes</h2>
             </div>
-            <Link href="/transport/routes" className="text-xs font-semibold text-cyan-600 hover:text-cyan-700 flex items-center gap-1">
+            <Link href="/transport/routes" className="text-xs font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1">
               Manage <ChevronRight className="w-3.5 h-3.5" />
             </Link>
           </div>
@@ -108,8 +108,8 @@ export function TransportDashboardClient({
               const pct = route.capacity > 0 ? Math.min(100, (assigned / route.capacity) * 100) : 0
               return (
                 <div key={i} className="flex items-center gap-4 px-5 py-4 hover:bg-slate-50/60 dark:hover:bg-slate-900/20 transition-colors">
-                  <div className="w-10 h-10 rounded-xl bg-cyan-50 dark:bg-cyan-900/20 flex items-center justify-center shrink-0">
-                    <Bus className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
+                  <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center shrink-0">
+                    <Bus className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between mb-1">

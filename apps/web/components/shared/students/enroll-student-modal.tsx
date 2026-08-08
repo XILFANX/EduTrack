@@ -139,8 +139,8 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
         <div className="p-6">
           <DialogHeader className="mb-5">
             <div className="flex items-center gap-3 mb-1">
-              <div className="w-9 h-9 rounded-xl bg-cyan-100 dark:bg-cyan-900/40 flex items-center justify-center">
-                <GraduationCap className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
+              <div className="w-9 h-9 rounded-xl bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center">
+                <GraduationCap className="w-5 h-5 text-blue-600 dark:text-blue-400" />
               </div>
               <div>
                 <DialogTitle className="text-base font-bold text-foreground">
@@ -154,8 +154,8 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
           {/* ── Success State ── */}
           {done ? (
             <div className="text-center py-6 space-y-4">
-              <div className="w-16 h-16 rounded-full bg-cyan-100 dark:bg-cyan-900/30 flex items-center justify-center mx-auto">
-                <CheckCircle2 className="w-8 h-8 text-cyan-600 dark:text-cyan-400" />
+              <div className="w-16 h-16 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mx-auto">
+                <CheckCircle2 className="w-8 h-8 text-blue-600 dark:text-blue-400" />
               </div>
               <div>
                 <p className="font-bold text-foreground text-lg">{firstName} {middleName ? middleName + ' ' : ''}{lastName}</p>
@@ -195,7 +195,7 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
                       <button
                         type="button"
                         onClick={() => photoInputRef.current?.click()}
-                        className="mt-1.5 text-xs text-cyan-600 dark:text-cyan-400 hover:underline font-medium"
+                        className="mt-1.5 text-xs text-blue-600 dark:text-blue-400 hover:underline font-medium"
                       >
                         {photoPreview ? 'Change photo' : 'Upload photo'}
                       </button>
@@ -203,7 +203,7 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
                         <button
                           type="button"
                           onClick={() => { setPhotoFile(null); setPhotoPreview(null) }}
-                          className="ml-3 text-xs text-orange-500 hover:underline"
+                          className="ml-3 text-xs text-red-500 hover:underline"
                         >
                           Remove
                         </button>
@@ -304,7 +304,7 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
                         onClick={() => setClassId(null)}
                         className={`text-left px-4 py-2.5 rounded-xl border text-sm transition-all ${
                           classId === null
-                            ? 'border-cyan-600 bg-cyan-50 dark:bg-cyan-900/20 ring-1 ring-cyan-600 text-cyan-700 dark:text-cyan-300 font-semibold'
+                            ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/20 ring-1 ring-blue-600 text-blue-700 dark:text-blue-300 font-semibold'
                             : 'border-slate-200 dark:border-slate-700 text-muted-foreground hover:border-cyan-300'
                         }`}
                       >
@@ -317,7 +317,7 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
                           onClick={() => setClassId(cls.id)}
                           className={`text-left px-4 py-2.5 rounded-xl border text-sm font-medium transition-all ${
                             classId === cls.id
-                              ? 'border-cyan-600 bg-cyan-50 dark:bg-cyan-900/20 ring-1 ring-cyan-600 text-cyan-700 dark:text-cyan-300'
+                              ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/20 ring-1 ring-blue-600 text-blue-700 dark:text-blue-300'
                               : 'border-slate-200 dark:border-slate-700 text-foreground hover:border-cyan-300'
                           }`}
                         >
@@ -336,8 +336,8 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
                     {photoPreview ? (
                       <img src={photoPreview} alt="" className="w-12 h-12 rounded-full object-cover shrink-0 border border-slate-200 dark:border-slate-700" />
                     ) : (
-                      <div className="w-12 h-12 rounded-full bg-cyan-100 dark:bg-cyan-900/40 flex items-center justify-center shrink-0">
-                        <span className="text-base font-bold text-cyan-700 dark:text-cyan-300">{firstName[0]}{lastName[0]}</span>
+                      <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center shrink-0">
+                        <span className="text-base font-bold text-blue-700 dark:text-blue-300">{firstName[0]}{lastName[0]}</span>
                       </div>
                     )}
                     <div>
@@ -365,7 +365,7 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
               )}
 
               {error && (
-                <p className="text-sm text-orange-600 bg-orange-50 dark:bg-orange-900/20 px-3 py-2 rounded-lg border border-orange-200 dark:border-orange-800/40">
+                <p className="text-sm text-red-600 bg-orange-50 dark:bg-orange-900/20 px-3 py-2 rounded-lg border border-red-200 dark:border-red-800/40">
                   {error}
                 </p>
               )}

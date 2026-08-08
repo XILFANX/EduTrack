@@ -160,7 +160,7 @@ export default async function TeacherTimetablePage() {
                   </th>
                   {DAYS.map(d => (
                     <th key={d.num} className="border-b border-r border-border last:border-r-0 px-3 py-3 text-center">
-                      <span className="text-xs font-bold text-cyan-600 dark:text-cyan-400 uppercase tracking-wider">{d.label}</span>
+                      <span className="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">{d.label}</span>
                     </th>
                   ))}
                 </tr>
@@ -186,8 +186,8 @@ export default async function TeacherTimetablePage() {
                       if (period.is_break) {
                         return (
                           <td key={day.num} className="border-b border-r border-border last:border-r-0 p-1.5">
-                            <div className="rounded-xl bg-orange-50 dark:bg-orange-950/20 border border-orange-100 dark:border-orange-900/30 px-2 py-3 text-center">
-                              <span className="text-[10px] text-orange-400 font-semibold">Break</span>
+                            <div className="rounded-xl bg-orange-50 dark:bg-orange-950/20 border border-red-100 dark:border-red-900/30 px-2 py-3 text-center">
+                              <span className="text-[10px] text-red-400 font-semibold">Break</span>
                             </div>
                           </td>
                         )
@@ -196,7 +196,7 @@ export default async function TeacherTimetablePage() {
                       return (
                         <td key={day.num} className="border-b border-r border-border last:border-r-0 p-1.5">
                           {slot ? (
-                            <div className="rounded-xl bg-cyan-50 dark:bg-cyan-950/30 border border-cyan-200 dark:border-cyan-800/40 px-2 py-2">
+                            <div className="rounded-xl bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800/40 px-2 py-2">
                               <p className="text-[11px] font-bold text-cyan-800 dark:text-cyan-200 text-center leading-tight">
                                 {slot.subjects?.name}
                               </p>
@@ -224,19 +224,19 @@ export default async function TeacherTimetablePage() {
           {/* Summary stats */}
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
             <div className="bg-card border border-border rounded-2xl px-4 py-3 text-center">
-              <p className="text-2xl font-black text-cyan-600 dark:text-cyan-400">{slots.length}</p>
+              <p className="text-2xl font-black text-blue-600 dark:text-blue-400">{slots.length}</p>
               <p className="text-[10px] font-bold uppercase tracking-wide text-muted-foreground mt-0.5">Teaching Slots</p>
             </div>
             {isSubjectTeacher && (
               <div className="bg-card border border-border rounded-2xl px-4 py-3 text-center">
-                <p className="text-2xl font-black text-cyan-600 dark:text-cyan-400">
+                <p className="text-2xl font-black text-blue-600 dark:text-blue-400">
                   {new Set(slots.map((s: any) => s.class_id)).size}
                 </p>
                 <p className="text-[10px] font-bold uppercase tracking-wide text-muted-foreground mt-0.5">Classes</p>
               </div>
             )}
             <div className="bg-card border border-border rounded-2xl px-4 py-3 text-center">
-              <p className="text-2xl font-black text-cyan-600 dark:text-cyan-400">
+              <p className="text-2xl font-black text-blue-600 dark:text-blue-400">
                 {new Set(slots.map((s: any) => s.day_of_week)).size}
               </p>
               <p className="text-[10px] font-bold uppercase tracking-wide text-muted-foreground mt-0.5">Active Days</p>

@@ -145,10 +145,10 @@ export default function VerifyPaymentPage({ title = 'Verify Fees Payment', ledge
   if (phase === 'done' && result) {
     return (
       <div className="max-w-lg mx-auto px-4 py-16 text-center space-y-4">
-        <div className={`w-20 h-20 rounded-full flex items-center justify-center mx-auto ${result.errors.length > 0 ? 'bg-orange-100 dark:bg-orange-900/30' : 'bg-cyan-100 dark:bg-cyan-900/30'}`}>
+        <div className={`w-20 h-20 rounded-full flex items-center justify-center mx-auto ${result.errors.length > 0 ? 'bg-red-100 dark:bg-red-900/30' : 'bg-blue-100 dark:bg-blue-900/30'}`}>
           {result.errors.length > 0
-            ? <AlertCircle className="w-10 h-10 text-orange-500" />
-            : <CheckCircle2 className="w-10 h-10 text-cyan-600" />}
+            ? <AlertCircle className="w-10 h-10 text-red-500" />
+            : <CheckCircle2 className="w-10 h-10 text-blue-600" />}
         </div>
         <h2 className="text-xl font-bold text-foreground">
           {result.matched > 0
@@ -163,9 +163,9 @@ export default function VerifyPaymentPage({ title = 'Verify Fees Payment', ledge
             : 'Your submission is in the pool. It will auto-match when the parent submits their transaction.'}
         </p>
         {result.errors.length > 0 && (
-          <div className="bg-orange-50 dark:bg-orange-950/30 border border-orange-200 rounded-xl p-3 text-left space-y-1">
+          <div className="bg-orange-50 dark:bg-orange-950/30 border border-red-200 rounded-xl p-3 text-left space-y-1">
             {result.errors.map((e, i) => (
-              <p key={i} className="text-sm text-orange-600">{e}</p>
+              <p key={i} className="text-sm text-red-600">{e}</p>
             ))}
           </div>
         )}
@@ -185,7 +185,7 @@ export default function VerifyPaymentPage({ title = 'Verify Fees Payment', ledge
     <div className="max-w-2xl mx-auto px-4 py-6 space-y-6">
       <div>
         <div className="flex items-center gap-2 mb-1">
-          <ShieldCheck className="w-5 h-5 text-cyan-600" />
+          <ShieldCheck className="w-5 h-5 text-blue-600" />
           <h1 className="text-xl font-bold text-foreground">{title}</h1>
         </div>
         <p className="text-sm text-muted-foreground">
@@ -199,7 +199,7 @@ export default function VerifyPaymentPage({ title = 'Verify Fees Payment', ledge
             {rows.length > 1 && (
               <div className="flex items-center justify-between mb-1">
                 <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Entry {idx + 1}</span>
-                <button type="button" onClick={() => removeRow(row.id)} className="text-muted-foreground hover:text-orange-500 transition-colors">
+                <button type="button" onClick={() => removeRow(row.id)} className="text-muted-foreground hover:text-red-500 transition-colors">
                   <Trash2 className="w-4 h-4" />
                 </button>
               </div>
@@ -217,7 +217,7 @@ export default function VerifyPaymentPage({ title = 'Verify Fees Payment', ledge
               <textarea
                 id={`raw-${row.id}`}
                 rows={3}
-                className="w-full bg-muted border border-border rounded-xl px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-cyan-500/40 font-mono"
+                className="w-full bg-muted border border-border rounded-xl px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-500/40 font-mono"
                 placeholder="e.g. QJK23XF89H Confirmed. Ksh 15,000.00 received from 0712 345 678 on 1/8/26 at 10:30 AM."
                 value={showRaw[row.id] ? row.rawMessage : (row.rawMessage ? '●●●●●● (tap Show to edit)' : '')}
                 onChange={(e) => parseMessage(e.target.value, row.id)}
@@ -225,8 +225,8 @@ export default function VerifyPaymentPage({ title = 'Verify Fees Payment', ledge
               />
 
               {row.rawMessage && (
-                <div className="bg-cyan-500/5 border border-cyan-500/20 rounded-xl p-3 space-y-2">
-                  <p className="text-xs font-semibold text-cyan-600 dark:text-cyan-400 uppercase tracking-wide">Transaction Details</p>
+                <div className="bg-blue-500/5 border border-blue-500/20 rounded-xl p-3 space-y-2">
+                  <p className="text-xs font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-wide">Transaction Details</p>
                   <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-xs">
                     {row.detectedProvider && <><span className="text-muted-foreground">Provider</span><span className="font-medium text-foreground">{row.detectedProvider}</span></>}
                     {row.referenceCode && <><span className="text-muted-foreground">Reference</span><span className="font-mono font-bold text-foreground">{row.referenceCode}</span></>}
@@ -262,7 +262,7 @@ export default function VerifyPaymentPage({ title = 'Verify Fees Payment', ledge
                   <button key={r.value} type="button" onClick={() => updateRow(row.id, { paymentRail: r.value })}
                     className={`px-3 py-1.5 rounded-lg border text-xs font-medium transition-all ${
                       row.paymentRail === r.value
-                        ? 'border-cyan-600 bg-cyan-50 dark:bg-cyan-900/30 text-cyan-700'
+                        ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/30 text-blue-700'
                         : 'border-border text-muted-foreground hover:border-cyan-300'
                     }`}>
                     {r.label}
@@ -270,7 +270,7 @@ export default function VerifyPaymentPage({ title = 'Verify Fees Payment', ledge
                 ))}
               </div>
               {(row.paymentRail === 'cash' || row.paymentRail === 'cheque') && (
-                <p className="text-xs text-orange-600 dark:text-orange-400 mt-1">
+                <p className="text-xs text-red-600 dark:text-red-400 mt-1">
                   ⚠ Cash/cheque payments won't auto-match. They go to your Pending Cash list for manual confirmation.
                 </p>
               )}
@@ -279,7 +279,7 @@ export default function VerifyPaymentPage({ title = 'Verify Fees Payment', ledge
         ))}
 
         <button type="button" onClick={addRow}
-          className="w-full flex items-center justify-center gap-2 py-3 rounded-xl border-2 border-dashed border-border text-sm text-muted-foreground hover:border-cyan-400 hover:text-cyan-600 transition-all">
+          className="w-full flex items-center justify-center gap-2 py-3 rounded-xl border-2 border-dashed border-border text-sm text-muted-foreground hover:border-cyan-400 hover:text-blue-600 transition-all">
           <Plus className="w-4 h-4" />
           Add another transaction
         </button>

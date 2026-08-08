@@ -53,7 +53,7 @@ export function SetupPinForm() {
             value={pin}
             onChange={(e) => setPin(e.target.value)}
             placeholder="Enter PIN (min 4 chars)"
-            className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 pr-12 text-center text-xl font-mono text-slate-900 dark:text-white tracking-widest focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all"
+            className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 pr-12 text-center text-xl font-mono text-slate-900 dark:text-white tracking-widest focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
             disabled={loading}
             autoFocus
             maxLength={12}
@@ -77,14 +77,14 @@ export function SetupPinForm() {
           value={confirmPin}
           onChange={(e) => setConfirmPin(e.target.value)}
           placeholder="Re-enter PIN"
-          className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 pr-12 text-center text-xl font-mono text-slate-900 dark:text-white tracking-widest focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all"
+          className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 pr-12 text-center text-xl font-mono text-slate-900 dark:text-white tracking-widest focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
           disabled={loading}
           maxLength={12}
         />
       </div>
 
       {error && (
-        <p className="text-orange-600 dark:text-orange-400 text-sm font-mono text-center bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-900/30 rounded-lg px-3 py-2">
+        <p className="text-red-600 dark:text-red-400 text-sm font-mono text-center bg-orange-50 dark:bg-orange-950/20 border border-red-200 dark:border-red-900/30 rounded-lg px-3 py-2">
           {error}
         </p>
       )}
@@ -97,7 +97,7 @@ export function SetupPinForm() {
       <button
         type="submit"
         disabled={loading || pin.length < 4 || !confirmPin}
-        className="w-full bg-cyan-600 text-white font-mono font-bold rounded-xl px-4 py-3 hover:bg-cyan-700 active:scale-95 transition-all disabled:opacity-40 disabled:active:scale-100 flex items-center justify-center gap-2"
+        className="w-full bg-blue-600 text-white font-mono font-bold rounded-xl px-4 py-3 hover:bg-blue-700 active:scale-95 transition-all disabled:opacity-40 disabled:active:scale-100 flex items-center justify-center gap-2"
       >
         {loading ? (
           <Loader2 className="w-5 h-5 animate-spin" />

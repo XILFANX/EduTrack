@@ -16,8 +16,8 @@ export function CodeLink({ repoPath, accent = 'blue' }: CodeLinkProps) {
 
   const colorCls =
     accent === 'violet'
-      ? 'border-cyan-200 dark:border-cyan-800/60 bg-cyan-50 dark:bg-cyan-900/20 text-cyan-700 dark:text-cyan-300 hover:bg-cyan-100 dark:hover:bg-cyan-900/40 hover:border-cyan-400 dark:hover:border-cyan-600'
-      : 'border-cyan-200 dark:border-cyan-800/60 bg-cyan-50 dark:bg-cyan-900/20 text-cyan-700 dark:text-cyan-300 hover:bg-cyan-100 dark:hover:bg-cyan-900/40 hover:border-cyan-400 dark:hover:border-cyan-600'
+      ? 'border-blue-200 dark:border-blue-800/60 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-cyan-900/40 hover:border-cyan-400 dark:hover:border-blue-600'
+      : 'border-blue-200 dark:border-blue-800/60 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-cyan-900/40 hover:border-cyan-400 dark:hover:border-blue-600'
 
   return (
     <button
@@ -25,7 +25,7 @@ export function CodeLink({ repoPath, accent = 'blue' }: CodeLinkProps) {
       className={`inline-flex items-center gap-2 my-6 w-full px-4 py-3 rounded-xl border font-mono text-sm transition-all duration-200 group shadow-sm hover:shadow ${colorCls}`}
     >
       <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 transition-transform group-hover:scale-110 ${
-        accent === 'violet' ? 'bg-cyan-100 dark:bg-cyan-900/40' : 'bg-cyan-100 dark:bg-cyan-900/40'
+        accent === 'violet' ? 'bg-blue-100 dark:bg-blue-900/40' : 'bg-blue-100 dark:bg-blue-900/40'
       }`}>
         <FileCode className="w-4 h-4" />
       </div>

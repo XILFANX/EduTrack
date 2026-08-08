@@ -16,7 +16,7 @@ type GradingStatusType = 'pending' | 'submitted' | 'approved' | 'rejected'
 
 const STATUS_CONFIG: Record<GradingStatusType, { label: string; color: string; icon: any }> = {
   pending:   { label: 'Awaiting',  color: 'text-slate-500 bg-slate-100 dark:bg-slate-800', icon: Clock },
-  submitted: { label: 'Submitted', color: 'text-cyan-700 dark:text-cyan-300 bg-cyan-100 dark:bg-cyan-900/40', icon: Send },
+  submitted: { label: 'Submitted', color: 'text-blue-700 dark:text-blue-300 bg-blue-100 dark:bg-blue-900/40', icon: Send },
   approved:  { label: 'Approved',  color: 'text-emerald-700 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-900/40', icon: CheckCircle2 },
   rejected:  { label: 'Rejected',  color: 'text-red-700 dark:text-red-300 bg-red-100 dark:bg-red-900/40', icon: XCircle },
 }
@@ -155,12 +155,12 @@ export function ClassTeacherReviewView({
                 onClick={() => router.push(`/teacher/grades?examEventId=${selectedEventId}&subjectId=${slot.subject_id}`)}
                 className={`w-full text-left px-4 py-3 rounded-2xl border-2 transition-all ${
                   isSelected
-                    ? 'border-cyan-500 bg-cyan-50 dark:bg-cyan-950/30'
+                    ? 'border-blue-500 bg-blue-50 dark:bg-blue-950/30'
                     : 'border-border bg-card hover:border-cyan-300'
                 }`}
               >
                 <div className="flex items-center justify-between gap-2">
-                  <p className={`text-sm font-bold ${isSelected ? 'text-cyan-700 dark:text-cyan-200' : 'text-foreground'}`}>
+                  <p className={`text-sm font-bold ${isSelected ? 'text-blue-700 dark:text-cyan-200' : 'text-foreground'}`}>
                     {slot.subjects?.name}
                   </p>
                   <span className={`inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full ${cfg.color}`}>
@@ -197,10 +197,10 @@ export function ClassTeacherReviewView({
             <div className="space-y-4">
               {/* Action bar */}
               {slotStatus === 'submitted' && (
-                <div className="flex items-center justify-between gap-3 p-4 bg-cyan-50 dark:bg-cyan-950/30 border border-cyan-200 dark:border-cyan-800/50 rounded-2xl">
+                <div className="flex items-center justify-between gap-3 p-4 bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800/50 rounded-2xl">
                   <div>
-                    <p className="text-sm font-bold text-cyan-700 dark:text-cyan-300">Results ready for review</p>
-                    <p className="text-xs text-cyan-600 dark:text-cyan-400 mt-0.5">Review the marks below then approve or send back for correction.</p>
+                    <p className="text-sm font-bold text-blue-700 dark:text-blue-300">Results ready for review</p>
+                    <p className="text-xs text-blue-600 dark:text-blue-400 mt-0.5">Review the marks below then approve or send back for correction.</p>
                   </div>
                   <div className="flex gap-2 shrink-0">
                     <Button
@@ -256,7 +256,7 @@ export function ClassTeacherReviewView({
                             <td className="px-4 py-2.5 text-center font-bold text-foreground">{result?.score ?? '—'}</td>
                             <td className="px-4 py-2.5 text-center">
                               {result?.grade ? (
-                                <span className="px-2 py-0.5 rounded-full text-xs font-black bg-cyan-100 dark:bg-cyan-900/40 text-cyan-700 dark:text-cyan-300">
+                                <span className="px-2 py-0.5 rounded-full text-xs font-black bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300">
                                   {result.grade}
                                 </span>
                               ) : <span className="text-slate-300 text-xs">—</span>}

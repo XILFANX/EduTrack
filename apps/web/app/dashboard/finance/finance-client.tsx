@@ -135,8 +135,8 @@ export function FinanceAnalytics({ stats, collectionByClass, paymentTrend, aging
         {[
           {
             label: 'Total Expected', value: formatKES(stats.totalExpected), sub: 'Total invoiced',
-            icon: Banknote, color: 'bg-cyan-50 dark:bg-cyan-950/30 border-cyan-200 dark:border-cyan-800/40',
-            iconColor: 'text-cyan-600 dark:text-cyan-400',
+            icon: Banknote, color: 'bg-blue-50 dark:bg-blue-950/30 border-blue-200 dark:border-blue-800/40',
+            iconColor: 'text-blue-600 dark:text-blue-400',
           },
           {
             label: 'Total Collected', value: formatKES(stats.totalCollected), sub: `${stats.collectionRate.toFixed(1)}% collection rate`,
@@ -145,8 +145,8 @@ export function FinanceAnalytics({ stats, collectionByClass, paymentTrend, aging
           },
           {
             label: 'Outstanding', value: formatKES(stats.totalArrears), sub: 'Fees in arrears',
-            icon: AlertTriangle, color: 'bg-orange-50 dark:bg-orange-950/30 border-orange-200 dark:border-orange-800/40',
-            iconColor: 'text-orange-600 dark:text-orange-400',
+            icon: AlertTriangle, color: 'bg-orange-50 dark:bg-orange-950/30 border-red-200 dark:border-red-800/40',
+            iconColor: 'text-red-600 dark:text-red-400',
           },
           {
             label: 'Defaulters', value: totalDefaulters.toString(), sub: criticalDefaulters > 0 ? `${criticalDefaulters} critical (60d+)` : 'No critical defaulters',
@@ -212,7 +212,7 @@ export function FinanceAnalytics({ stats, collectionByClass, paymentTrend, aging
             {Object.entries(agingBuckets).map(([label, list]) => (
               <span key={label} className={`text-xs font-bold px-2.5 py-1 rounded-full ${
                 label === '60+ days' ? 'bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300' :
-                label === '31–60 days' ? 'bg-orange-100 dark:bg-orange-900/40 text-orange-700 dark:text-orange-300' :
+                label === '31–60 days' ? 'bg-red-100 dark:bg-orange-900/40 text-red-700 dark:text-red-300' :
                 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
               }`}>
                 {label}: {list.length}
@@ -240,14 +240,14 @@ export function FinanceAnalytics({ stats, collectionByClass, paymentTrend, aging
               <tbody className="divide-y divide-border">
                 {Object.entries(agingBuckets).map(([bucket, list]) =>
                   list.sort((a, b) => b.daysOverdue - a.daysOverdue).map((d, idx) => (
-                    <tr key={d.id} className={`${idx % 2 !== 0 ? 'bg-slate-50/40 dark:bg-slate-900/20' : ''} hover:bg-cyan-50/30 dark:hover:bg-cyan-950/10 transition-colors`}>
+                    <tr key={d.id} className={`${idx % 2 !== 0 ? 'bg-slate-50/40 dark:bg-slate-900/20' : ''} hover:bg-blue-50/30 dark:hover:bg-cyan-950/10 transition-colors`}>
                       <td className="px-5 py-3 font-semibold text-foreground">{d.className}</td>
-                      <td className="px-5 py-3 text-right font-bold text-orange-600 dark:text-orange-400">{formatKES(d.outstanding)}</td>
+                      <td className="px-5 py-3 text-right font-bold text-red-600 dark:text-red-400">{formatKES(d.outstanding)}</td>
                       <td className="px-5 py-3 text-center text-muted-foreground">{d.daysOverdue}d</td>
                       <td className="px-5 py-3 text-center">
                         <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${
                           bucket === '60+ days' ? 'bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300' :
-                          bucket === '31–60 days' ? 'bg-orange-100 dark:bg-orange-900/40 text-orange-700 dark:text-orange-300' :
+                          bucket === '31–60 days' ? 'bg-red-100 dark:bg-orange-900/40 text-red-700 dark:text-red-300' :
                           'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
                         }`}>
                           {bucket}

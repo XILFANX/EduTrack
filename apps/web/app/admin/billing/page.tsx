@@ -13,7 +13,7 @@ export default async function AdminBillingPage() {
     <div className="p-4 md:p-6 space-y-6 max-w-5xl mx-auto pb-24 animate-in fade-in slide-in-from-bottom-4 duration-700">
       <div>
         <h1 className="text-2xl font-black text-slate-800 dark:text-slate-100 flex items-center gap-2">
-          <CheckCircle2 className="w-6 h-6 text-cyan-600 dark:text-cyan-500" />
+          <CheckCircle2 className="w-6 h-6 text-blue-600 dark:text-cyan-500" />
           Verify Subscription Payments
         </h1>
         <p className="text-sm text-slate-500 mt-1">

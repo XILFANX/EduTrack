@@ -53,14 +53,14 @@ export function IssuesClient({
           value={searchQuery}
           onChange={e => setSearchQuery(e.target.value)}
           placeholder="Search by student, admission number, or book title..." 
-          className="w-full h-11 pl-10 pr-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 transition-all text-sm"
+          className="w-full h-11 pl-10 pr-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-sm"
         />
       </div>
 
       {filteredIssues.length === 0 ? (
         <div className="text-center py-20 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl">
-          <div className="w-16 h-16 rounded-2xl bg-cyan-100 dark:bg-cyan-900/40 mx-auto flex items-center justify-center mb-4">
-            <BookOpen className="w-8 h-8 text-cyan-600 dark:text-cyan-400" />
+          <div className="w-16 h-16 rounded-2xl bg-blue-100 dark:bg-blue-900/40 mx-auto flex items-center justify-center mb-4">
+            <BookOpen className="w-8 h-8 text-blue-600 dark:text-blue-400" />
           </div>
           <h2 className="text-lg font-semibold text-foreground">No records found</h2>
           <p className="text-sm text-muted-foreground max-w-sm mx-auto mt-2">
@@ -98,16 +98,16 @@ export function IssuesClient({
                         {new Date(issue.borrow_date).toLocaleDateString()}
                       </td>
                       <td className="px-6 py-4">
-                        <span className={isOverdue ? 'text-orange-600 font-semibold' : 'text-muted-foreground'}>
+                        <span className={isOverdue ? 'text-red-600 font-semibold' : 'text-muted-foreground'}>
                           {new Date(issue.due_date).toLocaleDateString()}
                         </span>
                       </td>
                       <td className="px-6 py-4">
                         <span className={`px-2.5 py-1 rounded-full text-xs font-medium uppercase tracking-wider flex items-center w-fit gap-1 ${
-                          issue.status === 'returned' ? 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-400' :
-                          issue.status === 'lost' ? 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400' :
-                          isOverdue ? 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400' :
-                          'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-400'
+                          issue.status === 'returned' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400' :
+                          issue.status === 'lost' ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400' :
+                          isOverdue ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400' :
+                          'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'
                         }`}>
                           {issue.status === 'borrowed' && isOverdue ? 'Overdue' : issue.status}
                         </span>

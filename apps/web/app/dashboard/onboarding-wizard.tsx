@@ -61,18 +61,18 @@ export function OnboardingWizard({ totalStaff, totalClasses, totalSubjects, tota
   const progress = Math.round((completedCount / steps.length) * 100)
 
   return (
-    <div className="rounded-2xl border border-cyan-200 dark:border-cyan-500/30 bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-cyan-900/10 dark:to-cyan-900/5 shadow-sm overflow-hidden mb-7">
+    <div className="rounded-2xl border border-blue-200 dark:border-blue-500/30 bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-cyan-900/10 dark:to-cyan-900/5 shadow-sm overflow-hidden mb-7">
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-3">
         <div className="flex items-center gap-2.5 min-w-0">
-          <div className="w-8 h-8 rounded-xl bg-cyan-100 dark:bg-cyan-500/20 flex items-center justify-center shrink-0">
-            <Sparkles className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
+          <div className="w-8 h-8 rounded-xl bg-blue-100 dark:bg-blue-500/20 flex items-center justify-center shrink-0">
+            <Sparkles className="w-4 h-4 text-blue-600 dark:text-blue-400" />
           </div>
           <div className="min-w-0">
-            <h2 className="text-sm font-bold text-cyan-900 dark:text-cyan-300 truncate">
+            <h2 className="text-sm font-bold text-cyan-900 dark:text-blue-300 truncate">
               Let&apos;s get your school set up!
             </h2>
-            <p className="text-xs text-cyan-700/60 dark:text-cyan-400/60 hidden sm:block">
+            <p className="text-xs text-blue-700/60 dark:text-blue-400/60 hidden sm:block">
               {completedCount} of {steps.length} steps completed
             </p>
           </div>
@@ -80,14 +80,14 @@ export function OnboardingWizard({ totalStaff, totalClasses, totalSubjects, tota
         <div className="flex items-center gap-1 shrink-0 ml-2">
           <button
             onClick={() => setExpanded(e => !e)}
-            className="p-1.5 rounded-lg hover:bg-cyan-100 dark:hover:bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 transition-colors"
+            className="p-1.5 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-500/20 text-blue-600 dark:text-blue-400 transition-colors"
             aria-label="Toggle wizard"
           >
             {expanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
           </button>
           <button
             onClick={() => setDismissed(true)}
-            className="p-1.5 rounded-lg hover:bg-cyan-100 dark:hover:bg-cyan-500/20 text-cyan-600/50 dark:text-cyan-400/50 transition-colors"
+            className="p-1.5 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-500/20 text-blue-600/50 dark:text-blue-400/50 transition-colors"
             aria-label="Dismiss wizard"
           >
             <X className="w-4 h-4" />
@@ -100,12 +100,12 @@ export function OnboardingWizard({ totalStaff, totalClasses, totalSubjects, tota
           {/* Progress Bar */}
           <div className="space-y-1">
             <div className="flex justify-between items-center text-xs">
-              <span className="text-cyan-800 dark:text-cyan-400 font-medium sm:hidden">
+              <span className="text-cyan-800 dark:text-blue-400 font-medium sm:hidden">
                 {completedCount}/{steps.length} steps done
               </span>
-              <span className="font-bold text-cyan-700 dark:text-cyan-300 ml-auto">{progress}%</span>
+              <span className="font-bold text-blue-700 dark:text-blue-300 ml-auto">{progress}%</span>
             </div>
-            <div className="w-full bg-cyan-200/60 dark:bg-cyan-500/20 rounded-full h-1.5 overflow-hidden">
+            <div className="w-full bg-cyan-200/60 dark:bg-blue-500/20 rounded-full h-1.5 overflow-hidden">
               <div
                 className="h-1.5 rounded-full bg-gradient-to-r from-cyan-400 to-cyan-400 transition-all duration-700"
                 style={{ width: `${progress}%` }}
@@ -118,17 +118,17 @@ export function OnboardingWizard({ totalStaff, totalClasses, totalSubjects, tota
             {steps.map((step, idx) => (
               <div
                 key={step.id}
-                className="flex items-center gap-3 bg-white/70 dark:bg-slate-900/40 rounded-xl border border-cyan-100 dark:border-cyan-500/10 px-3 py-2.5 md:flex-col md:items-start md:p-4"
+                className="flex items-center gap-3 bg-white/70 dark:bg-slate-900/40 rounded-xl border border-cyan-100 dark:border-blue-500/10 px-3 py-2.5 md:flex-col md:items-start md:p-4"
               >
                 {/* Step number badge */}
-                <div className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 text-xs font-bold md:hidden ${step.completed ? 'bg-cyan-100 text-cyan-600 dark:bg-cyan-500/20 dark:text-cyan-400' : 'bg-cyan-100 text-cyan-600 dark:bg-cyan-500/20 dark:text-cyan-400'}`}>
+                <div className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 text-xs font-bold md:hidden ${step.completed ? 'bg-blue-100 text-blue-600 dark:bg-blue-500/20 dark:text-blue-400' : 'bg-blue-100 text-blue-600 dark:bg-blue-500/20 dark:text-blue-400'}`}>
                   {step.completed ? <CheckCircle2 className="w-3.5 h-3.5" /> : idx + 1}
                 </div>
 
                 {/* Desktop icon */}
                 <div className="hidden md:flex items-start justify-between mb-1 w-full">
-                  <div className="w-8 h-8 rounded-lg bg-cyan-50 dark:bg-cyan-500/10 flex items-center justify-center">
-                    <step.icon className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
+                  <div className="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-500/10 flex items-center justify-center">
+                    <step.icon className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                   </div>
                   {step.completed && <CheckCircle2 className="w-5 h-5 text-cyan-500" />}
                 </div>
@@ -141,7 +141,7 @@ export function OnboardingWizard({ totalStaff, totalClasses, totalSubjects, tota
 
                 {/* Action */}
                 {step.completed ? (
-                  <span className="shrink-0 text-xs font-semibold text-cyan-600 dark:text-cyan-400 md:hidden">Done</span>
+                  <span className="shrink-0 text-xs font-semibold text-blue-600 dark:text-blue-400 md:hidden">Done</span>
                 ) : (
                   <Link
                     href={step.href}
@@ -155,7 +155,7 @@ export function OnboardingWizard({ totalStaff, totalClasses, totalSubjects, tota
 
                 {/* Desktop completed button */}
                 {step.completed && (
-                  <div className="hidden md:flex w-full mt-2 py-1.5 rounded-lg bg-cyan-50 dark:bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 text-xs font-semibold justify-center border border-cyan-100 dark:border-cyan-500/20">
+                  <div className="hidden md:flex w-full mt-2 py-1.5 rounded-lg bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 text-xs font-semibold justify-center border border-cyan-100 dark:border-blue-500/20">
                     Completed
                   </div>
                 )}

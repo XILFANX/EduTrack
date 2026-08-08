@@ -83,8 +83,8 @@ export function InviteParentModal({ open, onClose, studentId, studentName, schoo
           <>
             <DialogHeader className="mb-4">
               <DialogTitle className="flex items-center gap-2 text-lg font-bold text-foreground">
-                <div className="w-8 h-8 rounded-lg bg-cyan-100 dark:bg-cyan-900/40 flex items-center justify-center">
-                  <UserPlus className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
+                <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center">
+                  <UserPlus className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                 </div>
                 Invite Parent
               </DialogTitle>
@@ -101,7 +101,7 @@ export function InviteParentModal({ open, onClose, studentId, studentName, schoo
                   <select 
                     value={salutation} 
                     onChange={e => setSalutation(e.target.value)}
-                    className="w-full bg-background border border-input text-foreground rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 transition"
+                    className="w-full bg-background border border-input text-foreground rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
                   >
                     <option value="">Select</option>
                     {SALUTATIONS.map(s => <option key={s} value={s}>{s}</option>)}
@@ -129,8 +129,8 @@ export function InviteParentModal({ open, onClose, studentId, studentName, schoo
               </div>
 
               {error && (
-                <div className="p-3 bg-orange-50 dark:bg-orange-900/20 border border-orange-100 dark:border-orange-900/50 rounded-xl">
-                  <p className="text-sm text-orange-600 dark:text-orange-400">{error}</p>
+                <div className="p-3 bg-orange-50 dark:bg-orange-900/20 border border-red-100 dark:border-red-900/50 rounded-xl">
+                  <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
                 </div>
               )}
 
@@ -146,8 +146,8 @@ export function InviteParentModal({ open, onClose, studentId, studentName, schoo
           </>
         ) : (
           <div className="text-center py-4 space-y-6">
-            <div className="w-16 h-16 rounded-full bg-cyan-100 dark:bg-cyan-900/30 flex items-center justify-center mx-auto mb-2">
-              <CheckCircle2 className="w-8 h-8 text-cyan-600 dark:text-cyan-400" />
+            <div className="w-16 h-16 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mx-auto mb-2">
+              <CheckCircle2 className="w-8 h-8 text-blue-600 dark:text-blue-400" />
             </div>
             
             <div className="space-y-1">

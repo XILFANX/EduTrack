@@ -18,18 +18,18 @@ interface ConfirmDialogProps {
 const VARIANT_STYLES = {
   danger: {
     icon: "⚠️",
-    iconBg: "bg-orange-100 dark:bg-orange-900/30",
-    confirmBtn: "bg-orange-600 hover:bg-orange-700 focus:ring-orange-500",
+    iconBg: "bg-red-100 dark:bg-red-900/30",
+    confirmBtn: "bg-red-600 hover:bg-red-700 focus:ring-red-500",
   },
   warning: {
     icon: "⚠️",
-    iconBg: "bg-orange-100 dark:bg-orange-900/30",
-    confirmBtn: "bg-orange-600 hover:bg-orange-700 focus:ring-orange-500",
+    iconBg: "bg-blue-100 dark:bg-blue-900/30",
+    confirmBtn: "bg-blue-600 hover:bg-blue-700 focus:ring-blue-500",
   },
   default: {
     icon: "❓",
-    iconBg: "bg-cyan-100 dark:bg-cyan-900/30",
-    confirmBtn: "bg-[#1D6FEB] hover:bg-[#1558C8] focus:ring-cyan-500",
+    iconBg: "bg-blue-100 dark:bg-blue-900/30",
+    confirmBtn: "bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 focus:ring-blue-500",
   },
 }
 

@@ -66,7 +66,7 @@ export function CodeViewer({ repoPath, language = 'typescript', standalone = fal
         className="my-8 w-full flex items-center justify-between p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 hover:bg-slate-50 dark:hover:bg-slate-900 transition-all text-slate-700 dark:text-slate-300 font-mono text-sm group shadow-sm hover:shadow"
       >
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-cyan-50 dark:bg-cyan-500/10 flex items-center justify-center text-cyan-600 dark:text-cyan-400 group-hover:scale-110 transition-transform">
+          <div className="w-10 h-10 rounded-lg bg-blue-50 dark:bg-blue-500/10 flex items-center justify-center text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform">
             <FileCode className="w-5 h-5" />
           </div>
           <div className="flex flex-col items-start">
@@ -130,7 +130,7 @@ export function CodeViewer({ repoPath, language = 'typescript', standalone = fal
           </div>
         )}
         {error && (
-          <div className="absolute inset-0 z-10 bg-[#1E1E1E] p-6 flex flex-col items-center justify-center text-orange-400 font-mono text-sm gap-2">
+          <div className="absolute inset-0 z-10 bg-[#1E1E1E] p-6 flex flex-col items-center justify-center text-red-400 font-mono text-sm gap-2">
             <AlertCircle className="w-8 h-8 opacity-60 mb-2" />
             <p className="font-bold text-base text-orange-300">Unable to load source code</p>
             <p className="text-xs opacity-70 bg-orange-950/30 px-3 py-1.5 rounded-md mt-2">{error}</p>

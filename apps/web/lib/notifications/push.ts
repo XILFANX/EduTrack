@@ -55,7 +55,7 @@ export const pushProvider: NotificationProvider = {
             auth: subscription.auth,
           },
         },
-        JSON.stringify({ title: 'EstateTrack', body: payload.message })
+        JSON.stringify({ title: 'EduTrack', body: payload.message })
       )
 
       return { channel: 'push', success: true }

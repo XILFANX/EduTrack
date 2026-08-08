@@ -16,7 +16,7 @@ import { createExamEvent, deleteExamEvent, publishExamEvent } from '@/app/action
 
 const STATUS_CONFIG: Record<string, { label: string; color: string; icon: any }> = {
   draft:     { label: 'Draft',     color: 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400', icon: Clock },
-  published: { label: 'Published', color: 'bg-cyan-100 dark:bg-cyan-900/40 text-cyan-700 dark:text-cyan-300', icon: CheckCircle2 },
+  published: { label: 'Published', color: 'bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300', icon: CheckCircle2 },
   closed:    { label: 'Closed',    color: 'bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300', icon: CheckCircle2 },
 }
 
@@ -106,7 +106,7 @@ function CreateEventModal({ open, onClose, schoolId, years, terms, classes }: {
                   onClick={() => toggleClass(c.id)}
                   className={`px-3 py-2 rounded-xl text-xs font-semibold border-2 transition-all ${
                     selectedClassIds.includes(c.id)
-                      ? 'border-cyan-500 bg-cyan-50 dark:bg-cyan-950/30 text-cyan-700 dark:text-cyan-300'
+                      ? 'border-blue-500 bg-blue-50 dark:bg-blue-950/30 text-blue-700 dark:text-blue-300'
                       : 'border-border text-foreground hover:border-cyan-300'
                   }`}
                 >
@@ -178,7 +178,7 @@ export function ExamEventsManager({ schoolId, events, years, terms, classes, sub
               <p className="text-cyan-100 text-sm mt-0.5">School-wide exam events — create, schedule and publish results</p>
             </div>
           </div>
-          <Button onClick={() => setModal(true)} className="bg-white text-cyan-700 hover:bg-cyan-50 font-bold rounded-xl gap-2 shrink-0">
+          <Button onClick={() => setModal(true)} className="bg-white text-blue-700 hover:bg-blue-50 font-bold rounded-xl gap-2 shrink-0">
             <Plus className="w-4 h-4" /> New Exam Event
           </Button>
         </div>
@@ -206,8 +206,8 @@ export function ExamEventsManager({ schoolId, events, years, terms, classes, sub
               <div key={event.id} className="bg-card border border-border rounded-2xl p-4 hover:shadow-sm transition-shadow group">
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex items-start gap-4 flex-1 min-w-0">
-                    <div className="w-10 h-10 rounded-xl bg-cyan-50 dark:bg-cyan-950/30 flex items-center justify-center shrink-0">
-                      <ClipboardList className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
+                    <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/30 flex items-center justify-center shrink-0">
+                      <ClipboardList className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-3 flex-wrap">

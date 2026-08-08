@@ -9,7 +9,7 @@ export default function InviteNotFound() {
           <Image src="/logo.png" alt="EduTrack" fill className="object-cover" />
         </div>
         <div className="space-y-3">
-          <p className="text-sm font-semibold text-cyan-600 dark:text-cyan-400 uppercase tracking-wider">
+          <p className="text-sm font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-wider">
             EduTrack — School Management System
           </p>
           <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-100">Invite Not Found</h1>

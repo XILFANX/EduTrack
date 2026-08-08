@@ -46,7 +46,7 @@ export function ChatWidget({ currentUserId, recipientName, initialMessages = [],
   return (
     <div className="flex flex-col h-[600px] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm">
       <div className="p-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full bg-cyan-100 dark:bg-cyan-900/30 text-cyan-600 flex items-center justify-center">
+        <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 flex items-center justify-center">
           <User className="w-5 h-5" />
         </div>
         <div>
@@ -85,7 +85,7 @@ export function ChatWidget({ currentUserId, recipientName, initialMessages = [],
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Type a message..."
-            className="w-full h-12 pl-4 pr-12 rounded-full border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 transition-all text-sm text-foreground"
+            className="w-full h-12 pl-4 pr-12 rounded-full border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-sm text-foreground"
           />
           <button
             type="submit"

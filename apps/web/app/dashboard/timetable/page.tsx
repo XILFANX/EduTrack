@@ -129,7 +129,7 @@ export default async function AdminTimetablePage({ searchParams }: Props) {
                 ✓ Published
               </span>
             ) : (
-              <span className="text-xs font-bold px-3 py-1.5 rounded-full bg-orange-400/30 border border-orange-300/40">
+              <span className="text-xs font-bold px-3 py-1.5 rounded-full bg-orange-400/30 border border-red-300/40">
                 Draft
               </span>
             )}

@@ -69,10 +69,10 @@ export function StoreDashboardClient({
               <Link
                 key={i}
                 href={a.href}
-                className="flex flex-col items-center gap-2 p-4 bg-card hover:bg-slate-50 dark:hover:bg-slate-900/50 border border-border hover:border-cyan-500/50 rounded-2xl hover:scale-[1.02] transition-all text-center shadow-sm group"
+                className="flex flex-col items-center gap-2 p-4 bg-card hover:bg-slate-50 dark:hover:bg-slate-900/50 border border-border hover:border-blue-500/50 rounded-2xl hover:scale-[1.02] transition-all text-center shadow-sm group"
               >
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-cyan-50 dark:bg-cyan-900/20 border border-cyan-100 dark:border-cyan-800/30 group-hover:bg-cyan-100 dark:group-hover:bg-cyan-800/40 transition-colors">
-                  <Icon className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-blue-50 dark:bg-blue-900/20 border border-cyan-100 dark:border-blue-800/30 group-hover:bg-blue-100 dark:group-hover:bg-cyan-800/40 transition-colors">
+                  <Icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                 </div>
                 <div className="text-center min-w-0 w-full mt-1">
                   <p className="font-bold text-xs text-foreground truncate">{a.label}</p>
@@ -86,17 +86,17 @@ export function StoreDashboardClient({
 
       {/* Low stock warnings */}
       {lowStockItems.length > 0 && (
-        <div className="bg-orange-50 dark:bg-orange-900/10 border border-orange-200 dark:border-orange-800/30 rounded-2xl p-4">
+        <div className="bg-orange-50 dark:bg-orange-900/10 border border-red-200 dark:border-red-800/30 rounded-2xl p-4">
           <div className="flex items-center gap-2 mb-3">
-            <AlertTriangle className="w-4 h-4 text-orange-600" />
-            <h3 className="font-bold text-orange-800 dark:text-orange-400 text-sm">Low Stock Alerts ({lowStockItems.length})</h3>
+            <AlertTriangle className="w-4 h-4 text-red-600" />
+            <h3 className="font-bold text-orange-800 dark:text-red-400 text-sm">Low Stock Alerts ({lowStockItems.length})</h3>
           </div>
           <div className="flex flex-wrap gap-2">
             {lowStockItems.map((item, i) => (
               <div key={i} className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border ${
                 item.qty <= 0
-                  ? 'bg-orange-50 text-orange-700 border-orange-200 dark:bg-orange-900/20 dark:text-orange-400 dark:border-orange-800/30'
-                  : 'bg-orange-100 text-orange-800 border-orange-200 dark:bg-orange-900/20 dark:text-orange-300 dark:border-orange-800/30'
+                  ? 'bg-orange-50 text-red-700 border-red-200 dark:bg-orange-900/20 dark:text-red-400 dark:border-red-800/30'
+                  : 'bg-red-100 text-orange-800 border-red-200 dark:bg-orange-900/20 dark:text-red-300 dark:border-red-800/30'
               }`}>
                 <span>{item.name}</span>
                 <span className="font-extrabold">{item.qty <= 0 ? 'OUT' : `×${item.qty}`}</span>
@@ -123,14 +123,14 @@ export function StoreDashboardClient({
             <div className="divide-y divide-border">
               {recentTransactions.filter(t => t.transaction_type === 'in').slice(0, 3).map((tx: any, i: number) => (
                 <div key={i} className="flex items-center gap-3 px-5 py-3 hover:bg-slate-50/60 dark:hover:bg-slate-900/20 transition-colors">
-                  <div className="w-8 h-8 rounded-xl bg-cyan-50 dark:bg-cyan-900/20 flex items-center justify-center shrink-0">
-                    <ArrowDownToLine className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
+                  <div className="w-8 h-8 rounded-xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center shrink-0">
+                    <ArrowDownToLine className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="font-semibold text-sm text-foreground truncate">{tx.item_name}</p>
                     <p className="text-xs text-muted-foreground">{fmtDate(tx.created_at)} · By {tx.logged_by}</p>
                   </div>
-                  <span className="text-cyan-600 dark:text-cyan-400 font-bold text-sm">+{tx.quantity}</span>
+                  <span className="text-blue-600 dark:text-blue-400 font-bold text-sm">+{tx.quantity}</span>
                 </div>
               ))}
             </div>
@@ -153,13 +153,13 @@ export function StoreDashboardClient({
               {recentTransactions.filter(t => t.transaction_type === 'out').slice(0, 3).map((tx: any, i: number) => (
                 <div key={i} className="flex items-center gap-3 px-5 py-3 hover:bg-slate-50/60 dark:hover:bg-slate-900/20 transition-colors">
                   <div className="w-8 h-8 rounded-xl bg-orange-50 dark:bg-orange-900/20 flex items-center justify-center shrink-0">
-                    <ArrowUpFromLine className="w-3.5 h-3.5 text-orange-600 dark:text-orange-400" />
+                    <ArrowUpFromLine className="w-3.5 h-3.5 text-red-600 dark:text-red-400" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="font-semibold text-sm text-foreground truncate">{tx.item_name}</p>
                     <p className="text-xs text-muted-foreground">{fmtDate(tx.created_at)} · {tx.notes || 'No notes'}</p>
                   </div>
-                  <span className="text-orange-600 dark:text-orange-400 font-bold text-sm">-{tx.quantity}</span>
+                  <span className="text-red-600 dark:text-red-400 font-bold text-sm">-{tx.quantity}</span>
                 </div>
               ))}
             </div>
@@ -172,7 +172,7 @@ export function StoreDashboardClient({
         <div className="bg-card border border-border rounded-3xl overflow-hidden shadow-sm">
           <div className="px-5 py-4 border-b border-border flex items-center justify-between">
             <h2 className="font-bold text-foreground">Current Stock Levels</h2>
-            <Link href="/store/stock" className="text-xs font-semibold text-orange-600 hover:text-orange-700 flex items-center gap-1">
+            <Link href="/store/stock" className="text-xs font-semibold text-red-600 hover:text-red-700 flex items-center gap-1">
               View all <ChevronRight className="w-3.5 h-3.5" />
             </Link>
           </div>
@@ -182,11 +182,11 @@ export function StoreDashboardClient({
               const isOut = item.qty <= 0
               return (
                 <div key={i} className={`rounded-xl px-3 py-2.5 border ${
-                  isOut ? 'bg-orange-50 dark:bg-orange-900/10 border-orange-200 dark:border-orange-800/30'
-                        : isLow ? 'bg-orange-50 dark:bg-orange-900/10 border-orange-200 dark:border-orange-800/30'
+                  isOut ? 'bg-orange-50 dark:bg-orange-900/10 border-red-200 dark:border-red-800/30'
+                        : isLow ? 'bg-orange-50 dark:bg-orange-900/10 border-red-200 dark:border-red-800/30'
                         : 'bg-slate-50 dark:bg-slate-900/30 border-border'
                 }`}>
-                  <p className={`text-lg font-extrabold ${isOut ? 'text-orange-600 dark:text-orange-400' : isLow ? 'text-orange-700 dark:text-orange-400' : 'text-foreground'}`}>{item.qty}</p>
+                  <p className={`text-lg font-extrabold ${isOut ? 'text-red-600 dark:text-red-400' : isLow ? 'text-red-700 dark:text-red-400' : 'text-foreground'}`}>{item.qty}</p>
                   <p className="text-xs text-muted-foreground truncate mt-0.5">{item.name}</p>
                 </div>
               )

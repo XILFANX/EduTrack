@@ -78,7 +78,7 @@ export function UnreadMessagesBadge() {
   if (count === 0) return null
 
   return (
-    <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-cyan-500 text-[9px] font-bold text-white shadow-sm ring-1 ring-card">
+    <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-blue-500 text-[9px] font-bold text-white shadow-sm ring-1 ring-card">
       {count > 9 ? '9+' : count}
     </span>
   )

@@ -124,7 +124,7 @@ export default function SubscriptionPostPaymentForm({ obligationId, amountDue, c
 
   if (result?.status === 'success') {
     return (
-      <div className="bg-cyan-500/5 border border-cyan-500/20 rounded-xl p-5 text-center space-y-3">
+      <div className="bg-blue-500/5 border border-blue-500/20 rounded-xl p-5 text-center space-y-3">
         <CheckCircle2 className="w-10 h-10 text-cyan-400 mx-auto" />
         <div>
           <p className="font-bold text-foreground">Payment Submitted</p>
@@ -252,7 +252,7 @@ export default function SubscriptionPostPaymentForm({ obligationId, amountDue, c
 
           {/* Error state */}
           {result?.status === 'error' && (
-            <div className="bg-cyan-500/5 border border-cyan-500/20 rounded-xl p-3 flex items-start gap-2">
+            <div className="bg-blue-500/5 border border-blue-500/20 rounded-xl p-3 flex items-start gap-2">
               <AlertCircle className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
               <p className="text-sm text-cyan-400">{result.message}</p>
             </div>

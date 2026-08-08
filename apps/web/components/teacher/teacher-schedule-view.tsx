@@ -127,7 +127,7 @@ export function TeacherScheduleView({ periods, slots, roleName }: Props) {
                 <tr key={period.id} className={idx % 2 === 0 ? '' : 'bg-slate-50/40 dark:bg-slate-900/20'}>
                   <td className="sticky left-0 z-10 bg-white dark:bg-slate-950 border-b border-r border-border px-4 py-3">
                     <div className="flex items-center gap-2">
-                      {period.is_break ? <Coffee className="w-3.5 h-3.5 text-orange-500 shrink-0" /> : <Clock className="w-3.5 h-3.5 text-cyan-400 shrink-0" />}
+                      {period.is_break ? <Coffee className="w-3.5 h-3.5 text-red-500 shrink-0" /> : <Clock className="w-3.5 h-3.5 text-cyan-400 shrink-0" />}
                       <div>
                         <p className="font-semibold text-xs text-foreground">{period.name}</p>
                         <p className="text-[10px] text-muted-foreground">{fmt12(period.start_time)}–{fmt12(period.end_time)}</p>
@@ -140,13 +140,13 @@ export function TeacherScheduleView({ periods, slots, roleName }: Props) {
                     return (
                       <td key={day.num} className="border-b border-r border-border last:border-r-0 p-1.5">
                         {period.is_break ? (
-                          <div className="rounded-xl bg-orange-50 dark:bg-orange-950/20 border border-orange-200/60 dark:border-orange-800/30 px-2 py-3 text-center">
-                            <Coffee className="w-3.5 h-3.5 text-orange-400 mx-auto" />
+                          <div className="rounded-xl bg-orange-50 dark:bg-orange-950/20 border border-red-200/60 dark:border-red-800/30 px-2 py-3 text-center">
+                            <Coffee className="w-3.5 h-3.5 text-red-400 mx-auto" />
                           </div>
                         ) : daySlots.length > 0 ? (
                           <div className="space-y-1">
                             {daySlots.map((slot, si) => (
-                              <div key={si} className={`rounded-xl px-2 py-2 text-center text-xs font-semibold border ${isToday(day.num) ? 'ring-1 ring-cyan-400' : ''} bg-cyan-50 border-cyan-200 text-cyan-800 dark:bg-cyan-950/40 dark:border-cyan-800/50 dark:text-cyan-300`}>
+                              <div key={si} className={`rounded-xl px-2 py-2 text-center text-xs font-semibold border ${isToday(day.num) ? 'ring-1 ring-cyan-400' : ''} bg-blue-50 border-blue-200 text-cyan-800 dark:bg-blue-950/40 dark:border-blue-800/50 dark:text-blue-300`}>
                                 <p>{slot.subjects?.name || '—'}</p>
                                 {slot.classes?.name && <p className="text-[10px] opacity-70 mt-0.5">{slot.classes.name}</p>}
                               </div>

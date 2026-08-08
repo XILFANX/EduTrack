@@ -125,7 +125,7 @@ export default async function AdminDashboardPage() {
                 <Building2 className="w-5 h-5 text-cyan-500" />
                 Latest Registered Schools
               </h2>
-              <Link href="/admin/schools" className="text-sm font-bold text-cyan-600 hover:text-cyan-700 dark:text-cyan-400 transition-colors flex items-center gap-1 group">
+              <Link href="/admin/schools" className="text-sm font-bold text-blue-600 hover:text-blue-700 dark:text-blue-400 transition-colors flex items-center gap-1 group">
                 View all <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
@@ -143,11 +143,11 @@ export default async function AdminDashboardPage() {
                 {recentSchools.map((s) => (
                   <Link key={s.id} href={`/admin/schools`} className="flex items-center justify-between px-6 py-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
                     <div className="flex items-center gap-4">
-                      <div className="w-11 h-11 rounded-2xl bg-cyan-100 dark:bg-cyan-900/40 text-cyan-700 dark:text-cyan-300 text-base font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                      <div className="w-11 h-11 rounded-2xl bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 text-base font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
                         {s.name[0]?.toUpperCase()}
                       </div>
                       <div>
-                        <p className="text-sm font-bold text-foreground group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">{s.name}</p>
+                        <p className="text-sm font-bold text-foreground group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-colors">{s.name}</p>
                         <p className="text-xs font-medium text-slate-500 flex items-center gap-1.5 mt-0.5">
                           <span>{s.domain || 'No domain'}</span>
                           <span>·</span>
@@ -155,7 +155,7 @@ export default async function AdminDashboardPage() {
                         </p>
                       </div>
                     </div>
-                    <span className="text-[10px] px-3 py-1.5 rounded-full font-black uppercase tracking-wider shadow-sm bg-cyan-50 text-cyan-600 border border-cyan-200 dark:bg-cyan-900/20 dark:border-cyan-800/50">
+                    <span className="text-[10px] px-3 py-1.5 rounded-full font-black uppercase tracking-wider shadow-sm bg-blue-50 text-blue-600 border border-blue-200 dark:bg-blue-900/20 dark:border-blue-800/50">
                       {s.subscription_tier}
                     </span>
                   </Link>
@@ -183,7 +183,7 @@ export default async function AdminDashboardPage() {
                 return (
                   <Link key={a.href} href={a.href}
                     className="bg-card border border-border rounded-2xl p-4 flex items-center gap-3 hover:bg-accent hover:border-accent-foreground/20 transition-all text-sm text-foreground font-medium shadow-sm group">
-                    <Icon className="w-5 h-5 text-cyan-500 group-hover:text-cyan-600 transition-colors" />
+                    <Icon className="w-5 h-5 text-cyan-500 group-hover:text-blue-600 transition-colors" />
                     {a.label}
                   </Link>
                 )
@@ -201,7 +201,7 @@ export default async function AdminDashboardPage() {
             </div>
             <div className="divide-y divide-border/50">
               <div className="flex items-center gap-4 px-6 py-4">
-                <div className="w-10 h-10 rounded-full bg-cyan-100 dark:bg-cyan-900/40 text-cyan-700 dark:text-cyan-300 text-sm font-bold flex items-center justify-center shrink-0 border border-cyan-200 dark:border-cyan-800">
+                <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 text-sm font-bold flex items-center justify-center shrink-0 border border-blue-200 dark:border-blue-800">
                   PN
                 </div>
                 <div>
@@ -227,7 +227,7 @@ export default async function AdminDashboardPage() {
             </div>
             <div className="p-4 border-t border-border bg-slate-50 dark:bg-slate-900/50">
               <Link href="/admin/admins"
-                className="flex items-center justify-center w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-cyan-300 dark:hover:border-cyan-700 hover:text-cyan-600 dark:hover:text-cyan-400 text-sm font-bold text-slate-700 dark:text-slate-300 py-3 rounded-xl transition-all shadow-sm">
+                className="flex items-center justify-center w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-cyan-300 dark:hover:border-cyan-700 hover:text-blue-600 dark:hover:text-blue-400 text-sm font-bold text-slate-700 dark:text-slate-300 py-3 rounded-xl transition-all shadow-sm">
                 Manage Team
               </Link>
             </div>

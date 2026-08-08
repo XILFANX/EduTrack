@@ -58,8 +58,8 @@ export function AddRouteModal({ schoolId }: { schoolId: string }) {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] rounded-3xl">
         <DialogHeader>
-          <div className="w-12 h-12 rounded-full bg-cyan-100 dark:bg-cyan-900/40 flex items-center justify-center mb-4">
-            <Map className="w-6 h-6 text-cyan-600 dark:text-cyan-400" />
+          <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center mb-4">
+            <Map className="w-6 h-6 text-blue-600 dark:text-blue-400" />
           </div>
           <DialogTitle className="text-xl">Add New Route</DialogTitle>
           <DialogDescription>

@@ -123,7 +123,7 @@ function SlotModal({
                 onClick={() => setSubjectId(null)}
                 className={`text-left px-3 py-2 rounded-xl border-2 text-xs font-medium transition-all ${
                   subjectId === null
-                    ? 'border-cyan-500 bg-cyan-50 dark:bg-cyan-950/30 text-cyan-700 dark:text-cyan-300'
+                    ? 'border-blue-500 bg-blue-50 dark:bg-blue-950/30 text-blue-700 dark:text-blue-300'
                     : 'border-border text-muted-foreground hover:border-cyan-300'
                 }`}
               >
@@ -135,7 +135,7 @@ function SlotModal({
                   onClick={() => setSubjectId(s.id)}
                   className={`text-left px-3 py-2 rounded-xl border-2 text-xs font-semibold transition-all ${
                     subjectId === s.id
-                      ? 'border-cyan-500 bg-cyan-50 dark:bg-cyan-950/30 text-cyan-700 dark:text-cyan-300'
+                      ? 'border-blue-500 bg-blue-50 dark:bg-blue-950/30 text-blue-700 dark:text-blue-300'
                       : 'border-border text-foreground hover:border-cyan-300'
                   }`}
                 >
@@ -155,7 +155,7 @@ function SlotModal({
                 onClick={() => setTeacherId(null)}
                 className={`text-left px-3 py-2 rounded-xl border-2 text-xs font-medium transition-all ${
                   teacherId === null
-                    ? 'border-cyan-500 bg-cyan-50 dark:bg-cyan-950/30 text-cyan-700 dark:text-cyan-300'
+                    ? 'border-blue-500 bg-blue-50 dark:bg-blue-950/30 text-blue-700 dark:text-blue-300'
                     : 'border-border text-muted-foreground hover:border-cyan-300'
                 }`}
               >
@@ -167,7 +167,7 @@ function SlotModal({
                   onClick={() => setTeacherId(t.id)}
                   className={`text-left px-3 py-2 rounded-xl border-2 text-xs font-semibold transition-all flex items-center justify-between ${
                     teacherId === t.id
-                      ? 'border-cyan-500 bg-cyan-50 dark:bg-cyan-950/30 text-cyan-700 dark:text-cyan-300'
+                      ? 'border-blue-500 bg-blue-50 dark:bg-blue-950/30 text-blue-700 dark:text-blue-300'
                       : 'border-border text-foreground hover:border-cyan-300'
                   }`}
                 >
@@ -263,7 +263,7 @@ export function TimetableGrid({
             <select
               value={selectedTermId}
               onChange={e => router.push(`/dashboard/timetable?term=${e.target.value}`)}
-              className="appearance-none pl-4 pr-9 py-2 text-sm font-semibold bg-card border border-border rounded-xl text-foreground cursor-pointer hover:border-cyan-500/50 transition-colors"
+              className="appearance-none pl-4 pr-9 py-2 text-sm font-semibold bg-card border border-border rounded-xl text-foreground cursor-pointer hover:border-blue-500/50 transition-colors"
             >
               {terms.map(t => (
                 <option key={t.id} value={t.id}>{t.name}</option>
@@ -320,7 +320,7 @@ export function TimetableGrid({
                     key={`${day.num}-${period.id}`}
                     className={`border-b border-r border-border px-2 py-2 text-center min-w-[90px] last:border-r-0 ${period.is_break ? 'bg-orange-50/50 dark:bg-orange-950/10' : ''}`}
                   >
-                    <div className="text-[10px] font-bold text-cyan-600 dark:text-cyan-400 uppercase tracking-wider">{day.short}</div>
+                    <div className="text-[10px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">{day.short}</div>
                     <div className="text-[10px] text-muted-foreground font-medium mt-0.5">{period.name}</div>
                     {!period.is_break && (
                       <div className="text-[9px] text-slate-400">{fmt12(period.start_time)}</div>
@@ -352,14 +352,14 @@ export function TimetableGrid({
                         onClick={() => openCell(period, day, cls)}
                       >
                         {period.is_break ? (
-                          <div className="rounded-lg bg-orange-100/60 dark:bg-orange-900/20 px-1 py-2 text-center cursor-default">
-                            <Coffee className="w-3 h-3 text-orange-400 mx-auto" />
+                          <div className="rounded-lg bg-red-100/60 dark:bg-orange-900/20 px-1 py-2 text-center cursor-default">
+                            <Coffee className="w-3 h-3 text-red-400 mx-auto" />
                           </div>
                         ) : slot?.subject_id ? (
                           <div className={`rounded-lg border px-1.5 py-1.5 cursor-pointer transition-all hover:opacity-80 ${
                             isConflict
                               ? 'bg-red-50 dark:bg-red-950/30 border-red-300 dark:border-red-700'
-                              : 'bg-cyan-50 dark:bg-cyan-950/30 border-cyan-200 dark:border-cyan-800/40'
+                              : 'bg-blue-50 dark:bg-blue-950/30 border-blue-200 dark:border-blue-800/40'
                           }`}>
                             <p className={`text-[10px] font-bold leading-tight text-center ${isConflict ? 'text-red-700 dark:text-red-300' : 'text-cyan-800 dark:text-cyan-200'}`}>
                               {slot.subjects?.name}
@@ -374,7 +374,7 @@ export function TimetableGrid({
                             )}
                           </div>
                         ) : (
-                          <div className="rounded-lg border-2 border-dashed border-slate-200 dark:border-slate-700 px-1 py-3 text-center cursor-pointer hover:border-cyan-400 hover:bg-cyan-50/50 dark:hover:bg-cyan-950/20 transition-all group/cell">
+                          <div className="rounded-lg border-2 border-dashed border-slate-200 dark:border-slate-700 px-1 py-3 text-center cursor-pointer hover:border-cyan-400 hover:bg-blue-50/50 dark:hover:bg-cyan-950/20 transition-all group/cell">
                             <span className="text-[10px] text-slate-300 group-hover/cell:text-cyan-400 transition-colors">+</span>
                           </div>
                         )}
@@ -391,7 +391,7 @@ export function TimetableGrid({
       {/* Legend */}
       <div className="flex flex-wrap items-center gap-4 text-xs text-muted-foreground">
         <div className="flex items-center gap-1.5">
-          <div className="w-3 h-3 rounded bg-cyan-100 dark:bg-cyan-950/40 border border-cyan-200 dark:border-cyan-800" />
+          <div className="w-3 h-3 rounded bg-blue-100 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800" />
           <span>Subject assigned</span>
         </div>
         <div className="flex items-center gap-1.5">
@@ -403,7 +403,7 @@ export function TimetableGrid({
           <span>Teacher conflict</span>
         </div>
         <div className="flex items-center gap-1.5">
-          <div className="w-3 h-3 rounded bg-orange-100/60 dark:bg-orange-900/20" />
+          <div className="w-3 h-3 rounded bg-red-100/60 dark:bg-orange-900/20" />
           <span>Break</span>
         </div>
       </div>

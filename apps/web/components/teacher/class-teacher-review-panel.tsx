@@ -80,14 +80,14 @@ export function ClassTeacherReviewPanel({ examId, classId, subjects }: Props) {
           </button>
         )}
         {allFinalized && (
-          <span className="flex items-center gap-1 text-xs text-cyan-600 dark:text-cyan-400 font-semibold">
+          <span className="flex items-center gap-1 text-xs text-blue-600 dark:text-blue-400 font-semibold">
             <CheckCircle2 className="w-3.5 h-3.5" /> All Finalized
           </span>
         )}
       </div>
 
       {error && (
-        <div className="flex items-center gap-2 bg-orange-50 dark:bg-orange-900/20 text-orange-700 dark:text-orange-400 rounded-xl px-3 py-2 text-xs">
+        <div className="flex items-center gap-2 bg-orange-50 dark:bg-orange-900/20 text-red-700 dark:text-red-400 rounded-xl px-3 py-2 text-xs">
           <AlertCircle className="w-3.5 h-3.5 shrink-0" /> {error}
         </div>
       )}
@@ -119,7 +119,7 @@ export function ClassTeacherReviewPanel({ examId, classId, subjects }: Props) {
               </button>
             )}
             {subject.status === 'finalized' && (
-              <span className="flex items-center gap-1 text-[11px] font-semibold text-cyan-600 dark:text-cyan-400 shrink-0">
+              <span className="flex items-center gap-1 text-[11px] font-semibold text-blue-600 dark:text-blue-400 shrink-0">
                 <CheckCircle2 className="w-3 h-3" /> Done
               </span>
             )}

@@ -28,8 +28,8 @@ interface Props {
 // Color coding by grade band
 function gradeColor(min: number) {
   if (min >= 70) return { bg: 'bg-emerald-50 dark:bg-emerald-950/30', border: 'border-emerald-200 dark:border-emerald-800/40', text: 'text-emerald-700 dark:text-emerald-300', badge: 'bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300' }
-  if (min >= 50) return { bg: 'bg-cyan-50 dark:bg-cyan-950/30', border: 'border-cyan-200 dark:border-cyan-800/40', text: 'text-cyan-700 dark:text-cyan-300', badge: 'bg-cyan-100 dark:bg-cyan-900/40 text-cyan-700 dark:text-cyan-300' }
-  if (min >= 30) return { bg: 'bg-orange-50 dark:bg-orange-950/30', border: 'border-orange-200 dark:border-orange-800/40', text: 'text-orange-700 dark:text-orange-300', badge: 'bg-orange-100 dark:bg-orange-900/40 text-orange-700 dark:text-orange-300' }
+  if (min >= 50) return { bg: 'bg-blue-50 dark:bg-blue-950/30', border: 'border-blue-200 dark:border-blue-800/40', text: 'text-blue-700 dark:text-blue-300', badge: 'bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300' }
+  if (min >= 30) return { bg: 'bg-orange-50 dark:bg-orange-950/30', border: 'border-red-200 dark:border-red-800/40', text: 'text-red-700 dark:text-red-300', badge: 'bg-red-100 dark:bg-orange-900/40 text-red-700 dark:text-red-300' }
   return { bg: 'bg-red-50 dark:bg-red-950/30', border: 'border-red-200 dark:border-red-800/40', text: 'text-red-700 dark:text-red-300', badge: 'bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300' }
 }
 
@@ -184,7 +184,7 @@ export function GradingClient({ schoolId, initialScales }: Props) {
           </div>
           <Button
             onClick={() => setModal({ open: true, existing: null })}
-            className="bg-white text-cyan-700 hover:bg-cyan-50 font-bold rounded-xl gap-2 shrink-0"
+            className="bg-white text-blue-700 hover:bg-blue-50 font-bold rounded-xl gap-2 shrink-0"
           >
             <Plus className="w-4 h-4" /> Add Grade
           </Button>
@@ -193,9 +193,9 @@ export function GradingClient({ schoolId, initialScales }: Props) {
 
       {/* Coverage warning */}
       {hasGap && (
-        <div className="flex items-center gap-3 px-4 py-3 bg-orange-50 dark:bg-orange-950/30 border border-orange-200 dark:border-orange-800/50 rounded-2xl">
-          <Info className="w-5 h-5 text-orange-500 shrink-0" />
-          <p className="text-sm text-orange-700 dark:text-orange-400">
+        <div className="flex items-center gap-3 px-4 py-3 bg-orange-50 dark:bg-orange-950/30 border border-red-200 dark:border-red-800/50 rounded-2xl">
+          <Info className="w-5 h-5 text-red-500 shrink-0" />
+          <p className="text-sm text-red-700 dark:text-red-400">
             <strong>Gap detected</strong> — some score ranges are not covered by any grade. Students with scores in those ranges will have no grade assigned.
           </p>
         </div>

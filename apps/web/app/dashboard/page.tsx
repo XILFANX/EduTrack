@@ -86,7 +86,7 @@ export default async function DashboardPage() {
           {school?.name || 'Your School'}
         </h1>
         {activeTerm && (
-          <p className="text-xs font-semibold text-cyan-600 mt-1 bg-cyan-50 dark:bg-cyan-900/30 px-3 py-1 rounded-full">
+          <p className="text-xs font-semibold text-blue-600 mt-1 bg-blue-50 dark:bg-blue-900/30 px-3 py-1 rounded-full">
             Active: {(activeTerm as any).academic_years?.name} — {activeTerm.name}
           </p>
         )}
@@ -133,11 +133,11 @@ export default async function DashboardPage() {
               href={href}
               className="flex flex-col items-center gap-2 p-3 hover:scale-[1.05] transition-all text-center group"
             >
-              <div className="w-14 h-14 rounded-[1.25rem] flex items-center justify-center bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-cyan-900/40 dark:to-cyan-900/20 border border-cyan-100/50 dark:border-cyan-800/50 group-hover:shadow-lg group-hover:shadow-cyan-500/20 group-hover:-translate-y-1 transition-all duration-300">
-                <Icon className="w-7 h-7 text-cyan-600 dark:text-cyan-400" />
+              <div className="w-14 h-14 rounded-[1.25rem] flex items-center justify-center bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-cyan-900/40 dark:to-cyan-900/20 border border-cyan-100/50 dark:border-blue-800/50 group-hover:shadow-lg group-hover:shadow-blue-500/20 group-hover:-translate-y-1 transition-all duration-300">
+                <Icon className="w-7 h-7 text-blue-600 dark:text-blue-400" />
               </div>
               <div className="text-center min-w-0 w-full mt-1">
-                <p className="font-bold text-sm text-foreground truncate group-hover:text-cyan-600 transition-colors">{label}</p>
+                <p className="font-bold text-sm text-foreground truncate group-hover:text-blue-600 transition-colors">{label}</p>
                 <p className="text-[10px] font-medium text-muted-foreground truncate hidden sm:block mt-0.5">{sublabel}</p>
               </div>
             </Link>

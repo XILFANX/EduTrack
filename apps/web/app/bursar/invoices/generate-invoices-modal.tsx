@@ -54,8 +54,8 @@ export function GenerateInvoicesModal({ open, onClose, schoolId, terms, classes 
       <DialogContent className="max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-6">
         <DialogHeader className="mb-4">
           <DialogTitle className="flex items-center gap-2 text-lg font-bold">
-            <div className="w-8 h-8 rounded-lg bg-cyan-100 dark:bg-cyan-900/40 flex items-center justify-center">
-              <Zap className="w-4 h-4 text-cyan-600" />
+            <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center">
+              <Zap className="w-4 h-4 text-blue-600" />
             </div>
             Generate Invoices
           </DialogTitle>
@@ -63,15 +63,15 @@ export function GenerateInvoicesModal({ open, onClose, schoolId, terms, classes 
 
         {result ? (
           <div className="text-center py-4 space-y-4">
-            <div className="w-16 h-16 rounded-full bg-cyan-100 dark:bg-cyan-900/30 text-cyan-600 flex items-center justify-center mx-auto">
+            <div className="w-16 h-16 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 flex items-center justify-center mx-auto">
               <Check className="w-8 h-8" />
             </div>
             <div>
               <p className="font-bold text-lg">Done!</p>
               <p className="text-sm text-muted-foreground mt-1">
-                <span className="text-cyan-600 font-semibold">{result.created}</span> invoices created.
+                <span className="text-blue-600 font-semibold">{result.created}</span> invoices created.
                 {result.skipped > 0 && (
-                  <span className="text-orange-500"> {result.skipped} students already had invoices and were skipped.</span>
+                  <span className="text-red-500"> {result.skipped} students already had invoices and were skipped.</span>
                 )}
               </p>
             </div>
@@ -81,7 +81,7 @@ export function GenerateInvoicesModal({ open, onClose, schoolId, terms, classes 
           </div>
         ) : (
           <div className="space-y-4">
-            <div className="bg-cyan-50 dark:bg-cyan-900/20 border border-cyan-200 dark:border-cyan-800 rounded-xl p-3 text-xs text-cyan-700 dark:text-cyan-300 flex gap-2">
+            <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-3 text-xs text-blue-700 dark:text-blue-300 flex gap-2">
               <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
               <span>
                 This will create one invoice per student in the selected class, based on all fee structures defined for the selected term. Students who already have invoices for this term will be skipped.
@@ -121,7 +121,7 @@ export function GenerateInvoicesModal({ open, onClose, schoolId, terms, classes 
             </div>
 
             {error && (
-              <p className="text-sm text-orange-600 bg-orange-50 dark:bg-orange-950/30 px-3 py-2 rounded-lg border border-orange-200">
+              <p className="text-sm text-red-600 bg-orange-50 dark:bg-orange-950/30 px-3 py-2 rounded-lg border border-red-200">
                 {error}
               </p>
             )}

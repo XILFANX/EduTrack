@@ -56,8 +56,8 @@ export function ClassesPageClient({ classes, studentCountMap, schoolId, curricul
 
       {!classes || classes.length === 0 ? (
         <div className="text-center py-20 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl">
-          <div className="w-16 h-16 rounded-2xl bg-cyan-100 dark:bg-cyan-900/40 mx-auto flex items-center justify-center mb-4">
-            <Users className="w-8 h-8 text-cyan-600 dark:text-cyan-400" />
+          <div className="w-16 h-16 rounded-2xl bg-blue-100 dark:bg-blue-900/40 mx-auto flex items-center justify-center mb-4">
+            <Users className="w-8 h-8 text-blue-600 dark:text-blue-400" />
           </div>
           <h2 className="text-lg font-semibold text-foreground">No classes created</h2>
           <p className="text-sm text-muted-foreground max-w-sm mx-auto mt-2">
@@ -86,15 +86,15 @@ export function ClassesPageClient({ classes, studentCountMap, schoolId, curricul
                     className="flex-1 flex items-center gap-4 px-4 py-3.5"
                   >
                     {/* Avatar */}
-                    <div className="w-10 h-10 rounded-xl bg-cyan-100 dark:bg-cyan-900/30 flex items-center justify-center shrink-0 group-hover:bg-cyan-200 dark:group-hover:bg-cyan-800/40 transition-colors">
-                      <span className="text-sm font-bold text-cyan-700 dark:text-cyan-300">
+                    <div className="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center shrink-0 group-hover:bg-cyan-200 dark:group-hover:bg-cyan-800/40 transition-colors">
+                      <span className="text-sm font-bold text-blue-700 dark:text-blue-300">
                         {cls.name.substring(0, 2).toUpperCase()}
                       </span>
                     </div>
 
                     {/* Info */}
                     <div className="flex-1 min-w-0">
-                      <p className="font-semibold text-foreground text-sm truncate group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
+                      <p className="font-semibold text-foreground text-sm truncate group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-colors">
                         {cls.name}
                       </p>
                       <p className="text-xs text-muted-foreground mt-0.5 flex items-center gap-1 truncate">
@@ -119,7 +119,7 @@ export function ClassesPageClient({ classes, studentCountMap, schoolId, curricul
                   {/* Delete button — positioned absolute on the right edge */}
                   <button
                     onClick={e => { e.stopPropagation(); handleDeleteClass(cls.id, cls.name) }}
-                    className="absolute right-3 p-2 rounded-lg text-slate-300 hover:text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-900/20 transition-colors"
+                    className="absolute right-3 p-2 rounded-lg text-slate-300 hover:text-red-600 hover:bg-orange-50 dark:hover:bg-orange-900/20 transition-colors"
                     title="Delete class"
                   >
                     <Trash2 className="w-4 h-4" />

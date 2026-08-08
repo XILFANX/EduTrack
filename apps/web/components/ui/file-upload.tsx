@@ -101,7 +101,7 @@ export function FileUpload({
       <div
         className={`relative border-2 border-dashed rounded-xl p-6 transition-colors ${
           isDragging 
-            ? 'border-cyan-500 bg-cyan-500/10' 
+            ? 'border-blue-500 bg-blue-500/10' 
             : 'border-slate-700 bg-slate-800/50 hover:bg-slate-800'
         }`}
         onDragEnter={handleDrag}
@@ -150,7 +150,7 @@ export function FileUpload({
               <button
                 type="button"
                 onClick={(e) => { e.stopPropagation(); removeFile(i); }}
-                className="absolute top-1 right-1 p-1 bg-black/50 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-orange-500"
+                className="absolute top-1 right-1 p-1 bg-black/50 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-500"
               >
                 <X className="w-4 h-4" />
               </button>

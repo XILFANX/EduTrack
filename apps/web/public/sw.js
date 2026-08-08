@@ -36,7 +36,7 @@ self.addEventListener('fetch', (event) => {
 self.addEventListener('push', (event) => {
   const data = JSON.parse(event?.data?.text() || '{}')
   
-  const title = data.title || 'EstateTrack Notification'
+  const title = data.title || 'EduTrack Notification'
   const options = {
     body: data.body || 'You have a new message.',
     icon: '/icon-192x192.png',

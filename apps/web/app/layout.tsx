@@ -39,7 +39,7 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: '#1D6FEB',
+  themeColor: '#2563eb', /* electric blue — logo bottom gradient */
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,

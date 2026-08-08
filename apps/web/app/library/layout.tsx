@@ -27,7 +27,7 @@ export default async function LibraryLayout({ children }: { children: React.Reac
   const school = schoolResult as any
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#060E1C] pb-20">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 pb-20">
       <header className="sticky top-0 z-40 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800">
         <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
           {/* School branding */}
@@ -41,7 +41,7 @@ export default async function LibraryLayout({ children }: { children: React.Reac
             </div>
             <div>
               <p className="font-bold text-sm text-foreground leading-tight">{school?.name || 'School Portal'}</p>
-              <p className="text-xs font-medium" style={{ color: '#22D3EE' }}>Library Portal</p>
+              <p className="text-xs text-blue-600 dark:text-blue-400 font-medium">Library Portal</p>
             </div>
           </div>
           <form action="/api/auth/signout" method="post">

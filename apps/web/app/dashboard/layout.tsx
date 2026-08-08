@@ -44,7 +44,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
     .toUpperCase()
 
   return (
-    <div className="min-h-screen bg-muted/40 dark:bg-[#060E1C] flex flex-col">
+    <div className="min-h-screen bg-muted/40 dark:bg-slate-950 flex flex-col">
       {/* Header */}
       <header className="bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl sticky top-0 z-40 border-b border-slate-200/50 dark:border-slate-800/50">
         <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
@@ -54,7 +54,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
             </div>
             <div>
               <span className="font-semibold text-foreground text-sm dark:text-slate-100 block leading-tight">EduTrack</span>
-          <span className="text-[10px] font-semibold uppercase tracking-wider" style={{ color: '#22D3EE' }}>{roleLabel}</span>
+              <span className="text-[10px] font-semibold text-blue-600 uppercase tracking-wider">{roleLabel}</span>
             </div>
           </div>
 

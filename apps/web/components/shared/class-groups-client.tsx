@@ -171,9 +171,9 @@ export function ClassGroupsClient({
             <button
               key={group.id}
               onClick={() => setSelectedGroup(group)}
-              className="flex items-center gap-4 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-cyan-400/50 bg-white dark:bg-slate-900 hover:bg-cyan-50/30 dark:hover:bg-cyan-900/10 transition-all group text-left"
+              className="flex items-center gap-4 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-cyan-400/50 bg-white dark:bg-slate-900 hover:bg-blue-50/30 dark:hover:bg-cyan-900/10 transition-all group text-left"
             >
-              <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 flex items-center justify-center shrink-0">
+              <div className="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center shrink-0">
                 <Users2 className="w-6 h-6 text-cyan-500" />
               </div>
               <div>
@@ -202,7 +202,7 @@ export function ClassGroupsClient({
               <MessageSquare className="w-5 h-5" />
             </button>
           )}
-          <div className="w-9 h-9 rounded-xl bg-cyan-500/10 flex items-center justify-center shrink-0">
+          <div className="w-9 h-9 rounded-xl bg-blue-500/10 flex items-center justify-center shrink-0">
             <Users2 className="w-5 h-5 text-cyan-500" />
           </div>
           <div className="min-w-0">
@@ -238,7 +238,7 @@ export function ClassGroupsClient({
                     </span>
                   )}
                   {!isMe && !sameSender && (
-                    <span className="text-[10px] font-bold text-cyan-600 dark:text-cyan-400 ml-1 mb-0.5">
+                    <span className="text-[10px] font-bold text-blue-600 dark:text-blue-400 ml-1 mb-0.5">
                       {getSenderName(msg)}
                     </span>
                   )}
@@ -279,7 +279,7 @@ export function ClassGroupsClient({
               onChange={e => setInput(e.target.value)}
               placeholder={`Message ${selectedGroup.title}…`}
               disabled={sending}
-              className="flex-1 h-10 px-4 rounded-full border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-1 focus:ring-cyan-500 text-sm"
+              className="flex-1 h-10 px-4 rounded-full border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm"
             />
             <button
               type="submit"

@@ -111,8 +111,8 @@ export function ParentPostPaymentClient({ obligationId, obligationBalance, perio
   if (phase === 'done') {
     return (
       <div className="bg-card border border-border rounded-2xl p-6 text-center space-y-3">
-        <div className="w-14 h-14 rounded-full bg-cyan-100 dark:bg-cyan-900/30 flex items-center justify-center mx-auto">
-          <CheckCircle2 className="w-7 h-7 text-cyan-600" />
+        <div className="w-14 h-14 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mx-auto">
+          <CheckCircle2 className="w-7 h-7 text-blue-600" />
         </div>
         <p className="font-bold text-foreground">Payment Posted</p>
         <p className="text-sm text-muted-foreground">
@@ -139,7 +139,7 @@ export function ParentPostPaymentClient({ obligationId, obligationBalance, perio
           <button key={m} type="button" onClick={() => { setMode(m); setError(null) }}
             className={`flex-1 py-2.5 text-xs font-semibold transition-colors ${
               mode === m
-                ? 'bg-cyan-50 dark:bg-cyan-900/20 text-cyan-700 dark:text-cyan-300 border-b-2 border-cyan-600'
+                ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border-b-2 border-blue-600'
                 : 'text-muted-foreground hover:text-foreground'
             }`}>
             {m === 'digital' ? '📱 Digital / Bank' : '💵 Cash / Cheque'}
@@ -161,7 +161,7 @@ export function ParentPostPaymentClient({ obligationId, obligationBalance, perio
                   <button key={r.value} type="button" onClick={() => setPaymentRail(r.value)}
                     className={`px-3 py-1.5 rounded-lg border text-xs font-medium transition-all ${
                       paymentRail === r.value
-                        ? 'border-cyan-600 bg-cyan-50 dark:bg-cyan-900/30 text-cyan-700'
+                        ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/30 text-blue-700'
                         : 'border-border text-muted-foreground hover:border-cyan-300'
                     }`}>
                     {r.label}
@@ -173,15 +173,15 @@ export function ParentPostPaymentClient({ obligationId, obligationBalance, perio
             <div className="space-y-1.5">
               <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Transaction Message</label>
               <textarea rows={3}
-                className="w-full bg-muted border border-border rounded-xl px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-cyan-500/40 font-mono"
+                className="w-full bg-muted border border-border rounded-xl px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-500/40 font-mono"
                 placeholder="Paste your confirmation SMS or bank alert here…"
                 value={rawMessage}
                 onChange={(e) => parseMessage(e.target.value)}
               />
 
               {rawMessage && (detectedProvider || referenceCode || parsedAmount) && (
-                <div className="bg-cyan-500/5 border border-cyan-500/20 rounded-xl p-3 space-y-2">
-                  <p className="text-xs font-semibold text-cyan-600 dark:text-cyan-400 uppercase tracking-wide">Transaction Details</p>
+                <div className="bg-blue-500/5 border border-blue-500/20 rounded-xl p-3 space-y-2">
+                  <p className="text-xs font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-wide">Transaction Details</p>
                   <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-xs">
                     {detectedProvider && <><span className="text-muted-foreground">Provider</span><span className="font-medium text-foreground">{detectedProvider}</span></>}
                     {referenceCode && <><span className="text-muted-foreground">Reference</span><span className="font-mono font-bold text-foreground">{referenceCode}</span></>}
@@ -197,19 +197,19 @@ export function ParentPostPaymentClient({ obligationId, obligationBalance, perio
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-1">
                 <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Reference Code *</label>
-                <input className="w-full bg-muted border border-border rounded-xl px-3 py-2 text-sm font-mono uppercase focus:outline-none focus:ring-2 focus:ring-cyan-500/40"
+                <input className="w-full bg-muted border border-border rounded-xl px-3 py-2 text-sm font-mono uppercase focus:outline-none focus:ring-2 focus:ring-blue-500/40"
                   placeholder="QJK23XF89H" value={referenceCode}
                   onChange={(e) => setReferenceCode(e.target.value.toUpperCase().trim())} required />
               </div>
               <div className="space-y-1">
                 <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Amount Sent ({parsedCurrency}) *</label>
-                <input type="number" className="w-full bg-muted border border-border rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500/40"
+                <input type="number" className="w-full bg-muted border border-border rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/40"
                   placeholder="15000" value={parsedAmount}
                   onChange={(e) => setParsedAmount(e.target.value)} required />
               </div>
             </div>
 
-            {error && <p className="text-sm text-orange-600 bg-orange-50 dark:bg-orange-950/30 px-3 py-2 rounded-xl border border-orange-200">{error}</p>}
+            {error && <p className="text-sm text-red-600 bg-orange-50 dark:bg-orange-950/30 px-3 py-2 rounded-xl border border-red-200">{error}</p>}
 
             <button type="submit" disabled={phase === 'submitting'}
               className="w-full bg-[#1D6FEB] hover:bg-[#1558C8] disabled:opacity-50 text-white font-bold py-2.5 rounded-xl transition-all flex items-center justify-center gap-2">
@@ -219,28 +219,28 @@ export function ParentPostPaymentClient({ obligationId, obligationBalance, perio
           </form>
         ) : (
           <form onSubmit={handleCashSubmit} className="space-y-4">
-            <div className="flex gap-2 items-start bg-orange-50 dark:bg-orange-900/20 rounded-xl p-3 border border-orange-200 dark:border-orange-800">
-              <CreditCard className="w-4 h-4 text-orange-600 mt-0.5 shrink-0" />
-              <p className="text-[11px] text-orange-700 dark:text-orange-300">
+            <div className="flex gap-2 items-start bg-orange-50 dark:bg-orange-900/20 rounded-xl p-3 border border-red-200 dark:border-red-800">
+              <CreditCard className="w-4 h-4 text-red-600 mt-0.5 shrink-0" />
+              <p className="text-[11px] text-red-700 dark:text-red-300">
                 Cash and cheque payments require the school to confirm on their side. You'll be notified once confirmed.
               </p>
             </div>
 
             <div className="space-y-1">
               <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Amount Paid ({currency}) *</label>
-              <input type="number" className="w-full bg-muted border border-border rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500/40"
+              <input type="number" className="w-full bg-muted border border-border rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/40"
                 placeholder={String(obligationBalance)} value={cashAmount}
                 onChange={(e) => setCashAmount(e.target.value)} required />
             </div>
 
             <div className="space-y-1">
               <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Notes (optional)</label>
-              <input className="w-full bg-muted border border-border rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500/40"
+              <input className="w-full bg-muted border border-border rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/40"
                 placeholder="e.g. Cash handed to bursar's office on 1 Aug" value={cashNotes}
                 onChange={(e) => setCashNotes(e.target.value)} />
             </div>
 
-            {error && <p className="text-sm text-orange-600 bg-orange-50 dark:bg-orange-950/30 px-3 py-2 rounded-xl border border-orange-200">{error}</p>}
+            {error && <p className="text-sm text-red-600 bg-orange-50 dark:bg-orange-950/30 px-3 py-2 rounded-xl border border-red-200">{error}</p>}
 
             <button type="submit" disabled={phase === 'submitting'}
               className="w-full bg-[#1D6FEB] hover:bg-[#1558C8] disabled:opacity-50 text-white font-bold py-2.5 rounded-xl flex items-center justify-center gap-2">

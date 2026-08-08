@@ -64,7 +64,7 @@ export function ParentDashboardClient({ childrenList, recentPayments }: { childr
                       <span className="font-medium text-sm">{child.first_name} {child.last_name}</span>
                       <span className="text-[10px] text-muted-foreground uppercase">{child.class_name}</span>
                     </div>
-                    {selectedChild.id === child.id && <CheckCircle2 className="w-4 h-4 text-cyan-600 ml-auto" />}
+                    {selectedChild.id === child.id && <CheckCircle2 className="w-4 h-4 text-blue-600 ml-auto" />}
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>
@@ -86,10 +86,10 @@ export function ParentDashboardClient({ childrenList, recentPayments }: { childr
             <div
               key={href}
               onClick={() => window.location.href = href}
-              className="flex flex-col items-center gap-2 p-4 bg-card hover:bg-slate-50 dark:hover:bg-slate-900/50 border border-border hover:border-cyan-500/50 rounded-2xl hover:scale-[1.02] transition-all text-center shadow-sm cursor-pointer group"
+              className="flex flex-col items-center gap-2 p-4 bg-card hover:bg-slate-50 dark:hover:bg-slate-900/50 border border-border hover:border-blue-500/50 rounded-2xl hover:scale-[1.02] transition-all text-center shadow-sm cursor-pointer group"
             >
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-cyan-50 dark:bg-cyan-900/20 border border-cyan-100 dark:border-cyan-800/30 group-hover:bg-cyan-100 dark:group-hover:bg-cyan-800/40 transition-colors">
-                <Icon className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-blue-50 dark:bg-blue-900/20 border border-cyan-100 dark:border-blue-800/30 group-hover:bg-blue-100 dark:group-hover:bg-cyan-800/40 transition-colors">
+                <Icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
               </div>
               <div className="text-center min-w-0 w-full mt-1">
                 <p className="font-bold text-xs text-foreground truncate">{label}</p>
@@ -104,8 +104,8 @@ export function ParentDashboardClient({ childrenList, recentPayments }: { childr
         {/* Fees Widget */}
         <div className="bg-card border border-border rounded-3xl p-6 shadow-sm">
           <div className="flex items-center justify-between mb-4">
-            <div className="w-12 h-12 rounded-2xl bg-cyan-50 dark:bg-cyan-900/20 border border-cyan-100 dark:border-cyan-800/30 flex items-center justify-center">
-              <Wallet className="w-6 h-6 text-cyan-600 dark:text-cyan-400" />
+            <div className="w-12 h-12 rounded-2xl bg-blue-50 dark:bg-blue-900/20 border border-cyan-100 dark:border-blue-800/30 flex items-center justify-center">
+              <Wallet className="w-6 h-6 text-blue-600 dark:text-blue-400" />
             </div>
           </div>
           <p className="text-sm text-muted-foreground font-medium mb-1">Current Fee Balance</p>
@@ -115,21 +115,21 @@ export function ParentDashboardClient({ childrenList, recentPayments }: { childr
         {/* Academics Widget */}
         <div className="bg-card border border-border rounded-3xl p-6 shadow-sm">
           <div className="flex items-center justify-between mb-4">
-            <div className="w-12 h-12 rounded-2xl bg-cyan-50 dark:bg-cyan-900/20 border border-cyan-100 dark:border-cyan-800/30 flex items-center justify-center">
-              <GraduationCap className="w-6 h-6 text-cyan-600 dark:text-cyan-400" />
+            <div className="w-12 h-12 rounded-2xl bg-blue-50 dark:bg-blue-900/20 border border-cyan-100 dark:border-blue-800/30 flex items-center justify-center">
+              <GraduationCap className="w-6 h-6 text-blue-600 dark:text-blue-400" />
             </div>
           </div>
           <p className="text-sm text-muted-foreground font-medium mb-1">Recent Exam: Mid Term 2</p>
           <div className="flex items-baseline gap-2">
             <h3 className="text-3xl font-bold text-foreground">A-</h3>
-            <span className="text-sm font-semibold text-cyan-600">Top 15%</span>
+            <span className="text-sm font-semibold text-blue-600">Top 15%</span>
           </div>
         </div>
       </div>
 
       <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm">
         <h2 className="text-lg font-bold text-foreground flex items-center gap-2 mb-4">
-          <Bell className="w-5 h-5 text-orange-500" />
+          <Bell className="w-5 h-5 text-red-500" />
           Recent Payments
         </h2>
         {recentPayments.length === 0 ? (
@@ -137,11 +137,11 @@ export function ParentDashboardClient({ childrenList, recentPayments }: { childr
         ) : (
           <div className="space-y-4">
             {recentPayments.slice(0, 3).map((p, i) => (
-              <div key={i} className="border-l-2 border-cyan-500 pl-4 py-1">
+              <div key={i} className="border-l-2 border-blue-500 pl-4 py-1">
                 <p className="text-sm font-medium text-foreground">KES {Number(p.amount).toLocaleString()} Received</p>
                 <p className="text-xs text-muted-foreground mt-0.5">
                   {new Date(p.payment_date).toLocaleDateString('en-KE', { year: 'numeric', month: 'long', day: 'numeric' })}
-                  {p.mpesa_receipt && <span className="font-mono ml-2 text-cyan-600">#{p.mpesa_receipt}</span>}
+                  {p.mpesa_receipt && <span className="font-mono ml-2 text-blue-600">#{p.mpesa_receipt}</span>}
                 </p>
               </div>
             ))}

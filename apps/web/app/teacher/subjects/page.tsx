@@ -67,8 +67,8 @@ export default async function SubjectTeacherSubjects() {
 
       {groups.length === 0 ? (
         <div className="text-center py-20 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl">
-          <div className="w-16 h-16 rounded-2xl bg-cyan-100 dark:bg-cyan-900/40 mx-auto flex items-center justify-center mb-4">
-            <BookOpen className="w-8 h-8 text-cyan-600 dark:text-cyan-400" />
+          <div className="w-16 h-16 rounded-2xl bg-blue-100 dark:bg-blue-900/40 mx-auto flex items-center justify-center mb-4">
+            <BookOpen className="w-8 h-8 text-blue-600 dark:text-blue-400" />
           </div>
           <h2 className="text-lg font-semibold text-foreground">No Subjects Yet</h2>
           <p className="text-sm text-muted-foreground max-w-sm mx-auto mt-2">
@@ -81,8 +81,8 @@ export default async function SubjectTeacherSubjects() {
             <div key={subject.id} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm">
               {/* Subject header */}
               <div className="flex items-center gap-3 px-4 py-3 bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800">
-                <div className="w-9 h-9 rounded-xl bg-cyan-100 dark:bg-cyan-900/30 flex items-center justify-center shrink-0">
-                  <BookOpen className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
+                <div className="w-9 h-9 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center shrink-0">
+                  <BookOpen className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                 </div>
                 <div>
                   <p className="font-bold text-sm text-foreground">{subject.name}</p>
@@ -102,8 +102,8 @@ export default async function SubjectTeacherSubjects() {
                     className="flex items-center justify-between px-4 py-3.5 hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors"
                   >
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-lg bg-cyan-100 dark:bg-cyan-900/30 flex items-center justify-center shrink-0">
-                        <GraduationCap className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
+                      <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center shrink-0">
+                        <GraduationCap className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                       </div>
                       <div>
                         <p className="font-semibold text-sm text-foreground">{a.classes?.name}</p>

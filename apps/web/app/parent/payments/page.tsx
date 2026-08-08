@@ -67,8 +67,8 @@ export default async function ParentPaymentsPage() {
 
       {/* Balance card */}
       <div className={`p-6 rounded-3xl shadow-lg ${totalDue > 0
-        ? 'bg-gradient-to-br from-cyan-500/10 to-orange-600/10 border border-orange-400/20'
-        : 'bg-gradient-to-br from-cyan-500/10 to-cyan-600/10 border border-cyan-500/20'}`}>
+        ? 'bg-gradient-to-br from-cyan-500/10 to-orange-600/10 border border-red-400/20'
+        : 'bg-gradient-to-br from-cyan-500/10 to-cyan-600/10 border border-blue-500/20'}`}>
         <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">
           {totalDue > 0 ? 'Total Outstanding' : 'All Caught Up!'}
         </p>
@@ -112,7 +112,7 @@ export default async function ParentPaymentsPage() {
 
       {openList.length === 0 && historyList.length === 0 && (
         <div className="text-center py-16 border border-dashed border-border rounded-2xl bg-card">
-          <div className="w-12 h-12 rounded-full bg-cyan-500/10 flex items-center justify-center mx-auto mb-3">
+          <div className="w-12 h-12 rounded-full bg-blue-500/10 flex items-center justify-center mx-auto mb-3">
             <AlertCircle className="w-6 h-6 text-cyan-500" />
           </div>
           <p className="text-sm font-semibold text-foreground">No fee obligations found</p>
@@ -155,7 +155,7 @@ export default async function ParentPaymentsPage() {
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-sm font-bold text-foreground">{fmt(obl.amount_due, obl.currency)}</span>
-                <span className="text-[10px] font-bold text-cyan-700 bg-cyan-100 dark:bg-cyan-900/30 dark:text-cyan-300 px-2 py-0.5 rounded-full">
+                <span className="text-[10px] font-bold text-blue-700 bg-blue-100 dark:bg-blue-900/30 dark:text-blue-300 px-2 py-0.5 rounded-full">
                   {obl.status === 'overpaid' ? 'Overpaid' : 'Paid ✓'}
                 </span>
               </div>

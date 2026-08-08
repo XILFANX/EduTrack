@@ -42,7 +42,7 @@ export function AnnouncementsClient({ audienceOptions, defaultAudience, subjectP
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       {status && (
-        <div className={`p-3 rounded-xl text-sm font-medium ${status.type === 'success' ? 'bg-cyan-500/10 text-cyan-500 dark:text-cyan-400' : 'bg-orange-500/10 text-orange-500 dark:text-orange-400'}`}>
+        <div className={`p-3 rounded-xl text-sm font-medium ${status.type === 'success' ? 'bg-blue-500/10 text-cyan-500 dark:text-blue-400' : 'bg-red-500/10 text-red-500 dark:text-red-400'}`}>
           {status.text}
         </div>
       )}
@@ -52,7 +52,7 @@ export function AnnouncementsClient({ audienceOptions, defaultAudience, subjectP
         <select 
           value={target}
           onChange={(e) => setTarget(e.target.value)}
-          className="w-full bg-[#0b0f19] border border-slate-700 text-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all"
+          className="w-full bg-[#0b0f19] border border-slate-700 text-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
         >
           {audienceOptions.map(opt => (
             <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -68,7 +68,7 @@ export function AnnouncementsClient({ audienceOptions, defaultAudience, subjectP
           onChange={(e) => setTitle(e.target.value)}
           placeholder={subjectPlaceholder}
           required
-          className="w-full bg-[#0b0f19] border border-slate-700 text-slate-200 placeholder:text-slate-600 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all"
+          className="w-full bg-[#0b0f19] border border-slate-700 text-slate-200 placeholder:text-slate-600 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
         />
       </div>
 
@@ -80,7 +80,7 @@ export function AnnouncementsClient({ audienceOptions, defaultAudience, subjectP
           placeholder="Type the details here..."
           required
           rows={4}
-          className="w-full bg-[#0b0f19] border border-slate-700 text-slate-200 placeholder:text-slate-600 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all resize-none"
+          className="w-full bg-[#0b0f19] border border-slate-700 text-slate-200 placeholder:text-slate-600 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all resize-none"
         />
       </div>
 

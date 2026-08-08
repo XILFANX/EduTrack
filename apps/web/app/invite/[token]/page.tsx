@@ -91,7 +91,7 @@ function RevokedAccessScreen({ message }: { message: string }) {
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
       <div className="w-full max-w-md bg-card border border-border rounded-2xl p-8 text-center shadow-xl">
-        <div className="w-16 h-16 bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 rounded-full flex items-center justify-center mx-auto mb-4">
+        <div className="w-16 h-16 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-full flex items-center justify-center mx-auto mb-4">
           <AlertCircle className="w-8 h-8" />
         </div>
         <h1 className="text-xl font-bold text-foreground mb-2">Access Revoked</h1>

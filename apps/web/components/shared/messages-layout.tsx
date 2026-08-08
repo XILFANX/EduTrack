@@ -99,7 +99,7 @@ export function MessagesLayout({
             <div className="xl:col-span-2 space-y-4">
               <section className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm">
                 <div className="p-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/20 flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-xl bg-cyan-500/10 flex items-center justify-center">
+                  <div className="w-8 h-8 rounded-xl bg-blue-500/10 flex items-center justify-center">
                     <Megaphone className="w-4 h-4 text-cyan-400" />
                   </div>
                   <div>

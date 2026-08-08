@@ -9,16 +9,16 @@ import {
 import { ModeToggleLanding } from '@/components/shared/mode-toggle-landing'
 import { PricingSection } from '@/components/landing/pricing-section'
 
-// ─── Theme tokens (electric-blue → cyan — matches both app logos) ────────────
+// ─── Theme tokens (electric blue / cyan — EduTrack) ────────────────────────
 const T = {
-  accent:       'text-[#1D6FEB] dark:text-[#22D3EE]',
-  accentHover:  'hover:text-[#1D6FEB] dark:hover:text-[#22D3EE]',
-  bg:           'bg-[#1D6FEB] hover:bg-[#1558C8]',
+  accent:       'text-blue-600 dark:text-blue-400',
+  accentHover:  'hover:text-blue-600 dark:hover:text-blue-400',
+  bg:           'bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700',
   bgLight:      'bg-blue-50 dark:bg-blue-500/10',
   border:       'border-blue-200 dark:border-blue-500/20',
-  grad:         'from-[#1D6FEB] to-[#22D3EE]',
+  grad:         'from-cyan-400 to-blue-600',
   selBg:        'bg-blue-50 dark:bg-blue-900/30',
-  selText:      'text-[#1D6FEB] dark:text-[#22D3EE]',
+  selText:      'text-blue-700 dark:text-blue-400',
   selBorder:    'border-blue-200 dark:border-blue-800/50',
 }
 
@@ -27,7 +27,7 @@ function FeatureRow({ icon: Icon, title, description }: {
   icon: React.ElementType; title: string; description: string
 }) {
   return (
-    <div className="flex items-start gap-4 p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 hover:border-cyan-200 dark:hover:border-cyan-800/50 hover:shadow-sm transition-all group">
+    <div className="flex items-start gap-4 p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 hover:border-blue-200 dark:hover:border-cyan-800/50 hover:shadow-sm transition-all group">
       <div className={`shrink-0 w-9 h-9 rounded-lg ${T.bgLight} flex items-center justify-center ${T.accent}`}>
         <Icon className="w-4 h-4" />
       </div>
@@ -40,10 +40,10 @@ function FeatureRow({ icon: Icon, title, description }: {
 }
 
 // ─── Portal Card ──────────────────────────────────────────────────────────────
-function PortalCard({ emoji, role, tagline, color, bg, textAccent, benefits, cta, href, ctaStyle, ctaGradient, secondary }: {
+function PortalCard({ emoji, role, tagline, color, bg, textAccent, benefits, cta, href, ctaStyle, secondary }: {
   emoji: string; role: string; tagline: string; color: string; bg: string;
   textAccent: string; benefits: string[]; cta: string; href: string;
-  ctaStyle: string; ctaGradient?: boolean; secondary?: { label: string; href: string } | null
+  ctaStyle: string; secondary?: { label: string; href: string } | null
 }) {
   return (
     <div className={`rounded-2xl border p-5 flex flex-col gap-4 transition-all hover:shadow-md hover:-translate-y-0.5 ${bg}`}>
@@ -65,10 +65,7 @@ function PortalCard({ emoji, role, tagline, color, bg, textAccent, benefits, cta
         ))}
       </ul>
       <div className="space-y-1.5">
-        <a href={href}
-          className={`w-full flex items-center justify-center text-xs font-semibold px-3 py-2 rounded-lg transition-all active:scale-95 ${ctaStyle}`}
-          style={ctaGradient ? { background: 'linear-gradient(135deg, #1D6FEB 0%, #22D3EE 100%)', boxShadow: '0 3px 12px rgba(29,111,235,0.3)' } : {}}
-        >
+        <a href={href} className={`w-full flex items-center justify-center text-xs font-semibold px-3 py-2 rounded-lg transition-all active:scale-95 ${ctaStyle}`}>
           {cta} →
         </a>
         {secondary && (
@@ -125,7 +122,7 @@ function NavBar() {
           {navLinks.map((l) => (
             <a key={l.label} href={l.href} className={`text-xs font-medium whitespace-nowrap text-slate-500 dark:text-slate-400 ${T.accentHover} transition-colors shrink-0`}>{l.label}</a>
           ))}
-          <Link href="/login" className={`text-xs font-bold whitespace-nowrap text-cyan-600 dark:text-cyan-400 ${T.accentHover} transition-colors shrink-0`}>Log in</Link>
+          <Link href="/login" className={`text-xs font-bold whitespace-nowrap text-blue-600 dark:text-blue-400 ${T.accentHover} transition-colors shrink-0`}>Log in</Link>
         </div>
       </div>
     </nav>
@@ -137,10 +134,7 @@ function HeroSection() {
   return (
     <section id="hero" className="relative pt-20 md:pt-24 pb-12 md:pb-20 overflow-hidden">
       <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] blur-3xl rounded-full"
-          style={{ background: 'radial-gradient(circle, rgba(29,111,235,0.12) 0%, rgba(34,211,238,0.05) 60%, transparent 100%)' }} />
-        <div className="absolute top-0 right-0 w-72 h-72 blur-3xl rounded-full"
-          style={{ background: 'radial-gradient(circle, rgba(34,211,238,0.06) 0%, transparent 70%)' }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-500/10 dark:bg-blue-500/5 blur-3xl rounded-full" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
@@ -161,11 +155,9 @@ function HeroSection() {
           The all-in-one platform for principals, teachers, and parents. Automate fee collection via M-Pesa, track attendance, manage grades, and connect the entire school.
         </p>
 
-        {/* Role CTAs */}
+        {/* Role CTAs — all three always visible, wrap on small screens */}
         <div className="flex flex-wrap items-center justify-center gap-3">
-          <Link href="/signup"
-            className="px-6 py-2.5 rounded-full text-white font-semibold text-sm transition-all shadow-md hover:shadow-lg active:scale-95 flex items-center gap-2"
-            style={{ background: 'linear-gradient(135deg, #1D6FEB 0%, #22D3EE 100%)', boxShadow: '0 4px 20px rgba(29,111,235,0.35)' }}>
+          <Link href="/signup" className="px-5 py-2 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-semibold text-sm transition-all shadow-sm hover:shadow-md active:scale-95 flex items-center gap-2">
             Start your school <ArrowRight className="w-3.5 h-3.5" />
           </Link>
           <Link href="/login" className="px-5 py-2 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-white font-medium text-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-all active:scale-95">
@@ -213,34 +205,28 @@ function PortalSection() {
   const portals = [
     {
       emoji: '🏛️', role: 'Principal / Admin', tagline: 'I manage the entire school',
-      color: 'from-[#1D6FEB] to-[#22D3EE]',
+      color: 'from-cyan-600 to-blue-500',
       bg: 'bg-blue-50 border-blue-200 dark:bg-blue-950/30 dark:border-blue-800/50',
-      textAccent: 'text-[#1D6FEB] dark:text-[#22D3EE]',
+      textAccent: 'text-blue-700 dark:text-blue-400',
       benefits: ['Global overview of operations', 'Staff and class management', 'Send school-wide announcements'],
-      cta: 'Create free account', href: '/signup',
-      ctaStyle: 'text-white font-semibold shadow-md',
-      ctaGradient: true, secondary: null,
+      cta: 'Create free account', href: '/signup', ctaStyle: 'bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white shadow-md shadow-blue-500/20', secondary: null,
     },
     {
       emoji: '👨‍🏫', role: 'Teachers & Staff', tagline: 'I educate and operate',
-      color: 'from-[#1D6FEB] to-[#22D3EE]',
+      color: 'from-cyan-600 to-blue-500',
       bg: 'bg-blue-50 border-blue-200 dark:bg-blue-950/30 dark:border-blue-800/50',
-      textAccent: 'text-[#1D6FEB] dark:text-[#22D3EE]',
+      textAccent: 'text-blue-700 dark:text-blue-400',
       benefits: ['Take lightning-fast attendance', 'Enter exam grades effortlessly', 'Communicate safely with parents'],
-      cta: 'Use invite link', href: '/login',
-      ctaStyle: 'text-white font-semibold shadow-md',
-      ctaGradient: true,
+      cta: 'Use invite link', href: '/login', ctaStyle: 'bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white shadow-md shadow-blue-500/20',
       secondary: { label: 'Learn how invites work', href: '/help' },
     },
     {
       emoji: '👨‍👩‍👧', role: 'Parents', tagline: 'I have children enrolled',
-      color: 'from-[#1D6FEB] to-[#22D3EE]',
+      color: 'from-cyan-500 to-cyan-500',
       bg: 'bg-blue-50 border-blue-200 dark:bg-blue-950/30 dark:border-blue-800/50',
-      textAccent: 'text-[#1D6FEB] dark:text-[#22D3EE]',
+      textAccent: 'text-blue-700 dark:text-blue-400',
       benefits: ['Pay fees securely via M-Pesa', 'Track academic performance', 'Receive direct updates from teachers'],
-      cta: 'Sign in to your portal', href: '/login',
-      ctaStyle: 'text-white font-semibold shadow-md',
-      ctaGradient: true,
+      cta: 'Sign in to your portal', href: '/login', ctaStyle: 'bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white shadow-md shadow-blue-500/20',
       secondary: { label: 'Contact your school for access', href: '/help' },
     },
   ]
@@ -389,7 +375,7 @@ export default async function RootPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-slate-950 selection:bg-blue-200 dark:selection:bg-blue-900">
+    <div className="min-h-screen bg-white dark:bg-slate-950 selection:bg-cyan-200 dark:selection:bg-cyan-900">
       <NavBar />
       <main className="pt-14">
         <HeroSection />

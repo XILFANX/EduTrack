@@ -127,8 +127,8 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
       <DialogContent className="max-w-md max-h-[92vh] flex flex-col bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-0 overflow-hidden">
         <DialogHeader className="px-6 pt-6 pb-0 shrink-0">
           <DialogTitle className="flex items-center gap-2 text-lg font-bold">
-            <div className="w-8 h-8 rounded-lg bg-cyan-100 dark:bg-cyan-900/40 flex items-center justify-center">
-              <UserPlus className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
+            <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center">
+              <UserPlus className="w-4 h-4 text-blue-600 dark:text-blue-400" />
             </div>
             Invite Staff Member
           </DialogTitle>
@@ -149,7 +149,7 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
                     onClick={() => { setRole(opt.value); setClassId('') }}
                     className={`text-left px-3 py-2 rounded-xl border transition-all text-sm ${
                       role === opt.value
-                        ? 'border-cyan-600 bg-cyan-50 dark:bg-cyan-900/20 ring-1 ring-cyan-600'
+                        ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/20 ring-1 ring-blue-600'
                         : 'border-slate-200 dark:border-slate-800 hover:border-cyan-300'
                     }`}
                   >
@@ -165,7 +165,7 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
               <div className="space-y-2">
                 <Label htmlFor="staffClass">Assign to class <span className="text-muted-foreground font-normal">(Optional)</span></Label>
                 {classes.length === 0 ? (
-                  <p className="text-xs text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800/50 rounded-lg px-3 py-2">
+                  <p className="text-xs text-red-600 dark:text-red-400 bg-orange-50 dark:bg-orange-900/20 border border-red-200 dark:border-red-800/50 rounded-lg px-3 py-2">
                     No classes found. You can invite the teacher now and assign a class later.
                   </p>
                 ) : (
@@ -173,7 +173,7 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
                     id="staffClass"
                     value={classId}
                     onChange={(e) => setClassId(e.target.value)}
-                    className="w-full bg-background border border-input text-foreground rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition"
+                    className="w-full bg-background border border-input text-foreground rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                   >
                     <option value="">Select a class…</option>
                     {classes.map((cls) => (
@@ -189,7 +189,7 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
               <div className="space-y-2">
                 <Label htmlFor="staffSubject">Assign Subject <span className="text-muted-foreground font-normal">(Optional)</span></Label>
                 {unoccupiedSubjects.length === 0 ? (
-                  <p className="text-xs text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800/50 rounded-lg px-3 py-2">
+                  <p className="text-xs text-red-600 dark:text-red-400 bg-orange-50 dark:bg-orange-900/20 border border-red-200 dark:border-red-800/50 rounded-lg px-3 py-2">
                     No unoccupied subjects found. You can invite the teacher now and assign them subjects later.
                   </p>
                 ) : (
@@ -197,7 +197,7 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
                     id="staffSubject"
                     value={classSubjectId}
                     onChange={(e) => setClassSubjectId(e.target.value)}
-                    className="w-full bg-background border border-input text-foreground rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition"
+                    className="w-full bg-background border border-input text-foreground rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                   >
                     <option value="">Select an unoccupied subject…</option>
                     {unoccupiedSubjects.map((sub) => (
@@ -215,7 +215,7 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
                 <select
                   value={salutation}
                   onChange={e => setSalutation(e.target.value)}
-                  className="w-24 bg-background border border-input text-foreground rounded-xl px-2 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 transition shrink-0"
+                  className="w-24 bg-background border border-input text-foreground rounded-xl px-2 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition shrink-0"
                 >
                   {SALUTATIONS.map(s => (
                     <option key={s} value={s}>{s}</option>
@@ -230,7 +230,7 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
                 />
               </div>
               {salutation && fullName && (
-                <p className="text-xs text-cyan-600 dark:text-cyan-400">
+                <p className="text-xs text-blue-600 dark:text-blue-400">
                   Will be addressed as: <strong>{salutation} {fullName}</strong>
                 </p>
               )}
@@ -261,7 +261,7 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
                     <p className="text-sm font-semibold text-foreground">Photo uploaded</p>
                     <p className="text-xs text-muted-foreground">Will be shown on their profile.</p>
                   </div>
-                  <Button variant="ghost" size="sm" onClick={() => setPhotoUrl(null)} className="text-orange-500 hover:text-orange-600">Remove</Button>
+                  <Button variant="ghost" size="sm" onClick={() => setPhotoUrl(null)} className="text-red-500 hover:text-red-600">Remove</Button>
                 </div>
               ) : (
                 <FileUpload
@@ -276,7 +276,7 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
             </div>
 
             {error && (
-              <p className="text-sm text-orange-600 bg-orange-50 dark:bg-orange-950/30 px-3 py-2 rounded-lg border border-orange-200 dark:border-orange-900/50">
+              <p className="text-sm text-red-600 bg-orange-50 dark:bg-orange-950/30 px-3 py-2 rounded-lg border border-red-200 dark:border-red-900/50">
                 {error}
               </p>
             )}
@@ -298,8 +298,8 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
           /* ── Success: Invite link created ── */
           <div className="space-y-5 pt-1">
             <div className="text-center space-y-2">
-              <div className="w-16 h-16 rounded-full bg-cyan-100 dark:bg-cyan-900/30 flex items-center justify-center mx-auto mb-3">
-                <Check className="w-8 h-8 text-cyan-600 dark:text-cyan-400" />
+              <div className="w-16 h-16 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mx-auto mb-3">
+                <Check className="w-8 h-8 text-blue-600 dark:text-blue-400" />
               </div>
               <p className="font-bold text-xl text-foreground">Invite link created!</p>
               <p className="text-sm text-muted-foreground">

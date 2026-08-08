@@ -35,7 +35,7 @@ export default async function MessagingPoliciesPage() {
       {/* Page Header */}
       <div>
         <div className="flex items-center gap-3 mb-1">
-          <div className="w-10 h-10 rounded-2xl bg-cyan-500/10 flex items-center justify-center">
+          <div className="w-10 h-10 rounded-2xl bg-blue-500/10 flex items-center justify-center">
             <ShieldCheck className="w-5 h-5 text-cyan-500" />
           </div>
           <h1 className="text-xl font-bold text-foreground">Messaging Policies</h1>
@@ -46,11 +46,11 @@ export default async function MessagingPoliciesPage() {
       </div>
 
       {/* Info callout */}
-      <div className="flex items-start gap-3 p-4 bg-cyan-50 dark:bg-cyan-900/20 border border-cyan-200 dark:border-cyan-800 rounded-2xl">
+      <div className="flex items-start gap-3 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-2xl">
         <MessageSquare className="w-5 h-5 text-cyan-500 shrink-0 mt-0.5" />
         <div>
-          <p className="text-sm font-semibold text-cyan-800 dark:text-cyan-300">How policies work</p>
-          <p className="text-xs text-cyan-700 dark:text-cyan-400 mt-1 leading-relaxed">
+          <p className="text-sm font-semibold text-cyan-800 dark:text-blue-300">How policies work</p>
+          <p className="text-xs text-blue-700 dark:text-blue-400 mt-1 leading-relaxed">
             Disabling a rule hides the contact from the affected role&apos;s contact list entirely. Existing conversations remain accessible. Class Group chats are not affected by these policies — they are automatically maintained per class enrolment.
           </p>
         </div>

@@ -44,9 +44,9 @@ function fileIcon(name: string) {
   const map: Record<string, { icon: React.ElementType; color: string }> = {
     ts:   { icon: FileCode,  color: 'text-cyan-400' },
     tsx:  { icon: FileCode,  color: 'text-cyan-400' },
-    js:   { icon: FileCode,  color: 'text-orange-400' },
-    jsx:  { icon: FileCode,  color: 'text-orange-400' },
-    json: { icon: FileJson,  color: 'text-orange-400' },
+    js:   { icon: FileCode,  color: 'text-red-400' },
+    jsx:  { icon: FileCode,  color: 'text-red-400' },
+    json: { icon: FileJson,  color: 'text-red-400' },
     md:   { icon: FileText,  color: 'text-slate-400' },
     mdx:  { icon: FileText,  color: 'text-slate-400' },
     css:  { icon: FileType,  color: 'text-cyan-400' },
@@ -272,7 +272,7 @@ export function CodeExplorer({ repo, branch = 'main', accent = 'blue' }: CodeExp
                 </div>
               ) : treeError ? (
                 <div className="px-4 py-4 space-y-3">
-                  <div className="flex items-center gap-2 text-orange-400 text-xs">
+                  <div className="flex items-center gap-2 text-red-400 text-xs">
                     <AlertCircle className="w-3.5 h-3.5 shrink-0" />
                     <span className="leading-snug">{treeError}</span>
                   </div>
@@ -383,10 +383,10 @@ export function CodeExplorer({ repo, branch = 'main', accent = 'blue' }: CodeExp
               </div>
             )}
             {activeErr && !activeLoading && (
-              <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-orange-400 text-sm px-8 text-center bg-[#0A0A0F]">
+              <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-red-400 text-sm px-8 text-center bg-[#0A0A0F]">
                 <AlertCircle className="w-8 h-8 opacity-50" />
                 <p className="font-semibold">Could not load file</p>
-                <p className="text-xs text-orange-500/70 bg-orange-900/20 px-3 py-1.5 rounded-md">{activeErr}</p>
+                <p className="text-xs text-red-500/70 bg-orange-900/20 px-3 py-1.5 rounded-md">{activeErr}</p>
               </div>
             )}
             {activeCode && !activeLoading && !activeErr && (

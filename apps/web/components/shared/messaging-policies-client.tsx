@@ -64,7 +64,7 @@ export function MessagingPoliciesClient({ initialPolicy }: { initialPolicy: Poli
           key={rule.key}
           className={`flex items-start justify-between gap-6 p-5 rounded-2xl border transition-colors ${
             policy[rule.key]
-              ? 'bg-cyan-50/50 dark:bg-cyan-900/10 border-cyan-200 dark:border-cyan-800'
+              ? 'bg-blue-50/50 dark:bg-blue-900/10 border-blue-200 dark:border-blue-800'
               : 'bg-slate-50 dark:bg-slate-900/50 border-slate-200 dark:border-slate-800'
           }`}
         >
@@ -72,7 +72,7 @@ export function MessagingPoliciesClient({ initialPolicy }: { initialPolicy: Poli
             <div className="flex items-center gap-2">
               <p className="font-semibold text-foreground text-sm">{rule.label}</p>
               {rule.warn && (
-                <span className="text-[10px] font-bold text-orange-500 bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-700 px-2 py-0.5 rounded-full">
+                <span className="text-[10px] font-bold text-red-500 bg-orange-50 dark:bg-orange-900/20 border border-red-200 dark:border-red-700 px-2 py-0.5 rounded-full">
                   Privacy Risk
                 </span>
               )}
@@ -81,7 +81,7 @@ export function MessagingPoliciesClient({ initialPolicy }: { initialPolicy: Poli
           </div>
           <button
             onClick={() => toggle(rule.key)}
-            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors shrink-0 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 ${
+            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors shrink-0 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
               policy[rule.key] ? 'bg-[#1D6FEB]' : 'bg-slate-300 dark:bg-slate-600'
             }`}
             role="switch"
@@ -101,13 +101,13 @@ export function MessagingPoliciesClient({ initialPolicy }: { initialPolicy: Poli
           {status === 'success' && (
             <>
               <CheckCircle2 className="w-4 h-4 text-cyan-500" />
-              <span className="text-cyan-600 font-medium">Policies saved successfully</span>
+              <span className="text-blue-600 font-medium">Policies saved successfully</span>
             </>
           )}
           {status === 'error' && (
             <>
-              <AlertCircle className="w-4 h-4 text-orange-500" />
-              <span className="text-orange-600 font-medium">Failed to save. Try again.</span>
+              <AlertCircle className="w-4 h-4 text-red-500" />
+              <span className="text-red-600 font-medium">Failed to save. Try again.</span>
             </>
           )}
         </div>

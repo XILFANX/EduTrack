@@ -27,14 +27,14 @@ export function LedgerClient({ transactions }: { transactions: any[] }) {
           value={searchQuery}
           onChange={e => setSearchQuery(e.target.value)}
           placeholder="Search by item name or logger..." 
-          className="w-full h-11 pl-10 pr-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 transition-all text-sm"
+          className="w-full h-11 pl-10 pr-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-sm"
         />
       </div>
 
       {filteredTx.length === 0 ? (
         <div className="text-center py-20 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl">
-          <div className="w-16 h-16 rounded-2xl bg-cyan-100 dark:bg-cyan-900/40 mx-auto flex items-center justify-center mb-4">
-            <FileText className="w-8 h-8 text-cyan-600 dark:text-cyan-400" />
+          <div className="w-16 h-16 rounded-2xl bg-blue-100 dark:bg-blue-900/40 mx-auto flex items-center justify-center mb-4">
+            <FileText className="w-8 h-8 text-blue-600 dark:text-blue-400" />
           </div>
           <h2 className="text-lg font-semibold text-foreground">No transactions found</h2>
           <p className="text-sm text-muted-foreground max-w-sm mx-auto mt-2">
@@ -59,13 +59,13 @@ export function LedgerClient({ transactions }: { transactions: any[] }) {
                   <tr key={tx.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors">
                     <td className="px-6 py-4 font-medium text-foreground">{tx.item_name}</td>
                     <td className="px-6 py-4">
-                      <div className={`font-bold ${tx.transaction_type === 'in' ? 'text-cyan-600' : 'text-orange-600'}`}>
+                      <div className={`font-bold ${tx.transaction_type === 'in' ? 'text-blue-600' : 'text-red-600'}`}>
                         {tx.transaction_type === 'in' ? '+' : '-'}{tx.quantity}
                       </div>
                     </td>
                     <td className="px-6 py-4">
                       <span className={`px-2.5 py-1 rounded-full text-xs font-medium uppercase tracking-wider flex items-center w-fit gap-1 ${
-                        tx.transaction_type === 'in' ? 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30' : 'bg-orange-100 text-orange-700 dark:bg-orange-900/30'
+                        tx.transaction_type === 'in' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30' : 'bg-red-100 text-red-700 dark:bg-red-900/30'
                       }`}>
                         {tx.transaction_type === 'in' ? <ArrowDownRight className="w-3.5 h-3.5" /> : <ArrowUpRight className="w-3.5 h-3.5" />}
                         {tx.transaction_type}

@@ -27,14 +27,14 @@ export function parseMarkdown(
 
   const generateId = (text: string) => text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
 
-  const accentNoteIcon = accent === 'violet' ? 'text-cyan-600 dark:text-cyan-400' : 'text-cyan-600 dark:text-cyan-400'
-  const accentNoteText = accent === 'violet' ? 'text-cyan-700 dark:text-cyan-300' : 'text-cyan-700 dark:text-cyan-300'
+  const accentNoteIcon = accent === 'violet' ? 'text-blue-600 dark:text-blue-400' : 'text-blue-600 dark:text-blue-400'
+  const accentNoteText = accent === 'violet' ? 'text-blue-700 dark:text-blue-300' : 'text-blue-700 dark:text-blue-300'
   const accentLink = accent === 'violet'
-    ? 'text-cyan-600 dark:text-cyan-400 hover:text-cyan-700 dark:hover:text-cyan-300 bg-cyan-50 dark:bg-cyan-500/10'
-    : 'text-cyan-600 dark:text-cyan-400 hover:text-cyan-700 dark:hover:text-cyan-300 bg-cyan-50 dark:bg-cyan-500/10'
+    ? 'text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-cyan-300 bg-blue-50 dark:bg-blue-500/10'
+    : 'text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-cyan-300 bg-blue-50 dark:bg-blue-500/10'
   const accentNum = accent === 'violet'
-    ? 'bg-cyan-100 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-400'
-    : 'bg-cyan-100 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-400'
+    ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400'
+    : 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400'
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i]
@@ -59,7 +59,7 @@ export function parseMarkdown(
     } else if (line.startsWith('> DRAFT')) {
       pushList()
       elements.push(
-        <div key={i} className="p-4 rounded-xl bg-orange-50 border border-orange-200 text-orange-800 dark:bg-orange-950/30 dark:border-orange-800/50 dark:text-orange-300 text-sm mb-8 flex items-start gap-3">
+        <div key={i} className="p-4 rounded-xl bg-orange-50 border border-red-200 text-orange-800 dark:bg-orange-950/30 dark:border-red-800/50 dark:text-red-300 text-sm mb-8 flex items-start gap-3">
           <AlertTriangle className="w-5 h-5 shrink-0 mt-0.5" />
           <div>{line.substring(2)}</div>
         </div>
@@ -77,10 +77,10 @@ export function parseMarkdown(
     } else if (line.startsWith('> Warning:')) {
       pushList()
       elements.push(
-        <div key={i} className="p-5 rounded-2xl bg-orange-50 border border-orange-100 text-orange-900 dark:bg-orange-950/30 dark:border-orange-900/30 dark:text-orange-200 text-sm mb-8 flex items-start gap-3 shadow-sm">
-          <AlertTriangle className="w-5 h-5 shrink-0 text-orange-600 dark:text-orange-400 mt-0.5" />
+        <div key={i} className="p-5 rounded-2xl bg-orange-50 border border-red-100 text-red-900 dark:bg-orange-950/30 dark:border-red-900/30 dark:text-orange-200 text-sm mb-8 flex items-start gap-3 shadow-sm">
+          <AlertTriangle className="w-5 h-5 shrink-0 text-red-600 dark:text-red-400 mt-0.5" />
           <div className="leading-relaxed">
-            <strong className="text-orange-700 dark:text-orange-400">Warning:</strong> {line.substring(line.indexOf(':') + 1).trim()}
+            <strong className="text-red-700 dark:text-red-400">Warning:</strong> {line.substring(line.indexOf(':') + 1).trim()}
           </div>
         </div>
       )
@@ -107,9 +107,9 @@ export function parseMarkdown(
         <div key={i} className="w-full rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm overflow-hidden mb-10 mt-6">
           <div className="h-10 bg-slate-50 dark:bg-slate-950/50 border-b border-slate-200 dark:border-slate-800 flex items-center px-4 gap-2">
             <div className="flex gap-1.5">
-              <div className="w-3 h-3 rounded-full bg-orange-400 dark:bg-orange-500/50"></div>
-              <div className="w-3 h-3 rounded-full bg-orange-400 dark:bg-orange-500/50"></div>
-              <div className="w-3 h-3 rounded-full bg-orange-400 dark:bg-orange-500/50"></div>
+              <div className="w-3 h-3 rounded-full bg-orange-400 dark:bg-red-500/50"></div>
+              <div className="w-3 h-3 rounded-full bg-orange-400 dark:bg-red-500/50"></div>
+              <div className="w-3 h-3 rounded-full bg-orange-400 dark:bg-red-500/50"></div>
             </div>
           </div>
           <div className="h-48 flex flex-col items-center justify-center text-slate-400 dark:text-slate-600 bg-slate-50/50 dark:bg-slate-900/50 p-6 text-center">

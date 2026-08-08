@@ -11,9 +11,9 @@ const fmt = (n: number) => new Intl.NumberFormat('en-KE', { style: 'currency', c
 const fmtDate = (d: string) => new Date(d).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
 
 const STATUS_CONFIG: Record<string, { label: string; bg: string; dot: string }> = {
-  paid: { label: 'Paid', bg: 'bg-cyan-50 text-cyan-700 dark:bg-cyan-900/20 dark:text-cyan-400', dot: 'bg-cyan-400' },
-  partial: { label: 'Partial', bg: 'bg-orange-50 text-orange-700 dark:bg-orange-900/20 dark:text-orange-400', dot: 'bg-orange-400' },
-  unpaid: { label: 'Unpaid', bg: 'bg-orange-50 text-orange-700 dark:bg-orange-900/20 dark:text-orange-400', dot: 'bg-orange-400' },
+  paid: { label: 'Paid', bg: 'bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400', dot: 'bg-cyan-400' },
+  partial: { label: 'Partial', bg: 'bg-orange-50 text-red-700 dark:bg-orange-900/20 dark:text-red-400', dot: 'bg-orange-400' },
+  unpaid: { label: 'Unpaid', bg: 'bg-orange-50 text-red-700 dark:bg-orange-900/20 dark:text-red-400', dot: 'bg-orange-400' },
 }
 
 export function BursarDashboardClient({ stats, recentPayments }: { stats: any; recentPayments: any[] }) {
@@ -86,10 +86,10 @@ export function BursarDashboardClient({ stats, recentPayments }: { stats: any; r
             <Link
               key={i}
               href={action.href}
-              className="flex flex-col items-center gap-2 p-4 bg-card hover:bg-slate-50 dark:hover:bg-slate-900/50 border border-border hover:border-cyan-500/50 rounded-2xl hover:scale-[1.02] transition-all text-center shadow-sm group"
+              className="flex flex-col items-center gap-2 p-4 bg-card hover:bg-slate-50 dark:hover:bg-slate-900/50 border border-border hover:border-blue-500/50 rounded-2xl hover:scale-[1.02] transition-all text-center shadow-sm group"
             >
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-cyan-50 dark:bg-cyan-900/20 border border-cyan-100 dark:border-cyan-800/30 group-hover:bg-cyan-100 dark:group-hover:bg-cyan-800/40 transition-colors">
-                <Icon className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-blue-50 dark:bg-blue-900/20 border border-cyan-100 dark:border-blue-800/30 group-hover:bg-blue-100 dark:group-hover:bg-cyan-800/40 transition-colors">
+                <Icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
               </div>
               <div className="text-center min-w-0 w-full mt-1">
                 <p className="font-bold text-xs text-foreground truncate">{action.label}</p>
@@ -104,7 +104,7 @@ export function BursarDashboardClient({ stats, recentPayments }: { stats: any; r
       <div className="bg-card border border-border rounded-3xl overflow-hidden shadow-sm">
         <div className="px-5 py-4 border-b border-border flex items-center justify-between">
           <h2 className="font-bold text-foreground">Recent Payments</h2>
-          <Link href="/bursar/invoices" className="text-xs font-semibold text-cyan-600 hover:text-cyan-700 transition-colors flex items-center gap-1">
+          <Link href="/bursar/invoices" className="text-xs font-semibold text-blue-600 hover:text-blue-700 transition-colors flex items-center gap-1">
             View all <ChevronRight className="w-3.5 h-3.5" />
           </Link>
         </div>
@@ -150,8 +150,8 @@ export function BursarDashboardClient({ stats, recentPayments }: { stats: any; r
           const Icon = card.icon
           return (
             <div key={i} className="bg-card border border-border rounded-2xl p-4 flex items-center gap-4">
-              <div className="w-10 h-10 rounded-xl bg-cyan-50 dark:bg-cyan-900/20 border border-cyan-100 dark:border-cyan-800/30 flex items-center justify-center shrink-0">
-                <Icon className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
+              <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-900/20 border border-cyan-100 dark:border-blue-800/30 flex items-center justify-center shrink-0">
+                <Icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
               </div>
               <div>
                 <p className="text-xl font-extrabold text-foreground">{card.value}</p>

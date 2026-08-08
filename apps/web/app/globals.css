@@ -4,15 +4,6 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* ─── Brand gradient helpers ─────────────────────────────────────────────────
-   Electric-blue → Cyan — derived from both app logos.
-   --grad-start : #1D6FEB  (electric blue)
-   --grad-end   : #22D3EE  (cyan)
-   --navy-950   : #060E1C  (deepest dark bg)
-   --navy-900   : #0A1628  (dark card/sidebar)
-   --navy-800   : #0F2040  (elevated dark surface)
-──────────────────────────────────────────────────────────────────────────── */
-
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -56,102 +47,85 @@
   --radius-4xl: calc(var(--radius) + 16px);
 }
 
-/* ── Light mode ─────────────────────────────────────────────────────────── */
 :root {
   --radius: 0.625rem;
-
-  /* Surfaces */
-  --background: hsl(210, 40%, 98%);            /* near-white */
-  --foreground: hsl(220, 60%, 8%);             /* navy text */
-  --card: hsl(0, 0%, 100%);                    /* white card */
-  --card-foreground: hsl(220, 60%, 8%);
+  /* Light mode — white cards, electric-blue primary */
+  --background: hsl(210, 40%, 98%);       /* slate-50 */
+  --foreground: hsl(222, 84%, 5%);        /* near-black */
+  --card: hsl(0, 0%, 100%);              /* white */
+  --card-foreground: hsl(222, 84%, 5%);
   --popover: hsl(0, 0%, 100%);
-  --popover-foreground: hsl(220, 60%, 8%);
-
-  /* Brand — electric blue primary */
-  --primary: hsl(214, 85%, 51%);               /* #1D6FEB electric blue */
-  --primary-foreground: hsl(0, 0%, 100%);      /* white text on primary */
-
-  /* Secondary surfaces */
-  --secondary: hsl(210, 40%, 96%);             /* slate-100 */
-  --secondary-foreground: hsl(220, 50%, 15%);
+  --popover-foreground: hsl(222, 84%, 5%);
+  --primary: hsl(221, 83%, 53%);          /* blue-600 — electric blue (logo bottom) */
+  --primary-foreground: hsl(0, 0%, 100%);
+  --secondary: hsl(210, 40%, 96%);        /* slate-100 */
+  --secondary-foreground: hsl(222, 47%, 11%);
   --muted: hsl(210, 40%, 96%);
-  --muted-foreground: hsl(215, 16%, 47%);      /* slate-500 */
-
-  /* Accent (hover surfaces) */
-  --accent: hsl(210, 40%, 94%);
-  --accent-foreground: hsl(220, 50%, 15%);
-
-  /* Semantic */
-  --destructive: hsl(0, 84%, 60%);             /* red — errors */
-  --border: hsl(214, 32%, 91%);                /* slate-200 */
+  --muted-foreground: hsl(215, 16%, 47%); /* slate-500 */
+  --accent: hsl(210, 40%, 96%);
+  --accent-foreground: hsl(222, 47%, 11%);
+  --destructive: hsl(4, 86%, 58%);        /* danger red — red-600 */
+  --border: hsl(214, 32%, 91%);           /* slate-200 */
   --input: hsl(214, 32%, 91%);
-  --ring: hsl(214, 85%, 51%);                  /* electric blue focus ring */
-
-  /* Charts — electric-blue → cyan family */
-  --chart-1: hsl(214, 85%, 51%);              /* electric blue */
-  --chart-2: hsl(191, 97%, 51%);              /* cyan */
-  --chart-3: hsl(210, 100%, 60%);             /* sky blue */
+  --ring: hsl(221, 83%, 53%);             /* electric blue */
+  /* Logo-matched gradient anchors */
+  --gradient-from: hsl(188, 94%, 43%);   /* cyan-400 — logo top */
+  --gradient-to: hsl(221, 83%, 53%);     /* blue-600 — logo bottom */
+  /* Charts */
+  --chart-1: hsl(221, 83%, 53%);
+  --chart-2: hsl(188, 94%, 43%);
+  --chart-3: hsl(199, 89%, 48%);
   --chart-4: hsl(280, 65%, 60%);
   --chart-5: hsl(340, 75%, 55%);
-
-  /* Sidebar */
+  /* Sidebar — light */
   --sidebar: hsl(0, 0%, 100%);
-  --sidebar-foreground: hsl(220, 60%, 8%);
-  --sidebar-primary: hsl(214, 85%, 51%);
+  --sidebar-foreground: hsl(222, 84%, 5%);
+  --sidebar-primary: hsl(221, 83%, 53%);
   --sidebar-primary-foreground: hsl(0, 0%, 100%);
   --sidebar-accent: hsl(210, 40%, 96%);
-  --sidebar-accent-foreground: hsl(220, 50%, 15%);
+  --sidebar-accent-foreground: hsl(222, 47%, 11%);
   --sidebar-border: hsl(214, 32%, 91%);
-  --sidebar-ring: hsl(214, 85%, 51%);
+  --sidebar-ring: hsl(221, 83%, 53%);
 }
 
-/* ── Dark mode — navy + electric-blue + cyan ────────────────────────────── */
 .dark {
-  /* Surfaces — deep navy */
-  --background: hsl(220, 60%, 7%);            /* #060E1C navy-950 */
-  --foreground: hsl(210, 40%, 97%);           /* near-white text */
-  --card: hsl(217, 55%, 12%);                 /* #0A1628 navy-900 */
-  --card-foreground: hsl(210, 40%, 97%);
-  --popover: hsl(217, 55%, 12%);
-  --popover-foreground: hsl(210, 40%, 97%);
-
-  /* Brand — electric blue primary */
-  --primary: hsl(214, 85%, 51%);              /* #1D6FEB electric blue */
+  /* Dark mode — deep navy background, electric-blue primary */
+  --background: hsl(222, 84%, 4%);        /* deep navy — matches logo bg */
+  --foreground: hsl(210, 40%, 98%);       /* white */
+  --card: hsl(217, 33%, 10%);            /* navy card */
+  --card-foreground: hsl(210, 40%, 98%);
+  --popover: hsl(217, 33%, 10%);
+  --popover-foreground: hsl(210, 40%, 98%);
+  --primary: hsl(221, 83%, 60%);          /* blue-500 — slightly brighter in dark */
   --primary-foreground: hsl(0, 0%, 100%);
-
-  /* Secondary surfaces */
-  --secondary: hsl(217, 45%, 18%);            /* #0F2040 navy-800 */
-  --secondary-foreground: hsl(210, 40%, 97%);
-  --muted: hsl(217, 45%, 18%);
-  --muted-foreground: hsl(215, 25%, 60%);     /* muted text on navy */
-
-  /* Accent */
-  --accent: hsl(217, 45%, 18%);
-  --accent-foreground: hsl(210, 40%, 97%);
-
-  /* Semantic */
-  --destructive: hsl(0, 62%, 31%);            /* dark red */
-  --border: hsl(217, 45%, 18%);               /* navy-800 border */
-  --input: hsl(217, 45%, 18%);
-  --ring: hsl(214, 85%, 51%);                 /* electric blue focus ring */
-
+  --secondary: hsl(217, 33%, 17%);        /* slate-800 toned navy */
+  --secondary-foreground: hsl(210, 40%, 98%);
+  --muted: hsl(217, 33%, 17%);
+  --muted-foreground: hsl(215, 20%, 65%); /* slate-400 */
+  --accent: hsl(217, 33%, 17%);
+  --accent-foreground: hsl(210, 40%, 98%);
+  --destructive: hsl(4, 86%, 65%);        /* danger red — brighter for dark bg */
+  --border: hsl(217, 33%, 17%);
+  --input: hsl(217, 33%, 17%);
+  --ring: hsl(221, 83%, 60%);             /* electric blue */
+  /* Logo-matched gradient anchors */
+  --gradient-from: hsl(188, 94%, 50%);   /* cyan — slightly lighter in dark */
+  --gradient-to: hsl(221, 83%, 60%);     /* blue-500 — logo electric blue */
   /* Charts */
-  --chart-1: hsl(214, 85%, 51%);             /* electric blue */
-  --chart-2: hsl(191, 97%, 51%);             /* cyan */
-  --chart-3: hsl(210, 100%, 60%);
+  --chart-1: hsl(221, 83%, 60%);
+  --chart-2: hsl(188, 94%, 50%);
+  --chart-3: hsl(199, 89%, 55%);
   --chart-4: hsl(280, 65%, 60%);
   --chart-5: hsl(340, 75%, 55%);
-
-  /* Sidebar — navy */
-  --sidebar: hsl(220, 60%, 7%);
-  --sidebar-foreground: hsl(210, 40%, 97%);
-  --sidebar-primary: hsl(214, 85%, 51%);
+  /* Sidebar — deep navy */
+  --sidebar: hsl(222, 84%, 4%);
+  --sidebar-foreground: hsl(210, 40%, 98%);
+  --sidebar-primary: hsl(221, 83%, 60%);
   --sidebar-primary-foreground: hsl(0, 0%, 100%);
-  --sidebar-accent: hsl(217, 45%, 18%);
-  --sidebar-accent-foreground: hsl(210, 40%, 97%);
-  --sidebar-border: hsl(217, 45%, 18%);
-  --sidebar-ring: hsl(214, 85%, 51%);
+  --sidebar-accent: hsl(217, 33%, 17%);
+  --sidebar-accent-foreground: hsl(210, 40%, 98%);
+  --sidebar-border: hsl(217, 33%, 17%);
+  --sidebar-ring: hsl(221, 83%, 60%);
 }
 
 @layer base {
@@ -161,25 +135,4 @@
   body {
     @apply bg-background text-foreground;
   }
-}
-
-/* ── Gradient utility classes (used across both apps) ─────────────────────── */
-@layer utilities {
-  .brand-gradient {
-    background: linear-gradient(135deg, #1D6FEB 0%, #22D3EE 100%);
-  }
-  .brand-gradient-text {
-    background: linear-gradient(135deg, #1D6FEB 0%, #22D3EE 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  .brand-gradient-hover:hover {
-    background: linear-gradient(135deg, #1558C8 0%, #06B6D4 100%);
-  }
-  .navy-bg {
-    background-color: #0A1628;
-  }
-  .no-scrollbar::-webkit-scrollbar { display: none; }
-  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 }

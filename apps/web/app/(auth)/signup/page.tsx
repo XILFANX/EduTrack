@@ -68,7 +68,7 @@ export default function SignupPage() {
           <p className="text-slate-500 dark:text-slate-400 text-sm">
             We sent a confirmation link to <strong className="text-slate-700 dark:text-slate-200">{email}</strong>. Click it to activate your account.
           </p>
-          <Link href="/login" className="text-cyan-600 dark:text-cyan-500 text-sm hover:underline">Back to login</Link>
+          <Link href="/login" className="text-blue-600 dark:text-cyan-500 text-sm hover:underline">Back to login</Link>
         </div>
       </div>
     )
@@ -88,7 +88,7 @@ export default function SignupPage() {
         </div>
 
         {/* Trial callout */}
-        <div className="bg-cyan-600 text-white rounded-xl px-4 py-3 text-sm text-center shadow-sm">
+        <div className="bg-blue-600 text-white rounded-xl px-4 py-3 text-sm text-center shadow-sm">
           <p className="font-semibold">🎓 Welcome to EduTrack</p>
           <p className="opacity-90 text-xs mt-0.5">Full access to all portals. Set up in minutes.</p>
         </div>
@@ -107,7 +107,7 @@ export default function SignupPage() {
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 placeholder="Jane Kamau"
-                className="w-full border border-slate-200 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
+                className="w-full border border-slate-200 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
 
@@ -121,7 +121,7 @@ export default function SignupPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="jane@example.com"
-                className="w-full border border-slate-200 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
+                className="w-full border border-slate-200 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
 
@@ -137,7 +137,7 @@ export default function SignupPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="At least 8 characters"
-                  className="w-full border border-slate-200 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent pr-10"
+                  className="w-full border border-slate-200 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent pr-10"
                 />
                 <button
                   type="button"
@@ -151,7 +151,7 @@ export default function SignupPage() {
             </div>
 
             {error && (
-              <p className="text-sm text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-950/50 border border-orange-100 dark:border-orange-900/50 px-3 py-2 rounded-lg leading-snug">
+              <p className="text-sm text-red-600 dark:text-red-400 bg-orange-50 dark:bg-orange-950/50 border border-red-100 dark:border-red-900/50 px-3 py-2 rounded-lg leading-snug">
                 {error}
               </p>
             )}
@@ -195,7 +195,7 @@ export default function SignupPage() {
 
         <p className="text-center text-sm text-slate-500 dark:text-slate-400">
           Already have an account?{' '}
-          <Link href="/login" className="text-cyan-600 dark:text-cyan-500 font-medium hover:underline">Sign in</Link>
+          <Link href="/login" className="text-blue-600 dark:text-cyan-500 font-medium hover:underline">Sign in</Link>
         </p>
       </div>
     </div>

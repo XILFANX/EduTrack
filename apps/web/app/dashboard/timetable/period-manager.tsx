@@ -183,19 +183,19 @@ export function PeriodManager({ schoolId, initialPeriods }: Props) {
             >
               <GripVertical className="w-4 h-4 text-slate-300 shrink-0" />
               {period.is_break ? (
-                <div className="w-8 h-8 rounded-lg bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center shrink-0">
-                  <Coffee className="w-4 h-4 text-orange-500" />
+                <div className="w-8 h-8 rounded-lg bg-red-100 dark:bg-red-900/30 flex items-center justify-center shrink-0">
+                  <Coffee className="w-4 h-4 text-red-500" />
                 </div>
               ) : (
-                <div className="w-8 h-8 rounded-lg bg-cyan-100 dark:bg-cyan-900/30 flex items-center justify-center shrink-0">
-                  <span className="text-xs font-bold text-cyan-600 dark:text-cyan-400">{idx + 1}</span>
+                <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center shrink-0">
+                  <span className="text-xs font-bold text-blue-600 dark:text-blue-400">{idx + 1}</span>
                 </div>
               )}
               <div className="flex-1 min-w-0">
                 <p className="font-semibold text-foreground text-sm">{period.name}</p>
                 <p className="text-xs text-muted-foreground">
                   {fmt12(period.start_time)} – {fmt12(period.end_time)}
-                  {period.is_break && <span className="ml-2 text-orange-500 font-medium">· Break</span>}
+                  {period.is_break && <span className="ml-2 text-red-500 font-medium">· Break</span>}
                 </p>
               </div>
               <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">

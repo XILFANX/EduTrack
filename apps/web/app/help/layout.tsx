@@ -31,14 +31,14 @@ export default function HelpLayout({ children }: { children: React.ReactNode }) 
               </Link>
               <div className="w-px h-6 bg-slate-200 dark:bg-slate-800"></div>
               <Link href="/help" className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-cyan-600 flex items-center justify-center text-white shadow-sm">
+                <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white shadow-sm">
                   <BookOpen className="w-4 h-4" />
                 </div>
                 <span className="font-bold text-lg text-slate-900 dark:text-white tracking-tight">EduTrack Docs</span>
               </Link>
             </div>
             <div className="flex items-center gap-4">
-              <Link href="/login" className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-400 hidden sm:block">
+              <Link href="/login" className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hidden sm:block">
                 Sign In
               </Link>
               <Link href="/signup" className="text-sm font-medium px-4 py-2 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 transition-all hover:bg-slate-800 dark:hover:bg-slate-200">
@@ -52,7 +52,7 @@ export default function HelpLayout({ children }: { children: React.ReactNode }) 
       {/* Mobile Navigation (Scrollable Tabs) */}
       <div className="lg:hidden w-full border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/50 sticky top-16 z-30 overflow-x-auto no-scrollbar">
         <nav className="flex px-4 py-3 gap-2 min-w-max">
-          <Link href="/help" className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-full border shadow-sm whitespace-nowrap active:scale-95 transition-all ${pathname === '/help' ? 'bg-cyan-600 text-white border-cyan-600' : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300'}`}>
+          <Link href="/help" className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-full border shadow-sm whitespace-nowrap active:scale-95 transition-all ${pathname === '/help' ? 'bg-blue-600 text-white border-blue-600' : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300'}`}>
             <Home className="w-4 h-4" />
             Home
           </Link>
@@ -63,7 +63,7 @@ export default function HelpLayout({ children }: { children: React.ReactNode }) 
               <Link 
                 key={guide.slug} 
                 href={`/help/${guide.slug}`}
-                className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-full border shadow-sm whitespace-nowrap active:scale-95 transition-all ${isActive ? 'bg-cyan-600 text-white border-cyan-600' : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300'}`}
+                className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-full border shadow-sm whitespace-nowrap active:scale-95 transition-all ${isActive ? 'bg-blue-600 text-white border-blue-600' : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300'}`}
               >
                 <Icon className="w-4 h-4" />
                 {guide.title}
@@ -83,7 +83,7 @@ export default function HelpLayout({ children }: { children: React.ReactNode }) 
               <h3 className="font-semibold text-slate-900 dark:text-white mb-4 px-3 text-sm tracking-wide uppercase">User Guide</h3>
               <ul className="space-y-1">
                 <li>
-                  <Link href="/help" className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-colors ${pathname === '/help' ? 'bg-cyan-50 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-400' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900 hover:text-slate-900 dark:hover:text-white'}`}>
+                  <Link href="/help" className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-colors ${pathname === '/help' ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900 hover:text-slate-900 dark:hover:text-white'}`}>
                     <Home className="w-4 h-4" />
                     Help Center Home
                   </Link>
@@ -95,7 +95,7 @@ export default function HelpLayout({ children }: { children: React.ReactNode }) 
                     <li key={guide.slug}>
                       <Link 
                         href={`/help/${guide.slug}`} 
-                        className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-colors ${isActive ? 'bg-cyan-50 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-400' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900 hover:text-cyan-600 dark:hover:text-cyan-400'}`}
+                        className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-colors ${isActive ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900 hover:text-blue-600 dark:hover:text-blue-400'}`}
                       >
                         <Icon className="w-4 h-4" />
                         {guide.title}

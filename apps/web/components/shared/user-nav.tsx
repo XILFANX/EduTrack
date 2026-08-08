@@ -56,7 +56,7 @@ export function UserNav({ user }: UserNavProps) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button className="flex items-center gap-2.5 outline-none hover:bg-slate-100 p-2 rounded-lg transition-colors cursor-pointer dark:hover:bg-slate-800">
-          <div className="w-8 h-8 rounded-full bg-cyan-100 text-cyan-700 flex items-center justify-center text-xs font-bold shrink-0 dark:bg-cyan-900/50 dark:text-cyan-400">
+          <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-xs font-bold shrink-0 dark:bg-blue-900/50 dark:text-blue-400">
             {user.initials}
           </div>
           <div className="hidden md:block text-left min-w-0">
@@ -102,7 +102,7 @@ export function UserNav({ user }: UserNavProps) {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem 
-          className="text-orange-600 focus:text-orange-600 focus:bg-orange-50 dark:focus:bg-orange-950/50 cursor-pointer"
+          className="text-red-600 focus:text-red-600 focus:bg-orange-50 dark:focus:bg-orange-950/50 cursor-pointer"
           onClick={handleLogout}
           disabled={isLoggingOut}
         >

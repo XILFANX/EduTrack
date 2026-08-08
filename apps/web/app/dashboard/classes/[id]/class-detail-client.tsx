@@ -130,7 +130,7 @@ export function ClassDetailClient({
         {students.length === 0 && (
           <button
             onClick={handleDeleteClass}
-            className="shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-xl text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-900/20 border border-orange-200 dark:border-orange-900/50 text-sm font-medium transition-colors"
+            className="shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-xl text-red-600 hover:bg-orange-50 dark:hover:bg-orange-900/20 border border-red-200 dark:border-red-900/50 text-sm font-medium transition-colors"
             title="Delete class"
           >
             <Trash2 className="w-4 h-4" />
@@ -147,7 +147,7 @@ export function ClassDetailClient({
             onClick={() => setActiveTab(t.id)}
             className={`flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium border-b-2 transition-all -mb-px ${
               activeTab === t.id
-                ? 'border-cyan-600 text-cyan-600 dark:border-cyan-400 dark:text-cyan-400'
+                ? 'border-blue-600 text-blue-600 dark:border-cyan-400 dark:text-blue-400'
                 : 'border-transparent text-muted-foreground hover:text-foreground hover:border-slate-300 dark:hover:border-slate-600'
             }`}
           >
@@ -172,7 +172,7 @@ export function ClassDetailClient({
                   <p className="text-xs text-muted-foreground">Class Teacher</p>
                   {displayTeacherName
                     ? <p className="font-semibold text-foreground text-sm">{displayTeacherName}</p>
-                    : <p className="text-sm text-orange-600 dark:text-orange-400 font-medium">Not assigned</p>
+                    : <p className="text-sm text-red-600 dark:text-red-400 font-medium">Not assigned</p>
                   }
                 </div>
               </div>
@@ -192,7 +192,7 @@ export function ClassDetailClient({
                   <select
                     value={selectedTeacherId}
                     onChange={e => setSelectedTeacherId(e.target.value)}
-                    className="flex-1 sm:w-52 bg-background border border-input text-foreground rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 transition"
+                    className="flex-1 sm:w-52 bg-background border border-input text-foreground rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
                   >
                     <option value="">— None —</option>
                     {teachers.map(t => <option key={t.id} value={t.id}>{t.full_name}</option>)}
@@ -207,7 +207,7 @@ export function ClassDetailClient({
                       <X className="w-4 h-4" />
                     </button>
                   </div>
-                  {assignError && <p className="w-full text-xs text-orange-600 mt-1">{assignError}</p>}
+                  {assignError && <p className="w-full text-xs text-red-600 mt-1">{assignError}</p>}
                 </div>
               )}
             </div>
@@ -236,8 +236,8 @@ export function ClassDetailClient({
             className="w-full flex items-center justify-between px-4 py-3.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group"
           >
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-cyan-50 dark:bg-cyan-900/20 flex items-center justify-center">
-                <Users className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
+              <div className="w-9 h-9 rounded-xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center">
+                <Users className="w-4 h-4 text-blue-600 dark:text-blue-400" />
               </div>
               <div className="text-left">
                 <p className="font-semibold text-foreground text-sm">See all students</p>
@@ -252,8 +252,8 @@ export function ClassDetailClient({
             className="w-full flex items-center justify-between px-4 py-3.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group"
           >
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-cyan-50 dark:bg-cyan-900/20 flex items-center justify-center">
-                <BarChart3 className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
+              <div className="w-9 h-9 rounded-xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center">
+                <BarChart3 className="w-4 h-4 text-blue-600 dark:text-blue-400" />
               </div>
               <div className="text-left">
                 <p className="font-semibold text-foreground text-sm">See performance</p>
@@ -274,7 +274,7 @@ export function ClassDetailClient({
               <input
                 type="text" value={search} onChange={e => setSearch(e.target.value)}
                 placeholder="Search students…"
-                className="w-full h-10 pl-10 pr-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 transition-all"
+                className="w-full h-10 pl-10 pr-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
               />
             </div>
             <Button className="bg-[#1D6FEB] hover:bg-[#1558C8] gap-2 shrink-0" onClick={() => setIsModalOpen(true)}>
@@ -285,8 +285,8 @@ export function ClassDetailClient({
 
           {filteredStudents.length === 0 ? (
             <div className="text-center py-16 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl">
-              <div className="w-16 h-16 rounded-2xl bg-cyan-100 dark:bg-cyan-900/40 mx-auto flex items-center justify-center mb-4">
-                <GraduationCap className="w-8 h-8 text-cyan-600 dark:text-cyan-400" />
+              <div className="w-16 h-16 rounded-2xl bg-blue-100 dark:bg-blue-900/40 mx-auto flex items-center justify-center mb-4">
+                <GraduationCap className="w-8 h-8 text-blue-600 dark:text-blue-400" />
               </div>
               <h2 className="text-lg font-semibold text-foreground">
                 {search ? 'No students match your search' : 'No students enrolled'}
@@ -311,10 +311,10 @@ export function ClassDetailClient({
                     className="flex items-center gap-3 px-4 py-3 hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors cursor-pointer"
                     onClick={() => setQuickViewStudent(student)}
                   >
-                    <div className="w-8 h-8 rounded-full overflow-hidden bg-cyan-100 dark:bg-cyan-900/30 flex items-center justify-center shrink-0">
+                    <div className="w-8 h-8 rounded-full overflow-hidden bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center shrink-0">
                       {student.photo_url
                         ? <img src={student.photo_url} alt="" className="w-full h-full object-cover" />
-                        : <span className="text-xs font-bold text-cyan-600 dark:text-cyan-400">{student.first_name?.[0]}{student.last_name?.[0]}</span>
+                        : <span className="text-xs font-bold text-blue-600 dark:text-blue-400">{student.first_name?.[0]}{student.last_name?.[0]}</span>
                       }
                     </div>
                     <div className="flex-1 min-w-0">
@@ -324,7 +324,7 @@ export function ClassDetailClient({
                       <p className="text-xs text-muted-foreground font-mono">{student.admission_number}</p>
                     </div>
                     <div className="flex items-center gap-2 shrink-0" onClick={e => e.stopPropagation()}>
-                      <span className="hidden sm:inline-flex px-2 py-0.5 rounded-full bg-cyan-100 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-400 text-xs font-medium">
+                      <span className="hidden sm:inline-flex px-2 py-0.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 text-xs font-medium">
                         Active
                       </span>
                       <DropdownMenu>
@@ -343,7 +343,7 @@ export function ClassDetailClient({
                             </Link>
                           </DropdownMenuItem>
                           <DropdownMenuItem
-                            className="text-orange-600 focus:bg-orange-50 dark:focus:bg-orange-900/20 gap-2 cursor-pointer"
+                            className="text-red-600 focus:bg-orange-50 dark:focus:bg-orange-900/20 gap-2 cursor-pointer"
                             onClick={() => handleDeleteStudent(student.id)}
                           >
                             <Trash2 className="w-4 h-4" /> Remove
@@ -366,22 +366,22 @@ export function ClassDetailClient({
       {activeTab === 'performance' && (
         <div className="space-y-4">
           <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 text-center">
-            <div className="w-16 h-16 rounded-2xl bg-cyan-100 dark:bg-cyan-900/30 mx-auto flex items-center justify-center mb-4">
-              <TrendingUp className="w-8 h-8 text-cyan-600 dark:text-cyan-400" />
+            <div className="w-16 h-16 rounded-2xl bg-blue-100 dark:bg-blue-900/30 mx-auto flex items-center justify-center mb-4">
+              <TrendingUp className="w-8 h-8 text-blue-600 dark:text-blue-400" />
             </div>
             <h2 className="text-lg font-semibold text-foreground">Performance Analytics</h2>
             <p className="text-sm text-muted-foreground max-w-sm mx-auto mt-2">
               Ranked student performance, broken down term by term, will appear here once exam results are entered.
             </p>
             {students.length === 0 ? (
-              <p className="mt-4 text-xs text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800/50 rounded-lg px-3 py-2 inline-block">
+              <p className="mt-4 text-xs text-red-600 dark:text-red-400 bg-orange-50 dark:bg-orange-900/20 border border-red-200 dark:border-red-800/50 rounded-lg px-3 py-2 inline-block">
                 Enroll students first to see their performance.
               </p>
             ) : (
               <div className="mt-6 space-y-2">
                 {students.slice().sort(() => Math.random() - 0.5).map((s, i) => (
                   <div key={s.id} className="flex items-center gap-3 px-4 py-2.5 bg-slate-50 dark:bg-slate-800/30 rounded-xl">
-                    <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${i === 0 ? 'bg-orange-100 text-orange-700' : i === 1 ? 'bg-slate-100 text-slate-600' : i === 2 ? 'bg-orange-100 text-orange-700' : 'bg-slate-100 dark:bg-slate-700 text-muted-foreground'}`}>
+                    <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${i === 0 ? 'bg-red-100 text-red-700' : i === 1 ? 'bg-slate-100 text-slate-600' : i === 2 ? 'bg-red-100 text-red-700' : 'bg-slate-100 dark:bg-slate-700 text-muted-foreground'}`}>
                       {i + 1}
                     </span>
                     <p className="flex-1 text-left text-sm font-medium text-foreground">{s.first_name} {s.last_name}</p>
@@ -437,10 +437,10 @@ export function ClassDetailClient({
                   {quickViewStudent.first_name} {(quickViewStudent as any).last_name}
                 </h2>
                 <div className="flex items-center gap-2 mt-2">
-                  <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-300">
+                  <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">
                     Student
                   </span>
-                  <span className="text-sm font-medium px-2.5 py-1 rounded-full bg-cyan-100 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-400">
+                  <span className="text-sm font-medium px-2.5 py-1 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400">
                     Active
                   </span>
                 </div>
@@ -481,7 +481,7 @@ export function ClassDetailClient({
                 </Link>
                 <button
                   onClick={() => { setQuickViewStudent(null); handleDeleteStudent(quickViewStudent.id) }}
-                  className="w-full flex items-center justify-center gap-2 h-11 rounded-xl border border-orange-200 dark:border-orange-900/50 text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-900/20 text-sm font-semibold transition-colors bg-white dark:bg-slate-900 shadow-sm"
+                  className="w-full flex items-center justify-center gap-2 h-11 rounded-xl border border-red-200 dark:border-red-900/50 text-red-600 hover:bg-orange-50 dark:hover:bg-orange-900/20 text-sm font-semibold transition-colors bg-white dark:bg-slate-900 shadow-sm"
                 >
                   <Trash2 className="w-4 h-4" />
                   Remove Student

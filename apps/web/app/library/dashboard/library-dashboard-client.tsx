@@ -88,10 +88,10 @@ export function LibraryDashboardClient({ stats, borrowedBooks }: {
               <Link
                 key={i}
                 href={a.href}
-                className="flex flex-col items-center gap-2 p-4 bg-card hover:bg-slate-50 dark:hover:bg-slate-900/50 border border-border hover:border-cyan-500/50 rounded-2xl hover:scale-[1.02] transition-all text-center shadow-sm group"
+                className="flex flex-col items-center gap-2 p-4 bg-card hover:bg-slate-50 dark:hover:bg-slate-900/50 border border-border hover:border-blue-500/50 rounded-2xl hover:scale-[1.02] transition-all text-center shadow-sm group"
               >
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-cyan-50 dark:bg-cyan-900/20 border border-cyan-100 dark:border-cyan-800/30 group-hover:bg-cyan-100 dark:group-hover:bg-cyan-800/40 transition-colors">
-                  <Icon className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-blue-50 dark:bg-blue-900/20 border border-cyan-100 dark:border-blue-800/30 group-hover:bg-blue-100 dark:group-hover:bg-cyan-800/40 transition-colors">
+                  <Icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                 </div>
                 <div className="text-center min-w-0 w-full mt-1">
                   <p className="font-bold text-xs text-foreground truncate">{a.label}</p>
@@ -107,10 +107,10 @@ export function LibraryDashboardClient({ stats, borrowedBooks }: {
       <div className="bg-card border border-border rounded-3xl overflow-hidden shadow-sm">
         <div className="px-5 py-4 border-b border-border flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Clock className="w-4 h-4 text-orange-500" />
+            <Clock className="w-4 h-4 text-red-500" />
             <h2 className="font-bold text-foreground">Currently Borrowed</h2>
           </div>
-          <Link href="/library/issues" className="text-xs font-semibold text-cyan-600 hover:text-cyan-700 flex items-center gap-1">
+          <Link href="/library/issues" className="text-xs font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1">
             View all <ChevronRight className="w-3.5 h-3.5" />
           </Link>
         </div>
@@ -127,8 +127,8 @@ export function LibraryDashboardClient({ stats, borrowedBooks }: {
               const isOverdue = issue.due_date && new Date(issue.due_date) < new Date()
               return (
                 <div key={i} className="flex items-center gap-4 px-5 py-3.5 hover:bg-slate-50/60 dark:hover:bg-slate-900/30 transition-colors">
-                  <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${isOverdue ? 'bg-orange-50 dark:bg-orange-900/20' : 'bg-cyan-50 dark:bg-cyan-900/20'}`}>
-                    <BookMarked className={`w-4 h-4 ${isOverdue ? 'text-orange-500' : 'text-cyan-500'}`} />
+                  <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${isOverdue ? 'bg-orange-50 dark:bg-orange-900/20' : 'bg-blue-50 dark:bg-blue-900/20'}`}>
+                    <BookMarked className={`w-4 h-4 ${isOverdue ? 'text-red-500' : 'text-cyan-500'}`} />
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="font-semibold text-sm text-foreground truncate">{issue.book?.title || 'Unknown Book'}</p>
@@ -139,7 +139,7 @@ export function LibraryDashboardClient({ stats, borrowedBooks }: {
                   <div className="text-right shrink-0">
                     <p className="text-xs text-muted-foreground">{days}d out</p>
                     {isOverdue
-                      ? <span className="text-[10px] font-bold text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-900/20 px-2 py-0.5 rounded-full">Overdue</span>
+                      ? <span className="text-[10px] font-bold text-red-600 dark:text-red-400 bg-orange-50 dark:bg-orange-900/20 px-2 py-0.5 rounded-full">Overdue</span>
                       : issue.due_date
                         ? <span className="text-[10px] text-muted-foreground">Due {fmtDate(issue.due_date)}</span>
                         : null}

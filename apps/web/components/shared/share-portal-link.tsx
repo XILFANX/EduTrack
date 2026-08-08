@@ -45,7 +45,7 @@ export function SharePortalLink({ link, label = "Share Portal", className = "", 
     <div className="relative inline-block" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`flex items-center gap-1.5 text-xs font-medium transition-colors text-cyan-600 dark:text-cyan-400 hover:text-cyan-700 dark:hover:text-cyan-300 ${className}`}
+        className={`flex items-center gap-1.5 text-xs font-medium transition-colors text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-cyan-300 ${className}`}
       >
         <Share2 className="w-3.5 h-3.5" />
         {label}

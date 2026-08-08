@@ -21,17 +21,17 @@ interface Stats {
 }
 
 const DATA_SECTIONS: { key: RetentionCategory, title: string, Icon: any, desc: string, color: string, bg: string }[] = [
-  { key: 'communications', title: 'Chat Messages', Icon: MessageSquare, desc: 'Historical chat across all portals.', color: 'text-cyan-600', bg: 'bg-cyan-100 dark:bg-cyan-900/20' },
-  { key: 'notifications', title: 'Notifications', Icon: Bell, desc: 'System & activity notifications.', color: 'text-orange-600', bg: 'bg-orange-100 dark:bg-orange-900/20' },
-  { key: 'audit_logs', title: 'Activity Logs', Icon: FileText, desc: 'Audit trail & compliance records.', color: 'text-cyan-600', bg: 'bg-cyan-100 dark:bg-cyan-900/20' },
-  { key: 'search_queries_log', title: 'Search Analytics', Icon: Search, desc: 'Portal search logs.', color: 'text-cyan-600', bg: 'bg-cyan-100 dark:bg-cyan-900/20' },
-  { key: 'invitations', title: 'Used Invitations', Icon: UserPlus, desc: 'Accepted or expired invitations.', color: 'text-cyan-600', bg: 'bg-cyan-100 dark:bg-cyan-900/20' },
+  { key: 'communications', title: 'Chat Messages', Icon: MessageSquare, desc: 'Historical chat across all portals.', color: 'text-blue-600', bg: 'bg-blue-100 dark:bg-blue-900/20' },
+  { key: 'notifications', title: 'Notifications', Icon: Bell, desc: 'System & activity notifications.', color: 'text-red-600', bg: 'bg-red-100 dark:bg-orange-900/20' },
+  { key: 'audit_logs', title: 'Activity Logs', Icon: FileText, desc: 'Audit trail & compliance records.', color: 'text-blue-600', bg: 'bg-blue-100 dark:bg-blue-900/20' },
+  { key: 'search_queries_log', title: 'Search Analytics', Icon: Search, desc: 'Portal search logs.', color: 'text-blue-600', bg: 'bg-blue-100 dark:bg-blue-900/20' },
+  { key: 'invitations', title: 'Used Invitations', Icon: UserPlus, desc: 'Accepted or expired invitations.', color: 'text-blue-600', bg: 'bg-blue-100 dark:bg-blue-900/20' },
 ]
 
 const DORMANT_PHASES = [
-  { key: 'warning_phase' as const, label: 'Warning Phase', sublabel: '60–84 days inactive', Icon: Clock, color: 'text-orange-600', bg: 'bg-orange-50 dark:bg-orange-900/10', border: 'border-orange-200 dark:border-orange-800/40' },
-  { key: 'final_phase' as const, label: 'Final Notice', sublabel: '85–89 days inactive', Icon: AlertTriangle, color: 'text-orange-600', bg: 'bg-orange-50 dark:bg-orange-900/10', border: 'border-orange-200 dark:border-orange-800/40' },
-  { key: 'deletion_phase' as const, label: 'Pending Deletion', sublabel: '90+ days inactive', Icon: UserX, color: 'text-orange-600', bg: 'bg-orange-50 dark:bg-orange-900/10', border: 'border-orange-200 dark:border-orange-800/40' },
+  { key: 'warning_phase' as const, label: 'Warning Phase', sublabel: '60–84 days inactive', Icon: Clock, color: 'text-red-600', bg: 'bg-orange-50 dark:bg-orange-900/10', border: 'border-red-200 dark:border-red-800/40' },
+  { key: 'final_phase' as const, label: 'Final Notice', sublabel: '85–89 days inactive', Icon: AlertTriangle, color: 'text-red-600', bg: 'bg-orange-50 dark:bg-orange-900/10', border: 'border-red-200 dark:border-red-800/40' },
+  { key: 'deletion_phase' as const, label: 'Pending Deletion', sublabel: '90+ days inactive', Icon: UserX, color: 'text-red-600', bg: 'bg-orange-50 dark:bg-orange-900/10', border: 'border-red-200 dark:border-red-800/40' },
 ]
 
 export function OptimizationClient({ initialStats }: { initialStats: Stats }) {
@@ -88,7 +88,7 @@ export function OptimizationClient({ initialStats }: { initialStats: Stats }) {
             <button onClick={refreshStats} disabled={refreshing} className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 transition-colors text-sm font-medium">
               <RefreshCw className={`w-4 h-4 ${refreshing ? 'animate-spin' : ''}`} /> Refresh
             </button>
-            <button onClick={handlePurgeAll} disabled={purgingAll || totalDormant === 0} className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white text-cyan-700 hover:bg-cyan-50 text-sm font-bold disabled:opacity-50">
+            <button onClick={handlePurgeAll} disabled={purgingAll || totalDormant === 0} className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white text-blue-700 hover:bg-blue-50 text-sm font-bold disabled:opacity-50">
               {purgingAll ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
               {purgingAll ? 'Purging...' : 'Purge All'}
             </button>
@@ -131,7 +131,7 @@ export function OptimizationClient({ initialStats }: { initialStats: Stats }) {
             const count = stats[key]
             const isLoading = purging === key || purgingAll
             return (
-              <div key={key} className="group bg-card border border-border rounded-2xl p-5 flex flex-col gap-4 hover:border-cyan-200 dark:hover:border-cyan-800 hover:shadow-md transition-all duration-300">
+              <div key={key} className="group bg-card border border-border rounded-2xl p-5 flex flex-col gap-4 hover:border-blue-200 dark:hover:border-cyan-800 hover:shadow-md transition-all duration-300">
                 <div className="flex items-start justify-between">
                   <div className={`w-11 h-11 rounded-xl ${bg} ${color} flex items-center justify-center`}>
                     <Icon className="w-5 h-5" />
@@ -147,7 +147,7 @@ export function OptimizationClient({ initialStats }: { initialStats: Stats }) {
                 </div>
                 <div className="flex items-center justify-between pt-1 border-t border-border/60 mt-auto">
                   <div className="flex items-center gap-1.5 text-[12px] text-muted-foreground">
-                    <span className="w-1.5 h-1.5 rounded-full bg-orange-500 inline-block" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-500 inline-block" />
                     <span>Retention: <strong className="text-foreground">{stats.policies[key]}d</strong></span>
                   </div>
                   <button

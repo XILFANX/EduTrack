@@ -59,7 +59,7 @@ export function CreateAdminModal({ onClose }: { onClose: () => void }) {
               value={fullName}
               onChange={e => setFullName(e.target.value)}
               placeholder="e.g. Jane Doe"
-              className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 outline-none"
+              className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
             />
           </div>
 
@@ -70,7 +70,7 @@ export function CreateAdminModal({ onClose }: { onClose: () => void }) {
               value={email}
               onChange={e => setEmail(e.target.value)}
               placeholder="e.g. jane@edutrack.com"
-              className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 outline-none"
+              className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
             />
           </div>
 
@@ -81,11 +81,11 @@ export function CreateAdminModal({ onClose }: { onClose: () => void }) {
               value={phoneNumber}
               onChange={e => setPhoneNumber(e.target.value)}
               placeholder="e.g. 0712345678"
-              className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 outline-none"
+              className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
             />
           </div>
 
-          {error && <p className="text-sm text-orange-500">{error}</p>}
+          {error && <p className="text-sm text-red-500">{error}</p>}
 
           <Button disabled={loading} className="w-full bg-[#1D6FEB] hover:bg-[#1558C8] gap-2 mt-2">
             {loading && <Loader2 className="w-4 h-4 animate-spin" />}

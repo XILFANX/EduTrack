@@ -33,9 +33,9 @@ export default async function AccountSettingsPage() {
         />
       </div>
 
-      <div className="bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-900/40 rounded-xl p-6 shadow-sm">
-        <h2 className="text-orange-600 dark:text-orange-400 font-semibold mb-2">Danger Zone</h2>
-        <p className="text-sm text-orange-800 dark:text-orange-300 mb-4">
+      <div className="bg-orange-50 dark:bg-orange-950/20 border border-red-200 dark:border-red-900/40 rounded-xl p-6 shadow-sm">
+        <h2 className="text-red-600 dark:text-red-400 font-semibold mb-2">Danger Zone</h2>
+        <p className="text-sm text-orange-800 dark:text-red-300 mb-4">
           Deleting your account is permanent. All school data associated with your profile will be removed.
         </p>
         <DeleteAccountButton />
