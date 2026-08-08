@@ -99,7 +99,7 @@ export function ParentsDirectoryClient({ classes, selectedClassId, studentsWithP
         </p>
         <Link
           href="/dashboard/students"
-          className="inline-flex items-center gap-2 bg-cyan-600 hover:bg-cyan-700 text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition-colors shadow-sm"
+          className="inline-flex items-center gap-2 bg-[#1D6FEB] hover:bg-[#1558C8] text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition-colors shadow-sm"
         >
           <UserPlus className="w-4 h-4" />
           Enroll Students

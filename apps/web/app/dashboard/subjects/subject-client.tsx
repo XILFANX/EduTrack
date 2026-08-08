@@ -170,7 +170,7 @@ export function SubjectClient({ globalSubjects, classSubjects, classes, schoolId
             </div>
           </div>
           <button 
-            className="flex items-center gap-2 bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-all shadow-sm"
+            className="flex items-center gap-2 bg-[#1D6FEB] hover:bg-[#1558C8] text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-all shadow-sm"
             onClick={() => setIsModalOpen(true)}
           >
             <Plus className="w-4 h-4" /> Add Subject
@@ -186,7 +186,7 @@ export function SubjectClient({ globalSubjects, classSubjects, classes, schoolId
             <p className="text-sm text-slate-400 mt-2 mb-6 max-w-xs mx-auto">
               Add a subject {selectedClass && `to ${selectedClass.name}`} to get started.
             </p>
-            <button className="bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2 rounded-xl text-sm font-semibold transition-colors" onClick={() => setIsModalOpen(true)}>
+            <button className="bg-[#1D6FEB] hover:bg-[#1558C8] text-white px-4 py-2 rounded-xl text-sm font-semibold transition-colors" onClick={() => setIsModalOpen(true)}>
               Assign Subjects
             </button>
           </div>
@@ -311,7 +311,7 @@ export function SubjectClient({ globalSubjects, classSubjects, classes, schoolId
                         </select>
                         {assignError && <p className="text-xs text-orange-400">{assignError}</p>}
                         <div className="flex gap-2">
-                          <button onClick={handleAssignTeacher} disabled={assigning} className="flex items-center justify-center gap-2 bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2 rounded-xl text-sm font-semibold transition-colors disabled:opacity-50 min-w-[100px]">
+                          <button onClick={handleAssignTeacher} disabled={assigning} className="flex items-center justify-center gap-2 bg-[#1D6FEB] hover:bg-[#1558C8] text-white px-4 py-2 rounded-xl text-sm font-semibold transition-colors disabled:opacity-50 min-w-[100px]">
                             {assigning ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Save'}
                           </button>
                           <button onClick={() => setAssignMode(false)} className="px-4 py-2 bg-[#1a2133] hover:bg-[#232b40] text-slate-300 text-sm font-semibold rounded-xl transition-colors">

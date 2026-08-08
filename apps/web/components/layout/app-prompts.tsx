@@ -179,7 +179,7 @@ export function AppPrompts() {
               {!isIOS && (
                 <button 
                   onClick={handleInstallClick} 
-                  className="text-xs bg-cyan-600 hover:bg-cyan-700 text-white font-semibold py-1.5 px-4 rounded-lg transition-colors"
+                  className="text-xs bg-[#1D6FEB] hover:bg-[#1558C8] text-white font-semibold py-1.5 px-4 rounded-lg transition-colors"
                 >
                   Install Now
                 </button>
@@ -209,7 +209,7 @@ export function AppPrompts() {
               <button 
                 onClick={handleEnablePush} 
                 disabled={pushLoading}
-                className="text-xs bg-cyan-600 hover:bg-cyan-700 disabled:opacity-50 text-white font-semibold py-1.5 px-4 rounded-lg transition-colors"
+                className="text-xs bg-[#1D6FEB] hover:bg-[#1558C8] disabled:opacity-50 text-white font-semibold py-1.5 px-4 rounded-lg transition-colors"
               >
                 {pushLoading ? 'Enabling...' : 'Enable Now'}
               </button>

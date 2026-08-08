@@ -190,7 +190,7 @@ export function SessionsClient({ initialYears, initialTerms }: { initialYears: A
       )}
 
       {/* Active Session Status */}
-      <div className="bg-gradient-to-r from-cyan-600 to-cyan-600 rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
+      <div className="bg-gradient-to-r from-[#1D6FEB] to-[#1558C8] rounded-[2rem] p-6 text-white shadow-lg relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-[50px] rounded-full pointer-events-none" />
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
@@ -404,7 +404,7 @@ export function SessionsClient({ initialYears, initialTerms }: { initialYears: A
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="w-full bg-cyan-600 hover:bg-cyan-700 text-white rounded-xl py-3 text-sm font-bold flex items-center justify-center transition-colors disabled:opacity-50 shadow-sm"
+                  className="w-full bg-[#1D6FEB] hover:bg-[#1558C8] text-white rounded-xl py-3 text-sm font-bold flex items-center justify-center transition-colors disabled:opacity-50 shadow-sm"
                 >
                   {submitting ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Create'}
                 </button>
@@ -434,7 +434,7 @@ export function SessionsClient({ initialYears, initialTerms }: { initialYears: A
               </button>
               <button
                 onClick={confirmDialog.onConfirm}
-                className="flex-1 py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white text-sm font-bold transition-colors shadow-sm"
+                className="flex-1 py-2.5 rounded-xl bg-[#1D6FEB] hover:bg-[#1558C8] text-white text-sm font-bold transition-colors shadow-sm"
               >
                 {confirmDialog.confirmLabel}
               </button>

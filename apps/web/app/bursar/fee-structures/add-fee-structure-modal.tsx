@@ -147,7 +147,7 @@ export function AddFeeStructureModal({ open, onClose, schoolId, terms, classes }
             </Button>
             <Button
               type="submit"
-              className="flex-1 bg-cyan-600 hover:bg-cyan-700"
+              className="flex-1 bg-[#1D6FEB] hover:bg-[#1558C8]"
               disabled={loading}
             >
               {loading ? 'Saving…' : 'Save Structure'}

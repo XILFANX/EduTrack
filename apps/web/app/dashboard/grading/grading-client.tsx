@@ -124,7 +124,7 @@ function ScaleModal({
 
           <div className="flex justify-end gap-3 pt-2 border-t border-border">
             <Button type="button" variant="outline" onClick={() => onClose()} className="rounded-xl">Cancel</Button>
-            <Button type="submit" disabled={saving} className="rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white">
+            <Button type="submit" disabled={saving} className="rounded-xl bg-[#1D6FEB] hover:bg-[#1558C8] text-white">
               {saving ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
               {existing ? 'Save Changes' : 'Add Grade'}
             </Button>
@@ -208,7 +208,7 @@ export function GradingClient({ schoolId, initialScales }: Props) {
           <p className="text-sm text-muted-foreground mt-1 mb-4 max-w-sm mx-auto">
             Define your school&apos;s grading system — A, B, C grades with score ranges and GPA points.
           </p>
-          <Button onClick={() => setModal({ open: true, existing: null })} className="bg-cyan-600 hover:bg-cyan-700 text-white rounded-xl gap-2">
+          <Button onClick={() => setModal({ open: true, existing: null })} className="bg-[#1D6FEB] hover:bg-[#1558C8] text-white rounded-xl gap-2">
             <Plus className="w-4 h-4" /> Add First Grade
           </Button>
         </div>

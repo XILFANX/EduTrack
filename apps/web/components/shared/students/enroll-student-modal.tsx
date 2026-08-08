@@ -166,7 +166,7 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
               </div>
               <div className="flex gap-2 pt-2">
                 <Button variant="outline" className="flex-1" onClick={handleClose}>Done</Button>
-                <Button className="flex-1 bg-cyan-600 hover:bg-cyan-700" onClick={() => { reset() }}>
+                <Button className="flex-1 bg-[#1D6FEB] hover:bg-[#1558C8]" onClick={() => { reset() }}>
                   Enroll Another
                 </Button>
               </div>
@@ -284,7 +284,7 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
                             onClick={() => setGender(g)}
                             className={`flex-1 py-2 rounded-xl border text-sm font-semibold transition-all ${
                               gender === g
-                                ? 'border-cyan-600 bg-cyan-600 text-white'
+                                ? 'border-[#1D6FEB] bg-[#1D6FEB] text-white'
                                 : 'border-slate-200 dark:border-slate-700 text-muted-foreground hover:border-cyan-300'
                             }`}
                           >
@@ -378,12 +378,12 @@ export function EnrollStudentModal({ open, onClose, classes, onSuccess }: Enroll
                   </Button>
                 )}
                 {step < STEPS.length ? (
-                  <Button className="flex-1 gap-1 bg-cyan-600 hover:bg-cyan-700" onClick={handleNext}>
+                  <Button className="flex-1 gap-1 bg-[#1D6FEB] hover:bg-[#1558C8]" onClick={handleNext}>
                     Review <ChevronRight className="w-4 h-4" />
                   </Button>
                 ) : (
                   <Button
-                    className="flex-1 bg-cyan-600 hover:bg-cyan-700"
+                    className="flex-1 bg-[#1D6FEB] hover:bg-[#1558C8]"
                     onClick={handleSubmit}
                     disabled={loading}
                   >

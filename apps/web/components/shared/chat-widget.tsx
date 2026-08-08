@@ -67,7 +67,7 @@ export function ChatWidget({ currentUserId, recipientName, initialMessages = [],
               <div key={msg.id} className={`flex ${isMe ? 'justify-end' : 'justify-start'}`}>
                 <div className={`max-w-[75%] rounded-2xl px-4 py-2 ${
                   isMe 
-                    ? 'bg-cyan-600 text-white rounded-br-sm' 
+                    ? 'bg-[#1D6FEB] text-white rounded-br-sm' 
                     : 'bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-foreground rounded-bl-sm'
                 }`}>
                   <p className="text-sm">{msg.content}</p>
@@ -90,7 +90,7 @@ export function ChatWidget({ currentUserId, recipientName, initialMessages = [],
           <button
             type="submit"
             disabled={!input.trim() || isSending}
-            className="absolute right-2 w-8 h-8 flex items-center justify-center rounded-full bg-cyan-600 text-white disabled:opacity-50 hover:bg-cyan-700 transition-colors"
+            className="absolute right-2 w-8 h-8 flex items-center justify-center rounded-full bg-[#1D6FEB] text-white disabled:opacity-50 hover:bg-[#1558C8] transition-colors"
           >
             <Send className="w-4 h-4" />
           </button>

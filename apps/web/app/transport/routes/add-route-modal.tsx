@@ -51,7 +51,7 @@ export function AddRouteModal({ schoolId }: { schoolId: string }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="bg-cyan-600 hover:bg-cyan-700 gap-2 shrink-0">
+        <Button className="bg-[#1D6FEB] hover:bg-[#1558C8] gap-2 shrink-0">
           <Plus className="w-4 h-4" />
           <span className="hidden sm:inline">Add Route</span>
         </Button>
@@ -113,7 +113,7 @@ export function AddRouteModal({ schoolId }: { schoolId: string }) {
             </div>
           </div>
           
-          <Button type="submit" disabled={loading} className="w-full rounded-xl bg-cyan-600 hover:bg-cyan-700 h-11 mt-2">
+          <Button type="submit" disabled={loading} className="w-full rounded-xl bg-[#1D6FEB] hover:bg-[#1558C8] h-11 mt-2">
             {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Create Route'}
           </Button>
         </form>

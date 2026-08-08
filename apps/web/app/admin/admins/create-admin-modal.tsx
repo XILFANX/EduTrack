@@ -87,7 +87,7 @@ export function CreateAdminModal({ onClose }: { onClose: () => void }) {
 
           {error && <p className="text-sm text-orange-500">{error}</p>}
 
-          <Button disabled={loading} className="w-full bg-cyan-600 hover:bg-cyan-700 gap-2 mt-2">
+          <Button disabled={loading} className="w-full bg-[#1D6FEB] hover:bg-[#1558C8] gap-2 mt-2">
             {loading && <Loader2 className="w-4 h-4 animate-spin" />}
             Grant Access
           </Button>

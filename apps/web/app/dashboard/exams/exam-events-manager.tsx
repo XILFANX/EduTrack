@@ -123,7 +123,7 @@ function CreateEventModal({ open, onClose, schoolId, years, terms, classes }: {
 
           <div className="flex justify-end gap-3 pt-2 border-t border-border">
             <Button type="button" variant="outline" onClick={onClose} className="rounded-xl">Cancel</Button>
-            <Button type="submit" disabled={saving} className="rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white">
+            <Button type="submit" disabled={saving} className="rounded-xl bg-[#1D6FEB] hover:bg-[#1558C8] text-white">
               {saving ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Plus className="w-4 h-4 mr-2" />}
               Create Event
             </Button>
@@ -191,7 +191,7 @@ export function ExamEventsManager({ schoolId, events, years, terms, classes, sub
           <p className="text-sm text-muted-foreground mt-1 mb-4 max-w-sm mx-auto">
             Create a school-wide exam event. It will span multiple classes and subjects.
           </p>
-          <Button onClick={() => setModal(true)} className="bg-cyan-600 hover:bg-cyan-700 text-white rounded-xl gap-2">
+          <Button onClick={() => setModal(true)} className="bg-[#1D6FEB] hover:bg-[#1558C8] text-white rounded-xl gap-2">
             <Plus className="w-4 h-4" /> Create First Exam Event
           </Button>
         </div>
@@ -248,7 +248,7 @@ export function ExamEventsManager({ schoolId, events, years, terms, classes, sub
                         size="sm"
                         onClick={() => handlePublish(event)}
                         disabled={publishing}
-                        className="rounded-xl gap-1.5 text-xs bg-cyan-600 hover:bg-cyan-700 text-white"
+                        className="rounded-xl gap-1.5 text-xs bg-[#1D6FEB] hover:bg-[#1558C8] text-white"
                       >
                         <Send className="w-3.5 h-3.5" /> Publish
                       </Button>

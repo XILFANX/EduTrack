@@ -286,7 +286,7 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
                 Cancel
               </Button>
               <Button
-                className="flex-1 bg-cyan-600 hover:bg-cyan-700"
+                className="flex-1 bg-[#1D6FEB] hover:bg-[#1558C8]"
                 onClick={handleInvite}
                 disabled={loading}
               >
@@ -317,7 +317,7 @@ export function InviteStaffModal({ open, onClose, schoolId, onSuccess }: InviteS
             <div className="space-y-2.5">
               <button
                 onClick={handleCopy}
-                className="w-full h-11 flex items-center justify-center gap-2 rounded-xl bg-cyan-600 hover:bg-cyan-700 active:bg-cyan-800 text-white font-semibold text-sm transition-colors"
+                className="w-full h-11 flex items-center justify-center gap-2 rounded-xl bg-[#1D6FEB] hover:bg-[#1558C8] active:bg-cyan-800 text-white font-semibold text-sm transition-colors"
               >
                 {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
                 {copied ? 'Copied!' : 'Copy Link'}

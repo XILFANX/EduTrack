@@ -9,7 +9,7 @@ export function CreateAdminButton() {
   const [open, setOpen] = useState(false)
   return (
     <>
-      <Button onClick={() => setOpen(true)} className="bg-cyan-600 hover:bg-cyan-700 gap-2">
+      <Button onClick={() => setOpen(true)} className="bg-[#1D6FEB] hover:bg-[#1558C8] gap-2">
         <Plus className="w-4 h-4" />
         Add Admin
       </Button>

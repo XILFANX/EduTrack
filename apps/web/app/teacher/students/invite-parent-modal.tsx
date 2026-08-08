@@ -138,7 +138,7 @@ export function InviteParentModal({ open, onClose, studentId, studentName, schoo
                 <Button variant="outline" className="flex-1" onClick={handleClose} disabled={loading}>
                   Cancel
                 </Button>
-                <Button className="flex-1 bg-cyan-600 hover:bg-cyan-700" onClick={handleGenerateInvite} disabled={loading}>
+                <Button className="flex-1 bg-[#1D6FEB] hover:bg-[#1558C8]" onClick={handleGenerateInvite} disabled={loading}>
                   {loading ? 'Generating...' : 'Generate Invite'}
                 </Button>
               </div>

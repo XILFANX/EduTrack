@@ -60,7 +60,7 @@ export function MessagesLayout({
             onClick={() => setActiveTab(id)}
             className={`flex-1 md:flex-none flex items-center justify-center gap-2.5 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all ${
               activeTab === id
-                ? 'bg-cyan-600 text-white shadow-md'
+                ? 'bg-[#1D6FEB] text-white shadow-md'
                 : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-white dark:hover:bg-slate-800'
             }`}
           >

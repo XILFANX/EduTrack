@@ -177,7 +177,7 @@ export default async function DisputeQueue({ schoolId }: { schoolId: string }) {
                   <button
                     id={`confirm-dispute-${d.id}`}
                     type="submit"
-                    className="w-full text-sm bg-cyan-600 hover:bg-cyan-700 text-white py-2 px-4 rounded-xl font-semibold transition-colors flex items-center justify-center gap-2"
+                    className="w-full text-sm bg-[#1D6FEB] hover:bg-[#1558C8] text-white py-2 px-4 rounded-xl font-semibold transition-colors flex items-center justify-center gap-2"
                   >
                     <CheckCircle2 className="w-4 h-4" />
                     Confirm Match

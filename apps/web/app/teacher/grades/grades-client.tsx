@@ -156,7 +156,7 @@ export function GradesClient({ schoolId, teacherId, cls, students, exams, subjec
           <h1 className="text-2xl font-bold text-foreground">Exam Grades</h1>
           <p className="text-sm text-muted-foreground mt-0.5">{cls.name}</p>
         </div>
-        <Button onClick={handleSave} disabled={loading || Object.keys(dirtyScores).length === 0} className="bg-cyan-600 hover:bg-cyan-700 gap-2">
+        <Button onClick={handleSave} disabled={loading || Object.keys(dirtyScores).length === 0} className="bg-[#1D6FEB] hover:bg-[#1558C8] gap-2">
           {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
           Save Grades
         </Button>

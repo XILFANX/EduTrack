@@ -116,7 +116,7 @@ export function AddSubjectModal({ open, onClose, schoolId, onSuccess, preSelecte
 
         <div className="flex items-center justify-end gap-3 mt-6">
           <Button variant="ghost" onClick={handleClose} disabled={loading} className="rounded-xl">Cancel</Button>
-          <Button onClick={handleSave} disabled={loading} className="bg-cyan-600 hover:bg-cyan-700 rounded-xl min-w-[100px]">
+          <Button onClick={handleSave} disabled={loading} className="bg-[#1D6FEB] hover:bg-[#1558C8] rounded-xl min-w-[100px]">
             {loading ? 'Saving...' : 'Save Subject'}
           </Button>
         </div>

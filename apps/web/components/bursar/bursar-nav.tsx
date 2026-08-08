@@ -9,10 +9,10 @@ import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet'
 import { UnreadMessagesBadge } from '@/components/shared/unread-messages-badge'
 
 const TABS = [
-  { href: '/bursar/dashboard', icon: Home, label: 'Home' },
-  { href: '/bursar/payments', icon: CheckCircle2, label: 'Fees' },
-  { href: '/bursar/invoices', icon: Receipt, label: 'Invoices' },
-  { href: '/bursar/messages', icon: MessageSquare, label: 'Messages' },
+  { href: '/bursar/dashboard', icon: Home,         label: 'Home'     },
+  { href: '/bursar/payments',  icon: CheckCircle2, label: 'Fees'     },
+  { href: '/bursar/invoices',  icon: Receipt,      label: 'Invoices' },
+  { href: '/bursar/messages',  icon: MessageSquare,label: 'Messages' },
 ]
 
 const MENU_SECTIONS = [
@@ -25,8 +25,8 @@ const MENU_SECTIONS = [
   {
     label: 'Operations',
     items: [
-      { href: '/bursar/billing', label: 'Subscription', icon: Banknote },
-      { href: '/bursar/settings', label: 'Settings', icon: Settings },
+      { href: '/bursar/billing',  label: 'Subscription', icon: Banknote },
+      { href: '/bursar/settings', label: 'Settings',     icon: Settings },
     ],
   },
 ]
@@ -35,7 +35,6 @@ export function BursarNav() {
   const pathname = usePathname()
   const [menuOpen, setMenuOpen] = useState(false)
 
-  // Check if any menu item is active
   const isMenuActive = MENU_SECTIONS.some(sec => 
     sec.items.some(item => pathname.startsWith(item.href) && !TABS.some(t => t.href === item.href))
   )
@@ -43,7 +42,7 @@ export function BursarNav() {
   return (
     <>
       <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-full max-w-[min(calc(100vw-2rem),32rem)]">
-        {/* Heavy glass blur backdrop */}
+        {/* Glass blur backdrop */}
         <div className="absolute inset-0 bg-card/80 backdrop-blur-xl rounded-[1.75rem] shadow-xl shadow-black/10 dark:shadow-black/40 border border-border/60" />
         
         <div className="relative flex items-center justify-around p-2">
@@ -60,7 +59,8 @@ export function BursarNav() {
                 {active && !menuOpen && (
                   <motion.div
                     layoutId="bursar-active-tab"
-                    className="absolute inset-0 bg-cyan-600 dark:bg-cyan-500 rounded-2xl shadow-md shadow-cyan-500/20"
+                    className="absolute inset-0 rounded-2xl shadow-md"
+                    style={{ background: 'linear-gradient(135deg, #1D6FEB 0%, #22D3EE 100%)', boxShadow: '0 4px 14px rgba(29,111,235,0.35)' }}
                     transition={{ type: "spring", stiffness: 350, damping: 25 }}
                   />
                 )}
@@ -74,7 +74,7 @@ export function BursarNav() {
                     }`} />
                     {t.href === '/bursar/messages' && !active && <UnreadMessagesBadge />}
                   </div>
-                  <span className={`text-[9px] font-extrabold uppercase tracking-tight transition-colors duration-300 ${
+                  <span className={`text-[9px] font-bold tracking-tight transition-colors duration-300 ${
                     active && !menuOpen
                       ? 'text-white/90' 
                       : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300'
@@ -94,7 +94,8 @@ export function BursarNav() {
             {isMenuActive || menuOpen ? (
                <motion.div
                  layoutId="bursar-active-tab"
-                 className="absolute inset-0 bg-cyan-600 dark:bg-cyan-500 rounded-2xl shadow-md shadow-cyan-500/20"
+                 className="absolute inset-0 rounded-2xl shadow-md"
+                 style={{ background: 'linear-gradient(135deg, #1D6FEB 0%, #22D3EE 100%)', boxShadow: '0 4px 14px rgba(29,111,235,0.35)' }}
                  transition={{ type: "spring", stiffness: 350, damping: 25 }}
                />
             ) : null}
@@ -105,7 +106,7 @@ export function BursarNav() {
                   ? 'text-white' 
                   : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300'
               }`} />
-              <span className={`text-[9px] font-extrabold uppercase tracking-tight transition-colors duration-300 ${
+              <span className={`text-[9px] font-bold tracking-tight transition-colors duration-300 ${
                 isMenuActive || menuOpen
                   ? 'text-white/90' 
                   : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300'
@@ -142,12 +143,14 @@ export function BursarNav() {
                         >
                           <div className={`relative w-14 h-14 rounded-[1.25rem] flex items-center justify-center transition-all duration-300 ${
                             active 
-                              ? 'bg-gradient-to-br from-cyan-600 to-blue-600 text-white shadow-lg shadow-cyan-500/30 -translate-y-1' 
-                              : 'bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/40 dark:to-cyan-900/20 border border-blue-100/50 dark:border-blue-800/50 text-cyan-600 dark:text-cyan-400 group-hover:shadow-lg group-hover:shadow-cyan-500/20 group-hover:-translate-y-1'
-                          }`}>
+                              ? '-translate-y-1 text-white shadow-lg shadow-blue-500/30' 
+                              : 'bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/40 dark:to-cyan-900/20 border border-blue-100/50 dark:border-blue-800/50 text-[#1D6FEB] dark:text-[#22D3EE] group-hover:shadow-lg group-hover:shadow-blue-500/20 group-hover:-translate-y-1'
+                          }`}
+                          style={active ? { background: 'linear-gradient(135deg, #1D6FEB 0%, #22D3EE 100%)' } : {}}
+                          >
                             <Icon className="w-7 h-7" strokeWidth={2.5} />
                           </div>
-                          <span className={`text-xs font-bold text-center mt-1 transition-colors ${active ? 'text-cyan-600 dark:text-cyan-400' : 'text-foreground group-hover:text-cyan-600'}`}>
+                          <span className={`text-xs font-bold text-center mt-1 transition-colors ${active ? 'text-[#1D6FEB] dark:text-[#22D3EE]' : 'text-foreground group-hover:text-[#1D6FEB]'}`}>
                             {item.label}
                           </span>
                         </Link>

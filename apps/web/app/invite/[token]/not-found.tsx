@@ -19,7 +19,7 @@ export default function InviteNotFound() {
         </div>
         <Link
           href="/"
-          className="inline-block px-6 py-2.5 rounded-full bg-cyan-600 hover:bg-cyan-700 text-white font-medium text-sm transition-colors"
+          className="inline-block px-6 py-2.5 rounded-full bg-[#1D6FEB] hover:bg-[#1558C8] text-white font-medium text-sm transition-colors"
         >
           Go to EduTrack
         </Link>

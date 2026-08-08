@@ -73,7 +73,7 @@ export function ClassTeacherReviewPanel({ examId, classId, subjects }: Props) {
           <button
             onClick={handleFinalizeAll}
             disabled={isPending}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-cyan-600 to-cyan-600 hover:from-cyan-700 hover:to-cyan-700 text-white text-xs font-bold rounded-xl transition-colors disabled:opacity-60"
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-[#1D6FEB] to-[#1558C8] hover:from-cyan-700 hover:to-cyan-700 text-white text-xs font-bold rounded-xl transition-colors disabled:opacity-60"
           >
             {isPending ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <CheckCircle2 className="w-3.5 h-3.5" />}
             Finalize All
@@ -112,7 +112,7 @@ export function ClassTeacherReviewPanel({ examId, classId, subjects }: Props) {
               <button
                 onClick={() => handleFinalize(subject.subject_id)}
                 disabled={finalizing === subject.subject_id || isPending}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-cyan-600 hover:bg-cyan-700 text-white text-xs font-bold rounded-xl transition-colors disabled:opacity-60 shrink-0"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1D6FEB] hover:bg-[#1558C8] text-white text-xs font-bold rounded-xl transition-colors disabled:opacity-60 shrink-0"
               >
                 {finalizing === subject.subject_id ? <Loader2 className="w-3 h-3 animate-spin" /> : <CheckCircle2 className="w-3 h-3" />}
                 Finalize

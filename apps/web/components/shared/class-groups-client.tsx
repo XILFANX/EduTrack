@@ -244,7 +244,7 @@ export function ClassGroupsClient({
                   )}
                   <div className={`px-4 py-2.5 rounded-2xl max-w-[80%] shadow-sm mb-1 ${
                     isMe
-                      ? 'bg-cyan-600 text-white rounded-br-sm'
+                      ? 'bg-[#1D6FEB] text-white rounded-br-sm'
                       : 'bg-slate-100 dark:bg-slate-800 text-foreground rounded-bl-sm border border-slate-200 dark:border-slate-700'
                   }`}>
                     <p className="text-sm leading-relaxed">{msg.content}</p>
@@ -284,7 +284,7 @@ export function ClassGroupsClient({
             <button
               type="submit"
               disabled={!input.trim() || sending}
-              className="w-10 h-10 flex items-center justify-center rounded-full bg-cyan-600 text-white disabled:opacity-50 hover:bg-cyan-700 transition-colors shrink-0"
+              className="w-10 h-10 flex items-center justify-center rounded-full bg-[#1D6FEB] text-white disabled:opacity-50 hover:bg-[#1558C8] transition-colors shrink-0"
             >
               {sending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
             </button>

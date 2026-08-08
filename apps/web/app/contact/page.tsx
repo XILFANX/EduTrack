@@ -36,7 +36,7 @@ export default function Page() {
           
           
           <div className="pt-6 pb-2">
-            <a href="mailto:estatetrack@gmail.com" className="inline-block bg-cyan-600 hover:bg-cyan-700 text-white font-medium px-8 py-3 rounded-full transition-transform active:scale-95 shadow-md">
+            <a href="mailto:estatetrack@gmail.com" className="inline-block bg-[#1D6FEB] hover:bg-[#1558C8] text-white font-medium px-8 py-3 rounded-full transition-transform active:scale-95 shadow-md">
               Email estatetrack@gmail.com
             </a>
           </div>

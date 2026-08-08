@@ -192,7 +192,7 @@ export function SubjectTeacherGradesView({
               <Button
                 onClick={handleSubmit}
                 disabled={isLocked || submitting || !selectedSlot}
-                className="rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white gap-2"
+                className="rounded-xl bg-[#1D6FEB] hover:bg-[#1558C8] text-white gap-2"
               >
                 {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
                 Submit for Review

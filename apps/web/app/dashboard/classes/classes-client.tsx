@@ -47,7 +47,7 @@ export function ClassesPageClient({ classes, studentCountMap, schoolId, curricul
           <h1 className="text-2xl font-bold text-foreground">Classes</h1>
           <p className="text-sm text-muted-foreground mt-1">Manage class rosters and assign teachers.</p>
         </div>
-        <Button className="bg-cyan-600 hover:bg-cyan-700 gap-2" onClick={() => setIsModalOpen(true)}>
+        <Button className="bg-[#1D6FEB] hover:bg-[#1558C8] gap-2" onClick={() => setIsModalOpen(true)}>
           <Plus className="w-4 h-4" />
           <span className="hidden sm:inline">Add Class</span>
           <span className="sm:hidden">Add</span>
@@ -63,7 +63,7 @@ export function ClassesPageClient({ classes, studentCountMap, schoolId, curricul
           <p className="text-sm text-muted-foreground max-w-sm mx-auto mt-2">
             Add your first class to start enrolling students and assigning teachers.
           </p>
-      <Button className="mt-6 bg-cyan-600 hover:bg-cyan-700 gap-2" onClick={() => setIsModalOpen(true)}>
+      <Button className="mt-6 bg-[#1D6FEB] hover:bg-[#1558C8] gap-2" onClick={() => setIsModalOpen(true)}>
             <Plus className="w-4 h-4" /> Add First Class
           </Button>
         </div>

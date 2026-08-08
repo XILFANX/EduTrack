@@ -344,7 +344,7 @@ export default function OnboardingPage() {
                         onClick={() => setFeeDueDay(day)}
                         className={`py-2 rounded-lg border text-sm font-semibold transition-colors ${
                           feeDueDay === day
-                            ? 'border-cyan-600 bg-cyan-600 text-white'
+                            ? 'border-[#1D6FEB] bg-[#1D6FEB] text-white'
                             : 'border-border text-foreground hover:border-cyan-400 hover:bg-muted'
                         }`}
                       >
@@ -399,7 +399,7 @@ export default function OnboardingPage() {
           )}
           {step < STEPS.length ? (
             <Button
-              className="flex-1 bg-cyan-600 hover:bg-cyan-700"
+              className="flex-1 bg-[#1D6FEB] hover:bg-[#1558C8]"
               onClick={handleNext}
               disabled={loading}
             >
@@ -407,7 +407,7 @@ export default function OnboardingPage() {
             </Button>
           ) : (
             <Button
-              className="flex-1 bg-cyan-600 hover:bg-cyan-700"
+              className="flex-1 bg-[#1D6FEB] hover:bg-[#1558C8]"
               onClick={handleComplete}
               disabled={loading || uploadingLogo}
             >

@@ -149,7 +149,7 @@ export function VerifyPaymentModal({ open, onClose }: Props) {
             ))}
             <div className="flex gap-3 pt-2">
               <Button variant="outline" className="flex-1" onClick={reset}>Verify more</Button>
-              <Button className="flex-1 bg-cyan-600 hover:bg-cyan-700" onClick={handleClose}>Done</Button>
+              <Button className="flex-1 bg-[#1D6FEB] hover:bg-[#1558C8]" onClick={handleClose}>Done</Button>
             </div>
           </div>
         ) : (
@@ -258,7 +258,7 @@ export function VerifyPaymentModal({ open, onClose }: Props) {
               <Button type="button" variant="outline" className="flex-1" onClick={handleClose} disabled={loading}>
                 Cancel
               </Button>
-              <Button type="submit" className="flex-1 bg-cyan-600 hover:bg-cyan-700" disabled={loading}>
+              <Button type="submit" className="flex-1 bg-[#1D6FEB] hover:bg-[#1558C8]" disabled={loading}>
                 {loading ? <><Loader2 className="w-4 h-4 animate-spin mr-2" />Submitting…</> : <><ShieldCheck className="w-4 h-4 mr-2" />Verify{rows.length > 1 ? ` (${rows.length})` : ''}</>}
               </Button>
             </div>

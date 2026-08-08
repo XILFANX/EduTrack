@@ -145,7 +145,7 @@ export function OnboardingWizard({ totalStaff, totalClasses, totalSubjects, tota
                 ) : (
                   <Link
                     href={step.href}
-                    className="shrink-0 flex items-center gap-1 text-xs font-semibold bg-cyan-600 hover:bg-cyan-700 text-white px-2.5 py-1.5 rounded-lg transition-colors"
+                    className="shrink-0 flex items-center gap-1 text-xs font-semibold bg-[#1D6FEB] hover:bg-[#1558C8] text-white px-2.5 py-1.5 rounded-lg transition-colors"
                   >
                     <span className="hidden sm:inline">{step.cta}</span>
                     <span className="sm:hidden">Go</span>
@@ -162,7 +162,7 @@ export function OnboardingWizard({ totalStaff, totalClasses, totalSubjects, tota
                 {!step.completed && (
                   <Link
                     href={step.href}
-                    className="hidden md:flex items-center justify-center gap-1.5 w-full mt-2 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-700 text-white text-xs font-semibold transition-colors"
+                    className="hidden md:flex items-center justify-center gap-1.5 w-full mt-2 py-2 rounded-lg bg-[#1D6FEB] hover:bg-[#1558C8] text-white text-xs font-semibold transition-colors"
                   >
                     {step.cta} <ArrowRight className="w-3 h-3" />
                   </Link>

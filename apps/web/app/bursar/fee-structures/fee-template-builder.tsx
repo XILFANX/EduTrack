@@ -161,7 +161,7 @@ function CreateTemplateModal({ open, onClose, years, terms, classes, schoolId }:
 
           <div className="flex justify-end gap-3 pt-2 border-t border-border">
             <Button type="button" variant="outline" onClick={onClose} className="rounded-xl">Cancel</Button>
-            <Button type="submit" disabled={saving} className="rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white">
+            <Button type="submit" disabled={saving} className="rounded-xl bg-[#1D6FEB] hover:bg-[#1558C8] text-white">
               {saving ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
               Create Template
             </Button>
@@ -220,7 +220,7 @@ function InvoiceGeneratorModal({ open, onClose, template }: { open: boolean; onC
           </div>
           <div className="flex justify-end gap-3 pt-2 border-t border-border">
             <Button variant="outline" onClick={onClose} className="rounded-xl">Cancel</Button>
-            <Button onClick={handleGenerate} disabled={generating} className="rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white gap-2">
+            <Button onClick={handleGenerate} disabled={generating} className="rounded-xl bg-[#1D6FEB] hover:bg-[#1558C8] text-white gap-2">
               {generating ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
               Generate Invoices
             </Button>
@@ -282,7 +282,7 @@ export function FeeTemplateBuilder({ schoolId, initialTemplates, terms, years, c
           <p className="text-sm text-muted-foreground mt-1 mb-4 max-w-sm mx-auto">
             Create a fee template with multiple components (tuition, lunch, activities) to generate invoices.
           </p>
-          <Button onClick={() => setCreateModal(true)} className="bg-cyan-600 hover:bg-cyan-700 text-white rounded-xl gap-2">
+          <Button onClick={() => setCreateModal(true)} className="bg-[#1D6FEB] hover:bg-[#1558C8] text-white rounded-xl gap-2">
             <Plus className="w-4 h-4" /> Create First Template
           </Button>
         </div>
@@ -323,7 +323,7 @@ export function FeeTemplateBuilder({ schoolId, initialTemplates, terms, years, c
                     <span className="text-base font-black text-cyan-600 dark:text-cyan-400">{formatKES(total)}</span>
                   </div>
                   <Button
-                    className="w-full rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white gap-2 text-sm"
+                    className="w-full rounded-xl bg-[#1D6FEB] hover:bg-[#1558C8] text-white gap-2 text-sm"
                     onClick={() => setInvoiceModal({ open: true, template: t })}
                   >
                     <Send className="w-3.5 h-3.5" /> Generate Invoices

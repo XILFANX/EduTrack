@@ -82,7 +82,7 @@ export function MessagingPoliciesClient({ initialPolicy }: { initialPolicy: Poli
           <button
             onClick={() => toggle(rule.key)}
             className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors shrink-0 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 ${
-              policy[rule.key] ? 'bg-cyan-600' : 'bg-slate-300 dark:bg-slate-600'
+              policy[rule.key] ? 'bg-[#1D6FEB]' : 'bg-slate-300 dark:bg-slate-600'
             }`}
             role="switch"
             aria-checked={policy[rule.key]}
@@ -114,7 +114,7 @@ export function MessagingPoliciesClient({ initialPolicy }: { initialPolicy: Poli
         <button
           onClick={handleSave}
           disabled={isPending}
-          className="flex items-center gap-2 px-6 py-2.5 bg-cyan-600 hover:bg-cyan-700 text-white font-semibold text-sm rounded-xl transition-colors disabled:opacity-60 shadow-sm"
+          className="flex items-center gap-2 px-6 py-2.5 bg-[#1D6FEB] hover:bg-[#1558C8] text-white font-semibold text-sm rounded-xl transition-colors disabled:opacity-60 shadow-sm"
         >
           {isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <ShieldCheck className="w-4 h-4" />}
           Save Policies

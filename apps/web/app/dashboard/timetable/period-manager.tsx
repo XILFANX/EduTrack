@@ -102,7 +102,7 @@ function PeriodModal({
           {err && <p className="text-sm text-red-500 bg-red-50 dark:bg-red-900/20 px-3 py-2 rounded-lg border border-red-200 dark:border-red-800">{err}</p>}
           <div className="flex justify-end gap-3 pt-2 border-t border-border">
             <Button type="button" variant="outline" onClick={() => onClose()} className="rounded-xl">Cancel</Button>
-            <Button type="submit" disabled={saving} className="rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white">
+            <Button type="submit" disabled={saving} className="rounded-xl bg-[#1D6FEB] hover:bg-[#1558C8] text-white">
               {saving ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
               {existing ? 'Save Changes' : 'Add Period'}
             </Button>
@@ -158,7 +158,7 @@ export function PeriodManager({ schoolId, initialPeriods }: Props) {
           </Link>
           <Button
             onClick={() => setModal({ open: true, existing: null })}
-            className="bg-cyan-600 hover:bg-cyan-700 text-white gap-2 rounded-xl"
+            className="bg-[#1D6FEB] hover:bg-[#1558C8] text-white gap-2 rounded-xl"
           >
             <Plus className="w-4 h-4" /> Add Period
           </Button>

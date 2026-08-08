@@ -113,19 +113,22 @@ export function GlobalNotificationPopup() {
   }
 
   return (
-    <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="bg-white dark:bg-slate-900 rounded-3xl w-full max-w-sm shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden animate-in zoom-in-95 duration-200">
+    <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 backdrop-blur-sm animate-in fade-in duration-200"
+      style={{ background: 'rgba(6,14,28,0.65)' }}>
+      <div className="rounded-3xl w-full max-w-sm shadow-2xl border overflow-hidden animate-in zoom-in-95 duration-200 border-t-[3px]"
+        style={{ background: '#0A1628', borderTopColor: '#1D6FEB', borderLeftColor: 'rgba(15,32,64,0.8)', borderRightColor: 'rgba(15,32,64,0.8)', borderBottomColor: 'rgba(15,32,64,0.8)' }}>
 
         {/* Header */}
         <div className="flex items-center gap-3 px-5 pt-5 pb-4">
-          <div className="w-10 h-10 bg-cyan-100 dark:bg-cyan-900/40 rounded-2xl flex items-center justify-center shrink-0">
-            <Bell className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
+          <div className="w-10 h-10 rounded-2xl flex items-center justify-center shrink-0"
+            style={{ background: 'linear-gradient(135deg, rgba(29,111,235,0.15) 0%, rgba(34,211,238,0.1) 100%)' }}>
+            <Bell className="w-5 h-5" style={{ color: '#1D6FEB' }} />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-xs font-bold uppercase tracking-widest text-cyan-600 dark:text-cyan-400">
+            <p className="text-xs font-bold uppercase tracking-widest" style={{ color: '#22D3EE' }}>
               {pending.type === 'message' ? 'Message' : 'Notification'}
             </p>
-            <h3 className="font-bold text-slate-900 dark:text-white text-sm leading-tight truncate">{pending.title}</h3>
+            <h3 className="font-bold text-white text-sm leading-tight truncate">{pending.title}</h3>
           </div>
           <button
             onClick={handleDismiss}
@@ -145,21 +148,23 @@ export function GlobalNotificationPopup() {
         </div>
 
         {/* Actions */}
-        <div className="flex flex-col gap-2 px-5 py-4 border-t border-slate-100 dark:border-slate-800 mt-2">
+        <div className="flex flex-col gap-2 px-5 py-4 border-t mt-2" style={{ borderTopColor: 'rgba(29,111,235,0.15)' }}>
           {expanded ? (
             <div className="flex gap-2">
               {(pending.action_href || pending.link) && (
                 <Link
                   href={(pending.action_href || pending.link)!}
                   onClick={handleDismiss}
-                  className="flex-1 bg-cyan-600 hover:bg-cyan-700 text-white text-sm font-bold py-2.5 rounded-xl text-center transition-colors flex items-center justify-center gap-2"
+                  className="flex-1 text-white text-sm font-bold py-2.5 rounded-xl text-center transition-all flex items-center justify-center gap-2 active:scale-95"
+                  style={{ background: 'linear-gradient(135deg, #1D6FEB 0%, #22D3EE 100%)' }}
                 >
                   {pending.action_label || 'Open'} <ArrowRight className="w-4 h-4" />
                 </Link>
               )}
               <button
                 onClick={handleDismiss}
-                className="flex-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-sm font-medium py-2.5 rounded-xl transition-colors"
+                className="flex-1 text-slate-300 text-sm font-medium py-2.5 rounded-xl transition-colors"
+                style={{ background: 'rgba(255,255,255,0.06)' }}
               >
                 Dismiss
               </button>
@@ -168,13 +173,15 @@ export function GlobalNotificationPopup() {
             <div className="flex gap-2">
               <button
                 onClick={handleRead}
-                className="flex-1 bg-cyan-600 hover:bg-cyan-700 text-white text-sm font-bold py-2.5 rounded-xl transition-colors flex items-center justify-center gap-1"
+                className="flex-1 text-white text-sm font-bold py-2.5 rounded-xl transition-all flex items-center justify-center gap-1 active:scale-95"
+                style={{ background: 'linear-gradient(135deg, #1D6FEB 0%, #22D3EE 100%)' }}
               >
                 <ChevronDown className="w-3.5 h-3.5" /> Read
               </button>
               <button
                 onClick={handleLater}
-                className="flex-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-sm font-medium py-2.5 rounded-xl transition-colors"
+                className="flex-1 text-slate-300 text-sm font-medium py-2.5 rounded-xl transition-colors"
+                style={{ background: 'rgba(255,255,255,0.06)' }}
               >
                 Later
               </button>

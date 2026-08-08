@@ -53,7 +53,7 @@ export default async function SubjectsPage({ searchParams }: { searchParams: Pro
         basePath="/dashboard/subjects?class"
         actionButton={
           <div className="flex gap-2">
-            <Link href="/dashboard/subjects?mode=bulk" className="px-4 py-2 bg-cyan-600 hover:bg-cyan-700 text-white text-sm font-semibold rounded-xl transition-colors">
+            <Link href="/dashboard/subjects?mode=bulk" className="px-4 py-2 bg-[#1D6FEB] hover:bg-[#1558C8] text-white text-sm font-semibold rounded-xl transition-colors">
               Global Subject Engine
             </Link>
           </div>

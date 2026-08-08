@@ -181,7 +181,7 @@ export function ClassDetailClient({
                 <Button
                   variant={currentTeacherId ? 'outline' : 'default'}
                   size="sm"
-                  className={currentTeacherId ? 'gap-1.5' : 'bg-cyan-600 hover:bg-cyan-700 gap-1.5'}
+                  className={currentTeacherId ? 'gap-1.5' : 'bg-[#1D6FEB] hover:bg-[#1558C8] gap-1.5'}
                   onClick={() => { setSelectedTeacherId(currentTeacherId ?? ''); setAssignMode(true) }}
                 >
                   <UserCheck className="w-3.5 h-3.5" />
@@ -199,7 +199,7 @@ export function ClassDetailClient({
                   </select>
                   <div className="flex gap-1.5">
                     <button onClick={handleAssignTeacher} disabled={assigning}
-                      className="w-8 h-8 rounded-lg bg-cyan-600 hover:bg-cyan-700 text-white flex items-center justify-center transition-colors disabled:opacity-50">
+                      className="w-8 h-8 rounded-lg bg-[#1D6FEB] hover:bg-[#1558C8] text-white flex items-center justify-center transition-colors disabled:opacity-50">
                       <Check className="w-4 h-4" />
                     </button>
                     <button onClick={() => { setAssignMode(false); setAssignError(null) }}
@@ -277,7 +277,7 @@ export function ClassDetailClient({
                 className="w-full h-10 pl-10 pr-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 transition-all"
               />
             </div>
-            <Button className="bg-cyan-600 hover:bg-cyan-700 gap-2 shrink-0" onClick={() => setIsModalOpen(true)}>
+            <Button className="bg-[#1D6FEB] hover:bg-[#1558C8] gap-2 shrink-0" onClick={() => setIsModalOpen(true)}>
               <UserPlus className="w-4 h-4" />
               <span className="hidden sm:inline">Enroll Student</span>
             </Button>
@@ -296,7 +296,7 @@ export function ClassDetailClient({
                   <p className="text-sm text-muted-foreground max-w-sm mx-auto mt-2 mb-6">
                     Enroll your first student to build the class roster.
                   </p>
-                  <Button className="bg-cyan-600 hover:bg-cyan-700 gap-2" onClick={() => setIsModalOpen(true)}>
+                  <Button className="bg-[#1D6FEB] hover:bg-[#1558C8] gap-2" onClick={() => setIsModalOpen(true)}>
                     <UserPlus className="w-4 h-4" /> Enroll First Student
                   </Button>
                 </>
@@ -416,7 +416,7 @@ export function ClassDetailClient({
             </button>
 
             {/* Hero Header */}
-            <div className="h-32 bg-gradient-to-r from-cyan-600 to-cyan-600 shrink-0 relative">
+            <div className="h-32 bg-gradient-to-r from-[#1D6FEB] to-[#1558C8] shrink-0 relative">
               {/* Overlapping Avatar */}
               <div className="absolute -bottom-10 left-6">
                 {(quickViewStudent as any).photo_url ? (
@@ -475,7 +475,7 @@ export function ClassDetailClient({
               <div className="space-y-3 pt-2">
                 <Link
                   href={`/dashboard/students/${quickViewStudent.id}`}
-                  className="w-full flex items-center justify-center gap-2 h-11 rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white text-sm font-semibold transition-colors shadow-sm"
+                  className="w-full flex items-center justify-center gap-2 h-11 rounded-xl bg-[#1D6FEB] hover:bg-[#1558C8] text-white text-sm font-semibold transition-colors shadow-sm"
                 >
                   <Pencil className="w-4 h-4" /> Full Profile
                 </Link>

@@ -1,25 +1,19 @@
-# PLAN.md
+# PLAN
 
-## Task 1: Fix EduTrack Invite Link
-- **What exists today:** `apps/web/app/invite/[token]/page.tsx` (InvitePage function)
-- **What changes:** Remove `schools ( name )` join from the Supabase query to prevent foreign key relation errors. Fetch the school name in a separate query using the `school_id` from the invite.
-- **Docs affected:** none: bug fix
-- **Tier 1 gate:** `npm run build`
+## Task 1: Fix EduTrack Invite Link Issue
+- **What exists today**: `apps/web/app/invite/[token]/page.tsx` uses `.single()` which throws an error if 0 rows are found or if the Supabase SDK encounters an issue with complex joins over RLS. It also has an `isReturningUser` check that uses `listUsers()` without pagination.
+- **What changes**: Update `page.tsx` to use `.maybeSingle()`, maintain the `schools(name)` join since it's valid for this DB, and use `admin.auth.admin.getUserById` after getting the user ID from the `users` table instead of relying on `listUsers()`.
+- **Docs affected**: none: Bug fix only.
+- **Tier 1 gate**: `npm run build`
 
-## Task 2: Global Color Sweep
-- **What exists today:** Hundreds of hardcoded `blue` classes in EduTrack, and `blue/indigo` in EstateTrack.
-- **What changes:** Run a Node.js script to replace `blue-*` with `cyan-*` in EduTrack, and `blue/indigo` with `fuchsia/purple` in EstateTrack across `apps/web/app` and `apps/web/components`.
-- **Docs affected:** none: styling update
-- **Tier 1 gate:** `npm run build`
+## Task 2: Fix Navigation Bar Overflow
+- **What exists today**: Multiple nav files (e.g. `components/bursar/bursar-nav.tsx`) have `w-6 h-6 stroke-[2.5]` icons and `text-[10px]` text in the bottom bar, which overflows on mobile when there are many items.
+- **What changes**: Run a script across all `-nav.tsx` files to reduce bottom tab icons to `w-5 h-5 stroke-[2.5]`, reduce text to `text-[9px] tracking-tight`, ensure `flex-1 min-w-0 px-1` on the link wrapper, and slightly widen the container `max-w-[min(calc(100vw-2rem),32rem)]`.
+- **Docs affected**: none: Styling only.
+- **Tier 1 gate**: `npm run build`
 
-## Task 3: Global CSS Updates
-- **What exists today:** `apps/web/app/globals.css` with legacy `--primary` and `--ring`.
-- **What changes:** Update `--primary` and `--ring` to Cyan (EduTrack) and Fuchsia (EstateTrack).
-- **Docs affected:** none: styling update
-- **Tier 1 gate:** `npm run build`
-
-## Task 4: Bold UI Enforcement (Navigations)
-- **What exists today:** `*-nav.tsx` components in both repos using subtle styling (`w-12 h-12`, `bg-muted`, `font-semibold text-[10px]`).
-- **What changes:** Redesign these to match the Quick Access styling: gradient squircles (`rounded-[1.25rem]`, `w-14 h-14`), bold labels (`font-bold text-sm`), solid icons (`w-6 h-6` with thick strokes), heavy shadows, and hover transitions. 
-- **Docs affected:** none: styling update
-- **Tier 1 gate:** `npm run build`
+## Task 3: Replace EduTrack Logo
+- **What exists today**: `apps/web/public/logo.png` and assorted icon sizes are using the old logo.
+- **What changes**: Create a Node.js script to take the newly provided logo and resize it to replace `logo.png`, Apple touch icons, and all PWA `icon-*.png` sizes.
+- **Docs affected**: none: Asset update.
+- **Tier 1 gate**: `npm run build`

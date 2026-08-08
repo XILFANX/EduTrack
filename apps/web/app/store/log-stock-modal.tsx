@@ -127,7 +127,7 @@ export function LogStockModal({ schoolId, userId, onClose }: Props) {
           <Button
             type="submit"
             disabled={loading}
-            className={`w-full gap-2 ${type === 'in' ? 'bg-cyan-600 hover:bg-cyan-700' : 'bg-orange-500 hover:bg-orange-600'}`}
+            className={`w-full gap-2 ${type === 'in' ? 'bg-[#1D6FEB] hover:bg-[#1558C8]' : 'bg-orange-500 hover:bg-orange-600'}`}
           >
             {loading && <Loader2 className="w-4 h-4 animate-spin" />}
             {type === 'in' ? 'Confirm Stock In' : 'Confirm Stock Out'}

@@ -75,7 +75,7 @@ export function GenerateInvoicesModal({ open, onClose, schoolId, terms, classes 
                 )}
               </p>
             </div>
-            <Button className="w-full bg-cyan-600 hover:bg-cyan-700" onClick={handleClose}>
+            <Button className="w-full bg-[#1D6FEB] hover:bg-[#1558C8]" onClick={handleClose}>
               Done
             </Button>
           </div>
@@ -131,7 +131,7 @@ export function GenerateInvoicesModal({ open, onClose, schoolId, terms, classes 
                 Cancel
               </Button>
               <Button
-                className="flex-1 bg-cyan-600 hover:bg-cyan-700"
+                className="flex-1 bg-[#1D6FEB] hover:bg-[#1558C8]"
                 onClick={handleGenerate}
                 disabled={loading}
               >

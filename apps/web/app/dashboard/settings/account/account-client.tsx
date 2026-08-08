@@ -57,7 +57,7 @@ export default function AccountClient({ initialName, initialPhone }: Props) {
       <button
         type="submit"
         disabled={submitting}
-        className="bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors disabled:opacity-50 mt-2"
+        className="bg-[#1D6FEB] hover:bg-[#1558C8] text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors disabled:opacity-50 mt-2"
       >
         {submitting ? 'Saving…' : 'Save Profile'}
       </button>

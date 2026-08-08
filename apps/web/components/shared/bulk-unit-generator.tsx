@@ -151,7 +151,7 @@ export function BulkUnitGenerator({ propertyId, landlordId, onCreated }: Props) 
       <button
         onClick={handleGenerate}
         disabled={saving}
-        className="w-full bg-cyan-600 hover:bg-cyan-700 text-white text-sm font-semibold py-2.5 rounded-xl transition-colors disabled:opacity-60"
+        className="w-full bg-[#1D6FEB] hover:bg-[#1558C8] text-white text-sm font-semibold py-2.5 rounded-xl transition-colors disabled:opacity-60"
       >
         {saving ? `Creating ${count} units…` : `✓ Create ${count} units`}
       </button>

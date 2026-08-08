@@ -173,7 +173,7 @@ export default function VerifyPaymentPage({ title = 'Verify Fees Payment', ledge
           <Button variant="outline" onClick={() => { setResult(null); setRows([makeRow()]); setPhase('idle') }}>
             Submit more
           </Button>
-          <Button className="bg-cyan-600 hover:bg-cyan-700" onClick={() => window.location.href = ledgerHref}>
+          <Button className="bg-[#1D6FEB] hover:bg-[#1558C8]" onClick={() => window.location.href = ledgerHref}>
             View Ledger
           </Button>
         </div>
@@ -285,7 +285,7 @@ export default function VerifyPaymentPage({ title = 'Verify Fees Payment', ledge
         </button>
 
         <Button type="submit" disabled={phase !== 'idle'}
-          className="w-full bg-cyan-600 hover:bg-cyan-700 text-white py-3 rounded-xl font-semibold transition-all">
+          className="w-full bg-[#1D6FEB] hover:bg-[#1558C8] text-white py-3 rounded-xl font-semibold transition-all">
           {phase === 'idle' && <span className="flex items-center gap-2"><ShieldCheck className="w-4 h-4" /> Submit{rows.length > 1 ? ' All' : ''}</span>}
           {phase === 'verifying' && <span className="flex items-center gap-2"><Loader2 className="w-4 h-4 animate-spin" /> Verifying...</span>}
           {phase === 'verified' && <span className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4" /> Payment Verified ✓</span>}

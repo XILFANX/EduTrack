@@ -38,7 +38,7 @@ export function FeeStructuresClient({ schoolId, structures: initial, terms, clas
           <p className="text-sm text-muted-foreground mt-1">Define standard fees for each class and term.</p>
         </div>
         <Button
-          className="bg-cyan-600 hover:bg-cyan-700 gap-2"
+          className="bg-[#1D6FEB] hover:bg-[#1558C8] gap-2"
           onClick={() => setOpen(true)}
         >
           <Plus className="w-4 h-4" />
@@ -55,7 +55,7 @@ export function FeeStructuresClient({ schoolId, structures: initial, terms, clas
           <p className="text-sm text-muted-foreground max-w-sm mx-auto mt-2 mb-4">
             Create a fee structure to start billing students for this term.
           </p>
-          <Button className="bg-cyan-600 hover:bg-cyan-700 gap-2" onClick={() => setOpen(true)}>
+          <Button className="bg-[#1D6FEB] hover:bg-[#1558C8] gap-2" onClick={() => setOpen(true)}>
             <Plus className="w-4 h-4" />
             Add First Structure
           </Button>

@@ -212,7 +212,7 @@ export function ParentPostPaymentClient({ obligationId, obligationBalance, perio
             {error && <p className="text-sm text-orange-600 bg-orange-50 dark:bg-orange-950/30 px-3 py-2 rounded-xl border border-orange-200">{error}</p>}
 
             <button type="submit" disabled={phase === 'submitting'}
-              className="w-full bg-cyan-600 hover:bg-cyan-700 disabled:opacity-50 text-white font-bold py-2.5 rounded-xl transition-all flex items-center justify-center gap-2">
+              className="w-full bg-[#1D6FEB] hover:bg-[#1558C8] disabled:opacity-50 text-white font-bold py-2.5 rounded-xl transition-all flex items-center justify-center gap-2">
               {phase === 'submitting' ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
               {phase === 'submitting' ? 'Submitting...' : 'Post Payment'}
             </button>
@@ -243,7 +243,7 @@ export function ParentPostPaymentClient({ obligationId, obligationBalance, perio
             {error && <p className="text-sm text-orange-600 bg-orange-50 dark:bg-orange-950/30 px-3 py-2 rounded-xl border border-orange-200">{error}</p>}
 
             <button type="submit" disabled={phase === 'submitting'}
-              className="w-full bg-cyan-600 hover:bg-cyan-700 disabled:opacity-50 text-white font-bold py-2.5 rounded-xl flex items-center justify-center gap-2">
+              className="w-full bg-[#1D6FEB] hover:bg-[#1558C8] disabled:opacity-50 text-white font-bold py-2.5 rounded-xl flex items-center justify-center gap-2">
               {phase === 'submitting' ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
               {phase === 'submitting' ? 'Submitting...' : 'Post Cash Payment'}
             </button>

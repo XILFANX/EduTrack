@@ -63,7 +63,7 @@ export default async function BursarLedgerPage() {
           <p className="text-2xl font-bold mt-1">{fmt(totalOutstanding)}</p>
           <p className="text-xs text-orange-100 mt-1">{obls.filter((o) => ['open','partial'].includes(o.status)).length} obligations</p>
         </div>
-        <div className="bg-gradient-to-br from-cyan-600 to-cyan-600 rounded-2xl p-4 text-white">
+        <div className="bg-gradient-to-br from-[#1D6FEB] to-[#1558C8] rounded-2xl p-4 text-white">
           <p className="text-xs font-medium text-cyan-100">Collected (this view)</p>
           <p className="text-2xl font-bold mt-1">{fmt(totalCollected)}</p>
           <p className="text-xs text-cyan-100 mt-1">{obls.filter((o) => ['settled','overpaid'].includes(o.status)).length} settled</p>

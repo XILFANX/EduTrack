@@ -122,8 +122,9 @@ The "Docs affected" field in every task cites a row from this table or `none: <r
 | 2026-08-06 | Agent Harness Rewrite — Binary gates, MISSION.md scratchpad, slimmed CONTEXT.md | Shipped |
 | 2026-08-04 | EduTrack Core Modules Rewrite (Timetable, Exams, Fees, Analytics) | Shipped `246b8c2` |
 | 2026-08-04 | EduTrack Portals UI Refinement — blue hero all subportals, Quick Actions, 3-item truncation | Shipped |
-| 2026-08-04 | UI Refinement: Minimalist Dashboards — profile cards, 3-item truncation, bg-card themes | Shipped `2c3ed64` |
-| 2026-08-04 | Tenant & Caretaker Portals Redesign — purple theme, floating nav, quick action grids | Shipped `6569c80` |
+| 2026-08-04 | Removed rigid 'no tools' restriction from fast-path workflow, allowing minimal tool usage. | Shipped `3a5796c` |
+| 2026-08-06 | Updated harness logic to reflect the new agent workflow (gates, tier 1/2, and history log limit). | Shipped `64b35f7` |
+| 2026-08-06 | Fix invite links and sweep legacy blue themes codebase-wide, applying bold Quick Access navigation styling. | Shipped `62b2736` |
 | 2026-08-02 | Payment UX v5, Engine Flows, Nav Fixes, Subscription Gating | Shipped |
 | 2026-08-02 | UI Consistency, Navigation Overlaps, Robust Parsing Enforcement | Shipped `abaa99a` |
 | 2026-08-01 | Payment Parsing & UI Consistency — rebuilt M-Pesa/Bank parser, portal nav fixes | Shipped |

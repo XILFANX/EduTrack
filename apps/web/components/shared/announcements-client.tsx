@@ -87,7 +87,7 @@ export function AnnouncementsClient({ audienceOptions, defaultAudience, subjectP
       <button 
         type="submit" 
         disabled={submitting || !title || !body}
-        className="w-full bg-cyan-600 hover:bg-cyan-700 text-white font-semibold py-2.5 rounded-xl transition-all shadow-md disabled:opacity-50 flex justify-center items-center h-11"
+        className="w-full bg-[#1D6FEB] hover:bg-[#1558C8] text-white font-semibold py-2.5 rounded-xl transition-all shadow-md disabled:opacity-50 flex justify-center items-center h-11"
       >
         {submitting ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Send Broadcast'}
       </button>

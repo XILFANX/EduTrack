@@ -78,7 +78,7 @@ export default async function AdminReportsPage({ searchParams }: { searchParams:
           </div>
           <h2 className="text-lg font-semibold text-slate-200">No students enrolled</h2>
           <p className="text-sm text-slate-400 mt-2 mb-6 max-w-xs mx-auto">Enroll students in this class to generate report cards.</p>
-          <a href="/dashboard/students" className="inline-flex items-center gap-2 bg-cyan-600 hover:bg-cyan-700 text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition-colors">
+          <a href="/dashboard/students" className="inline-flex items-center gap-2 bg-[#1D6FEB] hover:bg-[#1558C8] text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition-colors">
             Enroll Students
           </a>
         </div>

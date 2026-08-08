@@ -117,7 +117,7 @@ export function StudentsPageClient({
             <h1 className="text-2xl font-bold text-foreground">Student Management</h1>
             <p className="text-sm text-muted-foreground mt-1">Select a class to manage its enrolled students, or search globally.</p>
           </div>
-          <Button className="bg-cyan-600 hover:bg-cyan-700 gap-2 shrink-0" onClick={() => setIsModalOpen(true)}>
+          <Button className="bg-[#1D6FEB] hover:bg-[#1558C8] gap-2 shrink-0" onClick={() => setIsModalOpen(true)}>
             <UserPlus className="w-4 h-4" />
             <span className="hidden sm:inline">Enroll Student</span>
           </Button>
@@ -177,14 +177,15 @@ export function StudentsPageClient({
                 onClick={() => setSelectedClass({ id: 'unassigned', name: 'Unassigned Students' })}
                 className="w-full flex items-center gap-4 px-4 py-3.5 border-t border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors group text-left"
               >
-                <div className="w-10 h-10 rounded-xl bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center shrink-0">
-                  <Users className="w-4 h-4 text-orange-600 dark:text-orange-400" />
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+                    style={{ background: 'linear-gradient(135deg, rgba(29,111,235,0.15) 0%, rgba(34,211,238,0.1) 100%)' }}>
+                    <Users className="w-4 h-4" style={{ color: '#1D6FEB' }} />
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="font-semibold text-foreground text-sm">Unassigned Students</p>
                   <p className="text-xs text-muted-foreground">{unassignedCount} student{unassignedCount !== 1 ? 's' : ''} not yet linked to a class</p>
                 </div>
-                <ChevronRight className="w-4 h-4 text-slate-300 dark:text-slate-600 group-hover:text-orange-500 transition-colors shrink-0" />
+                <ChevronRight className="w-4 h-4 text-slate-300 dark:text-slate-600 group-hover:text-[#22D3EE] transition-colors shrink-0" />
               </button>
             )}
 
@@ -234,7 +235,7 @@ export function StudentsPageClient({
           <h1 className="text-2xl font-bold text-foreground truncate">{title}</h1>
           <p className="text-sm text-muted-foreground mt-0.5">{subtitle}</p>
         </div>
-        <Button className="bg-cyan-600 hover:bg-cyan-700 gap-2 shrink-0" onClick={() => setIsModalOpen(true)}>
+        <Button className="bg-[#1D6FEB] hover:bg-[#1558C8] gap-2 shrink-0" onClick={() => setIsModalOpen(true)}>
           <UserPlus className="w-4 h-4" />
           <span className="hidden sm:inline">Enroll Student</span>
         </Button>
@@ -262,7 +263,7 @@ export function StudentsPageClient({
               ? `There are no students enrolled in ${selectedClass?.name || 'this class'}.`
               : 'Click Enroll Student to add your first student.'}
           </p>
-          <Button className="bg-cyan-600 hover:bg-cyan-700 gap-2" onClick={() => setIsModalOpen(true)}>
+          <Button className="bg-[#1D6FEB] hover:bg-[#1558C8] gap-2" onClick={() => setIsModalOpen(true)}>
             <UserPlus className="w-4 h-4" />
             Enroll Student
           </Button>
@@ -376,7 +377,7 @@ export function StudentsPageClient({
             </button>
 
             {/* Hero Header */}
-            <div className="h-32 bg-gradient-to-r from-cyan-600 to-cyan-600 shrink-0 relative">
+            <div className="h-32 bg-gradient-to-r from-[#1D6FEB] to-[#1558C8] shrink-0 relative">
               {/* Overlapping Avatar */}
               <div className="absolute -bottom-10 left-6">
                 {quickViewStudent.photo_url ? (
@@ -446,7 +447,7 @@ export function StudentsPageClient({
               <div className="space-y-3 pt-2">
                 <Link
                   href={`/dashboard/students/${quickViewStudent.id}`}
-                  className="w-full flex items-center justify-center gap-2 h-11 rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white text-sm font-semibold transition-colors shadow-sm"
+                  className="w-full flex items-center justify-center gap-2 h-11 rounded-xl bg-[#1D6FEB] hover:bg-[#1558C8] text-white text-sm font-semibold transition-colors shadow-sm"
                 >
                   <Pencil className="w-4 h-4" /> Full Profile
                 </Link>

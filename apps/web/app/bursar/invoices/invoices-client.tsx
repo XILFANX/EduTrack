@@ -26,7 +26,7 @@ export function InvoicesClient({ invoices }: { invoices: any[] }) {
           <h1 className="text-2xl font-bold text-foreground">Invoices & Billing</h1>
           <p className="text-sm text-muted-foreground mt-1">Manage termly fee invoices for all students.</p>
         </div>
-        <Button className="bg-cyan-600 hover:bg-cyan-700 gap-2 shrink-0">
+        <Button className="bg-[#1D6FEB] hover:bg-[#1558C8] gap-2 shrink-0">
           <Plus className="w-4 h-4" />
           <span className="hidden sm:inline">Generate Invoices</span>
         </Button>

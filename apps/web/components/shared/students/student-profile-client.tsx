@@ -86,7 +86,7 @@ export function StudentProfileClient({ student, classes }: { student: any, class
       {/* ── Left Column: Main Profile Card ── */}
       <div className="md:col-span-1">
         <Card className="border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden relative">
-          <div className="h-24 bg-gradient-to-r from-cyan-600 to-blue-500" />
+          <div className="h-24 bg-gradient-to-r from-[#1D6FEB] to-[#22D3EE]" />
           <CardContent className="px-6 pb-6 pt-0 relative">
             <div className="w-20 h-20 rounded-2xl bg-white dark:bg-slate-900 border-4 border-white dark:border-slate-950 shadow-sm mx-auto -mt-10 flex items-center justify-center relative z-10 overflow-hidden group">
               {photoUrl ? (

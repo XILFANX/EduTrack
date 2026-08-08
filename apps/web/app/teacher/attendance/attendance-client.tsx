@@ -114,7 +114,7 @@ export function AttendanceClient({ schoolId, teacherId, cls, students, existingR
         <Button 
           onClick={handleSave} 
           disabled={loading || Object.keys(records).length === 0}
-          className="bg-cyan-600 hover:bg-cyan-700 gap-2"
+          className="bg-[#1D6FEB] hover:bg-[#1558C8] gap-2"
         >
           {loading && <Loader2 className="w-4 h-4 animate-spin" />}
           Save

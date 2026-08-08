@@ -189,7 +189,7 @@ function SlotModal({
           )}
           <div className="flex gap-3 ml-auto">
             <Button variant="outline" onClick={onClose} className="rounded-xl">Cancel</Button>
-            <Button onClick={handleSave} disabled={saving} className="rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white">
+            <Button onClick={handleSave} disabled={saving} className="rounded-xl bg-[#1D6FEB] hover:bg-[#1558C8] text-white">
               {saving ? <Loader2 className="w-4 h-4 animate-spin mr-1.5" /> : <Save className="w-4 h-4 mr-1.5" />}
               Save
             </Button>
@@ -245,7 +245,7 @@ export function TimetableGrid({
         <h3 className="font-semibold text-foreground">No Bell Schedule Yet</h3>
         <p className="text-sm text-muted-foreground mt-1 mb-4">Set up your school day periods before building the timetable.</p>
         <Link href="/dashboard/timetable?view=setup">
-          <Button className="rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white gap-2">
+          <Button className="rounded-xl bg-[#1D6FEB] hover:bg-[#1558C8] text-white gap-2">
             <Settings className="w-4 h-4" /> Configure Bell Schedule
           </Button>
         </Link>
@@ -285,7 +285,7 @@ export function TimetableGrid({
           disabled={publishing || !selectedTermId}
           className={`rounded-xl gap-2 ${isPublished
             ? 'bg-slate-700 hover:bg-slate-600 text-white'
-            : 'bg-cyan-600 hover:bg-cyan-700 text-white'
+            : 'bg-[#1D6FEB] hover:bg-[#1558C8] text-white'
           }`}
         >
           {publishing ? <Loader2 className="w-4 h-4 animate-spin" /> : isPublished ? <X className="w-4 h-4" /> : <CheckCircle2 className="w-4 h-4" />}

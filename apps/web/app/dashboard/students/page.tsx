@@ -41,7 +41,7 @@ export default async function StudentsPage({ searchParams }: { searchParams: Pro
         basePath="/dashboard/students?class"
         actionButton={
           <div className="flex gap-2">
-            <Link href="/dashboard/students?enroll=true" className="flex items-center gap-2 px-4 py-2 bg-cyan-600 hover:bg-cyan-700 text-white text-sm font-semibold rounded-xl transition-colors">
+            <Link href="/dashboard/students?enroll=true" className="flex items-center gap-2 px-4 py-2 bg-[#1D6FEB] hover:bg-[#1558C8] text-white text-sm font-semibold rounded-xl transition-colors">
               <UserPlus className="w-4 h-4" />
               Enroll Student
             </Link>

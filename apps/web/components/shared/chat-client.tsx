@@ -638,7 +638,7 @@ export function ChatClient({
                         )}
                         <div className={`px-4 py-2.5 rounded-2xl max-w-[80%] shadow-sm mb-1 ${
                           isMe
-                            ? 'bg-cyan-600 text-white rounded-br-sm'
+                            ? 'bg-[#1D6FEB] text-white rounded-br-sm'
                             : 'bg-slate-100 dark:bg-slate-800 text-foreground rounded-bl-sm border border-slate-200 dark:border-slate-700'
                         }`}>
                           <p className="text-[14px] leading-relaxed break-words">{msg.content}</p>

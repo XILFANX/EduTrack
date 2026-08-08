@@ -141,7 +141,7 @@ export function NotificationCenter() {
               className={`p-5 transition-colors sm:flex sm:items-start gap-4 cursor-pointer ${n.is_read ? 'bg-transparent' : 'bg-cyan-50/50 dark:bg-cyan-950/20'}`}
               onClick={() => openNotification(n)}
             >
-              <div className={`mt-1.5 w-2.5 h-2.5 rounded-full shrink-0 hidden sm:block ${n.is_read ? 'bg-transparent' : 'bg-cyan-600'}`} />
+              <div className={`mt-1.5 w-2.5 h-2.5 rounded-full shrink-0 hidden sm:block ${n.is_read ? 'bg-transparent' : 'bg-[#1D6FEB]'}`} />
               
               <div className="flex-1 min-w-0">
                 <div className="flex items-start justify-between gap-4">
@@ -166,7 +166,7 @@ export function NotificationCenter() {
                   <div className="mt-4">
                     <Link 
                       href={getAdjustedLink(n.action_href || n.link)!}
-                      className="inline-flex px-4 py-2 bg-cyan-600 hover:bg-cyan-700 text-white text-sm font-semibold rounded-xl transition-colors"
+                      className="inline-flex px-4 py-2 bg-[#1D6FEB] hover:bg-[#1558C8] text-white text-sm font-semibold rounded-xl transition-colors"
                       onClick={(e) => e.stopPropagation()}
                     >
                       View Details

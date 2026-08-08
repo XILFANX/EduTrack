@@ -7,14 +7,14 @@ import { motion } from 'framer-motion'
 import { UnreadMessagesBadge } from '@/components/shared/unread-messages-badge'
 
 const NAV_ITEMS = [
-  { href: '/admin/dashboard', label: 'Overview', Icon: LayoutDashboard },
-  { href: '/admin/analytics', label: 'Analytics', Icon: BarChart3 },
-  { href: '/admin/schools', label: 'Schools', Icon: Building2 },
-  { href: '/admin/billing', label: 'Subscriptions', Icon: CreditCard },
-  { href: '/admin/messages', label: 'Messages', Icon: MessageSquare },
-  { href: '/admin/admins', label: 'Admins', Icon: ShieldCheck, rootOnly: true },
-  { href: '/admin/optimization', label: 'Optimize', Icon: DatabaseZap, rootOnly: true },
-  { href: '/admin/docs', label: 'Docs', Icon: Terminal, rootOnly: true },
+  { href: '/admin/dashboard',    label: 'Overview',       Icon: LayoutDashboard },
+  { href: '/admin/analytics',    label: 'Analytics',      Icon: BarChart3       },
+  { href: '/admin/schools',      label: 'Schools',        Icon: Building2       },
+  { href: '/admin/billing',      label: 'Subscriptions',  Icon: CreditCard      },
+  { href: '/admin/messages',     label: 'Messages',       Icon: MessageSquare   },
+  { href: '/admin/admins',       label: 'Admins',         Icon: ShieldCheck,    rootOnly: true },
+  { href: '/admin/optimization', label: 'Optimize',       Icon: DatabaseZap,    rootOnly: true },
+  { href: '/admin/docs',         label: 'Docs',           Icon: Terminal,       rootOnly: true },
 ]
 
 export function AdminNav({ isRoot }: { isRoot: boolean }) {
@@ -23,7 +23,7 @@ export function AdminNav({ isRoot }: { isRoot: boolean }) {
   
   return (
     <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50" style={{ width: 'min(calc(100vw - 1.5rem), 44rem)' }}>
-      {/* Heavy glass blur backdrop */}
+      {/* Glass blur backdrop */}
       <div className="absolute inset-0 bg-card/80 backdrop-blur-xl rounded-[1.75rem] shadow-xl shadow-black/10 dark:shadow-black/40 border border-border/60" />
       
       <div className="relative flex items-center justify-around p-1.5">
@@ -40,7 +40,8 @@ export function AdminNav({ isRoot }: { isRoot: boolean }) {
               {active && (
                 <motion.div
                   layoutId="admin-active-tab"
-                  className="absolute inset-0 bg-cyan-600 dark:bg-cyan-500 rounded-2xl shadow-md shadow-cyan-500/20"
+                  className="absolute inset-0 rounded-2xl shadow-md"
+                  style={{ background: 'linear-gradient(135deg, #1D6FEB 0%, #22D3EE 100%)', boxShadow: '0 4px 14px rgba(29,111,235,0.35)' }}
                   transition={{ type: "spring", stiffness: 350, damping: 25 }}
                 />
               )}
@@ -56,7 +57,7 @@ export function AdminNav({ isRoot }: { isRoot: boolean }) {
                     <UnreadMessagesBadge />
                   )}
                 </div>
-                <span className={`text-[9px] font-extrabold uppercase tracking-tight transition-colors duration-300 ${
+                <span className={`text-[9px] font-bold tracking-tight transition-colors duration-300 ${
                   active 
                     ? 'text-white/90' 
                     : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300'

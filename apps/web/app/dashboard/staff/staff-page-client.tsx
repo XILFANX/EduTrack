@@ -91,7 +91,7 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
             {staff.length} active · {pendingInvitations.length} pending invite{pendingInvitations.length !== 1 ? 's' : ''}
           </p>
         </div>
-        <Button className="bg-cyan-600 hover:bg-cyan-700 gap-2" onClick={() => setModalOpen(true)}>
+        <Button className="bg-[#1D6FEB] hover:bg-[#1558C8] gap-2" onClick={() => setModalOpen(true)}>
           <UserPlus className="w-4 h-4" /><span className="hidden sm:inline">Invite Staff</span>
         </Button>
       </div>
@@ -187,7 +187,7 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
             <p className="font-semibold text-foreground">No staff yet</p>
             <p className="text-sm text-muted-foreground max-w-xs mx-auto mt-1">Invite your first staff member using the button above.</p>
           </div>
-          <Button className="bg-cyan-600 hover:bg-cyan-700 gap-2" onClick={() => setModalOpen(true)}>
+          <Button className="bg-[#1D6FEB] hover:bg-[#1558C8] gap-2" onClick={() => setModalOpen(true)}>
             <UserPlus className="w-4 h-4" /> Invite First Staff Member
           </Button>
         </div>
@@ -245,7 +245,7 @@ export function StaffPageClient({ staff, invitations, schoolId }: StaffPageClien
             </button>
 
             {/* Hero Header */}
-            <div className="h-32 bg-gradient-to-r from-cyan-600 to-cyan-600 shrink-0 relative">
+            <div className="h-32 bg-gradient-to-r from-[#1D6FEB] to-[#1558C8] shrink-0 relative">
               {/* Overlapping Avatar */}
               <div className="absolute -bottom-10 left-6">
                 {(detailMember as any).photo_url ? (
