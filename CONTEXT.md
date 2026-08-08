@@ -117,6 +117,7 @@ The "Docs affected" field in every task cites a row from this table or `none: <r
 
 | Date | Mission | Outcome |
 |---|---|---|
+| 2026-08-08 | Polish round 2 — blue hero all portals both apps, new logo PWA icons navy-socket, purge orange/cyan/slate-dusty, destructive→blue, modal navy bg | Shipped `cbdcc93` (EduTrack) `3d51303` (EstateTrack) |
 | 2026-08-08 | Full UI re-theme — electric blue/cyan gradient, navy dark mode, danger red, title-case navs, new logos as PWA icons | Shipped `bb55d3b` |
 | 2026-08-06 | Harness upgrade — merged Anthropic-style protocol into binary gates; added Verification Tiers, Bootstrap, Drift, Sync-to-remote; History Log capped at 10 rows | Shipped |
 | 2026-08-06 | UI Design System Canonicalization — cyan-blue hero all EduTrack portals, orange alerts, max-3 lists | Shipped `22c1213` |
@@ -126,4 +127,3 @@ The "Docs affected" field in every task cites a row from this table or `none: <r
 | 2026-08-04 | Removed rigid 'no tools' restriction from fast-path workflow, allowing minimal tool usage. | Shipped `3a5796c` |
 | 2026-08-06 | Updated harness logic to reflect the new agent workflow (gates, tier 1/2, and history log limit). | Shipped `64b35f7` |
 | 2026-08-06 | Fix invite links and sweep legacy blue themes codebase-wide, applying bold Quick Access navigation styling. | Shipped `62b2736` |
-| 2026-08-02 | Payment UX v5, Engine Flows, Nav Fixes, Subscription Gating | Shipped |
